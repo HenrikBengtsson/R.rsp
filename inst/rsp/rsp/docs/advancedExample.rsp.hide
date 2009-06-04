@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+        "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<%@ page language="R" info="An example of an RSP page."%>
+
+<%
+"l
+%>
+
+<%title="R Server Pages - Advanced Example"%>
+
+<%-- 
+ This is the RSP file process in the example of RspEngine.
+ If you see this because you ran example(RspEngine) you
+ should see the RSP respond, a HTML document, in a web
+ browser in a few seconds...
+--%>
+
+<html>
+ <head>
+  <title><%=title%></title>
+  <style>
+  <%@include file="rsp.css"%>
+ </head>
+
+ <body>
+  <h1><%=title%></h1>
+
+  Say <%="Hello world!"%> to the very first RSP code ever created. RSP stands for R Server Pages.
+
+  <h2>Supported RSP Tags</h2>
+  <%-- Table of supported tags --%>
+  <table border="1">
+   <tr><th>Element</th><th>RSP</th><th>Description</th></tr>
+   <tr valign="top">
+    <td>Comment</td><td>&lt;%-- <em>comment</em> --%&gt;</td>
+    <td>Documents the RSP code, but not part of the response.</td>
+   </tr>
+   <tr valign="top">
+    <td>Expression</td><td>&lt;%= <em>expression</em> %&gt;</td>
+    <td>Contains an R expression.</td>
+   </tr>
+   <tr valign="top">
+    <td>Scriptlet</td><td>&lt;% <em>code fragment</em> %&gt;</td>
+    <td>Runs the containing R code fragment.</td>
+   </tr>
+   <tr valign="top">
+    <td>Scriptlet</td><td>&lt;%# <em>code fragment</em> %&gt;</td>
+    <td>Same as above but the code fragment is first copied to the output.</td>
+   </tr>
+   <tr valign="top">
+    <td>Include Directive</td><td>&lt;%@include file="<em>URL</em>" %&gt;</td>
+    <td>Includes a URL and translates its RSP contents.</td>
+   </tr>
+  </table>
+
+
+  <h2>Scriptlets</h2>
+  <p>
+  The following code was copies from a
+  &lt;%#&nbsp;<em>code&nbsp;fragment</em>&nbsp;%&gt;
+  scriptlet to this document and then evaluated.
+  </p>
+<pre class="RspScriptlet"><%#
+x <- rnorm(1000)
+mx <- mean(x)
+%></pre>
+  <p>
+  The above code calculated the mean of the <em>x</em> vector to be <%=mx%>.
+  </p>
+
+  <h2>Advanced scriptlets</h2>
+  <p>
+  Defines some local functions to be used later.
+  </p>
+<pre class="RspScriptlet"><%#
+
+# Extract the contents of an HTML body
+extractBody <- function(lines) {
+  lines <- paste(lines, collapse="\n", sep="");
+
+  # Remove all characters before '<body>'
+  lines <- gsub("^.*<body[^>]*>", "", lines);
+
+  # Remove all characters after '</body>'
+  gsub("</body[^>]*>.*$", "", lines);
+}
+
+# Add absolute URL to relative URLs
+addDomain <- function(body, url) {
+  replace <- paste("<a href=\"", url, "\\1", sep="");
+  gsub("<a href=\"([^h/][^t][^t][^p][^:])", replace, body);
+}
+
+onInclude <- function(lines, attrs=NULL, ...) {
+  body <- extractBody(lines);    
+  body <- addDomain(body, url=attrs$file);
+
+  # Remove all characters after "pagefooter"
+  gsub("<!--[ =]*P A G E *F O O T E R.*$", "", body);
+}
+ %></pre>
+
+  <h2>Include Directive</h2>
+  <p>
+   <strong>Usage:</strong> <code>&lt;%@include file="file|URL"%&gt;</code>
+  </p>
+  <h3>Example</h3>
+  <p>
+   RSP tag:<br>
+   <code>&lt;%@include file="RspEngine.include.rsp"%&gt;</code>
+  </p>
+  <div class="HTMLCode"><%@include file="RspEngine.include.rsp"%></div>
+  <pre class="RspScriptlet"><%@include file="RspEngine.include.rsp" verbatim="TRUE"%></pre>
+
+
+  <h2>Exception handling</h2>
+  <p>
+   There is also a build in exception handling that generates informative message of RSP parsing errors or evaluation error of embedded R code. For example:
+  </p>
+  <p>
+   <%@include file="RspEngine.include.notfound.rsp"%>
+  </p>
+  <p>
+   <%=log("a")%>
+  </p>
+
+  <h2>Including the body of www.braju.com/R/</h2>
+
+  <p>
+  RSP tag:<br>
+  <code>&lt;%@include file="http://www.braju.com/R/" onInclude="onInclude"%&gt;</code>
+  </p>
+
+  <small>Included page:</small><br>
+  <div class="PageInclude">
+   <%@include file="http://www.braju.com/R/" onInclude="onInclude"%>
+  </div>
+
+
+  <%@include file="simpleFooter.rsp"%>
+ </body>
+</html>
+

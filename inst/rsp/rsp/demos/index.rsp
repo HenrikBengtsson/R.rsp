@@ -1,0 +1,24 @@
+<%@page contentType="text/html"%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+        "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<%title="RSP/Demos/"%>
+
+<%domainPath="../../..";%>
+
+<html>
+<%@include file="../../src/simpleHead.rsp"%>
+
+<body>
+<%@include file="../../src/simpleHeader.rsp"%>
+
+<h2>Table of Contents</h2>
+
+<ul>
+ <li><a href="calculator/">R calculator</a></li>
+</ul>
+
+<%@include file="../../src/simpleFooter.rsp"%>
+</body>
+</html>

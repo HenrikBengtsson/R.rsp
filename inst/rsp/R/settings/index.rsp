@@ -1,0 +1,30 @@
+<%@page contentType="text/html"%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+        "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<%title="R/Settings/"%>
+
+<% domainPath="../.."; %>
+
+<html>
+<%@include file="../../src/simpleHead.rsp"%>
+
+<body>
+<%@include file="../../src/simpleHeader.rsp"%>
+
+
+<h2>Table of Contents</h2>
+
+<ul>
+ <li><a href="options.rsp">Options</a></li>
+ <li><a href="language.rsp">Language</a></li>
+ <li><a href="par.rsp">Graphical parameters</a> for the current device</li>
+<%
+# <li><a href="environmentVariables.rsp">Environment variables</a></li>
+%>
+</ul>
+
+<%@include file="../../src/simpleFooter.rsp"%>
+</body>
+</html>

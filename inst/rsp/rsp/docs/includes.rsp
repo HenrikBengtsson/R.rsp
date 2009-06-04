@@ -1,0 +1,69 @@
+<%@ page contentType="text/html"%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+        "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<%title="R Server Pages - Includes &amp; Imports"%>
+
+<html>
+<%@include file="../../src/simpleHead.rsp"%>
+
+<body>
+<%@include file="../../src/simpleHeader.rsp"%>
+
+<p>
+An <em>include</em> and <em>import</em> inserts another file or URL at <em>translation</em> time and <em>process</em> time ("run-time"), respectively.
+</p>
+
+<h2>Include</h2>
+<p>
+ <strong>Usage:</strong> 
+ <code>&lt;%@include file="file|URL"%&gt;</code>
+</p>
+
+<p>
+The include command translates the contents of a file (or a URL) and adds it to the R source code.  This is done when translating the RSP document, cf. the import command.
+</p>
+
+<h3>Example</h3>
+<p>
+ <strong>RSP tag:</strong><br>
+ <code>&lt;%@include file="incl/example.include.rsp"%&gt;</code>
+</p>
+<div class="HtmlCode"><%@include file="incl/example.include.rsp"%></div>
+
+
+<h3>Example</h3>
+<p>
+ <strong>RSP tag:</strong><br>
+ <code>&lt;%@include file="incl/example.include.rsp" verbatim="TRUE" wrap="80"%&gt;</code>
+</p>
+<pre class="RspScriptlet"><%@include file="incl/example.include.rsp" verbatim="TRUE" wrap="80"%></pre>
+
+
+
+<h2>Import</h2>
+<p>
+ <strong>Usage:</strong> 
+ <code>&lt;%@import file="file|URL"%&gt;</code>
+</p>
+
+<p>
+The import command adds a command to the translated R code that imports, translates and processes a file (or a URL) when the RSP document is sourced, cf. the include command.
+</p>
+
+<h3>Example</h3>
+<p>
+ <strong>RSP tag:</strong><br>
+ <code>&lt;%@import file="incl/example.include.rsp"%&gt;</code>
+</p>
+<div class="HtmlCode"><%@import file="incl/example.import.rsp"%></div>
+
+<p>
+<small><a href="index.rsp">Back...</a></small>
+</p>
+
+<%@include file="../../src/simpleFooter.rsp"%>
+</body>
+</html>
+

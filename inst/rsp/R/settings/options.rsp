@@ -1,0 +1,133 @@
+<%@page contentType="text/html"%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+        "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<% domainPath="../.."; %>
+<% source("ROptions.R"); %>
+
+<%
+toEdit <- getParameter(request, "toEdit"); 
+action <- getParameter(request, "action"); 
+if (identical(action, "Save")) {
+  params <- request$parameters;
+  keys <- setdiff(names(params), "action");
+  # Update only valid keys
+  keys <- intersect(names(options()), keys);
+  params <- params[keys];
+  for (kk in seq(length=length(params))) { 
+    key <- names(params)[kk];
+    value <- params[[kk]]; 
+    oldValue <- getOption(key);
+    if (!is.null(oldValue))
+      storage.mode(value) <- storage.mode(oldValue);
+    args <- list(value); names(args) <- key;
+    oldValue <- do.call("options", args=args);%>
+  Updated option <strong><%=key%></strong>.<br>
+<%}%>
+<%
+}
+%>
+
+<%title="R/Settings/Options"%>
+
+<html>
+<%@include file="../../src/simpleHead.rsp"%>
+
+<body>
+<%@include file="../../src/simpleHeader.rsp"%>
+
+<h2>Options</h2>
+<form id="options">
+<% 
+
+opts <- options(); 
+for (kk in seq(length=length(opts))) { 
+  name <- names(opts)[kk];
+  value <- opts[[kk]];
+  valueStr <- value;
+  keys <- names(value); 
+  nvalue <- length(value);
+  mode <- storage.mode(value);
+  isVector <- is.vector(value) && (nvalue > 1);
+  isList <- isVector && is.list(value);
+  hasNames <- !is.null(names(value));
+  if (hasNames) {
+    # Quote names
+    names <- paste("\"", names(value), "\"", sep="");
+  }
+  size <- 20;
+  if (isVector) {
+    if (is.character(value)) {
+      # Quote values
+      valueStr <- paste("\"", valueStr, "\"", sep="");
+      if (hasNames)
+        valueStr <- paste(names, "=", valueStr, sep="");
+    }
+    valueStr <- paste(valueStr, collapse=", ");
+    if (isList) {
+      valueStr <- deparse(value, control=c("useSource"));
+    } else {
+      valueStr <- paste("c(", valueStr, ")", sep="");
+    }
+    valueStr <- gsub("\"", "&#34;", valueStr);
+    size <- 80;
+  }
+
+  dataTypes <- ROptions$getDataTypes(name);
+  isSimpleDataType <- (length(dataTypes) == 1);
+  type <- "text";
+%>
+
+<div style="width: 100%; <%=ifelse(kk == 1, "border-top: 1px solid;", "")%> border-bottom: 1px solid; padding-bottom: 0.5ex; background: <%=ifelse(kk %% 2 == 0, "#cccccc", "#ffffff")%>;">
+<% if (name %in% toEdit) { %>
+<strong><%=name%></strong><br>
+<% if (isSimpleDataType) { %>
+<% if (identical(dataTypes, "logical")) { %>
+  <input name="<%=name%>" type="checkbox" <%=ifelse(valueStr, "checked", "")%> value="TRUE">
+<% } else if (is.numeric(valueStr)) { %>
+<% size <- 10; %>
+  <input name="<%=name%>" type="text" size=<%=size%> value="<%=valueStr%>">
+<% } else if (is.character(valueStr)) { %>
+  <input name="<%=name%>" type="text" size=<%=size%> value="<%=valueStr%>">
+<% } else if (is.matrix(valueStr)) {
+    valueStr <- as.logical(valueStr);
+    type <- "logical"; %>
+<% for (ll in c(TRUE, FALSE)) { %>
+<input name="<%=name%>" type="radio" value="<%=ll%>"><%=ll%>
+<% } %>
+<select>
+<% for (opt in c(TRUE, FALSE)) { %>
+   <option <%=ifelse(valueStr == opt, "selected", "")%> value="<%=valueStr%>"><%=opt%></option>
+<% } %>
+</select>
+<% } else if (is.list(valueStr)) {
+    valueStr <- as.logical(valueStr);
+    type <- "logical"; %>
+<select>
+<% for (opt in c(TRUE, FALSE)) { %>
+   <option <%=ifelse(valueStr == opt, "selected", "")%> value="<%=valueStr%>"><%=opt%></option>
+<% } %>
+</select>
+<% } else { %>
+<input type="<%=type%>"><%=valueStr%></input>
+[<%=mode%><%=ifelse(isVector,"*","")%>]
+<% } %>
+<% } # if (isSimpleDataType) %>
+<input type="submit" name="action" value="Save">
+<input type="submit" name="action" value="Cancel">
+<% } else { %>
+<strong><%=name%></strong> (<a href="options.rsp?toEdit=<%=name%>">edit</a>)<br>
+<code><%=valueStr%></code>
+<% } # if (name %in% toEdit) %>
+<br>
+<em>
+<%=ROptions$getDescription(name)%>
+</em>
+</div>
+<% } %>
+</form>
+
+<%@include file="../../src/simpleFooter.rsp"%>
+</body>
+</html>

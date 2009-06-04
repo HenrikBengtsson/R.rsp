@@ -1,0 +1,161 @@
+Package: R.rsp
+==============
+
+Version: 0.3.5 [2009-02-23]
+o Added rsptex() to compiling a *.tex.rsp file into a *.dvi file
+  via *.tex.rsp -> *.tex.rsp.R -> *.tex -> *.dvi.
+o Added compileRsp(), which utilizes internal translateRsp() 
+  which in turn calls parseRsp().
+o Renamed old translateRsp() to translateRspV1(), which 
+  sourceRsp() is still utilizing.
+
+
+Version: 0.3.4 [2008-03-06]
+o BUG FIX: Regular expression pattern 'a-Z' is illegal on (at least) 
+  some locale, e.g. 'C' (where 'A-z' works). The only way to specify 
+  the ASCII alphabet is to list all characters explicitly, which we now
+  do in all methods of the package.  See the r-devel thread 
+  "invalid regular expression '[a-Z]'" on 2008-03-05 for details.
+
+
+Version: 0.3.3 [2007-06-10]
+o Updated code such that package pass R CMD check R v2.6.0.
+o BUG FIX: Removed obsolete code calling non-existing functions.
+
+
+Version: 0.3.2 [2007-04-07]
+o Replaced gsub pattern "\\\[\"\']" with "\\\\[\"\']" in
+  indexOfNonQuoted().
+o Replace regexpr pattern "^[ \]*=[ \]*" with "^[ \]*=[ \]*"
+  in translateRsp().
+
+
+Version: 0.3.1 [2007-01-07]
+o Added rspToHtml() in order to simplify RSP-to-HTML compilations.
+
+
+Version: 0.3.0 [2006-07-20]
+o Package has now been verified to compile not only HTML input files,
+  but also TeX files.  This make RSP a very power tool to write 
+  vignettes.  Added a simple package vignette.
+o Packages with an rsp/ path (installed from inst/rsp/) will now
+  be listed and linked to on the main RSP page.  This makes it very
+  easy to add RSP pages to a package.  For an example, see the
+  aroma.light package.
+o Added browseRsp() for the Package too, e.g. browseRsp(aroma.light).
+  Added help pages for these methods.
+o When calling browseRsp(start=TRUE), (the parents of) all library 
+  paths are now added to the root paths.
+o BUG FIX: translateRsp("\\\n") would convert to "\\n". Thanks 
+  Peter Dahlsgaard for the suggestion how to fix it using deparse().
+o BUG FIX: translateRsp() would replicate last R code or text piece,
+  for each RSP comment tag.
+
+
+Version: 0.2.9 [2006-07-05]
+o BUG FIX: If argument 'path' was NULL, translateRsp() gave an error.
+  Thanks Julien Gagneur for pointing this out.
+
+
+Version: 0.2.8 [2006-07-04]
+o Renamed class Response to RspResponse and RspResponse to 
+  FileRspResponse, cf. HttpDaemonRspResponse.
+o Now sourceRsp() creates an HttpRequest object internally, if not 
+  given.  Added an example to ?sourceRsp too.
+o Added a little bit more help text.
+
+
+Version: 0.2.7 [2006-06-13]
+o BUG FIX: Used obsolete setClassS3() instead of setConstructorS3().
+
+
+Version: 0.2.6 [2006-02-22]
+o Added getParameters() to HttpRequest for completeness.
+o The RSP page on "System Details" used functions only available
+  on Windows platforms.
+o BUG FIX: HttpDaemon$getHttpRequest() failed to retrieve 
+  parameters with empty values, e.g. "index.rsp?foo=&bar=2".
+
+
+Version: 0.2.5 [2006-01-21]
+o Added writeResponse() to HttpDaemon.  No other classes but
+  HttpDaemon should know about the Tcl HTTP daemon.
+o Improved the built-in RSP pages.
+o Mozilla browsers does unfortunately not follow file URLs (file://)
+  when clicking on links on a page that has been loaded via HTTP.
+  This makes it impossible (for now) to link to local R help pages 
+  via RSP pages (without passing everything through the HTTP daemon
+  that is). It works under Internet Explorer.
+o Added more help.
+
+
+Version: 0.2.4 [2006-01-11]
+o BUG FIX: translateRsp() would in some locales give the error:
+   simpleError in gsub(pattern, replacement, x, ignore.case, 
+   extended, fixed): 'replacement' is invalid in this locale
+  This was due to an incorrect internal MAGIC.STRING.
+  Thanks Julien Gagneur at EMBL/HTFG Center, Heidelberg for 
+  this bug fix.
+o Create better support for plugins on the main RSP page.
+o Updated example(HttpDaemon) so it actually runs and opens up
+  the main RSP page (when in interactive mode).
+o Added argument 'overwrite' to sourceAllRsp().
+o Added argument 'overwrite' to constructor of RspResponse.
+
+
+Version: 0.2.3 [2005-10-27]
+o Removed the generation of doc/ from rsp files. Now all such
+  documentation is supposed to viewed via the built in HTTP
+  daemon.  This might change if/when a root ServletRequest 
+  class is written.
+
+
+Version: 0.2.2 [2005-10-20]
+o Now root paths can be set before the server has started.
+o Updated the Tcl HTTP daemon so it can search multiple root 
+  directories for files to be processed.
+o BUG FIX: HttpDaemon$startHelp() tried to open the wrong page.
+o Update the RSP pages to include a common header with a navigator.
+  Changes the CSS style to use sans serif etc.
+
+
+Version: 0.2.1 [2005-10-15]
+o BUG FIX: The HttpDaemon sent the wrong MIME type for *.rsp pages. 
+  Now text/html as it should be.
+
+
+Version: 0.2.0 [2005-09-26]
+o Added a simple webserver (HTTP Daemon) requiring Tcl, which now
+  all R installation has.  The current version recognized and 
+  pre-process RSP files.  
+o BUG FIX: sourceRsp() is no longer using argument 'output', 
+  but 'response'.
+
+
+Version: 0.1.3 [2005-09-18]
+o The RSP template is now searching for a functional PNG device.
+o Made a few method protected (and hence hid their documentation), 
+  because they are not of public interest.
+o Added help to all methods.  R CMD check gives no warnings.
+
+
+Version: 0.1.2 [2005-08-15]
+o All output is first interpreted as a GString before being written.
+o Added support for page directive with attribute 'import'.
+o More robust search for '%>'; tries to make sure the ending tag
+  is not within a character string.
+
+
+Version: 0.1.1 [2005-08-02]
+o If an error occurs with an RSP file when running sourceAllRsp(),
+  it smoothly continues with the next file instead of interrupting.
+o Clean up and added help pages to all methods and classes.
+o Now the "User Guides and Package Vignettes" documentation is
+  build from RSP files when re-building man pages from Rdoc comments.
+
+
+Version: 0.1.0 [2005-07-26]
+o Created.  Since May 2005, there has been a trial version of an 
+  RSPEngine class in the R.io package, but from now on this package
+  should be used for RSP processing.  The RSPEngine class is made
+  deprecated.

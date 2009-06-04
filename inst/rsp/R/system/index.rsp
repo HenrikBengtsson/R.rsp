@@ -1,0 +1,27 @@
+<%@page contentType="text/html"%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+        "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<%title="R/System/"%>
+
+<% domainPath="../.."; %>
+
+<html>
+<%@include file="../../src/simpleHead.rsp"%>
+
+<body>
+<%@include file="../../src/simpleHeader.rsp"%>
+
+<h2>Table of Contents</h2>
+
+<ul>
+ <li><a href="systemDetails.rsp">System details</a></li>
+ <li><a href="environments">Current search path</a></li>
+ <li><a href="packages.rsp">Installed packages</a> (first time it may be slow)</li>
+ <li><a href="packageDetails.rsp">Package details form</a></li>
+</ul>
+
+<%@include file="../../src/simpleFooter.rsp"%>
+</body>
+</html>
