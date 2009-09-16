@@ -428,7 +428,7 @@ proc push { sock } {
   # Default response
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   if {![catch {open $mypath} in]} {
-    puts $sock "HTTP/1.x 200 Data follows"
+    puts $sock "HTTP/1.1 200 Data follows"
     puts $sock "Date: [fmtdate [file mtime $mypath]]"
     if {$dontcache} {
       puts $sock "Pragma: no-cache"
@@ -529,6 +529,9 @@ proc bgerror {msg} {
 
 ###############################################################################
 # HISTORY:
+# 2009-09-16
+# o Updated HTTP header from 'HTTP/1.x [...]' to 'HTTP/1.1 [...]'.  Thanks
+#   Ryan Bressler (Institute for Systems Biology, Seattle) for this.
 # 2005-11-30
 # o When processing RSP pages data must be sent directly to the daemons output
 #   socket.  This will allow for more immediate responses for slow pages. /HB
