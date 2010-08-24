@@ -24,7 +24,7 @@ if (!refresh && exists(".installedPackages", envir=.GlobalEnv)) {
   assign(".installedPackages", packages, envir=.GlobalEnv);
 }
 footnotes <- toupper(base::letters);
-packages <- cbind("#"=1:nrow(packages), packages);
+packages <- cbind("#"=seq(length=nrow(packages)), packages);
 packages[,"#"] <- paste("<a href=\"packageDetails.rsp?package=", packages[,"Package"], "\">", packages[,"#"], "</a>", sep="");
 packages[,"Package"] <- paste("<a href=\"packageDetails.rsp?package=", packages[,"Package"], "\">", packages[,"Package"], "</a>", sep="");
 libPaths <- unique(packages[,"LibPath"]);
@@ -32,8 +32,12 @@ packages[,"LibPath"] <- footnotes[match(packages[,"LibPath"], libPaths)];
 packages[,"LibPath"] <- paste("<a href=\"#LibPath", packages[,"LibPath"], "\">", packages[,"LibPath"], "</a>", sep="");
 # Reorder the columns
 cols <- colnames(packages);
+print(cols)
 lastCols <- c("Bundle", "Contains", "Priority", "Imports", "Built");
 cols <- c(setdiff(cols, lastCols), lastCols);
+# Drop non existing columns
+keep <- is.element(cols, colnames(packages));
+cols <- cols[keep];
 packages <- packages[,cols];
 %>
 
@@ -51,7 +55,7 @@ header <- paste(header, collapse="");
 header <- paste("<tr valign=\"top\">", header, "</tr>\n", sep="");
 %>
 <%=header%>
-<% for (kk in 1:nrow(packages)) { %>
+<% for (kk in seq(length=nrow(packages))) { %>
 <%
 package <- packages[kk,];
 bgColor <- ifelse(kk %% 2 == 0, "background: #cccccc; ", "");
