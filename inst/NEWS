@@ -1,13 +1,16 @@
 Package: R.rsp
 ==============
 
+Version: 0.4.0 [2010-09-15]
+o BUG FIX: browseRsp(path="/R/settings/options.rsp") and
+  browseRsp(path="/R/settings/par.rsp") was throwing "Error in
+  help("par", pager = stdoutPager): unused argument(s) 
+  (pager = stdoutPager)" in R >= 2.10.0.
+
+
 Version: 0.3.7 [2010-08-04]
 o BUG FIX: browseRsp(path="/R/system/packages.rsp") would throw
   "Error in eval(expr, envir, enclos): subscript out of bounds".
-o KNOWN ISSUES: browseRsp(path="/R/settings/options.rsp") and
-  browseRsp(path="/R/settings/par.rsp") still throw "Error in
-  help("par", pager = stdoutPager): unused argument(s) 
-  (pager = stdoutPager)" in R >= 2.10.0.
 
 
 Version: 0.3.6 [2009-09-16]

@@ -25,13 +25,6 @@ setMethodS3("setOption", "ROptions", function(this, ...) {
 
 
 setMethodS3("getDescription", "ROptions", function(this, option, default="", force=FALSE, ...) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Local functions
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  stdoutPager <- function(lines, ...) {
-    cat(readLines(lines), sep="\n");
-  }
-
   # Is option value cached?
   if (!force) {
     value <- ROptions$.descriptions[[option]];
@@ -42,7 +35,7 @@ setMethodS3("getDescription", "ROptions", function(this, option, default="", for
   # Search for option value in help(options)
   helpText <- this$.helpText;
   if (force || is.null(helpText)) {
-    helpText <- capture.output(help("options", pager=stdoutPager));
+    helpText <- readRdHelp("options");
     helpText <- trim(gsub("_\b", "", helpText));
     this$.helpText <- helpText;
   } else {

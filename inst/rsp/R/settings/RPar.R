@@ -27,13 +27,6 @@ setMethodS3("setOption", "RPar", function(this, par, ...) {
 
 
 setMethodS3("getDescription", "RPar", function(this, par, default="", force=FALSE, ...) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Local functions
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  stdoutPager <- function(lines, ...) {
-    cat(readLines(lines), sep="\n");
-  }
-
   # Is par value cached?
   if (!force) {
     value <- RPar$.descriptions[[par]];
@@ -44,7 +37,7 @@ setMethodS3("getDescription", "RPar", function(this, par, default="", force=FALS
   # Search for par value in help(par)
   helpText <- this$.helpText;
   if (force || is.null(helpText)) {
-    helpText <- capture.output(help("par", pager=stdoutPager));
+    helpText <- readRdHelp("par");
     helpText <- trim(gsub("_\b", "", helpText));
     this$.helpText <- helpText;
   } else {
