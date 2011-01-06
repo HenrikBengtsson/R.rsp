@@ -1,6 +1,12 @@
 Package: R.rsp
 ==============
 
+Version: 0.4.1 [2011-01-06]
+o DOCUMENTATION: Clarified in the help of HttpDaemon that it is only 
+  connections from the local host (127.0.0.1) that are accepted.
+  This lowers the risk for unauthorized access to the R session.
+
+
 Version: 0.4.0 [2010-09-15]
 o BUG FIX: browseRsp(path="/R/settings/options.rsp") and
   browseRsp(path="/R/settings/par.rsp") was throwing "Error in

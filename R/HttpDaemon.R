@@ -24,6 +24,14 @@
 #  mode, which means that the R prompt will be available for other things.
 #  This class is tightly coupled with the source code of the Tcl script.
 #
+#  For security reasons, the server only accept connections from the 
+#  local host (127.0.0.1).  This lowers the risk for external computers
+#  to gain access to the R session.
+#  This is asserted by the \code{accept_connect} Tcl procedure in
+#  r-httpd.tcl (located in \code{system("tcl/", package="R.rsp")}).
+#  If access from other hosts are wanted, then this procedure needs to 
+#  be modified.
+#
 #  The Tcl server was written by Steve Uhlers, and later adopted for R by
 #  Philippe Grosjean and Tom Short (Rpad package author) [1].
 # }
@@ -48,7 +56,7 @@ setConstructorS3("HttpDaemon", function(...) {
 
   # Check if another server is already running.
   if (this$count > 1) {
-    throw("ERROR: There is already an HttpDaemon running. Sorry, but the current implementation allows only one per R sesssion.");
+    throw("ERROR: There is already an HttpDaemon running. Sorry, but the current implementation allows only one per R session.");
   }
   
   this;
@@ -858,6 +866,10 @@ setMethodS3("writeResponse", "HttpDaemon", function(static, ...) {
 
 ###############################################################################
 # HISTORY:
+# 2011-01-06
+# o DOCUMENTATION: Clarified in the help of HttpDaemon that it is only 
+#   connections from the local host (127.0.0.1) that are accepted.
+#   This lowers the risk for unauthorized access to the R session.
 # 2007-06-10
 # o Now all methods of 'tcltk' are called explicitly with prefix 'tcltk::'.
 # 2006-07-10

@@ -66,7 +66,7 @@ extends \link[R.oo]{Object}\cr
 
 
  \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
  }
 
@@ -74,6 +74,14 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach
   The actual server is written in Tcl such that it runs in a non-blocking
   mode, which means that the R prompt will be available for other things.
   This class is tightly coupled with the source code of the Tcl script.
+
+  For security reasons, the server only accept connections from the
+  local host (127.0.0.1).  This lowers the risk for external computers
+  to gain access to the R session.
+  This is asserted by the \code{accept_connect} Tcl procedure in
+  r-httpd.tcl (located in \code{system("tcl/", package="R.rsp")}).
+  If access from other hosts are wanted, then this procedure needs to
+  be modified.
 
   The Tcl server was written by Steve Uhlers, and later adopted for R by
   Philippe Grosjean and Tom Short (Rpad package author) [1].

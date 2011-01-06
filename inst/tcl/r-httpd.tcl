@@ -117,6 +117,7 @@ proc server {roots { port 0 } { default "" } } {
 # Accept a new connection from the server and set up a handler
 # to read the request from the client.
 #
+# HB: Only connections from the local host (127.0.0.1) are accepted.
 # HB: This function is called whenever there is a new request on the socket.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 proc accept_connect {newsock ipaddr port} {

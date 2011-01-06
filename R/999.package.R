@@ -15,8 +15,7 @@
 # }
 #
 # \section{Installation}{
-#   To install this package, see \url{http://www.braju.com/R/}.
-#   Required packages are installed in the same way.
+#   To install this package, do \code{install.packages("R.rsp")}.
 # }
 #
 # \section{To get started}{
