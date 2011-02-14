@@ -29,6 +29,15 @@
   Returns the pathname to the generated document.
 }
 
+\section{Retrieving intermediate and final results}{
+  By default, the RSP document is processed in a local environment,
+  which is discarded afterward.  This can be avoided by explicitly
+  specifying the processing environment, e.g.
+  \code{env <- new.env(); rsptex(..., envir=env)}.
+  Afterward you can query its content by, say, \code{ll(envir=env)}
+  or attach its content by \code{attachLocally(env)}.
+}
+
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{

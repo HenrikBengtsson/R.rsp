@@ -1,6 +1,14 @@
 Package: R.rsp
 ==============
 
+Version: 0.4.2 [2011-02-13]
+o DOCUMENTATION: Added a section to help(rsptex) explaining in what 
+  environment the RSP document is evaluated and how to retrieve it 
+  and its content.
+o BUG FIX: parseRsp() would generate invalid R code/R comments for
+  multiline <%=...%> statements.
+
+
 Version: 0.4.1 [2011-01-06]
 o DOCUMENTATION: Clarified in the help of HttpDaemon that it is only 
   connections from the local host (127.0.0.1) that are accepted.

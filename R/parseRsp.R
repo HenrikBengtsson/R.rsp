@@ -270,7 +270,10 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
     if (type == "rsp") {
       rspTag <- paste("<%", part, "%>", sep="");
-      codeComment <- sprintf("# %s\n", rspTag);
+      codeComment <- unlist(strsplit(rspTag, split="\n", fixed=TRUE));
+      codeComment <- paste("# ", codeComment, sep="");
+      codeComment <- c(codeComment, "");
+      codeComment <- paste(codeComment, collapse="\n");
       rspCode <- trim(part);
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -494,6 +497,9 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
 ##############################################################################
 # HISTORY:
+# 2011-02-13
+# o BUG FIX: parseRsp() would generate invalid R code/R comments for
+#   multiline <%=...%> statements.
 # 2009-02-23
 # o Now parseRsp() does the validation of the R code.
 # o Renamed translateRsp() to parseRsp().

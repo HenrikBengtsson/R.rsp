@@ -20,6 +20,15 @@
 #   Returns the pathname to the generated document.
 # }
 #
+# \section{Retrieving intermediate and final results}{
+#   By default, the RSP document is processed in a local environment,
+#   which is discarded afterward.  This can be avoided by explicitly
+#   specifying the processing environment, e.g.
+#   \code{env <- new.env(); rsptex(..., envir=env)}.
+#   Afterward you can query its content by, say, \code{ll(envir=env)}
+#   or attach its content by \code{attachLocally(env)}.
+# }
+#
 # @author
 #
 # \seealso{
@@ -78,6 +87,9 @@ setMethodS3("rsptex", "default", function(..., pdf=FALSE, force=FALSE, verbose=F
 
 ############################################################################
 # HISTORY:
+# 2011-02-13
+# o Added a section to help(rsptex) explaining in what environment the
+#   RSP document is evaluated and how to retrieve it and its content.
 # 2009-02-23
 # o Created.
 ############################################################################
