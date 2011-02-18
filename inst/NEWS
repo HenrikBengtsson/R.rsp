@@ -1,7 +1,7 @@
 Package: R.rsp
 ==============
 
-Version: 0.4.2 [2011-02-13]
+Version: 0.4.2 [2011-02-14]
 o DOCUMENTATION: Added a section to help(rsptex) explaining in what 
   environment the RSP document is evaluated and how to retrieve it 
   and its content.
