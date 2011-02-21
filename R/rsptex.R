@@ -41,7 +41,7 @@
 # @keyword file
 # @keyword IO
 #*/########################################################################### 
-setMethodS3("rsptex", "default", function(..., pdf=FALSE, force=FALSE, verbose=FALSE) {
+setMethodS3("rsptex", "default", function(..., pdf=TRUE, force=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -89,6 +89,9 @@ setMethodS3("rsptex", "default", function(..., pdf=FALSE, force=FALSE, verbose=F
 
 ############################################################################
 # HISTORY:
+# 2011-02-20
+# o Now argument 'pdf' of rsptex() default to TRUE.
+# o Added an example(rsptex).
 # 2011-02-13
 # o Added a section to help(rsptex) explaining in what environment the
 #   RSP document is evaluated and how to retrieve it and its content.

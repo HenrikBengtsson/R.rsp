@@ -31,7 +31,7 @@ This article was itself written using LaTeX and RSP.
 In order to compile an LaTeX+RSP document named \code{report.tex.rsp} into a PDF, use the \code{rsptex()} function as follows:
 \begin{verbatim}
 library("R.rsp")
-rsptex("report.tex.rsp", pdf=TRUE)
+rsptex("report.tex.rsp")
 \end{verbatim}
 
 This will (i) translate the LaTeX RSP document into a valid R script (\code{report.tex.rsp.R}), (ii) run the R script resulting in a LaTeX document (\code{report.tex}), and (iii) compile the LaTeX document into a PDF (\code{report.pdf}).
@@ -40,7 +40,7 @@ You can try to compile this document by calling
 \begin{verbatim}
 library("R.rsp")
 path <- system.file("tex.rsp", package="R.rsp")
-rsptex("report.tex.rsp", path=path, pdf=TRUE)
+rsptex("report.tex.rsp", path=path)
 \end{verbatim}
 The PDF (\code{report.pdf}) will be available in the current directory of R (see \code{getwd()}).
 
