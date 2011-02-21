@@ -38,6 +38,14 @@
   or attach its content by \code{attachLocally(env)}.
 }
 
+\examples{
+library("R.rsp")
+path <- system.file("tex.rsp", package="R.rsp")
+rsptex("report.tex.rsp", path=path, pdf=TRUE)
+
+
+}
+
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{

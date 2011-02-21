@@ -39,7 +39,7 @@ This will (i) translate the LaTeX RSP document into a valid R script (\code{repo
 You can try to compile this document by calling
 \begin{verbatim}
 library("R.rsp")
-path <- system.file("latex", package="R.rsp")
+path <- system.file("tex.rsp", package="R.rsp")
 rsptex("report.tex.rsp", path=path, pdf=TRUE)
 \end{verbatim}
 The PDF (\code{report.pdf}) will be available in the current directory of R (see \code{getwd()}).

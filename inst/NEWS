@@ -2,6 +2,7 @@ Package: R.rsp
 ==============
 
 Version: 0.4.3 [2011-02-20]
+o DOCUMENTATION: Added example(rsptex).
 o DOCUMENTATION: First draft of a article on how to generate
   dynamic reports by extending LaTeX with RSP.
 

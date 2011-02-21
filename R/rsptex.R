@@ -29,6 +29,8 @@
 #   or attach its content by \code{attachLocally(env)}.
 # }
 #
+# @examples "../incl/rsptex.Rex"
+#
 # @author
 #
 # \seealso{
