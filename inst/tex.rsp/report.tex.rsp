@@ -47,7 +47,7 @@ The PDF (\code{report.pdf}) will be available in the current directory of R (see
 
 \section{The RSP markup language}
 
-\subsection{Evaluating R code}
+\subsection{\code{<\%\{R code\}\%>} - Evaluating R code}
 The RSP markup \code{<\%\{R code\}\%>} evaluates the R code (without inserting it into the document)..  For instance,
 \begin{verbatim}
 <\%:
@@ -58,7 +58,7 @@ b <- 2
 evaluates the code such that \code{a == 1} and \code{b == 2} afterward.
 
 
-\subsection{Evaluating and displaying code blocks}
+\subsection{\code{<\%:\{R code\}\%>} - Evaluating and displaying code blocks}
 Just as \code{<\%\{R code\}\%>}, the RSP markup \code{<\%:\{R code\}\%>} also evaluates core, but in addition it also inserts the code verbatim into the document.  For instance,
 \begin{verbatim}
 <\%:
@@ -74,6 +74,18 @@ b <- 2
 %>
 \end{verbatim}
 into the document.  Formatting of the inserted code has to be taken care of by LaTeX.  For instance, here we wrapped the RSP markup inside a \code{{\textbackslash}begin\{verbatim\} ... {\textbackslash}end\{verbatim\}} block.
+
+
+\subsection{\code{<\%=\{R code\}\%>} - Inlining values of R variables}
+The RSP markup \code{<\%=\{R code\}\%>} evaluates the R code (without inserting it into the document) and inserts the character representation of the returned R object.  For instance,
+\begin{verbatim}
+There are <\%=b%> elephants and 3 <\%="horses"%>
+\end{verbatim}
+would produce the string "There are 2 elephants and 3 horses", e.g.
+\begin{verbatim}
+> sourceRsp(text='There are <%=b%> elephants and 3 <%="horses"%>')
+There are 2 elephants and 3 horses
+\end{verbatim}
 
 
 \section{Generating and inserting figures}
