@@ -1,6 +1,15 @@
 Package: R.rsp
 ==============
 
+Version: 0.4.5 [2011-03-08]
+o Updated getParameter() of HttpRequest to returning the value of a
+  query parameters with multiple entries.  Added argument 'drop'.
+o BUG FIX: getHttpRequest() of HttpDaemon would drop all but the last
+  of replicated query parameters of the same name, which for instance
+  may occur if an HTML form with replicated checkboxes is used.
+  Thanks to Truc Trung at University of Bergen, Norway, for this report.
+
+
 Version: 0.4.4 [2011-03-08]
 o Now rsptex() trims white space of RSP blocks so that RSP-only blocks
   no longer introduces newlines (that previously had to be escaped).

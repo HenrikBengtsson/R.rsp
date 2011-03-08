@@ -193,11 +193,15 @@ setMethodS3("getParameters", "HttpRequest", function(this, ...) {
 # \arguments{
 #   \item{name}{Name of parameter to be retrieved.}
 #   \item{default}{Value to be returned if parameter is missing.}
+#   \item{drop}{If @TRUE and the number of returned values is one, then 
+#    this single value is returned, otherwise a named @vector.}
 #   \item{...}{Not used.}
 # }
 #
 # \value{
-#  Returns the value of the parameter, or the default value.
+#  Returns the value(s) of the parameter either as a single value or
+#  as a named @list.
+#  If the parameter does not exist, the default value is returned as is.
 # }
 #
 # @author
@@ -210,12 +214,20 @@ setMethodS3("getParameters", "HttpRequest", function(this, ...) {
 #
 # @keyword IO
 #*/#########################################################################
-setMethodS3("getParameter", "HttpRequest", function(this, name, default=NULL, ...) {
+setMethodS3("getParameter", "HttpRequest", function(this, name, default=NULL, drop=TRUE, ...) {
   if (hasParameter(this, name)) {
-    this$parameters[[name]];
+    params <- getParameters(this);
+    idxs <- which(names(params) == name);
+    params <- params[idxs];
+
+    if (drop && length(params) == 1) {
+      params <- params[[1]];
+    }
   } else {
-    default;
+    params <- default;
   }
+
+  params;
 })
 
 
@@ -253,7 +265,7 @@ setMethodS3("getParameter", "HttpRequest", function(this, name, default=NULL, ..
 #*/#########################################################################
 setMethodS3("hasParameter", "HttpRequest", function(this, name, ...) {
   name <- Arguments$getCharacter(name, nchar=c(1,256));
-  (name %in% names(this$parameters));
+  is.element(name, names(this$parameters));
 })
 
 
@@ -600,6 +612,9 @@ setMethodS3("getRealPath", "HttpRequest", function(this, uri, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2011-03-08
+# o Updated getParameter() of HttpRequest to returning the value of a
+#   query parameters with multiple entries.  Added argument 'drop'.
 # 2006-02-22
 # o Added getParameters() for completeness.
 # 2005-10-27

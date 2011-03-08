@@ -318,10 +318,13 @@ setMethodS3("getHttpRequest", "HttpDaemon", function(static, ...) {
         return(params);
   
       query <- strsplit(query, split="=", fixed=TRUE);
-      for (pair in query) {
+
+      for (kk in seq(along=query)) {
+        pair <- query[[kk]];
         name <- urlDecode(pair[1]);
         value <- urlDecode(pair[2]);
-        params[[name]] <- value;
+        params[[kk]] <- value;
+        names(params)[kk] <- name;
       }
     }
   
@@ -866,6 +869,10 @@ setMethodS3("writeResponse", "HttpDaemon", function(static, ...) {
 
 ###############################################################################
 # HISTORY:
+# 2011-03-08
+# o BUG FIX: getHttpRequest() for HttpDaemon would drop all but the last
+#   of replicated query parameters of the same name.  Thanks to Truc Trung
+#   at University of Bergen, Norway, for reporting on this.
 # 2011-01-06
 # o DOCUMENTATION: Clarified in the help of HttpDaemon that it is only 
 #   connections from the local host (127.0.0.1) that are accepted.

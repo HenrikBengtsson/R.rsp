@@ -19,16 +19,20 @@
  Gets a parameter.
 }
 
-\usage{\method{getParameter}{HttpRequest}(this, name, default=NULL, ...)}
+\usage{\method{getParameter}{HttpRequest}(this, name, default=NULL, drop=TRUE, ...)}
 
 \arguments{
   \item{name}{Name of parameter to be retrieved.}
   \item{default}{Value to be returned if parameter is missing.}
+  \item{drop}{If \code{\link[base:logical]{TRUE}} and the number of returned values is one, then
+   this single value is returned, otherwise a named \code{\link[base]{vector}}.}
   \item{...}{Not used.}
 }
 
 \value{
- Returns the value of the parameter, or the default value.
+ Returns the value(s) of the parameter either as a single value or
+ as a named \code{\link[base]{list}}.
+ If the parameter does not exist, the default value is returned as is.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
