@@ -19,6 +19,7 @@
 #               is different from this one, \code{path} is added
 #               to the beginning of \code{file} before the file is read.}
 #   \item{rspLanguage}{An @see "RspLanguage" object.}
+#   \item{trimRsp}{If @TRUE, white space is trimmed from RSP blocks.}
 #   \item{verbose}{Either a @logical, a @numeric, or a @see "R.utils::Verbose"
 #     object specifying how much verbose/debug information is written to
 #     standard output. If a Verbose object, how detailed the information is
@@ -43,11 +44,59 @@
 # @keyword file
 # @keyword IO
 #*/###########################################################################
-setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getParent(file), rspLanguage=getOption("rspLanguage"), verbose=FALSE, ...) {
+setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getParent(file), rspLanguage=getOption("rspLanguage"), trimRsp=FALSE, verbose=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  splitRspTags <- function(...) {
+  trimTextParts <- function(parts, ...) {
+    ## cat("TRIMMING...\n");
+    # Identify RSP-only lines by looking at the preceeding
+    # and succeeding text parts of each RSP part
+
+    # This code assumes that the first and the last part in 'parts'
+    # is always a "text" part.
+    stopifnot(names(parts)[1] == "text");
+    stopifnot(names(parts)[length(parts)] == "text");
+
+    # Identify all text parts
+    idxs <- which(names(parts) == "text");
+    partsT <- unlist(parts[idxs], use.names=FALSE);
+
+    # Find text parts that ends with a new line
+    endsWithNewline <- (regexpr("\n[ \t\v]*$", partsT[-length(partsT)]) != -1);
+    endsWithNewline <- which(endsWithNewline);
+
+    # Any candidates?
+    if (length(endsWithNewline) > 0) {
+      # Check the following text part
+      nextT <- endsWithNewline + 1L;
+      partsTT <- partsT[nextT];
+
+      # Among those, which starts with a new line?
+      startsWithNewline <- (regexpr("^[ \t\v]*\n", partsTT) != -1);
+      startsWithNewline <- nextT[startsWithNewline];
+
+      # Any remaining candidates?
+      if (length(startsWithNewline) > 0) {
+        # Trim matching text blocks
+        endsWithNewline <- startsWithNewline - 1L;
+
+        # Trim to the right (excluding new line because it belongs to text)
+        partsT[endsWithNewline] <- sub("[ \t\v]*$", "", partsT[endsWithNewline]);
+
+        # Trim to the left (including new line because it belongs to RSP)
+        partsT[startsWithNewline] <- sub("^[ \t\v]*\n", "", partsT[startsWithNewline]);
+
+        parts[idxs] <- partsT;
+      }
+    }
+    ## cat("TRIMMING...done\n");
+
+    parts;
+  } # trimTextParts()
+
+
+  splitRspTags <- function(..., trimRsp=FALSE) {
     bfr <- paste(..., collapse="\n", sep="");
   
     START <- 0;
@@ -80,6 +129,10 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
 
     # Add the rest of the buffer as text
     parts <- c(parts, list(text=bfr));
+
+    if (trimRsp) {
+      parts <- trimTextParts(parts);
+    }
   
     parts;
   } # splitRspTags()
@@ -262,10 +315,14 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
     # When does this happen? /HB 2006-07-04
   }
 
+  # Argument 'trimRsp'
+  trimRsp <- Arguments$getLogical(trimRsp);
+
+
   text <- paste(paste(text, collapse="\n"), "\n", sep="");
 
   # Split in non-RSP and RSP parts, e.g splitting by '<%...%>'.
-  parts <- splitRspTags(text);
+  parts <- splitRspTags(text, trimRsp=trimRsp);
   rm(text);
 
   error <- NULL;
@@ -518,6 +575,10 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
 
 ##############################################################################
 # HISTORY:
+# 2011-03-08
+# o Added argument 'trimRsp' to translateRspV1() for trimming white spaces
+#   surrounding RSP blocks that have preceeding and succeeding white space
+#   and that are followed by a newline.
 # 2009-02-23
 # o There is a new translateRsp(). The old version is keep for backward
 #   compatibility as translateRspV1().

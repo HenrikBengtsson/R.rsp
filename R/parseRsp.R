@@ -12,6 +12,7 @@
 # \arguments{
 #   \item{rspCode}{A @character @vector of RSP code to parsed.}
 #   \item{rspLanguage}{An @see "RspLanguage" object.}
+#   \item{trimRsp}{If @TRUE, white space is trimmed from RSP blocks.}
 #   \item{validate}{If @TRUE, the parsed RSP code is validated through the
 #     \R parser.}
 #   \item{verbose}{Either a @logical, a @numeric, or a @see "R.utils::Verbose"
@@ -38,11 +39,59 @@
 # @keyword file
 # @keyword IO
 #*/###########################################################################
-setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspLanguage"), validate=TRUE, verbose=FALSE, ...) {
+setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspLanguage"), trimRsp=TRUE, validate=TRUE, verbose=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  splitRspTags <- function(...) {
+  trimTextParts <- function(parts, ...) {
+    ## cat("TRIMMING...\n");
+    # Identify RSP-only lines by looking at the preceeding
+    # and succeeding text parts of each RSP part
+
+    # This code assumes that the first and the last part in 'parts'
+    # is always a "text" part.
+    stopifnot(names(parts)[1] == "text");
+    stopifnot(names(parts)[length(parts)] == "text");
+
+    # Identify all text parts
+    idxs <- which(names(parts) == "text");
+    partsT <- unlist(parts[idxs], use.names=FALSE);
+
+    # Find text parts that ends with a new line
+    endsWithNewline <- (regexpr("\n[ \t\v]*$", partsT[-length(partsT)]) != -1);
+    endsWithNewline <- which(endsWithNewline);
+
+    # Any candidates?
+    if (length(endsWithNewline) > 0) {
+      # Check the following text part
+      nextT <- endsWithNewline + 1L;
+      partsTT <- partsT[nextT];
+
+      # Among those, which starts with a new line?
+      startsWithNewline <- (regexpr("^[ \t\v]*\n", partsTT) != -1);
+      startsWithNewline <- nextT[startsWithNewline];
+
+      # Any remaining candidates?
+      if (length(startsWithNewline) > 0) {
+        # Trim matching text blocks
+        endsWithNewline <- startsWithNewline - 1L;
+
+        # Trim to the right (excluding new line because it belongs to text)
+        partsT[endsWithNewline] <- sub("[ \t\v]*$", "", partsT[endsWithNewline]);
+
+        # Trim to the left (including new line because it belongs to RSP)
+        partsT[startsWithNewline] <- sub("^[ \t\v]*\n", "", partsT[startsWithNewline]);
+
+        parts[idxs] <- partsT;
+      }
+    }
+    ## cat("TRIMMING...done\n");
+
+    parts;
+  } # trimTextParts()
+
+
+  splitRspTags <- function(..., trimRsp=FALSE) {
     bfr <- paste(..., collapse="\n", sep="");
   
     START <- 0;
@@ -75,6 +124,10 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
     # Add the rest of the buffer as text
     parts <- c(parts, list(text=bfr));
+  
+    if (trimRsp) {
+      parts <- trimTextParts(parts);
+    }
   
     parts;
   } # splitRspTags()
@@ -240,7 +293,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
   rspCode <- paste(rspCode, "\n", sep="");
 
   # Split in non-RSP and RSP parts, e.g splitting by '<%...%>'.
-  parts <- splitRspTags(rspCode);
+  parts <- splitRspTags(rspCode, trimRsp=trimRsp);
   rm(rspCode);
 
   error <- NULL;
@@ -497,6 +550,10 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
 ##############################################################################
 # HISTORY:
+# 2011-03-08
+# o Added argument 'trimRsp' to parseRsp() for trimming white space
+#   surrounding RSP blocks that have preceeding and succeeding white space
+#   and that are followed by a newline.
 # 2011-02-13
 # o BUG FIX: parseRsp() would generate invalid R code/R comments for
 #   multiline <%=...%> statements.

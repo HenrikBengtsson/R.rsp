@@ -1,6 +1,17 @@
 Package: R.rsp
 ==============
 
+Version: 0.4.4 [2011-03-08]
+o Now rsptex() trims white space of RSP blocks so that RSP-only blocks
+  no longer introduces newlines (that have to previously had to be escaped).
+o Added argument 'trimRsp' to parseRsp() for trimming white spaces
+  surrounding RSP blocks that have preceeding and succeeding white space
+  and that are followed by a newline.  Currently it defaults to FALSE,
+  but this may change in a future release.  The same was added to old
+  translateRspV1() for compatibility reasons.  Note, compileRsp() and
+  sourceRsp() will pass this argument down to these functions via '...'.
+
+
 Version: 0.4.3 [2011-02-20]
 o Now argument 'pdf' of rsptex() default to TRUE.
 o DOCUMENTATION: Added example(rsptex).

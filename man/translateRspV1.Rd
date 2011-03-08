@@ -16,7 +16,7 @@
  Translates an RSP file to an R servlet.
 }
 
-\usage{\method{translateRspV1}{default}(file="", text=NULL, path=getParent(file), rspLanguage=getOption("rspLanguage"), verbose=FALSE, ...)}
+\usage{\method{translateRspV1}{default}(file="", text=NULL, path=getParent(file), rspLanguage=getOption("rspLanguage"), trimRsp=FALSE, verbose=FALSE, ...)}
 
 \arguments{
   \item{file}{A filename, a URL, or a \code{\link[base:connections]{connection}} to be read.
@@ -28,6 +28,7 @@
               is different from this one, \code{path} is added
               to the beginning of \code{file} before the file is read.}
   \item{rspLanguage}{An \code{\link{RspLanguage}} object.}
+  \item{trimRsp}{If \code{\link[base:logical]{TRUE}}, white space is trimmed from RSP blocks.}
   \item{verbose}{Either a \code{\link[base]{logical}}, a \code{\link[base]{numeric}}, or a \code{\link[R.utils]{Verbose}}
     object specifying how much verbose/debug information is written to
     standard output. If a Verbose object, how detailed the information is

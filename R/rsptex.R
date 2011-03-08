@@ -55,7 +55,7 @@ setMethodS3("rsptex", "default", function(..., pdf=TRUE, force=FALSE, verbose=FA
 
   verbose && enter(verbose, "Compiling RSP LaTeX file");
 
-  pathname2 <- compileRsp(..., force=force, verbose=verbose);
+  pathname2 <- compileRsp(..., trimRsp=TRUE, force=force, verbose=verbose);
   verbose && cat(verbose, "LaTeX pathname: ", pathname2);
 
   ext <- ifelse(pdf, ".pdf", ".dvi");
@@ -89,6 +89,10 @@ setMethodS3("rsptex", "default", function(..., pdf=TRUE, force=FALSE, verbose=FA
 
 ############################################################################
 # HISTORY:
+# 2011-03-08
+# o Now rsptex() trims white space of RSP blocks so that RSP blocks will
+#   not add additional newlines.  This is done via the new 'trimRsp'
+#   argument of compileRsp() et al.
 # 2011-02-20
 # o Now argument 'pdf' of rsptex() default to TRUE.
 # o Added an example(rsptex).

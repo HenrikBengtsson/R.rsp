@@ -15,7 +15,7 @@
 
 
 \description{
-  An R Server Page (RSP) is a document that contains both text in a format of choice (HTML, TeX, ...) as well as R source code within special tags.  An RSP file can be translated into a so called R servlet, which is an R script that outputs the final document when sourced.  This way documents in any format can be generated dynamically using R, e.g. automatic reports of statistical analysis.  Utilizing an internal cross-platform web server, this package provides dynamic help pages in HTML.  If other packages provide RSP help pages, these are automatically linked to in the RSP main menu.
+  An R Server Page (RSP) is a document that contains both text in a format of choice (HTML, TeX, Rnw, ...) as well as R source code within special tags.  An RSP file can be translated into a so called R servlet, which is an R script that outputs the final document when sourced.  This way documents in any format can be generated dynamically using R, e.g. automatic reports of statistical analysis.  Utilizing an internal cross-platform web server, this package provides dynamic help pages in HTML.  If other packages provide RSP help pages, these are automatically linked to in the RSP main menu.
 
   For package history, see \code{showHistory(R.rsp)}.
 }

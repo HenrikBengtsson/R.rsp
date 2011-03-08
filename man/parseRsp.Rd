@@ -16,11 +16,12 @@
  Parse an RSP code string to an R RSP code string.
 }
 
-\usage{\method{parseRsp}{default}(rspCode, rspLanguage=getOption("rspLanguage"), validate=TRUE, verbose=FALSE, ...)}
+\usage{\method{parseRsp}{default}(rspCode, rspLanguage=getOption("rspLanguage"), trimRsp=TRUE, validate=TRUE, verbose=FALSE, ...)}
 
 \arguments{
   \item{rspCode}{A \code{\link[base]{character}} \code{\link[base]{vector}} of RSP code to parsed.}
   \item{rspLanguage}{An \code{\link{RspLanguage}} object.}
+  \item{trimRsp}{If \code{\link[base:logical]{TRUE}}, white space is trimmed from RSP blocks.}
   \item{validate}{If \code{\link[base:logical]{TRUE}}, the parsed RSP code is validated through the
     \R parser.}
   \item{verbose}{Either a \code{\link[base]{logical}}, a \code{\link[base]{numeric}}, or a \code{\link[R.utils]{Verbose}}
