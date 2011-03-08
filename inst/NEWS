@@ -3,7 +3,7 @@ Package: R.rsp
 
 Version: 0.4.4 [2011-03-08]
 o Now rsptex() trims white space of RSP blocks so that RSP-only blocks
-  no longer introduces newlines (that have to previously had to be escaped).
+  no longer introduces newlines (that previously had to be escaped).
 o Added argument 'trimRsp' to parseRsp() for trimming white spaces
   surrounding RSP blocks that have preceeding and succeeding white space
   and that are followed by a newline.  Currently it defaults to FALSE,
