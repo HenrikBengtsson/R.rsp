@@ -29,7 +29,9 @@
 #   or attach its content by \code{attachLocally(env)}.
 # }
 #
-# @examples "../incl/rsptex.Rex"
+# \examples{\dontrun{
+#   @include "../incl/rsptex.Rex"
+# }}
 #
 # @author
 #

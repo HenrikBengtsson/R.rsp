@@ -38,11 +38,12 @@
   or attach its content by \code{attachLocally(env)}.
 }
 
-\examples{
-library("R.rsp")
+\examples{\dontrun{
+  library("R.rsp")
 path <- system.file("tex.rsp", package="R.rsp")
 rsptex("report.tex.rsp", path=path)
-}
+
+}}
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
