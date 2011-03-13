@@ -58,7 +58,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
     partsT <- unlist(parts[idxs], use.names=FALSE);
 
     # Find text parts that ends with a new line
-    endsWithNewline <- (regexpr("\n[ \t\v]*$", partsT[-length(partsT)]) != -1);
+    endsWithNewline <- (regexpr("(\n|\r|\r\n)[ \t\v]*$", partsT[-length(partsT)]) != -1);
     endsWithNewline <- which(endsWithNewline);
 
     # Any candidates?
@@ -68,7 +68,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
       partsTT <- partsT[nextT];
 
       # Among those, which starts with a new line?
-      startsWithNewline <- (regexpr("^[ \t\v]*\n", partsTT) != -1);
+      startsWithNewline <- (regexpr("^[ \t\v]*(\n|\r|\r\n)", partsTT) != -1);
       startsWithNewline <- nextT[startsWithNewline];
 
       # Any remaining candidates?
@@ -80,7 +80,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         partsT[endsWithNewline] <- sub("[ \t\v]*$", "", partsT[endsWithNewline]);
 
         # Trim to the left (including new line because it belongs to RSP)
-        partsT[startsWithNewline] <- sub("^[ \t\v]*\n", "", partsT[startsWithNewline]);
+        partsT[startsWithNewline] <- sub("^[ \t\v]*(\n|\r|\r\n)", "", partsT[startsWithNewline]);
 
         parts[idxs] <- partsT;
       }
@@ -550,6 +550,8 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
 ##############################################################################
 # HISTORY:
+# 2011-03-12
+# o Now the trimming of RSP handles all newline types, i.e. LF, CR+LF, CR.
 # 2011-03-08
 # o Added argument 'trimRsp' to parseRsp() for trimming white space
 #   surrounding RSP blocks that have preceeding and succeeding white space

@@ -2,8 +2,9 @@ Package: R.rsp
 ==============
 
 Version: 0.4.6 [2011-03-12]
-o The new argument in 'trimRsp' introduced in v0.4.4 now defaults
-  to TRUE everywhere.
+o Now the trimming of RSP handles all newline types, i.e. LF, 
+  CR+LF, and CR.  The corresponding argument 'trimRsp' now 
+  defaults to TRUE everywhere.
 o BUG FIX: The main 'R Server Pages' page launched by browseRsp()
   would list package twice on a Windows system.
 o CLEANUP: Some minor R code cleanups.
