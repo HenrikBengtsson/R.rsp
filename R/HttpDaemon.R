@@ -168,10 +168,10 @@ setMethodS3("openUrl", "HttpDaemon", function(static, url=sprintf("http://%s:%d/
 
 
   # Start HTTP server, if not started.
-  if (!HttpDaemon$isStarted()) {
+  if (!isStarted(static)) {
     # Start the web server
     rootPath <- system.file("rsp", package="R.rsp")
-    HttpDaemon$start(rootPath=rootPath, port=port, default="index.rsp");
+    start(static, rootPath=rootPath, port=port, default="index.rsp");
   }
 
   if (!is.null(url))
@@ -869,6 +869,8 @@ setMethodS3("writeResponse", "HttpDaemon", function(static, ...) {
 
 ###############################################################################
 # HISTORY:
+# 2011-03-12
+# o CLEANUP: Replaced on HttpDaemon$<method>(...) with <method>(static, ...).
 # 2011-03-08
 # o BUG FIX: getHttpRequest() for HttpDaemon would drop all but the last
 #   of replicated query parameters of the same name.  Thanks to Truc Trung

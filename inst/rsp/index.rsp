@@ -51,10 +51,20 @@ names(paths) <- pkgs[,"Package"];
 paths <- paths[file.exists(paths)];
 paths <- paths[unlist(sapply(paths, FUN=isDirectory))];
 pkgs <- names(paths);
-# Order by package name
-o <- order(pkgs);
-pkgs <- pkgs[o];
-paths <- paths[o];
+
+if (length(paths) > 0) {
+  paths <- normalizePath(paths);
+
+  # Drop duplicates
+  keep <- !duplicated(paths);
+  paths <- paths[keep];
+  pkgs <- pkgs[keep];
+
+  # Order by package name
+  o <- order(pkgs);
+  pkgs <- pkgs[o];
+  paths <- paths[o];
+}
 %>
 
 <ol>

@@ -49,11 +49,15 @@ setMethodS3("browseRsp", "default", function(url=sprintf("http://%s:%d/%s", host
   # Argument 'stop':
   stop <- Arguments$getLogical(stop);
 
+
+  # Get the/a HTTP daemon
+  httpDaemon <- getStaticInstance(HttpDaemon);
+
   # Stop HTTP server?
   if (stop) {
-    if (HttpDaemon$isStarted())
-      HttpDaemon$stop();
-    return(!HttpDaemon$isStarted());
+    if (isStarted(httpDaemon))
+      stop(httpDaemon);
+    return(!isStarted(httpDaemon));
   }
 
   # Start HTTP server?
@@ -62,11 +66,11 @@ setMethodS3("browseRsp", "default", function(url=sprintf("http://%s:%d/%s", host
     paths <- dirname(.libPaths());
     # Add /library/R.rsp/rsp/ as a root path too.
     paths <- c(paths, system.file("rsp", package="R.rsp"));
-    HttpDaemon$appendRootPaths(paths);
+    appendRootPaths(httpDaemon, paths);
 
-    if (!HttpDaemon$isStarted()) {
+    if (!isStarted(httpDaemon)) {
       # Start the web server
-      HttpDaemon$start(port=port, default="index.rsp")
+      start(httpDaemon, port=port, default="index.rsp")
     }
   }
 
@@ -83,6 +87,9 @@ setMethodS3("browseRsp", "Package", function(this, ..., path=sprintf("library/%s
 
 ############################################################################
 # HISTORY:
+# 2011-03-12
+# o Replaced all references to static class HttpDaemon by a single one.
+#   This will make it easier to generalize the code in the future.
 # 2007-07-19
 # o Added Rdoc comments.
 # 2007-07-11
@@ -93,5 +100,3 @@ setMethodS3("browseRsp", "Package", function(this, ..., path=sprintf("library/%s
 # 2005-10-18
 # o Created.
 ############################################################################
-
-

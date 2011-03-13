@@ -16,7 +16,7 @@
  Translates an RSP file to an R servlet.
 }
 
-\usage{\method{translateRspV1}{default}(file="", text=NULL, path=getParent(file), rspLanguage=getOption("rspLanguage"), trimRsp=FALSE, verbose=FALSE, ...)}
+\usage{\method{translateRspV1}{default}(file="", text=NULL, path=getParent(file), rspLanguage=getOption("rspLanguage"), trimRsp=TRUE, verbose=FALSE, ...)}
 
 \arguments{
   \item{file}{A filename, a URL, or a \code{\link[base:connections]{connection}} to be read.

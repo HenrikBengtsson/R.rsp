@@ -28,8 +28,11 @@
 # @keyword IO
 #*/######################################################################### 
 setMethodS3("processRsp", "HttpDaemon", function(static, ...) {
-  if (missing(static))
+  # If processRsp() was called from Tcl, then it is called without
+  # arguments, which is why we need this rather ad hoc solution here.
+  if (missing(static)) {
     static <- getStaticInstance(HttpDaemon);
+  }
 
   # Get the request information
   request <- getHttpRequest(static);
@@ -50,7 +53,7 @@ setMethodS3("processRsp", "HttpDaemon", function(static, ...) {
     if (!isFile(pathname))
       stop("File not found: ", pathname);
 
-    HttpDaemon$pwd <- opwd;
+    static$pwd <- opwd;
     setwd(path);
 
     tryCatch({
@@ -77,6 +80,8 @@ setMethodS3("processRsp", "HttpDaemon", function(static, ...) {
 
 ###############################################################################
 # HISTORY:
+# 2011-03-12
+# o CLEANUP: Replaced on HttpDaemon$<method>(...) with <method>(static, ...).
 # 2007-06-10
 # o Now all methods of 'tcltk' are called explicitly with prefix 'tcltk::'.
 # 2006-01-21
