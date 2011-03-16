@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.4.7 [2011-03-14]
+o Additional updates on the 'Dynamic LaTeX reports with RSP' vignette.
+
+
 Version: 0.4.6 [2011-03-12]
 o Now the trimming of RSP handles all newline types, i.e. LF, 
   CR+LF, and CR.  The corresponding argument 'trimRsp' now 
