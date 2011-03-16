@@ -28,6 +28,9 @@ This article was itself written using LaTeX and RSP.
 
 
 
+<%-------------------------------------------------------------------
+  INTRODUCTION
+  -------------------------------------------------------------------%>
 \section{Compiling LaTeX documents with RSP markup}
 Before anything else, load the \pkg{R.rsp} package by \code{library("R.rsp")}.  Then, in order to compile an LaTeX document with RSP markup (a "LaTeX RSP document") named \code{report.tex.rsp} into a PDF, do:
 \begin{verbatim}
@@ -44,6 +47,10 @@ rsptex("report.tex.rsp", path=path)
 The PDF (\code{report.pdf}) will be available in the current directory of R (see \code{getwd()}).
 
 
+
+<%-------------------------------------------------------------------
+  THE RSP MARKUP LANGUAGE
+  -------------------------------------------------------------------%>
 \section{The RSP markup language}
 
 \subsection{\code{<\%\{R code\}\%>} - Evaluating R code}
@@ -84,6 +91,13 @@ would produce the string "There are <%=n%> red <%=type%>s".
 
 
 
+\subsection{\code{<\%--\{any thing\}--\%>} - Comments}
+The RSP markup \code{<\%--\{any thing\}--\%>} will be treated as a comment, which will not be translated, i.e. it will immediately be dropped.  RSP comments are useful for excluding large sections of an RSP document.  It is also for adding comments that are independent of the syntax (here LaTeX) of the document itself.
+
+
+<%-------------------------------------------------------------------
+  FIGURES
+  -------------------------------------------------------------------%>
 \section{Generating and inserting figures}
 Since the above RSP markups are powerful enough, there is no need for a specific markup for figures.  This section shows how to create and embed image files into a LaTeX document.
 
@@ -153,6 +167,9 @@ After the RSP code has been processed, and the image file has been created, the 
 
 
 
+<%-------------------------------------------------------------------
+  ADDITIONAL FEATURES
+  -------------------------------------------------------------------%>
 \section{Iterating over a mixture of R and LaTeX blocks}
 A useful feature of RSP is that it is possible to construct R expressions that span multiple R and LaTeX blocks.  For instance, the following will iterate over multiple R and LaTeX blocks:
 \begin{verbatim}
@@ -163,7 +180,7 @@ The <\%=n <- length(letters)%> letters in the English alphabet are:
 \end{verbatim}
 which generates: 'The <%=n <- length(letters)%> letters in the English alphabet are: 
 <% for (i in 1:n) { %>
-  <%=letters[i]%>/<%=LETTERS[i]%><%=if(i < n) ", "%>%
+  <%=letters[i]%>/<%=LETTERS[i]%><%=if(i < n) ", "%>
 <% } %>.'
 
 A more complex example is where one wish to generate a report on human genomic data across all of the 24 chromosomes and where the same type of analysis should be repeated for each chromosome.  With RSP markup, this can be achieved by an outer loop over chromosomes:
@@ -179,5 +196,5 @@ the analysis of the current chromosome.
 
 Note that there exist no corresponding markup in Sweave.  Instead, contrary to RSP, Sweave requires the each code chunk contains a complete R expression.  This means that, in terms of the above example, in Sweave it is not possible to begin a for loop in one code chunk and end it in a succeeding one.  This has to do with the fundamentally different way RSP and Sweave documents are processed.
 
-\end{document}
 
+\end{document}

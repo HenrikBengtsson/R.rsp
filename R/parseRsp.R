@@ -568,7 +568,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 # o BUG FIX: An RSP comment tag would also replicate last text or R code.
 # 2006-07-17
 # o BUG FIX: translateRsp("\\\n") would convert to "\\n".  Update internal
-#   escapeRspText().  Thanks Peter Dahlsgaard for the suggestions.
+#   escapeRspText().  Thanks Peter Dalgaard for the suggestions.
 # 2006-07-05
 # o BUG FIX: If argument 'path' was NULL, translateRsp() gave an error.
 # 2006-07-04
