@@ -1,8 +1,10 @@
 Package: R.rsp
 ==============
 
-Version: 0.4.7 [2011-03-14]
+Version: 0.4.7 [2011-03-16]
 o Additional updates on the 'Dynamic LaTeX reports with RSP' vignette.
+o BUG FIX: write() for RspResponse classes would ignore arguments
+  'collapse' and 'sep'.
 
 
 Version: 0.4.6 [2011-03-12]

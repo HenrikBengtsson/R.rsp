@@ -494,6 +494,43 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # RSP Scripting Elements and Variables
       #
+      # <%:: [expressions] %>  - Output the code and evaluate it
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      pattern <- "^::(.*)";
+      if (regexpr(pattern, part) != -1) {
+        expressions <- gsub(pattern, "\\1", part);
+        expressions <- trim(expressions);
+        expressions <- paste(expressions, "\n", sep="");
+
+        flavor <- c("echo", "chunk")[2];
+        if (flavor == "echo") {
+          expressions <- strsplit(expressions, split="\n", fixed=TRUE);
+          expressions <- unlist(expressions);
+          code <- sprintf("write(response, evalWithEcho({%s}, capture=TRUE), collapse='\\n');\n", expressions);
+        }
+
+        if (flavor == "chunk") {
+          # Sanity check (this code chunk needs to be complete!)
+          tryCatch({
+            parse(text=expressions);
+          }, error = function(ex) {
+            throw(ex);
+          });
+          expressions <- paste(expressions, collapse="");
+          # FIXME: The following does not handled "nested" code
+          # inside strings, e.g. cat("cat('cat(\''hello\\')')").
+          # /HB 2011-03-16
+          expressions <- gsub("'", "\\'", expressions, fixed=TRUE);
+          code <- sprintf("write(response, sourceWithTrim('%s', echo=TRUE), collapse='\\n');\n", expressions);
+        }
+        rCode <- c(rCode, code);
+
+        next;
+      }
+
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # RSP Scripting Elements and Variables
+      #
       # <%: [expressions] %>  - Output the code and evaluate it
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       pattern <- "^:(.*)";
@@ -550,6 +587,8 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
 ##############################################################################
 # HISTORY:
+# 2011-03-15
+# o Added RSP markup <%;{R code}%> for evaluating and echoing code.
 # 2011-03-12
 # o Now the trimming of RSP handles all newline types, i.e. LF, CR+LF, CR.
 # 2011-03-08

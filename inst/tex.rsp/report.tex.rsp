@@ -82,6 +82,55 @@ type <- "horse"
 Formatting of the inserted code has to be taken care of by LaTeX.  For instance, here we have explicitly wrapped the RSP markup inside a \code{{\textbackslash}begin\{verbatim\}...{\textbackslash}end\{verbatim\}} block.
 
 
+\clearpage
+\subsection{\code{<\%::\{R code\}\%>} - Evaluating, embedding and echoing code}
+\begin{verbatim}
+<\%=evalWithEcho({
+n <- 3;
+type <- "horse"
+type
+}, capture=TRUE)%>
+\end{verbatim}
+
+\begin{verbatim}
+<%=evalWithEcho({
+n <- 3
+type <- "horse"
+type
+}, capture=TRUE)%>
+\end{verbatim}
+
+Shortcut:
+
+\begin{verbatim}
+<\%::
+n <- 50
+x <- seq(1, n)
+a.true <- 3
+b.true <- 1.5
+y.true <- a.true + b.true * x
+s.true <- 17.3
+y <- y.true + s.true * rnorm(n)
+out1 <- lm(y ~ x)
+summary(out1)
+%>
+\end{verbatim}
+evaluates the code and insert the following into the LaTeX document:
+\begin{verbatim}
+<%::
+n <- 50
+x <- seq(1, n)
+a.true <- 3
+b.true <- 1.5
+y.true <- a.true + b.true * x
+s.true <- 17.3
+y <- y.true + s.true * rnorm(n)
+out1 <- lm(y ~ x)
+summary(out1)
+%>
+\end{verbatim}
+
+
 \subsection{\code{<\%=\{R code\}\%>} - Inlining values of R variables}
 The RSP markup \code{<\%=\{R code\}\%>} evaluates the R code (without inserting it into the document) and inserts the character representation\footnote{The \emph{character representation} of an R object \code{x} is what \code{as.character(x)} gives.} of the returned R object.  For instance,
 \begin{verbatim}

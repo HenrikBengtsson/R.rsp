@@ -105,7 +105,7 @@ setMethodS3("getOutput", "FileRspResponse", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("write", "FileRspResponse", function(this, ..., collapse="", sep="") {
-  msg <- paste(..., collapse="", sep="");  
+  msg <- paste(..., collapse=collapse, sep=sep);  
   msg <- as.character(GString(msg));
   out <- getOutput(this);
   cat(file=out, append=TRUE, msg);

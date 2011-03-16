@@ -92,7 +92,7 @@ setConstructorS3("HttpDaemonRspResponse", function(httpDaemon=NULL, ...) {
 # @keyword IO
 #*/######################################################################### 
 setMethodS3("write", "HttpDaemonRspResponse", function(this, ..., collapse="", sep="") {
-  msg <- paste(..., collapse="", sep="");  
+  msg <- paste(..., collapse=collapse, sep=sep);  
   msg <- as.character(GString(msg));
   this$.bfr <- c(this$.bfr, msg);
 })
@@ -149,6 +149,9 @@ setMethodS3("flush", "HttpDaemonRspResponse", function(con, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2011-03-15
+# o BUG FIX: write() for RspResponse classes would ignore arguments
+#   'collapse' and 'sep'.
 # 2006-07-04
 # o Renamed from HttpDaemonResponse to HttpDaemonRspResponse.
 # 2006-01-21
