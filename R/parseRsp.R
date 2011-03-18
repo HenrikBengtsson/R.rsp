@@ -345,6 +345,19 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # RSP Scripting Elements and Variables
       #
+      # <%# [comment] %>  [MAY BE AMBIGOUS! /HB 2011-03-16]
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+##       pattern <- "^#(.*)$";
+##       if (regexpr(pattern, part) != -1) {
+##         # <%# [comment] %>  => # [comment]
+##         comment <- gsub(pattern, "\\1", part);
+##         rCode <- c(rCode, comment);
+##         next;
+##       }
+
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # RSP Scripting Elements and Variables
+      #
       # <%=[expression]%>
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       pattern <- "^=(.*)$";

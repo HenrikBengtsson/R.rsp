@@ -165,12 +165,10 @@ The \code{devEval()} function of the \pkg{R.utils} package is useful for creatin
 To spare ourselves from having to repeat the same arguments each time an image is created, we define the following custom function for creating PNG image files with a certain default dimension (840 by 840 since the default aspect ratio is 1) and default graphical parameters (see \code{help("par")}):
 \begin{verbatim}
 <%:
-toPNG <- function(..., width=840, par=list()) {
- # Default graphical parameters
- parD <- list(cex=2, lwd=2);
-
- # Create a PNG file and return its fullname
- devEval(type="png", width=width, ..., par=c(parD, par), force=TRUE)$fullname;
+# Use greater objects by default
+setOption("devNew/args/par", list(cex=2, lwd=2));
+toPNG <- function(name, ..., width=840) {
+ devEval(type="png", width=width, name=name, ..., force=TRUE)$fullname;
 }
 %>
 \end{verbatim}
