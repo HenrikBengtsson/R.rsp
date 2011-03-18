@@ -165,17 +165,12 @@ The \code{devEval()} function of the \pkg{R.utils} package is useful for creatin
 To spare ourselves from having to repeat the same arguments each time an image is created, we define the following custom function for creating PNG image files with a certain default dimension (840 by 840 since the default aspect ratio is 1) and default graphical parameters (see \code{help("par")}):
 \begin{verbatim}
 <%:
-asPNG <- function(..., width=840, par=list()) {
+toPNG <- function(..., width=840, par=list()) {
  # Default graphical parameters
- parT <- list(cex=2, lwd=2);
-
- # Override default values by user specified settings
- for (key in names(par)) {
-   parT[[key]] <- par[[key]];
- }
+ parD <- list(cex=2, lwd=2);
 
  # Create a PNG file and return its fullname
- devEval(type="png", width=width, ..., par=parT, force=TRUE)$fullname;
+ devEval(type="png", width=width, ..., par=c(parD, par), force=TRUE)$fullname;
 }
 %>
 \end{verbatim}
@@ -184,7 +179,7 @@ This function creates a PNG file based on a set of plot commands and returns the
 
 \textsc{Example:}  The following R code creates a PNG image file 'figures/MyFigure,yeah,cool.png' and returns \code{"MyFigure,yeah,cool"}:
 \begin{verbatim}
-asPNG("MyFigure,yeah,cool", {
+toPNG("MyFigure,yeah,cool", {
   curve(dnorm, from=-5, to=+5);
 })
 \end{verbatim}
@@ -194,7 +189,7 @@ asPNG("MyFigure,yeah,cool", {
 \begin{figure}[htp]
  \begin{center}
  \resizebox{0.70\textwidth}{!}{%
-  \includegraphics{<%=asPNG("MyFigure,yeah,cool", width=840, {
+  \includegraphics{<%=toPNG("MyFigure,yeah,cool", width=840, {
    curve(dnorm, from=-5, to=+5);
   })%>}
  }%
@@ -205,7 +200,7 @@ asPNG("MyFigure,yeah,cool", {
 
 With this setup, it is possible to create and embed a figure with the following tidy markup:
 \begin{verbatim}
-\includegraphics{<\%=asPNG(name="MyFigure,yeah,cool", width=840, {
+\includegraphics{<\%=toPNG(name="MyFigure,yeah,cool", width=840, {
   curve(dnorm, from=-5, to=+5);
 })%>}
 \end{verbatim}
