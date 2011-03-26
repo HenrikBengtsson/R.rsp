@@ -13,10 +13,10 @@
 \alias{getConfig,HttpDaemon-method}
 
 
-\title{Retrieves the servers 'config' structure from Tcl}
+\title{Retrieves the server's 'config' structure from Tcl}
 
 \description{
- Retrieves the servers 'config' structure from Tcl.
+ Retrieves the server's 'config' structure from Tcl.
 }
 
 \synopsis{getConfig.HttpDaemon(static, ...)}

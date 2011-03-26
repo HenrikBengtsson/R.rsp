@@ -220,7 +220,7 @@ setMethodS3("startHelp", "HttpDaemon", function(static, ...) {
 #########################################################################/**
 # @RdocMethod getConfig
 #
-# @title "Retrieves the servers 'config' structure from Tcl"
+# @title "Retrieves the server's 'config' structure from Tcl"
 #
 # \description{
 #  @get "title".

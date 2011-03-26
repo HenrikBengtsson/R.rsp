@@ -98,6 +98,9 @@
 \alias{dvips}
 \alias{ps2pdf}
 \alias{rspCapture}
+\alias{evalWithEcho}
+\alias{sourceWithTrim}
+\alias{sourceWithTrim.default}
 
 \description{
 This page contains aliases for all "non-documented" objects that
