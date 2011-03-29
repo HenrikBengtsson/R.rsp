@@ -3,6 +3,11 @@
 \usepackage{xspace} 
 \graphicspath{{figures/}}
 
+\addtolength{\oddsidemargin}{-0.5in}	
+\addtolength{\evensidemargin}{-0.5in}	
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-0.5in}	
+\addtolength{\textheight}{1in}
 
 \newcommand{\keywords}[1]{\footnotesize{\textbf{Keywords: }#1}\xspace}
 \newcommand{\pkg}[1]{\textsl{#1}\xspace}
@@ -278,5 +283,15 @@ produces:
 <% } # for (ii ...) %>
 \end{itemize}
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Session information
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\section*{Session information}
+<%=toLatex(sessionInfo())%>
+This report was automatically generated using \code{rsptex()} of the R.rsp package.
+\end{document}
 
 \end{document}
