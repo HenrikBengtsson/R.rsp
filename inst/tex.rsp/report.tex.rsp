@@ -27,6 +27,10 @@ This article was itself written using LaTeX and RSP.
 \keywords{reproducible research, report generator, markup language, LaTeX}
 
 
+\clearpage
+\tableofcontents
+
+\clearpage
 
 <%-------------------------------------------------------------------
   INTRODUCTION
@@ -237,6 +241,42 @@ the analysis of the current chromosome.
 \end{verbatim}
 
 Note that there exist no corresponding markup in Sweave.  Instead, contrary to RSP, Sweave requires the each code chunk contains a complete R expression.  This means that, in terms of the above example, in Sweave it is not possible to begin a for loop in one code chunk and end it in a succeeding one.  This has to do with the fundamentally different way RSP and Sweave documents are processed.
+
+
+\section{Templates - Reusing RSP and R blocks}
+Sometimes the very similar paragraphs of text, tables, or figures are used throughout a document with only minor differences.  Instead of cut'n'pasting the same pieces of RSP and R code to other places in the document, it is more robust and much easier to setup a template which is then reused in place.
+Because of the nature of RSP, setting up a template is as simple as wrapping the mixture of RSP and R code blocks in a function definition.  For example, assume you wish to reuse the following RSP and R blocks multiple times:
+\begin{verbatim}
+The sum of $x=<\%=paste(1:n, collapse=", ")%>$ is <\%=sum(1:n)%>.
+\end{verbatim}
+Then place it in a function definition:
+\begin{verbatim}
+<\% myTemplate <- function(n, ...) { %>
+The sum of $x=<\%=paste(1:n, collapse=", ")%>$ is <\%=sum(1:n)%>.%
+<\% } # myTemplate() %>
+\end{verbatim}
+<% myTemplate <- function(n, ...) { %>
+The sum of $x=<%=paste(1:n, collapse=", ")%>$ is <%=sum(1:n)%>.%
+<% } # myTemplate() %>
+We use a trailing LaTeX comment (\code{\%}) in order to escape the newline that otherwise would be appended.  Also, note that there is no limitation in how many RSP and R blocks you can use.  After having defined the template, it can be reused any number of times by simply by calling it as a function:
+\begin{verbatim}
+<\% myTemplate(n=3) %>
+\end{verbatim}
+which produces '<% myTemplate(n=3) %>'.  If one drop the trailing LaTeX comment (\code{\%}), LaTeX would insert a white space after the period and before the closing single-quote.
+A template can also be used within for loops.  For example:
+\begin{verbatim}
+\begin{itemize}
+<\% for (ii in 1:5) { %>
+ \item <\% myTemplate(n=ii) %>
+<\% } # for (ii ...) %>
+\end{itemize}
+\end{verbatim}
+produces:
+\begin{itemize}
+<% for (ii in 1:5) { %>
+ \item <% myTemplate(ii) %>
+<% } # for (ii ...) %>
+\end{itemize}
 
 
 \end{document}
