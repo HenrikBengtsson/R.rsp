@@ -160,6 +160,34 @@ would produce the string 'There are <%=n%> red <%=type%>s'.
 The RSP markup \code{<\%--\{any thing\}--\%>} will be treated as a comment, which will not be translated, i.e. it will immediately be dropped.  RSP comments are useful for excluding large sections of an RSP document.  It is also for adding comments that are independent of the syntax (here LaTeX) of the document itself.
 
 
+\subsection{Iterating over a mixture of code and LaTeX blocks}
+A useful feature of RSP is that it is possible to use RSP constructs that span multiple code and LaTeX blocks.  For instance, the following will iterate over a set of LaTeX and code blocks:
+\begin{rspVerbatim}
+The <\%=n <- length(letters)%> letters in the English alphabet are: 
+<\% for (i in 1:n) \{ %>
+  <\%=letters[i]%>/<\%=LETTERS[i]%><\%=if(i < n) ", "%>%
+<\% \} %>.
+\end{rspVerbatim}
+which generates: 'The <%=n <- length(letters)%> letters in the English alphabet are: 
+<% for (i in 1:n) { %>
+  <%=letters[i]%>/<%=LETTERS[i]%><%=if(i < n) ", "%>
+<% } %>.'
+
+A more complex example is where one wish to generate a report on human genomic data across all of the 24 chromosomes and where the same type of analysis should be repeated for each chromosome.  With RSP markup, this can be achieved by an outer loop over chromosomes:
+\begin{rspVerbatim}
+<\% for (chromosome in 1:24) \{ %>
+{\bs}section\{Chromosome <\%=chromosome%>\}
+...
+A mix of RSP and LaTeX blocks constituting 
+the analysis of the current chromosome.
+...
+<\% \} # for (chromosome ...) %>
+\end{rspVerbatim}
+
+Note that there exist no corresponding markup in Sweave.  Instead, contrary to RSP, Sweave requires the each code chunk contains a complete R expression.  This means that, in terms of the above example, in Sweave it is not possible to begin a for loop in one code chunk and end it in a succeeding one.  This has to do with the fundamentally different way RSP and Sweave documents are processed.
+
+
+
 <%-------------------------------------------------------------------
   FIGURES
   -------------------------------------------------------------------%>
@@ -228,32 +256,6 @@ After the RSP code has been processed, and the image file has been created, the 
 <%-------------------------------------------------------------------
   ADDITIONAL FEATURES
   -------------------------------------------------------------------%>
-\section{Iterating over a mixture of code and LaTeX blocks}
-A useful feature of RSP is that it is possible to construct R expressions that span multiple R and LaTeX blocks.  For instance, the following will iterate over multiple R and LaTeX blocks:
-\begin{rspVerbatim}
-The <\%=n <- length(letters)%> letters in the English alphabet are: 
-<\% for (i in 1:n) \{ %>
-  <\%=letters[i]%>/<\%=LETTERS[i]%><\%=if(i < n) ", "%>%
-<\% \} %>.
-\end{rspVerbatim}
-which generates: 'The <%=n <- length(letters)%> letters in the English alphabet are: 
-<% for (i in 1:n) { %>
-  <%=letters[i]%>/<%=LETTERS[i]%><%=if(i < n) ", "%>
-<% } %>.'
-
-A more complex example is where one wish to generate a report on human genomic data across all of the 24 chromosomes and where the same type of analysis should be repeated for each chromosome.  With RSP markup, this can be achieved by an outer loop over chromosomes:
-\begin{rspVerbatim}
-<\% for (chromosome in 1:24) \{ %>
-{\bs}section\{Chromosome <\%=chromosome%>\}
-...
-A mix of RSP and LaTeX blocks constituting 
-the analysis of the current chromosome.
-...
-<\% \} # for (chromosome ...) %>
-\end{rspVerbatim}
-
-Note that there exist no corresponding markup in Sweave.  Instead, contrary to RSP, Sweave requires the each code chunk contains a complete R expression.  This means that, in terms of the above example, in Sweave it is not possible to begin a for loop in one code chunk and end it in a succeeding one.  This has to do with the fundamentally different way RSP and Sweave documents are processed.
-
 
 \section{Templates - Reusing LaTeX and RSP blocks}
 Sometimes the very similar paragraphs of text, tables, or figures are used throughout a document with only minor differences.  Instead of cut'n'pasting the same pieces of RSP and R code to other places in the document, it is more robust and much easier to setup a template which is then reused in place.
