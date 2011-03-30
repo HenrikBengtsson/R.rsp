@@ -100,17 +100,22 @@ Formatting of the inserted code has to be taken care of by LaTeX.  For instance,
 
 \clearpage
 \subsection{Evaluating, embedding and echoing code (\code{<\%=\{R code\}\%>})}
+The \code{evalWithEcho()} function allows us to evaluate, embed and echo the output of a code chunk.  For example:
 \begin{rspVerbatim}
 <\%=evalWithEcho(\{
 n <- 3;
+n         # TO FIX: Does not work
+print(n)  # TO FIX: Does not work
 type <- "horse"
 type
 \}, capture=TRUE)%>
 \end{rspVerbatim}
-
+produces
 \begin{verbatim}
 <%=evalWithEcho({
-n <- 3
+n <- 3;
+n         # TO FIX: Does not work
+print(n)  # TO FIX: Does not work
 type <- "horse"
 type
 }, capture=TRUE)%>

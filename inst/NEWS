@@ -3,6 +3,7 @@ Package: R.rsp
 
 Version: 0.4.7 [2011-03-28]
 o Additional updates on the 'Dynamic LaTeX reports with RSP' vignette.
+o BUG FIX: evalWithEcho() would only add the prompt to the first line.
 o BUG FIX: write() for RspResponse classes would ignore arguments
   'collapse' and 'sep'.
 

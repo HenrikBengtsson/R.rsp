@@ -5,7 +5,8 @@ evalWithEcho <- function(expr, envir=parent.frame(), ..., trim=TRUE, prompt=getO
     code <- code[-c(1, length(code))];
     code <- gsub("^    ", "", code);
   }
-  prefix <- c(prompt, rep(continue, length=length(code)-1));
+##  prefix <- c(prompt, rep(continue, times=length(code)-1));
+  prefix <- rep(prompt, times=length(code));
   code <- paste(prefix, code, sep="");
   code <- paste(code, collapse="\n");
   res <- withVisible(expr);
@@ -35,6 +36,8 @@ evalWithEcho <- function(expr, envir=parent.frame(), ..., trim=TRUE, prompt=getO
 
 ##############################################################################
 # HISTORY:
+# 2011-03-28
+# o BUG FIX: evalWithEcho() would only add the prompt to the first line.
 # 2011-03-15
 # o Added evalWithEcho().
 # o Created.
