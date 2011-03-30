@@ -164,8 +164,28 @@ would produce the string 'There are <%=n%> red <%=type%>s'.
 
 
 
-\subsection{Comments (\code{<\%--\{any thing\}--\%>})}
-The RSP markup \code{<\%--\{any thing\}--\%>} will be treated as a comment, which will not be translated, i.e. it will immediately be dropped.  RSP comments are useful for excluding large sections of an RSP document.  It is also for adding comments that are independent of the syntax (here LaTeX) of the document itself.
+\subsection{Comments (\code{<\%--\{anything\}--\%>})}
+The RSP markup \code{<\%--\{anything\}--\%>} will be treated as a comment that can contain \emph{anything} (but \code{--\%>}), which will not be translated and not part of the output, i.e. it will immediately be dropped.  RSP comments are useful for excluding large sections of an RSP document.  
+Note that RSP comments are \emph{greedy}, that is, anything between (and including) the \code{<\%--} and the \emph{first} the \code{--\%>} will be dropped, which means that they cannot be nested.
+\begin{rspVerbatim}
+<\%-- This is an RSP comment that will be dropped --\%>
+You can write a paragraph and drop a large portion of it using 
+RSP comments, <\%-- All the below will be dropped
+There are <\%=n\%> red <\%=type\%>s
+<\%-- and this --\%> but they must not be nested --\%>, because then
+the output will be like this.
+\end{rspVerbatim}
+
+which produces:
+\begin{verbatim}
+<%-- This is an RSP comment that will be dropped --%>
+You can write a paragraph and drop a large portion of it using 
+RSP comments, <%-- All the below will be dropped
+There are <%=n%> red <%=type%>s
+<%-- and this --%> but they must not be nested --%>, because then
+the output will be like this.
+\end{verbatim}
+
 
 
 \subsection{Iterating over a mixture of code and LaTeX blocks}

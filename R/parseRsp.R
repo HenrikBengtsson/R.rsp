@@ -90,6 +90,13 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
     parts;
   } # trimTextParts()
 
+  dropRspComments <- function(rspCode, trimRsp=FALSE, ...) {
+    pattern <- "<%--.*?--%>";
+    if (trimRsp) {
+      pattern <- sprintf("%s(|[ \t\v]*(\n|\r|\r\n))", pattern);
+    }
+    gsub(pattern, "", rspCode, ...);
+  } # dropRspComments()
 
   splitRspTags <- function(..., trimRsp=FALSE) {
     bfr <- paste(..., collapse="\n", sep="");
@@ -292,6 +299,12 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
   rspCode <- paste(rspCode, collapse="\n");
   rspCode <- paste(rspCode, "\n", sep="");
 
+  # Drop RSP comments
+  # [1] Example Depot, Greedy and Nongreedy Matching in a Regular 
+  #     Expression, 2009.
+  #     http://www.exampledepot.com/egs/java.util.regex/Greedy.html
+  rspCode <- dropRspComments(rspCode, trimRsp=trimRsp);
+
   # Split in non-RSP and RSP parts, e.g splitting by '<%...%>'.
   parts <- splitRspTags(rspCode, trimRsp=trimRsp);
   rm(rspCode);
@@ -333,6 +346,8 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
       # RSP Scripting Elements and Variables
       #
       # <%--[comment]--%>
+      #
+      # NOTE: With dropRspComments() above, this will never occur here.
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       pattern <- "^--(.*)--$";
       if (regexpr(pattern, part) != -1) {
@@ -600,6 +615,9 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
 ##############################################################################
 # HISTORY:
+# 2011-03-30
+# o Now parseRsp() drops RSP comments, i.e. '<%-- {anything} --%>'.
+# o Added internal dropRspComments() for dropping '<%-- {anything} --%>'.
 # 2011-03-15
 # o Added RSP markup <%;{R code}%> for evaluating and echoing code.
 # 2011-03-12

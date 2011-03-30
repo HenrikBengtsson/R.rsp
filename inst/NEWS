@@ -2,6 +2,7 @@ Package: R.rsp
 ==============
 
 Version: 0.4.8 [2011-03-30]
+o Now parseRsp() drops RSP comments, i.e. '<%-- {anything} --%>'.
 o Rewrote evalWithEcho() so that it utilizes source(..., echo=TRUE).
 o DOCUMENTATION: Now the RSP documentation is automatically
   generated when the package is built.
