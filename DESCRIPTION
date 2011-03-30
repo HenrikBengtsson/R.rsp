@@ -1,10 +1,10 @@
 Package: R.rsp
-Version: 0.4.7
-Date: 2011-03-28
+Version: 0.4.8
+Date: 2011-03-30
 Title: R Server Pages
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
-Depends: R (>= 2.5.0), R.oo (>= 1.7.5), R.utils (>= 1.7.2)
+Depends: R (>= 2.5.0), R.oo (>= 1.7.5), R.utils (>= 1.7.3)
 Suggests: tcltk
 Description: An R Server Page (RSP) is a document that contains both text in a format of choice (HTML, TeX, Rnw, ...) as well as R source code within special tags.  An RSP file can be translated into a so called R servlet, which is an R script that outputs the final document when sourced.  This way documents in any format can be generated dynamically using R, e.g. automatic reports of statistical analysis.  Utilizing an internal cross-platform web server, this package provides dynamic help pages in HTML.  If other packages provide RSP help pages, these are automatically linked to in the RSP main menu.
 License: LGPL (>= 2.1)

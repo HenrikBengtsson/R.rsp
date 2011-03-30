@@ -44,7 +44,7 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[R.rsp:appendRootPaths.HttpDaemon]{appendRootPaths}} \tab Appends and inserts new paths to the list of known root directories.\cr
  \tab \code{\link[R.rsp:as.character.HttpDaemon]{as.character}} \tab Returns a short string describing the HTTP daemon.\cr
  \tab \code{finalize} \tab  -\cr
- \tab \code{\link[R.rsp:getConfig.HttpDaemon]{getConfig}} \tab Retrieves the servers 'config' structure from Tcl.\cr
+ \tab \code{\link[R.rsp:getConfig.HttpDaemon]{getConfig}} \tab Retrieves the server's 'config' structure from Tcl.\cr
  \tab \code{getCount} \tab  -\cr
  \tab \code{\link[R.rsp:getDefaultFilename.HttpDaemon]{getDefaultFilename}} \tab Gets the default filename to be loaded by the HTTP daemon.\cr
  \tab \code{\link[R.rsp:getHttpRequest.HttpDaemon]{getHttpRequest}} \tab Gets the HTTP request.\cr

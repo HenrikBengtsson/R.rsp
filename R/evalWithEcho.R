@@ -1,33 +1,27 @@
-evalWithEcho <- function(expr, envir=parent.frame(), ..., trim=TRUE, prompt=getOption("prompt"), continue=getOption("continue"), capture=FALSE) {
+evalWithEcho <- function(expr, ..., envir=parent.frame(), trim=TRUE, collapse="\n") {
+  # Get code/expression without evaluating it
   expr2 <- substitute(expr);
-  code <- deparse(expr2);
-  if (trim && length(code) > 1) {
+  code <- capture.output(print(expr2));
+
+  # Trim of surrounding { ... }
+  if (code[1] == "{") {
     code <- code[-c(1, length(code))];
-    code <- gsub("^    ", "", code);
   }
-##  prefix <- c(prompt, rep(continue, times=length(code)-1));
-  prefix <- rep(prompt, times=length(code));
-  code <- paste(prefix, code, sep="");
-  code <- paste(code, collapse="\n");
-  res <- withVisible(expr);
-  value <- res$value;
-  isVisible <- res$visible;
-##print(isVisible);
-  if (capture) {
-    code <- paste(code, "\n", sep="");
-    if (isVisible) {
-      bfr <- capture.output({
-        print(value);
-        cat("\n");
-      });
-      bfr <- paste(bfr, collapse="\n");
-      code <- paste(code, bfr, sep="");
-    }
-    res <- code;
-  } else {
-    cat(code, "\n", sep="");
-    if (isVisible) print(value);
-    res <- value;
+
+  # Evaluate the code via source()
+  con <- textConnection(code, open="r");
+  res <- capture.output({
+    sourceTo(file=con, echo=TRUE, ..., envir=envir);
+  });
+
+  # Drop empty lines
+  if (trim) {
+    res <- res[nchar(res) > 0];
+  }
+
+  if (!is.null(collapse)) {
+    res <- c(res, "");
+    res <- paste(res, collapse=collapse);
   }
 
   invisible(res);
@@ -37,6 +31,7 @@ evalWithEcho <- function(expr, envir=parent.frame(), ..., trim=TRUE, prompt=getO
 ##############################################################################
 # HISTORY:
 # 2011-03-28
+# o Rewrote evalWithEcho() so that it utilizes source(..., echo=TRUE).
 # o BUG FIX: evalWithEcho() would only add the prompt to the first line.
 # 2011-03-15
 # o Added evalWithEcho().
