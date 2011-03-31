@@ -123,6 +123,11 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
         part <- list(rsp=substring(bfr, first=1, last=pos-1));
         bfr <- substring(bfr, first=pos+2);
+##        # Trim trailing white space from RSP tag, if there is
+##        # nothing else on the rest of the line?
+##        if (trimRsp) {
+##          bfr <- sub("^[ \t\v]*(\n|\r|\r\n)", "", bfr);
+##        }
         state <- START;
       }
 
