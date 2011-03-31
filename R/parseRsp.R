@@ -304,18 +304,33 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
   rspCode <- paste(rspCode, collapse="\n");
   rspCode <- paste(rspCode, "\n", sep="");
 
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # (a) Preprocess RSP code
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Drop RSP comments
   # [1] Example Depot, Greedy and Nongreedy Matching in a Regular 
   #     Expression, 2009.
   #     http://www.exampledepot.com/egs/java.util.regex/Greedy.html
   rspCode <- dropRspComments(rspCode, trimRsp=trimRsp);
 
+  # Preprocessing RSP directives should go here, e.g. @include.
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # (b) Parse RSP code
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Split in non-RSP and RSP parts, e.g splitting by '<%...%>'.
   parts <- splitRspTags(rspCode, trimRsp=trimRsp);
   rm(rspCode);
 
-  error <- NULL;
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # (c) Translate RSP code (to R code)
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  error <- NULL;
   rCode <- NULL;
 
   types <- names(parts);
@@ -592,8 +607,9 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
   rCode <- paste(rCode, collapse="", sep="");
 
 
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate R code (by parsing R code)
+  # (d) Validate R code (via parsing)
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (validate) {
     # Parse the R RSP code so that error messages contains line numbers.

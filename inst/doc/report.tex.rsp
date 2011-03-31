@@ -90,7 +90,7 @@ n <- 3
 type <- "horse"
 %>
 \end{rspVerbatim}
-evaulates the code and insert the following into the LaTeX document:
+evaluates the code and insert the following into the LaTeX document:
 \begin{verbatim}
 <%:
 n <- 3
@@ -122,7 +122,6 @@ type <- "horse"
 type
 })%>
 \end{verbatim}
-
 Note that code is parsed and formatted by the R parser, meaning that indentation, spacing and so on are \emph{not} preserved when echoing this way.  This is also why comments, semicolons and other code constructs are dropped from the code.
 
 
@@ -277,7 +276,7 @@ The sum of $x=<\%=hpaste(1:n, abbreviate="{\bs}{\bs}ldots")\%>$ is <\%=sum(1:n)\
 \end{rspVerbatim}
 <% myTemplate <- function(n, ...) { %>
 The sum of $x=<%=hpaste(1:n, abbreviate="\\ldots")%>$ is <%=sum(1:n)%>.<%----%>
-<% } # myTemplate() %>
+<% } # myTemplate() %><%-- TO FIX: Should not be needed! /HB 2011-03-31 --%>
 We use a trailing (empty) RSP comment (\code{<\%----\%>}) to escape the following newline.  Also, note that there is no limitation in how many RSP and text blocks you can use.  After having defined the template, it can be reused any number of times by simply by calling it as a function:
 \begin{rspVerbatim}
 <\% myTemplate(n=3) \%>
