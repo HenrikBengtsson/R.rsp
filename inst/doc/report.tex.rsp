@@ -312,6 +312,7 @@ the output will be like this.
 Moreover, RSP comments are special in the sense that if the remainder of the line following the comment consists of only whitespace symbols, then they are also dropped, including the newline.  Thus, an \code{<\%----\%>} at the end of a line will prevent a newline from being inserted.
 
 
+<%--
 
 \subsection{Inserting files (\code{<\%@insert file="\{pathname\}"\%>})}
 The \emph{insert} directive can be used to insert the content of a file into the main RSP-embedded document \emph{just as if the content was pasted manually}.
@@ -352,6 +353,7 @@ inserts the content of all *.R files that are available in the R/ directory.\foo
 
 Finally, it is important to understand that the paths used for inserting these files are all relative to the current working directory of R \emph{at the time of the preprocessing}\footnote{The current working directory as seen by the RSP preprocessor \emph{cannot} be modified via a \code{<\%setwd(newPath)\%>} construct, because that is only evaluated after the preprocessing step.}.
 
+<%----%>
 
 
 
