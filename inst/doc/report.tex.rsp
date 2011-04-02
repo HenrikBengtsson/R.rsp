@@ -284,12 +284,14 @@ produces:
   -------------------------------------------------------------------%>
 \section{Preprocessing directives}
 When an RSP-embedded document processed, it is first \emph{preprocessed} before it is \emph{translated} into an R script.  During this step it is possible to 
-modify the document by removing parts of it and inserting new pieces to it.  For instance, by using the RSP hidden comments, multiple lines of the document can be silently dropped, and by using the so called RSP 'insert' directive content of other files can be pasted into the document.
+modify the document by removing parts of it and inserting new pieces to it.  For instance, by using the RSP hidden comments, multiple lines of the document can be silently dropped.
+
+<%--, and by using the so called RSP 'insert' directive content of other files can be pasted into the document.
+--%>
 
 
 \subsection{Hidden comments (\code{<\%--\{anything\}--\%>})}
 The RSP markup \code{<\%--\{anything\}--\%>} will be treated as a comment that can contain \emph{anything} (but \code{--\%>}), which will not be translated and not part of the output, i.e. it will immediately be dropped.  RSP comments are useful for excluding large sections of an RSP document.  It is useful to understand that RSP comments are \emph{greedy}, that is, anything between (and including) the \code{<\%--} and the \emph{first} following \code{--\%>} will be dropped, which means that they cannot be nested.
-
 For example,
 \begin{rspVerbatim}
 <\%-- This is an RSP comment that will be dropped --\%>
@@ -299,7 +301,7 @@ There are <\%=n\%> red <\%=type\%>s
 <\%-- and this --\%> but they must not be nested --\%>, because then
 the output will be like this.
 \end{rspVerbatim}
-produces:
+produces
 \begin{verbatim}
 <%-- This is an RSP comment that will be dropped --%>
 You can write a paragraph and drop a large portion of it using 
@@ -309,7 +311,7 @@ There are <%=n%> red <%=type%>s
 the output will be like this.
 \end{verbatim}
 
-Moreover, RSP comments are special in the sense that if the remainder of the line following the comment consists of only whitespace symbols, then they are also dropped, including the newline.  Thus, an \code{<\%----\%>} at the end of a line will prevent a newline from being inserted.
+Moreover, RSP comments are special in the sense that if (and only if) the remainder of the line following the comment consists of only whitespace symbols, then they are also dropped, including the newline.  Thus, an \code{<\%----\%>} at the end of a line will prevent a newline from being inserted.
 
 
 <%--
