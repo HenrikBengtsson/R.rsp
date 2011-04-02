@@ -253,7 +253,7 @@ The sum of $x=<\%=hpaste(1:n, abbreviate="{\bs}{\bs}ldots")\%>$ is <\%=sum(1:n)\
 <% myTemplate <- function(n, ...) { %>
 The sum of $x=<%=hpaste(1:n, abbreviate="\\ldots")%>$ is <%=sum(1:n)%>.<%----%>
 <% } # myTemplate() %><%-- TO FIX: Should not be needed! /HB 2011-03-31 --%>
-We use a trailing (empty) RSP comment (\code{<\%----\%>}) to escape the following newline.  Also, note that there is no limitation in how many RSP and text blocks you can use.  After having defined the template, it can be reused any number of times by simply by calling it as a function:
+We use a trailing (empty) RSP comment (\code{<\%----\%>}) to escape the following newline.  Also, note that there is no limitation in how many RSP and text blocks you can use.  After having defined the template, it can be reused any number of times by simply calling it as a function:
 \begin{rspVerbatim}
 <\% myTemplate(n=3) \%>
 \end{rspVerbatim}
