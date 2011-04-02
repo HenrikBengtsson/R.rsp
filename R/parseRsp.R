@@ -90,6 +90,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
     parts;
   } # trimTextParts()
 
+
   dropRspComments <- function(rspCode, trimRsp=FALSE, ...) {
     pattern <- "<%--.*?--%>";
     if (trimRsp) {
@@ -97,6 +98,88 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
     }
     gsub(pattern, "", rspCode, ...);
   } # dropRspComments()
+
+
+
+  processRspInserts <- function(rspCode, ...) {
+    rspPattern <- "<%@[ ]*([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*)[ ]+(.*?)%>";
+
+    bfr <- rspCode;
+    rspCode <- c();
+    while (nchar(bfr) > 0) {
+      pos <- regexpr(rspPattern, bfr);
+      if (pos == -1) {
+        break;
+      }
+
+      len <- attr(pos, "match.length");
+      head <- substring(bfr, first=1, last=pos-1L);
+      rspCode <- c(rspCode, head);
+
+      part <- substring(bfr, first=pos, last=pos+len-1L);
+      bfr <- substring(bfr, first=pos+len);
+
+
+      # <%@foo attr1="bar" attr2="geek"%> => ...
+      directive <- gsub(rspPattern, "\\1", part);
+#      printf("directive: %s\n", directive);
+
+      attrs <- gsub(rspPattern, "\\2", part);
+#      printf("attrs: %s\n", attrs);
+
+      if (directive == "insert") {
+        attrList <- parseAttributes(attrs, known=NULL);
+#        str(attrList);
+
+        path <- attrList$path;
+        path <- Arguments$getReadablePath(path, mustExist=TRUE);
+
+        file <- attrList$file;
+        pattern <- attrList$pattern;
+        if (!is.null(file) && !is.null(pattern)) {
+          throw(sprintf("Incorrect RSP directive <%%@insert ...%%>: Only one of attributes 'file' and 'pattern' may be given: <%%@%s %s%%>", directive, attrs));
+        }
+
+#str(pattern);
+#str(file);
+        pathnames <- NULL;
+        if (!is.null(pattern)) {
+          if (is.null(path))
+            path <- ".";
+          pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE);
+          # Guarantee lexicographic ordering
+          pathnames <- sort(pathname);
+        } else if (!is.null(file)) {
+          pathname <- Arguments$getReadablePathname(file, path=path, mustExist=TRUE);
+#          printf("Pathname: %s\n", pathname);
+          pathnames <- pathname;
+        } else {
+          throw(sprintf("Incomplete RSP directive <%%@insert ...%%>: Either attribute 'file' or 'pattern' must be given: <%%@%s %s%%>", directive, attrs));
+        }
+
+        part <- NULL;
+        for (pathname in pathnames) {
+          bfrT <- readLines(pathname);
+##          bfrT <- gsub("\\", "\\\\", bfrT, fixed=TRUE);
+          bfrT <- paste(bfrT, collapse="\n");
+          part <- c(part, bfrT);
+        }
+
+        collapse <- attrList$collapse;
+        if (is.null(collapse)) collapse <- "\n";
+        part <- paste(part, collapse=collapse);
+      } # if (directive == ...)
+
+      rspCode <- c(rspCode, part);
+    } # while(...)
+
+    rspCode <- c(rspCode, bfr);
+    rspCode <- paste(rspCode, collapse="");
+
+    rspCode;
+  } # processRspInserts()
+
+
 
   splitRspTags <- function(..., trimRsp=FALSE) {
     bfr <- paste(..., collapse="\n", sep="");
@@ -309,13 +392,19 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # (a) Preprocess RSP code
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Drop RSP comments
-  # [1] Example Depot, Greedy and Nongreedy Matching in a Regular 
-  #     Expression, 2009.
-  #     http://www.exampledepot.com/egs/java.util.regex/Greedy.html
-  rspCode <- dropRspComments(rspCode, trimRsp=trimRsp);
+  lastRspCode <- "";
+  while (rspCode != lastRspCode) {
+    lastRspCode <- rspCode;
 
-  # Preprocessing RSP directives should go here, e.g. @include.
+    # Drop RSP comments
+    # [1] Example Depot, Greedy and Nongreedy Matching in a Regular 
+    #     Expression, 2009.
+    #     http://www.exampledepot.com/egs/java.util.regex/Greedy.html
+    rspCode <- dropRspComments(rspCode, trimRsp=trimRsp);
+  
+    # Preprocessing RSP directives should go here, e.g. @insert.
+    rspCode <- processRspInserts(rspCode);
+  } # while (...)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -636,6 +725,11 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
 ##############################################################################
 # HISTORY:
+# 2011-04-01
+# o Added support for <%insert path="<path>" pattern="<pattern>"%>.
+# o Added support for <%insert file="<filename>" path="<path>"%>.
+# o Added support for <%insert file="<pathname>"%>.
+# o Added internal processRspInserts().
 # 2011-03-30
 # o Now parseRsp() drops RSP comments, i.e. '<%-- {anything} --%>'.
 # o Added internal dropRspComments() for dropping '<%-- {anything} --%>'.

@@ -26,12 +26,12 @@
 
 \maketitle
 \begin{abstract}
-An important part of a statistical analysis is to document the results.  A common approach is to build up an R script as the the analysis progresses.  This script may generate image files and tables that are later inserted manually into a, say, LaTeX report.  This strategy works alright for small one-off analyzes, whereas for larger and partly repetitive analyzes an automatic report generator is more suitable.
+An important part of a statistical analysis is to document the analysis and its results.  A common approach is to build up an R script as the the analysis progresses.  This script may generate image files and tables that are later inserted manually into a, say, LaTeX report.  This strategy works alright for small one-off analyzes, whereas for larger and partly repetitive analyzes an automatic report generator is more suitable.
 
-In this article, we will illustrate how a LaTeX document can be extended with the RSP markup language resulting in a very powerful tool for generating dynamic reports in R.  
+In this document we will illustrate how a LaTeX document can be extended with the RSP markup language resulting in a very powerful tool for generating dynamic reports in R.  
 As we will discover, with RSP it is possible to generate document constructs that are not possible in Sweave, e.g. looping of a mix of R and LaTeX blocks.
-The strategy of using RSP is not limited to LaTeX, but can easily be used in combination of other text-based documentation language such as HTML, and plain text.
-This article was itself written using LaTeX and RSP.
+Because RSP is a so called \emph{context-indepent} markup language, RSP can be used to produce documents of any text-based format, e.g. plain text, HTML, XML, SVG, as well as Javascript, R, and Sweave.
+This document was produced using RSP-embedded LaTeX.
 \end{abstract}
 
 \keywords{reproducible research, report generator, markup language, LaTeX}
@@ -138,30 +138,6 @@ The letters of the alphabet are '<\%=LETTERS\%>'
 produces 'The letters the alphabet are '<%=LETTERS%>'.
 To separate the elements with commas, use \code{<\%=paste(LETTERS, collapse=", ")\%>}.  Alternatively, use \code{<\%=hpaste(LETTERS)\%>} to output '<%=hpaste(LETTERS)%>'\footnote{The \code{hpaste()} function of \pkg{R.utils} provides "human-readable" pasting of vectors.}.
 
-\subsection{Comments (\code{<\%--\{anything\}--\%>})}
-The RSP markup \code{<\%--\{anything\}--\%>} will be treated as a comment that can contain \emph{anything} (but \code{--\%>}), which will not be translated and not part of the output, i.e. it will immediately be dropped.  RSP comments are useful for excluding large sections of an RSP document, but also for preventing newlines to be inserted.
-
-First, the RSP comments are \emph{greedy}, that is, anything between (and including) the \code{<\%--} and the \emph{first} following \code{--\%>} will be dropped, which means that they cannot be nested.
-Second, RSP comments are special in the sense that if the remainder of the line following the comment consists of only whitespace symbols, then they are also dropped, including the newline.  Thus, an \code{<\%----\%>} at the end of a line will prevent a newline from being inserted.
-
-For example,
-\begin{rspVerbatim}
-<\%-- This is an RSP comment that will be dropped --\%>
-You can write a paragraph and drop a large portion of it using 
-RSP comments, <\%-- All the below will be dropped
-There are <\%=n\%> red <\%=type\%>s
-<\%-- and this --\%> but they must not be nested --\%>, because then
-the output will be like this.
-\end{rspVerbatim}
-produces:
-\begin{verbatim}
-<%-- This is an RSP comment that will be dropped --%>
-You can write a paragraph and drop a large portion of it using 
-RSP comments, <%-- All the below will be dropped
-There are <%=n%> red <%=type%>s
-<%-- and this --%> but they must not be nested --%>, because then
-the output will be like this.
-\end{verbatim}
 
 
 
@@ -224,7 +200,7 @@ toPNG <- function(name, ..., width=840) {
 This function creates a PNG file based on a set of plot commands and returns the so called \emph{fullname} of the image file.  The fullname of an image file is the filename without the filename extension.
 %%  For instance, if the image file is \code{"MyFigure,yeah,cool.png"}, then the fullname is \code{"MyFigure,yeah,cool"}.  
 
-\textsc{Example:}  The following code creates a PNG image file 'figures/MyFigure,yeah,cool.png' and returns \code{"MyFigure,yeah,cool"}:
+The following code creates a PNG image file 'figures/MyFigure,yeah,cool.png' and returns \code{"MyFigure,yeah,cool"}:
 \begin{verbatim}
 toPNG("MyFigure,yeah,cool", aspectRatio=0.6, {
   curve(dnorm, from=-5, to=+5);
@@ -298,22 +274,104 @@ produces:
 \end{itemize}
 
 
-<%--
-\section{Summary of features in comparison to Sweave}
+
+<%-------------------------------------------------------------------
+  PREPROCESSING DIRECTIVES
+  -------------------------------------------------------------------%>
+\section{Preprocessing directives}
+When an RSP-embedded document processed, it is first \emph{preprocessed} before it is \emph{translated} into an R script.  During this step it is possible to 
+modify the document by removing parts of it and inserting new pieces to it.  For instance, by using the RSP hidden comments, multiple lines of the document can be silently dropped, and by using the so called RSP 'insert' directive content of other files can be pasted into the document.
+
+
+\subsection{Hidden comments (\code{<\%--\{anything\}--\%>})}
+The RSP markup \code{<\%--\{anything\}--\%>} will be treated as a comment that can contain \emph{anything} (but \code{--\%>}), which will not be translated and not part of the output, i.e. it will immediately be dropped.  RSP comments are useful for excluding large sections of an RSP document.  It is useful to understand that RSP comments are \emph{greedy}, that is, anything between (and including) the \code{<\%--} and the \emph{first} following \code{--\%>} will be dropped, which means that they cannot be nested.
+
+For example,
+\begin{rspVerbatim}
+<\%-- This is an RSP comment that will be dropped --\%>
+You can write a paragraph and drop a large portion of it using 
+RSP comments, <\%-- All the below will be dropped
+There are <\%=n\%> red <\%=type\%>s
+<\%-- and this --\%> but they must not be nested --\%>, because then
+the output will be like this.
+\end{rspVerbatim}
+produces:
+\begin{verbatim}
+<%-- This is an RSP comment that will be dropped --%>
+You can write a paragraph and drop a large portion of it using 
+RSP comments, <%-- All the below will be dropped
+There are <%=n%> red <%=type%>s
+<%-- and this --%> but they must not be nested --%>, because then
+the output will be like this.
+\end{verbatim}
+
+Moreover, RSP comments are special in the sense that if the remainder of the line following the comment consists of only whitespace symbols, then they are also dropped, including the newline.  Thus, an \code{<\%----\%>} at the end of a line will prevent a newline from being inserted.
+
+
+
+\subsection{Inserting files (\code{<\%@insert file="\{pathname\}"})}
+The \emph{insert} directive can be used to insert the content of a file into the main RSP-embedded document \emph{just as if the content was pasted manually}.
+ This makes it possible to reuse commonly used R code, paragraphs of text, page layouts and so on.
+
+For instance, assume that the file 'R/graphics.R' contains
+\begin{verbatim}
+setOption("devNew/args/par", list(cex=2, lwd=2));
+toPNG <- function(name, ..., width=840) {
+ devEval(type="png", width=width, name=name, ..., force=TRUE)$fullname;
+}
+\end{verbatim}
+Then it is possible to insert its content into a \code{<\%\{code\}\%>} block of the main RSP-embedded document by:
+\begin{rspVerbatim}
+<\%
+# Graphics settings
+<\%@insert file="R/graphics.R"\%>
+\%>
+\end{rspVerbatim}
+which "updates" the main document to:
+\begin{rspVerbatim}
+<\%
+# Graphics settings
+setOption("devNew/args/par", list(cex=2, lwd=2));
+toPNG <- function(name, ..., width=840) \{
+ devEval(type="png", width=width, name=name, ..., force=TRUE)$fullname;
+\}
+\%>
+\end{rspVerbatim}
+In addition to the \code{file} attribute, the insert directive also takes the optional \code{path} attribute, which provides an alternative for specifying the path, e.g. \code{<\%@insert file="graphics.R" path="R/"\%>}.
+
+It is also possible to insert the content of all files in a directory that match a given \emph{filename pattern}, which is specified by the \code{pattern} attribute.  For instance,
+\begin{rspVerbatim}
+<\%
+<\%@insert path="R/", pattern="[.]R$"\%>
+\%>
+\end{rspVerbatim}
+inserts the content of all *.R files that are available in the R/ directory.\footnote{Files are guaranteed to be inserted in lexicographic order when using the 'insert' preprocessing directive.  Their content is by default concatenated using the newline symbol, which can be changed by setting the \code{collapse} attribute.}
+
+Finally, it is important to understand that the paths used for inserting these files are all relative to the current working directory of R \emph{at the time of the preprocessing}\footnote{The current working directory as seen by the RSP preprocessor \emph{cannot} be modified via a \code{<\% setwd(newPath) \%>} construct, because that is not yet evaluated at the preprocessing step.}.
+
+
+
+
+<%-------------------------------------------------------------------
+  COMPARISON TO OTHER METHODS
+  -------------------------------------------------------------------%>
+\section{Brief comparison to other markup languages}
 
 \begin{table}[htb]
 \begin{center}
-\begin{tabular}{lcc}
-Feature & RSP & Sweave \\
+\begin{tabular}{lccc}
+Feature & RSP & brew & Sweave \\
 \hline
-Non-contexted aware processing                 & yes & - \\
-Multiline comments                             & yes & - \\
-Interweaving incomplete code and text snippets & yes & - \\
+Context-independent processing                 & yes & yes & - \\
+Interweaving incomplete code and text snippets & yes & yes & - \\
+Hidden comments                                & yes &   ? & ? \\
+Multiline comments                             & yes &   - & ? \\
+"As-is" insertion of other files               & yes &   ? & ? \\
 \hline
 \end{tabular}
 \end{center}
 \end{table}
---%>
+<%----%>
 
 <%-------------------------------------------------------------------
   APPENDIX
