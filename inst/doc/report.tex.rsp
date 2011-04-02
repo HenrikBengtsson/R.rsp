@@ -45,8 +45,12 @@ This document was produced using RSP-embedded LaTeX.
 <%-------------------------------------------------------------------
   INTRODUCTION
   -------------------------------------------------------------------%>
-\section{Compiling LaTeX documents with RSP markup}
-Before anything else, load the \pkg{R.rsp} package by \code{library("R.rsp")}.  Then, in order to compile an LaTeX document with RSP markup (a "LaTeX RSP document") named \code{report.tex.rsp} into a PDF, do:
+\section{Compiling RSP-markup documents}
+Before anything else, load the \pkg{R.rsp} package by \code{library("R.rsp")}. 
+
+
+ \subsection{Compiling LaTeX documents with RSP markup}
+Then, in order to compile an LaTeX document with RSP markup (a "LaTeX RSP document") named \code{report.tex.rsp} into a PDF, do:
 \begin{verbatim}
 rsptex("report.tex.rsp")
 \end{verbatim}
@@ -90,7 +94,7 @@ n <- 3
 type <- "horse"
 %>
 \end{rspVerbatim}
-evaluates the code and insert the following into the LaTeX document:
+evaluates the code and insert the following into the output document:
 \begin{verbatim}
 <%:
 n <- 3
@@ -102,7 +106,7 @@ Formatting of the inserted code has to be taken care of by LaTeX.  For instance,
 
 \clearpage
 \subsection{Echoing evaluated code (\code{<\%=evalWithEcho(\{code chunk\})\%>})}
-The \code{evalWithEcho()} function allows us to evaluate, embed and echo the output of a code chunk\footnote{\code{\{code chunk\}} must be a complete and valid R expression, because \code{evalWithEcho()} is a function call.}.  For example:
+The \code{evalWithEcho()} function allows us to evaluate, embed and echo the output of a code chunk\footnote{\code{\{code chunk\}} must be a complete and valid R expression, because \code{evalWithEcho()} is a function call.}.  For example,
 \begin{rspVerbatim}
 <\%=evalWithEcho(\{
 n <- 3;   # Comments are not displayed
@@ -131,7 +135,7 @@ The RSP markup \code{<\%=\{code\}\%>} evaluates the code (without inserting it i
 There are <\%=n\%> red <\%=type\%>s
 \end{rspVerbatim}
 would produce the string 'There are <%=n%> red <%=type%>s'.
-If inlining multiple values, they are all pasted together without any separator.  For example:
+If inlining multiple values, they are all pasted together without any separator.  For example,
 \begin{rspVerbatim}
 The letters of the alphabet are '<\%=LETTERS\%>'
 \end{rspVerbatim}
@@ -141,8 +145,8 @@ To separate the elements with commas, use \code{<\%=paste(LETTERS, collapse=", "
 
 
 
-\subsection{Iterating over a mixture of code and LaTeX blocks}
-A useful feature of RSP is that it is possible to use RSP constructs that span multiple code and LaTeX blocks.  For instance, the following will iterate over a set of LaTeX and code blocks:
+\subsection{Iterating over a mixture of RSP and text blocks}
+A useful feature of RSP is that it is possible to use RSP constructs that span multiple code and text blocks.  For instance, the following will iterate over a set of text and RSP blocks:
 \begin{rspVerbatim}
 The <\%=n <- length(letters)%> letters in the English alphabet are: 
 <\% for (i in 1:n) \{ \%>
@@ -159,7 +163,7 @@ A more complex example is where one wish to generate a report on human genomic d
 <\% for (chromosome in 1:24) \{ %>
 {\bs}section\{Chromosome <\%=chromosome\%>\}
 ...
-A mix of RSP and LaTeX blocks constituting 
+A mix of RSP and text blocks constituting 
 the analysis of the current chromosome.
 ...
 <\% \} # for (chromosome ...) \%>
@@ -173,7 +177,7 @@ Note that there exist no corresponding markup in Sweave.  Instead, contrary to R
   FIGURES
   -------------------------------------------------------------------%>
 \section{Generating and inserting figures}
-Since the above RSP markups are powerful enough, there is no need for a specific markup for figures.  This section shows how to create and embed image files into a LaTeX document.
+Since the above RSP markups are powerful enough, there is no need for a specific markup for figures.  This section shows how to create and embed image files into the final document.
 
 \subsection{Brief on including image files in LaTeX}
 When insert a figure in LaTeX, it is recommended to do so without specifying neither the path nor the filename extension of the image file, e.g. \code{{\textbackslash}includegraphics\{MyFigure\}}.
@@ -238,7 +242,7 @@ After the RSP code has been processed, and the image file has been created, the 
   ADDITIONAL FEATURES
   -------------------------------------------------------------------%>
 
-\section{Templates - Reusing LaTeX and RSP blocks}
+\section{Templates - Reusing RSP and text blocks}
 Sometimes the very similar paragraphs of text, tables, or figures are used throughout a document with only minor differences.  Instead of cut'n'pasting the same pieces of RSP and code to other places in the document, it is more robust and much easier to setup a template which is then reused in place.
 Because of the nature of RSP, setting up a template is as simple as wrapping the mixture of RSP and code blocks in a function definition.  For example, assume you wish to reuse the following RSP and R blocks multiple times:
 \begin{rspVerbatim}
@@ -257,7 +261,7 @@ We use a trailing (empty) RSP comment (\code{<\%----\%>}) to escape the followin
 \begin{rspVerbatim}
 <\% myTemplate(n=3) \%>
 \end{rspVerbatim}
-which produces '<% myTemplate(n=3) %>'.  Without the trailing RSP comment, LaTeX would insert a whitespace after the period and before the closing single-quote.
+which produces '<% myTemplate(n=3) %>'.  Without the trailing RSP comment, the final document would contain a whitespace after the period and before the closing single-quote.
 A template can also be used within for loops.  For example:
 \begin{rspVerbatim}
 {\bs}begin\{itemize\}
@@ -309,10 +313,9 @@ Moreover, RSP comments are special in the sense that if the remainder of the lin
 
 
 
-\subsection{Inserting files (\code{<\%@insert file="\{pathname\}"})}
+\subsection{Inserting files (\code{<\%@insert file="\{pathname\}"\%>})}
 The \emph{insert} directive can be used to insert the content of a file into the main RSP-embedded document \emph{just as if the content was pasted manually}.
- This makes it possible to reuse commonly used R code, paragraphs of text, page layouts and so on.
-
+ This makes it possible to reuse commonly used R scripts, text paragraphs, page layouts and so on.
 For instance, assume that the file 'R/graphics.R' contains
 \begin{verbatim}
 setOption("devNew/args/par", list(cex=2, lwd=2));
@@ -337,7 +340,7 @@ toPNG <- function(name, ..., width=840) \{
 \}
 \%>
 \end{rspVerbatim}
-In addition to the \code{file} attribute, the insert directive also takes the optional \code{path} attribute, which provides an alternative for specifying the path, e.g. \code{<\%@insert file="graphics.R" path="R/"\%>}.
+In addition to the \code{file} attribute, the insert directive also takes an optional \code{path} attribute, which provides an alternative for specifying the path, e.g. \code{<\%@insert file="graphics.R" path="R/"\%>}.
 
 It is also possible to insert the content of all files in a directory that match a given \emph{filename pattern}, which is specified by the \code{pattern} attribute.  For instance,
 \begin{rspVerbatim}
@@ -347,7 +350,7 @@ It is also possible to insert the content of all files in a directory that match
 \end{rspVerbatim}
 inserts the content of all *.R files that are available in the R/ directory.\footnote{Files are guaranteed to be inserted in lexicographic order when using the 'insert' preprocessing directive.  Their content is by default concatenated using the newline symbol, which can be changed by setting the \code{collapse} attribute.}
 
-Finally, it is important to understand that the paths used for inserting these files are all relative to the current working directory of R \emph{at the time of the preprocessing}\footnote{The current working directory as seen by the RSP preprocessor \emph{cannot} be modified via a \code{<\% setwd(newPath) \%>} construct, because that is not yet evaluated at the preprocessing step.}.
+Finally, it is important to understand that the paths used for inserting these files are all relative to the current working directory of R \emph{at the time of the preprocessing}\footnote{The current working directory as seen by the RSP preprocessor \emph{cannot} be modified via a \code{<\%setwd(newPath)\%>} construct, because that is only evaluated after the preprocessing step.}.
 
 
 
@@ -355,6 +358,7 @@ Finally, it is important to understand that the paths used for inserting these f
 <%-------------------------------------------------------------------
   COMPARISON TO OTHER METHODS
   -------------------------------------------------------------------%>
+<%--
 \section{Brief comparison to other markup languages}
 
 \begin{table}[htb]

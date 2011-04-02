@@ -147,8 +147,10 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
           if (is.null(path))
             path <- ".";
           pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE);
+          # Keep only files
+          pathnames <- pathnames[sapply(pathnames, FUN=isFile)];
           # Guarantee lexicographic ordering
-          pathnames <- sort(pathname);
+          pathnames <- sort(pathnames);
         } else if (!is.null(file)) {
           pathname <- Arguments$getReadablePathname(file, path=path, mustExist=TRUE);
 #          printf("Pathname: %s\n", pathname);
