@@ -2,7 +2,7 @@ Package: R.rsp
 ==============
 
 Version: 0.4.9 [2011-04-01]
-o Added support for RSP preprocessing directive <%insert ...%>.
+o Added support for RSP preprocessing directive <%@insert ...%>.
 
 
 Version: 0.4.8 [2011-03-31]
