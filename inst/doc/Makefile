@@ -1,3 +1,14 @@
+#########################################################################
+# MACRO DEFINITIONS
+#########################################################################
+RM=rm -f
+MV=mv -f
+CP=cp -p
+
+
+#########################################################################
+# TARGET DEFINITIONS
+#########################################################################
 all: rsp index
 
 rsp:
@@ -5,11 +16,18 @@ rsp:
 
 index: index.html.rsp
 	R --vanilla -e "library('R.rsp'); rspToHtml('index.html.rsp')"
-	mv -f index.html.html index.html
+	$(MV) index.html.html index.html
 
 clean:
-	$(RM) -f *.Rnw
-	$(RM) -f *.aux *.log *.toc *.tex *.tex.rsp.R
-	$(RM) -rf figures/
-	$(RM) -f index.html.rsp
-	$(RM) -f Makefile
+	$(RM) *.Rnw
+	$(RM) *.aux *.log *.toc *.tex *.tex.rsp.R
+	$(RM) -r figures/
+	$(RM) index.html.rsp
+	$(RM) Makefile
+
+
+#########################################################################
+# HISTORY:
+# 2011-04-04
+# o Added macro definitions.
+#########################################################################
