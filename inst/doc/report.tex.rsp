@@ -53,7 +53,7 @@ Before anything else, load the \pkg{R.rsp} package by \code{library("R.rsp")}.
 
 
  \subsection{Compiling LaTeX documents with RSP markup}
-Then, in order to compile an LaTeX document with RSP markup (a "LaTeX RSP document") named \code{report.tex.rsp} into a PDF, do:
+In order to compile an LaTeX document with RSP markup (a "LaTeX RSP document") named \code{report.tex.rsp} into a PDF, do:
 \begin{verbatim}
 rsptex("report.tex.rsp")
 \end{verbatim}
@@ -156,7 +156,7 @@ The <\%=n <- length(letters)%> letters in the English alphabet are:
   <\%=letters[i]\%>/<\%=LETTERS[i]\%><\%=if(i < n) ", "\%>
 <\% \} \%>.
 \end{rspVerbatim}
-which generates:\footnote{Of course, in this particular case, the above for-loop can be replaced by \code{paste(letters, LETTERS, sep="/", collapse=", ")}.}: 'The <%=n <- length(letters)%> letters in the English alphabet are: 
+which generates:\footnote{Of course, in this particular case, the above for-loop can be replaced by \code{<\%=paste(letters, LETTERS, sep="/", collapse=", ")\%>}.}: 'The <%=n <- length(letters)%> letters in the English alphabet are: 
 <% for (i in 1:n) { %>
   <%=letters[i]%>/<%=LETTERS[i]%><%=if(i < n) ", "%>
 <% } %>.'
@@ -391,6 +391,6 @@ Multiline comments                             & yes &   - & ? \\
 \section*{Appendix}
 \subsection*{Session information}
 <%=toLatex(sessionInfo())%>
-This report was automatically generated using \code{rsptex()} of the R.rsp package.  Total processing time (excluding RSP-to-R translation) was <%=sprintf("%.2f", Sys.time()-t0)%> seconds.
+This report was automatically generated using \code{rsptex()} of the R.rsp package.  Total processing time after RSP-to-R translation was <%=sprintf("%.2f", Sys.time()-t0)%> seconds.
 
 \end{document}
