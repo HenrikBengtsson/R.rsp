@@ -5,6 +5,7 @@ Version: 0.4.10 [2011-04-06]
 o BUG FIX: Now the 'R Server Pages' page launched by browseRsp()
   list only the first package installation in case a package
   occurs in multiple package libraries in .libPaths().
+o RSP PAGES: Added a demo page listing all built-in colors in R.
 
 
 Version: 0.4.9 [2011-04-04]

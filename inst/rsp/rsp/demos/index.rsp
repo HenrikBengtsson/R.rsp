@@ -17,6 +17,7 @@
 
 <ul>
  <li><a href="calculator/">R calculator</a></li>
+ <li><a href="colors/">Table of built-in colors in R</a></li>
 </ul>
 
 <%@include file="../../src/simpleFooter.rsp"%>
