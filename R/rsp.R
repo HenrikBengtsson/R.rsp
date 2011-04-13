@@ -18,6 +18,8 @@
 #      If argument \code{text} is given, then @see "base::stdout" is used.
 #      Otherwise, the output defaults to that of the type-specific compiler.}
 #   \item{...}{Additional arguments passed to the type-specific compiler.}
+#   \item{postprocess}{If @TRUE, and a postprocessing method exists for
+#      the generated document type, it is postprocessed as well.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
@@ -27,28 +29,97 @@
 #
 # @author
 #
-# \seealso{
-#   Internally, 
-#     @see "rsptex" is used for *.tex.rsp documents,
-#     @see "rspToHtml" is used for *.html.rsp documents.
+# \section{Postprocessing}{
+#   For some document types, the \code{rsp()} method automatically
+#   postprocesses the generated document as well.
 # }
 #
 # @keyword file
 # @keyword IO
 #*/########################################################################### 
-setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, response=NULL, ..., verbose=FALSE) {
+setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, response=NULL, ..., postprocess=TRUE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  rspPlain <- function(filename, response=NULL, ...) {
+  rspPlain <- function(pathname, response=NULL, ..., verbose=FALSE) {
+    # Argument 'verbose':
+    verbose <- Arguments$getVerbose(verbose);
+    if (verbose) {
+      pushState(verbose);
+      on.exit(popState(verbose));
+    }
+
+    verbose && enter(verbose, "Compiling RSP-embedded plain document");
+
+    verbose && cat(verbose, "Input pathname: ", pathname);
     if (is.null(response)) {
       pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
-      filenameOut <- gsub(pattern, "\\1", filename);
-      filenameOut <- Arguments$getWritablePathname(filenameOut);
-      response <- FileRspResponse(file=filenameOut, overwrite=TRUE);
+      pathname2 <- gsub(pattern, "\\1", pathname);
+      pathname2 <- Arguments$getWritablePathname(pathname2);
+      response <- FileRspResponse(file=pathname2, overwrite=TRUE);
     }
-    sourceRspV2(filename, ..., response=response);
+    pathname2 <- getOutput(response);
+    verbose && cat(verbose, "Output pathname: ", pathname2);
+
+    verbose && enter(verbose, "Calling sourceRspV2()");
+    sourceRspV2(pathname, path=NULL, ..., response=response, verbose=less(verbose, 20));
+    verbose && exit(verbose);
+
+    verbose && exit(verbose);
+
+    invisible(pathname2);
   } # rspPlain()
+
+
+  rspLaTeX <- function(pathname, ..., verbose=FALSE) {
+    # Argument 'verbose':
+    verbose <- Arguments$getVerbose(verbose);
+    if (verbose) {
+      pushState(verbose);
+      on.exit(popState(verbose));
+    }
+
+    verbose && enter(verbose, "Compiling RSP-embedded LaTeX document");
+    verbose && cat(verbose, "Input pathname: ", pathname);
+
+    pathname2 <- rspPlain(pathname, ..., verbose=verbose);
+    verbose && cat(verbose, "LaTeX pathname: ", pathname2);
+
+    pathname3 <- compileLaTeX(pathname2);
+    verbose && cat(verbose, "Output pathname: ", pathname3);
+
+    verbose && exit(verbose);
+
+    invisible(pathname3);
+  } # rspLaTeX()
+
+
+  rspSweave <- function(pathname, ..., verbose=FALSE) {
+    # Argument 'verbose':
+    verbose <- Arguments$getVerbose(verbose);
+    if (verbose) {
+      pushState(verbose);
+      on.exit(popState(verbose));
+    }
+
+    verbose && enter(verbose, "Compiling RSP-embedded Sweave document");
+    verbose && cat(verbose, "Input pathname: ", pathname);
+
+    pathname2 <- rspPlain(pathname, ..., verbose=verbose);
+    verbose && cat(verbose, "Sweave pathname: ", pathname2);
+
+    pathname3 <- Sweave(pathname);
+    verbose && cat(verbose, "LaTeX pathname: ", pathname3);
+
+    pathname4 <- compileLaTeX(pathname3);
+    verbose && cat(verbose, "Output pathname: ", pathname4);
+
+    verbose && exit(verbose);
+
+    invisible(pathname4);
+  } # rspSweave()
+
+
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -73,6 +144,9 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   # Arguments 'filename' & 'path':
   pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);
 
+  # Argument 'postprocess':
+  postprocess <- Arguments$getLogical(postprocess);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -82,28 +156,70 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
 
 
   verbose && enter(verbose, "Compiling RSP document");
+
   verbose && cat(verbose, "RSP pathname: ", pathname);
   pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
   ext <- gsub(pattern, "\\3", pathname);
   type <- tolower(ext);
   verbose && cat(verbose, "RSP type: ", type);
+  verbose && cat(verbose, "Postprocess (if recognized): ", postprocess);
 
-  # Select RSP compiler
-  rspCompiler <- switch(type, 
-    # RSP-embedded LaTeX documents; *.tex.rsp => ... => *.dvi/*.pdf
-    "tex" = function(filename, path=NULL, ..., verbose=FALSE) {
-      rsptex(filename=filename, path=path, ..., verbose=verbose);
-    },
+  if (postprocess) {
+    verbose && enter(verbose, "Searching for document-type specific postprocessor");
 
-    # Default compiler
-    rspPlain
-  );
+    # Find another RSP compiler
+    postProcessors <- list(
+      # RSP-embedded LaTeX documents:
+      # *.tex => ... => *.dvi/*.pdf
+      "tex" = compileLaTeX,
+ 
+      # RSP-embedded Sweave documents:
+      # *.Rnw => ... => *.tex => dvi/*.pdf
+      "rnw" = compileSweave
+    );
 
-  res <- rspCompiler(filename=filename, path=path, response=response, ..., verbose=verbose);
+    postProcessor <- NULL;
+    for (key in names(postProcessors)) {
+      pattern <- key;
+      if (regexpr(pattern, type) != -1) {
+        postProcessor <- postProcessors[[key]];
+        verbose && cat(verbose, "Match: ", key);
+        break;
+      }
+    } # for (key ...)
+
+    if (is.null(postProcessor)) {
+      verbose && cat(verbose, "Postprocessor found: <none>");
+    } else {
+      verbose && cat(verbose, "Postprocessor found: ", type);
+    }
+
+    verbose && exit(verbose);
+  } # if (postprocess)
+
+
+  # Default RSP compiler
+  verbose && enter(verbose, "Preprocessing, translating, and evaluating RSP document");
+  pathname2 <- rspPlain(pathname, response=response, ..., verbose=verbose);
+  verbose && exit(verbose);
+
+
+  pathnameR <- pathname2;
+  if (!is.null(postProcessor)) {
+    verbose && enter(verbose, "Postprocessing generated document");
+    verbose && cat(verbose, "Input pathname: ", pathname2);
+    pathname3 <- postProcessor(pathname2, ..., verbose=verbose);
+    verbose && cat(verbose, "Output pathname: ", pathname3);
+    verbose && exit(verbose);
+
+    pathnameR <- pathname3;
+  }
+
+  verbose && cat(verbose, "Output document pathname: ", pathnameR);
 
   verbose && exit(verbose);
 
-  invisible(res);
+  invisible(pathnameR);
 }) # rsp()
 
 

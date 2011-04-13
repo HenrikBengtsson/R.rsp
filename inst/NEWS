@@ -3,6 +3,7 @@ Package: R.rsp
 
 Version: 0.5.0 [2011-04-12]
 o Added rsp().
+o Added compileLaTeX() and compileSweave().
 o Changed RSP preprocess directives to have format <%#insert ...%>.
 o DOCUMENTATION: Updated 'Dynamic LaTeX reports with RSP' vignette.
 

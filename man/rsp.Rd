@@ -16,7 +16,7 @@
  Compiles an RSP document.
 }
 
-\usage{\method{rsp}{default}(filename=NULL, path=NULL, text=NULL, response=NULL, ..., verbose=FALSE)}
+\usage{\method{rsp}{default}(filename=NULL, path=NULL, text=NULL, response=NULL, ..., postprocess=TRUE, verbose=FALSE)}
 
 \arguments{
   \item{filename, path}{The filename and (optional) path of the
@@ -27,6 +27,8 @@
      If argument \code{text} is given, then \code{\link[base]{stdout}}() is used.
      Otherwise, the output defaults to that of the type-specific compiler.}
   \item{...}{Additional arguments passed to the type-specific compiler.}
+  \item{postprocess}{If \code{\link[base:logical]{TRUE}}, and a postprocessing method exists for
+     the generated document type, it is postprocessed as well.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
@@ -36,10 +38,9 @@
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
-\seealso{
-  Internally,
-    \code{\link{rsptex}}() is used for *.tex.rsp documents,
-    \code{\link{rspToHtml}}() is used for *.html.rsp documents.
+\section{Postprocessing}{
+  For some document types, the \code{rsp()} method automatically
+  postprocesses the generated document as well.
 }
 
 

@@ -283,7 +283,13 @@ which is preferably added to the beginning of the LaTeX file.  This tells LaTeX 
 
 
 \subsection{Defining a function that creates an image file}
-The \code{devEval()} function of the \pkg{R.utils} package is useful for creating an image file from a set of plot commands.  For instance, \code{devEval("png", name="myFigure", width=840, aspectRatio=0.6, \{ curve(dnorm, from=-5, to=+5) \})} will create a PNG file named \code{myFigure.png} displaying the Guassian density distribution and that is 840 pixels wide and 0.6*840=504 pixels high.  Moreover, (by default) \code{devEval()} writes the image file to the figures/ directory.  For more information, see \code{help("devEval")}.\\
+The \code{devEval()} function of the \pkg{R.utils} package is useful for creating an image file from a set of plot commands.  For instance,
+\begin{verbatim}
+devEval("png", name="myFigure", width=840, aspectRatio=0.6, { 
+  curve(dnorm, from=-5, to=+5)
+})
+\end{verbatim}
+creates a PNG file named \code{myFigure.png} displaying the Guassian density distribution, an image file that is 840 pixels wide and 0.6*840=504 pixels high.  Moreover, (by default) \code{devEval()} writes the image file to the figures/ directory.  For more information, see \code{help("devEval")}.\\
 
 To spare ourselves from having to repeat the same arguments each time an image is created, we define the following custom function for creating PNG image files with a certain default dimension (840 by 840 since the default aspect ratio is 1) and default graphical parameters (see \code{help("par")}):
 \begin{verbatim}
@@ -454,6 +460,10 @@ Finally, it is important to understand that the paths used for inserting these f
   RSP-EMBEDDED SWEAVE DOCUMENTS
   -------------------------------------------------------------------%>
 \section{RSP-embedded Sweave documents}
+We advocate using RSP over Sweave, because of its richness and generality to the underlying document format.  However, for Sweave users, we will in this section show how to enhance Sweave with RSP-embedded markup to circumvent a few of Sweave's shortcomes.
+
+
+\subsection{Iterating over a mixture of code and text blocks}
 As mention above, it is not possible to programmatically loop over a mixture of text and code chunks in Sweave.  A workaround for this is to use RSP markup to define the loop.  For example, in Sweave the following\footnote{This example is taken from the Sweave User Manual part of the \pkg{utils} package.} does not work
 \begin{verbatim}
 <<fig=TRUE>>
@@ -512,14 +522,16 @@ This latter approach is error prone, especially because of how the LaTeX code ha
 \begin{tabular}{lccc}
 Feature & RSP & brew & Sweave \\
 \hline
-Context-independent processing                 & yes & yes & - \\
-Interweaving incomplete code and text snippets & yes & yes & - \\
-Hidden comments                                & yes & no? & ? \\
-Multiline comments                             & yes &   - & ? \\
-"As-is" insertion of other files               & yes & no? & ? \\
+Context-independent processing                 & yes & yes &  - \\
+Interweaving incomplete code and text snippets & yes & yes &  - \\
+Preprocessing markup                           & yes &   - &  - \\
+Hidden markup comments                         & yes &   - &  - \\
+Multiline markup comments                      & yes &   ? &  - \\
+"As-is" insertion of other files               & yes &   ? &  - \\
 \hline
 \end{tabular}
 \end{center}
+\caption{Comparison of features in different R-related markup languages.}
 \end{table}
 <% } # if (docVersion == "devel") %>
 

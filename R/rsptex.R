@@ -86,7 +86,7 @@ setMethodS3("rsptex", "default", function(..., pdf=TRUE, force=FALSE, verbose=FA
   verbose && exit(verbose);
 
   invisible(pathname3);
-}) # rsptex()
+}, private=TRUE) # rsptex()
 
 
 ############################################################################
