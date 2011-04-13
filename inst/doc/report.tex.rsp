@@ -1,4 +1,9 @@
 <% t0 <- Sys.time() %>
+
+<%
+docVersion <- c("release", "devel")[1];
+%>
+
 \documentclass[letter,12pt]{article}
 \usepackage{graphicx}
 \usepackage{xspace}
@@ -317,9 +322,8 @@ the output will be like this.
 Moreover, RSP comments are special in the sense that if (and only if) the remainder of the line following the comment consists of only whitespace symbols, then they are also dropped, including the newline.  Thus, an \code{<\%----\%>} at the end of a line will prevent a newline from being inserted.
 
 
-<%--
-
-\subsection{Inserting files (\code{<\%@insert file="\{pathname\}"\%>})}
+<% if (docVersion == "devel") { %>
+\subsection{Inserting files (\code{<\%\#insert file="\{pathname\}"\%>})}
 The \emph{insert} directive can be used to insert the content of a file into the main RSP-embedded document \emph{just as if the content was pasted manually}.
  This makes it possible to reuse commonly used R scripts, text paragraphs, page layouts and so on.
 For instance, assume that the file 'R/graphics.R' contains
@@ -329,11 +333,11 @@ toPNG <- function(name, ..., width=840) {
  devEval(type="png", width=width, name=name, ..., force=TRUE)$fullname;
 }
 \end{verbatim}
-Then it is possible to insert its content into a \code{<\%\{code\}\%>} block of the main RSP-embedded document by:
+Then it is possible to insert its content into a \code{<\%\{code\}\%>} block\footnote{Note, if the insert directive is not wrapped up in a \code{<\%\{code\}\%>} block, the inserted source code will be inserted as text to the document rather than as code.} of the main RSP-embedded document by:
 \begin{rspVerbatim}
 <\%
 # Graphics settings
-<\%@insert file="R/graphics.R"\%>
+<\%\#insert file="R/graphics.R"\%>
 \%>
 \end{rspVerbatim}
 which "updates" the main document to:
@@ -346,26 +350,22 @@ toPNG <- function(name, ..., width=840) \{
 \}
 \%>
 \end{rspVerbatim}
-In addition to the \code{file} attribute, the insert directive also takes an optional \code{path} attribute, which provides an alternative for specifying the path, e.g. \code{<\%@insert file="graphics.R" path="R/"\%>}.
-
+In addition to the \code{file} attribute, the insert directive also takes an optional \code{path} attribute, which provides an alternative for specifying the path, e.g. \code{<\%\#insert file="graphics.R" path="R/"\%>}.
 It is also possible to insert the content of all files in a directory that match a given \emph{filename pattern}, which is specified by the \code{pattern} attribute.  For instance,
 \begin{rspVerbatim}
-<\%
-<\%@insert path="R/", pattern="[.]R$"\%>
-\%>
+<\%\#insert path="R/" pattern="[.]R$"\%>
 \end{rspVerbatim}
 inserts the content of all *.R files that are available in the R/ directory.\footnote{Files are guaranteed to be inserted in lexicographic order when using the 'insert' preprocessing directive.  Their content is by default concatenated using the newline symbol, which can be changed by setting the \code{collapse} attribute.}
-
 Finally, it is important to understand that the paths used for inserting these files are all relative to the current working directory of R \emph{at the time of the preprocessing}\footnote{The current working directory as seen by the RSP preprocessor \emph{cannot} be modified via a \code{<\%setwd(newPath)\%>} construct, because that is only evaluated after the preprocessing step.}.
 
-<%----%>
+<% } else if (docVersion == "devel") %>
 
 
 
+<% if (docVersion == "devel") { %>
 <%-------------------------------------------------------------------
   COMPARISON TO OTHER METHODS
   -------------------------------------------------------------------%>
-<%--
 \section{Brief comparison to other markup languages}
 
 \begin{table}[htb]
@@ -382,7 +382,8 @@ Multiline comments                             & yes &   - & ? \\
 \end{tabular}
 \end{center}
 \end{table}
-<%----%>
+<% } else if (docVersion == "devel") %>
+
 
 <%-------------------------------------------------------------------
   APPENDIX

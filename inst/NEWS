@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.4.11 [2011-04-12]
+o Changed RSP preprocess directives to have format <%#insert ...%>.
+
+
 Version: 0.4.10 [2011-04-06]
 o RSP PAGES: Added a demo page listing all built-in colors in R.
 o RSP PAGES: Now the 'R Server Pages' page launched by browseRsp()
