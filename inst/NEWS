@@ -1,7 +1,7 @@
 Package: R.rsp
 ==============
 
-Version: 0.5.0 [2011-04-12]
+Version: 0.5.0 [2011-04-13]
 o Added rsp().
 o Added compileLaTeX() and compileSweave().
 o Changed RSP preprocess directives to have format <%#insert ...%>.

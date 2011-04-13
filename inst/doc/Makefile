@@ -12,11 +12,10 @@ CP=cp -p
 all: rsp index
 
 rsp:
-	R --no-save --no-restore -e "library('R.rsp'); rsptex('report.tex.rsp', force=TRUE)"
+	R --no-save --no-restore -e "library('R.rsp'); rsp('report.tex.rsp', force=TRUE)"
 
 index: index.html.rsp
-	R --vanilla -e "library('R.rsp'); rspToHtml('index.html.rsp')"
-	$(MV) index.html.html index.html
+	R --vanilla -e "library('R.rsp'); rsp('index.html.rsp')"
 
 clean:
 	$(RM) *.Rnw
@@ -28,6 +27,8 @@ clean:
 
 #########################################################################
 # HISTORY:
+# 2011-04-13
+# o Now using new rsp() throughout.
 # 2011-04-04
 # o Added macro definitions.
 #########################################################################
