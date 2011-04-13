@@ -91,6 +91,8 @@
 # @alias evalWithEcho
 # @alias sourceWithTrim
 # @alias sourceWithTrim.default
+# @alias sourceRspV2 
+# @alias sourceRspV2.default
 #
 # \description{
 # This page contains aliases for all "non-documented" objects that 

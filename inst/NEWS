@@ -1,8 +1,10 @@
 Package: R.rsp
 ==============
 
-Version: 0.4.11 [2011-04-12]
+Version: 0.5.0 [2011-04-12]
+o Added rsp().
 o Changed RSP preprocess directives to have format <%#insert ...%>.
+o DOCUMENTATION: Updated 'Dynamic LaTeX reports with RSP' vignette.
 
 
 Version: 0.4.10 [2011-04-06]
