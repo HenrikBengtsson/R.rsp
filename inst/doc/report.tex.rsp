@@ -1,39 +1,89 @@
 <% t0 <- Sys.time() %>
 
 <%--
-<% setOption("R.rsp/vignettes/docVersion", "devel"); %>
+<%
+setOption("R.rsp/vignettes/docMode", "slides");
+setOption("R.rsp/vignettes/docVersion", "devel");
+%>
 <%----%>
 
+<%-------------------------------------------------------------------
+  ARTICLE OR SLIDES?
+  -------------------------------------------------------------------%>
+<%
+docMode <- getOption("R.rsp/vignettes/docMode", "article");
+docMode <- match.arg(docMode, choices=c("article", "slides"));
+if (docMode == "article") {
+  docOptions <- "letter,12pt,twoside";
+} else if (docMode == "slides") {
+  docOptions <- "a5paper,12pt,landscape";
+}
+%>
+
+
+<%-------------------------------------------------------------------
+  RELEASE OR DEVEL?
+  -------------------------------------------------------------------%>
 <%
 docVersion <- getOption("R.rsp/vignettes/docVersion", "release");
 docVersion <- match.arg(docVersion, choices=c("release", "devel"));
 %>
 
-<% if (TRUE) { %>
-\documentclass[letter,12pt]{article}
-<% } else { %>
-\documentclass[a5paper,10pt]{article}
-<% } %>
+\documentclass[<%=docOptions%>]{article}
 \usepackage{graphicx}
 \usepackage{xspace}
+\usepackage{xcolor}
 \usepackage{alltt}
 \graphicspath{{figures/}}
 
+
+<%-------------------------------------------------------------------
+  DOCUMENT MODE SPECIFIC SETTINGS
+  -------------------------------------------------------------------%>
+<% if (docMode == "slides") { %>
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.75in}	
+\addtolength{\evensidemargin}{-0.75in}	
+\addtolength{\textwidth}{1.5in}
+\addtolength{\topmargin}{-1.0in}	
+\addtolength{\textheight}{2.0in}
+
+% Adjust the title to appear higher up
+\usepackage{titling} % \droptitle
+\setlength{\droptitle}{-9ex}
+
+% Add a \clearpage before each \section{}
+\makeatletter
+\renewcommand{\section}{\@startsection
+{section}
+{1}
+{0mm}
+{-3.5ex \@plus -1ex \@minus -.2ex}
+{2.3ex \@plus.2ex}
+{\clearpage\normalfont\Large\bfseries}}
+\makeatother
+<% } else { %>
+% Adjust margins
 \addtolength{\oddsidemargin}{-0.5in}	
 \addtolength{\evensidemargin}{-0.5in}	
 \addtolength{\textwidth}{1in}
 \addtolength{\topmargin}{-0.5in}	
 \addtolength{\textheight}{1in}
+<% } # if (docMode ...) %>
+
+
 
 %% \setlength{\parindent}{0in} 
 %% \setlength{\parskip}{\baselineskip}
+
 
 \newcommand{\keywords}[1]{\footnotesize{\textbf{Keywords: }#1}\xspace}
 \newcommand{\pkg}[1]{\textsl{#1}\xspace}
 \newcommand{\code}[1]{\texttt{#1}\xspace}
 \newcommand{\bs}{$\backslash$}
 
-\newenvironment{rspVerbatim}{\vspace{-\parskip}\begin{alltt}}{\end{alltt}}
+\newenvironment{rspVerbatim}{\vspace{-\parskip}\begin{alltt}\color{blue}}{\end{alltt}}
+\newenvironment{escapeRspVerbatim}{\vspace{-\parskip}\begin{alltt}}{\end{alltt}}
 
 \title{Dynamic LaTeX reports with RSP<%=ifelse(docVersion == "devel", "*", "")%>}
 \author{Henrik Bengtsson}
@@ -72,13 +122,13 @@ As a first example, consider the following RSP-embedded R string
 "A random number in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n"
 \end{rspVerbatim}
 It can be compiled as
-\begin{verbatim}
-> rsp(text="A random number in [1,100]: <\%=sample(1:100, size=1)\%>\n")
+\begin{escapeRspVerbatim}
+> rsp(text="A random number in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
 A random number in [1,100]: 77
-\end{verbatim}
+\end{escapeRspVerbatim}
 
 
-Any document with RSP markup can then be compiled using the \code{rsp()} method.  
+Any document with RSP markup can be compiled using the \code{rsp()} method.  
 For instance, consider an RSP-embedded text file \code{README.txt.rsp}.  In order to compile it into a plain text file, do
 \begin{verbatim}
 rsp("README.txt.rsp")
@@ -87,7 +137,7 @@ This will
 (i) translate the RSP text file into a valid 
     R script (\code{README.txt.rsp.R}), and
 (ii) run the R script resulting in a plain text file (\code{README.txt}).
-Other document formats can be compiled in a similar way, e.g. \code{rsp("index.html.rsp")}.\\
+Other document formats can be compiled in a similar way, e.g. \code{rsp("index.html.rsp")} and \code{rsp("report.Rnw.rsp")}.\\
 
 For certain document formats recognized by \code{rsp()}, further processing will also be done.  For instance, consider a RSP-embedded LaTeX document \code{report.tex.rsp}.  When compiling it by
 \begin{verbatim}
@@ -207,7 +257,7 @@ the analysis of the current chromosome.
 <\% \} # for (chromosome ...) \%>
 \end{rspVerbatim}
 
-Note that there exist no corresponding markup in Sweave.  Instead, contrary to RSP, Sweave requires the each code chunk contains a complete R expression.  This means that, in terms of the above example, in Sweave it is not possible to begin a for loop in one code chunk and end it in a succeeding one.  This has to do with the fundamentally different way RSP and Sweave documents are processed.
+Note that there exist no corresponding markup in Sweave.  Instead, contrary to RSP, Sweave requires the each code chunk contains a complete R expression.  This means that, in terms of the above example, in Sweave it is not possible to begin a for loop in one code chunk and end it in a succeeding one.  This has to do with the fundamentally different way RSP and Sweave documents are processed.  If using Sweave, one solution to this is to use RSP to generate the Sweave document, e.g. \code{rsp("report.Rnw.rsp")}.
 
 
 
@@ -393,6 +443,57 @@ Finally, it is important to understand that the paths used for inserting these f
 <% } # if (docVersion == "devel") %>
 
 
+<% if (docVersion == "devel") { %>
+<%-------------------------------------------------------------------
+  RSP-EMBEDDED SWEAVE DOCUMENTS
+  -------------------------------------------------------------------%>
+\section{RSP-embedded Sweave documents}
+As mention above, it is not possible to programmatically loop over a mixture of text and code chunks in Sweave.  A workaround for this is to use RSP markup to define the loop.  For example, in Sweave the following\footnote{This example is taken from the Sweave User Manual part of the \pkg{utils} package.} does not work
+\begin{verbatim}
+<<fig=TRUE>>
+for (i in 1:4) plot(rnorm(100)+i)
+@
+\end{verbatim}
+With RSP, one can do
+\begin{rspVerbatim}
+<\% for (kk in 1:4) \{ \%>
+<<fig=TRUE, echo=FALSE>>=
+  i <- <\%=kk\%>  <\%-- NOTE: Sweave does not see RSP variables! --\%>
+  plot(rnorm(100)+i)
+@
+<\% \} # for (kk ...) \%>
+\end{rspVerbatim}
+This will expand to four \code{<<fig=TRUE, echo=FALSE>>=\,[...]\,@} chunks before Sweave sees it.
+Alternative, one might want to use an \emph{RSP template} to tidy it up further, e.g.
+\begin{rspVerbatim}
+<\% mySweaveFigure <- function(kk, ...) \{ \%>
+<<fig=TRUE, echo=FALSE>>=
+  i <- <\%=kk\%>  <\%-- NOTE: Sweave does not see RSP variables! --\%>
+  plot(rnorm(100)+i)
+@
+<\% \} # mySweaveFigure() \%>
+\end{rspVerbatim}
+and then generate the four Sweave figure chunks by
+\begin{rspVerbatim}
+<\% for (kk in 1:4) \{ mySweaveFigure(kk) \} \%>
+\end{rspVerbatim}
+
+
+Without RSP, the workaround is to manually generate the image files and have the code output the correct LaTeX commands much like one would do without Sweave, e.g.
+\begin{verbatim}
+<<results=tex,echo=FALSE>>=
+for (i in 1:4) {
+  fn <- paste("myfile", i, ".pdf", sep="")
+  pdf(file=fn, width=6, height=6)
+  plot(rnorm(100)+i)
+  dev.off()
+  cat("\\includegraphics{", fn, "}\n\n", sep = "")
+}
+@
+\end{verbatim}
+This latter approach is error prone, especially because of how the LaTeX code has to be escaped and generated using R code.
+<% } # if (docVersion == "devel") %>
+
 
 <% if (docVersion == "devel") { %>
 <%-------------------------------------------------------------------
@@ -407,9 +508,9 @@ Feature & RSP & brew & Sweave \\
 \hline
 Context-independent processing                 & yes & yes & - \\
 Interweaving incomplete code and text snippets & yes & yes & - \\
-Hidden comments                                & yes &   ? & ? \\
+Hidden comments                                & yes & no? & ? \\
 Multiline comments                             & yes &   - & ? \\
-"As-is" insertion of other files               & yes &   ? & ? \\
+"As-is" insertion of other files               & yes & no? & ? \\
 \hline
 \end{tabular}
 \end{center}
