@@ -27,6 +27,8 @@
 #   Returns what the type-specific compiler returns.
 # }
 #
+# @examples "../incl/rsp.Rex"
+#
 # @author
 #
 # \section{Postprocessing}{
