@@ -45,8 +45,8 @@ docVersion <- match.arg(docVersion, choices=c("release", "devel"));
 \addtolength{\oddsidemargin}{-0.75in}	
 \addtolength{\evensidemargin}{-0.75in}	
 \addtolength{\textwidth}{1.5in}
-\addtolength{\topmargin}{-1.0in}	
-\addtolength{\textheight}{2.0in}
+\addtolength{\topmargin}{-1.3in}	
+\addtolength{\textheight}{2.3in}
 
 % Adjust the title to appear higher up
 \usepackage{titling} % \droptitle
@@ -62,6 +62,12 @@ docVersion <- match.arg(docVersion, choices=c("release", "devel"));
 {2.3ex \@plus.2ex}
 {\clearpage\normalfont\Large\bfseries}}
 \makeatother
+
+% Fonts
+%%\usepackage{mathptmx}  % times roman, including math (where possible)
+%%\usepackage{mathpazo}  % palatino, including math (where possible)
+%% \usepackage{helvetica}    % helvetica
+\renewcommand{\familydefault}{\sfdefault}
 <% } else { %>
 % Adjust margins
 \addtolength{\oddsidemargin}{-0.5in}	
