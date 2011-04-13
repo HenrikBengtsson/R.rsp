@@ -42,6 +42,26 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   rspPlain <- function(pathname, response=NULL, ..., verbose=FALSE) {
+    # Argument 'response':
+    if (is.null(response)) {
+      verbose && enter(verbose, "Creating FileRspResponse");
+      pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
+      pathname2 <- gsub(pattern, "\\1", pathname);
+      pathname2 <- Arguments$getWritablePathname(pathname2);
+      response <- FileRspResponse(file=pathname2, overwrite=TRUE);
+      verbose && exit(verbose);
+    }
+
+    if (inherits(response, "connection")) {
+      response <- FileRspResponse(file=response);
+    } else if (is.character(response)) {
+      pathname <- Arguments$getWritablePathname(response);
+      response <- FileRspResponse(file=pathname);
+    } else if (!inherits(response, "RspResponse")) {
+      throw("Argument 'response' is not an RspResponse object: ", 
+                                                         class(response)[1]);
+    }
+
     # Argument 'verbose':
     verbose <- Arguments$getVerbose(verbose);
     if (verbose) {
@@ -50,16 +70,13 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
     }
 
     verbose && enter(verbose, "Compiling RSP-embedded plain document");
-
     verbose && cat(verbose, "Input pathname: ", pathname);
-    if (is.null(response)) {
-      pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
-      pathname2 <- gsub(pattern, "\\1", pathname);
-      pathname2 <- Arguments$getWritablePathname(pathname2);
-      response <- FileRspResponse(file=pathname2, overwrite=TRUE);
-    }
+    verbose && printf(verbose, "%s:\n", class(response)[1]);
+    verbose && print(verbose, response);
+
     pathname2 <- getOutput(response);
-    verbose && cat(verbose, "Output pathname: ", pathname2);
+    verbose && cat(verbose, "Response output class: ", class(pathname2)[1]);
+    verbose && cat(verbose, "Response output pathname: ", pathname2);
 
     verbose && enter(verbose, "Calling sourceRspV2()");
     sourceRspV2(pathname, path=NULL, ..., response=response, verbose=less(verbose, 20));
@@ -69,56 +86,6 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
 
     invisible(pathname2);
   } # rspPlain()
-
-
-  rspLaTeX <- function(pathname, ..., verbose=FALSE) {
-    # Argument 'verbose':
-    verbose <- Arguments$getVerbose(verbose);
-    if (verbose) {
-      pushState(verbose);
-      on.exit(popState(verbose));
-    }
-
-    verbose && enter(verbose, "Compiling RSP-embedded LaTeX document");
-    verbose && cat(verbose, "Input pathname: ", pathname);
-
-    pathname2 <- rspPlain(pathname, ..., verbose=verbose);
-    verbose && cat(verbose, "LaTeX pathname: ", pathname2);
-
-    pathname3 <- compileLaTeX(pathname2);
-    verbose && cat(verbose, "Output pathname: ", pathname3);
-
-    verbose && exit(verbose);
-
-    invisible(pathname3);
-  } # rspLaTeX()
-
-
-  rspSweave <- function(pathname, ..., verbose=FALSE) {
-    # Argument 'verbose':
-    verbose <- Arguments$getVerbose(verbose);
-    if (verbose) {
-      pushState(verbose);
-      on.exit(popState(verbose));
-    }
-
-    verbose && enter(verbose, "Compiling RSP-embedded Sweave document");
-    verbose && cat(verbose, "Input pathname: ", pathname);
-
-    pathname2 <- rspPlain(pathname, ..., verbose=verbose);
-    verbose && cat(verbose, "Sweave pathname: ", pathname2);
-
-    pathname3 <- Sweave(pathname);
-    verbose && cat(verbose, "LaTeX pathname: ", pathname3);
-
-    pathname4 <- compileLaTeX(pathname3);
-    verbose && cat(verbose, "Output pathname: ", pathname4);
-
-    verbose && exit(verbose);
-
-    invisible(pathname4);
-  } # rspSweave()
-
 
 
 
@@ -200,26 +167,35 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
 
   # Default RSP compiler
   verbose && enter(verbose, "Preprocessing, translating, and evaluating RSP document");
-  pathname2 <- rspPlain(pathname, response=response, ..., verbose=verbose);
+  res <- rspPlain(pathname, response=response, ..., verbose=verbose);
+  wasFileGenerated <- inherits(res, "character");
+  if (wasFileGenerated) {
+    pathname2 <- res;
+    verbose && cat(verbose, "Output pathname: ", pathname2);
+  }
   verbose && exit(verbose);
 
-
-  pathnameR <- pathname2;
+  # Postprocess file?
   if (!is.null(postProcessor)) {
-    verbose && enter(verbose, "Postprocessing generated document");
-    verbose && cat(verbose, "Input pathname: ", pathname2);
-    pathname3 <- postProcessor(pathname2, ..., verbose=verbose);
-    verbose && cat(verbose, "Output pathname: ", pathname3);
-    verbose && exit(verbose);
-
-    pathnameR <- pathname3;
+    if (wasFileGenerated) {
+      verbose && enter(verbose, "Postprocessing generated document");
+      verbose && cat(verbose, "Input pathname: ", pathname2);
+      pathname3 <- postProcessor(pathname2, ..., verbose=verbose);
+      verbose && cat(verbose, "Output pathname: ", pathname3);
+      verbose && exit(verbose);
+      res <- pathname3;
+    }
   }
 
-  verbose && cat(verbose, "Output document pathname: ", pathnameR);
+  if (wasFileGenerated) {
+    verbose && cat(verbose, "Output document pathname: ", res);
+  } else {
+    verbose && printf(verbose, "Output written to: %s [%d]\n", class(res)[1], res);
+  }
 
   verbose && exit(verbose);
 
-  invisible(pathnameR);
+  invisible(res);
 }) # rsp()
 
 
