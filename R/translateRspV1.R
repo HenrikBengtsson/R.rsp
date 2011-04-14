@@ -43,6 +43,7 @@
 #
 # @keyword file
 # @keyword IO
+# @keyword internal
 #*/###########################################################################
 setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getParent(file), rspLanguage=getOption("rspLanguage"), trimRsp=TRUE, verbose=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

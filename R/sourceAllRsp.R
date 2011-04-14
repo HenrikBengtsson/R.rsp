@@ -42,6 +42,7 @@
 #
 # @keyword file
 # @keyword IO
+# @keyword internal
 #*/###########################################################################
 setMethodS3("sourceAllRsp", "default", function(pattern="[.]rsp$", path=".", extension="html", outputPath=extension, overwrite=FALSE, ..., envir=parent.frame()) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

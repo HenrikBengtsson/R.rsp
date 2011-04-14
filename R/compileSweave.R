@@ -28,6 +28,7 @@
 #
 # @keyword file
 # @keyword IO
+# @keyword internal
 #*/########################################################################### 
 setMethodS3("compileSweave", "default", function(filename, path=NULL, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

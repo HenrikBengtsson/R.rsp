@@ -38,6 +38,7 @@
 #
 # @keyword file
 # @keyword IO
+# @keyword internal
 #*/###########################################################################
 setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspLanguage"), trimRsp=TRUE, validate=TRUE, verbose=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

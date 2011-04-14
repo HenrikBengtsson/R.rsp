@@ -25,6 +25,7 @@
 #
 # @keyword file
 # @keyword IO
+# @keyword internal
 #*/########################################################################### 
 setMethodS3("importRsp", "default", function(...) {
   input <- NULL; # Declare variable to please R CMD check R v2.6.0

@@ -3,8 +3,6 @@
 #
 # \description{
 #   @eval "getDescription(R.rsp)"
-#
-#   For package history, see \code{showHistory(R.rsp)}. 
 # }
 #
 # \section{Requirements}{
@@ -21,16 +19,8 @@
 # \section{To get started}{
 #   To get started, see:
 #   \enumerate{
-#     \item @see "rspToHtml" - To compile an RSP file to HTML.
-#     \item @see "browseRsp" - To start the internal \R web server and
-#       launch the RSP main menu in the default web browser.
-#       From this page you access not only help pages and demos on how 
-#       to use RSP, but also other package RSP pages.
-#     \item @see "sourceRsp" - To process a single RSP page.
-#     \item @see "sourceAllRsp" - To process multiple RSP pages in a batch.
-#     \item @see "parseRsp" - To parse an RSP page in to R code, 
-#       but without evaluating the code.
-#     \item @see "HttpDaemon" - The internal web server.
+#     \item @see "rsp" - To compiles any RSP-embedded document.
+#     \item @see "browseRsp" - Luanches a locally running RSP website powered by an internal web server and RSP-embedded HTML pages.  From this page you access not only help pages and demos on how to use RSP, but also other package RSP pages.
 #   }
 # } 
 #

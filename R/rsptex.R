@@ -42,7 +42,8 @@
 #
 # @keyword file
 # @keyword IO
-#*/########################################################################### 
+# @keyword internal
+#*/###########################################################################
 setMethodS3("rsptex", "default", function(..., pdf=TRUE, force=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

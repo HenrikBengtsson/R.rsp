@@ -30,6 +30,7 @@
 #
 # @keyword file
 # @keyword IO
+# @keyword internal
 #*/########################################################################### 
 setMethodS3("translateRsp", "default", function(filename, path=NULL, ..., force=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

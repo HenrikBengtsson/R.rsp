@@ -30,6 +30,7 @@
 #
 # @keyword file
 # @keyword IO
+# @keyword internal
 #*/########################################################################### 
 setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("pdf", "dvi"), ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

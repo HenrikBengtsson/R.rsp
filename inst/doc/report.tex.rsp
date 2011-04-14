@@ -14,7 +14,7 @@ setOption("R.rsp/vignettes/docVersion", "devel");
 docMode <- getOption("R.rsp/vignettes/docMode", "article");
 docMode <- match.arg(docMode, choices=c("article", "slides"));
 if (docMode == "article") {
-  docOptions <- "letter,12pt,twoside";
+  docOptions <- "letter,12pt";
 } else if (docMode == "slides") {
   docOptions <- "a5paper,12pt,landscape";
 }
@@ -302,8 +302,7 @@ toPNG <- function(name, ..., width=840) {
 %>
 \end{verbatim}
 This function creates a PNG file based on a set of plot commands and returns the so called \emph{fullname} of the image file.  The fullname of an image file is the filename without the filename extension.
-%%  For instance, if the image file is \code{"MyFigure,yeah,cool.png"}, then the fullname is \code{"MyFigure,yeah,cool"}.\\
-
+%%  For instance, if the image file is \code{"MyFigure,yeah,cool.png"}, then the fullname is \code{"MyFigure,yeah,cool"}.
 The following code creates a PNG image file 'figures/MyFigure,yeah,cool.png' and returns \code{"MyFigure,yeah,cool"}:
 \begin{verbatim}
 toPNG("MyFigure,yeah,cool", aspectRatio=0.6, {
@@ -390,7 +389,7 @@ modify the document by removing parts of it and inserting new pieces to it.  For
 --%>
 
 
-\subsection{Hidden comments (\code{<\%--\{anything\}--\%>})}
+\subsection{Hidden (non-nested) comments (\code{<\%--\{anything\}--\%>})}
 The RSP markup \code{<\%--\{anything\}--\%>} will be treated as a comment that can contain \emph{anything} (but \code{--\%>}), which will not be translated and not part of the output, i.e. it will immediately be dropped.  RSP comments are useful for excluding large sections of an RSP document.  It is useful to understand that RSP comments are \emph{greedy}, that is, anything between (and including) the \code{<\%--} and the \emph{first} following \code{--\%>} will be dropped, which means that they cannot be nested.
 For example,
 \begin{rspVerbatim}

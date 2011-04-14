@@ -16,8 +16,6 @@
 
 \description{
   An R Server Page (RSP) is a document that contains both text in a format of choice (HTML, TeX, Rnw, ...) as well as R source code within special tags.  An RSP file can be translated into a so called R servlet, which is an R script that outputs the final document when sourced.  This way documents in any format can be generated dynamically using R, e.g. automatic reports of statistical analysis.  Utilizing an internal cross-platform web server, this package provides dynamic help pages in HTML.  If other packages provide RSP help pages, these are automatically linked to in the RSP main menu.
-
-  For package history, see \code{showHistory(R.rsp)}.
 }
 
 \section{Requirements}{
@@ -34,16 +32,8 @@
 \section{To get started}{
   To get started, see:
   \enumerate{
-    \item \code{\link{rspToHtml}}() - To compile an RSP file to HTML.
-    \item \code{\link{browseRsp}}() - To start the internal \R web server and
-      launch the RSP main menu in the default web browser.
-      From this page you access not only help pages and demos on how
-      to use RSP, but also other package RSP pages.
-    \item \code{\link{sourceRsp}}() - To process a single RSP page.
-    \item \code{\link{sourceAllRsp}}() - To process multiple RSP pages in a batch.
-    \item \code{\link{parseRsp}}() - To parse an RSP page in to R code,
-      but without evaluating the code.
-    \item \code{\link{HttpDaemon}} - The internal web server.
+    \item \code{\link{rsp}}() - To compiles any RSP-embedded document.
+    \item \code{\link{browseRsp}}() - Luanches a locally running RSP website powered by an internal web server and RSP-embedded HTML pages.  From this page you access not only help pages and demos on how to use RSP, but also other package RSP pages.
   }
 }
 
