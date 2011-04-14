@@ -10,10 +10,12 @@
 \alias{compileSweave.default}
 \alias{compileSweave}
 
-\title{Compiles a Sweave LaTeX file}
+\title{Compiles a Sweave file}
 
 \description{
- Compiles a Sweave LaTeX file to either PDF or DVI.
+ Compiles a Sweave file.
+ If Sweave generates a LaTeX file, that is then compiled as well,
+ which in turn generates either a PDF or a DVI document.
 }
 
 \usage{\method{compileSweave}{default}(filename, path=NULL, ..., verbose=FALSE)}
@@ -26,7 +28,7 @@
 }
 
 \value{
-  Returns (invisibly) the pathname of the generated (PDF or DVI) document.
+  Returns (invisibly) the pathname of the generated document.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

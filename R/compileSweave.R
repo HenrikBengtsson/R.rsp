@@ -1,10 +1,12 @@
 ###########################################################################/**
 # @RdocDefault compileSweave
 #
-# @title "Compiles a Sweave LaTeX file"
+# @title "Compiles a Sweave file"
 #
 # \description{
-#  @get "title" to either PDF or DVI.
+#  @get "title".
+#  If Sweave generates a LaTeX file, that is then compiled as well,
+#  which in turn generates either a PDF or a DVI document.
 # }
 #
 # @synopsis
@@ -17,7 +19,7 @@
 # }
 #
 # \value{
-#   Returns (invisibly) the pathname of the generated (PDF or DVI) document.
+#   Returns (invisibly) the pathname of the generated document.
 # }
 #
 # @author
@@ -44,14 +46,23 @@ setMethodS3("compileSweave", "default", function(filename, path=NULL, ..., verbo
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "Compiling Sweave LaTeX document");
+  verbose && enter(verbose, "Compiling Sweave document");
   verbose && cat(verbose, "Sweave pathname: ", pathname);
 
   pathname2 <- Sweave(pathname);
-  verbose && cat(verbose, "LaTeX pathname: ", pathname2);
+  verbose && cat(verbose, "Sweave output pathname: ", pathname2);
 
-  pathname3 <- compileLaTeX(pathname2, ...);
-  verbose && cat(verbose, "Output pathname: ", pathname3);
+  # Compile LaTeX?
+  ext <- gsub(".*[.]([^.]*)$", "\\1", pathname2);
+  isLaTeX <- (tolower(ext) == "tex");
+  if (isLaTeX) {
+    verbose && enter(verbose, "Compiling Sweave-generated LaTeX document");
+    pathname3 <- compileLaTeX(pathname2, ..., verbose=less(verbose, 10));
+    verbose && cat(verbose, "Output pathname: ", pathname3);
+    verbose && exit(verbose);
+  } else {
+    pathname3 <- pathname2;
+  }
 
   verbose && exit(verbose);
 
@@ -61,6 +72,9 @@ setMethodS3("compileSweave", "default", function(filename, path=NULL, ..., verbo
 
 ############################################################################
 # HISTORY:
+# 2011-04-14
+# o Now compileSweave() only calls compileLaTeX() if Sweave outputs
+#   a file with filename extension *.tex (non-case sensitive).
 # 2011-04-12
 # o Added compileSweave().
 # o Created.
