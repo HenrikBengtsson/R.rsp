@@ -19,9 +19,9 @@ index: index.html.rsp
 
 clean:
 	$(RM) *.Rnw
-	$(RM) *.aux *.log *.toc *.tex *.tex.rsp.R
-	$(RM) -r figures/
 	$(RM) index.html.rsp
+	$(RM) *.aux *.log *.toc *.tex *.rsp.R
+	$(RM) -r figures/
 	$(RM) Makefile
 
 

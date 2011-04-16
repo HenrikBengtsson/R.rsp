@@ -43,6 +43,26 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  rVer <- as.character(getRversion());
+
+  # For R v2.12.x and before
+  if (compareVersion(rVer, "2.13.0") < 0) { 
+    tempfile <- function(..., fileext="") {
+      # Try 100 times (should really work the first though)
+      for (kk in 1:100) {
+        pathnameT <- base::tempfile(...);
+        if (fileext != "") {
+          pathnameT <- sprintf("%s%s", pathnameT, fileext);
+          if (!file.exists(pathnameT)) {
+            return(pathnameT);
+          }
+        }
+      } # for (kk ...)
+      stop("Failed to create a non-existing temporary pathname.");
+    } # tempfile()
+  }
+
+
   rspPlain <- function(pathname, response=NULL, ..., verbose=FALSE) {
     # Argument 'response':
     if (is.null(response)) {
@@ -203,6 +223,11 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
 
 ############################################################################
 # HISTORY:
+# 2011-04-16
+# o BUG FIX: On R v2.12.x, rsp(text="...") would throw 'Error ...: unused
+#   argument(s) (fileext = ".txt.rsp")'.  Solved by providing a patched
+#   tempfile() with this feature for R v2.12.x.  Thanks Uwe Ligges for
+#   spotting this.
 # 2011-04-12
 # o Added rsp().
 # o Created.

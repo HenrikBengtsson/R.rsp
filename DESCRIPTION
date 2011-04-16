@@ -1,12 +1,12 @@
 Package: R.rsp
-Version: 0.5.0
-Date: 2011-04-14
+Version: 0.5.1
+Date: 2011-04-16
 Title: Report generation
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
 Depends: R (>= 2.5.0), R.oo (>= 1.8.0), R.utils (>= 1.7.4)
 Suggests: tcltk
-Description: An RSP document is a text-based document containing an R-embedded template of the final document.  An RSP document is preprocessed, parsed and translated into an R script, which when sourced generates the final document.  This way it is possible to dynamically generate reports in plain text, HTML, TeX etc.  It can also be used to enhance other literate programming languanges such as Sweave.  In addition to RSP, this package also provides an internal cross-platform web server and built-in dynamic RS_embedded HTML help pages, which can be launched by browseRsp().  If other packages provide RSP help pages, these are automatically linked to as well.
+Description: An RSP document is a text-based document containing an R-embedded template of the final document.  An RSP document is preprocessed, parsed and translated into an R script, which when sourced generates the final document.  This way it is possible to dynamically generate reports in plain text, HTML, TeX etc.  It can also be used to enhance other literate programming languanges such as Sweave.  In addition to RSP, this package also provides an internal cross-platform web server and built-in dynamic RSP-embedded HTML help pages, which can be launched by browseRsp().  If other packages provide RSP help pages, these are automatically linked to as well.
 License: LGPL (>= 2.1)
 URL: http://www.braju.com/R/
 LazyLoad: TRUE
