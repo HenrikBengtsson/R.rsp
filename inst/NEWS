@@ -269,7 +269,8 @@ o Now the "User Guides and Package Vignettes" documentation is
 
 
 Version: 0.1.0 [2005-07-26]
-o Created.  Since May 2005, there has been a trial version of an 
+o Created.  Since May 2002, there has been a trial version of an 
   RSPEngine class in the R.io package, but from now on this package
   should be used for RSP processing.  The RSPEngine class is made
   deprecated.
+ 
