@@ -462,6 +462,35 @@ Finally, it is important to understand that the paths used for inserting these f
 We advocate using RSP over Sweave, because of its richness and generality to the underlying document format.  However, for Sweave users, we will in this section show how to enhance Sweave with RSP-embedded markup to circumvent a few of Sweave's shortcomes.
 
 
+\subsection{Programmatically setting Sweave code chunk options}
+
+In the R-help thread 'sweave options with variable' on 2011-04-17, it was asked if it is possible to use a variable to control the 'eval' option of a code chunk, e.g. \code{<<eval=needRun>>=} instead of \code{<<eval=TRUE>>=} or \code{<<eval=FALSE>>=}.  As explained in the thread, this is not possible to do in plain Sweave, but using RSP it is straightforward:
+\begin{rspVerbatim}
+<\% needRun <- TRUE \%>
+<<eval=<\%=needRun\%>>>=
+someSlowFunction()
+@
+\end{rspVerbatim}
+Without RSP the following workaround will achieve the same effect:
+\begin{verbatim}
+<<echo=FALSE>>=
+needRun <- TRUE
+@
+
+...
+
+<<thecode,eval=FALSE>>=
+someSlowFunction()
+@
+
+<<echo=FALSE>>=
+if (needRun) {
+<<thecode>>
+}
+@
+\end{verbatim}
+
+
 \subsection{Iterating over a mixture of code and text blocks}
 As mention above, it is not possible to programmatically loop over a mixture of text and code chunks in Sweave.  A workaround for this is to use RSP markup to define the loop.  For example, in Sweave the following\footnote{This example is taken from the Sweave User Manual part of the \pkg{utils} package.} does not work
 \begin{verbatim}

@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.5.2 [2011-04-17]
+o DOCUMENTATION: Updated 'Dynamic LaTeX reports with RSP' vignette. 
+
+
 Version: 0.5.1 [2011-04-16]
 o Now docs/Makefile cleans out all auxillary files.
 o BUG FIX: On R v2.12.x, rsp(text="...") would throw 'Error ...: unused
