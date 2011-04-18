@@ -23,7 +23,7 @@
 #   \item{start}{If @TRUE, the internal \R web server is started if not
 #     already started, otherwise not.}
 #   \item{stop}{If @TRUE, the internal \R web server is stopped, if started.}
-#   \item{...}{Not used.}
+#   \item{...}{Additional arguments passed to @see "utils::browseURL".}
 # }
 #
 # \value{
@@ -33,7 +33,7 @@
 # @author
 #
 # \seealso{
-#   @see "utils::browseURL".
+#   Internally, @see "utils::browseURL" is used to launch the browser.
 # }
 #
 # @keyword file
@@ -75,7 +75,7 @@ setMethodS3("browseRsp", "default", function(url=sprintf("http://%s:%d/%s", host
   }
 
   if (!is.null(url)) {
-    browseURL(url);
+    browseURL(url, ...);
   }
 })
 
@@ -87,6 +87,8 @@ setMethodS3("browseRsp", "Package", function(this, ..., path=sprintf("library/%s
 
 ############################################################################
 # HISTORY:
+# 2011-04-18
+# o Now browseRsp() pass '...' arguments to browseURL().
 # 2011-03-12
 # o Replaced all references to static class HttpDaemon by a single one.
 #   This will make it easier to generalize the code in the future.

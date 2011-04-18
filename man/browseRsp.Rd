@@ -32,7 +32,7 @@
   \item{start}{If \code{\link[base:logical]{TRUE}}, the internal \R web server is started if not
     already started, otherwise not.}
   \item{stop}{If \code{\link[base:logical]{TRUE}}, the internal \R web server is stopped, if started.}
-  \item{...}{Not used.}
+  \item{...}{Additional arguments passed to \code{\link[utils]{browseURL}}.}
 }
 
 \value{
@@ -42,7 +42,7 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  \code{\link[utils]{browseURL}}.
+  Internally, \code{\link[utils]{browseURL}} is used to launch the browser.
 }
 
 

@@ -1,7 +1,8 @@
 Package: R.rsp
 ==============
 
-Version: 0.5.2 [2011-04-17]
+Version: 0.5.2 [2011-04-18]
+o Now browseRsp() pass '...' arguments to browseURL().
 o DOCUMENTATION: Updated 'Dynamic LaTeX reports with RSP' vignette. 
 
 

@@ -15,7 +15,7 @@
 
 
 \description{
-  An RSP document is a text-based document containing an R-embedded template of the final document.  An RSP document is preprocessed, parsed and translated into an R script, which when sourced generates the final document.  This way it is possible to dynamically generate reports in plain text, HTML, TeX etc.  It can also be used to enhance other literate programming languanges such as Sweave.  In addition to RSP, this package also provides an internal cross-platform web server and built-in dynamic RS_embedded HTML help pages, which can be launched by browseRsp().  If other packages provide RSP help pages, these are automatically linked to as well.
+  An RSP document is a text-based document containing an R-embedded template of the final document.  An RSP document is preprocessed, parsed and translated into an R script, which when sourced generates the final document.  This way it is possible to dynamically generate reports in plain text, HTML, TeX etc.  It can also be used to enhance other literate programming languanges such as Sweave.  In addition to RSP, this package also provides an internal cross-platform web server and built-in dynamic RSP-embedded HTML help pages, which can be launched by browseRsp().  If other packages provide RSP help pages, these are automatically linked to as well.
 }
 
 \section{Requirements}{
