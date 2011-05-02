@@ -13,7 +13,8 @@
 #   \item{filename, path}{The filename and (optional) path of the 
 #      LaTeX document to be compiled.}
 #   \item{format}{A @character string specifying the output format.}
-#   \item{...}{Additional arguments passed to @see "tools::texi2dvi".}
+#   \item{clean, quiet}{Additional arguments passed to @see "tools::texi2dvi".}
+#   \item{...}{Not used.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
@@ -32,7 +33,7 @@
 # @keyword IO
 # @keyword internal
 #*/########################################################################### 
-setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("pdf", "dvi"), ..., verbose=FALSE) {
+setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("pdf", "dvi"), clean=FALSE, quiet=TRUE, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -61,7 +62,7 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
 
   verbose && enter(verbose, "Calling tools::texidvi()");
   pdf <- (format == "pdf");
-  tools::texi2dvi(pathname, pdf=pdf);
+  tools::texi2dvi(pathname, pdf=pdf, clean=clean, quiet=quiet);
   verbose && exit(verbose);
 
   verbose && exit(verbose);
@@ -72,6 +73,8 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
 
 ############################################################################
 # HISTORY:
+# 2011-04-19
+# o Added arguments 'clean' and 'quiet' to compileLaTeX().
 # 2011-04-12
 # o Added compileLaTeX().
 # o Created.

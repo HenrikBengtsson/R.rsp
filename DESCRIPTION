@@ -1,7 +1,7 @@
 Package: R.rsp
-Version: 0.5.2
-Date: 2011-04-18
-Title: Report generation
+Version: 0.5.3
+Date: 2011-04-19
+Title: Dynamic generation of scientific reports
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
 Depends: R (>= 2.5.0), R.oo (>= 1.8.0), R.utils (>= 1.7.4)
