@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.5.4 [2011-05-05]
+o ROBUSTNESS: Internal sourceWithTrim() no longer uses partial
+  argument when calling source().
+
+
 Version: 0.5.3 [2011-04-19]
 o Added arguments 'clean' and 'quiet' to compileLaTeX().
 

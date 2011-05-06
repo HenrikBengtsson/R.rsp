@@ -5,7 +5,7 @@ setMethodS3("sourceWithTrim", "default", function(code, echo=TRUE, prompt=getOpt
   }, add=TRUE);
 
   magicPrompt <- "<RSP-MAGIC-RSP>";
-  bfr <- capture.output(source(con, echo=echo, prompt=magicPrompt));
+  bfr <- capture.output(source(con, echo=echo, prompt.echo=magicPrompt));
 
   if (trim) {
     pattern <- sprintf("^%s", magicPrompt);
@@ -27,6 +27,8 @@ setMethodS3("sourceWithTrim", "default", function(code, echo=TRUE, prompt=getOpt
 
 ##############################################################################
 # HISTORY:
+# 2011-05-05
+# o Now using full 'prompt.echo' argument name in call to base:source().
 # 2011-03-15
 # o Added sourceWithTrim().
 # o Created.
