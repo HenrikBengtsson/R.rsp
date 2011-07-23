@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.6.0 [2011-07-23]
+o Added a namespace to the package, which will be more or less
+  a requirement in the next major release of R.
+
+
 Version: 0.5.4 [2011-05-05]
 o ROBUSTNESS: Internal sourceWithTrim() no longer uses partial
   argument when calling source().
