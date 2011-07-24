@@ -1,6 +1,16 @@
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# IMPORTS
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Packages to be imported
 import(R.oo)
 
+# importFrom(R.utils, cat)
+import(R.utils)
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# EXPORTS
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Object that must exported explicitly
 export(.conflicts.OK) 
 
