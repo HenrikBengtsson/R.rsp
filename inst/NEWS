@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.6.1 [2011-07-24]
+o Now package exports '.conflicts.OK' in order to avoid
+  several warnings when loading package.
+
+
 Version: 0.6.0 [2011-07-23]
 o Added a namespace to the package, which will be more or less
   a requirement in the next major release of R.
