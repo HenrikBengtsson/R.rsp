@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.6.2 [2011-07-27]
+o CLEANUP: Replaced all references to 'R Server Pages' with RSP.
+o RSP PAGES: Minor cleanup and harmonization.
+
+
 Version: 0.6.1 [2011-07-24]
 o Now package exports '.conflicts.OK' in order to avoid
   several warnings when loading package.

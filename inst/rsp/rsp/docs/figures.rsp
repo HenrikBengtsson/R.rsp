@@ -10,7 +10,7 @@ path <- getPath(response);
 png <- System$findGraphicsDevice();
 %>
 
-<%title="R Server Pages - Figures"%>
+<%title="RSP - Figures"%>
 
 <html>
 <head>

@@ -19,7 +19,7 @@ escapeHtml <- function(text) {
 
 <%domainPath="../../";%>
 
-<%title="R Server Pages Documentation"%>
+<%title="RSP Documentation"%>
 
 <html>
 <%@include file="../../src/simpleHead.rsp"%>
@@ -36,7 +36,7 @@ by Henrik Bengtsson 2002-<%=format(Sys.Date(), "%Y")%>.
 <em>R Server Pages</em>, or short <em>RSPs</em>, is an R technology that allows developers to dynamically generate documents of any format, e.g. HTML and LaTeX, but also R code.  It allows R code to be embedded into static content.
 </p>
 <p>
-An RSP is <em>translated</em> into an <em>R servlet</em>, which consists of standard R code, by an RSP translator.  When the servlet is evaluated it outputs the final document.  This process is illustrated in Figure&nbsp;1.  
+An RSP is <em>translated</em> into an <em>R script</em>, which consists of standard R code, by an RSP translator.  When the R script is evaluated it outputs the final document.  This process is illustrated in Figure&nbsp;1.  
 </p>
 <center>
  <table style="border: 0px; margin: 2ex;">
@@ -44,29 +44,37 @@ An RSP is <em>translated</em> into an <em>R servlet</em>, which consists of stan
    <td></td><td><em>translation</em></td><td></td><td><em>evaluation</em></td><td></td>
   </tr> 
   <tr>
-   <td>RSP</td><td>=></td><td>R servlet</td><td>=></td><td>final document</td>
+   <td>RSP</td><td>=></td><td>R script</td><td>=></td><td>final document</td>
   </tr> 
   <tr style="font-size: small;">
-   <td>(index.rsp)</td><td></td><td>(index.rsp.R)</td><td></td><td>(index.html)</td>
+   <td>(index.html.rsp)</td><td></td><td>(index.html.rsp.R)</td><td></td><td>(index.html)</td>
   </tr> 
  </table>
 </center>
 <div style="flush: left; font-style: italic; margin: 1ex; margin-bottom: 2ex;">
-Figure 1. Processing of an RSP document.  When processed, an RSP document is first translated to an R servlet of plain R code, which is in turn evaluated and outputs the final document.  The filenames within parentesis shows an example where an RSP file is translated into a HTML file.
+Figure 1. Processing of an RSP document.  When processed, an RSP document is first translated to a script of plain R code, which is in turn evaluated and outputs the final document.  The filenames within parentesis shows an example where an RSP file is translated into a HTML file.
 </div>
 
+<%--
 The reason for using the names "R Server Page" and "R servlet" are their close similarity to "Java Server Page" (JSP) and "Java Servlet" used to dynamically generate HTML pages on web servers [1].
+--%>
 
 <p>
 An example of an RSP is:
 </p>
-<pre class="RspScriptlet"><%@include file="incl/simpleExample.rsp" verbatim="TRUE"%></pre>
+<pre class="RspScriptlet"><%@include file="incl/simpleExample.html.rsp" verbatim="TRUE"%></pre>
 <p>
-which when translated becomes an R servlet with R source code:
+which when translated becomes a script with R source code:
 <%
-rCode <- translateRsp("incl/simpleExample.rsp", path=getPath(page));
+pathname <- translateRsp("incl/simpleExample.html.rsp", path=getPath(page));
+rCode <- readLines(pathname);
+# Drop header
+drop <- 1:grep("^#=", rCode)[1];
+rCode <- rCode[-drop];
+# Drop comments
+rCode <- rCode[grep("^#+", rCode, invert=TRUE)];
+rCode <- paste(rCode, collapse="\n");
 rCode <- escapeHtml(rCode);
-rCode <- gsub("^.*####\n", "", rCode);
 rCode <- strsplit(rCode, split="\n")[[1]];
 rCode <- gsub("^# .*", "", rCode);
 rCode <- unlist(sapply(rCode, FUN=substring, first=c(1,76), last=c(75,150)));
@@ -75,9 +83,9 @@ rCode <- paste(rCode, collapse="\n");
 %>
 <pre class="RspScriptlet"><%=rCode%></pre>
 <p>
-(the variable <code>response</code> is an instance of class RspResponse, not needed to be understood in order to write RSP:s).  When the R servlet is evaluated, it outputs:
+(the variable <code>response</code> is an instance of class RspResponse, not needed to be understood in order to write RSP:s).  When the R script is evaluated, it outputs:
 </p>
-<div class="HtmlCode"><%@include file="incl/simpleExample.rsp"%></div>
+<div class="HtmlCode"><%@include file="incl/simpleExample.html.rsp"%></div>
 </div>
 
 <h2>RSP Syntax</h2>
@@ -100,7 +108,7 @@ Static data is written to the output as is.
 
 <h3>RSP Directives</h3>
 <p>
-Directives controls how the RSP translator generates the R servlet code.
+Directives controls how the RSP translator generates the R script.
 </p>
 
 <h4>The include directive</h4>
@@ -144,6 +152,3 @@ To be implemented!
 <%@include file="../../src/simpleFooter.rsp"%>
 </body>
 </html>
-
-
-

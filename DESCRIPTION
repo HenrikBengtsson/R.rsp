@@ -1,6 +1,6 @@
 Package: R.rsp
-Version: 0.6.1
-Date: 2011-07-24
+Version: 0.6.2
+Date: 2011-07-27
 Title: Dynamic generation of scientific reports
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>

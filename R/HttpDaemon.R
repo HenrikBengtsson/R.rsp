@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 #
-#  A minimalistic HTTP daemon (web server) that preprocesses R Server Pages.
+#  A minimalistic HTTP daemon (web server) that also preprocesses RSP.
 # }
 # 
 # @synopsis
