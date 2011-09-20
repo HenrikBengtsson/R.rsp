@@ -18,7 +18,7 @@
 <ul>
  <li><a href="systemDetails.rsp">System details</a></li>
  <li><a href="environments">Current search path</a></li>
- <li><a href="packages.rsp">Installed packages</a> (first time it may be slow)</li>
+ <li><a href="packages.rsp">Installed packages</a></li>
  <li><a href="packageDetails.rsp">Package details form</a></li>
 </ul>
 

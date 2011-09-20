@@ -32,7 +32,6 @@ packages[,"LibPath"] <- footnotes[match(packages[,"LibPath"], libPaths)];
 packages[,"LibPath"] <- paste("<a href=\"#LibPath", packages[,"LibPath"], "\">", packages[,"LibPath"], "</a>", sep="");
 # Reorder the columns
 cols <- colnames(packages);
-print(cols)
 lastCols <- c("Bundle", "Contains", "Priority", "Imports", "Built");
 cols <- c(setdiff(cols, lastCols), lastCols);
 # Drop non existing columns
