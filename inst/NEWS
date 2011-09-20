@@ -1,6 +1,13 @@
 Package: R.rsp
 ==============
 
+Version: 0.6.3 [2011-09-21]
+o BUG FIX: HttpDaemon$getRootPaths() did not handle paths with
+  spaces correctly.  Added a getRootPaths() Tcl function to
+  instead handle this, which is called by the former.
+o RSP PAGES: Added clarifications to the main index.rsp page.
+
+
 Version: 0.6.2 [2011-07-27]
 o CLEANUP: Replaced all references to 'R Server Pages' with RSP.
 o RSP PAGES: Minor cleanup and harmonization.

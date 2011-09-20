@@ -91,13 +91,19 @@ In addition to the above, the following root paths were found to contain RSP plu
 
 <ol>
 <% count <- 0 %>
+<% paths <- NULL %>
 <% for (rootPath in rootPaths) { %>
 <% if (isAbsolutePath(rootPath)) {
      path <- rootPath;
    } else {
      path <- file.path(HttpDaemon$pwd, rootPath);
    }
-
+   paths <- c(paths, path);
+%>
+ <li>
+   Plugin root path: <%=rootPath%>
+   <ol style="list-style-type: lower-alpha">
+<%  
    pathname <- file.path(path, ".rspPlugins");
    if (isFile(pathname)) {
      urls <- readLines(pathname);
@@ -110,37 +116,33 @@ In addition to the above, the following root paths were found to contain RSP plu
        url[1:3];
      })
 %>
-     <li>
-     Plugin root path: <%=rootPath%>
-     <ol style="list-style-type: lower-alpha">
   <% for (url in urls) { %>
        <li>
         <a href="/<%=url[1]%>"><%=url[2]%></a>
         <% if (nchar(url[3]) > 0) { %> - <em><%=url[3]%></em><% } %>
        </li>
-  <% } %>
+  <% } # for (url ...) %>
      </li>
+<% } else { %>
+    No <code>.rspPlugins</code> file.
+<% } %>
    </ol>
  </li>
-<% } %>
-<% } %>
+<% } # for (rootPath ...) %>
 </ol>
 
 <% if (count == 0) { %>
 <p>
-<em>None.</em>
+<em>No RSP plugins detected.</em>
 </p>
 <% } %>
 
 
 <small>
-TIPS: To add a plugin, put a <code>.rspPlugins</code> file in a directory and add that directory as a <em>root path</em> of the HTTP Daemon, e.g. <code>HttpDaemon$appendRootPaths(path)</code>.
+TIPS: To add a plugin, put a <code>.rspPlugins</code> file containing one URL per line in a directory and add that directory as a <em>root path</em> of the HTTP Daemon, e.g. <code>HttpDaemon$appendRootPaths(path)</code>.  To list current root paths, use <code>HttpDaemon$getRootPaths()</code>.
 </small>
 
 
 <%@include file="src/simpleFooter.rsp"%>
 </body>
 </html>
-
-
-

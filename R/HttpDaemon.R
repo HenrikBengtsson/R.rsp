@@ -411,9 +411,8 @@ setMethodS3("getPort", "HttpDaemon", function(static, ...) {
 setMethodS3("getRootPaths", "HttpDaemon", function(static, ...) {
   # If server is started, updated rootPaths from the servers settings
   if (isStarted(static)) {
-    config <- getConfig(static);
-    paths <- paste(as.character(config$roots), collapse=";", sep=" ");
-    paths <- unlist(strsplit(paths, split=";"));
+    paths <- tcltk::tcl("getRootPaths");
+    paths <- as.character(paths);
     static$.rootPaths <- paths;
   }
 
@@ -869,6 +868,10 @@ setMethodS3("writeResponse", "HttpDaemon", function(static, ...) {
 
 ###############################################################################
 # HISTORY:
+# 2011-09-21
+# o BUG FIX: HttpDaemon$getRootPaths() did not handle paths with
+#   spaces correctly.  Added a getRootPaths() Tcl function to
+#   instead handle this, which is called by the former.
 # 2011-03-12
 # o CLEANUP: Replaced on HttpDaemon$<method>(...) with <method>(static, ...).
 # 2011-03-08

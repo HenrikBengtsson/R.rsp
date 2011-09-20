@@ -253,13 +253,8 @@ proc insertRootPath {path} {
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Method to get and set list of root directories
+# Method to set new list of root directories
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-proc getRootPaths {} {
-  global config
-  return [split $config(roots) ";"]
-}
-
 proc setRootPaths {paths} {
   global config
   set config(roots) $paths
@@ -278,7 +273,7 @@ proc push { sock } {
   # Scan all root directories for the file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   set dontcache false
-  foreach {path} [split $config(roots) ";"] {
+	foreach {path} [split $config(roots) ";"] {
     # a. Create a potential pathname
 		set mypath [ URLtoString "$path$data(url)"]
     regsub -all "\\.UP\\./" $mypath "../" mypath
@@ -535,8 +530,6 @@ proc bgerror {msg} {
 
 ###############################################################################
 # HISTORY:
-# 2011-09-21
-# o Added getRootPaths() which returns a Tcl array.
 # 2009-09-16
 # o Updated HTTP header from 'HTTP/1.x [...]' to 'HTTP/1.1 [...]'.  Thanks
 #   Ryan Bressler (Institute for Systems Biology, Seattle) for this.
