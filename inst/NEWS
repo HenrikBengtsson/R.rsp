@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.6.4 [2011-10-21]
+o Updated the package's DESCRIPTION with an example of the RSP syntax.
+
+
 Version: 0.6.3 [2011-09-21]
 o BUG FIX: HttpDaemon$getRootPaths() did not handle paths with
   spaces correctly.  Added a getRootPaths() Tcl function to
