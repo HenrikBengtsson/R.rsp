@@ -1,6 +1,12 @@
 Package: R.rsp
 ==============
 
+Version: 0.6.5 [2011-11-01]
+o FIX: The package would not load in R v2.15.0 devel, because it
+  tried to access restart(), which has been dropped.  This was
+  a non-critical error and the fix was trivial.
+  
+
 Version: 0.6.4 [2011-10-21]
 o Updated the package's DESCRIPTION with an example of the RSP syntax.
 

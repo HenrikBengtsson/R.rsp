@@ -2,8 +2,11 @@
 # turned into default functions by setMethodS3().
 
 flush <- appendVarArgs(flush);
-restart <- appendVarArgs(restart);
 write <- appendVarArgs(write);
+if (exists("restart", mode="function")) {
+  restart <- NULL; rm("restart"); # To please R CMD check on R (>= 2.15.0)
+  restart <- appendVarArgs(restart);
+}
 
 
 ############################################################################
