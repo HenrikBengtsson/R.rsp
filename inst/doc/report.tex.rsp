@@ -312,7 +312,7 @@ The function returns the filename without the filename extension, i.e. \code{"my
 
 
 %% \subsection{Brief on including image files in LaTeX}
-When insert a figure in LaTeX, it is recommended to do so without specifying neither the path nor the filename extension of the image file, e.g. \code{{\textbackslash}includegraphics\{MyFigure\}}.
+When inserting a figure in LaTeX, it is recommended to do so without specifying neither the path nor the filename extension of the image file, e.g. \code{{\textbackslash}includegraphics\{MyFigure\}}.
 In order for this to work, one must specify the "image search path", e.g.
 \begin{verbatim}
 \graphicspath{{figures/}{figures/external/}}
@@ -332,9 +332,9 @@ which is preferably added to the beginning of the LaTeX file.  This tells LaTeX 
  \label{fig:MyFigure}
 \end{figure}
 
-With this setup, it is possible to create and embed a figure with the following tidy markup:
+With this setup, it is possible to create and embed a figure as the one in Figure~\ref{fig:MyFigure} with the following tidy markup:
 \begin{rspVerbatim}
-{\bs}includegraphics\{<\%=toPDF(name="MyFigure,yeah,cool", aspectRatio=0.6, \{
+{\bs}includegraphics\{<\%=toPDF("MyFigure,yeah,cool", aspectRatio=0.6, \{
   curve(dnorm, from=-5, to=+5);
 \})\%>\}
 \end{rspVerbatim}
@@ -369,7 +369,7 @@ We use a trailing (empty) RSP comment (\code{<\%----\%>}) to escape the followin
 \begin{rspVerbatim}
 <\% myTemplate(n=3) \%>
 \end{rspVerbatim}
-which produces '<% myTemplate(n=3) %>'.  Without the trailing RSP comment, the final document would contain a whitespace after the period and before the closing single-quote.
+which produces '<% myTemplate(n=3) %>'.  Without the trailing RSP comment, the final document would contain a whitespace after the period (and before the closing single-quote in the previous sentence).
 A template can also be used within for loops.  For example:
 \begin{rspVerbatim}
 {\bs}begin\{itemize\}
