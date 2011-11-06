@@ -183,6 +183,20 @@ The PDF (\code{report.pdf}) will be available in the current directory of R (see
   -------------------------------------------------------------------%>
 \section{The RSP markup language}
 
+\subsection{Inlining values of variables (\code{<\%=\{code\}\%>})}
+The RSP markup \code{<\%=\{code\}\%>} evaluates the code (without inserting it into the document) and inserts the character representation\footnote{The \emph{character representation} of an object \code{x} is what \code{as.character(x)} gives.} of the returned object.  For instance,
+\begin{rspVerbatim}
+Today's date is <\%=Sys.Date()\%>
+\end{rspVerbatim}
+would produce the string 'Today's date is <%=Sys.Date()%>'.
+If inlining multiple values, they are all pasted together without any separator.  For example,
+\begin{rspVerbatim}
+The letters of the alphabet are '<\%=LETTERS\%>'
+\end{rspVerbatim}
+produces 'The letters the alphabet are '<%=LETTERS%>'.
+To separate the elements with commas, use \code{<\%=paste(LETTERS, collapse=", ")\%>}.  Alternatively, use \code{<\%=hpaste(LETTERS)\%>} to output '<%=hpaste(LETTERS)%>'\footnote{The \code{hpaste()} function of \pkg{R.utils} provides "human-readable" pasting of vectors.}.
+
+
 \subsection{Evaluating code (\code{<\%\{code\}\%>})}
 The RSP markup \code{<\%\{code\}\%>} evaluates the code (without inserting it into the document).  For instance,
 \begin{rspVerbatim}
@@ -243,20 +257,6 @@ type <- "horse"
 %>
 \end{verbatim}
 Note that with this construct it is \emph{not} possible the capture the \emph{output}, only the code.
-
-
-\subsection{Inlining values of variables (\code{<\%=\{code\}\%>})}
-The RSP markup \code{<\%=\{code\}\%>} evaluates the code (without inserting it into the document) and inserts the character representation\footnote{The \emph{character representation} of an object \code{x} is what \code{as.character(x)} gives.} of the returned object.  For instance,
-\begin{rspVerbatim}
-There are <\%=n\%> red <\%=type\%>s
-\end{rspVerbatim}
-would produce the string 'There are <%=n%> red <%=type%>s'.
-If inlining multiple values, they are all pasted together without any separator.  For example,
-\begin{rspVerbatim}
-The letters of the alphabet are '<\%=LETTERS\%>'
-\end{rspVerbatim}
-produces 'The letters the alphabet are '<%=LETTERS%>'.
-To separate the elements with commas, use \code{<\%=paste(LETTERS, collapse=", ")\%>}.  Alternatively, use \code{<\%=hpaste(LETTERS)\%>} to output '<%=hpaste(LETTERS)%>'\footnote{The \code{hpaste()} function of \pkg{R.utils} provides "human-readable" pasting of vectors.}.
 
 
 
