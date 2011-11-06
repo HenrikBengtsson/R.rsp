@@ -4,6 +4,7 @@ Package: R.rsp
 Version: 0.6.7 [2011-11-06]
 o Updated code and vignettes to utilize evalCapture() of R.utils v1.9.2.
 o DEPRECATED: evalWithEcho(); use evalCapture() instead.
+o CLEANUP: Dropped the old 'The R.rsp package v0.3.0' vignette.
 
 
 Version: 0.6.6 [2011-11-05]

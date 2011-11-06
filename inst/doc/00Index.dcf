@@ -2,6 +2,3 @@ Title: Dynamic LaTeX reports with RSP
 Description: Describes how to compile LaTeX document with RSP markup.
 Files: report.pdf, report.tex.rsp
 
-Title: The R.rsp package v0.3.0
-Description: Describes how launch and use the built-in HTTP web server, which supports RSP markup.
-Files: R.rsp-package.pdf
