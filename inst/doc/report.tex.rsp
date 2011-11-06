@@ -98,7 +98,7 @@ docVersion <- match.arg(docVersion, choices=c("release", "devel"));
 # Set default graphics options
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Use greater objects by default
-setOption("devNew/args/par", list(cex=2, lwd=2));
+setOption("devNew/args/par", list(lwd=2));
 
 # Change the default dimensions for PNGs
 devOptions("png", width=840)
@@ -289,21 +289,18 @@ Since the above RSP markups are powerful enough, there is no need for a specific
 
 
 %% \subsection{Creating image files}
-The \code{toPNG()} function of the \pkg{R.utils} package is useful for creating an image file from a set of plot commands.  For instance,
+The \code{toEPS()}, \code{toPDF()} and \code{toPNG()} functions of the \pkg{R.utils} package are useful when creating image files that are recognized by \LaTeX.  For instance,
 \begin{verbatim}
 # Use greater objects by default
-setOption("devNew/args/par", list(cex=2, lwd=2));
+setOption("devNew/args/par", list(lwd=2));
 
-# Change the default dimensions for PNGs
-devOptions("png", width=840)
-
-toPNG("myFigure,yeah,cool", aspectRatio=0.6, { 
+toPDF("myFigure,yeah,cool", aspectRatio=0.6, { 
   curve(dnorm, from=-5, to=+5)
 })
 \end{verbatim}
-creates a PNG file named \code{myFigure,yeah,cool.png} displaying the Guassian density distribution, an image file that is 840 pixels wide and 0.6*840=504 pixels high.
+creates a PDF image file named \code{myFigure,yeah,cool.png} whose height is 60\% of its width and displays the Guassian density distribution.
 The function returns the filename without the filename extension, i.e. \code{"myFigure,yeah,cool"}.
-  Moreover, (by default) \code{toPNG()} writes the image file to the figures/ directory.  For more information, see \code{help("toPNG")}.\\
+  Moreover, (by default) these functions writes the image file to the figures/ directory.  For more information, see \code{help("toPDF")}.\\
 
 
 %% \subsection{Brief on including image files in LaTeX}
@@ -314,12 +311,11 @@ In order for this to work, one must specify the "image search path", e.g.
 \end{verbatim}
 which is preferably added to the beginning of the LaTeX file.  This tells LaTeX to search for image files in directory figures/ as well as directory figures/external/.   Moreover, when leaving out the filename extension, LaTeX will automatically search for image files with different filename extensions, e.g. \code{*.png}, \code{*.eps}, and \code{*.pdf}.
 
-
 %% \subsection{Generating and embedding figures}
 \begin{figure}[htp]
  \begin{center}
  \resizebox{0.70\textwidth}{!}{%
-  \includegraphics{<%=toPNG("MyFigure,yeah,cool", aspectRatio=0.6, {
+  \includegraphics{<%=toPDF("MyFigure,yeah,cool", aspectRatio=0.6, {
    curve(dnorm, from=-5, to=+5);
   })%>}
  }%
@@ -330,7 +326,7 @@ which is preferably added to the beginning of the LaTeX file.  This tells LaTeX 
 
 With this setup, it is possible to create and embed a figure with the following tidy markup:
 \begin{rspVerbatim}
-{\bs}includegraphics\{<\%=toPNG(name="MyFigure,yeah,cool", aspectRatio=0.6, \{
+{\bs}includegraphics\{<\%=toPDF(name="MyFigure,yeah,cool", aspectRatio=0.6, \{
   curve(dnorm, from=-5, to=+5);
 \})\%>\}
 \end{rspVerbatim}
@@ -338,6 +334,7 @@ After the RSP code has been processed, and the image file has been created, the 
 \begin{verbatim}
 \includegraphics{MyFigure,yeah,cool}
 \end{verbatim}
+Note that by replacing \code{toPDF()} with \code{toPNG()} (\code{toEPS()}), a PNG (EPS) image file is inserted instead.
 
 
 
@@ -423,10 +420,7 @@ The \emph{insert} directive can be used to insert the content of a file into the
  This makes it possible to reuse commonly used R scripts, text paragraphs, page layouts and so on.
 For instance, assume that the file 'R/graphics.R' contains
 \begin{verbatim}
-setOption("devNew/args/par", list(cex=2, lwd=2));
-toPNG <- function(name, ..., width=840) {
- devEval(type="png", width=width, name=name, ..., force=TRUE)$fullname;
-}
+setOption("devNew/args/par", list(lwd=2));
 \end{verbatim}
 Then it is possible to insert its content into a \code{<\%\{code\}\%>} block\footnote{Note, if the insert directive is not wrapped up in a \code{<\%\{code\}\%>} block, the inserted source code will be inserted as text to the document rather than as code.} of the main RSP-embedded document by:
 \begin{rspVerbatim}
@@ -439,10 +433,7 @@ which "updates" the main document to:
 \begin{rspVerbatim}
 <\%
 # Graphics settings
-setOption("devNew/args/par", list(cex=2, lwd=2));
-toPNG <- function(name, ..., width=840) \{
- devEval(type="png", width=width, name=name, ..., force=TRUE)$fullname;
-\}
+setOption("devNew/args/par", list(lwd=2));
 \%>
 \end{rspVerbatim}
 In addition to the \code{file} attribute, the insert directive also takes an optional \code{path} attribute, which provides an alternative for specifying the path, e.g. \code{<\%\#insert file="graphics.R" path="R/"\%>}.\\
