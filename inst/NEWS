@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.6.6 [2011-11-05]
+o Updated the R.rsp vignette to utilize toPNG() of R.utils v1.9.1.
+
+
 Version: 0.6.5 [2011-11-01]
 o FIX: The package would not load in R v2.15.0 devel, because it
   tried to access restart(), which has been dropped.  This was
