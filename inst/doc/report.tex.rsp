@@ -194,34 +194,20 @@ type <- "horse"
 evaluates the code such that \code{n == 3} and \code{type == "horse"} afterward.
 
 
-\subsection{Evaluating and embedding code (\code{<\%:\{code\}\%>})}
-Just as \code{<\%\{code\}\%>}, the RSP markup \code{<\%:\{code\}\%>} also evaluates code, but in addition it also inserts the code verbatim into the document.  For instance,
-\begin{rspVerbatim}
-<\%:
-n <- 3
-type <- "horse"
-%>
-\end{rspVerbatim}
-evaluates the code and insert the following into the output document:
-\begin{verbatim}
-<%:
-n <- 3
-type <- "horse"
-%>
-\end{verbatim}
-Formatting of the inserted code has to be taken care of by LaTeX.  For instance, here we have explicitly wrapped the RSP markup inside a \code{{\textbackslash}begin\{verbatim\}...{\textbackslash}end\{verbatim\}} block.
-
 
 %% \clearpage
 \subsection{Capturing evaluated code (\code{<\%=evalCapture(\{code chunk\})\%>})}
-The \code{evalCapture()} function allows us to evaluate, embed and echo the output of a code chunk\footnote{\code{\{code chunk\}} must be a complete and valid R expression, because \code{evalCapture()} is a function call.}.  For example,
+The \code{evalCapture()} function allows us to evaluate, embed and echo the output of a code chunk\footnote{\code{\{code chunk\}} must be a complete and valid R expression, because \code{evalCapture()} is a function call.}. 
+Formatting of the capture has to be taken care of by LaTeX.  Below we have explicitly wrapped the RSP markup inside a \code{{\textbackslash}begin\{verbatim\}...{\textbackslash}end\{verbatim\}} block.
+For example,
 \begin{rspVerbatim}
 <\%=evalCapture(\{
 for (kk in 1:3) \{
   printf("Iteration #%d{\bs}n", kk)
 \}
+
 print(Sys.time())
-type <- "horse"
+type <- "horse";  # Comments are dropped
 type
 \})%>
 \end{rspVerbatim}
@@ -231,13 +217,32 @@ produces
 for (kk in 1:3) {
   printf("Iteration #%d\n", kk)
 }
+
 print(Sys.time())
-type <- "horse"
+type <- "horse";  # Comments are dropped
 type
 })%>
 \end{verbatim}
-Note that code is parsed and formatted by the R parser, meaning that indentation, spacing and so on are \emph{not} preserved when echoing this way.  This is also why comments, semicolons and other code constructs are dropped from the code.
 By adding arguments \code{code=FALSE} and/or \code{output=FALSE} one can control whether the deparsed source code and/or the output of each subexpression is captured.
+Note that code is parsed and formatted by the R parser, meaning that indentation, empty lines, spacing and so on are \emph{not} preserved when echoing this way.  This is also why comments, semicolons and other code constructs are dropped from the code.
+
+
+\subsection{Evaluating and embedding code verbatim (\code{<\%:\{code\}\%>})}
+Just as \code{<\%\{code\}\%>}, the RSP markup \code{<\%:\{code\}\%>} also evaluates code, but in addition it also inserts the code verbatim into the document.  For instance,
+\begin{rspVerbatim}
+<\%:
+n <- 3;  # A comment
+type <- "horse"
+%>
+\end{rspVerbatim}
+evaluates the code and insert the following into the output document:
+\begin{verbatim}
+<%:
+n <- 3;  # A comment
+type <- "horse"
+%>
+\end{verbatim}
+Note that with this construct it is \emph{not} possible the capture the \emph{output}, only the code.
 
 
 \subsection{Inlining values of variables (\code{<\%=\{code\}\%>})}
@@ -292,7 +297,7 @@ Since the above RSP markups are powerful enough, there is no need for a specific
 
 
 %% \subsection{Creating image files}
-The \code{toEPS()}, \code{toPDF()} and \code{toPNG()} functions of the \pkg{R.utils} package are useful when creating image files that are recognized by \LaTeX.  For instance,
+The \code{toEPS()}, \code{toPDF()} and \code{toPNG()} functions of the \pkg{R.utils} package are useful when creating image files that are recognized by LaTeX.  For instance,
 \begin{verbatim}
 # Use greater objects by default
 setOption("devNew/args/par", list(lwd=2));
