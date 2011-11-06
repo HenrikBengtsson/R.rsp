@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.6.7 [2011-11-06]
+o Updated code and vignettes to utilize evalCapture() of R.utils v1.9.2.
+o DEPRECATED: evalWithEcho(); use evalCapture() instead.
+
+
 Version: 0.6.6 [2011-11-05]
 o Updated the R.rsp vignette to utilize toPNG() of R.utils v1.9.1.
 
