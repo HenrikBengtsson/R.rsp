@@ -237,7 +237,7 @@ type <- "horse";  # Comments are dropped
 type
 })%>
 \end{verbatim}
-By adding arguments \code{code=FALSE} and/or \code{output=FALSE} one can control whether the deparsed source code and/or the output of each subexpression is captured.
+By adding arguments \code{code=FALSE} and/or \code{output=FALSE} one can control whether the deparsed source code and/or the output of each subexpression is captured or not.
 Note that code is parsed and formatted by the R parser, meaning that indentation, empty lines, spacing and so on are \emph{not} preserved when echoing this way.  This is also why comments, semicolons and other code constructs are dropped from the code.
 
 
@@ -297,7 +297,7 @@ Since the above RSP markups are powerful enough, there is no need for a specific
 
 
 %% \subsection{Creating image files}
-The \code{toEPS()}, \code{toPDF()} and \code{toPNG()} functions of the \pkg{R.utils} package are useful when creating image files that are recognized by LaTeX.  For instance,
+The \code{toPDF()} and \code{toPNG()} functions of the \pkg{R.utils} package are useful when creating image files that are recognized by LaTeX.  For instance,
 \begin{verbatim}
 # Use greater objects by default
 setOption("devNew/args/par", list(lwd=2));
@@ -317,7 +317,7 @@ In order for this to work, one must specify the "image search path", e.g.
 \begin{verbatim}
 \graphicspath{{figures/}{figures/external/}}
 \end{verbatim}
-which is preferably added to the beginning of the LaTeX file.  This tells LaTeX to search for image files in directory figures/ as well as directory figures/external/.   Moreover, when leaving out the filename extension, LaTeX will automatically search for image files with different filename extensions, e.g. \code{*.png}, \code{*.eps}, and \code{*.pdf}.
+which is preferably added to the beginning of the LaTeX file.  This tells LaTeX to search for image files in directory figures/ as well as directory figures/external/.   Moreover, when leaving out the filename extension, LaTeX will automatically search for image files with different filename extensions, e.g. \code{*.png} and \code{*.pdf}.
 
 %% \subsection{Generating and embedding figures}
 \begin{figure}[htp]
@@ -342,7 +342,7 @@ After the RSP code has been processed, and the image file has been created, the 
 \begin{verbatim}
 \includegraphics{MyFigure,yeah,cool}
 \end{verbatim}
-Note that by replacing \code{toPDF()} with \code{toPNG()} (\code{toEPS()}), a PNG (EPS) image file is inserted instead.
+Note that by replacing \code{toPDF()} with \code{toPNG()}, a PNG image file is inserted instead, which can dramatically reduce the size of the final PDF document when for instance a high-density scatter plot is used.
 
 
 
