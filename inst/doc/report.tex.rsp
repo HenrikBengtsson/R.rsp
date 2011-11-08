@@ -201,7 +201,7 @@ To separate the elements with commas, use \code{<\%=paste(LETTERS, collapse=", "
 The RSP markup \code{<\%\{code\}\%>} evaluates the code (without inserting it into the document).  For instance,
 \begin{rspVerbatim}
 <\%
-n <- 3
+n <- 3;  # Comments are kept
 type <- "horse"
 %>
 \end{rspVerbatim}
