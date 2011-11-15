@@ -1,10 +1,12 @@
-evalWithEcho <- function(expr, ...) {
-  evalCapture(expr, ..., code=TRUE, output=TRUE);
+evalWithEcho <- function(..., envir=parent.frame()) {
+  evalCapture(..., code=TRUE, output=TRUE, envir=envir);
 }
 
 
 ##############################################################################
 # HISTORY:
+# 2011-11-07
+# o BUG FIX: Although deprecated, the update to evalWithEcho() did not work.
 # 2011-11-05
 # o DEPRECATED: evalWithEcho(); use evalCapture().
 # o Added evalCapture(..., code=TRUE, output=TRUE).

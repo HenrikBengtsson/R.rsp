@@ -402,7 +402,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
         value <- gsub(pattern, "\\1", part);
         value <- trim(value);
         # TODO: Try to parse here to catch invalid code as soon as possible?
-        code <- c(codeComment, "write(response, ", value, ");\n");
+        code <- c(codeComment, "write(response, {", value, "});\n");
 
         rCode <- c(rCode, code);
         next;

@@ -493,7 +493,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         value <- gsub(pattern, "\\1", part);
         value <- trim(value);
         # TODO: Try to parse here to catch invalid code as soon as possible?
-        code <- c(codeComment, sprintf("write(response, %s);\n", value));
+        code <- c(codeComment, sprintf("write(response, {%s});\n", value));
 
         rCode <- c(rCode, code);
         next;
@@ -616,16 +616,16 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
           }
 
           next;
-        }
+        } # if (directive == ...)
 
         # <%@directive attr1="foo" attr2="bar"%> 
         #     => write(response, directive(attr1="foo", attr2="bar"))
         # TODO: Try to parse here to catch invalid code as soon as possible?
         rspDirective <- directive;
-        args <-paste(names(attrs), attrs, sep="=");
+        args <- sprintf("%s=\"%s\"", names(attrs), attrs);
         args <- paste(args, collapse=", ");
-        value <- paste(rspDirective, "(response, ", args, ")", sep="");
-        code <- c(codeComment, "write(response, ", value, ");\n");
+        cmd <- sprintf("%s(%s)", rspDirective, args);
+        code <- c(codeComment, "write(response, ", cmd, ");\n");
 
         rCode <- c(rCode, code);
         next;
@@ -646,7 +646,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         if (flavor == "echo") {
           expressions <- strsplit(expressions, split="\n", fixed=TRUE);
           expressions <- unlist(expressions);
-          code <- sprintf("write(response, evalWithEcho({%s}, capture=TRUE), collapse='\\n');\n", expressions);
+          code <- sprintf("write(response, evalCapture({%s}), collapse='\\n');\n", expressions);
         }
 
         if (flavor == "chunk") {
@@ -728,6 +728,15 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
 ##############################################################################
 # HISTORY:
+# 2011-11-14
+# o ROBUSTNESS: Now <%=[expr]%> is translated with curly brackets around
+#   the expression, i.e. write(response, {[expr]}).  This allows for
+#   writing <%= x <- 1; x^2 %> instead of <%={ x <- 1; x^2 }%>.   
+# 2011-11-07
+# o BUG FIX: <@fcn foo="bar"> for "fallback" directives would try to call
+#   fcn(foo=bar) instead of fcn(foo="bar").
+# o CLEANUP: Now translating to evalCapture() instead of evalWithEcho().
+# o BUG FIX: One of the tags would generate invalid evalWithEcho() code.
 # 2011-04-12
 # o Change the preprocess directives to have format <%#insert ...%>.
 # 2011-04-01

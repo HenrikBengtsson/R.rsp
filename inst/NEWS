@@ -1,6 +1,19 @@
 Package: R.rsp
 ==============
 
+Version: 0.6.9 [2011-11-14]
+o ROBUSTNESS: Now <%=[expr]%> is translated with curly brackets around
+  the expression, i.e. write(response, {[expr]}).  This allows for
+  writing <%= x <- 1; x^2 %> instead of <%={ x <- 1; x^2 }%>.   
+o BUG FIX: By default the RSP document would be evaluated in the
+  local call frame of rsp(), not its parent frame.
+
+
+Version: 0.6.8 [2011-11-07]
+o BUG FIX: Although deprecated, the update to evalWithEcho() did not work.
+o CLEANUP: Replaced an internal evalWithEcho() with evalCapture().
+
+
 Version: 0.6.7 [2011-11-06]
 o Updated code and vignettes to utilize evalCapture() of R.utils v1.9.2.
 o DEPRECATED: evalWithEcho(); use evalCapture() instead.

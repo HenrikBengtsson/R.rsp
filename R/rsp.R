@@ -18,6 +18,7 @@
 #      If argument \code{text} is given, then @see "base::stdout" is used.
 #      Otherwise, the output defaults to that of the type-specific compiler.}
 #   \item{...}{Additional arguments passed to the type-specific compiler.}
+#   \item{envir}{The @environment in which the RSP document is evaluated.}
 #   \item{postprocess}{If @TRUE, and a postprocessing method exists for
 #      the generated document type, it is postprocessed as well.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
@@ -39,7 +40,7 @@
 # @keyword file
 # @keyword IO
 #*/########################################################################### 
-setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, response=NULL, ..., postprocess=TRUE, verbose=FALSE) {
+setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, response=NULL, ..., envir=parent.frame(), postprocess=TRUE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -101,7 +102,7 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
     verbose && cat(verbose, "Response output pathname: ", pathname2);
 
     verbose && enter(verbose, "Calling sourceRspV2()");
-    sourceRspV2(pathname, path=NULL, ..., response=response, verbose=less(verbose, 20));
+    sourceRspV2(pathname, path=NULL, ..., response=response, envir=envir, verbose=less(verbose, 20));
     verbose && exit(verbose);
 
     verbose && exit(verbose);
@@ -223,6 +224,8 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
 
 ############################################################################
 # HISTORY:
+# 2011-11-14
+# o Added argument 'envir' to rsp(..., envir=parent.frame()).
 # 2011-04-16
 # o BUG FIX: On R v2.12.x, rsp(text="...") would throw 'Error ...: unused
 #   argument(s) (fileext = ".txt.rsp")'.  Solved by providing a patched
