@@ -63,6 +63,11 @@ setMethodS3("translateRsp", "default", function(filename, path=NULL, ..., force=
       " This R code was parsed from RSP by the R.rsp package."
     );
   
+    code <- "# Assert that write() of R.rsp is used below\n";
+    rCode <- c(rCode, code);
+    code <- "write <- R.rsp::write;\n";
+    rCode <- c(rCode, code);
+
     code <- "# Sets the public RspPage 'page' object\n";
     rCode <- c(rCode, code);
     if (is.null(pathname)) {
@@ -189,6 +194,9 @@ setMethodS3("translateRsp", "default", function(filename, path=NULL, ..., force=
 
 ###########################################################################
 # HISTORY:
+# 2011-11-17
+# o Now the generated R script adds 'write <- R.rsp::write' at the
+#   beginning, to assure that it is used instead of base::write().
 # 2009-02-23
 # o Renamed from compileRsp() to translateRsp().
 # o Updated to use parseRsp().

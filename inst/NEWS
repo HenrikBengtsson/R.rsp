@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.6.10 [2011-11-17]
+o ROBUSTNESS: Now the generated R script adds 'write <- R.rsp::write'
+  at the beginning, to assure that it is used instead of base::write().
+
+
 Version: 0.6.9 [2011-11-14]
 o ROBUSTNESS: Now <%=[expr]%> is translated with curly brackets around
   the expression, i.e. write(response, {[expr]}).  This allows for

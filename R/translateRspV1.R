@@ -341,7 +341,10 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
   "#######################################################################\n",
   "\n", sep="");
 
-
+  code <- "# Assert that write() of R.rsp is used below\n";
+  rCode <- c(rCode, code);
+  code <- "write <- R.rsp::write;\n";
+  rCode <- c(rCode, code);
 
   code <- "# Sets the public RspPage 'page' object\n";
   rCode <- c(rCode, code);
@@ -576,6 +579,8 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
 
 ##############################################################################
 # HISTORY:
+# o Now the generated R script adds 'write <- R.rsp::write' at the
+#   beginning, to assure that it is used instead of base::write().
 # 2011-03-12
 # o Now the trimming of RSP handles all newline types, i.e. LF, CR+LF, CR.
 # 2011-03-08
