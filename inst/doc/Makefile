@@ -17,11 +17,10 @@ rnw: *.Rnw
 index.html.rsp:
 	R --vanilla -e "file.copy(system.file('doc/templates/index.html.rsp', package='R.rsp'), to='.')"
 
-index.html: index.html.rsp 00Index.dcf
-	R --vanilla -e "library('R.rsp'); rsp('index.html.rsp')"
+index.html: index.html.rsp
+	R --vanilla -e "library(R.rsp); rsp('index.html.rsp')"
 
 clean:
-	$(RM) dummy.Rnw
 	$(RM) index.html.rsp
 	$(RM) *.aux *.log *.toc *.tex *.rsp.R
 	$(RM) -r figures/
@@ -31,7 +30,7 @@ clean:
 #########################################################################
 # HISTORY:
 # 2011-11-23
-# o Now utilizing buildNowSweaveVignettes() instead.
+# o Now utilizing new buildNowSweaveVignettes().
 # 2011-11-22
 # o Now this Makefile is completely generic and no longer needs
 #   to be modified.
