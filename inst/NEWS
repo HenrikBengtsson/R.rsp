@@ -1,6 +1,14 @@
 Package: R.rsp
 ==============
 
+Version: 0.6.12 [2011-11-23]
+o Now the building of vignettes is independent of R.rsp.  All that
+  is needed to build non-Sweave vignettes (via RSP, brew etc), or 
+  include a static PDF, is to have a corresponding *.Rnw stub with 
+  custom vignette options \VignetteSource{} and \VignetteBuild{}.
+  See inst/doc/ of this package for more details.
+
+
 Version: 0.6.11 [2011-11-22]
 o Now the *.tex.rsp vignettes are recognized by R.  This was done
   by tricking R to believe they are of Sweave origin.

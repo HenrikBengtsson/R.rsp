@@ -9,13 +9,10 @@ CP=cp -p
 #########################################################################
 # TARGET DEFINITIONS
 #########################################################################
-all: pdf rnw index.html
+all: rnw index.html
 
-pdf:
-	R --no-save --no-restore -e "files <- list.files(pattern='[.]rsp$$'); for (file in files) { library('R.rsp'); rsp(file, force=TRUE); }"
-
-rnw: 00Index.dcf
-	R --vanilla -e "source(system.file('doc/templates/buildRnws.R', package='R.rsp'))"
+rnw: *.Rnw
+	R --vanilla -e "R.rsp::buildNonSweaveVignettes()"
 
 index.html.rsp:
 	R --vanilla -e "file.copy(system.file('doc/templates/index.html.rsp', package='R.rsp'), to='.')"
@@ -33,6 +30,8 @@ clean:
 
 #########################################################################
 # HISTORY:
+# 2011-11-23
+# o Now utilizing buildNowSweaveVignettes() instead.
 # 2011-11-22
 # o Now this Makefile is completely generic and no longer needs
 #   to be modified.
