@@ -1,3 +1,4 @@
 Title: Dynamic LaTeX reports with RSP
+Keywords: reproducible research, report generator, markup language, LaTeX
 Description: Describes how to compile LaTeX document with RSP markup.
 Files: Dynamic_LaTeX_reports_with_RSP.pdf, tex.rsp:Dynamic_LaTeX_reports_with_RSP.tex.rsp
