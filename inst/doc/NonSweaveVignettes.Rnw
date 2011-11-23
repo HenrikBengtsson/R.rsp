@@ -1,0 +1,17 @@
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+% This is *not* the source of the vignette.  It is just a place holder
+% for R to recognize and list the vignettes of this package.
+%
+% To view the source of this vignette, instead do:
+% 1. help.start()
+% 2. Go to the help page of this package, and go to the subpage
+%    'Overview of user guides and package vignettes'
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%\VignetteIndexEntry{How to include static PDFs and non-Sweave vignettes in an R package}
+%\VignetteKeyword{R, package, vignette, static PDF}
+%\VignetteDepends{R.rsp}
+%\VignetteSource{NonSweaveVignettes.tex.rsp}
+%\VignetteBuild{rsp("NonSweaveVignettes.tex.rsp")}
+\documentclass{article}
+\begin{document}
+\end{document}

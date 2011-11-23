@@ -1,0 +1,110 @@
+<% t0 <- Sys.time() %>
+
+\documentclass[letter,12pt]{article}
+\usepackage{xspace}
+\usepackage{alltt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}	
+\addtolength{\evensidemargin}{-0.5in}	
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-0.5in}	
+\addtolength{\textheight}{1in}
+
+\newcommand{\keywords}[1]{\footnotesize{\textbf{Keywords: }#1}\xspace}
+\newcommand{\pkg}[1]{\textsl{#1}\xspace}
+\newcommand{\code}[1]{\texttt{#1}\xspace}
+\newcommand{\bs}{$\backslash$}
+
+\newenvironment{rspVerbatim}{\vspace{-\parskip}\begin{alltt}\color{blue}}{\end{alltt}}
+\newenvironment{escapeRspVerbatim}{\vspace{-\parskip}\begin{alltt}}{\end{alltt}}
+
+
+\title{How to include static PDFs and non-Sweave vignettes in an R package}
+\author{Henrik Bengtsson}
+\date{<%=format(as.Date(getDate(R.rsp)), format="%B %d, %Y")%>}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+This document describes how to include static PDFs and non-Sweave vignettes in an R package such that they appear via \code{browseVignettes()}, \code{help.start()} as well as on CRAN and Bioconductor.
+\end{abstract}
+
+\keywords{R, package, vignette, static PDF}
+
+\begin{center}
+\emph{This document is under construction.}
+\end{center}
+
+\clearpage
+\tableofcontents
+
+\clearpage
+
+<%-------------------------------------------------------------------
+  BACKGROUND
+  -------------------------------------------------------------------%>
+\section{Background}
+When building an R package, Sweave/LaTeX vignettes are recognized by R, compiled into PDFs, which are listed along with their source in the R help system, e.g. via \code{browseVignettes()} and \code{help.start()}.  These package vignettes are also being listed online on the CRAN and Bioconductor package pages.
+
+Unfortunately, as of R~v2.14.0, static PDFs are not recognized and therefore not listed.  Same is true for other PDFs that are dynamically generated during build by other means, e.g. RSP-embedded LaTeX documents.  Fortunately, there is a framework to include also non-Sweave vignettes, as explained next.
+
+
+<%-------------------------------------------------------------------
+  STATIC PDFS
+  -------------------------------------------------------------------%>
+\section{Using the default R framework}
+\subsection{Include static PDFs}
+Assume you have static PDF named \code{manual.pdf} that you wish to include in your package.  Then place it in your package \code{inst/doc/} directory and create a corrsponding \code{manual.Rnw} stub that contains:
+\begin{verbatim}
+%\VignetteIndexEntry{User manual}
+\documentclass{article}
+\begin{document}
+\end{document}
+\end{verbatim}
+The above is a minimal valid Sweave document that is recognized by the R build system.
+
+
+<%-------------------------------------------------------------------
+  RSP VIGNETTES
+  -------------------------------------------------------------------%>
+\section{Using the extended framework of the R.rsp package}
+In this section, we describe how to dynamically build and include non-Sweave documents, such as, but not limited to, RSP-embedded LaTeX vignettes.  In order to do this, a customized \code{Makefile} needs to be added to the package's \code{inst/doc/} directory.  The Makefile is available in the \pkg{R.rsp} package in the installed \code{doc/templates/} directory.  You can copy it to the current directory by:
+\begin{verbatim}
+pathname <- system.file("doc/templates/Makefile", package="R.rsp")
+file.copy(pathname, to=".")
+\end{verbatim}
+This Makefile utilizes a few utility functions that are available in the \pkg{R.rsp} package.  Note that the Makefile and the utility functions are independent of the RSP markup language\footnote{In the future, we move the customized Makefile and its utility functions to the \pkg{R.utils} package.}.
+
+
+
+\subsection{Include RSP-embedded LaTeX vignettes}
+Assume you have an RSP-embedded LaTeX vignette named \code{manual.tex.rsp} that you wish to automatically build and have the PDF and the source being include in your package.  Then place it in your package \code{inst/doc/} directory and create a corrsponding \code{manual.Rnw} stub that contains:
+
+\begin{verbatim}
+%\VignetteIndexEntry{User manual}
+%\VignetteSource{manual.tex.rsp}
+%\VignetteDepends{R.rsp}
+%\VignetteBuild{rsp("manual.tex.rsp")}
+\documentclass{article}
+\begin{document}
+\end{document}
+\end{verbatim}
+Note that the "commands" \code{{\bs}VignetteSource\{\}} and \code{{\bs}VignetteBuild\{\}} are custom to our setup (recognized by the above Makefile) and are not recognized by the R system.
+The optional \code{{\bs}VignetteSource\{\}} command specifies which source file should be listed in the \code{help.start()} vignette overview.  If left out or left empty, no source file will be listed.
+The \code{{\bs}VignetteBuild\{\}} command specifies what R command to run for building the vignette.  Here we use the \code{rsp()} command of the \pkg{R.rsp} package to build the \code{manual.pdf} from the \code{manual.tex.rsp} file, which is why we also use \code{{\bs}VignetteDepends\{\}} to specify that \pkg{R.rsp} needs to be loaded.   The build command can be any R expression, which means that it is possible to compile virtually any type of documents using this technique.
+
+
+
+<%-------------------------------------------------------------------
+  APPENDIX
+  -------------------------------------------------------------------%>
+\clearpage
+\section*{Appendix}
+\subsection*{Session information}
+<%=toLatex(sessionInfo())%>
+This report was automatically generated using \code{rsp()} of the R.rsp package.
+Total processing time after RSP-to-R translation was <%=dt <- round(Sys.time()-t0, digits=2)%> <%=attr(dt, "units")%>.
+
+\end{document}

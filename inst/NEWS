@@ -2,6 +2,8 @@ Package: R.rsp
 ==============
 
 Version: 0.6.12 [2011-11-23]
+o DOCUMENTATION: Added a vignette explaining how to include static
+  PDFs and non-Sweave vignettes in an R package.
 o Now the building of vignettes is independent of R.rsp.  All that
   is needed to build non-Sweave vignettes (via RSP, brew etc), or 
   include a static PDF, is to have a corresponding *.Rnw stub with 
