@@ -9,18 +9,18 @@ CP=cp -p
 #########################################################################
 # TARGET DEFINITIONS
 #########################################################################
-all: rsp rnw index.html
+all: pdf rnw index.html
 
-rsp:
+pdf:
 	R --no-save --no-restore -e "files <- list.files(pattern='[.]rsp$$'); for (file in files) { library('R.rsp'); rsp(file, force=TRUE); }"
 
-rnw:
+rnw: 00Index.dcf
 	R --vanilla -e "source(system.file('doc/templates/buildRnws.R', package='R.rsp'))"
 
 index.html.rsp:
 	R --vanilla -e "file.copy(system.file('doc/templates/index.html.rsp', package='R.rsp'), to='.')"
 
-index.html: index.html.rsp
+index.html: index.html.rsp 00Index.dcf
 	R --vanilla -e "library('R.rsp'); rsp('index.html.rsp')"
 
 clean:
