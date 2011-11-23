@@ -45,26 +45,6 @@ toc$hasSource <- lapply(toc$Files, FUN=function(x) {
 <%
 files <- toc$Files[[ii]];
 types <- names(files);
-
-# Create a dummy Rnw for each PDF file, iff missing
-if (toc$hasPDF[[ii]]) {
-  filename <- files["pdf"];
-  rnwFilename <- gsub("pdf$", "Rnw", filename);
-  if (!isFile(rnwFilename)) {
-    rspFilename <- sprintf("%s.rsp", rnwFilename);
-    if (!isFile(rspFilename)) {
-      pathname <- system.file("doc/templates/dummy.Rnw.rsp", package="R.rsp");
-      file.copy(pathname, to=rspFilename);
-    }
-    local({
-      hasSource <- toc$hasSource[[ii]];
-      title <- toc$Title[ii];
-      keywords <- toc$Keywords[ii];
-      rsp(rspFilename, force=TRUE);
-    });
-    file.remove(rspFilename);
-  }
-}
 %>
  <li>
  <strong><%=toc[ii,"Title"]%></strong> - <%=toc[ii,"Description"]%>

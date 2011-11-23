@@ -12,7 +12,7 @@
 <% } %>
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 %\VignetteIndexEntry{<%=title%>}
-%\VignetteKeywords{<%=keywords%>}
+%\VignetteKeyword{<%=keywords%>}
 \documentclass{article}
 \begin{document}
 \end{document}
