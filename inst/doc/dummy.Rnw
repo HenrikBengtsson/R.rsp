@@ -1,0 +1,2 @@
+% This file is needed for triggering make of Makefile
+%\VignetteIndexEntry{}

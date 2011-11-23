@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.6.11 [2011-11-22]
+o Now the *.tex.rsp vignettes are recognized by R.  This was done
+  by tricking R to believe they are of Sweave origin.
+
+
 Version: 0.6.10 [2011-11-17]
 o ROBUSTNESS: Now the generated R script adds 'write <- R.rsp::write'
   at the beginning, to assure that it is used instead of base::write().

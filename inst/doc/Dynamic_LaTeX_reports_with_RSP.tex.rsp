@@ -172,9 +172,9 @@ To try this yourself, compile this very document by calling
 \begin{verbatim}
 library("R.rsp")
 path <- system.file("doc", package="R.rsp")
-rsp("report.tex.rsp", path=path)
+rsp("Dynamic_LaTeX_reports_with_RSP.tex.rsp", path=path)
 \end{verbatim}
-The PDF (\code{report.pdf}) will be available in the current directory of R (see \code{getwd()}).\\
+The PDF (\code{Dynamic\_LaTeX\_reports\_with\_RSP.pdf}) will be available in the current directory of R (see \code{getwd()}).\\
 
 
 
