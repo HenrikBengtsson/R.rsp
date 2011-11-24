@@ -67,9 +67,37 @@ buildNonSweaveVignettes <- function(path=".", pattern="[.]Rnw$", ...) {
 } # buildNonSweaveVignettes()
 
 
+buildPkgIndexHtml <- function(...) {
+  # Nothing to do?
+  if (file.exists("index.html")) {
+    return(NULL);
+  }
+
+  library("R.rsp");
+
+  filename <- "index.html.rsp";
+  if (!file.exists(filename)) {
+    # If not custom index.html.rsp exists, use the one of the R.rsp package
+    path <- system.file("doc/templates", package="R.rsp");
+    pathname <- file.path(path, filename);
+    file.copy(pathname, to=".");
+    on.exit({
+      file.remove(filename);
+    });
+  }
+
+  # Sanity check
+  stopifnot(file.exists(filename));
+
+  # Build index.html
+  rsp(filename);
+} # buildPkgIndexHtml()
+
+
 ############################################################################
 # HISTORY:
 # 2011-11-23
+# o Added buildPkgIndexHtml().
 # o Added parseVignette().
 # o Added buildNonSweaveVignettes().
 # o Added buildNonSweaveVignette().

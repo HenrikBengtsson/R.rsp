@@ -106,6 +106,7 @@
 \alias{buildNonSweaveVignette}
 \alias{buildNonSweaveVignettes}
 \alias{parseVignette}
+\alias{buildPkgIndexHtml}
 
 \description{
 This page contains aliases for all "non-documented" objects that

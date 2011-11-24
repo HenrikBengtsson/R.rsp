@@ -56,6 +56,7 @@ Unfortunately, as of R~v2.14.0, static PDFs are not recognized and therefore not
   -------------------------------------------------------------------%>
 \section{Using the default R framework}
 \subsection{Include static PDFs}
+\label{secStaticPDF}
 Assume you have static PDF named \code{manual.pdf} that you wish to include in your package.  Then place it in your package \code{inst/doc/} directory and create a corrsponding \code{manual.Rnw} stub that contains:
 \begin{verbatim}
 %\VignetteIndexEntry{User manual}
@@ -64,22 +65,30 @@ Assume you have static PDF named \code{manual.pdf} that you wish to include in y
 \end{document}
 \end{verbatim}
 The above is a minimal valid Sweave document that is recognized by the R build system.
+This small addition will make the vignette appear when calling \code{browseVignettes()} as well as in the 'Overview of user guides and package vignettes' section of the package HTML help page (via \code{help.start()}).
 
 
 <%-------------------------------------------------------------------
   RSP VIGNETTES
   -------------------------------------------------------------------%>
 \section{Using the extended framework of the R.rsp package}
-In this section, we describe how to dynamically build and include non-Sweave documents, such as, but not limited to, RSP-embedded LaTeX vignettes.  In order to do this, a customized \code{Makefile} needs to be added to the package's \code{inst/doc/} directory.  The Makefile is available in the \pkg{R.rsp} package in the installed \code{doc/templates/} directory.  You can copy it to the current directory by:
+In this section, we describe how to dynamically build and include non-Sweave vignettes, such as, but not limited to, RSP-embedded LaTeX vignettes.  In order to do this, a customized \code{Makefile} needs to be added to the package's \code{inst/doc/} directory.  The Makefile is available in the \pkg{R.rsp} package in the installed \code{doc/} directory (see Appendix for its content).  You can copy it to the current directory by:
 \begin{verbatim}
-pathname <- system.file("doc/templates/Makefile", package="R.rsp")
+pathname <- system.file("doc/Makefile", package="R.rsp")
 file.copy(pathname, to=".")
 \end{verbatim}
 This Makefile utilizes a few utility functions that are available in the \pkg{R.rsp} package.  Note that the Makefile and the utility functions are independent of the RSP markup language\footnote{In the future, we move the customized Makefile and its utility functions to the \pkg{R.utils} package.}.
+The use of a custom \code{inst/doc/Makefile} is described in Section 'Writing package vignettes' of 'Writing R Extensions' (via for instance \code{help.start()}).
 
+
+\subsection{Improved HTML overview of vignettes}
+By default, the R HTML help system will list links to the PDF and the Sweave source of the vignettes.  This means that above approach for including static PDFs in package will also list the Rnw stub in this listing.
+As explained in 'Writing R Extensions', it is possible to override this by providing a custom \code{inst/doc/index.html} file.
+In order not to have to manually edit the \code{index.html} file, the above \code{Makefile} has been set up to automatically build the \code{inst/doc/index.html} and populate it with the PDF and source files available according to what the Rnw files specify (see also below).
 
 
 \subsection{Include RSP-embedded LaTeX vignettes}
+\label{secRSPVignette}
 Assume you have an RSP-embedded LaTeX vignette named \code{manual.tex.rsp} that you wish to automatically build and have the PDF and the source being include in your package.  Then place it in your package \code{inst/doc/} directory and create a corrsponding \code{manual.Rnw} stub that contains:
 
 \begin{verbatim}
@@ -102,6 +111,37 @@ The \code{{\bs}VignetteBuild\{\}} command specifies what R command to run for bu
   -------------------------------------------------------------------%>
 \clearpage
 \section*{Appendix}
+\subsection*{The customized Makefile}
+\label{appMakefile}
+The customized Makefile that builds non-Sweave vignettes and missing \code{/inst/doc/index.html} files is available in \pkg{R.rsp} package directory \code{doc/}.  It content is:
+{\scriptsize\begin{verbatim}
+<%=
+pathname <- system.file("doc/Makefile", package="R.rsp");
+bfr <- readLines(pathname);
+rr <- grep("^# HISTORY", bfr);
+bfr <- bfr[1:(rr-2L)];
+paste(bfr, collapse="\n");
+%>
+\end{verbatim}}
+
+\subsection*{The files used for creating this document}
+\label{appThisRnw}
+This document was created the RSP-embedded LaTeX vignette \code{NonSweaveVignettes.tex.rsp} located in the \code{/doc/} package directory of \pkg{R.rsp}.  It can manually be compiled into a PDF as:
+\begin{verbatim}
+library("R.rsp");
+pathname <- system.file("doc/NonSweaveVignettes.tex.rsp", package="R.rsp");
+rsp(pathname);
+\end{verbatim}
+This PDF can then be included into the package as a static PDF (as explained in Section~\ref{secStaticPDF}).
+However, in this package we have choosen to build it dynamically during package build, by adding a \code{doc/NonSweaveVignettes.Rnw} file (as explained in Section~\ref{secRSPVignette}), which contains:
+{\scriptsize\begin{verbatim}
+<%=
+pathname <- system.file("doc/NonSweaveVignettes.Rnw", package="R.rsp");
+bfr <- readLines(pathname);
+paste(bfr, collapse="\n");
+%>
+\end{verbatim}}
+
 \subsection*{Session information}
 <%=toLatex(sessionInfo())%>
 This report was automatically generated using \code{rsp()} of the R.rsp package.
