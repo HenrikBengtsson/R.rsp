@@ -124,7 +124,7 @@ This document was produced using RSP-embedded LaTeX.
 \keywords{reproducible research, report generator, markup language, LaTeX}
 
 \begin{center}
-\emph{This document is under construction.}
+\emph{This vignette is distributed as part of the \pkg{R.rsp} package, which is available on CRAN.}
 \end{center}
 
 \clearpage

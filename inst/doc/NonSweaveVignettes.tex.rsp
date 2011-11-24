@@ -35,7 +35,7 @@ This document describes how to include static PDFs and non-Sweave vignettes in a
 \keywords{R, package, vignette, static PDF}
 
 \begin{center}
-\emph{This document is under construction.}
+\emph{This vignette is distributed as part of the \pkg{R.rsp} package, which is available on CRAN.}
 \end{center}
 
 \clearpage
