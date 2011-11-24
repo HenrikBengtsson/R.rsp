@@ -7,7 +7,7 @@
 % 2. Go to the help page of this package, and go to the subpage
 %    'Overview of user guides and package vignettes'
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-%\VignetteIndexEntry{How to include static PDFs and non-Sweave vignettes in an R package}
+%\VignetteIndexEntry{Include static PDFs and non-Sweave vignettes in an R package}
 %\VignetteKeyword{R, package, vignette, static PDF}
 %\VignetteDepends{R.rsp}
 %\VignetteSource{NonSweaveVignettes.tex.rsp}
