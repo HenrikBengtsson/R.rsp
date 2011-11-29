@@ -95,15 +95,14 @@ Assume you have an RSP-embedded LaTeX vignette named \file{manual.tex.rsp} that 
 \begin{verbatim}
 %\VignetteIndexEntry{User manual}
 %\VignetteSource{manual.tex.rsp}
-%\VignetteDepends{R.rsp}
-%\VignetteBuild{rsp("manual.tex.rsp")}
+%\VignetteBuild{R.rsp::rsp("manual.tex.rsp")}
 \documentclass{article}
 \begin{document}
 \end{document}
 \end{verbatim}
 Note that the "commands" \code{{\bs}VignetteSource\{\}} and \code{{\bs}VignetteBuild\{\}} are custom to our setup (recognized by the above Makefile) and are \emph{not} recognized by the R system.
 The optional \code{{\bs}VignetteSource\{\}} command specifies which source file should be listed in the \code{help.start()} vignette overview.  If left out or left empty, no source file will be listed.
-The \code{{\bs}VignetteBuild\{\}} command specifies what R command to run for building the vignette.  Here we use the \code{rsp()} command of the \pkg{R.rsp} package to build the \file{manual.pdf} from the \file{manual.tex.rsp} file, which is why we also use \code{{\bs}VignetteDepends\{\}} to specify that \pkg{R.rsp} needs to be loaded.   The build command can be any R expression, which means that it is possible to compile virtually any type of documents using this technique.
+The \code{{\bs}VignetteBuild\{\}} command specifies what R command to run for building the vignette.  Here we use the \code{rsp()} command of the \pkg{R.rsp} package to build the \file{manual.pdf} from the \file{manual.tex.rsp} file.   The build command can be any R expression, which means that it is possible to compile virtually any type of documents using this technique.
 
 
 

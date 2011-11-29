@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.7.1 [2011-11-28]
+o Now R.rsp::rsp() can be called without the package had been
+  loaded before.
+
+
 Version: 0.7.0 [2011-11-23]
 o DOCUMENTATION: Added a vignette explaining how to include static
   PDFs and non-Sweave vignettes in an R package.

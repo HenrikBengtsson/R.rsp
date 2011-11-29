@@ -18,3 +18,9 @@ export(.conflicts.OK)
 # in their names.
 exportPattern("^[^\\.]")
 
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# S3 methods
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+S3method("rsp", "default")
