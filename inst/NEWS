@@ -1,6 +1,14 @@
 Package: R.rsp
 ==============
 
+Version: 0.7.2 [2012-01-20]
+o Placed a copy of inst/doc/Makefile in inst/doc/templates/ and
+  updated the 'Include static PDFs and non-Sweave vignettes in 
+  an R package' vignette accordingly.  The reason for this change
+  is that inst/doc/Makefile will not be installed in recent
+  version of R.
+
+
 Version: 0.7.1 [2011-11-28]
 o Now R.rsp::rsp() can be called without the package had been
   loaded before.

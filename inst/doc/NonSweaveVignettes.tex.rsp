@@ -75,7 +75,7 @@ This small addition will make the vignette appear when calling \code{browseVigne
 \section{Using the extended framework of the R.rsp package}
 In this section, we describe how to dynamically build and include non-Sweave vignettes, such as, but not limited to, RSP-embedded LaTeX vignettes.  In order to do this, a customized \file{Makefile} needs to be added to the package's \file{inst/doc/} directory.  The Makefile is available in the \pkg{R.rsp} package in the installed \file{doc/} directory (see Appendix for its content).  You can copy it to the current directory by:
 \begin{verbatim}
-pathname <- system.file("doc/Makefile", package="R.rsp")
+pathname <- system.file("doc/templates/Makefile", package="R.rsp")
 file.copy(pathname, to=".")
 \end{verbatim}
 This Makefile utilizes a few utility functions that are available in the \pkg{R.rsp} package.  Note that the Makefile and the utility functions are independent of the RSP markup language\footnote{In the future, we may move the customized Makefile and its utility functions to the \pkg{R.utils} package.}.
