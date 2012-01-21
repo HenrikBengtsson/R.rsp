@@ -2,16 +2,14 @@
 % This is *not* the source of the vignette.  It is just a place holder
 % for R to recognize and list the vignettes of this package.
 %
-% To view the source of this vignette, instead do:
-% 1. help.start()
-% 2. Go to the help page of this package, and go to the subpage
-%    'Overview of user guides and package vignettes'
+% To view the source of this vignette, instead:
+% 1. open help(package="R.rsp"), and
+% 2. go to 'Overview of user guides and package vignettes'
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 %\VignetteIndexEntry{Dynamic LaTeX reports with RSP}
 %\VignetteKeyword{reproducible research, report generator, markup language, LaTeX}
-%\VignetteDepends{R.rsp}
 %\VignetteSource{Dynamic_LaTeX_reports_with_RSP.tex.rsp}
-%\VignetteBuild{rsp("Dynamic_LaTeX_reports_with_RSP.tex.rsp")}
+%\VignetteBuild{R.rsp::rsp("Dynamic_LaTeX_reports_with_RSP.tex.rsp")}
 \documentclass{article}
 \begin{document}
 \end{document}

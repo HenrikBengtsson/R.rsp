@@ -1,7 +1,5 @@
 # MACRO DEFINITIONS
 RM=rm -f
-MV=mv -f
-CP=cp -p
 
 # TARGET DEFINITIONS
 all: rnw index.html
