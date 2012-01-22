@@ -12,12 +12,14 @@ index.html:
 
 clean:
 	$(RM) index.html.rsp
-	$(RM) *.aux *.log *.toc *.tex *.rsp.R
+	$(RM) *.aux *.bbl *.blg *.bst *.log *.sty *.toc *.tex *.rsp.R
 	$(RM) -r figures/
 	$(RM) Makefile
 
 #########################################################################
 # HISTORY:
+# 2012-01-21
+# o Now removing more files in the cleanup.
 # 2011-11-23
 # o Now utilizing new buildNowSweaveVignettes().
 # 2011-11-22
