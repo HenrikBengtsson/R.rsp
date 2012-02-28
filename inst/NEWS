@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.7.3 [2012-02-28]
+o Added toLatex() for LaTeX escaping character strings, cf.
+  utils::toLatex() for 'sessionInfo' objects.
+
+
 Version: 0.7.2 [2012-01-21]
 o Placed a copy of inst/doc/Makefile in inst/doc/templates/ and
   updated the 'Include static PDFs and non-Sweave vignettes in 
