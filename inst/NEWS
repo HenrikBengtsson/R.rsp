@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.7.4 [2012-03-06]
+o CRAN POLICY: Removed all internal copies of 'base' functions
+  that contains .Internal().
+
+
 Version: 0.7.3 [2012-02-28]
 o Added toLatex() for LaTeX escaping character strings, cf.
   utils::toLatex() for 'sessionInfo' objects.

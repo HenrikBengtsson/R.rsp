@@ -8,6 +8,11 @@ if (exists("restart", mode="function")) {
   restart <- appendVarArgs(restart);
 }
 
+# To avoid creating an internal copy with a .Internal() call
+stop <- function(...) UseMethod("stop");
+setMethodS3("stop", "default", function(...) {
+  base::stop(...);
+})
 
 ############################################################################
 # HISTORY:
