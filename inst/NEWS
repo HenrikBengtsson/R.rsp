@@ -3,7 +3,7 @@ Package: R.rsp
 
 Version: 0.7.4 [2012-03-06]
 o CRAN POLICY: Removed all internal copies of 'base' functions
-  that contains .Internal().
+  that contain .Internal().
 
 
 Version: 0.7.3 [2012-02-28]
