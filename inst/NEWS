@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.7.5 [2012-03-20]
+o Now inst/doc/templates/Makefile does a better job cleaning up.
+
+
 Version: 0.7.4 [2012-03-06]
 o CRAN POLICY: Removed all internal copies of 'base' functions
   that contain .Internal().

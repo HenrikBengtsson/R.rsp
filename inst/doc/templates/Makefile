@@ -12,12 +12,14 @@ index.html:
 
 clean:
 	$(RM) index.html.rsp
-	$(RM) *.aux *.bbl *.blg *.bst *.log *.sty *.toc *.tex *.rsp.R
+	$(RM) *.aux *.bbl *.blg *.bst *.log *.out *.sty *.toc *.tex *.rsp.R
 	$(RM) -r figures/
 	$(RM) Makefile
 
 #########################################################################
 # HISTORY:
+# 2012-03-20
+# o Now removing more files in the cleanup.
 # 2012-01-21
 # o Now removing more files in the cleanup.
 # 2011-11-23
