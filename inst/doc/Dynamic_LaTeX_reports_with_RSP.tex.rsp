@@ -391,7 +391,7 @@ produces:
   PREPROCESSING DIRECTIVES
   -------------------------------------------------------------------%>
 \section{Preprocessing directives}
-When an RSP-embedded document processed, it is first \emph{preprocessed} before it is \emph{translated} into an R script.  During this step it is possible to 
+When an RSP-embedded document in processed, it is first \emph{preprocessed} before it is \emph{translated} into an R script.  During this step it is possible to 
 modify the document by removing parts of it and inserting new pieces to it.  For instance, by using the RSP hidden comments, multiple lines of the document can be silently dropped.
 
 <%--, and by using the so called RSP 'insert' directive content of other files can be pasted into the document.
