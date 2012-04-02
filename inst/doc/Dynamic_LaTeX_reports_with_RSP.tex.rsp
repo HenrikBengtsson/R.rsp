@@ -285,7 +285,7 @@ the analysis of the current chromosome.
 <\% \} # for (chromosome ...) \%>
 \end{rspVerbatim}
 
-Note that there exist no corresponding markup in Sweave.  Instead, contrary to RSP, Sweave requires the each code chunk contains a complete R expression.  This means that, in terms of the above example, in Sweave it is not possible to begin a for loop in one code chunk and end it in a succeeding one.  This has to do with the fundamentally different way RSP and Sweave documents are processed.  If using Sweave, one solution to this is to use RSP to generate the Sweave document, e.g. \code{rsp("report.Rnw.rsp")}.
+Note that there exist no corresponding markup in Sweave.  Instead, contrary to RSP, Sweave requires that each code chunk contains a complete R expression.  This means that, in terms of the above example, in Sweave it is not possible to begin a for loop in one code chunk and end it in a succeeding one.  This has to do with the fundamentally different way RSP and Sweave documents are processed.  If using Sweave, one solution to this is to use RSP to generate the Sweave document, e.g. \code{rsp("report.Rnw.rsp")}.
 
 
 
