@@ -297,7 +297,7 @@ Since the above RSP markups are powerful enough, there is no need for a specific
 
 
 %% \subsection{Creating image files}
-The \code{toPDF()} and \code{toPNG()} functions of the \pkg{R.utils} package are useful when creating image files that are recognized by LaTeX.  For instance,
+The \code{toPDF()} and \code{toPNG()} functions of the \pkg{R.devices} package are useful when creating image files that are recognized by LaTeX.  For instance,
 \begin{verbatim}
 # Use greater objects by default
 setOption("devNew/args/par", list(lwd=2));

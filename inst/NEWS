@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.8.0 [2012-05-02]
+o Now the package depends on R.devices, which contains the utility
+  functions for graphical devices that originates from R.utils.
+
+
 Version: 0.7.5 [2012-03-20]
 o Now inst/doc/templates/Makefile does a better job cleaning up.
 
