@@ -2,10 +2,11 @@
 # IMPORTS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Packages to be imported
-# import(R.oo)
+import("R.methodsS3")
+import("R.oo")
 
 # importFrom(R.utils, cat)
-import(R.utils)
+import("R.utils")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
