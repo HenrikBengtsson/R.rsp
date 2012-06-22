@@ -1,14 +1,15 @@
 # MACRO DEFINITIONS
 RM=rm -f
+R=$(R_HOME)/bin/R
 
 # TARGET DEFINITIONS
 all: rnw index.html
 
 rnw: *.Rnw
-	R --vanilla -e "R.rsp::buildNonSweaveVignettes()"
+	$(R) --vanilla -e "R.rsp::buildNonSweaveVignettes()"
 
 index.html:
-	R --vanilla -e "R.rsp::buildPkgIndexHtml()"
+	$(R) --vanilla -e "R.rsp::buildPkgIndexHtml()"
 
 clean:
 	$(RM) index.html.rsp
@@ -18,6 +19,8 @@ clean:
 
 #########################################################################
 # HISTORY:
+# 2012-06-22
+# o Now using $(R_HOME)/bin/R. Thanks Kasper Hansen for the suggestion.
 # 2012-03-20
 # o Now removing more files in the cleanup.
 # 2012-01-21

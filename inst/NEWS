@@ -1,6 +1,12 @@
 Package: R.rsp
 ==============
 
+Version: 0.8.2 [2012-06-22]
+o ROBUSTNESS: Now the doc/Makefile no longer assumes 'R' is on 
+  the system's search path.  Instead it uses $(R_HOME)/bin/R. 
+  Thanks to Kasper Hansen at John Hopkins for the suggestion.
+
+
 Version: 0.8.1 [2012-06-16]
 o Now package only imports R.methodsS3 and R.oo instead of
   "depends" on them.
