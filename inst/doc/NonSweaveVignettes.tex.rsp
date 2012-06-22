@@ -73,9 +73,10 @@ This small addition will make the vignette appear when calling \code{browseVigne
   RSP VIGNETTES
   -------------------------------------------------------------------%>
 \section{Using the extended framework of the R.rsp package}
-In this section, we describe how to dynamically build and include non-Sweave vignettes, such as, but not limited to, RSP-embedded LaTeX vignettes.  In order to do this, a customized \file{Makefile} needs to be added to the package's \file{inst/doc/} directory.  The Makefile is available in the \pkg{R.rsp} package in the installed \file{doc/} directory (see Appendix for its content).  You can copy it to the current directory by:
+<% pathMk <- file.path("doc", "templates", fsep="/"); %>
+In this section, we describe how to dynamically build and include non-Sweave vignettes, such as, but not limited to, RSP-embedded LaTeX vignettes.  In order to do this, a customized \file{Makefile} needs to be added to the package's \file{inst/doc/} directory.  The Makefile is available in the \pkg{R.rsp} package (see Appendix for its content).  You can copy it to the current directory by:
 \begin{verbatim}
-pathname <- system.file("doc/templates/Makefile", package="R.rsp")
+pathname <- system.file("<%=pathMk%>/Makefile", package="R.rsp")
 file.copy(pathname, to=".")
 \end{verbatim}
 This Makefile utilizes a few utility functions that are available in the \pkg{R.rsp} package.  Note that the Makefile and the utility functions are independent of the RSP markup language\footnote{In the future, we may move the customized Makefile and its utility functions to the \pkg{R.utils} package.}.
@@ -113,27 +114,27 @@ The \code{{\bs}VignetteBuild\{\}} command specifies what R command to run for bu
 \section*{Appendix}
 \subsection*{The customized Makefile}
 \label{appMakefile}
-The customized Makefile that builds non-Sweave vignettes and missing \file{/inst/doc/index.html} files is available in \pkg{R.rsp} package directory \file{doc/}.  Its content is:
+The customized Makefile that builds non-Sweave vignettes and missing \file{/inst/doc/index.html} files is available in \pkg{R.rsp} package directory \file{<%=pathMk%>/}.  Its content is:
 {\scriptsize\begin{verbatim}
 <%=
-pathname <- system.file("doc/Makefile", package="R.rsp");
+pathname <- system.file(pathMk, "Makefile", package="R.rsp");
 bfr <- readLines(pathname);
 rr <- grep("^# HISTORY", bfr);
 bfr <- bfr[1:(rr-2L)];
+bfr <- gsub("\t", "    ", bfr, fixed=TRUE);
 paste(bfr, collapse="\n");
 %>
 \end{verbatim}}
 
 \subsection*{The files used for creating this document}
 \label{appThisRnw}
-This document was created the RSP-embedded LaTeX vignette \file{NonSweaveVignettes.tex.rsp} located in the \file{/doc/} package directory of \pkg{R.rsp}.  It can manually be compiled into a PDF as:
+This document was created the RSP-embedded LaTeX vignette \file{NonSweaveVignettes.tex.rsp} located in the \file{doc/} package directory of \pkg{R.rsp}.  It can manually be compiled into a PDF as:
 \begin{verbatim}
-library("R.rsp");
 pathname <- system.file("doc/NonSweaveVignettes.tex.rsp", package="R.rsp");
-rsp(pathname);
+R.rsp::rsp(pathname);
 \end{verbatim}
 The generated PDF can then be included into the package as a static PDF (as explained in Section~\ref{secStaticPDF}).
-However, in this package we have choosen to build it dynamically during package build, by adding a \file{doc/NonSweaveVignettes.Rnw} file (as explained in Section~\ref{secRSPVignette}), which contains:
+However, in this package we have choosen to build it dynamically during package build, by adding an \file{inst/doc/NonSweaveVignettes.Rnw} file (as explained in Section~\ref{secRSPVignette}), which contains:
 {\scriptsize\begin{verbatim}
 <%=
 pathname <- system.file("doc/NonSweaveVignettes.Rnw", package="R.rsp");
