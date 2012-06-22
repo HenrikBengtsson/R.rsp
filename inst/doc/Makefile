@@ -6,10 +6,10 @@ R=$(R_HOME)/bin/R
 all: rnw index.html
 
 rnw: *.Rnw
-	$(R) --vanilla -e "R.rsp::buildNonSweaveVignettes()"
+	"$(R)" --vanilla -e "R.rsp::buildNonSweaveVignettes()"
 
 index.html:
-	$(R) --vanilla -e "R.rsp::buildPkgIndexHtml()"
+	"$(R)" --vanilla -e "R.rsp::buildPkgIndexHtml()"
 
 clean:
 	$(RM) index.html.rsp
