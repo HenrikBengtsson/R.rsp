@@ -120,7 +120,9 @@ The customized Makefile that builds non-Sweave vignettes and missing \file{/inst
 pathname <- system.file(pathMk, "Makefile", package="R.rsp");
 bfr <- readLines(pathname);
 rr <- grep("^# HISTORY", bfr);
-bfr <- bfr[1:(rr-2L)];
+if (length(rr) > 0) {
+  bfr <- bfr[1:(rr-2L)];
+}
 bfr <- gsub("\t", "    ", bfr, fixed=TRUE);
 paste(bfr, collapse="\n");
 %>
