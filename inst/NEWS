@@ -14,7 +14,7 @@ o Now package only imports R.methodsS3 and R.oo instead of
 
 Version: 0.8.0 [2012-05-02]
 o Now the package depends on R.devices, which contains the utility
-  functions for graphical devices that originates from R.utils.
+  functions for graphical devices that originate from R.utils.
 
 
 Version: 0.7.5 [2012-03-20]
