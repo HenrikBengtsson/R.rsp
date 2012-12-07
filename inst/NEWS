@@ -2,11 +2,12 @@ Package: R.rsp
 ==============
 
 Version: 0.8.3 [2012-12-06]
-o ROBUSTNESS: Added system tests for compileLaTeX() and compileSweave().
-o Added argument 'outPath' to compileLaTeX() and compileSweave(), which
-  is also the working directory.
-o BUG FIX: compileLaTeX() would return an incorrect pathname unless
-  the given LaTeX file was in the current working directory.
+o ROBUSTNESS: Added system tests for compileLaTeX(), compileSweave()
+  and rsp().
+o Added argument 'outPath' to compileLaTeX(), compileSweave() and rsp(),
+  which is also the working directory.
+o BUG FIX: compileLaTeX() and compileSweave() would return an incorrect
+  pathname unless the source file was in the working directory.
 
 
 Version: 0.8.2 [2012-06-22]

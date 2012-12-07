@@ -5,7 +5,7 @@ pathname <- Arguments$getReadablePathname(pathname)
 print(pathname)
 
 if (Sys.getenv("_R_CHECK_FULL_") != "") {
-  pathnameR <- compileSweave(pathname, outPath="sweave/", verbose=-10)
+  pathnameR <- compileSweave(pathname, outPath="Rnw/", verbose=-10)
   print(pathnameR)
   pathnameR <- Arguments$getReadablePathname(pathnameR)
 }

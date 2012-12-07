@@ -16,7 +16,7 @@
  Compiles an RSP document.
 }
 
-\usage{\method{rsp}{default}(filename=NULL, path=NULL, text=NULL, response=NULL, ..., envir=parent.frame(), postprocess=TRUE, verbose=FALSE)}
+\usage{\method{rsp}{default}(filename=NULL, path=NULL, text=NULL, response=NULL, ..., envir=parent.frame(), outPath=".", postprocess=TRUE, verbose=FALSE)}
 
 \arguments{
   \item{filename, path}{The filename and (optional) path of the
@@ -28,13 +28,14 @@
      Otherwise, the output defaults to that of the type-specific compiler.}
   \item{...}{Additional arguments passed to the type-specific compiler.}
   \item{envir}{The \code{\link[base]{environment}} in which the RSP document is evaluated.}
+  \item{outPath}{The output and working directory.}
   \item{postprocess}{If \code{\link[base:logical]{TRUE}}, and a postprocessing method exists for
      the generated document type, it is postprocessed as well.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{
-  Returns what the type-specific compiler returns.
+  Returns the pathname of the file generated.
 }
 
 \examples{

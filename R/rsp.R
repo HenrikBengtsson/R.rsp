@@ -19,13 +19,14 @@
 #      Otherwise, the output defaults to that of the type-specific compiler.}
 #   \item{...}{Additional arguments passed to the type-specific compiler.}
 #   \item{envir}{The @environment in which the RSP document is evaluated.}
+#   \item{outPath}{The output and working directory.}
 #   \item{postprocess}{If @TRUE, and a postprocessing method exists for
 #      the generated document type, it is postprocessed as well.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{
-#   Returns what the type-specific compiler returns.
+#   Returns the pathname of the file generated.
 # }
 #
 # @examples "../incl/rsp.Rex"
@@ -40,7 +41,7 @@
 # @keyword file
 # @keyword IO
 #*/########################################################################### 
-setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, response=NULL, ..., envir=parent.frame(), postprocess=TRUE, verbose=FALSE) {
+setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, response=NULL, ..., envir=parent.frame(), outPath=".", postprocess=TRUE, verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::rsp() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -72,8 +73,9 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
     if (is.null(response)) {
       verbose && enter(verbose, "Creating FileRspResponse");
       pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
-      pathname2 <- gsub(pattern, "\\1", pathname);
-      pathname2 <- Arguments$getWritablePathname(pathname2);
+      filename2 <- gsub(pattern, "\\1", basename(pathname));
+      outPath <- ".";
+      pathname2 <- Arguments$getWritablePathname(filename2, path=outPath);
       response <- FileRspResponse(file=pathname2, overwrite=TRUE);
       verbose && exit(verbose);
     }
@@ -96,13 +98,13 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
     }
 
     verbose && enter(verbose, "Compiling RSP-embedded plain document");
-    verbose && cat(verbose, "Input pathname: ", pathname);
+    verbose && cat(verbose, "Input pathname: ", getAbsolutePath(pathname));
     verbose && printf(verbose, "%s:\n", class(response)[1]);
     verbose && print(verbose, response);
 
     pathname2 <- getOutput(response);
     verbose && cat(verbose, "Response output class: ", class(pathname2)[1]);
-    verbose && cat(verbose, "Response output pathname: ", pathname2);
+    verbose && cat(verbose, "Response output pathname: ", getAbsolutePath(pathname2));
 
     verbose && enter(verbose, "Calling sourceRspV2()");
     sourceRspV2(pathname, path=NULL, ..., response=response, envir=envir, verbose=less(verbose, 20));
@@ -137,6 +139,10 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   # Arguments 'filename' & 'path':
   pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);
 
+  # Arguments 'outPath':
+  outPath <- Arguments$getWritablePath(outPath);
+  if (is.null(outPath)) outPath <- ".";
+
   # Argument 'postprocess':
   postprocess <- Arguments$getLogical(postprocess);
 
@@ -149,12 +155,15 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
 
 
   verbose && enter(verbose, "Compiling RSP document");
+  pathname <- getAbsolutePath(pathname);
+  verbose && cat(verbose, "RSP pathname (absolute): ", pathname);
+  verbose && cat(verbose, "Output and working directory: ", getAbsolutePath(outPath));
 
-  verbose && cat(verbose, "RSP pathname: ", pathname);
   pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
   ext <- gsub(pattern, "\\3", pathname);
   type <- tolower(ext);
   verbose && cat(verbose, "RSP type: ", type);
+
   verbose && cat(verbose, "Postprocess (if recognized): ", postprocess);
 
   if (postprocess) {
@@ -191,13 +200,20 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   } # if (postprocess)
 
 
+  opwd <- ".";
+  on.exit(setwd(opwd), add=TRUE);
+  if (!is.null(outPath)) {
+    opwd <- setwd(outPath);
+  }
+
   # Default RSP compiler
   verbose && enter(verbose, "Preprocessing, translating, and evaluating RSP document");
   res <- rspPlain(pathname, response=response, envir=envir, ..., verbose=verbose);
   wasFileGenerated <- inherits(res, "character");
   if (wasFileGenerated) {
-    pathname2 <- res;
+    pathname2 <- getAbsolutePath(res);
     verbose && cat(verbose, "Output pathname: ", pathname2);
+    verbose && printf(verbose, "Output file size: %g bytes\n", file.info(pathname2)$size);
   }
   verbose && exit(verbose);
 
@@ -207,17 +223,20 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
       verbose && enter(verbose, "Postprocessing generated document");
       verbose && cat(verbose, "Input pathname: ", pathname2);
       pathname3 <- postProcessor(pathname2, ..., verbose=verbose);
-      verbose && cat(verbose, "Output pathname: ", pathname3);
+      verbose && cat(verbose, "Output pathname: ", getAbsolutePath(pathname3));
       verbose && exit(verbose);
       res <- pathname3;
     }
   }
 
   if (wasFileGenerated) {
-    verbose && cat(verbose, "Output document pathname: ", res);
+    verbose && cat(verbose, "Output document pathname: ", getAbsolutePath(res));
+    verbose && printf(verbose, "Output file size: %g bytes\n", file.info(res)$size);
   } else {
     verbose && printf(verbose, "Output written to: %s [%d]\n", class(res)[1], res);
   }
+
+  res <- file.path(outPath, res);
 
   verbose && exit(verbose);
 

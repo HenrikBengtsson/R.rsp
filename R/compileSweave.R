@@ -42,6 +42,7 @@ setMethodS3("compileSweave", "default", function(filename, path=NULL, ..., outPa
 
   # Arguments 'outPath':
   outPath <- Arguments$getWritablePath(outPath);
+  if (is.null(outPath)) outPath <- ".";
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);

@@ -3,6 +3,8 @@
 \SweaveOpts{echo=FALSE}
 
 \title{Lorem Ipsum}
+\author{R.rsp}
+
 \begin{document}
 \maketitle
 

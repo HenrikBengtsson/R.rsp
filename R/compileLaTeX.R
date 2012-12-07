@@ -43,6 +43,7 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
 
   # Arguments 'outPath':
   outPath <- Arguments$getWritablePath(outPath);
+  if (is.null(outPath)) outPath <- ".";
 
   # Arguments 'format':
   format <- match.arg(format);
@@ -60,12 +61,12 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
   verbose && cat(verbose, "LaTeX pathname (absolute): ", pathname);
   verbose && printf(verbose, "Input file size: %g bytes\n", file.info(pathname)$size);
   verbose && cat(verbose, "Output format: ", format);
-  verbose && cat(verbose, "Output and working directory: ", outPath);
+  verbose && cat(verbose, "Output and working directory: ", getAbsolutePath(outPath));
   pattern <- "(.*)[.]([^.]+)$";
   replace <- sprintf("\\1.%s", format);
   filenameOut <- gsub(pattern, replace, basename(pathname));
   pathnameOut <- filePath(outPath, filenameOut);
-  verbose && cat(verbose, "Output pathname (", toupper(format), "): ", pathnameOut);
+  verbose && cat(verbose, "Output pathname (", toupper(format), "): ", getAbsolutePath(pathnameOut));
 
   opwd <- ".";
   on.exit(setwd(opwd), add=TRUE);
@@ -75,7 +76,8 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
 
   verbose && enter(verbose, "Calling tools::texidvi()");
   pdf <- (format == "pdf");
-  tools::texi2dvi(pathname, pdf=pdf, clean=clean, quiet=quiet);
+  pathnameR <- getRelativePath(pathname);
+  tools::texi2dvi(pathnameR, pdf=pdf, clean=clean, quiet=quiet);
   verbose && exit(verbose);
 
   setwd(opwd); opwd <- ".";
