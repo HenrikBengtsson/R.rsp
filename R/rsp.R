@@ -67,7 +67,7 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   }
 
 
-  rspPlain <- function(pathname, response=NULL, ..., verbose=FALSE) {
+  rspPlain <- function(pathname, response=NULL, envir, ..., verbose=FALSE) {
     # Argument 'response':
     if (is.null(response)) {
       verbose && enter(verbose, "Creating FileRspResponse");
@@ -193,7 +193,7 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
 
   # Default RSP compiler
   verbose && enter(verbose, "Preprocessing, translating, and evaluating RSP document");
-  res <- rspPlain(pathname, response=response, ..., verbose=verbose);
+  res <- rspPlain(pathname, response=response, envir=envir, ..., verbose=verbose);
   wasFileGenerated <- inherits(res, "character");
   if (wasFileGenerated) {
     pathname2 <- res;

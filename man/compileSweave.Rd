@@ -18,12 +18,13 @@
  which in turn generates either a PDF or a DVI document.
 }
 
-\usage{\method{compileSweave}{default}(filename, path=NULL, ..., verbose=FALSE)}
+\usage{\method{compileSweave}{default}(filename, path=NULL, ..., outPath=".", verbose=FALSE)}
 
 \arguments{
   \item{filename, path}{The filename and (optional) path of the
      Sweave document to be compiled.}
   \item{...}{Additional arguments passed to \code{\link{compileLaTeX}}().}
+  \item{outPath}{The output and working directory.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 

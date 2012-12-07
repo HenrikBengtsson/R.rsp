@@ -16,7 +16,7 @@
  Compiles a LaTeX file to either PDF or DVI.
 }
 
-\usage{\method{compileLaTeX}{default}(filename, path=NULL, format=c("pdf", "dvi"), clean=FALSE, quiet=TRUE, ..., verbose=FALSE)}
+\usage{\method{compileLaTeX}{default}(filename, path=NULL, format=c("pdf", "dvi"), clean=FALSE, quiet=TRUE, ..., outPath=".", verbose=FALSE)}
 
 \arguments{
   \item{filename, path}{The filename and (optional) path of the
@@ -24,6 +24,7 @@
   \item{format}{A \code{\link[base]{character}} string specifying the output format.}
   \item{clean, quiet}{Additional arguments passed to \code{\link[tools]{texi2dvi}}.}
   \item{...}{Not used.}
+  \item{outPath}{The output and working directory.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 

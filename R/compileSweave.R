@@ -15,6 +15,7 @@
 #   \item{filename, path}{The filename and (optional) path of the 
 #      Sweave document to be compiled.}
 #   \item{...}{Additional arguments passed to @see "compileLaTeX".}
+#   \item{outPath}{The output and working directory.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
@@ -32,12 +33,15 @@
 # @keyword IO
 # @keyword internal
 #*/########################################################################### 
-setMethodS3("compileSweave", "default", function(filename, path=NULL, ..., verbose=FALSE) {
+setMethodS3("compileSweave", "default", function(filename, path=NULL, ..., outPath=".", verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'filename' & 'path':
   pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);
+
+  # Arguments 'outPath':
+  outPath <- Arguments$getWritablePath(outPath);
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -47,17 +51,30 @@ setMethodS3("compileSweave", "default", function(filename, path=NULL, ..., verbo
   }
 
   verbose && enter(verbose, "Compiling Sweave document");
-  verbose && cat(verbose, "Sweave pathname: ", pathname);
+  pathname <- getAbsolutePath(pathname);
+  verbose && cat(verbose, "Sweave pathname (absolute): ", pathname);
+  verbose && printf(verbose, "Input file size: %g bytes\n", file.info(pathname)$size);
+  verbose && cat(verbose, "Output and working directory: ", outPath);
+
+  opwd <- ".";
+  on.exit(setwd(opwd), add=TRUE);
+  if (!is.null(outPath)) {
+    opwd <- setwd(outPath);
+  }
 
   pathname2 <- Sweave(pathname);
+  pathname2 <- getAbsolutePath(pathname2);
   verbose && cat(verbose, "Sweave output pathname: ", pathname2);
+
+  setwd(opwd); opwd <- ".";
+  verbose && printf(verbose, "Output file size: %g bytes\n", file.info(pathname2)$size);
 
   # Compile LaTeX?
   ext <- gsub(".*[.]([^.]*)$", "\\1", pathname2);
   isLaTeX <- (tolower(ext) == "tex");
   if (isLaTeX) {
     verbose && enter(verbose, "Compiling Sweave-generated LaTeX document");
-    pathname3 <- compileLaTeX(pathname2, ..., verbose=less(verbose, 10));
+    pathname3 <- compileLaTeX(pathname2, ..., outPath=outPath, verbose=less(verbose, 10));
     verbose && cat(verbose, "Output pathname: ", pathname3);
     verbose && exit(verbose);
   } else {
@@ -72,6 +89,9 @@ setMethodS3("compileSweave", "default", function(filename, path=NULL, ..., verbo
 
 ############################################################################
 # HISTORY:
+# 2012-12-06
+# o Added argument 'outPath' to compileSweave(), which is also the 
+#   working directory.
 # 2011-04-14
 # o Now compileSweave() only calls compileLaTeX() if Sweave outputs
 #   a file with filename extension *.tex (non-case sensitive).

@@ -1,6 +1,14 @@
 Package: R.rsp
 ==============
 
+Version: 0.8.3 [2012-12-06]
+o ROBUSTNESS: Added system tests for compileLaTeX() and compileSweave().
+o Added argument 'outPath' to compileLaTeX() and compileSweave(), which
+  is also the working directory.
+o BUG FIX: compileLaTeX() would return an incorrect pathname unless
+  the given LaTeX file was in the current working directory.
+
+
 Version: 0.8.2 [2012-06-22]
 o ROBUSTNESS: Now the doc/Makefile no longer assumes 'R' is on 
   the system's search path.  Instead it uses $(R_HOME)/bin/R. 
