@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\SweaveOpts{echo=FALSE}
+\SweaveOpts{echo=<%=FALSE%>}
 
 \title{Lorem Ipsum}
 \author{R.rsp}
