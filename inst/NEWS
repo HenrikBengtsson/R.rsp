@@ -2,10 +2,12 @@ Package: R.rsp
 ==============
 
 Version: 0.8.5 [2013-01-20]
+o Now rsp() uses compileRnw() for *.Rnw files.
 o Added compileRnw() which compiles Sweave and knitr Rnw files.
-o Added typeOfRnw() which tries to infer whether an Rnw file is for
-  Sweave or knitr based on its contents.
-o Added compileKnitr() and corresponding system tests.
+o Added typeOfRnw() which tries to infer whether an Rnw file is 
+  for Sweave or knitr based on its contents.
+o ROBUSTNESS: Added system tests for compileKnitr(), compileRnw()
+  and rsp() for handling Sweave and knitr Rnw files.
 o Added 'knitr' under suggested packages.
 
 

@@ -1,6 +1,12 @@
 \documentclass{article}
 
-\SweaveOpts{echo=<%=FALSE%>}
+<<global, echo=<%=FALSE%>>>=
+opts_chunk$set(echo=FALSE)
+# Emulate what Sweave is generating
+opts_chunk$set(fig.width=6, fig.height=6)
+opts_chunk$set(fig.align="center", fig.pos="htbp")
+opts_chunk$set(out.width="3.8in")
+@
 
 \title{Lorem Ipsum}
 \author{R.rsp}
@@ -13,14 +19,9 @@ sentences <- c("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
 %>
 <% for (sentence in sentences) { %>\Sexpr{"<%=sentence%>"} <% } %>
 
-\begin{figure}[htbp]
- \begin{center}
-<<fig=TRUE>>=
+<<fig=TRUE, fig.cap="Pairs plot of the iris data.">>=
 library(graphics)
 pairs(iris)
 @
-  \caption{Pairs plot of the iris data.}
- \end{center}
-\end{figure}
 
 \end{document}

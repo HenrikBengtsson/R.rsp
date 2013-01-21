@@ -175,9 +175,9 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
       # *.tex => ... => *.dvi/*.pdf
       "tex" = compileLaTeX,
  
-      # RSP-embedded Sweave documents:
+      # RSP-embedded Sweave and Knitr Rnw documents:
       # *.Rnw => ... => *.tex => dvi/*.pdf
-      "rnw" = compileSweave
+      "rnw" = compileRnw
     );
 
     postProcessor <- NULL;
