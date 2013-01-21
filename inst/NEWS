@@ -2,7 +2,8 @@ Package: R.rsp
 ==============
 
 Version: 0.8.5 [2013-01-20]
-Added compileKnitr() and corresponding system tests.
+o Added compileKnitr() and corresponding system tests.
+o Added 'knitr' under suggested packages.
 
 
 Version: 0.8.4 [2012-12-19]
