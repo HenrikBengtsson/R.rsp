@@ -1,8 +1,8 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # IMPORTS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# Packages to be imported
-import("R.methodsS3")
+importFrom("R.methodsS3", "setMethodS3")
+importFrom("R.methodsS3", "throw")
 import("R.oo")
 
 # importFrom(R.utils, cat)
