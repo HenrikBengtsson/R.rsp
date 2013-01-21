@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.8.5 [2013-01-20]
+Added compileKnitr() and corresponding system tests.
+
+
 Version: 0.8.4 [2012-12-19]
 o Utilizing new startupMessage() of R.oo.
 
