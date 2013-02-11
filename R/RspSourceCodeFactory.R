@@ -1,12 +1,12 @@
 ###########################################################################/**
-# @RdocClass RspEngine
+# @RdocClass RspSourceCodeFactory
 #
-# @title "The RspEngine class"
+# @title "The RspSourceCodeFactory class"
 #
 # \description{
 #  @classhierarchy
 #
-#  An RspEngine is language-specific engine that knows how to translate
+#  An RspSourceCodeFactory is language-specific engine that knows how to translate
 #  individual @see "RspExpression":s into source code of a specific
 #  programming language.
 # }
@@ -24,9 +24,9 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("RspEngine", function(language=NA_character_, ...) {
+setConstructorS3("RspSourceCodeFactory", function(language=NA_character_, ...) {
   language <- Arguments$getCharacter(language);
-  extend(language, "RspEngine");
+  extend(language, "RspSourceCodeFactory");
 })
 
 
@@ -55,7 +55,7 @@ setConstructorS3("RspEngine", function(language=NA_character_, ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("getLanguage", "RspEngine", function(this, ...) {
+setMethodS3("getLanguage", "RspSourceCodeFactory", function(this, ...) {
   as.character(this);
 })
 
@@ -85,7 +85,7 @@ setMethodS3("getLanguage", "RspEngine", function(this, ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("makeSourceCode", "RspEngine", function(this, ...) {
+setMethodS3("makeSourceCode", "RspSourceCodeFactory", function(this, ...) {
   lang <- getLanguage(this);
   className <- sprintf("%sSourceCode", capitalize(lang));
   clazz <- Class$forName(className);
@@ -118,19 +118,19 @@ setMethodS3("makeSourceCode", "RspEngine", function(this, ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("toSourceCode", "RspEngine", abstract=TRUE);
+setMethodS3("toSourceCode", "RspSourceCodeFactory", abstract=TRUE);
 
 
 
 ###########################################################################/**
-# @RdocClass RRspEngine
+# @RdocClass RRspSourceCodeFactory
 #
-# @title "The RRspEngine class"
+# @title "The RRspSourceCodeFactory class"
 #
 # \description{
 #  @classhierarchy
 #
-#  An RRspEngine is an @see "RspEngine" for the R language.
+#  An RRspSourceCodeFactory is an @see "RspSourceCodeFactory" for the R language.
 # }
 # 
 # @synopsis
@@ -145,8 +145,8 @@ setMethodS3("toSourceCode", "RspEngine", abstract=TRUE);
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("RRspEngine", function(...) {
-  extend(RspEngine("R"), "RRspEngine");
+setConstructorS3("RRspSourceCodeFactory", function(...) {
+  extend(RspSourceCodeFactory("R"), "RRspSourceCodeFactory");
 })
 
 
@@ -176,7 +176,7 @@ setConstructorS3("RRspEngine", function(...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("exprToCode", "RRspEngine", function(object, expr, ...) {
+setMethodS3("exprToCode", "RRspSourceCodeFactory", function(object, expr, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -277,7 +277,7 @@ setMethodS3("exprToCode", "RRspEngine", function(object, expr, ...) {
 
 
 
-setMethodS3("toSourceCode", "RspEngine", function(object, doc, ...) {
+setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
   # Argument 'doc':
   doc <- Arguments$getInstanceOf(doc, "RspDocument");
 

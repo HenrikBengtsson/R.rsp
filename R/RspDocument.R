@@ -27,38 +27,6 @@ setConstructorS3("RspDocument", function(expressions=list(), ...) {
 })
 
 
-#########################################################################/**
-# @RdocMethod evaluate
-#
-# @title "Parses, translates, and evaluates the RSP document"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{envir}{The @environment where the RSP document is evaluated.}
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns the last evaluated expression, iff any.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("evaluate", "RspDocument", function(object, envir=parent.frame(), ...) {
-  rCode <- toR(object);
-  evaluate(rCode, envir=envir, ...);
-}) # evaluate()
-
-
 
 #########################################################################/**
 # @RdocMethod trim
@@ -147,42 +115,6 @@ setMethodS3("trim", "RspDocument", function(object, ...) {
   res;
 }, protected=TRUE) # trim()
 
-
-
-
-#########################################################################/**
-# @RdocMethod toR
-#
-# @title "Translates the RSP document into R source code"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{engine}{A @see "RspEngine".}
-#   \item{...}{Optional arguments passed to \code{toSourceCode()} for
-#              the @see "RspEngine".}
-# }
-#
-# \value{
-#  Returns the R source code as an @see "RSourceCode".
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("toR", "RspDocument", function(object, engine=RRspEngine(), ...) {
-  # Argument 'engine':
-  engine <- Arguments$getInstanceOf(engine, "RspEngine");
-
-  toSourceCode(engine, object, ...);
-}) # toR()
 
 
 ##############################################################################

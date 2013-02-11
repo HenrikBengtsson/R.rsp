@@ -9,11 +9,12 @@ setMethodS3("rstring", "RspString", function(object, ...) {
 }) # rstring()
 
 setMethodS3("rstring", "RspDocument", function(object, ...) {
-  rCode <- toR(object);
+  factory <- RRspSourceCodeFactory();
+  rCode <- toSourceCode(factory, object);
   rstring(rCode, ...);
 }) # rstring()
 
-setMethodS3("rstring", "RSourceCode", function(object, envir=parent.frame(), engine=RRspEngine(), ...) {
+setMethodS3("rstring", "RSourceCode", function(object, envir=parent.frame(), ...) {
   header <- '
 rspCon <- textConnection(NULL, open="w", local=TRUE);
 on.exit({ if (exists("rspCon")) close(rspCon) });
