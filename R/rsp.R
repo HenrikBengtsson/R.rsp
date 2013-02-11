@@ -68,55 +68,6 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   }
 
 
-  rspPlain <- function(pathname, response=NULL, envir, ..., verbose=FALSE) {
-    # Argument 'response':
-    if (is.null(response)) {
-      verbose && enter(verbose, "Creating FileRspResponse");
-      pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
-      filename2 <- gsub(pattern, "\\1", basename(pathname));
-      outPath <- ".";
-      pathname2 <- Arguments$getWritablePathname(filename2, path=outPath);
-      response <- FileRspResponse(file=pathname2, overwrite=TRUE);
-      verbose && exit(verbose);
-    }
-
-    if (inherits(response, "connection")) {
-      response <- FileRspResponse(file=response);
-    } else if (is.character(response)) {
-      pathname <- Arguments$getWritablePathname(response);
-      response <- FileRspResponse(file=pathname);
-    } else if (!inherits(response, "RspResponse")) {
-      throw("Argument 'response' is not an RspResponse object: ", 
-                                                         class(response)[1]);
-    }
-
-    # Argument 'verbose':
-    verbose <- Arguments$getVerbose(verbose);
-    if (verbose) {
-      pushState(verbose);
-      on.exit(popState(verbose));
-    }
-
-    verbose && enter(verbose, "Compiling RSP-embedded plain document");
-    verbose && cat(verbose, "Input pathname: ", getAbsolutePath(pathname));
-    verbose && printf(verbose, "%s:\n", class(response)[1]);
-    verbose && print(verbose, response);
-
-    pathname2 <- getOutput(response);
-    verbose && cat(verbose, "Response output class: ", class(pathname2)[1]);
-    verbose && cat(verbose, "Response output pathname: ", getAbsolutePath(pathname2));
-
-    verbose && enter(verbose, "Calling sourceRspV2()");
-    sourceRspV2(pathname, path=NULL, ..., response=response, envir=envir, verbose=less(verbose, 20));
-    verbose && exit(verbose);
-
-    verbose && exit(verbose);
-
-    invisible(pathname2);
-  } # rspPlain()
-
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -138,6 +89,9 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   
   # Arguments 'filename' & 'path':
   pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);
+
+  # Argument 'envir':
+#  envir <- Arguments$getEnvironment(envir);
 
   # Arguments 'outPath':
   outPath <- Arguments$getWritablePath(outPath);
@@ -246,6 +200,8 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
 
 ############################################################################
 # HISTORY:
+# 2013-02-08
+# o Made internal rspPlain() its own function.
 # 2011-11-14
 # o Added argument 'envir' to rsp(..., envir=parent.frame()).
 # 2011-04-16
