@@ -72,11 +72,12 @@ setMethodS3("getLanguage", "RspSourceCodeFactory", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the source code constructor.}
+#   \item{...}{Arguments passed to the language-specific 
+#              @see "SourceCode" constructor.}
 # }
 #
 # \value{
-#  Returns an @character string.
+#  Returns a @see "SourceCode" object.
 # }
 #
 # @author
@@ -93,67 +94,12 @@ setMethodS3("makeSourceCode", "RspSourceCodeFactory", function(this, ...) {
 }, protected=TRUE)
 
 
-#########################################################################/**
-# @RdocMethod toSourceCode
-#
-# @title "Translates an RspExpression into source code"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @see "SourceCode" object.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
-setMethodS3("toSourceCode", "RspSourceCodeFactory", abstract=TRUE);
-
-
-
-###########################################################################/**
-# @RdocClass RRspSourceCodeFactory
-#
-# @title "The RRspSourceCodeFactory class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RRspSourceCodeFactory is an @see "RspSourceCodeFactory" for the R language.
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#*/###########################################################################
-setConstructorS3("RRspSourceCodeFactory", function(...) {
-  extend(RspSourceCodeFactory("R"), "RRspSourceCodeFactory");
-})
 
 
 #########################################################################/**
 # @RdocMethod exprToCode
 #
-# @title "Translates an RspExpression into R source code"
+# @title "Translates an RspExpression into source code"
 #
 # \description{
 #  @get "title".
@@ -176,107 +122,36 @@ setConstructorS3("RRspSourceCodeFactory", function(...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("exprToCode", "RRspSourceCodeFactory", function(object, expr, ...) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Local function
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  escapeRspText <- function(text) {
-    text <- deparse(text);
-    text <- substring(text, first=2L, last=nchar(text)-1L);
-    text;
-  } # escapeRspText()
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'expr':
-  expr <- Arguments$getInstanceOf(expr, "RspExpression");
+setMethodS3("exprToCode", "RspSourceCodeFactory", abstract=TRUE);
 
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # RspText => .ro("<text>")
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (inherits(expr, "RspText")) {
-    text <- getText(expr);
-    if (nchar(text) == 0L) {
-      return("");
-    }
-
-    code <- NULL;
-    while (nchar(text) > 0L) {
-      textT <- substring(text, first=1L, last=1024L);
-      textT <- escapeRspText(textT);
-      codeT <- sprintf(".ro(\"%s\")", textT);
-      code <- c(code, codeT);
-      text <- substring(text, first=1025L);
-    }
-
-    return(code);
-  }
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # RspCode => <code>
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (inherits(expr, "RspCode")) {
-    code <- getCode(expr);
-    return(code);
-  }
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # RspComment => [void]
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (inherits(expr, "RspComment")) {
-    return("");
-  }
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # RspEqualExpression => .ro({<expr>})
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (inherits(expr, "RspEqualExpression")) {
-    codeT <- getCode(expr);
-    code <- sprintf(".ro({%s})", codeT);
-    return(code);
-  }
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # RspIncludeDirective => ...
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (inherits(expr, "RspIncludeDirective")) {
-    file <- getFile(expr);
-
-    if (isUrl(file)) {
-      fh <- url(file);
-      lines <- readLines(fh);
-    } else {
-      file <- getAbsolutePath(file);
-      if (!isFile(file)) {
-        throw("Cannot include file. File not found: ", file);
-      }
-      lines <- readLines(file); 
-    }
-
-    # Parse RSP string to RSP document
-    s <- RspString(lines);
-    e <- parse(s);
-    # Translate to R source code
-    code <- toSourceCode(object, e, ...);
-
-    # Add a header and footer
-    hdr <- sprintf("# BEGIN: @include file='%s'", file);
-    ftr <- sprintf("# END: @include file='%s'", file);
-    code <- c(hdr, code, ftr);
-
-    return(code);
-  }
-
-  throw("Unknown RspExpression: ", class(expr)[1L]);
-}, protected=TRUE) # exprToCode()
-
-
-
+#########################################################################/**
+# @RdocMethod toSourceCode
+#
+# @title "Translates an RSP document to source code"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{expr}{An @see "RspDocument".}
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns the generated source code as a @see "SourceCode" object.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/#########################################################################
 setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
   # Argument 'doc':
   doc <- Arguments$getInstanceOf(doc, "RspDocument");
@@ -287,7 +162,6 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
 
   makeSourceCode(object, code);
 }) # toSourceCode()
-
 
 
 ##############################################################################
