@@ -61,9 +61,42 @@ setMethodS3("getLanguage", "RspEngine", function(this, ...) {
 
 
 #########################################################################/**
-# @RdocMethod toR
+# @RdocMethod makeSourceCode
 #
-# @title "Translates an RspExpression into R source code"
+# @title "Makes a SourceCode object"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Arguments passed to the source code constructor.}
+# }
+#
+# \value{
+#  Returns an @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/#########################################################################
+setMethodS3("makeSourceCode", "RspEngine", function(this, ...) {
+  lang <- getLanguage(this);
+  className <- sprintf("%sSourceCode", capitalize(lang));
+  clazz <- Class$forName(className);
+  clazz(...);
+}, protected=TRUE)
+
+
+#########################################################################/**
+# @RdocMethod toSourceCode
+#
+# @title "Translates an RspExpression into source code"
 #
 # \description{
 #  @get "title".
@@ -76,7 +109,7 @@ setMethodS3("getLanguage", "RspEngine", function(this, ...) {
 # }
 #
 # \value{
-#  Returns an @character @vector.
+#  Returns a @see "SourceCode" object.
 # }
 #
 # @author
@@ -85,7 +118,7 @@ setMethodS3("getLanguage", "RspEngine", function(this, ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("toR", "RspEngine", abstract=TRUE);
+setMethodS3("toSourceCode", "RspEngine", abstract=TRUE);
 
 
 
@@ -118,7 +151,7 @@ setConstructorS3("RRspEngine", function(...) {
 
 
 #########################################################################/**
-# @RdocMethod toR
+# @RdocMethod exprToCode
 #
 # @title "Translates an RspExpression into R source code"
 #
@@ -143,7 +176,7 @@ setConstructorS3("RRspEngine", function(...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("toR", "RRspEngine", function(object, expr, ...) {
+setMethodS3("exprToCode", "RRspEngine", function(object, expr, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -225,14 +258,36 @@ setMethodS3("toR", "RRspEngine", function(object, expr, ...) {
       lines <- readLines(file); 
     }
 
+    # Parse RSP string to RSP document
     s <- RspString(lines);
     e <- parse(s);
+    # Translate to R source code
+    code <- toSourceCode(object, e, ...);
 
-    return(e);
+    # Add a header and footer
+    hdr <- sprintf("# BEGIN: @include file='%s'", file);
+    ftr <- sprintf("# END: @include file='%s'", file);
+    code <- c(hdr, code, ftr);
+
+    return(code);
   }
 
   throw("Unknown RspExpression: ", class(expr)[1L]);
-}) # toR()
+}, protected=TRUE) # exprToCode()
+
+
+
+setMethodS3("toSourceCode", "RspEngine", function(object, doc, ...) {
+  # Argument 'doc':
+  doc <- Arguments$getInstanceOf(doc, "RspDocument");
+
+  # Coerce all RspExpression:s to source code
+  code <- lapply(doc, FUN=function(expr) exprToCode(object, expr));
+  code <- unlist(code, use.names=FALSE);
+
+  makeSourceCode(object, code);
+}) # toSourceCode()
+
 
 
 ##############################################################################

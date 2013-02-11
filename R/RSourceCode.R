@@ -1,12 +1,12 @@
 ###########################################################################/**
-# @RdocClass RCode
+# @RdocClass RSourceCode
 #
-# @title "The RCode class"
+# @title "The RSourceCode class"
 #
 # \description{
 #  @classhierarchy
 #
-#  An RCode object is a @character @vector holding R source code.
+#  An RSourceCode object is a @character @vector holding R source code.
 # }
 # 
 # @synopsis
@@ -21,41 +21,10 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("RCode", function(code=character(), ...) {
-  extend(c(code, ...), "RCode");
+setConstructorS3("RSourceCode", function(...) {
+  extend(SourceCode(...), "RSourceCode");
 })
 
-
-#########################################################################/**
-# @RdocMethod print
-#
-# @title "Prints the R code"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns nothing.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("print", "RCode", function(x, ...) {
-  code <- paste(x, collapse="\n");
-  cat(code);
-  cat("\n");
-})
 
 
 #########################################################################/**
@@ -83,7 +52,7 @@ setMethodS3("print", "RCode", function(x, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("parse", "RCode", function(this, ...) {
+setMethodS3("parse", "RSourceCode", function(this, ...) {
   code <- paste(this, collapse="\n");
   base::parse(text=code, ...);
 })
@@ -115,7 +84,7 @@ setMethodS3("parse", "RCode", function(this, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("evaluate", "RCode", function(this, envir=parent.frame(), ...) {
+setMethodS3("evaluate", "RSourceCode", function(this, envir=parent.frame(), ...) {
   expr <- parse(this, ...);
   eval(expr, envir=envir);
 })

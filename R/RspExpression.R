@@ -1,6 +1,32 @@
+###########################################################################/**
+# @RdocClass RspExpression
+#
+# @title "The RspExpression class"
+#
+# \description{
+#  @classhierarchy
+#
+#  An RspExpression object represents an RSP expression, which can either
+#  be a plain text section or an RSP section.
+# }
+# 
+# @synopsis
+#
+# \arguments{
+#   \item{object}{A R object.}
+#   \item{...}{Not used.}
+# }
+#
+# \section{Fields and Methods}{
+#  @allmethods
+# }
+# 
+# @author
+#*/###########################################################################
 setConstructorS3("RspExpression", function(object=character(), ...) {
   extend(object, "RspExpression");
 })
+
 
 setConstructorS3("RspComment", function(str=character(), ...) {
   extend(RspExpression(str), "RspComment");

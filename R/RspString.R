@@ -109,7 +109,7 @@ setMethodS3("dropComments", "RspString", function(object, ...) {
 # }
 #
 # \value{
-#  Returns a named @list.
+#  Returns a named @list with elements named "text" and "rsp".
 # }
 #
 # @author
@@ -152,12 +152,14 @@ setMethodS3("parseRaw", "RspString", function(object, ...) {
 
         # Trim trailing white space and newline from RSP tag?
         if (trimNewline) {
-          part <- list(rsp=substring(bfr, first=1L, last=pos-2L));
+          rsp <- substring(bfr, first=1L, last=pos-2L);
+          part <- list(rsp=trim(rsp));
           bfr <- substring(bfr, first=pos+2L);
           pattern <- "^[ \t\v]*(\n|\r|\r\n)";
           bfr <- gsub(pattern, "", bfr);
         } else {
-          part <- list(rsp=substring(bfr, first=1L, last=pos-1L));
+          rsp <- substring(bfr, first=1L, last=pos-1L);
+          part <- list(rsp=trim(rsp));
           bfr <- substring(bfr, first=pos+2L);
         }
 
@@ -206,11 +208,182 @@ setMethodS3("parseRaw", "RspString", function(object, ...) {
 # }
 #*/######################################################################### 
 setMethodS3("parse", "RspString", function(object, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local function
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  coerceText <- function(object, ...) {
+    idxs <- which(names(object) == "text");
+    for (kk in idxs) {
+      part <- object[[kk]];
+      part <- RspText(part);
+      object[[kk]] <- part;
+    }
+    object;
+  } # coerceText()
+
+
+  coerceRsp <- function(object, ...) {
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Local function
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    parseAttributes <- function(rspCode, known=mandatory, mandatory=NULL, ...) {
+      bfr <- rspCode;
+      
+      # Argument 'known':
+      known <- unique(union(known, mandatory));
+    
+      # Remove all leading white spaces
+      pos <- regexpr("^[ \t]+", bfr);
+      len <- attr(pos, "match.length");
+      bfr <- substring(bfr, first=len+1L);
+    
+      attrs <- list();
+      if (nchar(bfr) >= 0L) {
+        # Add a white space
+        bfr <- paste(" ", bfr, sep="");
+        while (nchar(bfr) > 0L) {
+          # Read all (mandatory) white spaces
+          pos <- regexpr("^[ \t]+", bfr);
+          if (pos == -1L) {
+            throw(Exception("Error when parsing attributes. Expected a white space: ", code=rspCode));
+          }
+          len <- attr(pos, "match.length");
+          bfr <- substring(bfr, first=len+1L);
+          # Read the attribute name
+          pos <- regexpr("^[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*", bfr);
+          if (pos == -1L) {
+            throw(Exception("Error when parsing attributes. Expected an attribute name: ", code=rspCode));
+          }
+          len <- attr(pos, "match.length");
+          name <- substring(bfr, first=1L, last=len);
+          bfr <- substring(bfr, first=len+1L);
+      
+          # Read the '=' with optional white spaces around it
+          pos <- regexpr("^[ ]*=[ ]*", bfr);
+          if (pos == -1L) {
+            throw(Exception("Error when parsing attributes. Expected an equal sign: ", code=rspCode));
+          }
+          len <- attr(pos, "match.length");
+          bfr <- substring(bfr, first=len+1L);
+      
+          # Read the value with mandatory quotation marks around it
+          pos <- regexpr("^\"[^\"]*\"", bfr);
+          if (pos == -1L) {
+            pos <- regexpr("^'[^']*'", bfr);
+            if (pos == -1L) {
+              throw(Exception("Error when parsing attributes. Expected a quoted attribute value string: ", code=rspCode));
+            }
+          }
+          len <- attr(pos, "match.length");
+          value <- substring(bfr, first=2L, last=len-1L);
+          bfr <- substring(bfr, first=len+1L);
+          names(value) <- name;
+          attrs <- c(attrs, value);
+        }
+      } # if (nchar(bfr) > 0)
+    
+      # Check for duplicated attributes  
+      if (length(names(attrs)) != length(unique(names(attrs))))
+          throw(Exception("Duplicated attributes.", code=rspCode));
+    
+      # Check for unknown attributes
+      if (!is.null(known)) {
+        nok <- which(is.na(match(names(attrs), known)));
+        if (length(nok) > 0) {
+          nok <- paste("'", names(attrs)[nok], "'", collapse=", ", sep="");
+          throw(Exception("Unknown attribute(s): ", nok, code=rspCode));
+        }
+      }
+    
+      # Check for missing mandatory attributes
+      if (!is.null(mandatory)) {
+        nok <- which(is.na(match(mandatory, names(attrs))));
+        if (length(nok) > 0) {
+          nok <- paste("'", mandatory[nok], "'", collapse=", ", sep="");
+          throw(Exception("Missing attribute(s): ", nok, code=rspCode));
+        }
+      }
+    
+      # Return parsed attributes.
+      attrs;
+    } # parseAttributes()
+  
+  
+    idxs <- which(names(object) == "rsp");
+    for (kk in idxs) {
+      part <- object[[kk]];
+      rspCode <- part;
+  
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # RSP Scripting Elements and Variables
+      #
+      # <%--[comment]--%>
+      #
+      # NOTE: With dropRspComments() above, this will never occur here.
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      pattern <- "^--(.*)--$";
+      if (regexpr(pattern, part) != -1L) {
+        comment <- gsub(pattern, "\\1", part);
+        part <- RspComment(comment);
+        object[[kk]] <- part;
+        next;
+      }
+  
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # RSP Scripting Elements and Variables
+      #
+      # <%=[expression]%>
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      pattern <- "^=(.*)$";
+      if (regexpr(pattern, part) != -1L) {
+        code <- gsub(pattern, "\\1", part);
+        code <- trim(code);
+        part <- RspEqualExpression(code);
+        object[[kk]] <- part;
+        next;
+      } 
+  
+  
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # RSP Directives
+      #
+      # <%@directive attr1="foo" attr2="bar" ...%>
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      pattern <- "^@[ ]*([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*)[ ]+(.*)$";
+      if (regexpr(pattern, part) != -1L) {
+        # <%@foo attr1="bar" attr2="geek"%> => ...
+        directive <- gsub(pattern, "\\1", part);
+        attrs <- gsub(pattern, "\\2", part);
+        attrs <- parseAttributes(attrs, known=NULL);
+        class <- sprintf("Rsp%sDirective", capitalize(tolower(directive)));
+        clazz <- Class$forName(class);
+        part <- newInstance(clazz, attributes=attrs);
+        object[[kk]] <- part;
+        next;
+      }
+   
+  
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # RSP Scripting Elements and Variables
+      #
+      # <% [expressions] %>
+      #
+      # This applies to anything not recognized above.
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      part <- RspCode(rspCode);
+      object[[kk]] <- part;
+    } # for (kk ...)
+  
+    object; 
+    } # coerceRsp()
+
+
   object <- dropComments(object);
   expr <- parseRaw(object);
+  expr <- coerceText(expr);
+  expr <- coerceRsp(expr);
   expr <- trim(expr);
-  expr <- parseText(expr);
-  expr <- parseRsp(expr);
+
   expr;
 }, protected=TRUE) # parse()
 
@@ -232,7 +405,7 @@ setMethodS3("parse", "RspString", function(object, ...) {
 # }
 #
 # \value{
-#  Returns the code as an @see "RCode".
+#  Returns the code as an @see "SourceCode".
 # }
 #
 # @author
@@ -243,7 +416,7 @@ setMethodS3("parse", "RspString", function(object, ...) {
 #*/######################################################################### 
 setMethodS3("toR", "RspString", function(object, ...) {
   expr <- parse(object);
-  toR(expr);
+  toR(expr, ...);
 }, protected=TRUE) # toR()
 
 
@@ -275,7 +448,7 @@ setMethodS3("toR", "RspString", function(object, ...) {
 # }
 #*/######################################################################### 
 setMethodS3("evaluate", "RspString", function(object, envir=parent.frame(), ...) {
-  rCode <- toR(object);
+  rCode <- toR(object, ...);
   # TO FIX!!!
   evaluate(rCode, envir=envir, ...);
 }) # evaluate()

@@ -13,7 +13,7 @@ setMethodS3("rstring", "RspDocument", function(object, ...) {
   rstring(rCode, ...);
 }) # rstring()
 
-setMethodS3("rstring", "RCode", function(object, envir=parent.frame(), engine=RRspEngine(), ...) {
+setMethodS3("rstring", "RSourceCode", function(object, envir=parent.frame(), engine=RRspEngine(), ...) {
   header <- '
 rspCon <- textConnection(NULL, open="w", local=TRUE);
 on.exit({ if (exists("rspCon")) close(rspCon) });
