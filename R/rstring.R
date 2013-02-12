@@ -39,10 +39,10 @@ setMethodS3("rstring", "RspString", function(object, ...) {
   rstring(expr, ...);
 }) # rstring()
 
-setMethodS3("rstring", "RspDocument", function(object, ...) {
+setMethodS3("rstring", "RspDocument", function(object, envir=parent.frame(), ...) {
   factory <- RspRSourceCodeFactory();
-  rCode <- toSourceCode(factory, object);
-  rstring(rCode, ...);
+  rCode <- toSourceCode(factory, object, envir=envir);
+  rstring(rCode, ..., envir=envir);
 }) # rstring()
 
 setMethodS3("rstring", "RSourceCode", function(object, envir=parent.frame(), ...) {

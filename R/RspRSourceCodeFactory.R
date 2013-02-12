@@ -54,7 +54,7 @@ setConstructorS3("RspRSourceCodeFactory", function(...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ...) {
+setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, envir=parent.frame(), ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -70,6 +70,9 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'expr':
   expr <- Arguments$getInstanceOf(expr, "RspExpression");
+
+  # Argument 'envir':
+  stopifnot(!is.null(envir));
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -154,8 +157,8 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ...) {
     pattern <- "^[$]([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*)$";
     if (regexpr(pattern, file) != -1L) {
       key <- gsub(pattern, "\\1", file);
-      if (exists(key, mode="character")) {
-        file <- get(key, mode="character");
+      if (exists(key, mode="character", envir=envir)) {
+        file <- get(key, mode="character", envir=envir);
         if (nchar(file) == 0L) {
           throw("RSP include attribute 'file' specifies an R character variable that is empty: ", key);
         }
@@ -182,7 +185,7 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ...) {
     s <- RspString(lines);
     e <- parse(s);
     # Translate to R source code
-    code <- toSourceCode(object, e, ...);
+    code <- toSourceCode(object, e, envir=envir, ...);
 
     # Add a header and footer
     hdr <- sprintf("# BEGIN: @include file='%s'", file);
@@ -190,7 +193,70 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ...) {
     code <- c(hdr, code, ftr);
 
     return(code);
-  }
+  } # RspIncludeDirective
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # RspDefineDirective => ...
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (inherits(expr, "RspDefineDirective")) {
+    attrs <- getAttributes(expr);
+    for (key in names(attrs)) {
+      assign(key, attrs[[key]], envir=envir);
+    }
+    return(NULL);
+  } # RspDefineDirective
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # RspEvalDirective => ...
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (inherits(expr, "RspEvalDirective")) {
+    text <- getText(expr);
+    if (!is.null(text)) {
+      expr <- base::parse(text=text);
+      value <- eval(expr, envir=envir);
+      return(NULL);
+    } # if (!is.null(text))
+
+    file <- getFile(expr);
+    if (!is.null(file)) {
+      # Support @include file="$VAR"
+      # Note that 'VAR' must exist when parsing the RSP string.
+      # In other words, it cannot be set from within the RSP string!
+      pattern <- "^[$]([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*)$";
+      if (regexpr(pattern, file) != -1L) {
+        key <- gsub(pattern, "\\1", file);
+        if (exists(key, mode="character", envir=envir)) {
+          file <- get(key, mode="character", envir=envir);
+          if (nchar(file) == 0L) {
+            throw("RSP include attribute 'file' specifies an R character variable that is empty: ", key);
+          }
+        } else {
+          file <- Sys.getenv(key);
+          if (nchar(file) == 0L) {
+            throw("RSP include attribute 'file' specifies neither an existing R character variable nor an existing system environment variable: ", key);
+          }
+        }
+      }
+  
+      if (isUrl(file)) {
+        fh <- url(file);
+        lines <- readLines(fh);
+      } else {
+        file <- getAbsolutePath(file);
+        if (!isFile(file)) {
+          throw("Cannot include file. File not found: ", file);
+        }
+        lines <- readLines(file); 
+      }
+  
+      return(NULL);
+    } # if (!is.null(file))
+
+    throw("RSP 'eval' directive requires either attribute 'file' or 'text'.");
+  } # RspEvalDirective
+
 
   throw("Unknown RspExpression: ", class(expr)[1L]);
 }, protected=TRUE) # exprToCode()
@@ -199,6 +265,8 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-02-12
+# o Added preprocessing directives RspDefineDirective and RspEvalDirective.
 # 2013-02-11
 # o Added Rdoc help.
 # 2013-02-10

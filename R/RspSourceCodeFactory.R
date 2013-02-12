@@ -139,6 +139,7 @@ setMethodS3("exprToCode", "RspSourceCodeFactory", abstract=TRUE);
 #
 # \arguments{
 #   \item{expr}{An @see "RspDocument".}
+#   \item{envir}{The @environment in which RSP preprocessing directives are evaluated.}
 #   \item{...}{Not used.}
 # }
 #
@@ -152,12 +153,15 @@ setMethodS3("exprToCode", "RspSourceCodeFactory", abstract=TRUE);
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
+setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, envir=parent.frame(), ...) {
   # Argument 'doc':
   doc <- Arguments$getInstanceOf(doc, "RspDocument");
 
+  # Argument 'envir':
+  stopifnot(!is.null(envir));
+
   # Coerce all RspExpression:s to source code
-  code <- lapply(doc, FUN=function(expr) exprToCode(object, expr));
+  code <- lapply(doc, FUN=function(expr) exprToCode(object, expr, envir=envir));
   code <- unlist(code, use.names=FALSE);
 
   makeSourceCode(object, code);

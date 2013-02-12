@@ -28,6 +28,16 @@ setConstructorS3("RspExpression", function(object=character(), ...) {
 })
 
 
+setMethodS3("getAttributes", "RspExpression", function(directive, ...) {
+  attrs <- attributes(directive);
+  keys <- names(attrs);
+  keys <- setdiff(keys, "class");
+  attrs <- attrs[keys];
+  attrs;
+})
+ 
+ 
+
 
 ###########################################################################/**
 # @RdocClass RspComment
@@ -346,12 +356,13 @@ setConstructorS3("RspIncludeDirective", function(attributes=list(), ...) {
   if (!missing(attributes)) {
     keys <- names(attributes);
     if (!any(is.element(c("file"), keys))) {
-      throw("Missing attribute 'file' for RSP 'include' directive: ", hpaste(keys));
+      throw("Missing attribute 'file' for the RSP 'include' directive: ", hpaste(keys));
     }
   }
 
   extend(RspDirective("include", attributes=attributes, ...), "RspIncludeDirective")
 })
+
 
 
 #########################################################################/**
@@ -381,6 +392,32 @@ setConstructorS3("RspIncludeDirective", function(attributes=list(), ...) {
 #*/######################################################################### 
 setMethodS3("getFile", "RspIncludeDirective", function(directive, ...) {
   attr(directive, "file");
+})
+
+
+setConstructorS3("RspDefineDirective", function(...) {
+  extend(RspDirective("define", ...), "RspDefineDirective")
+})
+
+
+setConstructorS3("RspEvalDirective", function(attributes=list(), ...) {
+  # Argument 'attributes':
+  if (!missing(attributes)) {
+    keys <- names(attributes);
+    if (!any(is.element(c("file", "text"), keys))) {
+      throw("Either attribute 'file' or 'text' for the RSP 'eval' directive must be given: ", hpaste(keys));
+    }
+  }
+
+  extend(RspDirective("eval", attributes=attributes, ...), "RspEvalDirective")
+})
+
+setMethodS3("getFile", "RspEvalDirective", function(directive, ...) {
+  attr(directive, "file");
+})
+
+setMethodS3("getText", "RspEvalDirective", function(directive, ...) {
+  attr(directive, "text");
 })
 
 

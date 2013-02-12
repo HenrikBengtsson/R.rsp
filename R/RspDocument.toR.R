@@ -26,11 +26,14 @@
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("toR", "RspDocument", function(object, factory=RspRSourceCodeFactory(), ...) {
+setMethodS3("toR", "RspDocument", function(object, factory=RspRSourceCodeFactory(), envir=parent.frame(), ...) {
   # Argument 'factory':
   factory <- Arguments$getInstanceOf(factory, "RspSourceCodeFactory");
 
-  toSourceCode(factory, object, ...);
+  # Argument 'envir':
+  stopifnot(!is.null(envir));
+
+  toSourceCode(factory, object, envir=envir, ...);
 }) # toR()
 
 
