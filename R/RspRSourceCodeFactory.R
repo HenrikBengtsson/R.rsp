@@ -148,6 +148,25 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ...) {
   if (inherits(expr, "RspIncludeDirective")) {
     file <- getFile(expr);
 
+    # Support @include file="$VAR"
+    # Note that 'VAR' must exist when parsing the RSP string.
+    # In other words, it cannot be set from within the RSP string!
+    pattern <- "^[$]([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*)$";
+    if (regexpr(pattern, file) != -1L) {
+      key <- gsub(pattern, "\\1", file);
+      if (exists(key, mode="character")) {
+        file <- get(key, mode="character");
+        if (nchar(file) == 0L) {
+          throw("RSP include attribute 'file' specifies an R character variable that is empty: ", key);
+        }
+      } else {
+        file <- Sys.getenv(key);
+        if (nchar(file) == 0L) {
+          throw("RSP include attribute 'file' specifies neither an existing R character variable nor an existing system environment variable: ", key);
+        }
+      }
+    }
+
     if (isUrl(file)) {
       fh <- url(file);
       lines <- readLines(fh);
