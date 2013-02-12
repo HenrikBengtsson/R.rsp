@@ -94,37 +94,26 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ...) {
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # RspCodeChunkWithReturn => .ro({<expr>})
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (inherits(expr, "RspCodeChunkWithReturn")) {
-    codeT <- getCode(expr);
-    code <- sprintf("{%s}", codeT);
-    # Validate code chunk
-    tryCatch({
-      expr <- base::parse(text=code);
-    }, error = function(ex) {
-      throw("The RSP code chunk does not contain a complete R expression: ", ex);
-    });
-    code <- sprintf(".ro(%s)", code);
-    return(code);
-  }
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # RspCodeChunk => {<expr>}
+  # RspCodeChunk => .ro({<expr>})
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspCodeChunk")) {
     codeT <- getCode(expr);
     code <- sprintf("{%s}", codeT);
+
     # Validate code chunk
     tryCatch({
-      expr <- base::parse(text=code);
+      base::parse(text=code);
     }, error = function(ex) {
       throw("The RSP code chunk does not contain a complete R expression: ", ex);
     });
+
+    # Should the value of the code chunk be echoed to the output?
+    if (getReturn(expr)) {
+      code <- sprintf(".ro(%s)", code);
+    }
+
     return(code);
   }
-
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # RspCode => <code>

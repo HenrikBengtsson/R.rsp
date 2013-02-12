@@ -137,6 +137,7 @@ setMethodS3("getText", "RspText", function(text, ...) {
 #
 # \arguments{
 #   \item{code}{A @character string.}
+#   \item{echo}{If @TRUE, code is echoed to the output.}
 #   \item{...}{Not used.}
 # }
 #
@@ -146,8 +147,10 @@ setMethodS3("getText", "RspText", function(text, ...) {
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("RspCode", function(code=character(), ...) {
-  extend(RspExpression(code), "RspCode");
+setConstructorS3("RspCode", function(code=character(), echo=FALSE, ...) {
+  this <- extend(RspExpression(code), "RspCode");
+  attr(this, "echo") <- echo;
+  this;
 })
 
 
@@ -181,6 +184,36 @@ setMethodS3("getCode", "RspCode", function(code, ...) {
 })
 
 
+#########################################################################/**
+# @RdocMethod getEcho
+#
+# @title "Checks whether the source code should be echoed or not"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @logical.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getEcho", "RspCode", function(code, ...) {
+  isTRUE(attr(code, "echo"));
+})
+
+
 
 ###########################################################################/**
 # @RdocClass RspCodeChunk
@@ -198,6 +231,7 @@ setMethodS3("getCode", "RspCode", function(code, ...) {
 #
 # \arguments{
 #   \item{...}{Arguments passed to the constructor of @see "RspCode".}
+#   \item{return}{If @TRUE, the value of the evaluated code chunk is returned.}
 # }
 #
 # \section{Fields and Methods}{
@@ -206,41 +240,41 @@ setMethodS3("getCode", "RspCode", function(code, ...) {
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("RspCodeChunk", function(...) {
-  extend(RspCode(...), "RspCodeChunk");
+setConstructorS3("RspCodeChunk", function(..., return=FALSE) {
+  this <- extend(RspCode(...), "RspCodeChunk");
+  attr(this, "return") <- return;
+  this;
 })
 
 
-
-###########################################################################/**
-# @RdocClass RspCodeChunkWithReturn
+#########################################################################/**
+# @RdocMethod getReturn
 #
-# @title "The RspCodeChunkWithReturn class"
+# @title "Checks whether the value of the evaluated code chunk should be returned or not"
 #
 # \description{
-#  @classhierarchy
-#
-#  An RspCodeChunkWithReturn is an @see "RspCodeChunk", which represents a
-#  complete RSP code chunk, and whose value is returned/inserted
-#  when evaluated.
+#  @get "title".
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the constructor of @see "RspCode".}
+#   \item{...}{Not used.}
 # }
 #
-# \section{Fields and Methods}{
-#  @allmethods
+# \value{
+#  Returns a @logical.
 # }
-# 
+#
 # @author
-#*/###########################################################################
-setConstructorS3("RspCodeChunkWithReturn", function(...) {
-  extend(RspCodeChunk(...), "RspCodeChunkWithReturn");
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getReturn", "RspCodeChunk", function(code, ...) {
+  isTRUE(attr(code, "return"));
 })
-
 
 
 
