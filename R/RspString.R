@@ -53,22 +53,41 @@ setConstructorS3("RspString", function(str=character(), ...) {
 # }
 #*/######################################################################### 
 setMethodS3("dropComments", "RspString", function(object, ...) {
-  ## <%-- comment \n comment --%>
-  dropRspComments <- function(rspCode, trimNewline=TRUE, ...) {
-    pattern <- "<%--.*?--%>";
+  ## <%[-]+%>
+  dropRspEmptyComments <- function(rspCode, trimNewline=TRUE, ...) {
+    pattern <- "<%[-]+%>";
     if (trimNewline) {
       pattern <- sprintf("%s(|[ \t\v]*(\n|\r|\r\n))", pattern);
     }
     gsub(pattern, "", rspCode, ...);
   } # dropRspComments()
 
-  ## <%-%>
-  dropRspEmptyComments <- function(rspCode, trimNewline=TRUE, ...) {
-    pattern <- "<%-%>";
-    if (trimNewline) {
-      pattern <- sprintf("%s(|[ \t\v]*(\n|\r|\r\n))", pattern);
-    }
-    gsub(pattern, "", rspCode, ...);
+
+  ## <%-{n} comment \n comment -{n}%>, where n >= 2
+  dropRspComments <- function(rspCode, trimNewline=TRUE, ...) {
+    patternL <- "<%(-[-]+)";
+    while ((posL <- regexpr(patternL, rspCode)) != -1L) {
+      nL <- attr(posL, "match.length");
+
+      patternR <- sprintf("[^-][-]{%d}%%>", nL-2L);
+      if ((posR <- regexpr(patternR, rspCode)) == -1L) {
+        break;
+      }
+      nR <- attr(posR, "match.length");
+
+
+      head <- substring(rspCode, first=1L, last=posL-1L);
+      comment <- substring(rspCode, first=posL+nL, last=posR);
+##      printf("BEGIN COMMENT\n'''%s'''\nEND COMMENT\n", comment);
+      tail <- substring(rspCode, first=posR+nR+1L, last=nchar(rspCode));
+
+      if (trimNewline) {
+        tail <- gsub("^[ \t\v]*(\n|\r|\r\n)", "", tail);
+      }
+
+      rspCode <- paste(c(head, tail), collapse="");
+    } # while()
+    rspCode;
   } # dropRspComments()
 
   ## <%# comment \n comment %>
@@ -80,9 +99,12 @@ setMethodS3("dropComments", "RspString", function(object, ...) {
     gsub(pattern, "", rspCode, ...);
   } # dropBrewComments()
 
+
   rspCode <- paste(object, collapse="\n");
-  rspCode <- dropRspComments(rspCode, trimNewline=TRUE, ...);
+
   rspCode <- dropRspEmptyComments(rspCode, trimNewline=TRUE, ...);
+
+  rspCode <- dropRspComments(rspCode, trimNewline=TRUE, ...);
 
   if (getOption("rsp/emulateBrew", FALSE)) {
     rspCode <- dropBrewComments(rspCode, trimNewline=TRUE, ...);
