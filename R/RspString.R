@@ -428,6 +428,9 @@ setMethodS3("parse", "RspString", function(object, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-02-12
+# o Added support for nested RSP comments, by introducing "different" RSP
+#   comment styles: <%-- --%>, <%--- ---%>, <%---- ----%>, and so on.
 # 2013-02-11
 # o Added Rdoc help.
 # 2013-02-09
