@@ -338,7 +338,7 @@ setMethodS3("parse", "RspString", function(object, ...) {
       if (regexpr(pattern, part) != -1L) {
         code <- gsub(pattern, "\\1", part);
         code <- trim(code);
-        part <- RspEqualExpression(code);
+        part <- RspCodeChunkWithReturn(code);
         object[[kk]] <- part;
         next;
       } 

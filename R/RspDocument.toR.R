@@ -26,7 +26,7 @@
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("toR", "RspDocument", function(object, factory=RRspSourceCodeFactory(), ...) {
+setMethodS3("toR", "RspDocument", function(object, factory=RspRSourceCodeFactory(), ...) {
   # Argument 'factory':
   factory <- Arguments$getInstanceOf(factory, "RspSourceCodeFactory");
 

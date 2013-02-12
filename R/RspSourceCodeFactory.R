@@ -24,7 +24,7 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("RspSourceCodeFactory", function(language=NA_character_, ...) {
+setConstructorS3("RspSourceCodeFactory", function(language=NA, ...) {
   language <- Arguments$getCharacter(language);
   extend(language, "RspSourceCodeFactory");
 })

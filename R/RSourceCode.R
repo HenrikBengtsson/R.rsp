@@ -12,7 +12,7 @@
 # @synopsis
 #
 # \arguments{
-#   \item{code, ...}{@character strings.}
+#   \item{...}{@character strings.}
 # }
 #
 # \section{Fields and Methods}{

@@ -1,3 +1,34 @@
+###########################################################################/**
+# @RdocDefault rstring
+# @alias rstring.RspString
+# @alias rstring.RspDocument
+# @alias rstring.RSourceCode
+#
+# @title "Evaluates an RSP string and returns the generated string"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{@character strings with RSP markup.}
+#   \item{envir}{The @environment in which the RSP string is evaluated.}
+# }
+#
+# \value{
+#   Returns a @character string.
+# }
+#
+# @examples "../incl/rstring.Rex"
+#
+# @author
+#
+# \seealso{
+#  @see "rcat".
+# }
+#*/###########################################################################
 setMethodS3("rstring", "default", function(..., envir=parent.frame()) {
   s <- RspString(...);
   rstring(s, envir=envir);
@@ -9,7 +40,7 @@ setMethodS3("rstring", "RspString", function(object, ...) {
 }) # rstring()
 
 setMethodS3("rstring", "RspDocument", function(object, ...) {
-  factory <- RRspSourceCodeFactory();
+  factory <- RspRSourceCodeFactory();
   rCode <- toSourceCode(factory, object);
   rstring(rCode, ...);
 }) # rstring()
@@ -46,14 +77,11 @@ rm("rspCon");
 }) # rstring()
 
 
-setMethodS3("rcat", "default", function(..., file="", append=FALSE, envir=parent.frame()) {
-  s <- rstring(..., envir=envir);
-  cat(s, file=file, append=append);
-}) # rstring()
-
 
 ##############################################################################
 # HISTORY:
+# 2013-02-11
+# o Added Rdoc help.
 # 2013-02-09
 # o Created.
 ##############################################################################

@@ -1,12 +1,12 @@
 ###########################################################################/**
-# @RdocClass RRspSourceCodeFactory
+# @RdocClass RspRSourceCodeFactory
 #
-# @title "The RRspSourceCodeFactory class"
+# @title "The RspRSourceCodeFactory class"
 #
 # \description{
 #  @classhierarchy
 #
-#  An RRspSourceCodeFactory is an @see "RspSourceCodeFactory" for 
+#  An RspRSourceCodeFactory is an @see "RspSourceCodeFactory" for 
 #  the R language.
 # }
 # 
@@ -22,8 +22,8 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("RRspSourceCodeFactory", function(...) {
-  extend(RspSourceCodeFactory("R"), "RRspSourceCodeFactory");
+setConstructorS3("RspRSourceCodeFactory", function(...) {
+  extend(RspSourceCodeFactory("R"), "RspRSourceCodeFactory");
 })
 
 
@@ -54,7 +54,7 @@ setConstructorS3("RRspSourceCodeFactory", function(...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("exprToCode", "RRspSourceCodeFactory", function(object, expr, ...) {
+setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -70,7 +70,6 @@ setMethodS3("exprToCode", "RRspSourceCodeFactory", function(object, expr, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'expr':
   expr <- Arguments$getInstanceOf(expr, "RspExpression");
-
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -95,6 +94,39 @@ setMethodS3("exprToCode", "RRspSourceCodeFactory", function(object, expr, ...) {
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # RspCodeChunkWithReturn => .ro({<expr>})
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (inherits(expr, "RspCodeChunkWithReturn")) {
+    codeT <- getCode(expr);
+    code <- sprintf("{%s}", codeT);
+    # Validate code chunk
+    tryCatch({
+      expr <- base::parse(text=code);
+    }, error = function(ex) {
+      throw("The RSP code chunk does not contain a complete R expression: ", ex);
+    });
+    code <- sprintf(".ro(%s)", code);
+    return(code);
+  }
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # RspCodeChunk => {<expr>}
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (inherits(expr, "RspCodeChunk")) {
+    codeT <- getCode(expr);
+    code <- sprintf("{%s}", codeT);
+    # Validate code chunk
+    tryCatch({
+      expr <- base::parse(text=code);
+    }, error = function(ex) {
+      throw("The RSP code chunk does not contain a complete R expression: ", ex);
+    });
+    return(code);
+  }
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # RspCode => <code>
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspCode")) {
@@ -107,15 +139,6 @@ setMethodS3("exprToCode", "RRspSourceCodeFactory", function(object, expr, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspComment")) {
     return("");
-  }
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # RspEqualExpression => .ro({<expr>})
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (inherits(expr, "RspEqualExpression")) {
-    codeT <- getCode(expr);
-    code <- sprintf(".ro({%s})", codeT);
-    return(code);
   }
 
 
