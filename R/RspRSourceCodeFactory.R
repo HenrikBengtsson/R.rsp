@@ -98,7 +98,7 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspCodeChunk")) {
     codeT <- getCode(expr);
-    code <- sprintf("{%s}", codeT);
+    code <- sprintf("{%s}", trim(codeT));
 
     # Validate code chunk
     tryCatch({
@@ -107,7 +107,14 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ...) {
       throw("The RSP code chunk does not contain a complete R expression: ", ex);
     });
 
-    # Should the value of the code chunk be echoed to the output?
+    # Should the value of the code chunk be echoed?
+    if (getEcho(expr)) {
+      # Evaluate code, then echo it
+      codeE <- escapeRspText(codeT);
+      code <- c(code, sprintf(".ro(\"%s\")", codeE));
+    }
+
+    # Should the value of the code chunk be returned?
     if (getReturn(expr)) {
       code <- sprintf(".ro(%s)", code);
     }

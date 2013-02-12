@@ -153,13 +153,13 @@ setMethodS3("parseRaw", "RspString", function(object, ...) {
         # Trim trailing white space and newline from RSP tag?
         if (trimNewline) {
           rsp <- substring(bfr, first=1L, last=pos-2L);
-          part <- list(rsp=trim(rsp));
+          part <- list(rsp=rsp);
           bfr <- substring(bfr, first=pos+2L);
           pattern <- "^[ \t\v]*(\n|\r|\r\n)";
           bfr <- gsub(pattern, "", bfr);
         } else {
           rsp <- substring(bfr, first=1L, last=pos-1L);
-          part <- list(rsp=trim(rsp));
+          part <- list(rsp=rsp);
           bfr <- substring(bfr, first=pos+2L);
         }
 
@@ -313,7 +313,8 @@ setMethodS3("parse", "RspString", function(object, ...) {
     for (kk in idxs) {
       part <- object[[kk]];
       rspCode <- part;
-  
+
+ 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # RSP Scripting Elements and Variables
       #
@@ -339,6 +340,20 @@ setMethodS3("parse", "RspString", function(object, ...) {
         code <- gsub(pattern, "\\1", part);
         code <- trim(code);
         part <- RspCodeChunk(code, return=TRUE);
+        object[[kk]] <- part;
+        next;
+      } 
+
+
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # RSP Scripting Elements and Variables
+      #
+      # <%:[expression]%>
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      pattern <- "^:(.*)$";
+      if (regexpr(pattern, part) != -1L) {
+        code <- gsub(pattern, "\\1", part);
+        part <- RspCodeChunk(code, echo=TRUE);
         object[[kk]] <- part;
         next;
       } 
@@ -370,7 +385,7 @@ setMethodS3("parse", "RspString", function(object, ...) {
       #
       # This applies to anything not recognized above.
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      part <- RspCode(rspCode);
+      part <- RspCode(trim(rspCode));
       object[[kk]] <- part;
     } # for (kk ...)
   
