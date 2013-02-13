@@ -135,28 +135,42 @@ This document was produced using RSP-embedded LaTeX.
 <%-------------------------------------------------------------------
   INTRODUCTION
   -------------------------------------------------------------------%>
-\section{Compiling RSP-markup documents}
-In order to utilize the methods explained in this document, the \pkg{R.rsp} package\footnote{To install the \pkg{R.rsp} package, call \code{install.packages("R.rsp")} at the R prompt.} needs to be loaded, i.e. \code{library("R.rsp")}.
-As a first example, consider the following RSP-embedded R string
+\section{Introduction to RSP}
+The RSP markup language makes it possible to interweave text and R source code in a compact and powerful way for the purpose of generating text.
+An example of an RSP-embedded string is
 \begin{rspVerbatim}
 "A random number in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n"
 \end{rspVerbatim}
-It can be processed and outputted as
+Using the \pkg{R.rsp} package\footnote{To install the \pkg{R.rsp} package, call \code{install.packages("R.rsp")} at the R prompt.}, this RSP string can be processed and outputted as
 \begin{escapeRspVerbatim}
+> library("R.rsp")
 > rcat("A random number in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
 A random number in [1,100]: 77
 \end{escapeRspVerbatim}
+As explained further in Section~\ref{RspMarkupLanguage}, the RSP expression \code{<\%=\{code chunk\}\%>} causes the R expression '\code{\{code chunk\}}' to be evaulated and its value to be inserted into the text (replacing the RSP expression itself).
+%
+To processed the RSP string without outputting the result, but instead storing it in a character variable, do
+\begin{escapeRspVerbatim}
+> s <- rstring("A random number in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
+> cat(s)
+A random number in [1,100]: 43
+\end{escapeRspVerbatim}
 
 
-Any document with RSP markup can be compiled using the \code{rsp()} method.  
-For instance, consider an RSP-embedded text file \code{README.txt.rsp}.  In order to compile it into a plain text file, do
+
+\section{Compiling RSP-markup documents}
+Consider an RSP-embedded text file \code{random.txt.rsp} that contains the above RSP string, i.e.
 \begin{verbatim}
-rsp("README.txt.rsp")
+A random number in [1,100]: <\%=sample(1:100, size=1)\%>
+\end{verbatim}
+This file can be compiled into a plain text file (\code{random.txt}) as
+\begin{verbatim}
+rsp("random.txt.rsp")
 \end{verbatim}
 This will
-(i) translate the RSP text file into a valid 
-    R script (\code{README.txt.rsp.R}), and
-(ii) run the R script resulting in a plain text file (\code{README.txt}).
+(i) parse the RSP text file and translate it into valid R code, and
+(ii) evaluate the R code which outputs a plain text file (\code{random.txt}).
+%
 Other document formats can be compiled in a similar way, e.g. \code{rsp("index.html.rsp")} and \code{rsp("report.Rnw.rsp")}.\\
 
 For certain document formats recognized by \code{rsp()}, further processing will also be done.  For instance, consider a RSP-embedded LaTeX document \code{report.tex.rsp}.  When compiling it by
@@ -164,9 +178,8 @@ For certain document formats recognized by \code{rsp()}, further processing will
 rsp("report.tex.rsp")
 \end{verbatim}
 the \code{rsp()} method will as before
-(i) translate the LaTeX RSP document into a valid 
-    R script (\code{report.tex.rsp.R}), and
-(ii) run the R script resulting in a LaTeX document (\code{report.tex}), but it will also
+(i) translate the LaTeX RSP document into valid R code, and
+(ii) evaluate the R code resulting in a LaTeX document (\code{report.tex}), but it will also
 (iii) compile the LaTeX document into a PDF (\code{report.pdf}).
 To try this yourself, compile this very document by calling
 \begin{verbatim}
@@ -182,9 +195,10 @@ The PDF (\code{Dynamic\_LaTeX\_reports\_with\_RSP.pdf}) will be available in the
   THE RSP MARKUP LANGUAGE
   -------------------------------------------------------------------%>
 \section{The RSP markup language}
+\label{RspMarkupLanguage}
 
-\subsection{Inlining values of variables (\code{<\%=\{code\}\%>})}
-The RSP markup \code{<\%=\{code\}\%>} evaluates the code (without inserting it into the document) and inserts the character representation\footnote{The \emph{character representation} of an object \code{x} is what \code{as.character(x)} gives.} of the returned object.  For instance,
+\subsection{Inlining values of variables (\code{<\%=\{code chunk\}\%>})}
+The RSP markup \code{<\%=\{code chunk\}\%>} evaluates the code (without inserting it into the document) and inserts the character representation\footnote{The \emph{character representation} of an object \code{x} is what \code{as.character(x)} gives.} of the returned object.  For instance,
 \begin{rspVerbatim}
 Today's date is <\%=Sys.Date()\%>
 \end{rspVerbatim}
@@ -269,7 +283,7 @@ The <\%=n <- length(letters)%> letters in the English alphabet are:
   <\%=letters[i]\%>/<\%=LETTERS[i]\%><\%=if(i < n) ", "\%>
 <\% \} \%>.
 \end{rspVerbatim}
-which generates:\footnote{Of course, in this particular case, the above for-loop can be replaced by \code{<\%=paste(letters, LETTERS, sep="/", collapse=", ")\%>}.}: 'The <%=n <- length(letters)%> letters in the English alphabet are: 
+which generates\footnote{Of course, in this particular case, the above for-loop can be replaced by \code{<\%=paste(letters, LETTERS, sep="/", collapse=", ")\%>}.}: 'The <%=n <- length(letters)%> letters in the English alphabet are: 
 <% for (i in 1:n) { %>
   <%=letters[i]%>/<%=LETTERS[i]%><%=if(i < n) ", "%>
 <% } %>.'\\
@@ -359,13 +373,13 @@ The sum of $x=<\%=hpaste(1:n, abbreviate="{\bs}{\bs}ldots")\%>$ is <\%=sum(1:n)\
 Then wrap it in a function definition:
 \begin{rspVerbatim}
 <\% myTemplate <- function(n, ...) \{ \%>
-The sum of $x=<\%=hpaste(1:n, abbreviate="{\bs}{\bs}ldots")\%>$ is <\%=sum(1:n)\%>.<\%----\%>
+The sum of $x=<\%=hpaste(1:n, abbreviate="{\bs}{\bs}ldots")\%>$ is <\%=sum(1:n)\%>.<\%-\%>
 <\% \} # myTemplate() \%>
 \end{rspVerbatim}
 <% myTemplate <- function(n, ...) { %>
-The sum of $x=<%=hpaste(1:n, abbreviate="\\ldots")%>$ is <%=sum(1:n)%>.<%----%>
+The sum of $x=<%=hpaste(1:n, abbreviate="\\ldots")%>$ is <%=sum(1:n)%>.<%-%>
 <% } # myTemplate() %><%-- TO FIX: Should not be needed! /HB 2011-03-31 --%>
-We use an empty RSP comment (\code{<\%----\%>}) at the end in order to escape the trailing newline.  Also, note that there is no limitation in how many RSP and text blocks you can use.  After having defined the template, it can be reused any number of times by simply calling it as a function:
+We use an empty RSP comment (\code{<\%-\%>}) at the end in order to escape the trailing newline (Section~\ref{HiddenComments}).  Also, note that there is no limitation in how many RSP and text blocks you can use.  After having defined the template, it can be reused any number of times by simply calling it as a function:
 \begin{rspVerbatim}
 <\% myTemplate(n=3) \%>
 \end{rspVerbatim}
@@ -391,35 +405,39 @@ produces:
   PREPROCESSING DIRECTIVES
   -------------------------------------------------------------------%>
 \section{Preprocessing directives}
-When an RSP-embedded document in processed, it is first \emph{preprocessed} before it is \emph{translated} into an R script.  During this step it is possible to 
+\label{PreprocessingDirectives}
+When an RSP-embedded document in processed, it is first \emph{preprocessed} before it is \emph{translated} into R source code and evaluated.  During this step it is possible to 
 modify the document by removing parts of it and inserting new pieces to it.  For instance, by using the RSP hidden comments, multiple lines of the document can be silently dropped.
 
 <%--, and by using the so called RSP 'insert' directive content of other files can be pasted into the document.
 --%>
 
 
-\subsection{Hidden (non-nested) comments (\code{<\%--\{anything\}--\%>})}
-The RSP markup \code{<\%--\{anything\}--\%>} will be treated as a comment that can contain \emph{anything} (but \code{--\%>}), which will not be translated and not part of the output, i.e. it will immediately be dropped.  RSP comments are useful for excluding large sections of an RSP document.  It is useful to understand that RSP comments are \emph{greedy}, that is, anything between (and including) the \code{<\%--} and the \emph{first} following \code{--\%>} will be dropped, which means that they cannot be nested.
+\subsection{Hidden comments (\code{<\%--\{anything\}--\%>})}
+\label{HiddenComments}
+The RSP markup \code{<\%--\{anything\}--\%>}, \code{<\%---\{anything\}---\%>} and so on causes the corresponding RSP expression, which can contain \emph{anything}, to be dropped immediately by the RSP parser.  The number of hyphens must match, i.e. \code{<\%--- A comment --\%>} is \emph{not} a valid RSP comment.
+
+RSP comments are useful for excluding large sections of an RSP document.  It is useful to understand that RSP comments are \emph{greedy}, that is, anything between (and including) the \code{<\%--} and the \emph{first} following \code{--\%>} will be dropped.  This means that an RSP comment \code{<\%--\{anything\}--\%>} cannot contain another \code{<\%--\{anything\}--\%>} comment.  Instead, to nest comments one needs to use a different number of hyphens.
 For example,
 \begin{rspVerbatim}
 <\%-- This is an RSP comment that will be dropped --\%>
 You can write a paragraph and drop a large portion of it using 
-RSP comments, <\%-- All the below will be dropped
-There are <\%=n\%> red <\%=type\%>s
-<\%-- and this --\%> but they must not be nested --\%>, because then
-the output will be like this.
+<\%--- This comment contains both regular RSP expressions 
+There are <\%=n\%> red <\%=type\%>s 
+<\%-- as well as another RSP comment --\%>
+which is nested. ---\%> RSP comments
 \end{rspVerbatim}
 produces
 \begin{verbatim}
 <%-- This is an RSP comment that will be dropped --%>
 You can write a paragraph and drop a large portion of it using 
-RSP comments, <%-- All the below will be dropped
-There are <%=n%> red <%=type%>s
-<%-- and this --%> but they must not be nested --%>, because then
-the output will be like this.
+<%--- This comment contains both regular RSP expressions 
+There are <%=n%> red <%=type%>s 
+<%-- as well as another RSP comment --%>
+which is nested. ---%> RSP comments
 \end{verbatim}
 
-Moreover, RSP comments are special in the sense that if (and only if) the remainder of the line following the comment consists of only whitespace symbols, then they are also dropped, including the newline.  Thus, an \code{<\%----\%>} at the end of a line will prevent a newline from being inserted.
+Moreover, RSP comments are special in the sense that if (and only if) the remainder of the line following the comment consists of only whitespace symbols, then they are also dropped, including the newline.  Thus, an \code{<\%----\%>} (or the short form \code{<\%-\%>}) at the end of a line will prevent a newline from being inserted.
 
 
 <% if (docVersion == "devel") { %>
