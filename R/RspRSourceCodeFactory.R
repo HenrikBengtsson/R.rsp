@@ -96,10 +96,6 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, envir=
       lines <- readLines(file); 
     }
 
-    # Replace all '\r\n' and '\r' with '\n' newlines
-    lines <- gsub("\r\n", "\n", lines);
-    lines <- gsub("\r", "\n", lines);
-
     lines;
   } # readFile()
 

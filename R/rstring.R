@@ -71,7 +71,7 @@ rm("rspCon");
   expr <- base::parse(text=rCode);
   rspRes <- NULL; rm(rspRes); # To please R CMD check
   eval(expr, envir=envir, ...);
-  res <- rspRes;
+  res <- get("rspRes", envir=envir);
   rm("rspRes", envir=envir);
   res;
 }) # rstring()

@@ -63,9 +63,13 @@ setMethodS3("rspPlain", "default", function(pathname, response=NULL, envir=paren
 
 
   verbose && enter(verbose, "Compiling RSP-embedded plain document");
-  verbose && cat(verbose, "Input pathname (absolute): ", pathname);
-  verbose && printf(verbose, "Output %s:\n", class(response)[1L]);
-  verbose && print(verbose, response);
+  verbose && cat(verbose, "Input pathname: ", pathname);
+  if (inherits(response, "connection")) {
+    verbose && printf(verbose, "Output %s:\n", class(response)[1L]);
+    verbose && print(verbose, response);
+  } else {
+    verbose && printf(verbose, "Output pathname: %s\n", response);
+  }
 
   verbose && enter(verbose, "Loading RSP document");
   str <- readLines(pathname);
@@ -73,7 +77,6 @@ setMethodS3("rspPlain", "default", function(pathname, response=NULL, envir=paren
   verbose && str(verbose, str);
   verbose && printf(verbose, "Number of characters: %d\n", nchar(str));
   rstr <- RspString(str);
-  rm(str);
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Parsing RSP document");
