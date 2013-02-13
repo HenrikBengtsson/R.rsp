@@ -98,6 +98,8 @@
 \alias{dvips}
 \alias{ps2pdf}
 \alias{rspCapture}
+\alias{rspTangle}
+\alias{rspWeave}
 \alias{evalWithEcho}
 \alias{sourceWithTrim}
 \alias{sourceWithTrim.default}
@@ -107,6 +109,18 @@
 \alias{buildNonSweaveVignettes}
 \alias{parseVignette}
 \alias{buildPkgIndexHtml}
+
+\alias{dropComments}
+\alias{exprToCode}
+\alias{getAttributes}
+\alias{getCode}
+\alias{getEcho} getFile
+\alias{getReturn}
+\alias{getText}
+\alias{makeSourceCode}
+\alias{parseRaw}
+\alias{toR}
+\alias{toSourceCode}
 
 \description{
 This page contains aliases for all "non-documented" objects that

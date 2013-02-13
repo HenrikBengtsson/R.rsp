@@ -28,6 +28,31 @@ setConstructorS3("RspExpression", function(object=character(), ...) {
 })
 
 
+#########################################################################/**
+# @RdocMethod getAttributes
+#
+# @title "Gets the attributes of an RSP expression"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a named @list.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
 setMethodS3("getAttributes", "RspExpression", function(directive, ...) {
   attrs <- attributes(directive);
   keys <- names(attrs);
