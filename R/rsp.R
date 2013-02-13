@@ -68,61 +68,8 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   }
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (!is.null(filename) && !is.null(text)) {
-    throw("Only one of arguments 'filename' and 'text' can be specified.");
-  }
-
-  # Argument 'text':
-  if (!is.null(text)) {
-    pathnameT <- tempfile(fileext=".txt.rsp");
-    on.exit(file.remove(pathnameT));
-    writeLines(text=text, con=pathnameT);
-    filename <- pathnameT;
-    path <- NULL;
-    if (is.null(response)) {
-      response <- stdout();
-    }
-  }
-  
-  # Arguments 'filename' & 'path':
-  pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);
-
-  # Argument 'envir':
-#  envir <- Arguments$getEnvironment(envir);
-
-  # Arguments 'outPath':
-  outPath <- Arguments$getWritablePath(outPath);
-  if (is.null(outPath)) outPath <- ".";
-
-  # Argument 'postprocess':
-  postprocess <- Arguments$getLogical(postprocess);
-
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
-
-  verbose && enter(verbose, "Compiling RSP document");
-  pathname <- getAbsolutePath(pathname);
-  verbose && cat(verbose, "RSP pathname (absolute): ", pathname);
-  verbose && cat(verbose, "Output and working directory: ", getAbsolutePath(outPath));
-
-  pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
-  ext <- gsub(pattern, "\\3", pathname);
-  type <- tolower(ext);
-  verbose && cat(verbose, "RSP type: ", type);
-
-  verbose && cat(verbose, "Postprocess (if recognized): ", postprocess);
-
-  if (postprocess) {
+  findPostprocessor <- function(type, verbose=FALSE, ...) {
     verbose && enter(verbose, "Searching for document-type specific postprocessor");
-
     # Find another RSP compiler
     postProcessors <- list(
       # RSP-embedded LaTeX documents:
@@ -151,9 +98,99 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
     }
 
     verbose && exit(verbose);
+
+    postProcessor;
+  } # findPostprocessor()
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (!is.null(filename) && !is.null(text)) {
+    throw("Only one of arguments 'filename' and 'text' can be specified.");
+  }
+
+  # Argument 'text':
+  if (!is.null(text)) {
+    text <- Arguments$getCharacter(text);
+  }
+  
+  # Arguments 'filename' & 'path':
+  if (!is.null(filename)) {
+    pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);
+    pathname <- getAbsolutePath(pathname);
+
+  } else {
+    pathname <- NULL;
+  }
+
+  if (is.null(text) && is.null(pathname)) {
+    throw("Either argument 'filename' or 'text' must be given.");
+  }
+
+  # Arguments 'outPath':
+  if (!is.null(pathname)) {
+    outPath <- Arguments$getWritablePath(outPath);
+    if (is.null(outPath)) outPath <- ".";
+  }
+
+  # Argument 'envir':
+#  envir <- Arguments$getEnvironment(envir);
+
+  # Argument 'postprocess':
+  postprocess <- Arguments$getLogical(postprocess);
+
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Compile an RSP string
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (!is.null(text)) {
+    verbose && enter(verbose, "Parsing and evaluating RSP string");
+
+    # Change working directory?
+    opwd <- ".";
+    on.exit(setwd(opwd), add=TRUE);
+    if (!is.null(outPath)) {
+      opwd <- setwd(outPath);
+    }
+
+    if (is.null(response)) {
+      response <- stdout();
+    }
+    res <- rcat(text, file=response, envir=envir, ...);
+
+    verbose && exit(verbose);
+    return(invisible(res));
+  }
+
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Compile an RSP file
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Parsing and evaluating RSP file");
+  verbose && cat(verbose, "RSP pathname (absolute): ", pathname);
+  verbose && cat(verbose, "Output and working directory: ", getAbsolutePath(outPath));
+
+  pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
+  ext <- gsub(pattern, "\\3", pathname);
+  type <- tolower(ext);
+  verbose && cat(verbose, "RSP type: ", type);
+  verbose && cat(verbose, "Postprocess (if recognized): ", postprocess);
+  if (postprocess) {
+    postProcessor <- findPostprocessor(type, verbose=verbose);
   } # if (postprocess)
 
 
+  # Change working directory?
   opwd <- ".";
   on.exit(setwd(opwd), add=TRUE);
   if (!is.null(outPath)) {
@@ -200,6 +237,8 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
 
 ############################################################################
 # HISTORY:
+# 2013-02-12
+# o Now rsp(text=...) utilizes rcat().
 # 2013-02-08
 # o Made internal rspPlain() its own function.
 # 2011-11-14

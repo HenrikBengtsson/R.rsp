@@ -158,6 +158,10 @@ setMethodS3("getText", "RspText", function(text, ...) {
 # @author
 #*/###########################################################################
 setConstructorS3("RspCode", function(code=character(), echo=FALSE, ...) {
+  # Replace all '\r\n' and '\r' with '\n' newlines
+  code <- gsub("\r\n", "\n", code);
+  code <- gsub("\r", "\n", code);
+
   this <- extend(RspExpression(code), "RspCode");
   attr(this, "echo") <- echo;
   this;
@@ -395,11 +399,67 @@ setMethodS3("getFile", "RspIncludeDirective", function(directive, ...) {
 })
 
 
+
+###########################################################################/**
+# @RdocClass RspDefineDirective
+#
+# @title "The RspDefineDirective class"
+#
+# \description{
+#  @classhierarchy
+#
+#  An RspDefineDirective is an @see "RspDirective" that causes the
+#  RSP parser to assign the value of an attribute to an R object of
+#  the same name as the attribute at the time of parsing.
+# }
+# 
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
+# }
+#
+# \section{Fields and Methods}{
+#  @allmethods
+# }
+# 
+# @author
+#*/###########################################################################
 setConstructorS3("RspDefineDirective", function(...) {
   extend(RspDirective("define", ...), "RspDefineDirective")
 })
 
 
+
+
+###########################################################################/**
+# @RdocClass RspEvalDirective
+#
+# @title "The RspEvalDirective class"
+#
+# \description{
+#  @classhierarchy
+#
+#  An RspEvalDirective is an @see "RspDirective" that causes the
+#  RSP parser to evaluate a piece of R code (either in a text string
+#  or in a file) as it is being parsed.
+# }
+# 
+# @synopsis
+#
+# \arguments{
+#   \item{attributes}{A named @list, which must contain a 'file' 
+#      or a 'text' element.}
+#   \item{...}{Optional arguments passed to the constructor 
+#              of @see "RspDirective".}
+# }
+#
+# \section{Fields and Methods}{
+#  @allmethods
+# }
+# 
+# @author
+#*/###########################################################################
 setConstructorS3("RspEvalDirective", function(attributes=list(), ...) {
   # Argument 'attributes':
   if (!missing(attributes)) {
@@ -412,10 +472,62 @@ setConstructorS3("RspEvalDirective", function(attributes=list(), ...) {
   extend(RspDirective("eval", attributes=attributes, ...), "RspEvalDirective")
 })
 
+
+#########################################################################/**
+# @RdocMethod getFile
+#
+# @title "Gets the file attribute"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
 setMethodS3("getFile", "RspEvalDirective", function(directive, ...) {
   attr(directive, "file");
 })
 
+
+#########################################################################/**
+# @RdocMethod getText
+#
+# @title "Gets the text"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
 setMethodS3("getText", "RspEvalDirective", function(directive, ...) {
   attr(directive, "text");
 })

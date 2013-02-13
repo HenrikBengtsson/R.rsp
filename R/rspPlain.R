@@ -32,25 +32,21 @@ setMethodS3("rspPlain", "default", function(pathname, response=NULL, envir=paren
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'pathname':
+  pathname <- Arguments$getReadablePathname(pathname);
+  pathname <- getAbsolutePath(pathname);
+
   # Argument 'response':
   if (is.null(response)) {
-    verbose && enter(verbose, "Creating FileRspResponse");
     pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
-    filename2 <- gsub(pattern, "\\1", basename(pathname));
-    outPath <- ".";
-    pathname2 <- Arguments$getWritablePathname(filename2, path=outPath);
-    response <- FileRspResponse(file=pathname2, overwrite=TRUE);
-    verbose && exit(verbose);
+    response <- gsub(pattern, "\\1", basename(pathname));
   }
-
   if (inherits(response, "connection")) {
-    response <- FileRspResponse(file=response);
   } else if (is.character(response)) {
-    pathname <- Arguments$getWritablePathname(response);
-    response <- FileRspResponse(file=pathname);
-  } else if (!inherits(response, "RspResponse")) {
-    throw("Argument 'response' is not an RspResponse object: ", 
-                                                       class(response)[1]);
+    response <- Arguments$getWritablePathname(response);
+    response <- getAbsolutePath(response);
+  } else {
+    throw("Argument 'response' of unknown type: ", class(response)[1L]);
   }
 
 
@@ -67,21 +63,39 @@ setMethodS3("rspPlain", "default", function(pathname, response=NULL, envir=paren
 
 
   verbose && enter(verbose, "Compiling RSP-embedded plain document");
-  verbose && cat(verbose, "Input pathname: ", getAbsolutePath(pathname));
-  verbose && printf(verbose, "%s:\n", class(response)[1]);
+  verbose && cat(verbose, "Input pathname (absolute): ", pathname);
+  verbose && printf(verbose, "Output %s:\n", class(response)[1L]);
   verbose && print(verbose, response);
 
-  pathname2 <- getOutput(response);
-  verbose && cat(verbose, "Response output class: ", class(pathname2)[1]);
-  verbose && cat(verbose, "Response output pathname: ", getAbsolutePath(pathname2));
+  verbose && enter(verbose, "Loading RSP document");
+  str <- readLines(pathname);
+  str <- paste(str, collapse="\n");
+  verbose && str(verbose, str);
+  verbose && printf(verbose, "Number of characters: %d\n", nchar(str));
+  rstr <- RspString(str);
+  rm(str);
+  verbose && exit(verbose);
 
-  verbose && enter(verbose, "Calling sourceRspV2()");
-  sourceRspV2(pathname, path=NULL, ..., response=response, envir=envir, verbose=less(verbose, 20));
+  verbose && enter(verbose, "Parsing RSP document");
+  rexpr <- parse(rstr, envir=envir, ...);
+  verbose && printf(verbose, "Number of RSP expressions: %d\n", length(rexpr));
+  verbose && str(verbose, head(rexpr));
+  verbose && str(verbose, tail(rexpr));
+  verbose && exit(verbose);
+
+  verbose && enter(verbose, "Translating RSP document (to R)");
+#  rcode <- toR(rexpr, ...);
+#  verbose && printf(verbose, "Number of R source code lines: %d\n", length(rcode));
+  verbose && exit(verbose);
+
+  verbose && enter(verbose, "Evaluating RSP document");
+##  res <- evaluate(rcode, envir=envir, ...);
+  rcat(str, file=response, envir=envir, ...);
   verbose && exit(verbose);
 
   verbose && exit(verbose);
 
-  invisible(pathname2);
+  invisible(response);
 }, protected=TRUE) # rspPlain()
 
 

@@ -54,7 +54,7 @@ setConstructorS3("RspRSourceCodeFactory", function(...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, envir=parent.frame(), ...) {
+setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, envir=parent.frame(), ..., index=NA) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -65,8 +65,8 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, envir=
   } # escapeRspText()
 
 
-  readFile <- function(file, envir=parent.frame(), ...) {
-    # Support @include file="$VAR"
+  readFile <- function(file, envir=parent.frame(), ..., directive=NA, index=NA) {
+    # Support @(include|eval) file="$VAR"
     # Note that 'VAR' must exist when parsing the RSP string.
     # In other words, it cannot be set from within the RSP string!
     pattern <- "^[$]([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*)$";
@@ -75,12 +75,12 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, envir=
       if (exists(key, mode="character", envir=envir)) {
         file <- get(key, mode="character", envir=envir);
         if (nchar(file) == 0L) {
-          throw("RSP include attribute 'file' specifies an R character variable that is empty: ", key);
+          throw(sprintf("RSP '%s' preprocessing directive (#%d) has a 'file' attribute given by an R variable ('$%s') that is empty.", directive, index, key));
         }
       } else {
         file <- Sys.getenv(key);
         if (nchar(file) == 0L) {
-          throw("RSP include attribute 'file' specifies neither an existing R character variable nor an existing system environment variable: ", key);
+          throw(sprintf("RSP '%s' preprocessing directive (#%d) has a 'file' attribute that specifies ('$%s') neither an existing R character variable nor an existing system environment variable.", directive, index, key));
         }
       }
     }
@@ -91,10 +91,16 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, envir=
     } else {
       file <- getAbsolutePath(file);
       if (!isFile(file)) {
-        throw("Cannot include file. File not found: ", file);
+        throw(sprintf("RSP '%s' preprocessing directive (#%d) specifies an non-existing file: %s", directive, index, file));
       }
       lines <- readLines(file); 
     }
+
+    # Replace all '\r\n' and '\r' with '\n' newlines
+    lines <- gsub("\r\n", "\n", lines);
+    lines <- gsub("\r", "\n", lines);
+
+    lines;
   } # readFile()
 
 
@@ -140,7 +146,7 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, envir=
     tryCatch({
       base::parse(text=code);
     }, error = function(ex) {
-      throw("The RSP code chunk does not contain a complete R expression: ", ex);
+      throw(sprintf("RSP code chunk (#%d) does not contain a complete R expression: %s", index, ex));
     });
 
     echo <- getEcho(expr);
@@ -184,7 +190,7 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, envir=
   if (inherits(expr, "RspIncludeDirective")) {
     file <- getFile(expr);
 
-    lines <- readFile(file, envir=envir);
+    lines <- readFile(file, envir=envir, directive="include", index=index);
 
     # Parse RSP string to RSP document
     s <- RspString(lines);
@@ -226,17 +232,17 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, envir=
 
     file <- getFile(expr);
     if (!is.null(file)) {
-      lines <- readFile(file, envir=envir);
+      lines <- readFile(file, envir=envir, directive="include", index=index);
       expr <- parse(text=lines);
       eval(expr, envir=envir);
       return(NULL);
     } # if (!is.null(file))
 
-    throw("RSP 'eval' directive requires either attribute 'file' or 'text'.");
+    throw(sprintf("RSP 'eval' preprocessing directive (#%d) requires either attribute 'file' or 'text'.", index));
   } # RspEvalDirective
 
 
-  throw("Unknown RspExpression: ", class(expr)[1L]);
+  throw(sprintf("Unknown type of RSP expression (#%d): %s", index, class(expr)[1L]));
 }, protected=TRUE) # exprToCode()
 
 

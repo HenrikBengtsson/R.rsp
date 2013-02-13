@@ -161,7 +161,10 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, envir=
   stopifnot(!is.null(envir));
 
   # Coerce all RspExpression:s to source code
-  code <- lapply(doc, FUN=function(expr) exprToCode(object, expr, envir=envir));
+  code <- vector("list", length=length(doc));
+  for (kk in seq_along(doc)) {
+    code[[kk]] <- exprToCode(object, doc[[kk]], envir=envir, index=kk);
+  }
   code <- unlist(code, use.names=FALSE);
 
   makeSourceCode(object, code);
