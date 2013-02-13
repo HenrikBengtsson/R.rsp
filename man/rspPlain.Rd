@@ -29,7 +29,7 @@
 }
 
 \value{
-  Returns the pathname of the file generated.
+  Returns the absolute pathname of the file generated.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

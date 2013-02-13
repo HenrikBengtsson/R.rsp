@@ -26,7 +26,10 @@
 # }
 #
 # \value{
-#   Returns the pathname of the file generated.
+#   If argument \code{response} specifies a file output, then the
+#   absolute pathname of the generated file is returned.
+#   If argument \code{text} is specified, then the generated string
+#   is returned (invisibly).
 # }
 #
 # @examples "../incl/rsp.Rex"
@@ -177,7 +180,7 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Parsing and evaluating RSP file");
   if (is.character(response)) {
-    response <- getAbsolutePath(pathname);
+    response <- getAbsolutePath(response);
   }
 
   verbose && cat(verbose, "RSP pathname (absolute): ", pathname);
@@ -204,11 +207,11 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   verbose && enter(verbose, "Preprocessing, translating, and evaluating RSP document");
   verbose && cat(verbose, "Current directory: ", getwd());
   res <- rspPlain(pathname, response=response, envir=envir, ..., verbose=verbose);
+
   wasFileGenerated <- inherits(res, "character");
   if (wasFileGenerated) {
-    pathname2 <- getAbsolutePath(res);
-    verbose && cat(verbose, "Output pathname: ", pathname2);
-    verbose && printf(verbose, "Output file size: %g bytes\n", file.info(pathname2)$size);
+    verbose && cat(verbose, "Output pathname: ", res);
+    verbose && printf(verbose, "Output file size: %g bytes\n", file.info(res)$size);
   }
   verbose && exit(verbose);
 
@@ -216,16 +219,17 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   if (!is.null(postProcessor)) {
     if (wasFileGenerated) {
       verbose && enter(verbose, "Postprocessing generated document");
-      verbose && cat(verbose, "Input pathname: ", pathname2);
-      pathname3 <- postProcessor(pathname2, ..., verbose=verbose);
-      verbose && cat(verbose, "Output pathname: ", getAbsolutePath(pathname3));
+      verbose && cat(verbose, "Input pathname: ", res);
+      pathname3 <- postProcessor(res, ..., verbose=verbose);
+      verbose && cat(verbose, "Output pathname: ", pathname3);
+      res <- getAbsolutePath(pathname3);
+      verbose && cat(verbose, "Output pathname (absolute): ", res);
       verbose && exit(verbose);
-      res <- pathname3;
     }
   }
 
   if (wasFileGenerated) {
-    verbose && cat(verbose, "Output document pathname: ", getAbsolutePath(res));
+    verbose && cat(verbose, "Output document pathname: ", res);
     verbose && printf(verbose, "Output file size: %g bytes\n", file.info(res)$size);
   } else {
     verbose && printf(verbose, "Output written to: %s [%d]\n", class(res)[1], res);

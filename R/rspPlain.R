@@ -20,7 +20,7 @@
 # }
 #
 # \value{
-#   Returns the pathname of the file generated.
+#   Returns the absolute pathname of the file generated.
 # }
 #
 # @author
@@ -39,9 +39,10 @@ setMethodS3("rspPlain", "default", function(pathname, response=NULL, envir=paren
   # Argument 'response':
   if (is.null(response)) {
     pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
-    response <- gsub(pattern, "\\1", basename(pathname));
-  }
-  if (inherits(response, "connection")) {
+    responseF <- gsub(pattern, "\\1", basename(pathname));
+    response <- Arguments$getWritablePathname(responseF);
+    response <- getAbsolutePath(response);
+  } else if (inherits(response, "connection")) {
   } else if (is.character(response)) {
     response <- Arguments$getWritablePathname(response);
     response <- getAbsolutePath(response);
@@ -105,6 +106,9 @@ setMethodS3("rspPlain", "default", function(pathname, response=NULL, envir=paren
 
 ############################################################################
 # HISTORY:
+# 2013-02-12
+# o rspPlain() is now utilizing the new RSP engine, e.g. rcat().
+# o CLEANUP: Removed all dependencies on RspResponse, FileRspResponse etc.
 # 2013-02-08
 # o Extracted rspPlain() from rsp().
 # o Created.

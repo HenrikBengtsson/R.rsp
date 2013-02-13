@@ -35,7 +35,10 @@
 }
 
 \value{
-  Returns the pathname of the file generated.
+  If argument \code{response} specifies a file output, then the
+  absolute pathname of the generated file is returned.
+  If argument \code{text} is specified, then the generated string
+  is returned (invisibly).
 }
 
 \examples{
