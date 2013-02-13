@@ -206,7 +206,7 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   # Default RSP compiler
   verbose && enter(verbose, "Preprocessing, translating, and evaluating RSP document");
   verbose && cat(verbose, "Current directory: ", getwd());
-  res <- rspPlain(pathname, response=response, envir=envir, ..., verbose=verbose);
+  res <- rfile(pathname, output=response, envir=envir, ..., verbose=verbose);
 
   wasFileGenerated <- inherits(res, "character");
   if (wasFileGenerated) {
@@ -244,7 +244,7 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
 ############################################################################
 # HISTORY:
 # 2013-02-12
-# o Now rsp(text=...) utilizes rcat().
+# o Now rsp(text=...) uses rcat() and rsp(file=...) uses rfile().
 # 2013-02-08
 # o Made internal rspPlain() its own function.
 # 2011-11-14

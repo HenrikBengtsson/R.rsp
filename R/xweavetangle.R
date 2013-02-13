@@ -1,5 +1,5 @@
 rspWeave <- function(file, ..., quiet=FALSE) {
-  pathname <- rspPlain(pathname=file, verbose=!quiet);
+  pathname <- rfile(pathname=file, verbose=!quiet);
   wasFileGenerated <- inherits(pathname, "character");
   if (wasFileGenerated) {
     pathname <- getAbsolutePath(pathname);

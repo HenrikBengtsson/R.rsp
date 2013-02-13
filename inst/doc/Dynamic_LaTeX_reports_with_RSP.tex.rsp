@@ -165,15 +165,20 @@ A random number in [1,100]: <\%=sample(1:100, size=1)\%>
 \end{verbatim}
 This file can be compiled into a plain text file (\code{random.txt}) as
 \begin{verbatim}
-rsp("random.txt.rsp")
+rfile("random.txt.rsp")
 \end{verbatim}
 This will
 (i) parse the RSP text file and translate it into valid R code, and
-(ii) evaluate the R code which outputs a plain text file (\code{random.txt}).
+(ii) evaluate the R code which outputs a plain text file (\code{random.txt}), which pathname is (by default) the same as the RSP file with the file extension dropped.
 %
 Other document formats can be compiled in a similar way, e.g. \code{rsp("index.html.rsp")} and \code{rsp("report.Rnw.rsp")}.\\
 
-For certain document formats recognized by \code{rsp()}, further processing will also be done.  For instance, consider a RSP-embedded LaTeX document \code{report.tex.rsp}.  When compiling it by
+
+
+\section{Compiling RSP-markup documents with automatic postprocessing}
+For RSP documents that outputs certain file formats such as LaTeX, Sweave, and Knitr further processing of the RSP file output is often necessary before obtaining the final artifact, e.g. a PDF file.
+This is where the \code{rsp()} function comes into place.  It processes a RSP file using \code{rfile()} and based on the output document type it applies a proper postprocessing to arrive at the final artifact.
+For instance, consider a RSP-embedded LaTeX document \code{report.tex.rsp}.  When compiling it by
 \begin{verbatim}
 rsp("report.tex.rsp")
 \end{verbatim}
@@ -198,7 +203,7 @@ The PDF (\code{Dynamic\_LaTeX\_reports\_with\_RSP.pdf}) will be available in the
 \label{RspMarkupLanguage}
 
 \subsection{Inlining values of variables (\code{<\%=\{code chunk\}\%>})}
-The RSP markup \code{<\%=\{code chunk\}\%>} evaluates the code (without inserting it into the document) and inserts the character representation\footnote{The \emph{character representation} of an object \code{x} is what \code{as.character(x)} gives.} of the returned object.  For instance,
+The RSP markup \code{<\%=\{code chunk\}\%>} evaluates the code chunk\footnote{\code{\{code chunk\}} must be a complete and valid R expression, because \code{evalCapture()} is a function call.} (without inserting it into the document) and inserts the character representation\footnote{The \emph{character representation} of an object \code{x} is what \code{as.character(x)} gives.} of the returned object.  For instance,
 \begin{rspVerbatim}
 Today's date is <\%=Sys.Date()\%>
 \end{rspVerbatim}
@@ -574,8 +579,8 @@ Feature & RSP & brew & Sweave \\
 Context-independent processing                 & yes & yes &  - \\
 Interweaving incomplete code and text snippets & yes & yes &  - \\
 Preprocessing markup                           & yes &   - &  - \\
-Hidden markup comments                         & yes &   - &  - \\
-Multiline markup comments                      & yes &   ? &  - \\
+Markup comments                                & yes &   - &  - \\
+Nested multiline markup comments               & yes &   ? &  - \\
 "As-is" insertion of other files               & yes &   ? &  - \\
 \hline
 \end{tabular}
