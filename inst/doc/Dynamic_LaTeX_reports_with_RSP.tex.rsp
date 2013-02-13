@@ -5,7 +5,7 @@
 setOption("R.rsp/vignettes/docMode", "slides");
 setOption("R.rsp/vignettes/docVersion", "devel");
 %>
-<%----%>
+--%>
 
 <%-------------------------------------------------------------------
   ARTICLE OR SLIDES?
@@ -141,9 +141,9 @@ As a first example, consider the following RSP-embedded R string
 \begin{rspVerbatim}
 "A random number in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n"
 \end{rspVerbatim}
-It can be compiled as
+It can be processed and outputted as
 \begin{escapeRspVerbatim}
-> rsp(text="A random number in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
+> rcat("A random number in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
 A random number in [1,100]: 77
 \end{escapeRspVerbatim}
 
