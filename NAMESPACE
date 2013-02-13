@@ -24,4 +24,7 @@ exportPattern("^[^\\.]")
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # S3 methods
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+S3method("rstring", "default")
+S3method("rcat", "default")
+S3method("rfile", "default")
 S3method("rsp", "default")

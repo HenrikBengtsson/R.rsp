@@ -31,6 +31,9 @@
 # @keyword IO
 #*/########################################################################### 
 setMethodS3("rfile", "default", function(pathname, output=NULL, envir=parent.frame(), ..., verbose=FALSE) {
+  # Load the package (super quietly), in case R.rsp::rfile() was called.
+  suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

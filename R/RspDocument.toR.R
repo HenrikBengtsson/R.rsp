@@ -27,6 +27,9 @@
 # }
 #*/######################################################################### 
 setMethodS3("toR", "RspDocument", function(object, factory=RspRSourceCodeFactory(), envir=parent.frame(), ...) {
+  # Load the package (super quietly), in case R.rsp::rfile() was called.
+  suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
+
   # Argument 'factory':
   factory <- Arguments$getInstanceOf(factory, "RspSourceCodeFactory");
 

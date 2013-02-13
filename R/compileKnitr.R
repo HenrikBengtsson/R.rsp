@@ -34,6 +34,9 @@
 # @keyword internal
 #*/########################################################################### 
 setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPath=".", verbose=FALSE) {
+  # Load the package (super quietly), in case R.rsp::nnn() was called.
+  suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
+
   require("knitr") || throw("Package not loaded: knitr");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

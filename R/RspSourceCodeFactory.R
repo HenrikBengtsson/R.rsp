@@ -25,6 +25,9 @@
 # @author
 #*/###########################################################################
 setConstructorS3("RspSourceCodeFactory", function(language=NA, ...) {
+  # Load the package (super quietly), in case R.rsp::nnn() was called.
+  suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
+
   language <- Arguments$getCharacter(language);
   extend(language, "RspSourceCodeFactory");
 })
@@ -154,6 +157,9 @@ setMethodS3("exprToCode", "RspSourceCodeFactory", abstract=TRUE);
 # }
 #*/#########################################################################
 setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, envir=parent.frame(), ...) {
+  # Load the package (super quietly), in case R.rsp::nnn() was called.
+  suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
+
   # Argument 'doc':
   doc <- Arguments$getInstanceOf(doc, "RspDocument");
 

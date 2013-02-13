@@ -33,6 +33,12 @@
 # @keyword internal
 #*/########################################################################### 
 setMethodS3("compileRnw", "default", function(filename, path=NULL, ..., type=typeOfRnw(filename, path=path), verbose=FALSE) {
+  # Load the package (super quietly), in case R.rsp::nnn() was called.
+  suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'type':
   type <- Arguments$getCharacter(type);
   if (!is.element(type, c("sweave", "knitr"))) {
