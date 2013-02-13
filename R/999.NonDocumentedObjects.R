@@ -104,7 +104,8 @@
 # @alias exprToCode
 # @alias getAttributes
 # @alias getCode
-# @alias getEcho getFile
+# @alias getEcho
+# @alias getFile
 # @alias getReturn
 # @alias getText
 # @alias makeSourceCode

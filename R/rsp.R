@@ -119,7 +119,6 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   if (!is.null(filename)) {
     pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);
     pathname <- getAbsolutePath(pathname);
-
   } else {
     pathname <- NULL;
   }
@@ -177,6 +176,10 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   # Compile an RSP file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Parsing and evaluating RSP file");
+  if (is.character(response)) {
+    response <- getAbsolutePath(pathname);
+  }
+
   verbose && cat(verbose, "RSP pathname (absolute): ", pathname);
   verbose && cat(verbose, "Output and working directory: ", getAbsolutePath(outPath));
 
@@ -199,6 +202,7 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
 
   # Default RSP compiler
   verbose && enter(verbose, "Preprocessing, translating, and evaluating RSP document");
+  verbose && cat(verbose, "Current directory: ", getwd());
   res <- rspPlain(pathname, response=response, envir=envir, ..., verbose=verbose);
   wasFileGenerated <- inherits(res, "character");
   if (wasFileGenerated) {
@@ -226,8 +230,6 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   } else {
     verbose && printf(verbose, "Output written to: %s [%d]\n", class(res)[1], res);
   }
-
-  res <- file.path(outPath, res);
 
   verbose && exit(verbose);
 

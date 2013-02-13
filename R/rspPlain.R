@@ -76,20 +76,20 @@ setMethodS3("rspPlain", "default", function(pathname, response=NULL, envir=paren
   str <- paste(str, collapse="\n");
   verbose && str(verbose, str);
   verbose && printf(verbose, "Number of characters: %d\n", nchar(str));
-  rstr <- RspString(str);
   verbose && exit(verbose);
 
-  verbose && enter(verbose, "Parsing RSP document");
-  rexpr <- parse(rstr, envir=envir, ...);
-  verbose && printf(verbose, "Number of RSP expressions: %d\n", length(rexpr));
-  verbose && str(verbose, head(rexpr));
-  verbose && str(verbose, tail(rexpr));
-  verbose && exit(verbose);
-
-  verbose && enter(verbose, "Translating RSP document (to R)");
-#  rcode <- toR(rexpr, ...);
-#  verbose && printf(verbose, "Number of R source code lines: %d\n", length(rcode));
-  verbose && exit(verbose);
+##  verbose && enter(verbose, "Parsing RSP document");
+##  rstr <- RspString(str);
+##  rexpr <- parse(rstr, envir=envir, ...);
+##  verbose && printf(verbose, "Number of RSP expressions: %d\n", length(rexpr));
+##  verbose && str(verbose, head(rexpr));
+##  verbose && str(verbose, tail(rexpr));
+##  verbose && exit(verbose);
+##
+##  verbose && enter(verbose, "Translating RSP document (to R)");
+###  rcode <- toR(rexpr, ...);
+###  verbose && printf(verbose, "Number of R source code lines: %d\n", length(rcode));
+##  verbose && exit(verbose);
 
   verbose && enter(verbose, "Evaluating RSP document");
 ##  res <- evaluate(rcode, envir=envir, ...);

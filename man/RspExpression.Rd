@@ -43,7 +43,7 @@ extends character\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{getAttributes} \tab  -\cr
+ \tab \code{\link[R.rsp:getAttributes.RspExpression]{getAttributes}} \tab Gets the attributes of an RSP expression.\cr
 }
 
 
