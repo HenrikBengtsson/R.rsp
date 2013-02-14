@@ -332,13 +332,22 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       return(fh);
     }
 
-    verbose && cat(verbose, "Path: ", path);
+    if (isAbsolutePath(file)) {
+      pathname <- file;
+    } else {
+      verbose && cat(verbose, "Path: ", path);
+      pathname <- file.path(path, file);
+      verbose && cat(verbose, "Pathname: ", pathname);
+    }
+
     tryCatch({
-      pathname <- Arguments$getReadablePathname(file, path=path);
+      pathname <- Arguments$getReadablePathname(pathname);
     }, error = function(ex) {
       throw(sprintf("RSP '%s' preprocessing directive (#%d) specifies an non-existing 'file' (%s): %s", expr, index, file, gsub("Pathname not found: ", "", ex$message)));
     });
+
     verbose && cat(verbose, "Pathname: ", pathname);
+
     pathname;
   } # getFileT()
 
