@@ -16,15 +16,22 @@
  Evaluates an RSP file and outputs the generated string.
 }
 
-\usage{\method{rfile}{default}(pathname, output=NULL, envir=parent.frame(), ..., verbose=FALSE)}
+\usage{\method{rfile}{default}(pathname, output=NULL, workdir=NULL, envir=parent.frame(), ..., verbose=FALSE)}
 
 \arguments{
   \item{pathname}{A \code{\link[base]{character}} string or a \code{\link[base:connections]{connection}} specifying
      the RSP file to be processed.}
   \item{output}{A \code{\link[base]{character}} string or a \code{\link[base:connections]{connection}} specifying where
      output should be directed.
-     The default is a file with a pathname where the file extension
-     (typically \code{".rsp"}) has been dropped from \code{pathname}.}
+     The default is a file with a filename where the file extension
+     (typically \code{".rsp"}) has been dropped from \code{pathname}
+     in the directory given by the \code{workdir} argument.}
+  \item{workdir}{The working directory to use while processing the
+     RSP file.  If argument \code{output} specifies an absolute pathname,
+     then the directory of \code{output} is used, otherwise the directory
+     of argument \code{pathname} is used.
+     If both \code{output} and \code{pathname} are \code{\link[base:connections]{connection}}s, then
+     the current directory is used.}
   \item{envir}{The \code{\link[base]{environment}} in which the RSP document is evaluated.}
   \item{...}{Additional arguments passed to the RSP engine.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}

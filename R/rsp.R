@@ -51,26 +51,6 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  rVer <- as.character(getRversion());
-
-  # For R v2.12.x and before
-  if (compareVersion(rVer, "2.13.0") < 0) { 
-    tempfile <- function(..., fileext="") {
-      # Try 100 times (should really work the first though)
-      for (kk in 1:100) {
-        pathnameT <- base::tempfile(...);
-        if (fileext != "") {
-          pathnameT <- sprintf("%s%s", pathnameT, fileext);
-          if (!file.exists(pathnameT)) {
-            return(pathnameT);
-          }
-        }
-      } # for (kk ...)
-      stop("Failed to create a non-existing temporary pathname.");
-    } # tempfile()
-  }
-
-
   findPostprocessor <- function(type, verbose=FALSE, ...) {
     verbose && enter(verbose, "Searching for document-type specific postprocessor");
     # Find another RSP compiler
@@ -243,6 +223,8 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
 
 ############################################################################
 # HISTORY:
+# 2013-02-13
+# o CLEANUP: Removed obsolete local tempfile() function.
 # 2013-02-12
 # o Now rsp(text=...) uses rcat() and rsp(file=...) uses rfile().
 # 2013-02-08
