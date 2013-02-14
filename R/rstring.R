@@ -14,8 +14,9 @@
 #
 # \arguments{
 #   \item{...}{@character strings with RSP markup.}
-#   \item{file}{Alternatively, a file, a URL or a @connection from with 
-#      the strings are read.}
+#   \item{file, path}{Alternatively, a file, a URL or a @connection from 
+#      with the strings are read.
+#      If a file, the \code{path} is prepended to the file, iff given.}
 #   \item{envir}{The @environment in which the RSP string is evaluated.}
 # }
 #
@@ -32,15 +33,29 @@
 #  @see "rcat".
 # }
 #*/###########################################################################
-setMethodS3("rstring", "default", function(..., file=NULL, envir=parent.frame()) {
+setMethodS3("rstring", "default", function(..., file=NULL, path=NULL, envir=parent.frame()) {
+  # Argument 'file' & 'path':
+  if (inherits(file, "connection")) {
+  } else if (is.character(file)) {
+    if (!is.null(path)) {
+      file <- file.path(path, file);
+    }
+    if (!isUrl(file)) {
+      file <- Arguments$getReadablePathname(file, absolute=TRUE);
+    }
+  }
+
+
   if (is.null(file)) {
     s <- RspString(...);
   } else {
     s <- readLines(file);
-    s <- RspString(s, pathname=file);
+    s <- RspString(s, source=file);
   }
+
   rstring(s, envir=envir);
 }) # rstring()
+
 
 setMethodS3("rstring", "RspString", function(object, ...) {
   expr <- parse(object);

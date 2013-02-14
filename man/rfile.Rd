@@ -16,15 +16,16 @@
  Evaluates an RSP file and outputs the generated string.
 }
 
-\usage{\method{rfile}{default}(filename, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), postprocess=TRUE, ..., verbose=FALSE)}
+\usage{\method{rfile}{default}(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), postprocess=TRUE, ..., verbose=FALSE)}
 
 \arguments{
-  \item{filename, path}{Specifies the RSP file to processed, which can
-     be a file, a URL or a \code{\link[base:connections]{connection}}.}
+  \item{file, path}{Specifies the RSP file to processed, which can
+     be a file, a URL or a \code{\link[base:connections]{connection}}.
+     If a file, the \code{path} is prepended to the file, iff given.}
   \item{output}{A \code{\link[base]{character}} string or a \code{\link[base:connections]{connection}} specifying where
      output should be directed.
      The default is a file with a filename where the file extension
-     (typically \code{".rsp"}) has been dropped from \code{filename}
+     (typically \code{".rsp"}) has been dropped from \code{file}
      in the directory given by the \code{workdir} argument.}
   \item{workdir}{The working directory to use after parsing and
      preprocessing, but while \emph{evaluating} and \emph{postprocessing}

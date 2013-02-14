@@ -10,12 +10,13 @@
 # @synopsis
 #
 # \arguments{
-#   \item{filename, path}{Specifies the RSP file to processed, which can
-#      be a file, a URL or a @connection.}
+#   \item{file, path}{Specifies the RSP file to processed, which can
+#      be a file, a URL or a @connection.
+#      If a file, the \code{path} is prepended to the file, iff given.}
 #   \item{output}{A @character string or a @connection specifying where
 #      output should be directed.
 #      The default is a file with a filename where the file extension
-#      (typically \code{".rsp"}) has been dropped from \code{filename}
+#      (typically \code{".rsp"}) has been dropped from \code{file}
 #      in the directory given by the \code{workdir} argument.}
 #   \item{workdir}{The working directory to use after parsing and 
 #      preprocessing, but while \emph{evaluating} and \emph{postprocessing}
@@ -41,21 +42,22 @@
 # @keyword file
 # @keyword IO
 #*/########################################################################### 
-setMethodS3("rfile", "default", function(filename, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), postprocess=TRUE, ..., verbose=FALSE) {
+setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), postprocess=TRUE, ..., verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'filename' & 'path':
-  if (inherits(filename, "connection")) {
-    file <- filename;
-  } else if (is.character(filename) && isUrl(filename)) {
-    file <- url(filename);
-  } else {
-    pathname <- Arguments$getReadablePathname(filename, path=path);
-    file <- getAbsolutePath(pathname);
+  # Argument 'file' & 'path':
+  if (inherits(file, "connection")) {
+  } else if (is.character(file)) {
+    if (!is.null(path)) {
+      file <- file.path(path, file);
+    }
+    if (!isUrl(file)) {
+      file <- Arguments$getReadablePathname(file, absolute=TRUE);
+    }
   }
 
   # Argument 'workdir':
@@ -72,14 +74,14 @@ setMethodS3("rfile", "default", function(filename, path=NULL, output=NULL, workd
   # Argument 'output':
   if (is.null(output)) {
     if (inherits(file, "connection")) {
-      throw("When argument 'filename' is a connection, then 'output' must be specified.");
+      throw("When argument 'file' is a connection, then 'output' must be specified.");
     }
     pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
     outputF <- gsub(pattern, "\\1", basename(file));
     output <- Arguments$getWritablePathname(outputF, path=workdir);
     output <- getAbsolutePath(output);
     if (output == file) {
-      throw("Cannot process RSP file. The inferred argument 'output' is the same as argument 'filename' & 'path': ", output, " == ", file);
+      throw("Cannot process RSP file. The inferred argument 'output' is the same as argument 'file' & 'path': ", output, " == ", file);
     }
   } else if (inherits(output, "connection")) {
   } else if (identical(output, "")) {
@@ -92,7 +94,7 @@ setMethodS3("rfile", "default", function(filename, path=NULL, output=NULL, workd
       output <- getAbsolutePath(output);
     }
     if (is.character(file) && (output == file)) {
-      throw("Cannot process RSP file. Argument 'output' specifies the same file as argument 'filename' & 'path': ", output, " == ", file);
+      throw("Cannot process RSP file. Argument 'output' specifies the same file as argument 'file' & 'path': ", output, " == ", file);
     }
   } else {
     throw("Argument 'output' of unknown type: ", class(output)[1L]);
@@ -150,7 +152,7 @@ setMethodS3("rfile", "default", function(filename, path=NULL, output=NULL, workd
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Parsing RSP document");
-  rstr <- RspString(str, type=type, pathname=file);
+  rstr <- RspString(str, type=type, source=file);
   doc <- parse(rstr, envir=envir, ...);
   verbose && print(verbose, doc);
   rm(rstr, str);

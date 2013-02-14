@@ -3,7 +3,7 @@ Version: 0.9.0
 Depends: R (>= 2.5.0), R.utils (>= 1.19.5), R.devices (>= 2.1.3)
 Imports: R.methodsS3 (>= 1.4.2), R.oo (>= 1.11.7), R.utils (>= 1.19.5)
 Suggests: tcltk, knitr
-Date: 2013-02-13
+Date: 2013-02-14
 Title: Dynamic generation of scientific reports
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>

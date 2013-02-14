@@ -13,10 +13,10 @@
 \alias{getType,RspString-method}
 
 
-\title{Gets the type of the RspString}
+\title{Gets the type of an RSP string}
 
 \description{
- Gets the type of the RspString.
+ Gets the type of an RSP string.
 }
 
 \usage{\method{getType}{RspString}(object, ...)}

@@ -15,7 +15,7 @@
 #   \item{expressions}{A @list of @see "RspExpression":s and
 #      @see "RspDocument":s.}
 #   \item{type}{The content type of the RSP document.}
-#   \item{pathname}{The pathname to the source RSP file, iff any.}
+#   \item{source}{A reference to the source RSP document, iff any.}
 #   \item{...}{Not used.}
 # }
 #
@@ -25,10 +25,18 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("RspDocument", function(expressions=list(), type=NA, pathname=NA, ...) {
+setConstructorS3("RspDocument", function(expressions=list(), type=NA, source=NA, ...) {
+  # Argument 'source':
+  if (is.character(source)) {
+    if (isUrl(source)) {
+    } else {
+      source <- getAbsolutePath(source);
+    }
+  }
+
   this <- extend(expressions, "RspDocument");
   attr(this, "type") <- as.character(type);
-  attr(this, "pathname") <- getAbsolutePath(pathname);
+  attr(this, "source") <- source;
   this;
 })
 
@@ -61,7 +69,7 @@ setConstructorS3("RspDocument", function(expressions=list(), type=NA, pathname=N
 #*/######################################################################### 
 setMethodS3("print", "RspDocument", function(x, ...) {
   s <- sprintf("%s:", class(x)[1L]);
-  s <- c(s, sprintf("Pathname: %s", getPathname(x)));
+  s <- c(s, sprintf("Source: %s", getSource(x)));
   s <- c(s, sprintf("Total number of RSP expressions: %d", length(x)));
   types <- sapply(x, FUN=function(x) class(x)[1L]);
   tbl <- table(types);
@@ -109,15 +117,66 @@ setMethodS3("getType", "RspDocument", function(object, ...) {
 
 
 
-setMethodS3("getPathname", "RspDocument", function(object, ...) {
-  res <- attr(object, "pathname");
+#########################################################################/**
+# @RdocMethod getSource
+#
+# @title "Gets the source reference of an RSP document"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getSource", "RspDocument", function(object, ...) {
+  res <- attr(object, "source");
   if (is.null(res)) res <- as.character(NA);
   res;
 }, protected=TRUE)
 
 
+
+#########################################################################/**
+# @RdocMethod getPath
+#
+# @title "Gets the path to the source reference of an RSP string"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
 setMethodS3("getPath", "RspDocument", function(object, ...) {
-  pathname <- getPathname(object, ...);
+  pathname <- getSource(object, ...);
   if (is.na(pathname)) {
     path <- getwd();
   } else {
@@ -269,7 +328,7 @@ setMethodS3("flatten", "RspDocument", function(object, ..., verbose=FALSE) {
 
   class(res) <- class(object);
   attr(res, "type") <- getType(object);
-  attr(res, "pathname") <- getPathname(object);
+  attr(res, "source") <- getSource(object);
 
   res;
 }, protected=TRUE) # flatten()
@@ -336,19 +395,22 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       pathname <- file;
     } else {
       verbose && cat(verbose, "Path: ", path);
-      pathname <- file.path(path, file);
-      verbose && cat(verbose, "Pathname: ", pathname);
+      file <- file.path(path, file);
+      verbose && cat(verbose, "File: ", file);
     }
 
-    tryCatch({
-      pathname <- Arguments$getReadablePathname(pathname);
-    }, error = function(ex) {
-      throw(sprintf("RSP '%s' preprocessing directive (#%d) specifies an non-existing 'file' (%s): %s", expr, index, file, gsub("Pathname not found: ", "", ex$message)));
-    });
+    if (isUrl(file)) {
+    } else {
+      tryCatch({
+        file <- Arguments$getReadablePathname(file);
+      }, error = function(ex) {
+        throw(sprintf("RSP '%s' preprocessing directive (#%d) specifies an non-existing 'file' (%s): %s", expr, index, file, gsub("Pathname not found: ", "", ex$message)));
+      });
+    }
 
-    verbose && cat(verbose, "Pathname: ", pathname);
+    verbose && cat(verbose, "File: ", file);
 
-    pathname;
+    file;
   } # getFileT()
 
 
@@ -400,7 +462,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       lines <- readLines(file);
   
       # Parse RSP string to RSP document
-      rstr <- RspString(lines, type=getType(object), pathname=file);
+      rstr <- RspString(lines, type=getType(object), source=file);
 
       doc <- parse(rstr, envir=envir, verbose=verbose);
 
@@ -593,13 +655,15 @@ setMethodS3("[", "RspDocument", function(x, i) {
   res <- .subset(x, i);
   class(res) <- class(x);
   attr(res, "type") <- getType(x);
-  attr(res, "pathname") <- getPathname(x);
+  attr(res, "source") <- getSource(x);
   res;
 }, protected=TRUE)
 
 
 ##############################################################################
 # HISTORY:
+# 2013-02-14
+# o Now RspDocument can include URLs as well.
 # 2013-02-13
 # o Added getType() for RspDocument.
 # o Added support for language:s 'system' and 'shell' for RspEvalDirective.

@@ -14,7 +14,7 @@
 # \arguments{
 #   \item{str, ...}{@character strings.}
 #   \item{type}{The content type of the RSP string.}
-#   \item{pathname}{The pathname to the source RSP file, iff any.}
+#   \item{source}{A reference to the source RSP document, iff any.}
 # }
 #
 # \section{Fields and Methods}{
@@ -23,10 +23,18 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("RspString", function(str=character(), ..., type=NA, pathname=NA) {
+setConstructorS3("RspString", function(str=character(), ..., type=NA, source=NA) {
+  # Argument 'source':
+  if (is.character(source)) {
+    if (isUrl(source)) {
+    } else {
+      source <- getAbsolutePath(source);
+    }
+  }
+
   this <- extend(c(str, ...), "RspString");
   attr(this, "type") <- as.character(type);
-  attr(this, "pathname") <- getAbsolutePath(pathname);
+  attr(this, "source") <- source;
   this;
 })
 
@@ -34,7 +42,7 @@ setConstructorS3("RspString", function(str=character(), ..., type=NA, pathname=N
 #########################################################################/**
 # @RdocMethod getType
 #
-# @title "Gets the type of the RspString"
+# @title "Gets the type of an RSP string"
 #
 # \description{
 #  @get "title".
@@ -63,8 +71,34 @@ setMethodS3("getType", "RspString", function(object, ...) {
 }, protected=TRUE)
 
 
-setMethodS3("getPathname", "RspString", function(object, ...) {
-  res <- attr(object, "pathname");
+
+#########################################################################/**
+# @RdocMethod getSource
+#
+# @title "Gets the source reference of an RSP string"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getSource", "RspString", function(object, ...) {
+  res <- attr(object, "source");
   if (is.null(res)) res <- as.character(NA);
   res;
 }, protected=TRUE)
@@ -156,7 +190,7 @@ setMethodS3("dropComments", "RspString", function(object, ...) {
 
   class(rspCode) <- class(object);
   attr(rspCode, "type") <- getType(object);
-  attr(rspCode, "pathname") <- getPathname(object);
+  attr(rspCode, "source") <- getSource(object);
 
   rspCode;
 }, protected=TRUE)
@@ -246,7 +280,7 @@ setMethodS3("parseRaw", "RspString", function(object, ...) {
 
   code <- paste(object, collapse="\n");
   expr <- splitRspTags(code, ...);
-  RspDocument(expr, type=getType(object), pathname=getPathname(object));
+  RspDocument(expr, type=getType(object), source=getSource(object));
 }, protected=TRUE) # parseRaw()
 
 
