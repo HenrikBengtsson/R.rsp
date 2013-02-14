@@ -182,7 +182,7 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
   }
   code <- unlist(code, use.names=FALSE);
 
-  makeSourceCode(object, code);
+  makeSourceCode(object, code, type=getType(doc));
 }) # toSourceCode()
 
 

@@ -19,6 +19,7 @@
 #
 # \value{
 #   Returns a @character string.
+#   If set/known, the content type is returned as attribute \code{type}.
 # }
 #
 # @examples "../incl/rstring.Rex"
@@ -73,6 +74,13 @@ rm("rspCon");
   eval(expr, envir=envir, ...);
   res <- get("rspRes", envir=envir);
   rm("rspRes", envir=envir);
+
+  # Set the content type?
+  type <- getType(object);
+  if (!is.na(type)) {
+    attr(res, "type") <- type;
+  }
+
   res;
 }) # rstring()
 

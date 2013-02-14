@@ -49,44 +49,6 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Local functions
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  findPostprocessor <- function(type, verbose=FALSE, ...) {
-    verbose && enter(verbose, "Searching for document-type specific postprocessor");
-    # Find another RSP compiler
-    postProcessors <- list(
-      # RSP-embedded LaTeX documents:
-      # *.tex => ... => *.dvi/*.pdf
-      "tex" = compileLaTeX,
- 
-      # RSP-embedded Sweave and Knitr Rnw documents:
-      # *.Rnw => ... => *.tex => dvi/*.pdf
-      "rnw" = compileRnw
-    );
-
-    postProcessor <- NULL;
-    for (key in names(postProcessors)) {
-      pattern <- key;
-      if (regexpr(pattern, type) != -1) {
-        postProcessor <- postProcessors[[key]];
-        verbose && cat(verbose, "Match: ", key);
-        break;
-      }
-    } # for (key ...)
-
-    if (is.null(postProcessor)) {
-      verbose && cat(verbose, "Postprocessor found: <none>");
-    } else {
-      verbose && cat(verbose, "Postprocessor found: ", type);
-    }
-
-    verbose && exit(verbose);
-
-    postProcessor;
-  } # findPostprocessor()
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(filename) && !is.null(text)) {
@@ -162,72 +124,16 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   } # if (!is.null(text))
 
 
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Compile an RSP file
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Parsing and evaluating RSP file");
   if (is.character(response)) {
     response <- getAbsolutePath(response);
   }
 
-  verbose && cat(verbose, "RSP pathname (absolute): ", pathname);
-  verbose && cat(verbose, "Output and working directory: ", outPath);
-
-  pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
-  ext <- gsub(pattern, "\\3", pathname);
-  type <- tolower(ext);
-  verbose && cat(verbose, "RSP type: ", type);
-  verbose && cat(verbose, "Postprocess (if recognized): ", postprocess);
-  if (postprocess) {
-    postProcessor <- findPostprocessor(type, verbose=verbose);
-  } # if (postprocess)
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Process RSP file
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Preprocessing, translating, and evaluating RSP document");
+  verbose && enter(verbose, "Processing RSP file");
   verbose && cat(verbose, "Current directory: ", getwd());
-  res <- rfile(pathname, output=response, workdir=outPath, envir=envir, ..., verbose=verbose);
-
-  if (isFile(res)) {
-    verbose && cat(verbose, "Output pathname: ", res);
-    verbose && printf(verbose, "Output file size: %g bytes\n", file.info(res)$size);
-  } else {
-    verbose && printf(verbose, "Output written to: %s [%d]\n", class(res)[1L], res);
-  }
+  res <- rfile(pathname, output=response, workdir=outPath, envir=envir, postprocess=postprocess, ..., verbose=verbose);
+  verbose && print(verbose, res);
   verbose && exit(verbose);
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Postprocess RSP artifact?
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (!is.null(postProcessor)) {
-    if (isFile(res)) {
-      verbose && enter(verbose, "Postprocessing generated document");
-      verbose && cat(verbose, "Input pathname: ", res);
-
-      # Change working directory?
-      opwd <- getwd();
-      on.exit({ if (!is.null(opwd)) setwd(opwd) }, add=TRUE);
-      setwd(outPath);
-
-      pathname3 <- postProcessor(res, ..., verbose=verbose);
-      verbose && cat(verbose, "Output pathname: ", pathname3);
-      res <- getAbsolutePath(pathname3);
-      verbose && cat(verbose, "Output pathname (absolute): ", res);
-      verbose && printf(verbose, "Output file size: %g bytes\n", file.info(res)$size);
-
-      # Reset working directory
-      if (!is.null(opwd)) {
-        setwd(opwd);
-        opwd <- NULL;
-      }
-
-      verbose && exit(verbose);
-    }
-  } # if (!is.null(postProcessor))
 
   verbose && exit(verbose);
 

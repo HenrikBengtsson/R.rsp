@@ -16,7 +16,7 @@
  Evaluates an RSP file and outputs the generated string.
 }
 
-\usage{\method{rfile}{default}(pathname, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), ..., verbose=FALSE)}
+\usage{\method{rfile}{default}(pathname, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), postprocess=TRUE, ..., verbose=FALSE)}
 
 \arguments{
   \item{pathname}{A \code{\link[base]{character}} string or a \code{\link[base:connections]{connection}} specifying
@@ -35,14 +35,14 @@
   \item{type}{The default content type of the RSP document.  By default, it
      is inferred from the \code{output} filename extension, iff possible.}
   \item{envir}{The \code{\link[base]{environment}} in which the RSP document is evaluated.}
+  \item{postprocess}{If \code{\link[base:logical]{TRUE}}, and a postprocessing method exists for
+     the generated RSP artifact, it is postprocessed as well.}
   \item{...}{Additional arguments passed to the RSP engine.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{
-  If argument \code{output} is a pathname, its absolute pathname is
-  returned (invisibly).
-  If a \code{\link[base:connections]{connection}}, the connection is returned (invisibly).
+  Returns an \code{\link{RspArtifact}}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

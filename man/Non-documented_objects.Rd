@@ -125,6 +125,9 @@
 \alias{flatten}
 \alias{preprocess}
 \alias{getType}
+\alias{findProcessor}
+\alias{hasProcessor}
+\alias{postprocess}
 
 \description{
 This page contains aliases for all "non-documented" objects that

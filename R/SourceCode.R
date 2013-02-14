@@ -14,6 +14,7 @@
 #
 # \arguments{
 #   \item{code, ...}{@character strings.}
+#   \item{type}{The content type of the source code.}
 # }
 #
 # \section{Fields and Methods}{
@@ -22,9 +23,44 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("SourceCode", function(code=character(), ...) {
-  extend(c(code, ...), "SourceCode");
+setConstructorS3("SourceCode", function(code=character(), ..., type=NA) {
+  this <- extend(c(code, ...), "SourceCode");
+  attr(this, "type") <- as.character(type);
+  this;
 })
+
+
+#########################################################################/**
+# @RdocMethod getType
+#
+# @title "Gets the type of the SourceCode"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getType", "SourceCode", function(object, ...) {
+  res <- attr(object, "type");
+  if (is.null(res)) res <- as.character(NA);
+  res;
+}, protected=TRUE)
+
 
 
 #########################################################################/**
@@ -118,6 +154,8 @@ setMethodS3("evaluate", "SourceCode", abstract=TRUE);
 
 ##############################################################################
 # HISTORY:
+# 2013-02-13
+# o Added getType() for SourceCode.
 # 2013-02-11
 # o Added Rdoc help.
 # 2013-02-09

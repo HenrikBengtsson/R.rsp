@@ -33,16 +33,18 @@ extends character\cr
   a particular programming language.
  }
 
- \usage{SourceCode(code=character(), ...)}
+ \usage{SourceCode(code=character(), ..., type=NA)}
 
  \arguments{
    \item{code, ...}{\code{\link[base]{character}} strings.}
+   \item{type}{The content type of the source code.}
  }
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.SourceCode]{evaluate}} \tab Parses and evaluates the source code.\cr
+ \tab \code{\link[R.rsp:getType.SourceCode]{getType}} \tab Gets the type of the SourceCode.\cr
  \tab \code{\link[R.rsp:parse.SourceCode]{parse}} \tab Parses the source code.\cr
  \tab \code{\link[R.rsp:print.SourceCode]{print}} \tab Prints the source code.\cr
 }

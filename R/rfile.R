@@ -26,14 +26,14 @@
 #   \item{type}{The default content type of the RSP document.  By default, it
 #      is inferred from the \code{output} filename extension, iff possible.}
 #   \item{envir}{The @environment in which the RSP document is evaluated.}
+#   \item{postprocess}{If @TRUE, and a postprocessing method exists for
+#      the generated RSP artifact, it is postprocessed as well.}
 #   \item{...}{Additional arguments passed to the RSP engine.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{
-#   If argument \code{output} is a pathname, its absolute pathname is 
-#   returned (invisibly).
-#   If a @connection, the connection is returned (invisibly).
+#   Returns an @see "RspArtifact".
 # }
 #
 # @author
@@ -41,7 +41,7 @@
 # @keyword file
 # @keyword IO
 #*/########################################################################### 
-setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), ..., verbose=FALSE) {
+setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), postprocess=TRUE, ..., verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -174,8 +174,11 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, ty
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Evaluating RSP document");
-  rcat(rcode, file=output, envir=envir, ...);
-  rm(rcode);
+  res <- rcat(rcode, file=output, envir=envir, ...);
+  type <- attr(res, "type");
+  rm(rcode, res);
+  verbose && cat(verbose, "Content type: ", type);
+  attr(output, "type") <- type;
   verbose && exit(verbose);
 
   # Reset the working directory?
@@ -184,9 +187,19 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, ty
     opwd <- NULL;
   }
 
+  if (isFile(output)) {
+    res <- RspFileArtifact(output);
+  } else {
+    res <- RspArtifact(output);
+  }
+
+  if (postprocess && hasProcessor(res)) {
+    res <- postprocess(res, workdir=workdir, ..., verbose=verbose);
+  }
+
   verbose && exit(verbose);
 
-  invisible(output);
+  invisible(res);
 }, protected=TRUE) # rfile()
 
 
@@ -194,6 +207,7 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, ty
 ############################################################################
 # HISTORY:
 # 2013-02-13
+# o Added argument 'postprocess' to rfile().
 # o Now rfile() sets the default content type based on the filename
 #   extension, iff possible.
 # o Added argument 'workdir' to rfile().
