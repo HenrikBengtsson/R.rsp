@@ -23,6 +23,8 @@
 #      of argument \code{pathname} is used.
 #      If both \code{output} and \code{pathname} are @connections, then 
 #      the current directory is used.}
+#   \item{type}{The default content type of the RSP document.  By default, it
+#      is inferred from the \code{output} filename extension, iff possible.}
 #   \item{envir}{The @environment in which the RSP document is evaluated.}
 #   \item{...}{Additional arguments passed to the RSP engine.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
@@ -39,7 +41,7 @@
 # @keyword file
 # @keyword IO
 #*/########################################################################### 
-setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, envir=parent.frame(), ..., verbose=FALSE) {
+setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), ..., verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -65,7 +67,8 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, en
       workdir <- ".";
     }
   }
-  workdir <- Arguments$getWritablePath(workdir);    
+  workdir <- Arguments$getWritablePath(workdir);
+  if (is.null(workdir)) workdir <- ".";
 
   # Argument 'output':
   if (is.null(output)) {
@@ -95,6 +98,15 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, en
   } else {
     throw("Argument 'output' of unknown type: ", class(output)[1L]);
   }
+
+  # Argument 'type':
+  if (is.na(type)) {
+    if (is.character(output)) {
+      ext <- gsub(".*[.]([^.]+)$", "\\1", basename(output));
+      type <- tolower(ext);
+    }
+  }
+  type <- Arguments$getCharacter(type);
 
   # Argument 'envir':
 #  envir <- Arguments$getEnvironment(envir);
@@ -128,14 +140,16 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, en
     }
 
     printf(verbose, "Working directory: %s\n", workdir);
+    printf(verbose, "Default content type: %s\n", type);
   }
 
   # Change working directory
   opwd <- NULL;
   if ((workdir != ".") && (workdir != getwd())) {
-    opwd <- setwd(workdir);
+    opwd <- getwd();
     on.exit({ if (!is.null(opwd)) setwd(opwd) }, add=TRUE);
-    verbose && cat(verbose, "Temporary working directory: ", workdir);
+    verbose && cat(verbose, "Temporary working directory: ", getAbsolutePath(workdir));
+    setwd(workdir);
   }
 
   verbose && enter(verbose, "Reading RSP document");
@@ -147,7 +161,7 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, en
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Parsing RSP document");
-  rstr <- RspString(str);
+  rstr <- RspString(str, type=type);
   doc <- parse(rstr, envir=envir, ...);
   verbose && print(verbose, doc);
   rm(rstr, str);
@@ -165,7 +179,10 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, en
   verbose && exit(verbose);
 
   # Reset the working directory?
-  if (!is.null(opwd)) setwd(opwd);
+  if (!is.null(opwd)) {
+    setwd(opwd);
+    opwd <- NULL;
+  }
 
   verbose && exit(verbose);
 
@@ -177,6 +194,8 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, en
 ############################################################################
 # HISTORY:
 # 2013-02-13
+# o Now rfile() sets the default content type based on the filename
+#   extension, iff possible.
 # o Added argument 'workdir' to rfile().
 # o Added support for 'pathname' also being a connection or a URL.
 # o Added some protection against overwriting the input file.

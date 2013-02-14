@@ -32,10 +32,12 @@ extends character\cr
   An RspString is a \code{\link[base]{character}} \code{\link[base]{vector}} with RSP markup.
  }
 
- \usage{RspString(str=character(), ...)}
+ \usage{RspString(str=character(), ..., type=NA)}
 
  \arguments{
    \item{str, ...}{\code{\link[base]{character}} strings.}
+   \item{type}{A \code{\link[base]{character}} string specifying the content type of
+      the RSP string.}
  }
 
  \section{Fields and Methods}{
@@ -43,6 +45,7 @@ extends character\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:dropComments.RspString]{dropComments}} \tab Drops all RSP comments.\cr
  \tab \code{\link[R.rsp:evaluate.RspString]{evaluate}} \tab Parses, translates, and evaluates the RSP string.\cr
+ \tab \code{\link[R.rsp:getType.RspString]{getType}} \tab Gets the type of the RspString.\cr
  \tab \code{\link[R.rsp:parse.RspString]{parse}} \tab Parses the RSP string.\cr
  \tab \code{\link[R.rsp:parseRaw.RspString]{parseRaw}} \tab Parses the string into blocks of text and RSP.\cr
  \tab \code{rcat} \tab  -\cr

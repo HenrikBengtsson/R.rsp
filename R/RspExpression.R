@@ -592,9 +592,71 @@ setMethodS3("getLanguage", "RspEvalDirective", function(directive, ...) {
 })
 
 
+###########################################################################/**
+# @RdocClass RspPageDirective
+#
+# @title "The RspPageDirective class"
+#
+# \description{
+#  @classhierarchy
+#
+#  An RspPageDirective is an @see "RspDirective" that annotates the
+#  content of the RSP document, e.g. the content type.
+# }
+# 
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
+# }
+#
+# \section{Fields and Methods}{
+#  @allmethods
+# }
+# 
+# @author
+#*/###########################################################################
+setConstructorS3("RspPageDirective", function(...) {
+  extend(RspDirective("page", ...), "RspPageDirective")
+})
+
+
+#########################################################################/**
+# @RdocMethod getType
+#
+# @title "Gets the content type"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getType", "RspPageDirective", function(directive, ...) {
+  res <- attr(directive, "type");
+  if (is.null(res)) res <- as.character(NA);
+  res;
+})
+
+
 ##############################################################################
 # HISTORY:
 # 2013-02-13
+# o Added RspPageDirective.
 # o Added 'language' attribute to RspEvalDirective.
 # 2013-02-11
 # o Added Rdoc help.

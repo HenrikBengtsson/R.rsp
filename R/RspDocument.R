@@ -14,6 +14,8 @@
 # \arguments{
 #   \item{expressions}{A @list of @see "RspExpression":s and
 #      @see "RspDocument":s.}
+#   \item{type}{A @character string specifying the content type of 
+#      the RSP document.}
 #   \item{...}{Not used.}
 # }
 #
@@ -23,8 +25,10 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("RspDocument", function(expressions=list(), ...) {
-  extend(expressions, "RspDocument");
+setConstructorS3("RspDocument", function(expressions=list(), type=NA, ...) {
+  this <- extend(expressions, "RspDocument");
+  attr(this, "type") <- as.character(type);
+  this;
 })
 
 
@@ -62,8 +66,43 @@ setMethodS3("print", "RspDocument", function(x, ...) {
   for (kk in seq_along(tbl)) {
     s <- c(s, sprintf("Number of %s(s): %d", names(tbl)[kk], tbl[kk]));
   }
+  s <- c(s, sprintf("Content type: %s", getType(x)));
   s <- paste(s, collapse="\n");
   cat(s, "\n", sep="");
+}, protected=TRUE)
+
+
+
+
+#########################################################################/**
+# @RdocMethod getType
+#
+# @title "Gets the type of the RspDocument"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getType", "RspDocument", function(object, ...) {
+  res <- attr(object, "type");
+  if (is.null(res)) res <- as.character(NA);
+  res;
 }, protected=TRUE)
 
 
@@ -208,6 +247,7 @@ setMethodS3("flatten", "RspDocument", function(object, ..., verbose=FALSE) {
   } # for (kk ...)
 
   class(res) <- class(object);
+  attr(res, "type") <- getType(object);
 
   res;
 }, protected=TRUE) # flatten()
@@ -320,8 +360,8 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       lines <- readFile(file, envir=envir, directive="include", index=idx);
   
       # Parse RSP string to RSP document
-      rstr <- RspString(lines);
-      doc <- parse(rstr);
+      rstr <- RspString(lines, type=getType(object));
+      doc <- parse(rstr, envir=envir);
       verbose && printf(verbose, "Included RSP document with %d RSP expressions.\n", length(doc));
   
       if (recursive) {
@@ -433,6 +473,25 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       throw("Unsupported 'language' for RSP 'eval' directive: ", language);
     } # RspEvalDirective
 
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # RspPageDirective => ...
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (inherits(expr, "RspPageDirective")) {
+      type <- getType(expr);
+
+      # Set the type of the RSP document
+      attr(object, "type") <- type;
+  
+      # Drop RSP expression
+      object[[idx]] <- NA;
+
+      verbose && exit(verbose);
+      next;
+    } # RspPageDirective
+  
+  
+
   
     throw(sprintf("Unknown type of RSP preprocessing directive (#%d): %s",
                                                        idx, class(expr)[1L]));
@@ -441,9 +500,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   # Cleanup
   excl <- which(sapply(object, FUN=identical, NA));
   if (length(excl) > 0L) {
-    class <- class(object);
     object <- object[-excl];
-    class(object) <- class;
   }
 
   if (flatten) {
@@ -461,9 +518,47 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 
 
+#########################################################################/**
+# @RdocMethod "["
+#
+# @title "Subsets an RspDocument"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{i}{Indices of the RSP elements to extract.}
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns an @see "RspDocument".
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("[", "RspDocument", function(x, i) {
+  # Preserve the class and other attributes
+  class <- class(x);
+  type <- getType(x);
+  x <- .subset(x, i);
+  class(x) <- class;
+  attr(x, "type") <- type;
+  x;
+}, protected=TRUE)
+
+
 ##############################################################################
 # HISTORY:
 # 2013-02-13
+# o Added getType() for RspDocument.
 # o Added support for language:s 'system' and 'shell' for RspEvalDirective.
 # o Added print(), preprocess() and flatten() for RspDocument.
 # 2013-02-09

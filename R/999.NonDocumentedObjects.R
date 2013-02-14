@@ -114,6 +114,7 @@
 # @alias toSourceCode
 # @alias flatten
 # @alias preprocess
+# @alias getType
 #
 # \description{
 # This page contains aliases for all "non-documented" objects that 

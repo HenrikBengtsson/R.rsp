@@ -6,47 +6,48 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspDirective}
+ \name{RspPageDirective}
 \docType{class}
-\alias{RspDirective}
+\alias{RspPageDirective}
 
 
- \title{The abstract RspDirective class}
+ \title{The RspPageDirective class}
 
  \description{
   Package:  R.rsp \cr
-\bold{Class RspDirective}\cr
+\bold{Class RspPageDirective}\cr
 
 \code{character}\cr
 \code{~~|}\cr
 \code{~~+--}\code{\link[R.rsp]{RspExpression}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{RspDirective}\cr
+\code{~~~~~~~+--}\code{\link[R.rsp]{RspDirective}}\cr
+\code{~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~+--}\code{RspPageDirective}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.rsp]{RspDefineDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspPageDirective}\cr
+\cr
 
-public class \bold{RspDirective}\cr
-extends \link[R.rsp]{RspExpression}\cr
+public class \bold{RspPageDirective}\cr
+extends \link[R.rsp]{RspDirective}\cr
 
 
 
-  An RspDirective is an \code{\link{RspExpression}} that represents a directive
-  to the RSP parser.
-  The directive is independent of the underlying programming language.
+  An RspPageDirective is an \code{\link{RspDirective}} that annotates the
+  content of the RSP document, e.g. the content type.
  }
 
- \usage{RspDirective(directive=character(), attributes=list(), ...)}
+ \usage{RspPageDirective(...)}
 
  \arguments{
-   \item{directive}{A \code{\link[base]{character}} string.}
-   \item{attributes}{A named \code{\link[base]{list}}.}
-   \item{...}{Not used.}
+   \item{...}{Arguments passed to the constructor of \code{\link{RspDirective}}.}
  }
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
-\emph{No methods defined}.
+\tabular{rll}{
+ \tab \code{\link[R.rsp:getType.RspPageDirective]{getType}} \tab Gets the content type.\cr
+}
 
 
  \bold{Methods inherited from RspExpression}:\cr

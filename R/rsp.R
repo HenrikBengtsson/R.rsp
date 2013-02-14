@@ -111,10 +111,13 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   }
 
   # Arguments 'outPath':
-  if (!is.null(pathname)) {
+  if (is.null(outPath)) {
+    outPath <- ".";
+  } else {
     outPath <- Arguments$getWritablePath(outPath);
-    if (is.null(outPath)) outPath <- ".";
+    if (is.null(outPath)) outPath <- getwd();
   }
+  outPath <- getAbsolutePath(outPath);
 
   # Argument 'envir':
 #  envir <- Arguments$getEnvironment(envir);
@@ -137,21 +140,26 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   if (!is.null(text)) {
     verbose && enter(verbose, "Parsing and evaluating RSP string");
 
-    # Change working directory?
-    opwd <- ".";
-    on.exit(setwd(opwd), add=TRUE);
-    if (!is.null(outPath)) {
-      opwd <- setwd(outPath);
-    }
-
     if (is.null(response)) {
       response <- stdout();
     }
+
+    # Change working directory?
+    opwd <- getwd();
+    on.exit({ if (!is.null(opwd)) setwd(opwd) }, add=TRUE);
+    setwd(outPath);
+
     res <- rcat(text, file=response, envir=envir, ...);
+
+    # Reset working directory
+    if (!is.null(opwd)) {
+      setwd(opwd);
+      opwd <- NULL;
+    }
 
     verbose && exit(verbose);
     return(invisible(res));
-  }
+  } # if (!is.null(text))
 
 
 
@@ -164,7 +172,7 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   }
 
   verbose && cat(verbose, "RSP pathname (absolute): ", pathname);
-  verbose && cat(verbose, "Output and working directory: ", getAbsolutePath(outPath));
+  verbose && cat(verbose, "Output and working directory: ", outPath);
 
   pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
   ext <- gsub(pattern, "\\3", pathname);
@@ -176,44 +184,50 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   } # if (postprocess)
 
 
-  # Change working directory?
-  opwd <- ".";
-  on.exit(setwd(opwd), add=TRUE);
-  if (!is.null(outPath)) {
-    opwd <- setwd(outPath);
-  }
-
-  # Default RSP compiler
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Process RSP file
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Preprocessing, translating, and evaluating RSP document");
   verbose && cat(verbose, "Current directory: ", getwd());
-  res <- rfile(pathname, output=response, envir=envir, ..., verbose=verbose);
+  res <- rfile(pathname, output=response, workdir=outPath, envir=envir, ..., verbose=verbose);
 
-  wasFileGenerated <- inherits(res, "character");
-  if (wasFileGenerated) {
+  if (isFile(res)) {
     verbose && cat(verbose, "Output pathname: ", res);
     verbose && printf(verbose, "Output file size: %g bytes\n", file.info(res)$size);
+  } else {
+    verbose && printf(verbose, "Output written to: %s [%d]\n", class(res)[1L], res);
   }
   verbose && exit(verbose);
 
-  # Postprocess file?
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Postprocess RSP artifact?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(postProcessor)) {
-    if (wasFileGenerated) {
+    if (isFile(res)) {
       verbose && enter(verbose, "Postprocessing generated document");
       verbose && cat(verbose, "Input pathname: ", res);
+
+      # Change working directory?
+      opwd <- getwd();
+      on.exit({ if (!is.null(opwd)) setwd(opwd) }, add=TRUE);
+      setwd(outPath);
+
       pathname3 <- postProcessor(res, ..., verbose=verbose);
       verbose && cat(verbose, "Output pathname: ", pathname3);
       res <- getAbsolutePath(pathname3);
       verbose && cat(verbose, "Output pathname (absolute): ", res);
+      verbose && printf(verbose, "Output file size: %g bytes\n", file.info(res)$size);
+
+      # Reset working directory
+      if (!is.null(opwd)) {
+        setwd(opwd);
+        opwd <- NULL;
+      }
+
       verbose && exit(verbose);
     }
-  }
-
-  if (wasFileGenerated) {
-    verbose && cat(verbose, "Output document pathname: ", res);
-    verbose && printf(verbose, "Output file size: %g bytes\n", file.info(res)$size);
-  } else {
-    verbose && printf(verbose, "Output written to: %s [%d]\n", class(res)[1], res);
-  }
+  } # if (!is.null(postProcessor))
 
   verbose && exit(verbose);
 

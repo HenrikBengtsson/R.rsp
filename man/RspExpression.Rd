@@ -22,7 +22,7 @@
 \code{~~+--}\code{RspExpression}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.rsp]{RspCode}, \link[R.rsp]{RspCodeChunk}, \link[R.rsp]{RspComment}, \link[R.rsp]{RspDefineDirective}, \link[R.rsp]{RspDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspText}\cr
+\link[R.rsp]{RspCode}, \link[R.rsp]{RspCodeChunk}, \link[R.rsp]{RspComment}, \link[R.rsp]{RspDefineDirective}, \link[R.rsp]{RspDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspPageDirective}, \link[R.rsp]{RspText}\cr
 
 public class \bold{RspExpression}\cr
 extends character\cr

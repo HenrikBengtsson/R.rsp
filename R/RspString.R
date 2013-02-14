@@ -13,6 +13,8 @@
 #
 # \arguments{
 #   \item{str, ...}{@character strings.}
+#   \item{type}{A @character string specifying the content type of
+#      the RSP string.}
 # }
 #
 # \section{Fields and Methods}{
@@ -21,9 +23,43 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("RspString", function(str=character(), ...) {
-  extend(c(str, ...), "RspString");
+setConstructorS3("RspString", function(str=character(), ..., type=NA) {
+  this <- extend(c(str, ...), "RspString");
+  attr(this, "type") <- as.character(type);
+  this;
 })
+
+
+#########################################################################/**
+# @RdocMethod getType
+#
+# @title "Gets the type of the RspString"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getType", "RspString", function(object, ...) {
+  res <- attr(object, "type");
+  if (is.null(res)) res <- as.character(NA);
+  res;
+}, protected=TRUE)
 
 
 
@@ -111,6 +147,8 @@ setMethodS3("dropComments", "RspString", function(object, ...) {
   }
 
   class(rspCode) <- class(object);
+  attr(rspCode, "type") <- getType(object);
+
   rspCode;
 }, protected=TRUE)
 
@@ -199,7 +237,7 @@ setMethodS3("parseRaw", "RspString", function(object, ...) {
 
   code <- paste(object, collapse="\n");
   expr <- splitRspTags(code, ...);
-  RspDocument(expr);
+  RspDocument(expr, type=getType(object));
 }, protected=TRUE) # parseRaw()
 
 
@@ -435,6 +473,8 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
 
 ##############################################################################
 # HISTORY:
+# 2013-02-13
+# o Added getType() for RspString.
 # 2013-02-12
 # o Added support for nested RSP comments, by introducing "different" RSP
 #   comment styles: <%-- --%>, <%--- ---%>, <%---- ----%>, and so on.

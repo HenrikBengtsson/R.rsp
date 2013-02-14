@@ -32,19 +32,23 @@ extends list\cr
   An RspDocument represents a \code{\link[base]{list}} of \code{\link{RspExpression}}:s.
  }
 
- \usage{RspDocument(expressions=list(), ...)}
+ \usage{RspDocument(expressions=list(), type=NA, ...)}
 
  \arguments{
    \item{expressions}{A \code{\link[base]{list}} of \code{\link{RspExpression}}:s and
       \code{\link{RspDocument}}:s.}
+   \item{type}{A \code{\link[base]{character}} string specifying the content type of
+      the RSP document.}
    \item{...}{Not used.}
  }
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
+ \tab \code{[} \tab  -\cr
  \tab \code{\link[R.rsp:evaluate.RspDocument]{evaluate}} \tab Parses, translates, and evaluates the RSP document.\cr
  \tab \code{\link[R.rsp:flatten.RspDocument]{flatten}} \tab Flattens an RspDocument.\cr
+ \tab \code{\link[R.rsp:getType.RspDocument]{getType}} \tab Gets the type of the RspDocument.\cr
  \tab \code{\link[R.rsp:preprocess.RspDocument]{preprocess}} \tab Processes all RSP preprocessing directives.\cr
  \tab \code{\link[R.rsp:print.RspDocument]{print}} \tab Prints a summary of an RspDocument.\cr
  \tab \code{rcat} \tab  -\cr
