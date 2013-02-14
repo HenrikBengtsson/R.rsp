@@ -10,19 +10,17 @@
 # @synopsis
 #
 # \arguments{
-#   \item{pathname}{A @character string or a @connection specifying 
-#      the RSP file to be processed.}
+#   \item{filename, path}{Specifies the RSP file to processed, which can
+#      be a file, a URL or a @connection.}
 #   \item{output}{A @character string or a @connection specifying where
 #      output should be directed.
 #      The default is a file with a filename where the file extension
-#      (typically \code{".rsp"}) has been dropped from \code{pathname}
+#      (typically \code{".rsp"}) has been dropped from \code{filename}
 #      in the directory given by the \code{workdir} argument.}
 #   \item{workdir}{The working directory to use while processing the 
 #      RSP file.  If argument \code{output} specifies an absolute pathname, 
-#      then the directory of \code{output} is used, otherwise the directory
-#      of argument \code{pathname} is used.
-#      If both \code{output} and \code{pathname} are @connections, then 
-#      the current directory is used.}
+#      then the directory of \code{output} is used, otherwise the
+#      current directory is used.}
 #   \item{type}{The default content type of the RSP document.  By default, it
 #      is inferred from the \code{output} filename extension, iff possible.}
 #   \item{envir}{The @environment in which the RSP document is evaluated.}
@@ -41,28 +39,27 @@
 # @keyword file
 # @keyword IO
 #*/########################################################################### 
-setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), postprocess=TRUE, ..., verbose=FALSE) {
+setMethodS3("rfile", "default", function(filename, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), postprocess=TRUE, ..., verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'pathname':
-  if (inherits(pathname, "connection")) {
-  } else if (is.character(pathname) && isUrl(pathname)) {
-    pathname <- url(pathname);
+  # Argument 'filename' & 'path':
+  if (inherits(filename, "connection")) {
+    file <- filename;
+  } else if (is.character(filename) && isUrl(filename)) {
+    file <- url(filename);
   } else {
-    pathname <- Arguments$getReadablePathname(pathname);
-    pathname <- getAbsolutePath(pathname);
+    pathname <- Arguments$getReadablePathname(filename, path=path);
+    file <- getAbsolutePath(pathname);
   }
 
   # Argument 'workdir':
   if (is.null(workdir)) {
     if (isAbsolutePath(output)) {
       workdir <- getParent(output);
-    } else if (isAbsolutePath(pathname)) {
-      workdir <- getParent(pathname);
     } else {
       workdir <- ".";
     }
@@ -72,15 +69,15 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, ty
 
   # Argument 'output':
   if (is.null(output)) {
-    if (inherits(pathname, "connection")) {
-      throw("When argument 'pathname' is a connection, then 'output' must be specified.");
+    if (inherits(file, "connection")) {
+      throw("When argument 'filename' is a connection, then 'output' must be specified.");
     }
     pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
-    outputF <- gsub(pattern, "\\1", basename(pathname));
+    outputF <- gsub(pattern, "\\1", basename(file));
     output <- Arguments$getWritablePathname(outputF, path=workdir);
     output <- getAbsolutePath(output);
-    if (output == pathname) {
-      throw("Cannot process RSP file. The inferred argument 'output' is the same as argument 'pathname': ", output, " == ", pathname);
+    if (output == file) {
+      throw("Cannot process RSP file. The inferred argument 'output' is the same as argument 'filename' & 'path': ", output, " == ", file);
     }
   } else if (inherits(output, "connection")) {
   } else if (identical(output, "")) {
@@ -92,8 +89,8 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, ty
       output <- Arguments$getWritablePathname(output, path=workdir);
       output <- getAbsolutePath(output);
     }
-    if (is.character(pathname) && (output == pathname)) {
-      throw("Cannot process RSP file. Argument 'output' specifies the same file as argument 'pathname': ", output, " == ", pathname);
+    if (is.character(file) && (output == file)) {
+      throw("Cannot process RSP file. Argument 'output' specifies the same file as argument 'filename' & 'path': ", output, " == ", file);
     }
   } else {
     throw("Argument 'output' of unknown type: ", class(output)[1L]);
@@ -123,10 +120,10 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, ty
   verbose && enter(verbose, "Processing RSP file");
 
   if (verbose) {
-    if (is.character(pathname)) {
-      cat(verbose, "Input pathname: ", pathname);
-    } else if (inherits(pathname, "connection")) {
-      ci <- summary(pathname);
+    if (is.character(file)) {
+      cat(verbose, "Input pathname: ", file);
+    } else if (inherits(file, "connection")) {
+      ci <- summary(file);
       printf(verbose, "Input '%s' connection: %s\n", 
           class(ci)[1L], ci$description);
     }
@@ -153,7 +150,7 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, workdir=NULL, ty
   }
 
   verbose && enter(verbose, "Reading RSP document");
-  str <- readLines(pathname);
+  str <- readLines(file);
   verbose && printf(verbose, "Number of lines: %d\n", length(str));
   str <- paste(str, collapse="\n");
   verbose && printf(verbose, "Number of characters: %d\n", nchar(str));

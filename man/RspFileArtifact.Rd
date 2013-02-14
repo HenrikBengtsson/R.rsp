@@ -45,9 +45,9 @@ extends \link[R.rsp]{RspArtifact}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:getType.RspFileArtifact]{getType}} \tab Gets the type of an RspFileArtifact.\cr
+ \tab \code{\link[R.rsp:getType.RspFileArtifact]{getType}} \tab Gets the type of an RSP file artifact.\cr
  \tab \code{\link[R.rsp:postprocess.RspFileArtifact]{postprocess}} \tab Postprocesses an RSP file artifact.\cr
- \tab \code{print} \tab  -\cr
+ \tab \code{\link[R.rsp:print.RspFileArtifact]{print}} \tab Prints a summary of an RSP file artifact.\cr
 }
 
 

@@ -171,18 +171,16 @@ This will
 (i) parse the RSP text file and translate it into valid R code, and
 (ii) evaluate the R code which outputs a plain text file (\code{random.txt}), which pathname is (by default) the same as the RSP file with the file extension dropped.
 %
-Other document formats can be compiled in a similar way, e.g. \code{rsp("index.html.rsp")} and \code{rsp("report.Rnw.rsp")}.\\
-
 
 
 \section{Compiling RSP-markup documents with automatic postprocessing}
-For RSP documents that outputs certain file formats such as LaTeX, Sweave, and Knitr further processing of the RSP file output is often necessary before obtaining the final artifact, e.g. a PDF file.
-This is where the \code{rsp()} function comes into place.  It processes a RSP file using \code{rfile()} and based on the output document type it applies a proper postprocessing to arrive at the final artifact.
-For instance, consider a RSP-embedded LaTeX document \code{report.tex.rsp}.  When compiling it by
+For RSP documents that outputs certain file formats such as LaTeX, Sweave, and knitr further processing of the RSP file output is often necessary before obtaining the final artifact, e.g. a PDF file.
+The \code{rfile()} function will, based on the content type of the generated RSP output, detected if further processing ("postprocessing") can be done or not.  If so, it is postprocessed to arrive at the final artifact.
+For instance, consider an RSP-embedded LaTeX document \code{report.tex.rsp}.  When compiling it by
 \begin{verbatim}
-rsp("report.tex.rsp")
+rfile("report.tex.rsp")
 \end{verbatim}
-the \code{rsp()} method will as before
+the \code{rfile()} method will as before
 (i) translate the LaTeX RSP document into valid R code, and
 (ii) evaluate the R code resulting in a LaTeX document (\code{report.tex}), but it will also
 (iii) compile the LaTeX document into a PDF (\code{report.pdf}).
@@ -190,7 +188,7 @@ To try this yourself, compile this very document by calling
 \begin{verbatim}
 library("R.rsp")
 path <- system.file("doc", package="R.rsp")
-rsp("Dynamic_LaTeX_reports_with_RSP.tex.rsp", path=path)
+rfile("Dynamic_LaTeX_reports_with_RSP.tex.rsp", path=path)
 \end{verbatim}
 The PDF (\code{Dynamic\_LaTeX\_reports\_with\_RSP.pdf}) will be available in the current directory of R (see \code{getwd()}).\\
 
@@ -304,7 +302,7 @@ the analysis of the current chromosome.
 <\% \} # for (chromosome ...) \%>
 \end{rspVerbatim}
 
-Note that there exist no corresponding markup in Sweave.  Instead, contrary to RSP, Sweave requires that each code chunk contains a complete R expression.  This means that, in terms of the above example, in Sweave it is not possible to begin a for loop in one code chunk and end it in a succeeding one.  This has to do with the fundamentally different way RSP and Sweave documents are processed.  If using Sweave, one solution to this is to use RSP to generate the Sweave document, e.g. \code{rsp("report.Rnw.rsp")}.
+Note that there exist no corresponding markup in Sweave.  Instead, contrary to RSP, Sweave requires that each code chunk contains a complete R expression.  This means that, in terms of the above example, in Sweave it is not possible to begin a for loop in one code chunk and end it in a succeeding one.  This has to do with the fundamentally different way RSP and Sweave documents are processed.  If using Sweave, one solution to this is to use RSP to generate the Sweave document, e.g. \code{rfile("report.Rnw.rsp")}.
 
 
 
@@ -597,7 +595,7 @@ Nested multiline markup comments               & yes &   ? &  - \\
 \section*{Appendix}
 \subsection*{Session information}
 <%=toLatex(sessionInfo())%>
-This report was automatically generated using \code{rsp()} of the R.rsp package.
+This report was automatically generated using \code{rfile()} of the R.rsp package.
 Total processing time after RSP-to-R translation was <%=dt <- round(Sys.time()-t0, digits=2)%> <%=attr(dt, "units")%>.
 
 \end{document}

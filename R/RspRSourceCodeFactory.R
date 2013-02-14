@@ -134,6 +134,11 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspCode")) {
     code <- getCode(expr);
+    echo <- getEcho(expr);
+    if (echo) {
+      codeE <- sprintf(".ro(\"%s\")", escapeRspText(code));
+      code <- c(codeE, code);
+    }
     return(code);
   }
 

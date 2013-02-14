@@ -416,7 +416,7 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
       pattern <- "^:(|[ \t\v]*(\n|\r|\r\n))(.*)$";
       if (regexpr(pattern, part) != -1L) {
         code <- gsub(pattern, "\\3", part);
-        part <- RspCodeChunk(code, echo=TRUE);
+        part <- RspCode(code, echo=TRUE);
         object[[kk]] <- part;
         next;
       } 

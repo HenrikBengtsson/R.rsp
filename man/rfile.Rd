@@ -16,22 +16,20 @@
  Evaluates an RSP file and outputs the generated string.
 }
 
-\usage{\method{rfile}{default}(pathname, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), postprocess=TRUE, ..., verbose=FALSE)}
+\usage{\method{rfile}{default}(filename, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), postprocess=TRUE, ..., verbose=FALSE)}
 
 \arguments{
-  \item{pathname}{A \code{\link[base]{character}} string or a \code{\link[base:connections]{connection}} specifying
-     the RSP file to be processed.}
+  \item{filename, path}{Specifies the RSP file to processed, which can
+     be a file, a URL or a \code{\link[base:connections]{connection}}.}
   \item{output}{A \code{\link[base]{character}} string or a \code{\link[base:connections]{connection}} specifying where
      output should be directed.
      The default is a file with a filename where the file extension
-     (typically \code{".rsp"}) has been dropped from \code{pathname}
+     (typically \code{".rsp"}) has been dropped from \code{filename}
      in the directory given by the \code{workdir} argument.}
   \item{workdir}{The working directory to use while processing the
      RSP file.  If argument \code{output} specifies an absolute pathname,
-     then the directory of \code{output} is used, otherwise the directory
-     of argument \code{pathname} is used.
-     If both \code{output} and \code{pathname} are \code{\link[base:connections]{connection}}s, then
-     the current directory is used.}
+     then the directory of \code{output} is used, otherwise the
+     current directory is used.}
   \item{type}{The default content type of the RSP document.  By default, it
      is inferred from the \code{output} filename extension, iff possible.}
   \item{envir}{The \code{\link[base]{environment}} in which the RSP document is evaluated.}
