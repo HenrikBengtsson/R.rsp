@@ -19,10 +19,12 @@
  Evaluates an RSP string and returns the generated string.
 }
 
-\usage{\method{rstring}{default}(..., envir=parent.frame())}
+\usage{\method{rstring}{default}(..., file=NULL, envir=parent.frame())}
 
 \arguments{
   \item{...}{\code{\link[base]{character}} strings with RSP markup.}
+  \item{file}{Alternatively, a file, a URL or a \code{\link[base:connections]{connection}} from with
+     the strings are read.}
   \item{envir}{The \code{\link[base]{environment}} in which the RSP string is evaluated.}
 }
 

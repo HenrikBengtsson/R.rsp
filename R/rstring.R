@@ -14,6 +14,8 @@
 #
 # \arguments{
 #   \item{...}{@character strings with RSP markup.}
+#   \item{file}{Alternatively, a file, a URL or a @connection from with 
+#      the strings are read.}
 #   \item{envir}{The @environment in which the RSP string is evaluated.}
 # }
 #
@@ -30,8 +32,13 @@
 #  @see "rcat".
 # }
 #*/###########################################################################
-setMethodS3("rstring", "default", function(..., envir=parent.frame()) {
-  s <- RspString(...);
+setMethodS3("rstring", "default", function(..., file=NULL, envir=parent.frame()) {
+  if (is.null(file)) {
+    s <- RspString(...);
+  } else {
+    s <- readLines(file);
+    s <- RspString(s);
+  }
   rstring(s, envir=envir);
 }) # rstring()
 
@@ -88,6 +95,8 @@ rm("rspCon");
 
 ##############################################################################
 # HISTORY:
+# 2013-02-13
+# o Added argument 'file' to rstring().
 # 2013-02-11
 # o Added Rdoc help.
 # 2013-02-09
