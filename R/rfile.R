@@ -17,8 +17,10 @@
 #      The default is a file with a filename where the file extension
 #      (typically \code{".rsp"}) has been dropped from \code{filename}
 #      in the directory given by the \code{workdir} argument.}
-#   \item{workdir}{The working directory to use while processing the 
-#      RSP file.  If argument \code{output} specifies an absolute pathname, 
+#   \item{workdir}{The working directory to use after parsing and 
+#      preprocessing, but while \emph{evaluating} and \emph{postprocessing}
+#      the RSP document.  
+#      If argument \code{output} specifies an absolute pathname, 
 #      then the directory of \code{output} is used, otherwise the
 #      current directory is used.}
 #   \item{type}{The default content type of the RSP document.  By default, it
@@ -136,17 +138,7 @@ setMethodS3("rfile", "default", function(filename, path=NULL, output=NULL, workd
           class(ci)[1L], ci$description);
     }
 
-    printf(verbose, "Working directory: %s\n", workdir);
     printf(verbose, "Default content type: %s\n", type);
-  }
-
-  # Change working directory
-  opwd <- NULL;
-  if ((workdir != ".") && (workdir != getwd())) {
-    opwd <- getwd();
-    on.exit({ if (!is.null(opwd)) setwd(opwd) }, add=TRUE);
-    verbose && cat(verbose, "Temporary working directory: ", getAbsolutePath(workdir));
-    setwd(workdir);
   }
 
   verbose && enter(verbose, "Reading RSP document");
@@ -170,13 +162,29 @@ setMethodS3("rfile", "default", function(filename, path=NULL, output=NULL, workd
   rm(doc);
   verbose && exit(verbose);
 
+
   verbose && enter(verbose, "Evaluating RSP document");
+
+  # Change working directory
+  opwd <- NULL;
+  if ((workdir != ".") && (workdir != getwd())) {
+    opwd <- getwd();
+    on.exit({ if (!is.null(opwd)) setwd(opwd) }, add=TRUE);
+    verbose && cat(verbose, "Temporary working directory: ", getAbsolutePath(workdir));
+    setwd(workdir);
+  }
+
   res <- rcat(rcode, file=output, envir=envir, ...);
   type <- attr(res, "type");
   rm(rcode, res);
-  verbose && cat(verbose, "Content type: ", type);
-  attr(output, "type") <- type;
-  verbose && exit(verbose);
+
+  if (isFile(output)) {
+    res <- RspFileArtifact(output, type=type);
+  } else {
+    res <- RspArtifact(output, type=type);
+  }
+  verbose && print(verbose, res);
+  rm(output, type);
 
   # Reset the working directory?
   if (!is.null(opwd)) {
@@ -184,11 +192,7 @@ setMethodS3("rfile", "default", function(filename, path=NULL, output=NULL, workd
     opwd <- NULL;
   }
 
-  if (isFile(output)) {
-    res <- RspFileArtifact(output);
-  } else {
-    res <- RspArtifact(output);
-  }
+  verbose && exit(verbose);
 
   if (postprocess && hasProcessor(res)) {
     res <- postprocess(res, workdir=workdir, ..., verbose=verbose);
