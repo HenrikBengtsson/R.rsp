@@ -45,6 +45,7 @@ extends character\cr
  \tab \code{\link[R.rsp:evaluate.RspString]{evaluate}} \tab Parses, translates, and evaluates the RSP string.\cr
  \tab \code{\link[R.rsp:parse.RspString]{parse}} \tab Parses the RSP string.\cr
  \tab \code{\link[R.rsp:parseRaw.RspString]{parseRaw}} \tab Parses the string into blocks of text and RSP.\cr
+ \tab \code{rcat} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
  \tab \code{\link[R.rsp:toR.RspString]{toR}} \tab Parses and translates the RSP string into R code.\cr
 }

@@ -45,6 +45,7 @@ extends \emph{\link[R.rsp]{SourceCode}}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RSourceCode]{evaluate}} \tab Parses and evaluates the R code.\cr
  \tab \code{\link[R.rsp:parse.RSourceCode]{parse}} \tab Parses the R code.\cr
+ \tab \code{rcat} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
 }
 

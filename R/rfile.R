@@ -10,7 +10,8 @@
 # @synopsis
 #
 # \arguments{
-#   \item{pathname}{The pathname of the RSP file to be processed.}
+#   \item{pathname}{A @character string or a @connection specifying 
+#      the RSP file to be processed.}
 #   \item{output}{A @character string or a @connection specifying where
 #      output should be directed.
 #      The default is a file with a pathname where the file extension
@@ -21,8 +22,9 @@
 # }
 #
 # \value{
-#   If argument \code{output} is a pathname, its absolute pathname is returned.
-#   If a @connection, the connection is returned.
+#   If argument \code{output} is a pathname, its absolute pathname is 
+#   returned (invisibly).
+#   If a @connection, the connection is returned (invisibly).
 # }
 #
 # @author
@@ -38,11 +40,17 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, envir=parent.fra
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'pathname':
-  pathname <- Arguments$getReadablePathname(pathname);
-  pathname <- getAbsolutePath(pathname);
+  if (inherits(pathname, "connection")) {
+  } else {
+    pathname <- Arguments$getReadablePathname(pathname);
+    pathname <- getAbsolutePath(pathname);
+  }
 
   # Argument 'output':
   if (is.null(output)) {
+    if (inherits(pathname, "connection")) {
+      throw("When argument 'pathname' is a connection, then 'output' must be specified.");
+    }
     pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
     outputF <- gsub(pattern, "\\1", basename(pathname));
     output <- Arguments$getWritablePathname(outputF);
@@ -51,10 +59,12 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, envir=parent.fra
       throw("Cannot process RSP file. The inferred argument 'output' is the same as argument 'pathname': ", output, " == ", pathname);
     }
   } else if (inherits(output, "connection")) {
+  } else if (identical(output, "")) {
+    output <- stdout();
   } else if (is.character(output)) {
     output <- Arguments$getWritablePathname(output);
     output <- getAbsolutePath(output);
-    if (output == pathname) {
+    if (is.character(pathname) && (output == pathname)) {
       throw("Cannot process RSP file. Argument 'output' specifies the same file as argument 'pathname': ", output, " == ", pathname);
     }
   } else {
@@ -77,7 +87,14 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, envir=parent.fra
   verbose && enter(verbose, "Processing RSP file");
 
   if (verbose) {
-    cat(verbose, "Pathname: ", pathname);
+    if (is.character(pathname)) {
+      cat(verbose, "Input pathname: ", pathname);
+    } else if (inherits(pathname, "connection")) {
+      ci <- summary(pathname);
+      printf(verbose, "Input '%s' connection: %s\n", 
+          class(ci)[1L], ci$description);
+    }
+
     if (is.character(output)) {
       cat(verbose, "Output pathname: ", output);
     } else if (inherits(output, "connection")) {
@@ -94,20 +111,35 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, envir=parent.fra
   verbose && printf(verbose, "Number of characters: %d\n", nchar(str));
   verbose && exit(verbose);
 
+  verbose && enter(verbose, "Parsing RSP document");
+  rstr <- RspString(str);
+  expr <- parse(rstr, envir=envir, ...);
+  verbose && printf(verbose, "Number of RSP expressions: %d\n", length(expr));
+  rm(rstr, str);
+  verbose && exit(verbose);
+
+  verbose && enter(verbose, "Translating RSP document (to R)");
+  rcode <- toR(expr, envir=envir, ...);
+  verbose && printf(verbose, "Number of R source code lines: %d\n", length(rcode));
+  rm(expr);
+  verbose && exit(verbose);
+
   verbose && enter(verbose, "Evaluating RSP document");
-  rcat(str, file=output, envir=envir, ...);
+  rcat(rcode, file=output, envir=envir, ...);
+  rm(rcode);
   verbose && exit(verbose);
 
   verbose && exit(verbose);
 
-  output;
+  invisible(output);
 }, protected=TRUE) # rfile()
 
 
 
 ############################################################################
 # HISTORY:
-# 2013-02-12
+# 2013-02-13
+# o Added support for 'pathname' also being a connection.
 # o Added some protection against overwriting the input file.
 # o Renamed rspPlain() to rfile(), cf. rstring() and rcat().
 # o rspPlain() is now utilizing the new RSP engine, e.g. rcat().

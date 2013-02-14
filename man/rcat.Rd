@@ -9,6 +9,9 @@
 \name{rcat}
 \alias{rcat.default}
 \alias{rcat}
+\alias{rcat.RspString}
+\alias{rcat.RspDocument}
+\alias{rcat.RSourceCode}
 
 \title{Evaluates an RSP string and outputs the generated string}
 

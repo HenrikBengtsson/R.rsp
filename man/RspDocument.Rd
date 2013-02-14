@@ -43,6 +43,7 @@ extends list\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RspDocument]{evaluate}} \tab Parses, translates, and evaluates the RSP document.\cr
+ \tab \code{rcat} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
  \tab \code{\link[R.rsp:toR.RspDocument]{toR}} \tab Translates the RSP document into R source code.\cr
  \tab \code{\link[R.rsp:trim.RspDocument]{trim}} \tab Trims each of the RSP expressions.\cr

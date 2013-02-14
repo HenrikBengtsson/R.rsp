@@ -19,7 +19,8 @@
 \usage{\method{rfile}{default}(pathname, output=NULL, envir=parent.frame(), ..., verbose=FALSE)}
 
 \arguments{
-  \item{pathname}{The pathname of the RSP file to be processed.}
+  \item{pathname}{A \code{\link[base]{character}} string or a \code{\link[base:connections]{connection}} specifying
+     the RSP file to be processed.}
   \item{output}{A \code{\link[base]{character}} string or a \code{\link[base:connections]{connection}} specifying where
      output should be directed.
      The default is a file with a pathname where the file extension
@@ -30,8 +31,9 @@
 }
 
 \value{
-  If argument \code{output} is a pathname, its absolute pathname is returned.
-  If a \code{\link[base:connections]{connection}}, the connection is returned.
+  If argument \code{output} is a pathname, its absolute pathname is
+  returned (invisibly).
+  If a \code{\link[base:connections]{connection}}, the connection is returned (invisibly).
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
