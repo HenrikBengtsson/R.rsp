@@ -160,17 +160,31 @@ A random number in [1,100]: 43
 
 \section{Compiling RSP-markup documents}
 Consider an RSP-embedded text file \code{random.txt.rsp} that contains the above RSP string, i.e.
-\begin{verbatim}
+\begin{rspVerbatim}
 A random number in [1,100]: <\%=sample(1:100, size=1)\%>
-\end{verbatim}
+\end{rspVerbatim}
 This file can be compiled into a plain text file (\code{random.txt}) as
 \begin{verbatim}
-rfile("random.txt.rsp")
+> rfile("random.txt.rsp")
 \end{verbatim}
 This will
 (i) parse the RSP text file and translate it into valid R code, and
 (ii) evaluate the R code which outputs a plain text file (\code{random.txt}), which pathname is (by default) the same as the RSP file with the file extension dropped.
 %
+To try this example yourself, do:
+\begin{verbatim}
+path <- system.file("exData", package="R.rsp")
+rfile("random.txt.rsp", path=path)
+\end{verbatim}
+%
+To process the same RSP file into a string (without generating a file), do:
+\begin{verbatim}
+path <- system.file("exData", package="R.rsp")
+s <- rstring(file="random.txt.rsp", path=path)
+cat(s)
+\end{verbatim}
+The latter example illustrates how \code{rstring()} also can load strings from a file (or a URL or a connection) as alternative to taking plain strings as input.
+
 
 
 \section{Compiling RSP-markup documents with automatic postprocessing}
@@ -178,7 +192,7 @@ For RSP documents that outputs certain file formats such as LaTeX, Sweave, and k
 The \code{rfile()} function will, based on the content type of the generated RSP output, detected if further processing ("postprocessing") can be done or not.  If so, it is postprocessed to arrive at the final artifact.
 For instance, consider an RSP-embedded LaTeX document \code{report.tex.rsp}.  When compiling it by
 \begin{verbatim}
-rfile("report.tex.rsp")
+> rfile("report.tex.rsp")
 \end{verbatim}
 the \code{rfile()} method will as before
 (i) translate the LaTeX RSP document into valid R code, and
@@ -186,11 +200,10 @@ the \code{rfile()} method will as before
 (iii) compile the LaTeX document into a PDF (\code{report.pdf}).
 To try this yourself, compile this very document by calling
 \begin{verbatim}
-library("R.rsp")
 path <- system.file("doc", package="R.rsp")
 rfile("Dynamic_LaTeX_reports_with_RSP.tex.rsp", path=path)
 \end{verbatim}
-The PDF (\code{Dynamic\_LaTeX\_reports\_with\_RSP.pdf}) will be available in the current directory of R (see \code{getwd()}).\\
+The PDF (\code{Dynamic\_LaTeX\_reports\_with\_RSP.pdf}) created will be available in the current directory of R (see \code{getwd()}).\\
 
 
 
@@ -382,7 +395,7 @@ The sum of $x=<\%=hpaste(1:n, abbreviate="{\bs}{\bs}ldots")\%>$ is <\%=sum(1:n)\
 <% myTemplate <- function(n, ...) { %>
 The sum of $x=<%=hpaste(1:n, abbreviate="\\ldots")%>$ is <%=sum(1:n)%>.<%-%>
 <% } # myTemplate() %><%-- TO FIX: Should not be needed! /HB 2011-03-31 --%>
-We use an empty RSP comment (\code{<\%-\%>}) at the end in order to escape the trailing newline (Section~\ref{HiddenComments}).  Also, note that there is no limitation in how many RSP and text blocks you can use.  After having defined the template, it can be reused any number of times by simply calling it as a function:
+We use an empty RSP comment (\code{<\%-\%>}) at the end in order to escape the trailing newline (Section~\ref{RspComments}).  Also, note that there is no limitation in how many RSP and text blocks you can use.  After having defined the template, it can be reused any number of times by simply calling it as a function:
 \begin{rspVerbatim}
 <\% myTemplate(n=3) \%>
 \end{rspVerbatim}
@@ -416,8 +429,8 @@ modify the document by removing parts of it and inserting new pieces to it.  For
 --%>
 
 
-\subsection{Hidden comments (\code{<\%--\{anything\}--\%>})}
-\label{HiddenComments}
+\subsection{RSP comments (\code{<\%--\{anything\}--\%>})}
+\label{RspComments}
 The RSP markup \code{<\%--\{anything\}--\%>}, \code{<\%---\{anything\}---\%>} and so on causes the corresponding RSP expression, which can contain \emph{anything}, to be dropped immediately by the RSP parser.  The number of hyphens must match, i.e. \code{<\%--- A comment --\%>} is \emph{not} a valid RSP comment.
 
 RSP comments are useful for excluding large sections of an RSP document.  It is useful to understand that RSP comments are \emph{greedy}, that is, anything between (and including) the \code{<\%--} and the \emph{first} following \code{--\%>} will be dropped.  This means that an RSP comment \code{<\%--\{anything\}--\%>} cannot contain another \code{<\%--\{anything\}--\%>} comment.  Instead, to nest comments one needs to use a different number of hyphens.
