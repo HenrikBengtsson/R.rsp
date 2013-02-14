@@ -51,6 +51,7 @@ extends \link[R.rsp]{RspDirective}\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:getFile.RspEvalDirective]{getFile}} \tab Gets the file attribute.\cr
+ \tab \code{\link[R.rsp:getLanguage.RspEvalDirective]{getLanguage}} \tab Gets the programming language.\cr
  \tab \code{\link[R.rsp:getText.RspEvalDirective]{getText}} \tab Gets the text.\cr
 }
 

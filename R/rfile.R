@@ -33,7 +33,7 @@
 # @keyword IO
 #*/########################################################################### 
 setMethodS3("rfile", "default", function(pathname, output=NULL, envir=parent.frame(), ..., verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::rfile() was called.
+  # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -41,6 +41,8 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, envir=parent.fra
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'pathname':
   if (inherits(pathname, "connection")) {
+  } else if (is.character(pathname) && isUrl(pathname)) {
+    pathname <- url(pathname);
   } else {
     pathname <- Arguments$getReadablePathname(pathname);
     pathname <- getAbsolutePath(pathname);
@@ -139,7 +141,7 @@ setMethodS3("rfile", "default", function(pathname, output=NULL, envir=parent.fra
 ############################################################################
 # HISTORY:
 # 2013-02-13
-# o Added support for 'pathname' also being a connection.
+# o Added support for 'pathname' also being a connection or a URL.
 # o Added some protection against overwriting the input file.
 # o Renamed rspPlain() to rfile(), cf. rstring() and rcat().
 # o rspPlain() is now utilizing the new RSP engine, e.g. rcat().

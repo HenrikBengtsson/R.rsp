@@ -184,70 +184,24 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, envir=
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # RspIncludeDirective => ...
+  # RspDirective?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (inherits(expr, "RspIncludeDirective")) {
-    file <- getFile(expr);
+  if (inherits(expr, "RspDirective")) {
+    throw(sprintf("Detected an %s (#%d). It appears that the %s was not preprocessed.", index, class(expr)[1L], class(object)[1L]));
+  }
 
-    lines <- readFile(file, envir=envir, directive="include", index=index);
-
-    # Parse RSP string to RSP document
-    s <- RspString(lines);
-    e <- parse(s);
-    # Translate to R source code
-    code <- toSourceCode(object, e, envir=envir, ...);
-
-    # Add a header and footer
-    hdr <- sprintf("# BEGIN: @include file='%s'", file);
-    ftr <- sprintf("# END: @include file='%s'", file);
-    code <- c(hdr, code, ftr);
-
-    return(code);
-  } # RspIncludeDirective
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # RspDefineDirective => ...
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (inherits(expr, "RspDefineDirective")) {
-    attrs <- getAttributes(expr);
-    for (key in names(attrs)) {
-      assign(key, attrs[[key]], envir=envir);
-    }
-    return(NULL);
-  } # RspDefineDirective
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # RspEvalDirective => ...
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (inherits(expr, "RspEvalDirective")) {
-    text <- getText(expr);
-    if (!is.null(text)) {
-      expr <- base::parse(text=text);
-      value <- eval(expr, envir=envir);
-      return(NULL);
-    } # if (!is.null(text))
-
-    file <- getFile(expr);
-    if (!is.null(file)) {
-      lines <- readFile(file, envir=envir, directive="include", index=index);
-      expr <- parse(text=lines);
-      eval(expr, envir=envir);
-      return(NULL);
-    } # if (!is.null(file))
-
-    throw(sprintf("RSP 'eval' preprocessing directive (#%d) requires either attribute 'file' or 'text'.", index));
-  } # RspEvalDirective
-
-
-  throw(sprintf("Unknown type of RSP expression (#%d): %s", index, class(expr)[1L]));
+  throw(sprintf("Unknown class of RSP expression (#%d): %s", index, class(expr)[1L]));
 }, protected=TRUE) # exprToCode()
 
 
 
 ##############################################################################
 # HISTORY:
+# 2013-02-13
+# o CLEANUP: RspDirective:s are now handles by preprocess() for RspDocument
+#   and are independent of programming language, except RspEvalDirective
+#   which by design can evaluate code of different languages, but currently
+#   only R is supported.
 # 2013-02-12
 # o Added preprocessing directives RspDefineDirective and RspEvalDirective.
 # 2013-02-11

@@ -19,9 +19,12 @@
  Parses the RSP string with RSP comments dropped.
 }
 
-\usage{\method{parse}{RspString}(object, ...)}
+\usage{\method{parse}{RspString}(object, preprocess=TRUE, envir=parent.frame(), ...)}
 
 \arguments{
+  \item{preprocess}{If \code{\link[base:logical]{TRUE}}, all RSP preprocessing directives
+     are processed after the RSP string is parsed, otherwise not.}
+  \item{envir}{The \code{\link[base]{environment}} where the RSP document is preprocessed.}
   \item{...}{Not used.}
 }
 

@@ -35,7 +35,8 @@ extends list\cr
  \usage{RspDocument(expressions=list(), ...)}
 
  \arguments{
-   \item{expressions}{A \code{\link[base]{list}} of \code{\link{RspExpression}}:s.}
+   \item{expressions}{A \code{\link[base]{list}} of \code{\link{RspExpression}}:s and
+      \code{\link{RspDocument}}:s.}
    \item{...}{Not used.}
  }
 
@@ -43,6 +44,9 @@ extends list\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RspDocument]{evaluate}} \tab Parses, translates, and evaluates the RSP document.\cr
+ \tab \code{\link[R.rsp:flatten.RspDocument]{flatten}} \tab Flattens an RspDocument.\cr
+ \tab \code{\link[R.rsp:preprocess.RspDocument]{preprocess}} \tab Processes all RSP preprocessing directives.\cr
+ \tab \code{\link[R.rsp:print.RspDocument]{print}} \tab Prints a summary of an RspDocument.\cr
  \tab \code{rcat} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
  \tab \code{\link[R.rsp:toR.RspDocument]{toR}} \tab Translates the RSP document into R source code.\cr

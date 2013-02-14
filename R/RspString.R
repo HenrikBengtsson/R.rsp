@@ -216,6 +216,9 @@ setMethodS3("parseRaw", "RspString", function(object, ...) {
 # @synopsis
 #
 # \arguments{
+#   \item{preprocess}{If @TRUE, all RSP preprocessing directives
+#      are processed after the RSP string is parsed, otherwise not.}
+#   \item{envir}{The @environment where the RSP document is preprocessed.}
 #   \item{...}{Not used.}
 # }
 #
@@ -229,7 +232,7 @@ setMethodS3("parseRaw", "RspString", function(object, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("parse", "RspString", function(object, ...) {
+setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent.frame(), ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -416,12 +419,16 @@ setMethodS3("parse", "RspString", function(object, ...) {
 
 
   object <- dropComments(object);
-  expr <- parseRaw(object);
-  expr <- coerceText(expr);
-  expr <- coerceRsp(expr);
-  expr <- trim(expr);
+  doc <- parseRaw(object);
+  doc <- coerceText(doc);
+  doc <- coerceRsp(doc);
+  doc <- trim(doc);
 
-  expr;
+  if (preprocess) {
+    doc <- preprocess(doc, envir=envir);
+  }
+
+  doc;
 }, protected=TRUE) # parse()
 
 

@@ -112,6 +112,8 @@
 # @alias parseRaw
 # @alias toR
 # @alias toSourceCode
+# @alias flatten
+# @alias preprocess
 #
 # \description{
 # This page contains aliases for all "non-documented" objects that 

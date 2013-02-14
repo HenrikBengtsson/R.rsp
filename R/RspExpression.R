@@ -492,6 +492,9 @@ setConstructorS3("RspEvalDirective", function(attributes=list(), ...) {
     if (!any(is.element(c("file", "text"), keys))) {
       throw("Either attribute 'file' or 'text' for the RSP 'eval' directive must be given: ", hpaste(keys));
     }
+
+    # Default programming language is "R".
+    if (is.null(attributes$language)) attributes$language <- "R";
   }
 
   extend(RspDirective("eval", attributes=attributes, ...), "RspEvalDirective")
@@ -557,9 +560,42 @@ setMethodS3("getText", "RspEvalDirective", function(directive, ...) {
   attr(directive, "text");
 })
 
+#########################################################################/**
+# @RdocMethod getLanguage
+#
+# @title "Gets the programming language"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getLanguage", "RspEvalDirective", function(directive, ...) {
+  res <- attr(directive, "language");
+  if (is.null(res)) res <- as.character(NA);
+  res;
+})
+
 
 ##############################################################################
 # HISTORY:
+# 2013-02-13
+# o Added 'language' attribute to RspEvalDirective.
 # 2013-02-11
 # o Added Rdoc help.
 # 2013-02-09
