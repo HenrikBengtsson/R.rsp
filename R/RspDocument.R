@@ -290,26 +290,16 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  readFile <- function(file, envir=parent.frame(), ..., directive=NA, index=NA) {
-    # Support @(include|eval) file="$VAR"
-    # Note that 'VAR' must exist when parsing the RSP string.
-    # In other words, it cannot be set from within the RSP string!
-    pattern <- "^[$]([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*)$";
-    if (regexpr(pattern, file) != -1L) {
-      key <- gsub(pattern, "\\1", file);
-      if (exists(key, mode="character", envir=envir)) {
-        file <- get(key, mode="character", envir=envir);
-        if (nchar(file) == 0L) {
-          throw(sprintf("RSP '%s' preprocessing directive (#%d) has a 'file' attribute given by an R variable ('$%s') that is empty.", directive, kk, key));
-        }
-      } else {
-        file <- Sys.getenv(key);
-        if (nchar(file) == 0L) {
-          throw(sprintf("RSP '%s' preprocessing directive (#%d) has a 'file' attribute that specifies ('$%s') neither an existing R character variable nor an existing system environment variable.", directive, kk, key));
-        }
-      }
-    }
+  gstring <- function(s, envir=parent.frame(), ...) {
+    g <- GString(s);
+    tmp <- envir$g;
+    envir$g <- g;
+    res <- with(envir, as.character(g));
+    envir$g <- tmp;
+    res;
+  } # gstring()
 
+  readFile <- function(file, envir=parent.frame(), ..., directive=NA, index=NA) {
     if (isUrl(file)) {
       fh <- url(file);
       lines <- readLines(fh);
@@ -350,6 +340,20 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     idx <- idxs[kk];
     expr <- object[[idx]];
     verbose && enter(verbose, sprintf("RSP directive #%d ('%s') of %d", kk, class(expr)[1L], length(idxs)));
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Support GString-style attribute values for all RSP directives.
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (inherits(expr, "RspDirective")) {
+      attrs <- getAttributes(expr);
+      for (key in names(attrs)) {
+        value <- attrs[[key]];
+        value <- gstring(value, envir=envir);
+        attr(expr, key) <- value;
+      }
+    }
+
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # RspIncludeDirective => ...
