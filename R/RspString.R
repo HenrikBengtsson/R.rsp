@@ -13,8 +13,8 @@
 #
 # \arguments{
 #   \item{str, ...}{@character strings.}
-#   \item{type}{A @character string specifying the content type of
-#      the RSP string.}
+#   \item{type}{The content type of the RSP string.}
+#   \item{pathname}{The pathname to the source RSP file, iff any.}
 # }
 #
 # \section{Fields and Methods}{
@@ -23,9 +23,10 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("RspString", function(str=character(), ..., type=NA) {
+setConstructorS3("RspString", function(str=character(), ..., type=NA, pathname=NA) {
   this <- extend(c(str, ...), "RspString");
   attr(this, "type") <- as.character(type);
+  attr(this, "pathname") <- getAbsolutePath(pathname);
   this;
 })
 
@@ -57,6 +58,13 @@ setConstructorS3("RspString", function(str=character(), ..., type=NA) {
 #*/######################################################################### 
 setMethodS3("getType", "RspString", function(object, ...) {
   res <- attr(object, "type");
+  if (is.null(res)) res <- as.character(NA);
+  res;
+}, protected=TRUE)
+
+
+setMethodS3("getPathname", "RspString", function(object, ...) {
+  res <- attr(object, "pathname");
   if (is.null(res)) res <- as.character(NA);
   res;
 }, protected=TRUE)
@@ -95,7 +103,7 @@ setMethodS3("dropComments", "RspString", function(object, ...) {
     if (trimNewline) {
       pattern <- sprintf("%s(|[ \t\v]*(\n|\r|\r\n))", pattern);
     }
-    gsub(pattern, "", rspCode, ...);
+    gsub(pattern, "", rspCode);
   } # dropRspComments()
 
 
@@ -132,22 +140,23 @@ setMethodS3("dropComments", "RspString", function(object, ...) {
     if (trimNewline) {
       pattern <- sprintf("%s(|[ \t\v]*(\n|\r|\r\n))", pattern);
     }
-    gsub(pattern, "", rspCode, ...);
+    gsub(pattern, "", rspCode);
   } # dropBrewComments()
 
 
   rspCode <- paste(object, collapse="\n");
 
-  rspCode <- dropRspEmptyComments(rspCode, trimNewline=TRUE, ...);
+  rspCode <- dropRspEmptyComments(rspCode, trimNewline=TRUE);
 
-  rspCode <- dropRspComments(rspCode, trimNewline=TRUE, ...);
+  rspCode <- dropRspComments(rspCode, trimNewline=TRUE);
 
   if (getOption("rsp/emulateBrew", FALSE)) {
-    rspCode <- dropBrewComments(rspCode, trimNewline=TRUE, ...);
+    rspCode <- dropBrewComments(rspCode, trimNewline=TRUE);
   }
 
   class(rspCode) <- class(object);
   attr(rspCode, "type") <- getType(object);
+  attr(rspCode, "pathname") <- getPathname(object);
 
   rspCode;
 }, protected=TRUE)
@@ -237,7 +246,7 @@ setMethodS3("parseRaw", "RspString", function(object, ...) {
 
   code <- paste(object, collapse="\n");
   expr <- splitRspTags(code, ...);
-  RspDocument(expr, type=getType(object));
+  RspDocument(expr, type=getType(object), pathname=getPathname(object));
 }, protected=TRUE) # parseRaw()
 
 
@@ -271,6 +280,9 @@ setMethodS3("parseRaw", "RspString", function(object, ...) {
 # }
 #*/######################################################################### 
 setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent.frame(), ...) {
+  # Load the package (super quietly), in case R.rsp::nnn() was called.
+  suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -463,7 +475,7 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
   doc <- trim(doc);
 
   if (preprocess) {
-    doc <- preprocess(doc, envir=envir);
+    doc <- preprocess(doc, envir=envir, ...);
   }
 
   doc;

@@ -150,7 +150,7 @@ setMethodS3("rfile", "default", function(filename, path=NULL, output=NULL, workd
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Parsing RSP document");
-  rstr <- RspString(str, type=type);
+  rstr <- RspString(str, type=type, pathname=file);
   doc <- parse(rstr, envir=envir, ...);
   verbose && print(verbose, doc);
   rm(rstr, str);

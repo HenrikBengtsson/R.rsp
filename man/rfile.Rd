@@ -26,8 +26,10 @@
      The default is a file with a filename where the file extension
      (typically \code{".rsp"}) has been dropped from \code{filename}
      in the directory given by the \code{workdir} argument.}
-  \item{workdir}{The working directory to use while processing the
-     RSP file.  If argument \code{output} specifies an absolute pathname,
+  \item{workdir}{The working directory to use after parsing and
+     preprocessing, but while \emph{evaluating} and \emph{postprocessing}
+     the RSP document.
+     If argument \code{output} specifies an absolute pathname,
      then the directory of \code{output} is used, otherwise the
      current directory is used.}
   \item{type}{The default content type of the RSP document.  By default, it

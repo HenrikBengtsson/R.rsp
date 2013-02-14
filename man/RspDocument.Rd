@@ -32,13 +32,13 @@ extends list\cr
   An RspDocument represents a \code{\link[base]{list}} of \code{\link{RspExpression}}:s.
  }
 
- \usage{RspDocument(expressions=list(), type=NA, ...)}
+ \usage{RspDocument(expressions=list(), type=NA, pathname=NA, ...)}
 
  \arguments{
    \item{expressions}{A \code{\link[base]{list}} of \code{\link{RspExpression}}:s and
       \code{\link{RspDocument}}:s.}
-   \item{type}{A \code{\link[base]{character}} string specifying the content type of
-      the RSP document.}
+   \item{type}{The content type of the RSP document.}
+   \item{pathname}{The pathname to the source RSP file, iff any.}
    \item{...}{Not used.}
  }
 
@@ -48,6 +48,8 @@ extends list\cr
  \tab \code{[} \tab  -\cr
  \tab \code{\link[R.rsp:evaluate.RspDocument]{evaluate}} \tab Parses, translates, and evaluates the RSP document.\cr
  \tab \code{\link[R.rsp:flatten.RspDocument]{flatten}} \tab Flattens an RspDocument.\cr
+ \tab \code{getPath} \tab  -\cr
+ \tab \code{getPathname} \tab  -\cr
  \tab \code{\link[R.rsp:getType.RspDocument]{getType}} \tab Gets the type of the RspDocument.\cr
  \tab \code{\link[R.rsp:preprocess.RspDocument]{preprocess}} \tab Processes all RSP preprocessing directives.\cr
  \tab \code{\link[R.rsp:print.RspDocument]{print}} \tab Prints a summary of an RspDocument.\cr

@@ -14,8 +14,8 @@
 # \arguments{
 #   \item{expressions}{A @list of @see "RspExpression":s and
 #      @see "RspDocument":s.}
-#   \item{type}{A @character string specifying the content type of 
-#      the RSP document.}
+#   \item{type}{The content type of the RSP document.}
+#   \item{pathname}{The pathname to the source RSP file, iff any.}
 #   \item{...}{Not used.}
 # }
 #
@@ -25,9 +25,10 @@
 # 
 # @author
 #*/###########################################################################
-setConstructorS3("RspDocument", function(expressions=list(), type=NA, ...) {
+setConstructorS3("RspDocument", function(expressions=list(), type=NA, pathname=NA, ...) {
   this <- extend(expressions, "RspDocument");
   attr(this, "type") <- as.character(type);
+  attr(this, "pathname") <- getAbsolutePath(pathname);
   this;
 })
 
@@ -60,6 +61,7 @@ setConstructorS3("RspDocument", function(expressions=list(), type=NA, ...) {
 #*/######################################################################### 
 setMethodS3("print", "RspDocument", function(x, ...) {
   s <- sprintf("%s:", class(x)[1L]);
+  s <- c(s, sprintf("Pathname: %s", getPathname(x)));
   s <- c(s, sprintf("Total number of RSP expressions: %d", length(x)));
   types <- sapply(x, FUN=function(x) class(x)[1L]);
   tbl <- table(types);
@@ -103,6 +105,25 @@ setMethodS3("getType", "RspDocument", function(object, ...) {
   res <- attr(object, "type");
   if (is.null(res)) res <- as.character(NA);
   res;
+}, protected=TRUE)
+
+
+
+setMethodS3("getPathname", "RspDocument", function(object, ...) {
+  res <- attr(object, "pathname");
+  if (is.null(res)) res <- as.character(NA);
+  res;
+}, protected=TRUE)
+
+
+setMethodS3("getPath", "RspDocument", function(object, ...) {
+  pathname <- getPathname(object, ...);
+  if (is.na(pathname)) {
+    path <- getwd();
+  } else {
+    path <- getParent(pathname);
+  }
+  path;
 }, protected=TRUE)
 
 
@@ -248,6 +269,7 @@ setMethodS3("flatten", "RspDocument", function(object, ..., verbose=FALSE) {
 
   class(res) <- class(object);
   attr(res, "type") <- getType(object);
+  attr(res, "pathname") <- getPathname(object);
 
   res;
 }, protected=TRUE) # flatten()
@@ -299,20 +321,26 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     res;
   } # gstring()
 
-  readFile <- function(file, envir=parent.frame(), ..., directive=NA, index=NA) {
+  getFileT <- function(expr, path=".", ..., index=NA, verbose=FALSE) {
+    file <- getFile(expr);
+    verbose && cat(verbose, "Attribute 'file': ", file);
+
+    # URL?
     if (isUrl(file)) {
+      verbose && cat(verbose, "URL: ", file);
       fh <- url(file);
-      lines <- readLines(fh);
-    } else {
-      file <- getAbsolutePath(file);
-      if (!isFile(file)) {
-        throw(sprintf("RSP '%s' preprocessing directive (#%d) specifies an non-existing file: %s", directive, kk, file));
-      }
-      lines <- readLines(file); 
+      return(fh);
     }
 
-    lines;
-  } # readFile()
+    verbose && cat(verbose, "Path: ", path);
+    tryCatch({
+      pathname <- Arguments$getReadablePathname(file, path=path);
+    }, error = function(ex) {
+      throw(sprintf("RSP '%s' preprocessing directive (#%d) specifies an non-existing 'file' (%s): %s", expr, index, file, gsub("Pathname not found: ", "", ex$message)));
+    });
+    verbose && cat(verbose, "Pathname: ", pathname);
+    pathname;
+  } # getFileT()
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -359,14 +387,16 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # RspIncludeDirective => ...
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(expr, "RspIncludeDirective")) {
-      file <- getFile(expr);
-  
-      lines <- readFile(file, envir=envir, directive="include", index=idx);
+      file <- getFileT(expr, path=getPath(object), index=idx, verbose=verbose);
+      lines <- readLines(file);
   
       # Parse RSP string to RSP document
-      rstr <- RspString(lines, type=getType(object));
-      doc <- parse(rstr, envir=envir);
-      verbose && printf(verbose, "Included RSP document with %d RSP expressions.\n", length(doc));
+      rstr <- RspString(lines, type=getType(object), pathname=file);
+
+      doc <- parse(rstr, envir=envir, verbose=verbose);
+
+      verbose && cat(verbose, "Included RSP document:");
+      verbose && print(verbose, doc);
   
       if (recursive) {
         verbose && enter(verbose, "Recursively preprocessing included RSP document");
@@ -414,7 +444,8 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       }
 
       if (!is.null(file)) {
-        text <- readFile(file, envir=envir, directive="include", index=idx);
+        file <- getFileT(expr, path=getPath(object), index=idx, verbose=verbose);
+        text <- readLines(file);
       }
 
       verbose && print(verbose, getAttributes(expr));
@@ -550,12 +581,11 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 #*/######################################################################### 
 setMethodS3("[", "RspDocument", function(x, i) {
   # Preserve the class and other attributes
-  class <- class(x);
-  type <- getType(x);
-  x <- .subset(x, i);
-  class(x) <- class;
-  attr(x, "type") <- type;
-  x;
+  res <- .subset(x, i);
+  class(res) <- class(x);
+  attr(res, "type") <- getType(x);
+  attr(res, "pathname") <- getPathname(x);
+  res;
 }, protected=TRUE)
 
 

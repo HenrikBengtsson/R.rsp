@@ -37,7 +37,7 @@ setMethodS3("rstring", "default", function(..., file=NULL, envir=parent.frame())
     s <- RspString(...);
   } else {
     s <- readLines(file);
-    s <- RspString(s);
+    s <- RspString(s, pathname=file);
   }
   rstring(s, envir=envir);
 }) # rstring()
