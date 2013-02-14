@@ -19,11 +19,11 @@
  Translates an RSP document to source code.
 }
 
-\usage{\method{toSourceCode}{RspSourceCodeFactory}(object, doc, envir=parent.frame(), ...)}
+\usage{\method{toSourceCode}{RspSourceCodeFactory}(object, doc, ...)}
 
 \arguments{
-  \item{expr}{An \code{\link{RspDocument}}.}
-  \item{envir}{The \code{\link[base]{environment}} in which RSP preprocessing directives are evaluated.}
+  \item{expr}{An \code{\link{RspDocument}} that has been preprocessed
+              and flattened.}
   \item{...}{Not used.}
 }
 

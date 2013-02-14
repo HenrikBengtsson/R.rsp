@@ -11,6 +11,7 @@
 # @synopsis
 #
 # \arguments{
+#   \item{envir}{The @environment where the RSP string is preprocessed.}
 #   \item{...}{Not used.}
 # }
 #
@@ -24,8 +25,8 @@
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("toR", "RspString", function(object, ...) {
-  expr <- parse(object);
+setMethodS3("toR", "RspString", function(object, envir=parent.frame(), ...) {
+  expr <- parse(object, preprocess=TRUE, envir=envir, ...);
   toR(expr, ...);
 }, protected=TRUE) # toR()
 

@@ -141,8 +141,8 @@ setMethodS3("exprToCode", "RspSourceCodeFactory", abstract=TRUE);
 # @synopsis
 #
 # \arguments{
-#   \item{expr}{An @see "RspDocument".}
-#   \item{envir}{The @environment in which RSP preprocessing directives are evaluated.}
+#   \item{expr}{An @see "RspDocument" that has been preprocessed 
+#               and flattened.}
 #   \item{...}{Not used.}
 # }
 #
@@ -156,20 +156,29 @@ setMethodS3("exprToCode", "RspSourceCodeFactory", abstract=TRUE);
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, envir=parent.frame(), ...) {
+setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
   # Argument 'doc':
   doc <- Arguments$getInstanceOf(doc, "RspDocument");
 
-  # Argument 'envir':
-  stopifnot(!is.null(envir));
+
+  # Assert that the RspDocument 'doc' contains other RspDocument:s
+  if (any(sapply(doc, FUN=inherits, "RspDocument"))) {
+    throw(sprintf("%s argument 'doc' contains other RspDocuments, which indicates that it has not been flattened.", class(doc)[1L]));
+  }
+
+  # Assert that the RspDocument 'doc' contains other RspDocument:s
+  if (any(sapply(doc, FUN=inherits, "RspDirective"))) {
+    throw(sprintf("%s argument 'doc' contains RSP preprocessing directives, which indicates that it has not been preprocessed.", class(doc)[1L]));
+  }
+
 
   # Coerce all RspExpression:s to source code
   code <- vector("list", length=length(doc));
   for (kk in seq_along(doc)) {
-    code[[kk]] <- exprToCode(object, doc[[kk]], envir=envir, index=kk);
+    code[[kk]] <- exprToCode(object, doc[[kk]], index=kk);
   }
   code <- unlist(code, use.names=FALSE);
 
@@ -179,6 +188,9 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, envir=
 
 ##############################################################################
 # HISTORY:
+# 2013-02-13
+# o ROBUSTNESS: Now toSourceCode() for RspDocument asserts that the document
+#   has been flattened and preprocessed.
 # 2013-02-11
 # o Added Rdoc help.
 # 2013-02-10

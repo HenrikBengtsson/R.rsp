@@ -54,7 +54,7 @@ setConstructorS3("RspRSourceCodeFactory", function(...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, envir=parent.frame(), ..., index=NA) {
+setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., index=NA) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -68,49 +68,11 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, envir=
   } # escapeRspText()
 
 
-  readFile <- function(file, envir=parent.frame(), ..., directive=NA, index=NA) {
-    # Support @(include|eval) file="$VAR"
-    # Note that 'VAR' must exist when parsing the RSP string.
-    # In other words, it cannot be set from within the RSP string!
-    pattern <- "^[$]([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*)$";
-    if (regexpr(pattern, file) != -1L) {
-      key <- gsub(pattern, "\\1", file);
-      if (exists(key, mode="character", envir=envir)) {
-        file <- get(key, mode="character", envir=envir);
-        if (nchar(file) == 0L) {
-          throw(sprintf("RSP '%s' preprocessing directive (#%d) has a 'file' attribute given by an R variable ('$%s') that is empty.", directive, index, key));
-        }
-      } else {
-        file <- Sys.getenv(key);
-        if (nchar(file) == 0L) {
-          throw(sprintf("RSP '%s' preprocessing directive (#%d) has a 'file' attribute that specifies ('$%s') neither an existing R character variable nor an existing system environment variable.", directive, index, key));
-        }
-      }
-    }
-
-    if (isUrl(file)) {
-      fh <- url(file);
-      lines <- readLines(fh);
-    } else {
-      file <- getAbsolutePath(file);
-      if (!isFile(file)) {
-        throw(sprintf("RSP '%s' preprocessing directive (#%d) specifies an non-existing file: %s", directive, index, file));
-      }
-      lines <- readLines(file); 
-    }
-
-    lines;
-  } # readFile()
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'expr':
   expr <- Arguments$getInstanceOf(expr, "RspExpression");
-
-  # Argument 'envir':
-  stopifnot(!is.null(envir));
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

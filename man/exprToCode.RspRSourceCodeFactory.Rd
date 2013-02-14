@@ -19,7 +19,7 @@
  Translates an RspExpression into R source code.
 }
 
-\usage{\method{exprToCode}{RspRSourceCodeFactory}(object, expr, envir=parent.frame(), ..., index=NA)}
+\usage{\method{exprToCode}{RspRSourceCodeFactory}(object, expr, ..., index=NA)}
 
 \arguments{
   \item{expr}{An \code{\link{RspExpression}}.}
