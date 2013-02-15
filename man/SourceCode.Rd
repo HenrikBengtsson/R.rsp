@@ -47,6 +47,7 @@ extends character\cr
  \tab \code{\link[R.rsp:getType.SourceCode]{getType}} \tab Gets the type of the SourceCode.\cr
  \tab \code{\link[R.rsp:parse.SourceCode]{parse}} \tab Parses the source code.\cr
  \tab \code{\link[R.rsp:print.SourceCode]{print}} \tab Prints the source code.\cr
+ \tab \code{tangle} \tab  -\cr
 }
 
 

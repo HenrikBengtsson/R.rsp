@@ -88,8 +88,6 @@
 # @alias dvips
 # @alias ps2pdf
 # @alias rspCapture
-# @alias rspTangle
-# @alias rspWeave
 # @alias evalWithEcho
 # @alias sourceWithTrim
 # @alias sourceWithTrim.default

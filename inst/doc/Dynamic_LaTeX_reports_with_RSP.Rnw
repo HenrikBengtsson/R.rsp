@@ -9,7 +9,7 @@
 %\VignetteIndexEntry{Dynamic LaTeX reports with RSP}
 %\VignetteKeyword{reproducible research, report generator, markup language, LaTeX}
 %\VignetteSource{Dynamic_LaTeX_reports_with_RSP.tex.rsp}
-%\VignetteBuild{R.rsp::rsp("Dynamic_LaTeX_reports_with_RSP.tex.rsp")}
+%\VignetteBuild{R.rsp::rfile("Dynamic_LaTeX_reports_with_RSP.tex.rsp")}
 \documentclass{article}
 \begin{document}
 \end{document}

@@ -47,11 +47,12 @@ extends \emph{\link[R.rsp]{SourceCode}}\cr
  \tab \code{\link[R.rsp:parse.RSourceCode]{parse}} \tab Parses the R code.\cr
  \tab \code{rcat} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
+ \tab \code{tangle} \tab  -\cr
 }
 
 
  \bold{Methods inherited from SourceCode}:\cr
-evaluate, getType, parse, print
+evaluate, getType, parse, print, tangle
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap

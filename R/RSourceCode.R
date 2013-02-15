@@ -90,8 +90,56 @@ setMethodS3("evaluate", "RSourceCode", function(this, envir=parent.frame(), ...)
 })
 
 
+#########################################################################/**
+# @RdocMethod tangle
+#
+# @title "Drops all text-outputting calls from the R code"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns an @see "RSourceCode" objects.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("tangle", "RSourceCode", function(code, ...) {
+  # Remember attributes
+  attrs <- attributes(code);
+
+  # Drop all .ro("...")
+  excl <- (regexpr(".ro(\"", code, fixed=TRUE) != -1L);
+  code <- code[!excl];
+
+  # Replace all .ro({...}) with {...}
+  idxs <- grep(".ro(", code, fixed=TRUE);
+  code[idxs] <- gsub(".ro(", "", code[idxs], fixed=TRUE);
+  code[idxs] <- gsub("[)]$", "", code[idxs], fixed=FALSE);
+
+  # Reset attributes
+  attributes(code) <- attrs;
+
+  code;
+}, protected=TRUE) # tangle()
+
+
+
 ##############################################################################
 # HISTORY:
+# 2013-02-14
+# o Added tangle() for RSourceCode.
 # 2013-02-11
 # o Added Rdoc help.
 # 2013-02-09

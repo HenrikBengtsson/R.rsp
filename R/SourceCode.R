@@ -151,9 +151,39 @@ setMethodS3("parse", "SourceCode", abstract=TRUE);
 setMethodS3("evaluate", "SourceCode", abstract=TRUE);
 
 
+#########################################################################/**
+# @RdocMethod tangle
+#
+# @title "Drops all text-outputting calls from the source code"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @see "SourceCode" objects.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("tangle", "SourceCode", abstract=TRUE);
+
+
 
 ##############################################################################
 # HISTORY:
+# 2013-02-14
+# o Added tangle() for SourceCode.
 # 2013-02-13
 # o Added getType() for SourceCode.
 # 2013-02-11
