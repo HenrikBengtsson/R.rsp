@@ -33,7 +33,34 @@
 # @keyword internal
 #*/########################################################################### 
 rspWeave <- function(file, ..., envir=parent.frame()) {
-  rfile(file, workdir=".", postprocess=FALSE, envir=envir);
+  # From help("vignetteEngine", package="tools"):
+  #  "If the filename being processed has one of the Sweave extensions
+  # (i.e. matching the regular expression ".[RrSs](nw|tex)$", the weave
+  # function should produce a '.tex' file in the same directory.
+  # If it has the extension '.Rmd', weaving should produce an .html' file.
+  if (is.character(file)) {
+    output <- NULL;
+    filename <- basename(file);
+    patterns <- c(tex="[.][RrSs](nw|tex)$", html="[.]Rmd$");
+    for (kk in seq_along(patterns)) {
+      ext <- names(patterns)[kk];
+      pattern <- patterns[kk];
+      if (regexpr(pattern, filename, ignore.case=TRUE) == -1L) {
+        next;
+      }
+      fullname <- gsub(pattern, "", filename, ignore.case=TRUE);
+      extT <- tolower(gsub("[.]([^.]*)$", "\\1", fullname, ignore.case=TRUE));
+      if (extT == ext) {
+        output <- fullname;
+      } else {
+        output <- sprintf("%s.%s", fullname, ext);
+      }
+    } # for (kk ...)
+  } else {
+    output <- NULL;
+  }
+
+  rfile(file, output=output, workdir=".", postprocess=FALSE, envir=envir);
 } # rspWeave()
 
 
@@ -74,7 +101,8 @@ rspTangle <- function(file, ..., envir=parent.frame()) {
   # Setup output R file
   workdir <- ".";
   filename <- basename(file);
-  filenameR <- sprintf("%s.R", filename);
+  fullname <- gsub("[.]([^.])$", "", filename);
+  filenameR <- sprintf("%s.R", fullname);
   pathnameR <- Arguments$getWritablePathname(filenameR, path=workdir);
 
   # Read RSP file
