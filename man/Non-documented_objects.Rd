@@ -126,6 +126,7 @@
 \alias{findProcessor}
 \alias{hasProcessor}
 \alias{postprocess}
+\alias{tangle}
 
 \description{
 This page contains aliases for all "non-documented" objects that
