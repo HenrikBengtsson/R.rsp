@@ -28,13 +28,13 @@
 #      is inferred from the \code{output} filename extension, iff possible.}
 #   \item{envir}{The @environment in which the RSP document is evaluated.}
 #   \item{postprocess}{If @TRUE, and a postprocessing method exists for
-#      the generated RSP artifact, it is postprocessed as well.}
+#      the generated RSP product, it is postprocessed as well.}
 #   \item{...}{Additional arguments passed to the RSP engine.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{
-#   Returns an @see "RspArtifact".
+#   Returns an @see "RspProduct".
 # }
 #
 # @author
@@ -181,9 +181,9 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   rm(rcode, res);
 
   if (isFile(output)) {
-    res <- RspFileArtifact(output, type=type);
+    res <- RspFileProduct(output, type=type);
   } else {
-    res <- RspArtifact(output, type=type);
+    res <- RspProduct(output, type=type);
   }
   verbose && print(verbose, res);
   rm(output, type);
@@ -197,7 +197,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   verbose && exit(verbose);
 
   if (postprocess && hasProcessor(res)) {
-    res <- postprocess(res, workdir=workdir, ..., verbose=verbose);
+    res <- process(res, workdir=workdir, ..., verbose=verbose);
   }
 
   verbose && exit(verbose);

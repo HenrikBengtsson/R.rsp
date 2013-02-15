@@ -103,10 +103,6 @@
 \alias{sourceWithTrim.default}
 \alias{sourceRspV2}
 \alias{sourceRspV2.default}
-\alias{buildNonSweaveVignette}
-\alias{buildNonSweaveVignettes}
-\alias{parseVignette}
-\alias{buildPkgIndexHtml}
 
 \alias{dropComments}
 \alias{exprToCode}
@@ -125,7 +121,7 @@
 \alias{getType}
 \alias{findProcessor}
 \alias{hasProcessor}
-\alias{postprocess}
+\alias{process}
 \alias{tangle}
 
 \description{

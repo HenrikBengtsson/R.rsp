@@ -188,8 +188,8 @@ The latter example illustrates how \code{rstring()} also can load strings from a
 
 
 \section{Compiling RSP-markup documents with automatic postprocessing}
-For RSP documents that outputs certain file formats such as LaTeX, Sweave, and knitr further processing of the RSP file output is often necessary before obtaining the final artifact, e.g. a PDF file.
-The \code{rfile()} function will, based on the content type of the generated RSP output, detected if further processing ("postprocessing") can be done or not.  If so, it is postprocessed to arrive at the final artifact.
+For RSP documents that outputs certain file formats such as LaTeX, Sweave, and knitr further processing of the RSP file output is often necessary before obtaining the final RSP product, e.g. a PDF file.
+The \code{rfile()} function will, based on the content type of the generated RSP output, detected if further processing ("postprocessing") can be done or not.  If so, it is postprocessed to arrive at the final product.
 For instance, consider an RSP-embedded LaTeX document \code{report.tex.rsp}.  When compiling it by
 \begin{verbatim}
 > rfile("report.tex.rsp")

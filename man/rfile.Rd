@@ -37,13 +37,13 @@
      is inferred from the \code{output} filename extension, iff possible.}
   \item{envir}{The \code{\link[base]{environment}} in which the RSP document is evaluated.}
   \item{postprocess}{If \code{\link[base:logical]{TRUE}}, and a postprocessing method exists for
-     the generated RSP artifact, it is postprocessed as well.}
+     the generated RSP product, it is postprocessed as well.}
   \item{...}{Additional arguments passed to the RSP engine.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{
-  Returns an \code{\link{RspArtifact}}.
+  Returns an \code{\link{RspProduct}}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

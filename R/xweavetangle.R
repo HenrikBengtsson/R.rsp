@@ -18,8 +18,8 @@
 # }
 #
 # \value{
-#   Returns the absolute pathname of the generated RSP artifact.
-#   The generated RSP artifact is not postprocessed.
+#   Returns the absolute pathname of the generated RSP product.
+#   The generated RSP product is not postprocessed.
 # }
 #
 # @author

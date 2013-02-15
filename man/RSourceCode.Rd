@@ -47,7 +47,7 @@ extends \emph{\link[R.rsp]{SourceCode}}\cr
  \tab \code{\link[R.rsp:parse.RSourceCode]{parse}} \tab Parses the R code.\cr
  \tab \code{rcat} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
- \tab \code{tangle} \tab  -\cr
+ \tab \code{\link[R.rsp:tangle.RSourceCode]{tangle}} \tab Drops all text-outputting calls from the R code.\cr
 }
 
 

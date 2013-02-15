@@ -1,6 +1,35 @@
-############################################################################
-# Author: Henrik Bengtsson
-############################################################################
+###########################################################################/**
+# @RdocFunction parseVignette
+#
+# @title "Parses an Rnw file"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{pathname}{The Rnw file to be parsed.}
+#   \item{commentPrefix}{A regular expression specifying the prefix
+#     pattern of vignette comments.}
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a named @list.
+# }
+#
+# @author
+#
+# \seealso{
+#   To build all non-Sweave vignettes, see @see "buildNonSweaveVignettes".
+# }
+#
+# @keyword file
+# @keyword IO
+# @keyword internal
+#*/########################################################################### 
 parseVignette <- function(pathname, commentPrefix="^%[ \t]*", ...) {
   if (!file.exists(pathname)) {
     stop("Cannot build vignette. File not found: ", pathname);
@@ -21,6 +50,33 @@ parseVignette <- function(pathname, commentPrefix="^%[ \t]*", ...) {
 } # parseVignette()
 
 
+
+###########################################################################/**
+# @RdocFunction buildNonSweaveVignette
+#
+# @title "Builds a non-Sweave Rnw vignette"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{pathname}{The Rnw file to be built.}
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns (invisibly) what the vignette builder returns.
+# }
+#
+# @author
+#
+# @keyword file
+# @keyword IO
+# @keyword internal
+#*/########################################################################### 
 buildNonSweaveVignette <- function(pathname, ...) {
   opts <- parseVignette(pathname, ...);
 
@@ -55,18 +111,95 @@ buildNonSweaveVignette <- function(pathname, ...) {
   });
 
   # Evaluate \VignetteBuild{} command
-  eval(expr);
+  res <- eval(expr);
+
+  # Was a function specified?
+  if (is.function(res)) {
+    fcn <- res;
+    # ...then process the file specified by \VignetteSource{}
+    file <- opts$Source;
+    if (is.null(file)) {
+      throw("If \\VignetteBuild{} specifies a function, then \\VignetteSource{} must specify the file to compile.");
+    }
+    res <- fcn(file);
+  }
+
+  invisible(res);
 } # buildNonSweaveVignette()
 
 
+
+###########################################################################/**
+# @RdocFunction buildNonSweaveVignettes
+#
+# @title "Builds all non-Sweave Rnw vignette"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{path}{The directory where to search for non-Sweave vignettes.}
+#   \item{pattern}{Filename pattern to locate non-Sweave vignettes.}
+#   \item{...}{Additional arguments passed to @see "buildNonSweaveVignette".}
+# }
+#
+# \value{
+#   Returns (invisibly) a named @list with elements of what 
+#   the vignette builder returns.
+# }
+#
+# @author
+#
+# \seealso{
+#   To build one non-Sweave vignette, see @see "buildNonSweaveVignette".
+# }
+#
+# @keyword file
+# @keyword IO
+# @keyword internal
+#*/########################################################################### 
 buildNonSweaveVignettes <- function(path=".", pattern="[.]Rnw$", ...) {
   pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE);
+  res <- list();
   for (pathname in pathnames) {
-    buildNonSweaveVignette(pathname, ...);
+    res[[pathname]] <- buildNonSweaveVignette(pathname, ...);
   }
+  invisible(res);
 } # buildNonSweaveVignettes()
 
 
+
+
+###########################################################################/**
+# @RdocFunction buildPkgIndexHtml
+#
+# @title "Builds a package index HTML file"
+#
+# \description{
+#  @get "title", iff missing.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns (invisibly) the absolute pathame to the built index.html file.
+#   If an index.html file already exists, nothing is done and @NULL 
+#   is returned.
+# }
+#
+# @author
+#
+# @keyword file
+# @keyword IO
+# @keyword internal
+#*/########################################################################### 
 buildPkgIndexHtml <- function(...) {
   # Nothing to do?
   if (file.exists("index.html")) {
@@ -90,12 +223,16 @@ buildPkgIndexHtml <- function(...) {
   stopifnot(file.exists(filename));
 
   # Build index.html
-  rsp(filename);
+  rfile(filename);
 } # buildPkgIndexHtml()
 
 
 ############################################################################
 # HISTORY:
+# 2013-02-14
+# o Added Rdoc help for all functions.
+# o Now buildNonSweaveVignette() also handles \VignetteBuild{R.rsp::rfile}
+#   given that \VignetteSource{} is specified.
 # 2011-11-23
 # o Added buildPkgIndexHtml().
 # o Added parseVignette().
