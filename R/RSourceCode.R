@@ -20,6 +20,8 @@
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RSourceCode", function(...) {
   extend(SourceCode(...), "RSourceCode");

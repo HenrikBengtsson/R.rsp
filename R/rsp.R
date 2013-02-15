@@ -43,6 +43,7 @@
 #
 # @keyword file
 # @keyword IO
+# @keyword internal
 #*/########################################################################### 
 setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, response=NULL, ..., envir=parent.frame(), outPath=".", postprocess=TRUE, verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::rsp() was called.

@@ -22,6 +22,8 @@
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspExpression", function(object=character(), ...) {
   extend(object, "RspExpression");
@@ -87,6 +89,8 @@ setMethodS3("getAttributes", "RspExpression", function(directive, ...) {
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspComment", function(str=character(), ...) {
   extend(RspExpression(str), "RspComment");
@@ -119,6 +123,8 @@ setConstructorS3("RspComment", function(str=character(), ...) {
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspText", function(text=character(), ...) {
   extend(RspExpression(text), "RspText");
@@ -181,6 +187,8 @@ setMethodS3("getText", "RspText", function(text, ...) {
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspCode", function(code=character(), echo=FALSE, ...) {
   # Replace all '\r\n' and '\r' with '\n' newlines
@@ -278,6 +286,8 @@ setMethodS3("getEcho", "RspCode", function(code, ...) {
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspCodeChunk", function(..., return=FALSE) {
   this <- extend(RspCode(...), "RspCodeChunk");
@@ -343,6 +353,8 @@ setMethodS3("getReturn", "RspCodeChunk", function(code, ...) {
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspDirective", function(directive=character(), attributes=list(), ...) {
   this <- extend(RspExpression(directive), "RspDirective");
@@ -379,6 +391,8 @@ setConstructorS3("RspDirective", function(directive=character(), attributes=list
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspIncludeDirective", function(attributes=list(), ...) {
   # Argument 'attributes':
@@ -449,6 +463,8 @@ setMethodS3("getFile", "RspIncludeDirective", function(directive, ...) {
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspDefineDirective", function(...) {
   extend(RspDirective("define", ...), "RspDefineDirective")
@@ -484,6 +500,8 @@ setConstructorS3("RspDefineDirective", function(...) {
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspEvalDirective", function(attributes=list(), ...) {
   # Argument 'attributes':
@@ -615,6 +633,8 @@ setMethodS3("getLanguage", "RspEvalDirective", function(directive, ...) {
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspPageDirective", function(...) {
   extend(RspDirective("page", ...), "RspPageDirective")

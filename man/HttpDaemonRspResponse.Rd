@@ -86,5 +86,7 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
  }
 
 
+
 \keyword{classes}
 \keyword{IO}
+\keyword{internal}

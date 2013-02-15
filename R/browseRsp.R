@@ -38,6 +38,7 @@
 #
 # @keyword file
 # @keyword IO
+# @keyword internal
 #*/###########################################################################
 setMethodS3("browseRsp", "default", function(url=sprintf("http://%s:%d/%s", host, port, path), host="127.0.0.1", port=8074, path="", start=TRUE, stop=FALSE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -22,6 +22,8 @@
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("SourceCode", function(code=character(), ..., type=NA) {
   this <- extend(c(code, ...), "SourceCode");

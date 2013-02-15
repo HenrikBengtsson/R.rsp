@@ -106,5 +106,7 @@ if (interactive()) {
  \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 
+
 \keyword{classes}
 \keyword{IO}
+\keyword{internal}

@@ -35,7 +35,8 @@
      current directory is used.}
   \item{type}{The default content type of the RSP document.  By default, it
      is inferred from the \code{output} filename extension, iff possible.}
-  \item{envir}{The \code{\link[base]{environment}} in which the RSP document is evaluated.}
+  \item{envir}{The \code{\link[base]{environment}} in which the RSP document is
+     preprocessed and evaluated.}
   \item{postprocess}{If \code{\link[base:logical]{TRUE}}, and a postprocessing method exists for
      the generated RSP product, it is postprocessed as well.}
   \item{...}{Additional arguments passed to the RSP engine.}
@@ -44,6 +45,19 @@
 
 \value{
   Returns an \code{\link{RspProduct}}.
+}
+
+\examples{
+path <- system.file("exData", package="R.rsp")
+pathname <- rfile("random.txt.rsp", path=path)
+print(pathname)
+
+lines <- readLines(pathname, warn=FALSE)
+cat(lines, collapse="\n")
+
+
+
+
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

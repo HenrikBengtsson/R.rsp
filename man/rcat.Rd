@@ -28,7 +28,8 @@
   \item{append}{Only applied if \code{file} specifies a pathname;
     If \code{\link[base:logical]{TRUE}}, then the output is appended to the file, otherwise
     the files content is overwritten.}
-  \item{envir}{The \code{\link[base]{environment}} in which the RSP string is evaluated.}
+  \item{envir}{The \code{\link[base]{environment}} in which the RSP string is
+    preprocessed and evaluated.}
 }
 
 \value{
@@ -36,7 +37,7 @@
 }
 
 \examples{
-rcat("<\% d <- data.frame(a=1, b=2) \%>'d' is a '<\%=class(d)[1]\%>'\n")
+rcat("A random number in [1,100]: <\%=sample(1:100, size=1)\%>\n")
 
 }
 

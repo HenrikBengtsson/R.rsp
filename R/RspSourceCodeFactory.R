@@ -23,6 +23,8 @@
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspSourceCodeFactory", function(language=NA, ...) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.

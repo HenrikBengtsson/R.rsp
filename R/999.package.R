@@ -5,46 +5,18 @@
 #   @eval "getDescription(R.rsp)"
 # }
 #
-# \section{Requirements}{
-#   This is a cross-platform package implemented in plain \R.
-#   This package depends on the packages \pkg{R.oo} [1] and \pkg{R.utils}.
-#
-#   Note that no webserver is required to process RSP documents.
-# }
-#
 # \section{Installation}{
-#   To install this package, do \code{install.packages("R.rsp")}.
+#   This is a cross-platform package implemented in plain \R.
+#   To install this package, call \code{install.packages("R.rsp")}.
 # }
 #
 # \section{To get started}{
 #   To get started, see:
 #   \enumerate{
-#     \item @see "rsp" - To compiles any RSP-embedded document.
-#     \item @see "browseRsp" - Luanches a locally running RSP website powered by an internal web server and RSP-embedded HTML pages.  From this page you access not only help pages and demos on how to use RSP, but also other package RSP pages.
+#     \item Vignette 'Dynamic LaTeX reports with RSP'
+#     \item @see "rstring", @see "rcat" and @see "rfile".
 #   }
 # } 
-#
-# \section{Wishlist}{
-#  Here is a list of features that would be useful, but which I have
-#  too little time to add myself. Contributions are appreciated.
-#  \itemize{ 
-#    \item Extract the HTTP daemon part of this package and create
-#          a standalone package named R.httpd or similar.  It should
-#          provide a method to register simple modules, such as an
-#          RSP module.  The R.rsp package should then only be a 
-#          simple module.
-#    \item Write "plugins" to common web servers, e.g. modules to
-#          the Apache webserver.
-#    \item Add support for multiple default files; needs Tcl coding.
-#    \item Create a root ServletRequest class to support not only
-#          HTTP requests, but also other types of request, e.g.
-#          FileRequest etc.  This requires some thinking of 
-#          user cases and design.
-#  }
-#
-#  If you consider implement some of the above, make sure it is not
-#  already implemented by downloading the latest "devel" version! 
-# }
 #
 # \section{License}{
 #   The releases of this package is licensed under 
@@ -65,9 +37,4 @@
 # \section{References}{
 #  [1] @include "../incl/BengtssonH_2003.bib.Rdoc" \cr
 # }
-#
-# % Building HTML documentation from RSP example files
 #*/#########################################################################  
-
-
-# @eval "path <- '../inst/doc'; unlink(path, recursive=TRUE); mkdirs(path); sourceAllRsp(path='../inst/rsp/', outputPath='../inst/doc/', extension='html'); ''"

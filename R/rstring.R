@@ -17,7 +17,8 @@
 #   \item{file, path}{Alternatively, a file, a URL or a @connection from 
 #      with the strings are read.
 #      If a file, the \code{path} is prepended to the file, iff given.}
-#   \item{envir}{The @environment in which the RSP string is evaluated.}
+#   \item{envir}{The @environment in which the RSP string is 
+#      preprocessed and evaluated.}
 # }
 #
 # \value{

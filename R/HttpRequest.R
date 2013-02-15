@@ -20,6 +20,7 @@
 # }
 # 
 # @author
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("HttpRequest", function(requestUri=NULL, parameters=list(), ...) {
   if (is.list(requestUri)) {

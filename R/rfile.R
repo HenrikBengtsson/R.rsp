@@ -26,7 +26,8 @@
 #      current directory is used.}
 #   \item{type}{The default content type of the RSP document.  By default, it
 #      is inferred from the \code{output} filename extension, iff possible.}
-#   \item{envir}{The @environment in which the RSP document is evaluated.}
+#   \item{envir}{The @environment in which the RSP document is 
+#      preprocessed and evaluated.}
 #   \item{postprocess}{If @TRUE, and a postprocessing method exists for
 #      the generated RSP product, it is postprocessed as well.}
 #   \item{...}{Additional arguments passed to the RSP engine.}
@@ -36,6 +37,8 @@
 # \value{
 #   Returns an @see "RspProduct".
 # }
+#
+# @examples "../incl/rfile.Rex"
 #
 # @author
 #

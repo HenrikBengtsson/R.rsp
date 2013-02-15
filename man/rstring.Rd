@@ -26,7 +26,8 @@
   \item{file, path}{Alternatively, a file, a URL or a \code{\link[base:connections]{connection}} from
      with the strings are read.
      If a file, the \code{path} is prepended to the file, iff given.}
-  \item{envir}{The \code{\link[base]{environment}} in which the RSP string is evaluated.}
+  \item{envir}{The \code{\link[base]{environment}} in which the RSP string is
+     preprocessed and evaluated.}
 }
 
 \value{
@@ -35,7 +36,7 @@
 }
 
 \examples{
-x <- rstring("<\% d <- data.frame(a=1, b=2) \%>'d' is a '<\%=class(d)[1]\%>'\n")
+x <- rstring("A random number in [1,100]: <\%=sample(1:100, size=1)\%>\n")
 cat(x)
 }
 

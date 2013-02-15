@@ -24,6 +24,8 @@
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspDocument", function(expressions=list(), type=NA, source=NA, ...) {
   # Argument 'source':

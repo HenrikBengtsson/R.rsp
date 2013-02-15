@@ -1,2 +1,2 @@
-rcat("<% d <- data.frame(a=1, b=2) %>'d' is a '<%=class(d)[1]%>'\n")
+rcat("A random number in [1,100]: <%=sample(1:100, size=1)%>\n")
 

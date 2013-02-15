@@ -21,6 +21,7 @@
 # }
 # 
 # @author
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspResponse", function(...) {
   extend(Object(), "RspResponse", 

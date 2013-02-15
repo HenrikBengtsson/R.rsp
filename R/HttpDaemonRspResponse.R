@@ -44,6 +44,7 @@
 # }
 #
 # @keyword IO
+# @keyword internal
 #*/########################################################################### 
 setConstructorS3("HttpDaemonRspResponse", function(httpDaemon=NULL, ...) {
   if (!is.null(httpDaemon)) {

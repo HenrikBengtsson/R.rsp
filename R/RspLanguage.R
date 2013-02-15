@@ -26,6 +26,7 @@
 # }
 # 
 # @author
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspLanguage", function(language="plain", ...) {
   language <- Arguments$getCharacter(language, length=1, nchar=c(1,64));

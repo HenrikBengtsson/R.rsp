@@ -1,2 +1,2 @@
-x <- rstring("<% d <- data.frame(a=1, b=2) %>'d' is a '<%=class(d)[1]%>'\n")
+x <- rstring("A random number in [1,100]: <%=sample(1:100, size=1)%>\n")
 cat(x)

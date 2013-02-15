@@ -19,7 +19,8 @@
 #   \item{append}{Only applied if \code{file} specifies a pathname;
 #     If @TRUE, then the output is appended to the file, otherwise 
 #     the files content is overwritten.}
-#   \item{envir}{The @environment in which the RSP string is evaluated.}
+#   \item{envir}{The @environment in which the RSP string is 
+#     preprocessed and evaluated.}
 # }
 #
 # \value{

@@ -21,6 +21,8 @@
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspRSourceCodeFactory", function(...) {
   extend(RspSourceCodeFactory("R"), "RspRSourceCodeFactory");

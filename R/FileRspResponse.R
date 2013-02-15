@@ -22,6 +22,8 @@
 # }
 #
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("FileRspResponse", function(file=stdout(), path=NULL, overwrite=FALSE, ...) {
   # Argument 'file' and 'path':

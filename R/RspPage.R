@@ -19,6 +19,7 @@
 # }
 # 
 # @author
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspPage", function(pathname=NULL, ...) {
   # Argument 'pathname':

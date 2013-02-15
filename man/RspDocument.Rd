@@ -66,4 +66,7 @@ all.equal, as.data.frame, attachLocally, callHooks, relist, within, wrap
  }
 
  \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+
+
 \keyword{classes}
+\keyword{internal}

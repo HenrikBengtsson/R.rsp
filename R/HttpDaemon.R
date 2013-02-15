@@ -45,6 +45,7 @@
 # @author
 #
 # @keyword IO
+# @keyword internal
 #*/########################################################################### 
 setConstructorS3("HttpDaemon", function(...) {
   this <- extend(Object(), "HttpDaemon",

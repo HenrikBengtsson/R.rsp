@@ -18,6 +18,8 @@
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/########################################################################### 
 setConstructorS3("HtmlRspLanguage", function(...) {
   extend(RspLanguage(language="html", ...), "HtmlRspLanguage")

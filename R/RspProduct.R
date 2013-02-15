@@ -23,6 +23,8 @@
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspProduct", function(object=NA, type=attr(object, "type"), ...) {
   # Argument 'type':
@@ -290,6 +292,8 @@ setMethodS3("process", "RspProduct", function(object, ...) {
 # }
 # 
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setConstructorS3("RspFileProduct", function(pathname=NA, ...) {
   # Argument 'pathname':
