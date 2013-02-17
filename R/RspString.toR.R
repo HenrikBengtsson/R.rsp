@@ -16,7 +16,7 @@
 # }
 #
 # \value{
-#  Returns the code as an @see "SourceCode".
+#  Returns the code as an @see "RspRSourceCode".
 # }
 #
 # @author

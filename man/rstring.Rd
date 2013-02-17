@@ -11,7 +11,7 @@
 \alias{rstring}
 \alias{rstring.RspString}
 \alias{rstring.RspDocument}
-\alias{rstring.RSourceCode}
+\alias{rstring.RspRSourceCode}
 
 \title{Evaluates an RSP string and returns the generated string}
 
@@ -42,13 +42,13 @@ x <- rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>\n")
 cat(x)
 
 # Passing arguments
-x <- rstring("A random integer in [1,<\%=max\%>]: <\%=sample(1:max, size=1)\%>\n", args=list(max=50))
+x <- rstring("A random integer in [1,<\%=K\%>]: <\%=sample(1:K, size=1)\%>\n", args=list(K=50))
 cat(x)
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
- \code{\link{rcat}}().
+ \code{\link{rcat}}() and \code{\link{rfile}}().
 }
 

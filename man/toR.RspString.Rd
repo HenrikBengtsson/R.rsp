@@ -28,7 +28,7 @@
 }
 
 \value{
- Returns the code as an \code{\link{SourceCode}}.
+ Returns the code as an \code{\link{RspRSourceCode}}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

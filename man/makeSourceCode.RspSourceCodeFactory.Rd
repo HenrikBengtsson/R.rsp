@@ -13,21 +13,21 @@
 \alias{makeSourceCode,RspSourceCodeFactory-method}
 
 
-\title{Makes a SourceCode object}
+\title{Makes a RspSourceCode object}
 
 \description{
- Makes a SourceCode object.
+ Makes a RspSourceCode object.
 }
 
 \usage{\method{makeSourceCode}{RspSourceCodeFactory}(this, ...)}
 
 \arguments{
   \item{...}{Arguments passed to the language-specific
-             \code{\link{SourceCode}} constructor.}
+             \code{\link{RspSourceCode}} constructor.}
 }
 
 \value{
- Returns a \code{\link{SourceCode}} object.
+ Returns a \code{\link{RspSourceCode}} object.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

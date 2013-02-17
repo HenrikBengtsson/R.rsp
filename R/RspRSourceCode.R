@@ -1,12 +1,12 @@
 ###########################################################################/**
-# @RdocClass RSourceCode
+# @RdocClass RspRSourceCode
 #
-# @title "The RSourceCode class"
+# @title "The RspRSourceCode class"
 #
 # \description{
 #  @classhierarchy
 #
-#  An RSourceCode object is a @character @vector holding R source code.
+#  An RspRSourceCode object is a @character @vector holding R source code.
 # }
 # 
 # @synopsis
@@ -23,8 +23,8 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RSourceCode", function(...) {
-  extend(SourceCode(...), "RSourceCode");
+setConstructorS3("RspRSourceCode", function(...) {
+  extend(RspSourceCode(...), "RspRSourceCode");
 })
 
 
@@ -54,7 +54,7 @@ setConstructorS3("RSourceCode", function(...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("parse", "RSourceCode", function(this, ...) {
+setMethodS3("parse", "RspRSourceCode", function(this, ...) {
   code <- paste(this, collapse="\n");
   base::parse(text=code, ...);
 })
@@ -86,7 +86,7 @@ setMethodS3("parse", "RSourceCode", function(this, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("evaluate", "RSourceCode", function(this, envir=parent.frame(), ...) {
+setMethodS3("evaluate", "RspRSourceCode", function(this, envir=parent.frame(), ...) {
   expr <- parse(this, ...);
   eval(expr, envir=envir);
 })
@@ -108,7 +108,7 @@ setMethodS3("evaluate", "RSourceCode", function(this, envir=parent.frame(), ...)
 # }
 #
 # \value{
-#  Returns an @see "RSourceCode" objects.
+#  Returns an @see "RspRSourceCode" objects.
 # }
 #
 # @author
@@ -117,7 +117,7 @@ setMethodS3("evaluate", "RSourceCode", function(this, envir=parent.frame(), ...)
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("tangle", "RSourceCode", function(code, ...) {
+setMethodS3("tangle", "RspRSourceCode", function(code, ...) {
   # Remember attributes
   attrs <- attributes(code);
 
@@ -140,6 +140,8 @@ setMethodS3("tangle", "RSourceCode", function(code, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-02-16
+# o Renamed RSourceCode to RspRSourceCode.
 # 2013-02-14
 # o Added tangle() for RSourceCode.
 # 2013-02-11

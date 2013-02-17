@@ -46,7 +46,7 @@ extends character\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:exprToCode.RspSourceCodeFactory]{exprToCode}} \tab Translates an RspExpression into source code.\cr
  \tab \code{\link[R.rsp:getLanguage.RspSourceCodeFactory]{getLanguage}} \tab Gets the language.\cr
- \tab \code{\link[R.rsp:makeSourceCode.RspSourceCodeFactory]{makeSourceCode}} \tab Makes a SourceCode object.\cr
+ \tab \code{\link[R.rsp:makeSourceCode.RspSourceCodeFactory]{makeSourceCode}} \tab Makes a RspSourceCode object.\cr
  \tab \code{\link[R.rsp:toSourceCode.RspSourceCodeFactory]{toSourceCode}} \tab Translates an RSP document to source code.\cr
 }
 

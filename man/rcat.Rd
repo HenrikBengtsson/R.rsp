@@ -11,7 +11,7 @@
 \alias{rcat}
 \alias{rcat.RspString}
 \alias{rcat.RspDocument}
-\alias{rcat.RSourceCode}
+\alias{rcat.RspRSourceCode}
 
 \title{Evaluates an RSP string and outputs the generated string}
 

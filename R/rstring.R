@@ -2,7 +2,7 @@
 # @RdocDefault rstring
 # @alias rstring.RspString
 # @alias rstring.RspDocument
-# @alias rstring.RSourceCode
+# @alias rstring.RspRSourceCode
 #
 # @title "Evaluates an RSP string and returns the generated string"
 #
@@ -81,7 +81,7 @@ setMethodS3("rstring", "RspDocument", function(object, envir=parent.frame(), ...
 }) # rstring()
 
 
-setMethodS3("rstring", "RSourceCode", function(object, envir=parent.frame(), args="*", ...) {
+setMethodS3("rstring", "RspRSourceCode", function(object, envir=parent.frame(), args="*", ...) {
   # Argument 'args':
   args <- rargs(args);
 
@@ -140,7 +140,7 @@ rm("rspCon");
 # 2013-02-16
 # o Now rstring() only takes a character vector; it no longer c(...) the
 #   '...' arguments.
-# o Added argument 'args' to rstring() for RspString and RSourceCode.
+# o Added argument 'args' to rstring() for RspString and RspRSourceCode.
 # o Added argument 'envir' to rstring() for RspString.
 # 2013-02-13
 # o Added argument 'file' to rstring().

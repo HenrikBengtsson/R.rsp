@@ -2,7 +2,7 @@
 # @RdocDefault rcat
 # @alias rcat.RspString
 # @alias rcat.RspDocument
-# @alias rcat.RSourceCode
+# @alias rcat.RspRSourceCode
 #
 # @title "Evaluates an RSP string and outputs the generated string"
 #
@@ -68,7 +68,7 @@ setMethodS3("rcat", "RspDocument", function(..., file="", append=FALSE, envir=pa
 }) # rcat()
 
 
-setMethodS3("rcat", "RSourceCode", function(..., file="", append=FALSE, envir=parent.frame(), args="*") {
+setMethodS3("rcat", "RspRSourceCode", function(..., file="", append=FALSE, envir=parent.frame(), args="*") {
   s <- rstring(..., envir=envir, args=args);
   cat(s, file=file, append=append);
   invisible(s);

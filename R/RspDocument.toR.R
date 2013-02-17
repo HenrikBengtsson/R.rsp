@@ -17,7 +17,7 @@
 # }
 #
 # \value{
-#  Returns the R source code as an @see "RSourceCode".
+#  Returns the R source code as an @see "RspRSourceCode".
 # }
 #
 # @author

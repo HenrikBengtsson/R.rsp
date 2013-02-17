@@ -1,13 +1,13 @@
 ###########################################################################/**
-# @RdocClass SourceCode
+# @RdocClass RspSourceCode
 #
-# @title "The SourceCode class"
+# @title "The RspSourceCode class"
 #
 # \description{
 #  @classhierarchy
 #
-#  An SourceCode object is a @character @vector holding source code for
-#  a particular programming language.
+#  An RspSourceCode object is a @character @vector holding RSP generated
+#  source code for a particular programming language.
 # }
 # 
 # @synopsis
@@ -25,8 +25,8 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("SourceCode", function(code=character(), ..., type=NA) {
-  this <- extend(c(code, ...), "SourceCode");
+setConstructorS3("RspSourceCode", function(code=character(), ..., type=NA) {
+  this <- extend(c(code, ...), "RspSourceCode");
   attr(this, "type") <- as.character(type);
   this;
 })
@@ -35,7 +35,7 @@ setConstructorS3("SourceCode", function(code=character(), ..., type=NA) {
 #########################################################################/**
 # @RdocMethod getType
 #
-# @title "Gets the type of the SourceCode"
+# @title "Gets the type of the RspSourceCode"
 #
 # \description{
 #  @get "title".
@@ -57,7 +57,7 @@ setConstructorS3("SourceCode", function(code=character(), ..., type=NA) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getType", "SourceCode", function(object, ...) {
+setMethodS3("getType", "RspSourceCode", function(object, ...) {
   res <- attr(object, "type");
   if (is.null(res)) res <- as.character(NA);
   res;
@@ -90,7 +90,7 @@ setMethodS3("getType", "SourceCode", function(object, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("print", "SourceCode", function(x, ...) {
+setMethodS3("print", "RspSourceCode", function(x, ...) {
   code <- paste(x, collapse="\n");
   cat(code);
   cat("\n");
@@ -122,7 +122,7 @@ setMethodS3("print", "SourceCode", function(x, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("parse", "SourceCode", abstract=TRUE);
+setMethodS3("parse", "RspSourceCode", abstract=TRUE);
 
 
 #########################################################################/**
@@ -150,7 +150,7 @@ setMethodS3("parse", "SourceCode", abstract=TRUE);
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("evaluate", "SourceCode", abstract=TRUE);
+setMethodS3("evaluate", "RspSourceCode", abstract=TRUE);
 
 
 #########################################################################/**
@@ -169,7 +169,7 @@ setMethodS3("evaluate", "SourceCode", abstract=TRUE);
 # }
 #
 # \value{
-#  Returns a @see "SourceCode" objects.
+#  Returns a @see "RspSourceCode" objects.
 # }
 #
 # @author
@@ -178,12 +178,14 @@ setMethodS3("evaluate", "SourceCode", abstract=TRUE);
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("tangle", "SourceCode", abstract=TRUE);
+setMethodS3("tangle", "RspSourceCode", abstract=TRUE);
 
 
 
 ##############################################################################
 # HISTORY:
+# 2013-02-16
+# o Renamed SourceCode to RspSourceCode.
 # 2013-02-14
 # o Added tangle() for SourceCode.
 # 2013-02-13

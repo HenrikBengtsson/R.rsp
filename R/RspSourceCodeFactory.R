@@ -68,7 +68,7 @@ setMethodS3("getLanguage", "RspSourceCodeFactory", function(this, ...) {
 #########################################################################/**
 # @RdocMethod makeSourceCode
 #
-# @title "Makes a SourceCode object"
+# @title "Makes a RspSourceCode object"
 #
 # \description{
 #  @get "title".
@@ -78,11 +78,11 @@ setMethodS3("getLanguage", "RspSourceCodeFactory", function(this, ...) {
 #
 # \arguments{
 #   \item{...}{Arguments passed to the language-specific 
-#              @see "SourceCode" constructor.}
+#              @see "RspSourceCode" constructor.}
 # }
 #
 # \value{
-#  Returns a @see "SourceCode" object.
+#  Returns a @see "RspSourceCode" object.
 # }
 #
 # @author
@@ -93,7 +93,7 @@ setMethodS3("getLanguage", "RspSourceCodeFactory", function(this, ...) {
 #*/#########################################################################
 setMethodS3("makeSourceCode", "RspSourceCodeFactory", function(this, ...) {
   lang <- getLanguage(this);
-  className <- sprintf("%sSourceCode", capitalize(lang));
+  className <- sprintf("Rsp%sSourceCode", capitalize(lang));
   clazz <- Class$forName(className);
   clazz(...);
 }, protected=TRUE)
@@ -149,7 +149,7 @@ setMethodS3("exprToCode", "RspSourceCodeFactory", abstract=TRUE);
 # }
 #
 # \value{
-#  Returns the generated source code as a @see "SourceCode" object.
+#  Returns the generated source code as a @see "RspSourceCode" object.
 # }
 #
 # @author
