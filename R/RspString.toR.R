@@ -60,8 +60,7 @@ setMethodS3("toR", "RspString", function(object, envir=parent.frame(), ...) {
 #*/######################################################################### 
 setMethodS3("evaluate", "RspString", function(object, envir=parent.frame(), ...) {
   rCode <- toR(object, ...);
-  # TO FIX!!!
-  evaluate(rCode, envir=envir, ...);
+  process(rCode, envir=envir, ...);
 }) # evaluate()
 
 

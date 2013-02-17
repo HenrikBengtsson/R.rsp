@@ -65,8 +65,8 @@ setMethodS3("toR", "RspDocument", function(object, factory=RspRSourceCodeFactory
 # }
 #*/######################################################################### 
 setMethodS3("evaluate", "RspDocument", function(object, envir=parent.frame(), ...) {
-  rCode <- toR(object);
-  evaluate(rCode, envir=envir, ...);
+  code <- toR(object);
+  process(code, envir=envir, ...);
 }) # evaluate()
 
 

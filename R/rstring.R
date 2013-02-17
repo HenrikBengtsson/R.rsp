@@ -81,7 +81,7 @@ setMethodS3("rstring", "RspDocument", function(object, envir=parent.frame(), ...
 
 
 setMethodS3("rstring", "RspRSourceCode", function(object, envir=parent.frame(), ...) {
-  evaluate(object, envir=envir, ...);
+  process(object, envir=envir, ...);
 }) # rstring()
 
 
