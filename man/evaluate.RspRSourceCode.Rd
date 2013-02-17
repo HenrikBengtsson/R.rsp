@@ -12,6 +12,10 @@
 \alias{evaluate.RspRSourceCode}
 \alias{evaluate,RspRSourceCode-method}
 
+\alias{RspRSourceCode.process}
+\alias{process.RspRSourceCode}
+\alias{process,RspRSourceCode-method}
+
 
 \title{Parses and evaluates the R code}
 

@@ -35,7 +35,7 @@
 }
 
 \value{
-  Returns (invisibly) the outputted \code{\link[base]{character}} string.
+  Returns (invisibly) the outputted \code{\link{RspStringProduct}}.
 }
 
 \section{Processing RSP strings from the command line}{

@@ -23,17 +23,17 @@
 \code{~~~~~~~|}\cr
 \code{~~~~~~~+--}\code{\link[R.rsp]{RspSourceCode}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\emph{\code{RspRSourceCode}}\cr
+\code{~~~~~~~~~~~~+--}\code{RspRSourceCode}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public abstract class \bold{RspRSourceCode}\cr
+public class \bold{RspRSourceCode}\cr
 extends \emph{\link[R.rsp]{RspSourceCode}}\cr
 
 
 
-  An RspRSourceCode object is a \code{\link[base]{character}} \code{\link[base]{vector}} holding R source code.
+  An RspRSourceCode object is an \code{\link{RspSourceCode}} holding R source code.
  }
 
  \usage{RspRSourceCode(...)}
@@ -48,6 +48,7 @@ extends \emph{\link[R.rsp]{RspSourceCode}}\cr
  \tab \code{\link[R.rsp:evaluate.RspRSourceCode]{evaluate}} \tab Parses and evaluates the R code.\cr
  \tab \code{\link[R.rsp:getCompleteCode.RspRSourceCode]{getCompleteCode}} \tab Gets the complete R source code.\cr
  \tab \code{\link[R.rsp:parse.RspRSourceCode]{parse}} \tab Parses the R code.\cr
+ \tab \code{process} \tab  -\cr
  \tab \code{rcat} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
  \tab \code{\link[R.rsp:tangle.RspRSourceCode]{tangle}} \tab Drops all text-outputting calls from the R code.\cr

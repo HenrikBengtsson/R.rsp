@@ -24,10 +24,10 @@
 \code{~~~~~~~+--}\emph{\code{RspSourceCode}}\cr
 
 \bold{Directly known subclasses:}\cr
-\emph{\link[R.rsp]{RspRSourceCode}}\cr
+\link[R.rsp]{RspRSourceCode}\cr
 
 public abstract class \bold{RspSourceCode}\cr
-extends \emph{\link[R.rsp]{RspProduct}}\cr
+extends \link[R.rsp]{RspProduct}\cr
 
 
 
@@ -46,7 +46,7 @@ extends \emph{\link[R.rsp]{RspProduct}}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:evaluate.RspSourceCode]{evaluate}} \tab Parses and evaluates the source code.\cr
+ \tab \code{\link[R.rsp:evaluate.RspSourceCode]{evaluate}} \tab Evaluates the source code.\cr
  \tab \code{\link[R.rsp:print.RspSourceCode]{print}} \tab Prints the source code.\cr
  \tab \code{\link[R.rsp:tangle.RspSourceCode]{tangle}} \tab Drops all text-outputting calls from the source code.\cr
 }

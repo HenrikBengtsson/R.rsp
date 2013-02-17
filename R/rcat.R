@@ -26,7 +26,7 @@
 # }
 #
 # \value{
-#   Returns (invisibly) the outputted @character string.
+#   Returns (invisibly) the outputted @see "RspStringProduct".
 # }
 #
 # \section{Processing RSP strings from the command line}{

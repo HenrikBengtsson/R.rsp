@@ -21,13 +21,13 @@
 \code{~~|}\cr
 \code{~~+--}\code{\link[R.rsp]{RspProduct}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\emph{\code{RspStringProduct}}\cr
+\code{~~~~~~~+--}\code{RspStringProduct}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public abstract class \bold{RspStringProduct}\cr
-extends \emph{\link[R.rsp]{RspProduct}}\cr
+public class \bold{RspStringProduct}\cr
+extends \link[R.rsp]{RspProduct}\cr
 
 
 

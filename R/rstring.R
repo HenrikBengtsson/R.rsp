@@ -24,8 +24,7 @@
 # }
 #
 # \value{
-#   Returns a @character string.
-#   If set/known, the content type is returned as attribute \code{type}.
+#   Returns an @see "RspStringProduct".
 # }
 #
 # @examples "../incl/rstring.Rex"

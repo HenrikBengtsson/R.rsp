@@ -19,12 +19,12 @@
 
 \code{logical}\cr
 \code{~~|}\cr
-\code{~~+--}\emph{\code{RspProduct}}\cr
+\code{~~+--}\code{RspProduct}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.rsp]{RspFileProduct}, \emph{\link[R.rsp]{RspRSourceCode}}, \emph{\link[R.rsp]{RspSourceCode}}, \emph{\link[R.rsp]{RspStringProduct}}\cr
+\link[R.rsp]{RspFileProduct}, \link[R.rsp]{RspRSourceCode}, \emph{\link[R.rsp]{RspSourceCode}}, \link[R.rsp]{RspStringProduct}\cr
 
-public abstract class \bold{RspProduct}\cr
+public class \bold{RspProduct}\cr
 extends logical\cr
 
 

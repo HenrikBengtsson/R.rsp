@@ -6,30 +6,29 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{process.RspFileProduct}
-\alias{process.RspFileProduct}
-\alias{RspFileProduct.process}
-\alias{process.RspFileProduct}
-\alias{process,RspFileProduct-method}
+\name{findProcessor.RspFileProduct}
+\alias{findProcessor.RspFileProduct}
+\alias{RspFileProduct.findProcessor}
+\alias{findProcessor.RspFileProduct}
+\alias{findProcessor,RspFileProduct-method}
 
 
-\title{Processes an RSP file product}
+\title{Locates a processor for an RSP file product}
 
 \description{
- Processes an RSP file product.
+ Locates a processor for an RSP file product.
 }
 
-\usage{\method{process}{RspFileProduct}(object, type=NULL, workdir=".", ..., verbose=FALSE)}
+\usage{\method{findProcessor}{RspFileProduct}(object, ..., verbose=FALSE)}
 
 \arguments{
-  \item{type}{A \code{\link[base]{character}} string specifying the content type.}
-  \item{workdir}{The working directory.}
   \item{...}{Not used.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{
-  Returns the processed RSP product, e.g. the pathname to a PDF file.
+  Returns a \code{\link[base]{function}} that takes an \code{\link{RspFileProduct}} as input,
+  or \code{\link[base]{NULL}} if no processor was found.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

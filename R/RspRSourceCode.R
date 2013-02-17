@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 #
-#  An RspRSourceCode object is a @character @vector holding R source code.
+#  An RspRSourceCode object is an @see "RspSourceCode" holding R source code.
 # }
 # 
 # @synopsis
@@ -181,6 +181,7 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
 
 #########################################################################/**
 # @RdocMethod evaluate
+# @aliasmethod process
 #
 # @title "Parses and evaluates the R code"
 #
@@ -224,6 +225,12 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, output=c("string"), e
 
   RspStringProduct(res, type=getType(object));
 }) # evaluate()
+
+
+setMethodS3("process", "RspRSourceCode", function(object, ..., envir=parent.frame()) {
+  evaluate(object, ..., envir=envir);
+}) # process()
+
 
 
 #########################################################################/**
@@ -271,10 +278,11 @@ setMethodS3("tangle", "RspRSourceCode", function(code, ...) {
 }, protected=TRUE) # tangle()
 
 
-
 ##############################################################################
 # HISTORY:
 # 2013-02-16
+# o Added process() for RspRSourceCode, which is declared abstract
+#   in RspProduct.
 # o Added getCompleteCode() for RspRSourceCode.
 # o Renamed RSourceCode to RspRSourceCode.
 # 2013-02-14

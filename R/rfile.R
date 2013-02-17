@@ -38,6 +38,8 @@
 #
 # \value{
 #   Returns an @see "RspProduct".
+#   If argument \code{output} specifies a file, then this is 
+#   a @see "RspFileProduct".
 # }
 #
 # \section{Processing RSP files from the command line}{

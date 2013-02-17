@@ -141,7 +141,7 @@ setMethodS3("hasProcessor", "RspProduct", function(object, ...) {
 ###########################################################################/**
 # @RdocMethod findProcessor
 #
-# @title "Tries to locate a processor for an RSP product"
+# @title "Locates a processor for an RSP product"
 #
 # \description{
 #  @get "title".
@@ -150,15 +150,12 @@ setMethodS3("hasProcessor", "RspProduct", function(object, ...) {
 # @synopsis
 #
 # \arguments{
-#   \item{pathname}{The RSP product, e.g. a file.}
-#   \item{type}{A @character string specifying the content type.}
-#   \item{outPath}{The working directory.}
 #   \item{...}{Not used.}
-#   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{
-#   Returns the processed RSP product, e.g. the pathname to a PDF file.
+#   Returns a @function that takes an @see "RspProduct" as input,
+#   or @NULL if no processor was found.
 # }
 #
 # @author
@@ -166,14 +163,63 @@ setMethodS3("hasProcessor", "RspProduct", function(object, ...) {
 # @keyword file
 # @keyword IO
 #*/########################################################################### 
-setMethodS3("findProcessor", "RspProduct", function(object, ..., verbose=FALSE) {
+setMethodS3("findProcessor", "RspProduct", function(object, ...) {
+  NULL;
+}, protected=TRUE) # findProcessor()
+
+
+
+
+###########################################################################/**
+# @RdocMethod process
+#
+# @title "Processes an RSP file product"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{type}{A @character string specifying the content type.}
+#   \item{workdir}{A temporary working directory to use during processing.
+#      If @NULL, the working directory is not changed.}
+#   \item{...}{Optional arguments passed to the processor @function.}
+#   \item{verbose}{See @see "R.utils::Verbose".}
+# }
+#
+# \value{
+#   Returns the processed RSP product output as another @see "RspProduct".
+# }
+#
+# @author
+#
+# @keyword file
+# @keyword IO
+#*/########################################################################### 
+setMethodS3("process", "RspProduct", function(object, type=NULL, workdir=NULL, ..., verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::rsp() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
-
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Arguments 'type':
+  if (is.null(type)) {
+    type <- getType(object);
+  }
+  type <- Arguments$getCharacter(type, length=c(1L,1L));
+  type <- tolower(type);
+
+
+  # Arguments 'workdir':
+  if (!is.null(workdir)) {
+    workdir <- Arguments$getWritablePath(workdir);
+    if (is.null(workdir)) workdir <- getwd();
+    workdir <- getAbsolutePath(workdir);
+  }
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -182,90 +228,52 @@ setMethodS3("findProcessor", "RspProduct", function(object, ..., verbose=FALSE) 
   }
 
 
-  verbose && enter(verbose, "Locating document-type specific processor");
-  type <- getType(object);
-  verbose && cat(verbose, "RSP product content type: ", type);
+  verbose && enter(verbose, "Processing RSP product");
+  verbose && print(verbose, object);
+
+  processor <- findProcessor(object, verbose=verbose);
 
   # Nothing to do?
-  if (is.na(type)) {
-    verbose && cat(verbose, "Processor found: <none>");
+  if (is.null(processor)) {
+    verbose && cat(verbose, "There is no known processor for this content type: ", type);
+    verbose && exit(verbose);
     verbose && exit(verbose);
     return(NULL);
   }
 
+  verbose && enter(verbose, "Processing");
 
-  # Find another RSP compiler
-  processors <- list(
-    # RSP-embedded LaTeX documents:
-    # *.tex => ... => *.dvi/*.pdf
-    "tex" = compileLaTeX,
-    "latex" = compileLaTeX,
+  # Change working directory?
+  if (!is.null(workdir)) {
+    opwd <- getwd();
+    on.exit({ if (!is.null(opwd)) setwd(opwd) }, add=TRUE);
+    setwd(workdir);
+  }
 
-    # RSP-embedded Sweave and Knitr Rnw documents:
-    # *.Rnw => ... => *.tex => dvi/*.pdf
-    "sweave" = compileSweave,
+  res <- processor(object, ..., verbose=verbose);
+  verbose && print(verbose, res);
 
-    # RSP-embedded Sweave and Knitr Rnw documents:
-    # *.Rnw => ... => *.tex => dvi/*.pdf
-    "knitr" = compileKnitr,
-
-    # RSP-embedded Sweave and Knitr Rnw documents:
-    # *.Rnw => ... => *.tex => dvi/*.pdf
-    "rnw" = compileRnw
-  );
-
-
-  fcn <- NULL;
-  for (key in names(processors)) {
-    pattern <- key;
-    if (regexpr(pattern, type) != -1) {
-      fcn <- processors[[key]];
-      verbose && cat(verbose, "Match: ", key);
-      break;
+  # Reset working directory
+  if (!is.null(workdir)) {
+    if (!is.null(opwd)) {
+      setwd(opwd);
+      opwd <- NULL;
     }
-  } # for (key ...)
-
-  if (is.null(fcn)) {
-    verbose && cat(verbose, "Processor found: <none>");
-  } else {
-    verbose && cat(verbose, "Processor found: ", type);
   }
 
   verbose && exit(verbose);
 
-  fcn;
-}, protected=TRUE) # findProcessor()
+  verbose && exit(verbose);
 
-
-###########################################################################/**
-# @RdocMethod process
-#
-# @title "Processes an RSP product"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns the processed RSP product, which is another @see "RspProduct".
-# }
-#
-# @author
-#
-# @keyword file
-# @keyword IO
-#*/########################################################################### 
-setMethodS3("process", "RspProduct", abstract=TRUE)
+  invisible(res);
+}) # process()
 
 
 ############################################################################
 # HISTORY:
+# 2013-02-16
+# o Added a general process() for RspProduct, which was adopted from
+#   former ditto for RspFileProduct.
 # 2013-02-13
 # o Added RspProduct and RspFileProduct with corresponding 
 #   process() methods.

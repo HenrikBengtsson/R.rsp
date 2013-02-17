@@ -27,7 +27,7 @@
 \cr
 
 public class \bold{RspFileProduct}\cr
-extends \emph{\link[R.rsp]{RspProduct}}\cr
+extends \link[R.rsp]{RspProduct}\cr
 
 
 
@@ -45,9 +45,9 @@ extends \emph{\link[R.rsp]{RspProduct}}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
+ \tab \code{findProcessor} \tab  -\cr
  \tab \code{\link[R.rsp:getType.RspFileProduct]{getType}} \tab Gets the type of an RSP file product.\cr
  \tab \code{\link[R.rsp:print.RspFileProduct]{print}} \tab Prints a summary of an RSP file product.\cr
- \tab \code{\link[R.rsp:process.RspFileProduct]{process}} \tab Processes an RSP file product.\cr
 }
 
 

@@ -13,20 +13,24 @@
 \alias{process,RspProduct-method}
 
 
-\title{Processes an RSP product}
+\title{Processes an RSP file product}
 
 \description{
- Processes an RSP product.
+ Processes an RSP file product.
 }
 
-\usage{\method{process}{RspProduct}(...)}
+\usage{\method{process}{RspProduct}(object, type=NULL, workdir=NULL, ..., verbose=FALSE)}
 
 \arguments{
-  \item{...}{Not used.}
+  \item{type}{A \code{\link[base]{character}} string specifying the content type.}
+  \item{workdir}{A temporary working directory to use during processing.
+     If \code{\link[base]{NULL}}, the working directory is not changed.}
+  \item{...}{Optional arguments passed to the processor \code{\link[base]{function}}.}
+  \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{
-  Returns the processed RSP product, which is another \code{\link{RspProduct}}.
+  Returns the processed RSP product output as another \code{\link{RspProduct}}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

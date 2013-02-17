@@ -33,8 +33,7 @@
 }
 
 \value{
-  Returns a \code{\link[base]{character}} string.
-  If set/known, the content type is returned as attribute \code{type}.
+  Returns an \code{\link{RspStringProduct}}.
 }
 
 \examples{

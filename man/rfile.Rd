@@ -47,6 +47,8 @@
 
 \value{
   Returns an \code{\link{RspProduct}}.
+  If argument \code{output} specifies a file, then this is
+  a \code{\link{RspFileProduct}}.
 }
 
 \section{Processing RSP files from the command line}{
