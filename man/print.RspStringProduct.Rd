@@ -1,28 +1,28 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspFileProduct.R
+%  RspStringProduct.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{print.RspFileProduct}
-\alias{print.RspFileProduct}
-\alias{RspFileProduct.print}
-\alias{print.RspFileProduct}
-\alias{print,RspFileProduct-method}
+\name{print.RspStringProduct}
+\alias{print.RspStringProduct}
+\alias{RspStringProduct.print}
+\alias{print.RspStringProduct}
+\alias{print,RspStringProduct-method}
 
 
-\title{Prints a summary of an RSP file product}
+\title{Prints an RSP string product}
 
 \description{
- Prints a summary of an RSP file product.
+ Prints an RSP string product.
 }
 
-\usage{\method{print}{RspFileProduct}(x, ...)}
+\usage{\method{print}{RspStringProduct}(x, ...)}
 
 \arguments{
-  \item{...}{Not used.}
+  \item{...}{Additional arguments passed to \code{\link[base]{print}}().}
 }
 
 \value{
@@ -32,7 +32,7 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  For more information see \code{\link{RspFileProduct}}.
+  For more information see \code{\link{RspStringProduct}}.
 }
 \keyword{internal}
 \keyword{methods}

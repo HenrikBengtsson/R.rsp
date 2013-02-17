@@ -13,8 +13,9 @@
 # @synopsis
 #
 # \arguments{
-#   \item{code, ...}{@character strings.}
-#   \item{type}{The content type of the source code.}
+#   \item{code}{@character @vector.}
+#   \item{...}{Additional arguments passed to the @see "RspProduct" 
+#     constructor.}
 # }
 #
 # \section{Fields and Methods}{
@@ -25,43 +26,9 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspSourceCode", function(code=character(), ..., type=NA) {
-  this <- extend(c(code, ...), "RspSourceCode");
-  attr(this, "type") <- as.character(type);
-  this;
+setConstructorS3("RspSourceCode", function(code=character(), ...) {
+  extend(RspProduct(code, ...), "RspSourceCode");
 })
-
-
-#########################################################################/**
-# @RdocMethod getType
-#
-# @title "Gets the type of the RspSourceCode"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getType", "RspSourceCode", function(object, ...) {
-  res <- attr(object, "type");
-  if (is.null(res)) res <- as.character(NA);
-  res;
-}, protected=TRUE)
 
 
 
@@ -98,34 +65,6 @@ setMethodS3("print", "RspSourceCode", function(x, ...) {
 
 
 #########################################################################/**
-# @RdocMethod parse
-#
-# @title "Parses the source code"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Optional arguments passed to language parse.}
-# }
-#
-# \value{
-#  Returns an @expression.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("parse", "RspSourceCode", abstract=TRUE);
-
-
-#########################################################################/**
 # @RdocMethod evaluate
 #
 # @title "Parses and evaluates the source code"
@@ -151,6 +90,7 @@ setMethodS3("parse", "RspSourceCode", abstract=TRUE);
 # }
 #*/######################################################################### 
 setMethodS3("evaluate", "RspSourceCode", abstract=TRUE);
+
 
 
 #########################################################################/**
@@ -185,6 +125,7 @@ setMethodS3("tangle", "RspSourceCode", abstract=TRUE);
 ##############################################################################
 # HISTORY:
 # 2013-02-16
+# o Now RspSourceCode extends RspProduct,
 # o Renamed SourceCode to RspSourceCode.
 # 2013-02-14
 # o Added tangle() for SourceCode.

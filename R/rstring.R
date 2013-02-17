@@ -76,63 +76,16 @@ setMethodS3("rstring", "RspString", function(object, envir=parent.frame(), args=
 
 setMethodS3("rstring", "RspDocument", function(object, envir=parent.frame(), ...) {
   factory <- RspRSourceCodeFactory();
-  rCode <- toSourceCode(factory, object);
-  rstring(rCode, ..., envir=envir);
+  code <- toSourceCode(factory, object);
+  rstring(code, ..., envir=envir);
 }) # rstring()
 
 
-setMethodS3("rstring", "RspRSourceCode", function(object, envir=parent.frame(), args="*", ...) {
-  # Argument 'args':
-  args <- rargs(args);
-
-  # Assign arguments to the parse/evaluation environment
-  attachLocally(args, envir=envir);
-
-
-  # Build R source code
-  header <- '
-rspCon <- textConnection(NULL, open="w", local=TRUE);
-on.exit({ if (exists("rspCon")) close(rspCon) });
-
-.ro <- function(..., collapse="", sep="") {
-  msg <- paste(..., collapse=collapse, sep=sep);
-  cat(msg, sep="", file=rspCon);
-} # .ro()
-
-';
-
-  footer <- '
-.ro("\n"); # Force a last complete line
-rm(".ro");
-rspRes <- paste(textConnectionValue(rspCon), collapse="\n");
-close(rspCon);
-rm("rspCon");
-';
-
-  rCode <- c(header, object, footer);
-  rCode <- paste(rCode, collapse="\n");
-##  rCode <- sprintf("local({%s})", rCode);
-
-
-  # Parse R source code
-  expr <- base::parse(text=rCode);
-  rspRes <- NULL; rm(rspRes); # To please R CMD check
-
-
-  # Evaluate R source code
-  eval(expr, envir=envir, ...);
-  res <- get("rspRes", envir=envir);
-  rm("rspRes", envir=envir);
-
-
-  # Set the content type?
-  type <- getType(object);
-  if (!is.na(type)) {
-    attr(res, "type") <- type;
-  }
-
-  res;
+setMethodS3("rstring", "RspRSourceCode", function(object, envir=parent.frame(), ...) {
+  evaluate(object, envir=envir, ...);
 }) # rstring()
+
+
 
 
 ##############################################################################

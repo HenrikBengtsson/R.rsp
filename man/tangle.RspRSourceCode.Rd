@@ -1,38 +1,38 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspFileProduct.R
+%  RspRSourceCode.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getType.RspFileProduct}
-\alias{getType.RspFileProduct}
-\alias{RspFileProduct.getType}
-\alias{getType.RspFileProduct}
-\alias{getType,RspFileProduct-method}
+\name{tangle.RspRSourceCode}
+\alias{tangle.RspRSourceCode}
+\alias{RspRSourceCode.tangle}
+\alias{tangle.RspRSourceCode}
+\alias{tangle,RspRSourceCode-method}
 
 
-\title{Gets the type of an RSP file product}
+\title{Drops all text-outputting calls from the R code}
 
 \description{
- Gets the type of an RSP file product.
+ Drops all text-outputting calls from the R code.
 }
 
-\usage{\method{getType}{RspFileProduct}(object, ...)}
+\usage{\method{tangle}{RspRSourceCode}(code, ...)}
 
 \arguments{
   \item{...}{Not used.}
 }
 
 \value{
- Returns a \code{\link[base]{character}} string.
+ Returns an \code{\link{RspRSourceCode}} objects without output calls.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  For more information see \code{\link{RspFileProduct}}.
+  For more information see \code{\link{RspRSourceCode}}.
 }
 \keyword{internal}
 \keyword{methods}

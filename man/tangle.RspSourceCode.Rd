@@ -1,39 +1,38 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspProduct.R
+%  RspSourceCode.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{process.RspProduct}
-\alias{process.RspProduct}
-\alias{RspProduct.process}
-\alias{process.RspProduct}
-\alias{process,RspProduct-method}
+\name{tangle.RspSourceCode}
+\alias{tangle.RspSourceCode}
+\alias{RspSourceCode.tangle}
+\alias{tangle.RspSourceCode}
+\alias{tangle,RspSourceCode-method}
 
 
-\title{Processes an RSP product}
+\title{Drops all text-outputting calls from the source code}
 
 \description{
- Processes an RSP product.
+ Drops all text-outputting calls from the source code.
 }
 
-\usage{\method{process}{RspProduct}(...)}
+\usage{\method{tangle}{RspSourceCode}(...)}
 
 \arguments{
   \item{...}{Not used.}
 }
 
 \value{
-  Returns the processed RSP product, which is another \code{\link{RspProduct.}}
+ Returns a \code{\link{RspSourceCode}} objects.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
-
-
+\seealso{
+  For more information see \code{\link{RspSourceCode}}.
+}
 \keyword{internal}
 \keyword{methods}
-\keyword{file}
-\keyword{IO}

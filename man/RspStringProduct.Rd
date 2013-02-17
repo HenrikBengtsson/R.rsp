@@ -1,53 +1,51 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspFileProduct.R
+%  RspStringProduct.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspFileProduct}
+ \name{RspStringProduct}
 \docType{class}
-\alias{RspFileProduct}
+\alias{RspStringProduct}
 
 
- \title{The RspFileProduct class}
+ \title{The RspStringProduct class}
 
  \description{
   Package:  R.rsp \cr
-\bold{Class RspFileProduct}\cr
+\bold{Class RspStringProduct}\cr
 
 \code{logical}\cr
 \code{~~|}\cr
 \code{~~+--}\code{\link[R.rsp]{RspProduct}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{RspFileProduct}\cr
+\code{~~~~~~~+--}\emph{\code{RspStringProduct}}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public class \bold{RspFileProduct}\cr
+public abstract class \bold{RspStringProduct}\cr
 extends \emph{\link[R.rsp]{RspProduct}}\cr
 
 
 
-  An RspFileProduct is an \code{\link{RspProduct}} that represents an
-  RSP product in form of a file, e.g. LaTeX, Sweave and knitr documents.
+  An RspStringProduct is an \code{\link{RspProduct}} that represents an
+  RSP product in form of a \code{\link[base]{character}} string.
  }
 
- \usage{RspFileProduct(pathname=NA, ...)}
+ \usage{RspStringProduct(...)}
 
  \arguments{
-   \item{pathname}{An existing file.}
-   \item{...}{Additional arguments passed to \code{\link{RspProduct}}.}
+   \item{...}{\code{\link[base]{character}} strings passed to \code{\link{RspProduct}}.}
  }
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:getType.RspFileProduct]{getType}} \tab Gets the type of an RSP file product.\cr
- \tab \code{\link[R.rsp:print.RspFileProduct]{print}} \tab Prints a summary of an RSP file product.\cr
- \tab \code{\link[R.rsp:process.RspFileProduct]{process}} \tab Processes an RSP file product.\cr
+ \tab \code{as.character} \tab  -\cr
+ \tab \code{print} \tab  -\cr
 }
 
 
