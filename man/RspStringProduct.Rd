@@ -44,8 +44,8 @@ extends \emph{\link[R.rsp]{RspProduct}}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{as.character} \tab  -\cr
- \tab \code{print} \tab  -\cr
+ \tab \code{\link[R.rsp:as.character.RspStringProduct]{as.character}} \tab Returns a plain character string representation of an RSP string product.\cr
+ \tab \code{\link[R.rsp:print.RspStringProduct]{print}} \tab Prints an RSP string product.\cr
 }
 
 

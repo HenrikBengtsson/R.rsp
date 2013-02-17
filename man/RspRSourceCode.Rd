@@ -55,7 +55,7 @@ extends \emph{\link[R.rsp]{RspSourceCode}}\cr
 
 
  \bold{Methods inherited from RspSourceCode}:\cr
-evaluate, parse, print, tangle
+evaluate, print, tangle
 
  \bold{Methods inherited from RspProduct}:\cr
 findProcessor, getType, hasProcessor, print, process

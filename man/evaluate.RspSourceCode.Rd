@@ -13,16 +13,16 @@
 \alias{evaluate,RspSourceCode-method}
 
 
-\title{Parses and evaluates the source code}
+\title{Evaluates the source code}
 
 \description{
- Parses and evaluates the source code.
+ Evaluates the source code.
 }
 
 \usage{\method{evaluate}{RspSourceCode}(...)}
 
 \arguments{
-  \item{...}{Optional arguments passed to \code{\link[R.rsp:parse.RspSourceCode]{*parse}()}.}
+  \item{...}{Not used.}
 }
 
 \value{

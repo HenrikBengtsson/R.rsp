@@ -253,7 +253,7 @@ setMethodS3("findProcessor", "RspProduct", function(object, ..., verbose=FALSE) 
 # }
 #
 # \value{
-#   Returns the processed RSP product, which is another @see RspProduct.
+#   Returns the processed RSP product, which is another @see "RspProduct".
 # }
 #
 # @author

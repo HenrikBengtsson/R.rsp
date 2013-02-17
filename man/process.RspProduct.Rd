@@ -26,7 +26,7 @@
 }
 
 \value{
-  Returns the processed RSP product, which is another \code{\link{RspProduct.}}
+  Returns the processed RSP product, which is another \code{\link{RspProduct}}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

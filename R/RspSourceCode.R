@@ -67,7 +67,7 @@ setMethodS3("print", "RspSourceCode", function(x, ...) {
 #########################################################################/**
 # @RdocMethod evaluate
 #
-# @title "Parses and evaluates the source code"
+# @title "Evaluates the source code"
 #
 # \description{
 #  @get "title".
@@ -76,7 +76,7 @@ setMethodS3("print", "RspSourceCode", function(x, ...) {
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Optional arguments passed to @seemethod "parse".}
+#   \item{...}{Not used.}
 # }
 #
 # \value{
