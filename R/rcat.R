@@ -21,10 +21,21 @@
 #     the files content is overwritten.}
 #   \item{envir}{The @environment in which the RSP string is 
 #     preprocessed and evaluated.}
+#   \item{args}{A named @list of arguments assigned to the environment
+#     in which the RSP string is parsed and evaluated. See @see "rargs".}
 # }
 #
 # \value{
 #   Returns (invisibly) the outputted @character string.
+# }
+#
+# \section{Processing RSP strings from the command line}{
+#   Using @see "Rscript" and \code{rcat()}, it is possible to process
+#   an RSP string and output the result from the command line.  For example,
+#
+#   \code{Rscript -e "R.rsp::rcat('A random integer in [1,<\%=K\%>]: <\%=sample(1:K, size=1)\%>')" --args --K=50}
+#
+#   silently parses and evaluates the 'random-args.txt.rsp' example file and output a file 'random-args.txt' in the current directory.
 # }
 #
 # @examples "../incl/rcat.Rex"
@@ -32,32 +43,32 @@
 # @author
 #
 # \seealso{
-#  @see "rstring".
+#  @see "rstring" and @see "rfile".
 # }
 #*/###########################################################################
-setMethodS3("rcat", "default", function(..., file="", append=FALSE, envir=parent.frame()) {
-  s <- rstring(..., envir=envir);
+setMethodS3("rcat", "default", function(..., file="", append=FALSE, envir=parent.frame(), args="*") {
+  s <- rstring(..., envir=envir, args=args);
   cat(s, file=file, append=append);
   invisible(s);
 }) # rcat()
 
 
-setMethodS3("rcat", "RspString", function(..., file="", append=FALSE, envir=parent.frame()) {
-  s <- rstring(..., envir=envir);
+setMethodS3("rcat", "RspString", function(..., file="", append=FALSE, envir=parent.frame(), args="*") {
+  s <- rstring(..., envir=envir, args=args);
   cat(s, file=file, append=append);
   invisible(s);
 }) # rcat()
 
 
-setMethodS3("rcat", "RspDocument", function(..., file="", append=FALSE, envir=parent.frame()) {
-  s <- rstring(..., envir=envir);
+setMethodS3("rcat", "RspDocument", function(..., file="", append=FALSE, envir=parent.frame(), args="*") {
+  s <- rstring(..., envir=envir, args=args);
   cat(s, file=file, append=append);
   invisible(s);
 }) # rcat()
 
 
-setMethodS3("rcat", "RSourceCode", function(..., file="", append=FALSE, envir=parent.frame()) {
-  s <- rstring(..., envir=envir);
+setMethodS3("rcat", "RSourceCode", function(..., file="", append=FALSE, envir=parent.frame(), args="*") {
+  s <- rstring(..., envir=envir, args=args);
   cat(s, file=file, append=append);
   invisible(s);
 }) # rcat()

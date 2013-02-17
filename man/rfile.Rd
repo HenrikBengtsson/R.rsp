@@ -16,7 +16,7 @@
  Evaluates an RSP file and outputs the generated string.
 }
 
-\usage{\method{rfile}{default}(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), postprocess=TRUE, ..., verbose=FALSE)}
+\usage{\method{rfile}{default}(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), args="*", postprocess=TRUE, ..., verbose=FALSE)}
 
 \arguments{
   \item{file, path}{Specifies the RSP file to processed, which can
@@ -37,6 +37,8 @@
      is inferred from the \code{output} filename extension, iff possible.}
   \item{envir}{The \code{\link[base]{environment}} in which the RSP document is
      preprocessed and evaluated.}
+  \item{args}{A named \code{\link[base]{list}} of arguments assigned to the environment
+    in which the RSP string is parsed and evaluated. See \code{\link{rargs}}().}
   \item{postprocess}{If \code{\link[base:logical]{TRUE}}, and a postprocessing method exists for
      the generated RSP product, it is postprocessed as well.}
   \item{...}{Additional arguments passed to the RSP engine.}
@@ -45,6 +47,15 @@
 
 \value{
   Returns an \code{\link{RspProduct}}.
+}
+
+\section{Processing RSP files from the command line}{
+  Using \code{\link{Rscript}} and \code{rfile()}, it is possible to process
+  an RSP file from the command line.  For example,
+
+  \code{Rscript -e "R.rsp::rfile('random-args.txt.rsp', path=system.file('exData', package='R.rsp'))" --args --K=50}
+
+  silently parses and evaluates the 'random-args.txt.rsp' example file and output a file 'random-args.txt' in the current directory.
 }
 
 \examples{
@@ -56,8 +67,13 @@ lines <- readLines(pathname, warn=FALSE)
 cat(lines, collapse="\n")
 
 
+# Passing arguments
+path <- system.file("exData", package="R.rsp")
+pathname <- rfile("random-args.txt.rsp", path=path, args=list(K=50))
+print(pathname)
 
-
+lines <- readLines(pathname, warn=FALSE)
+cat(lines, collapse="\n")
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

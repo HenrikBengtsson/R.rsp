@@ -1,10 +1,9 @@
 Package: R.rsp
 ==============
 
-Version: 0.9.0 [2013-02-14]
+Version: 0.9.0 [2013-02-16]
 o The internal RSP engine has undergone a major redesign.
-o More functions can now be called without loading the package,
-  e.g. R.rsp::compileLaTeX().
+o More functions can now be called without loading the package.
 
 
 Version: 0.8.5 [2013-01-20]

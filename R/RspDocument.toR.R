@@ -26,17 +26,15 @@
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("toR", "RspDocument", function(object, factory=RspRSourceCodeFactory(), envir=parent.frame(), ...) {
+setMethodS3("toR", "RspDocument", function(object, factory=RspRSourceCodeFactory(), ...) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
   # Argument 'factory':
   factory <- Arguments$getInstanceOf(factory, "RspSourceCodeFactory");
 
-  # Argument 'envir':
-  stopifnot(!is.null(envir));
 
-  toSourceCode(factory, object, envir=envir, ...);
+  toSourceCode(factory, object, ...);
 }) # toR()
 
 

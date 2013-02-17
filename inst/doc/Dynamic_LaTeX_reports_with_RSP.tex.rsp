@@ -139,21 +139,21 @@ This document was produced using RSP-embedded LaTeX.
 The RSP markup language makes it possible to interweave text and R source code in a compact and powerful way for the purpose of generating text.
 An example of an RSP-embedded string is
 \begin{rspVerbatim}
-"A random number in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n"
+"A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n"
 \end{rspVerbatim}
 Using the \pkg{R.rsp} package\footnote{To install the \pkg{R.rsp} package, call \code{install.packages("R.rsp")} at the R prompt.}, this RSP string can be processed and outputted as
 \begin{escapeRspVerbatim}
 > library("R.rsp")
-> rcat("A random number in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
-A random number in [1,100]: 77
+> rcat("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
+A random integer in [1,100]: 77
 \end{escapeRspVerbatim}
 As explained further in Section~\ref{RspMarkupLanguage}, the RSP expression \code{<\%=\{code chunk\}\%>} causes the R expression '\code{\{code chunk\}}' to be evaulated and its value to be inserted into the text (replacing the RSP expression itself).
 %
 To processed the RSP string without outputting the result, but instead storing it in a character variable, do
 \begin{escapeRspVerbatim}
-> s <- rstring("A random number in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
+> s <- rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
 > cat(s)
-A random number in [1,100]: 43
+A random integer in [1,100]: 43
 \end{escapeRspVerbatim}
 
 
@@ -161,7 +161,7 @@ A random number in [1,100]: 43
 \section{Compiling RSP-markup documents}
 Consider an RSP-embedded text file \code{random.txt.rsp} that contains the above RSP string, i.e.
 \begin{rspVerbatim}
-A random number in [1,100]: <\%=sample(1:100, size=1)\%>
+A random integer in [1,100]: <\%=sample(1:100, size=1)\%>
 \end{rspVerbatim}
 This file can be compiled into a plain text file (\code{random.txt}) as
 \begin{verbatim}

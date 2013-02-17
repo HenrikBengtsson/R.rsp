@@ -28,6 +28,8 @@
 #      is inferred from the \code{output} filename extension, iff possible.}
 #   \item{envir}{The @environment in which the RSP document is 
 #      preprocessed and evaluated.}
+#   \item{args}{A named @list of arguments assigned to the environment
+#     in which the RSP string is parsed and evaluated. See @see "rargs".}
 #   \item{postprocess}{If @TRUE, and a postprocessing method exists for
 #      the generated RSP product, it is postprocessed as well.}
 #   \item{...}{Additional arguments passed to the RSP engine.}
@@ -38,14 +40,27 @@
 #   Returns an @see "RspProduct".
 # }
 #
+# \section{Processing RSP files from the command line}{
+#   Using @see "Rscript" and \code{rfile()}, it is possible to process
+#   an RSP file from the command line.  For example,
+#
+#   \code{Rscript -e "R.rsp::rfile('random-args.txt.rsp', path=system.file('exData', package='R.rsp'))" --args --K=50}
+#
+#   silently parses and evaluates the 'random-args.txt.rsp' example file and output a file 'random-args.txt' in the current directory.
+# }
+#
 # @examples "../incl/rfile.Rex"
 #
 # @author
 #
+# \seealso{
+#  @see "rstring" and @see "rcat".
+# }
+#
 # @keyword file
 # @keyword IO
 #*/########################################################################### 
-setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), postprocess=TRUE, ..., verbose=FALSE) {
+setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), args="*", postprocess=TRUE, ..., verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -113,8 +128,10 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   type <- Arguments$getCharacter(type);
 
   # Argument 'envir':
-#  envir <- Arguments$getEnvironment(envir);
+  stopifnot(is.environment(envir));
 
+  # Argument 'args':
+  args <- rargs(args);
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -146,6 +163,17 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
     printf(verbose, "Default content type: %s\n", type);
   }
 
+  verbose && enter(verbose, "Assigning RSP arguments");
+  verbose && cat(verbose, "Environment: ", getName(envir));
+  if (length(args) > 0L) {
+    verbose && cat(verbose, "Arguments assigned: ", hpaste(names(args)));
+    # Assign arguments to the parse/evaluation environment
+    attachLocally(args, envir=envir);
+  } else {
+    verbose && cat(verbose, "Arguments assigned: <none>");
+  }
+  verbose && exit(verbose);
+
   verbose && enter(verbose, "Reading RSP document");
   str <- readLines(file);
   verbose && printf(verbose, "Number of lines: %d\n", length(str));
@@ -162,7 +190,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Translating RSP document (to R)");
-  rcode <- toR(doc, envir=envir, ...);
+  rcode <- toR(doc, ...);
   verbose && printf(verbose, "Number of R source code lines: %d\n", length(rcode));
   rm(doc);
   verbose && exit(verbose);
@@ -179,7 +207,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
     setwd(workdir);
   }
 
-  res <- rcat(rcode, file=output, envir=envir, ...);
+  res <- rcat(rcode, file=output, envir=envir, args=NULL, ...);
   type <- attr(res, "type");
   rm(rcode, res);
 

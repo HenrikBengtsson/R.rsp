@@ -19,7 +19,7 @@
  Evaluates an RSP string and returns the generated string.
 }
 
-\usage{\method{rstring}{default}(..., file=NULL, path=NULL, envir=parent.frame())}
+\usage{\method{rstring}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*")}
 
 \arguments{
   \item{...}{\code{\link[base]{character}} strings with RSP markup.}
@@ -28,6 +28,8 @@
      If a file, the \code{path} is prepended to the file, iff given.}
   \item{envir}{The \code{\link[base]{environment}} in which the RSP string is
      preprocessed and evaluated.}
+  \item{args}{A named \code{\link[base]{list}} of arguments assigned to the environment
+    in which the RSP string is parsed and evaluated. See \code{\link{rargs}}().}
 }
 
 \value{
@@ -36,7 +38,11 @@
 }
 
 \examples{
-x <- rstring("A random number in [1,100]: <\%=sample(1:100, size=1)\%>\n")
+x <- rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>\n")
+cat(x)
+
+# Passing arguments
+x <- rstring("A random integer in [1,<\%=max\%>]: <\%=sample(1:max, size=1)\%>\n", args=list(max=50))
 cat(x)
 }
 

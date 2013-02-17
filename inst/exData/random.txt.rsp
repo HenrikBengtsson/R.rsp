@@ -1,0 +1,1 @@
+A random integer in [1,100]: <%=sample(1:100, size=1)%>

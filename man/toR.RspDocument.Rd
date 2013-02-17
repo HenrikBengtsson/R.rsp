@@ -20,7 +20,7 @@
  Translates the RSP document into R source code.
 }
 
-\usage{\method{toR}{RspDocument}(object, factory=RspRSourceCodeFactory(), envir=parent.frame(), ...)}
+\usage{\method{toR}{RspDocument}(object, factory=RspRSourceCodeFactory(), ...)}
 
 \arguments{
   \item{factory}{A \code{\link{RspSourceCodeFactory}}.}
