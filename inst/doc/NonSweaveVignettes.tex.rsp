@@ -58,7 +58,7 @@ Unfortunately, as of R~v2.14.0, static PDFs are not recognized and therefore not
 \section{Using the default R framework}
 \subsection{Include static PDFs}
 \label{secStaticPDF}
-Assume you have a static PDF named \file{manual.pdf} that you wish to include in your package.  Then place it in the \file{inst/doc/} directory of the package and create a corrsponding \file{manual.Rnw} stub (in the same directory) that contains:
+Assume you have a static PDF named \file{manual.pdf} that you wish to include in your package.  Then place it in the \file{inst/doc/} directory of the package and create a corresponding \file{manual.Rnw} stub (in the same directory) that contains:
 \begin{verbatim}
 %\VignetteIndexEntry{User manual}
 \documentclass{article}

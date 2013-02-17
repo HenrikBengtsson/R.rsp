@@ -198,7 +198,7 @@ setMethodS3("findProcessor", "RspProduct", function(object, ...) {
 # @keyword file
 # @keyword IO
 #*/########################################################################### 
-setMethodS3("process", "RspProduct", function(object, type=NULL, workdir=NULL, ..., verbose=FALSE) {
+setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.frame(), workdir=NULL, ..., verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::rsp() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -212,6 +212,8 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, workdir=NULL, .
   type <- Arguments$getCharacter(type, length=c(1L,1L));
   type <- tolower(type);
 
+  # Arguments 'envir':
+  stopifnot(is.environment(envir));
 
   # Arguments 'workdir':
   if (!is.null(workdir)) {
@@ -250,7 +252,11 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, workdir=NULL, .
     setwd(workdir);
   }
 
-  res <- processor(object, ..., verbose=verbose);
+  # Override type with user argument type, if given.
+  if (identical(type, getType(object))) {
+    attr(object, "type") <- type;
+  }
+  res <- processor(object, envir=envir, ..., verbose=verbose);
   verbose && print(verbose, res);
 
   # Reset working directory

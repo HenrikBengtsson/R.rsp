@@ -181,7 +181,7 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
 
 #########################################################################/**
 # @RdocMethod evaluate
-# @aliasmethod process
+# @aliasmethod findProcessor
 #
 # @title "Parses and evaluates the R code"
 #
@@ -209,7 +209,7 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("evaluate", "RspRSourceCode", function(object, output=c("string"), envir=parent.frame(), args="*", ...) {
+setMethodS3("evaluate", "RspRSourceCode", function(object, output=c("string"), envir=parent.frame(), args="*", ..., verbose=FALSE) {
   # Argument 'args':
   args <- rargs(args);
 
@@ -227,9 +227,9 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, output=c("string"), e
 }) # evaluate()
 
 
-setMethodS3("process", "RspRSourceCode", function(object, ..., envir=parent.frame()) {
-  evaluate(object, ..., envir=envir);
-}) # process()
+setMethodS3("findProcessor", "RspRSourceCode", function(object, ...) {
+  evaluate;
+}) # findProcess()
 
 
 
@@ -281,8 +281,8 @@ setMethodS3("tangle", "RspRSourceCode", function(code, ...) {
 ##############################################################################
 # HISTORY:
 # 2013-02-16
-# o Added process() for RspRSourceCode, which is declared abstract
-#   in RspProduct.
+# o Added findProcessor() for RspRSourceCode, which returns the evaluate()
+#   method.
 # o Added getCompleteCode() for RspRSourceCode.
 # o Renamed RSourceCode to RspRSourceCode.
 # 2013-02-14

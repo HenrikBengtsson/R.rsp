@@ -46,9 +46,9 @@ extends \emph{\link[R.rsp]{RspSourceCode}}\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RspRSourceCode]{evaluate}} \tab Parses and evaluates the R code.\cr
+ \tab \code{findProcessor} \tab  -\cr
  \tab \code{\link[R.rsp:getCompleteCode.RspRSourceCode]{getCompleteCode}} \tab Gets the complete R source code.\cr
  \tab \code{\link[R.rsp:parse.RspRSourceCode]{parse}} \tab Parses the R code.\cr
- \tab \code{process} \tab  -\cr
  \tab \code{rcat} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
  \tab \code{\link[R.rsp:tangle.RspRSourceCode]{tangle}} \tab Drops all text-outputting calls from the R code.\cr

@@ -12,9 +12,9 @@
 \alias{evaluate.RspRSourceCode}
 \alias{evaluate,RspRSourceCode-method}
 
-\alias{RspRSourceCode.process}
-\alias{process.RspRSourceCode}
-\alias{process,RspRSourceCode-method}
+\alias{RspRSourceCode.findProcessor}
+\alias{findProcessor.RspRSourceCode}
+\alias{findProcessor,RspRSourceCode-method}
 
 
 \title{Parses and evaluates the R code}
@@ -23,7 +23,7 @@
  Parses and evaluates the R code.
 }
 
-\usage{\method{evaluate}{RspRSourceCode}(object, output=c("string"), envir=parent.frame(), args="*", ...)}
+\usage{\method{evaluate}{RspRSourceCode}(object, output=c("string"), envir=parent.frame(), args="*", ..., verbose=FALSE)}
 
 \arguments{
   \item{output}{A \code{\link[base]{character}} string specifying type of output function.}

@@ -44,11 +44,11 @@ extends logical\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:findProcessor.RspProduct]{findProcessor}} \tab Tries to locate a processor for an RSP product.\cr
+ \tab \code{\link[R.rsp:findProcessor.RspProduct]{findProcessor}} \tab Locates a processor for an RSP product.\cr
  \tab \code{\link[R.rsp:getType.RspProduct]{getType}} \tab Gets the type of an RSP product.\cr
  \tab \code{\link[R.rsp:hasProcessor.RspProduct]{hasProcessor}} \tab Checks whether a processor exist or not for an RSP product.\cr
  \tab \code{\link[R.rsp:print.RspProduct]{print}} \tab Prints a summary of an RSP product.\cr
- \tab \code{\link[R.rsp:process.RspProduct]{process}} \tab Processes an RSP product.\cr
+ \tab \code{\link[R.rsp:process.RspProduct]{process}} \tab Processes an RSP file product.\cr
 }
 
 

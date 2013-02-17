@@ -19,7 +19,7 @@
  Processes an RSP file product.
 }
 
-\usage{\method{process}{RspProduct}(object, type=NULL, workdir=NULL, ..., verbose=FALSE)}
+\usage{\method{process}{RspProduct}(object, type=NULL, envir=parent.frame(), workdir=NULL, ..., verbose=FALSE)}
 
 \arguments{
   \item{type}{A \code{\link[base]{character}} string specifying the content type.}

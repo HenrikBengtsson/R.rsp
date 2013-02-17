@@ -45,7 +45,7 @@ extends \link[R.rsp]{RspProduct}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{findProcessor} \tab  -\cr
+ \tab \code{\link[R.rsp:findProcessor.RspFileProduct]{findProcessor}} \tab Locates a processor for an RSP file product.\cr
  \tab \code{\link[R.rsp:getType.RspFileProduct]{getType}} \tab Gets the type of an RSP file product.\cr
  \tab \code{\link[R.rsp:print.RspFileProduct]{print}} \tab Prints a summary of an RSP file product.\cr
 }
