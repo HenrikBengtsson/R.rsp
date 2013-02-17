@@ -96,14 +96,14 @@ Assume you have an RSP-embedded LaTeX vignette named \file{manual.tex.rsp} that 
 \begin{verbatim}
 %\VignetteIndexEntry{User manual}
 %\VignetteSource{manual.tex.rsp}
-%\VignetteBuild{R.rsp::rsp("manual.tex.rsp")}
+%\VignetteBuild{R.rsp::file("manual.tex.rsp")}
 \documentclass{article}
 \begin{document}
 \end{document}
 \end{verbatim}
 Note that the "commands" \code{{\bs}VignetteSource\{\}} and \code{{\bs}VignetteBuild\{\}} are custom to our setup (recognized by the above Makefile) and are \emph{not} recognized by the R system.
 The optional \code{{\bs}VignetteSource\{\}} command specifies which source file should be listed in the \code{help.start()} vignette overview.  If left out or left empty, no source file will be listed.
-The \code{{\bs}VignetteBuild\{\}} command specifies what R command to run for building the vignette.  Here we use the \code{rsp()} command of the \pkg{R.rsp} package to build the \file{manual.pdf} from the \file{manual.tex.rsp} file.   The build command can be any R expression, which means that it is possible to compile virtually any type of documents using this technique.
+The \code{{\bs}VignetteBuild\{\}} command specifies what R command to run for building the vignette.  Here we use the \code{rfile()} command of the \pkg{R.rsp} package to build the \file{manual.pdf} from the \file{manual.tex.rsp} file.   The build command can be any R expression, which means that it is possible to compile virtually any type of documents using this technique.
 
 
 
@@ -133,7 +133,7 @@ paste(bfr, collapse="\n");
 This document was created the RSP-embedded LaTeX vignette \file{NonSweaveVignettes.tex.rsp} located in the \file{doc/} package directory of \pkg{R.rsp}.  It can manually be compiled into a PDF as:
 \begin{verbatim}
 pathname <- system.file("doc/NonSweaveVignettes.tex.rsp", package="R.rsp");
-R.rsp::rsp(pathname);
+R.rsp::file(pathname);
 \end{verbatim}
 The generated PDF can then be included into the package as a static PDF (as explained in Section~\ref{secStaticPDF}).
 However, in this package we have choosen to build it dynamically during package build, by adding an \file{inst/doc/NonSweaveVignettes.Rnw} file (as explained in Section~\ref{secRSPVignette}), which contains:
@@ -147,7 +147,7 @@ paste(bfr, collapse="\n");
 
 \subsection*{Session information}
 <%=toLatex(sessionInfo())%>
-This report was automatically generated using \code{rsp()} of the R.rsp package.
+This report was automatically generated using \code{rfile()} of the R.rsp package.
 Total processing time after RSP-to-R translation was <%=dt <- round(Sys.time()-t0, digits=2)%> <%=attr(dt, "units")%>.
 
 \end{document}

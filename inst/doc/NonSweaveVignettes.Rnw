@@ -9,7 +9,7 @@
 %\VignetteIndexEntry{Include static PDFs and non-Sweave vignettes in an R package}
 %\VignetteKeyword{R, package, vignette, static PDF}
 %\VignetteSource{NonSweaveVignettes.tex.rsp}
-%\VignetteBuild{R.rsp::rfile}
+%\VignetteBuild{R.rsp::rfile("NonSweaveVignettes.tex.rsp")}
 \documentclass{article}
 \begin{document}
 \end{document}
