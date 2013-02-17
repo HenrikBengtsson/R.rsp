@@ -15,6 +15,8 @@
 #   \item{unique}{If @TRUE, the returned set of arguments contains only
 #     unique arguments such that if two or more arguments has then same
 #     name, it is only the last occurance that is returned.}
+#   \item{adhoc}{If @TRUE, addtional ad hoc coercion of @character
+#     command line arguments is performed by trial and error, iff possible.}
 #   \item{...}{Not used.}
 # }
 #
@@ -35,7 +37,9 @@
 #      By default, the values of these command line arguments are
 #      @character strings.  However, if \code{args} or \code{defaults}
 #      contain arguments with the same names, the corresponding command
-#      line arguments are coerced to their data types.
+#      line arguments are coerced to that data types.
+#      Then, if \code{adhoc=TRUE}, any remaining character string arguments
+#      are coerced to @numerics, iff possible (i.e. unless the result is @NA).
 #   }
 #
 #   If argument \code{args} is a @vector (non-list), then it is coerced to
@@ -49,7 +53,7 @@
 #
 # @keyword internal
 #*/###########################################################################
-setMethodS3("rargs", "default", function(args="*", defaults=list(), unique=TRUE, ...) {
+setMethodS3("rargs", "default", function(args="*", defaults=list(), unique=TRUE, adhoc=TRUE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -68,6 +72,51 @@ setMethodS3("rargs", "default", function(args="*", defaults=list(), unique=TRUE,
 
     x;
   } # assertNamedList()
+
+  cmdArgs <- function(types=c(), adhoc=TRUE) {
+    # Get parsed command lines arguments
+    args <- R.utils::commandArgs(asValues=TRUE, excludeReserved=TRUE)[-1L];
+
+    # Nothing todo?
+    if (length(args) == 0L) {
+      return(args);
+    }
+    # Corce arguments to known data types?
+    if (length(types) > 0L) {
+      keys <- names(args);
+      idxs <- which(is.element(keys, names(types)));
+      if (length(idxs) > 0L) {
+        argsT <- args[idxs];
+        typesT <- types[names(argsT)];
+        for (jj in seq_along(argsT)) {
+          storage.mode(argsT[[jj]]) <- typesT[jj];
+        }
+        args[idxs] <- argsT;
+      }
+    }
+
+    # Ad hoc corcion of numerics?
+    if (adhoc) {
+      modes <- sapply(args, FUN=storage.mode);
+      idxs <- which(modes == "character");
+      if (length(idxs) > 0L) {
+        argsT <- args[idxs];
+        # Try to coerce to numeric
+        for (kk in seq_along(argsT)) {
+          arg <- argsT[[kk]];
+          tryCatch({
+            value <- as.numeric(arg);
+            if (!is.na(value)) {
+              argsT[[kk]] <- value;
+            }
+          }, error = function(ex) {});
+        }
+        args[idxs] <- argsT;
+      }
+    }
+
+    args;
+  } # cmdArgs()
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -116,19 +165,7 @@ setMethodS3("rargs", "default", function(args="*", defaults=list(), unique=TRUE,
     if (is.null(key) || nchar(key) == 0L) {
       value <- args[[kk]];
       if (identical(value, "*")) {
-        argsT <- R.utils::commandArgs(asValues=TRUE, excludeReserved=TRUE)[-1L];
-
-        # Corce arguments to known data types
-        keysT <- names(argsT);
-        idxs <- which(is.element(keysT, names(types)));
-        if (length(idxs) > 0L) {
-          argsTT <- argsT[idxs];
-          typesTT <- types[names(argsTT)];
-          for (jj in seq_along(argsTT)) {
-            storage.mode(argsTT[[jj]]) <- typesTT[jj];
-          }
-          argsT[idxs] <- argsTT;
-        }
+        argsT <- cmdArgs(types=types, adhoc=adhoc);
       } else {
         throw(sprintf("Unknown argument template (cannot expand): '%s'", key));
       }

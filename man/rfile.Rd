@@ -78,6 +78,10 @@ cat(lines, collapse="\n")
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
+\seealso{
+ \code{\link{rstring}}() and \code{\link{rcat}}().
+}
+
 
 
 \keyword{file}

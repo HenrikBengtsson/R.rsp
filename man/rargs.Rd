@@ -16,7 +16,7 @@
  Expands a set of arguments.
 }
 
-\usage{\method{rargs}{default}(args="*", defaults=list(), unique=TRUE, ...)}
+\usage{\method{rargs}{default}(args="*", defaults=list(), unique=TRUE, adhoc=TRUE, ...)}
 
 \arguments{
   \item{args}{A \code{\link[base]{vector}} or a \code{\link[base]{list}} of arguments.}
@@ -24,6 +24,8 @@
   \item{unique}{If \code{\link[base:logical]{TRUE}}, the returned set of arguments contains only
     unique arguments such that if two or more arguments has then same
     name, it is only the last occurance that is returned.}
+  \item{adhoc}{If \code{\link[base:logical]{TRUE}}, addtional ad hoc coercion of \code{\link[base]{character}}
+    command line arguments is performed by trial and error, iff possible.}
   \item{...}{Not used.}
 }
 
@@ -44,7 +46,9 @@
      By default, the values of these command line arguments are
      \code{\link[base]{character}} strings.  However, if \code{args} or \code{defaults}
      contain arguments with the same names, the corresponding command
-     line arguments are coerced to their data types.
+     line arguments are coerced to that data types.
+     Then, if \code{adhoc=TRUE}, any remaining character string arguments
+     are coerced to \code{\link[base]{numeric}}s, iff possible (i.e. unless the result is \code{\link[base]{NA}}).
   }
 
   If argument \code{args} is a \code{\link[base]{vector}} (non-list), then it is coerced to
