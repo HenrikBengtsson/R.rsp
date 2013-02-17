@@ -70,3 +70,5 @@ str(args)
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
+
+\keyword{internal}

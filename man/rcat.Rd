@@ -44,7 +44,8 @@
 
   \code{Rscript -e "R.rsp::rcat('A random integer in [1,<\%=K\%>]: <\%=sample(1:K, size=1)\%>')" --args --K=50}
 
-  silently parses and evaluates the 'random-args.txt.rsp' example file and output a file 'random-args.txt' in the current directory.
+  parses and evaluates the RSP string and outputs the result to
+  standard output.
 }
 
 \examples{
@@ -59,6 +60,6 @@ rcat("A random integer in [1,<\%=K\%>]: <\%=sample(1:K, size=1)\%>\n", args=list
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
- \code{\link{rstring}}().
+ \code{\link{rstring}}() and \code{\link{rfile}}().
 }
 

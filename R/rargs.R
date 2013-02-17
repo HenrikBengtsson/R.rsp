@@ -46,6 +46,8 @@
 # @examples "../incl/rargs.Rex"
 #
 # @author
+#
+# @keyword internal
 #*/###########################################################################
 setMethodS3("rargs", "default", function(args="*", defaults=list(), unique=TRUE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
