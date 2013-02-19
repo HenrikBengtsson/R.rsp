@@ -3,7 +3,7 @@
 <%
 # Copy the Webcuts.js javascript to the response output directory
 file.copy(filePath(getPath(page), "helloWorld.rsp"), 
-          filePath(getPath(response), "helloWorld.rsp.txt"));
+          filePath(getwd(), "helloWorld.rsp.txt"));
 %>
 
 <%

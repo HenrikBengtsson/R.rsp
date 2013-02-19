@@ -20,16 +20,17 @@
  Processes an RSP page.
 }
 
-\synopsis{processRsp.HttpDaemon(static, ...)}
-\usage{HttpDaemon$processRsp(...)}
+\synopsis{processRsp.HttpDaemon(static=getStaticInstance(HttpDaemon), pathname=tcltk::tclvalue("mypath"), version=getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0"), ...)}
+\usage{HttpDaemon$processRsp(pathname=tcltk::tclvalue("mypath"), version=getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0"), ...)}
 
 \arguments{
+  \item{pathname}{The RSP file to be processed.}
+  \item{version}{The version of the RSP processor to use.}
   \item{...}{Not used.}
 }
 
 \value{
- Returns (invisibly) the translated RSP document as a single
- \code{\link[base]{character}} string.
+ Returns nothing.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

@@ -76,6 +76,7 @@ for (kk in seq(length=length(opts))) {
 
   dataTypes <- ROptions$getDataTypes(name);
   isSimpleDataType <- (length(dataTypes) == 1);
+  canEdit <- TRUE;
   type <- "text";
 %>
 
@@ -117,7 +118,15 @@ for (kk in seq(length=length(opts))) {
 <input type="submit" name="action" value="Save">
 <input type="submit" name="action" value="Cancel">
 <% } else { %>
-<strong><%=name%></strong> (<a href="options.rsp?toEdit=<%=name%>">edit</a>)<br>
+<strong><%=name%></strong>
+<% if (is.function(valueStr)) { %>
+<%
+valueStr <- capture.output(args(valueStr)); 
+valueStr <- valueStr[-length(valueStr)];
+canEdit <- FALSE;
+%>
+<% } %>
+<% if (canEdit) { %>(<a href="options.rsp?toEdit=<%=name%>">edit</a>)<% } %><br>
 <code><%=valueStr%></code>
 <% } # if (name %in% toEdit) %>
 <br>

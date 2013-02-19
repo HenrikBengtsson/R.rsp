@@ -4,7 +4,7 @@
         "http://www.w3.org/TR/REC-html40/loose.dtd">
 
 <%
-path <- getPath(response);
+path <- getwd();
 
 # Find a working PNG device
 png <- System$findGraphicsDevice();

@@ -11,12 +11,13 @@
 # @synopsis
 #
 # \arguments{
+#   \item{pathname}{The RSP file to be processed.}
+#   \item{version}{The version of the RSP processor to use.}
 #   \item{...}{Not used.}
 # }
 #
 # \value{
-#  Returns (invisibly) the translated RSP document as a single 
-#  @character string.
+#  Returns nothing.
 # }
 #
 # @author
@@ -27,59 +28,91 @@
 #
 # @keyword IO
 #*/######################################################################### 
-setMethodS3("processRsp", "HttpDaemon", function(static, ...) {
+setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDaemon), pathname=tcltk::tclvalue("mypath"), version=getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0"), ...) {
   # If processRsp() was called from Tcl, then it is called without
-  # arguments, which is why we need this rather ad hoc solution here.
-  if (missing(static)) {
-    static <- getStaticInstance(HttpDaemon);
+  # arguments, which is why we need this rather ad hoc solution to
+  # default 'static' to getStaticInstance().
+  daemon <- static;
+
+
+  # Use a "global" tryCatch() to catch and respond to RSP processing errors
+  tryCatch({
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'pathname':
+  pathname <- as.character(pathname);
+  
+  # Validate pathname
+  pathname <- Arguments$getReadablePathname(pathname);
+
+  # Argment 'version':
+  if (!is.element(version, c("0.1.0", "1.0.0"))) {
+    throw("Unknown HttpDaemon RSP version: ", version);
   }
 
-  # Get the request information
-  request <- getHttpRequest(static);
 
-  pathname <- as.character(tcltk::tclvalue("mypath"));
-
-
-  # The connection where to write RSP response output to.
-  response <- HttpDaemonRspResponse(httpDaemon=static);
-
-  # Process the RSP
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Setup
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   path <- getParent(pathname);
   filename <- basename(pathname);
-  tryCatch({
-    opwd <- getwd();
 
-    # Validate the filename
-    if (!isFile(pathname))
-      stop("File not found: ", pathname);
+  # Record the current directory
+  opwd <- getwd();
+  on.exit(setwd(opwd));
 
-    static$pwd <- opwd;
-    setwd(path);
+  # Set the current working directory of the HTTP daemon
+  daemon$pwd <- opwd;
+  setwd(path);
+ 
+  # Get the HTTP request information
+  request <- getHttpRequest(daemon);
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Process RSP file
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (version == "0.1.0") {
+    # The connection where to write RSP response output to.
+    response <- HttpDaemonRspResponse(httpDaemon=daemon);
+    on.exit({
+      # print("Flushing buffered response.");
+      flush(response);
+    }, add=TRUE);
+  
+    # Process the RSP
     tryCatch({
-      sourceRsp(file=filename, path=getwd(), request=request, 
-                                                          response=response);
+      sourceRsp(file=filename, path=getwd(), request=request, response=response);
     }, error = function(ex) {
-      print("ERROR0:");
-      write(response, as.character(ex));
-      if (!is.null(ex$code))
-        write(response, ex$code, collapse="\n");
-    }) 
+      flush(response);
+      # Rethrow
+      throw(ex);
+    })
+  } else if (version == "1.0.0") {
+    page <- RspPage(pathname);
+    s <- rstring(file=filename, args=list(page=page, request=request));
+    if (nchar(s) > 0L) writeResponse(daemon, s);
+  }
+
+
   }, error = function(ex) {
     print("ERROR:");
     print(ex);
-    write(response, as.character(ex));
-  }, finally = {
-    # print("Flushing buffered response.");
-    flush(response);
-    setwd(opwd);
-  })
+    writeResponse(daemon, as.character(ex));
+    if (!is.null(ex$code)) {
+      writeResponse(daemon, ex$code, collapse="\n");
+    }
+  }) # tryCatch()
 }, static=TRUE, protected=TRUE)
 
 
 
 ###############################################################################
 # HISTORY:
+# 2013-02-18
+# o Added argument 'version' to processRsp() for HttpDaemon.
 # 2011-03-12
 # o CLEANUP: Replaced on HttpDaemon$<method>(...) with <method>(static, ...).
 # 2007-06-10
