@@ -208,7 +208,7 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
       pathname <- Arguments$getReadablePathname(object, mustExist=!fake);
       pathnameR <- processor(pathname, ..., fake=fake);
       pathnameR <- getAbsolutePath(pathnameR);
-      pathnameR <- RspFileProduct(pathnameR);
+      pathnameR <- RspFileProduct(pathnameR, mustExist=FALSE);
     } # fcn()
     verbose && cat(verbose, "Processor found: ", type);
   }
