@@ -13,6 +13,8 @@
 # \arguments{
 #   \item{file}{The file to be weaved.}
 #   \item{...}{Not used.}
+#   \item{fake}{If @TRUE, nothing is done, but the pathname of the 
+#      output file that would have been created is still returned.}
 #   \item{envir}{The @environment where the RSP document is 
 #         parsed and evaluated.}
 # }
@@ -32,7 +34,7 @@
 # @keyword IO
 # @keyword internal
 #*/########################################################################### 
-rspWeave <- function(file, ..., envir=parent.frame()) {
+rspWeave <- function(file, ..., fake=FALSE, envir=parent.frame()) {
   # From help("vignetteEngine", package="tools"):
   #  "If the filename being processed has one of the Sweave extensions
   # (i.e. matching the regular expression ".[RrSs](nw|tex)$", the weave
@@ -60,7 +62,7 @@ rspWeave <- function(file, ..., envir=parent.frame()) {
     output <- NULL;
   }
 
-  rfile(file, output=output, workdir=".", postprocess=FALSE, envir=envir);
+  rfile(file, output=output, workdir=".", postprocess=FALSE, envir=envir, fake=fake);
 } # rspWeave()
 
 
@@ -80,6 +82,8 @@ rspWeave <- function(file, ..., envir=parent.frame()) {
 # \arguments{
 #   \item{file}{The file to be tangled.}
 #   \item{...}{Not used.}
+#   \item{fake}{If @TRUE, nothing is done, but the pathname of the 
+#      output file that would have been created is still returned.}
 #   \item{envir}{The @environment where the RSP document is parsed.}
 # }
 #
@@ -97,16 +101,21 @@ rspWeave <- function(file, ..., envir=parent.frame()) {
 # @keyword IO
 # @keyword internal
 #*/########################################################################### 
-rspTangle <- function(file, ..., envir=parent.frame()) {
+rspTangle <- function(file, ..., fake=FALSE, envir=parent.frame()) {
   # Setup output R file
   workdir <- ".";
   filename <- basename(file);
   fullname <- gsub("[.]([^.])$", "", filename);
   filenameR <- sprintf("%s.R", fullname);
   pathnameR <- Arguments$getWritablePathname(filenameR, path=workdir);
+  pathnameR <- getAbsolutePath(pathnameR);
+
+  if (fake) {
+    return(pathnameR);
+  }
 
   # Read RSP file
-  lines <- readLines(file);
+  lines <- readLines(file, warn=FALSE);
 
   # Setup RSP string
   s <- RspString(lines, source=file);
@@ -130,6 +139,8 @@ rspTangle <- function(file, ..., envir=parent.frame()) {
 
 ###############################################################################
 # HISTORY:
+# 2013-02-18
+# o Added argument 'fake' to rspSweave() and rspTangle().
 # 2013-02-14
 # o Created.
 ###############################################################################

@@ -15,6 +15,7 @@
 # \arguments{
 #   \item{pathname}{An existing file.}
 #   \item{...}{Additional arguments passed to @see "RspProduct".}
+#   \item{mustExist}{If @TRUE, it is asserted that the file exists.}
 # }
 #
 # \section{Fields and Methods}{
@@ -25,10 +26,10 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspFileProduct", function(pathname=NA, ...) {
+setConstructorS3("RspFileProduct", function(pathname=NA, ..., mustExist=TRUE) {
   # Argument 'pathname':
   if (!is.null(pathname) && !is.na(pathname)) {
-    Arguments$getReadablePathname(pathname);
+    Arguments$getReadablePathname(pathname, mustExist=mustExist);
   }
 
   extend(RspProduct(pathname, ...), "RspFileProduct");
@@ -202,10 +203,10 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
   } else {
     # Make sure the processor returns an RspFileProduct
     processor <- fcn;
-    fcn <- function(pathname, ...) {
+    fcn <- function(pathname, ..., fake=FALSE) {
       # Arguments 'pathname':
-      pathname <- Arguments$getReadablePathname(object);
-      pathnameR <- processor(pathname, ...);
+      pathname <- Arguments$getReadablePathname(object, mustExist=!fake);
+      pathnameR <- processor(pathname, ..., fake=fake);
       pathnameR <- getAbsolutePath(pathnameR);
       pathnameR <- RspFileProduct(pathnameR);
     } # fcn()
@@ -221,6 +222,8 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
 ############################################################################
 # HISTORY:
+# 2013-02-18
+# o Added argument 'fake' to the returned processor.
 # 2013-02-13
 # o Added RspProduct and RspFileProduct with corresponding 
 #   process() methods.

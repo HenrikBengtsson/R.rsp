@@ -191,6 +191,7 @@ setMethodS3("findProcessor", "RspProduct", function(object, ...) {
 #
 # \value{
 #   Returns the processed RSP product output as another @see "RspProduct".
+#   If no processor exists, the input object itself is returned.
 # }
 #
 # @author
@@ -198,7 +199,7 @@ setMethodS3("findProcessor", "RspProduct", function(object, ...) {
 # @keyword file
 # @keyword IO
 #*/########################################################################### 
-setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.frame(), workdir=NULL, ..., verbose=FALSE) {
+setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.frame(), workdir=NULL, ..., fake=FALSE, verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::rsp() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -222,6 +223,9 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
     workdir <- getAbsolutePath(workdir);
   }
 
+  # Argument 'fake':
+  fake <- Arguments$getLogical(fake);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -233,6 +237,10 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
   verbose && enter(verbose, "Processing RSP product");
   verbose && print(verbose, object);
 
+  if (fake) {
+    verbose && cat(verbose, "Processing mode: fake");
+  }
+
   processor <- findProcessor(object, verbose=verbose);
 
   # Nothing to do?
@@ -240,7 +248,7 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
     verbose && cat(verbose, "There is no known processor for this content type: ", type);
     verbose && exit(verbose);
     verbose && exit(verbose);
-    return(NULL);
+    return(object);
   }
 
   verbose && enter(verbose, "Processing");
@@ -256,7 +264,7 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
   if (identical(type, getType(object))) {
     attr(object, "type") <- type;
   }
-  res <- processor(object, envir=envir, ..., verbose=verbose);
+  res <- processor(object, envir=envir, ..., fake=fake, verbose=verbose);
   verbose && print(verbose, res);
 
   # Reset working directory
@@ -277,6 +285,8 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
 
 ############################################################################
 # HISTORY:
+# 2013-02-18
+# o Added argument 'fake' to process() for RspProduct.
 # 2013-02-16
 # o Added a general process() for RspProduct, which was adopted from
 #   former ditto for RspFileProduct.

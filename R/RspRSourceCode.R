@@ -228,7 +228,9 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, output=c("string"), e
 
 
 setMethodS3("findProcessor", "RspRSourceCode", function(object, ...) {
-  evaluate;
+  function(..., fake=FALSE) {
+    evaluate(...);
+  }
 }) # findProcess()
 
 

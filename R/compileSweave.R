@@ -16,6 +16,8 @@
 #      Sweave document to be compiled.}
 #   \item{...}{Additional arguments passed to @see "compileLaTeX".}
 #   \item{outPath}{The output and working directory.}
+#   \item{fake}{If @TRUE, nothing is done, but the pathname of the 
+#      output file that would have been created is still returned.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
@@ -33,15 +35,18 @@
 # @keyword IO
 # @keyword internal
 #*/########################################################################### 
-setMethodS3("compileSweave", "default", function(filename, path=NULL, ..., outPath=".", verbose=FALSE) {
+setMethodS3("compileSweave", "default", function(filename, path=NULL, ..., outPath=".", fake=FALSE, verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'fake':
+  fake <- Arguments$getLogical(fake);
+
   # Arguments 'filename' & 'path':
-  pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);
+  pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=!fake);
 
   # Arguments 'outPath':
   outPath <- Arguments$getWritablePath(outPath);
@@ -66,7 +71,21 @@ setMethodS3("compileSweave", "default", function(filename, path=NULL, ..., outPa
     opwd <- setwd(outPath);
   }
 
-  pathname2 <- Sweave(pathname);
+  if (fake) {
+    pathname2 <- NULL;
+    patterns <- c(tex="(.*)[.][rRsS](nw|tex)$");
+    for (ext in names(patterns)) {
+      if (regexpr(patterns[ext], pathname) != -1L) {
+        pathname2 <- gsub(patterns[ext], sprintf("\\1.%s", ext), pathname);
+      }
+    }
+    if (is.null(pathname2)) {
+      throw("Unrecognized Sweave filename extension: ", pathname);
+    }
+  } else {
+    pathname2 <- Sweave(pathname);
+  }
+
   pathname2 <- getAbsolutePath(pathname2);
   verbose && cat(verbose, "Sweave output pathname: ", pathname2);
 
@@ -78,7 +97,7 @@ setMethodS3("compileSweave", "default", function(filename, path=NULL, ..., outPa
   isLaTeX <- (tolower(ext) == "tex");
   if (isLaTeX) {
     verbose && enter(verbose, "Compiling Sweave-generated LaTeX document");
-    pathname3 <- compileLaTeX(pathname2, ..., outPath=outPath, verbose=less(verbose, 10));
+    pathname3 <- compileLaTeX(pathname2, ..., outPath=outPath, fake=fake, verbose=less(verbose, 10));
     verbose && cat(verbose, "Output pathname: ", pathname3);
     verbose && exit(verbose);
   } else {
@@ -93,6 +112,8 @@ setMethodS3("compileSweave", "default", function(filename, path=NULL, ..., outPa
 
 ############################################################################
 # HISTORY:
+# 2013-02-18
+# o Added argument 'fake' to compileSweave().
 # 2012-12-06
 # o Added argument 'outPath' to compileSweave(), which is also the 
 #   working directory.

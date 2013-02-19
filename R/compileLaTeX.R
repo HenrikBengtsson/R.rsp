@@ -16,6 +16,8 @@
 #   \item{clean, quiet}{Additional arguments passed to @see "tools::texi2dvi".}
 #   \item{...}{Not used.}
 #   \item{outPath}{The output and working directory.}
+#   \item{fake}{If @TRUE, nothing is done, but the pathname of the 
+#      output file that would have been created is still returned.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
@@ -34,15 +36,18 @@
 # @keyword IO
 # @keyword internal
 #*/########################################################################### 
-setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("pdf", "dvi"), clean=FALSE, quiet=TRUE, ..., outPath=".", verbose=FALSE) {
+setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("pdf", "dvi"), clean=FALSE, quiet=TRUE, ..., outPath=".", fake=FALSE, verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'fake':
+  fake <- Arguments$getLogical(fake);
+
   # Arguments 'filename' & 'path':
-  pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);
+  pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=!fake);
 
   # Arguments 'outPath':
   outPath <- Arguments$getWritablePath(outPath);
@@ -71,6 +76,12 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
   pathnameOut <- filePath(outPath, filenameOut);
   verbose && cat(verbose, "Output pathname (", toupper(format), "): ", getAbsolutePath(pathnameOut));
 
+  if (fake) {
+    verbose && cat(verbose, "Returning early (fake=TRUE)");
+    verbose && exit(verbose);
+    return(pathnameOut);
+  }
+
   opwd <- ".";
   on.exit(setwd(opwd), add=TRUE);
   if (!is.null(outPath)) {
@@ -94,6 +105,8 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
 
 ############################################################################
 # HISTORY:
+# 2013-02-18
+# o Added argument 'fake' to compileLaTeX().
 # 2012-12-06
 # o Added argument 'outPath' to compileLaTeX(), which is also the 
 #   working directory.
