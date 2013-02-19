@@ -347,9 +347,9 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
       pos <- regexpr("^[ \t]+", bfr);
       len <- attr(pos, "match.length");
       bfr <- substring(bfr, first=len+1L);
-    
+
       attrs <- list();
-      if (nchar(bfr) >= 0L) {
+      if (nchar(bfr) > 0L) {
         # Add a white space
         bfr <- paste(" ", bfr, sep="");
         while (nchar(bfr) > 0L) {
@@ -392,7 +392,7 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
           attrs <- c(attrs, value);
         }
       } # if (nchar(bfr) > 0)
-    
+
       # Check for duplicated attributes  
       if (length(names(attrs)) != length(unique(names(attrs))))
           throw(Exception("Duplicated attributes.", code=rspCode));
@@ -475,7 +475,7 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
       #
       # <%@directive attr1="foo" attr2="bar" ...%>
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      pattern <- "^@[ ]*([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*)[ ]+(.*)$";
+      pattern <- "^@[ ]*([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*)([ ]+(.*))*$";
       if (regexpr(pattern, part) != -1L) {
         # <%@foo attr1="bar" attr2="geek"%> => ...
         directive <- gsub(pattern, "\\1", part);
@@ -521,6 +521,8 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
 
 ##############################################################################
 # HISTORY:
+# 2013-02-18
+# o BUG FIX: Preprocessing directives without attributes where not recognized.
 # 2013-02-13
 # o Added getType() for RspString.
 # 2013-02-12

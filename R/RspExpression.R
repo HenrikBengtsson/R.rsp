@@ -673,6 +673,15 @@ setMethodS3("getType", "RspPageDirective", function(directive, ...) {
 })
 
 
+setConstructorS3("RspIfeqDirective", function(...) {
+  extend(RspDirective("ifeq", ...), "RspIfeqDirective")
+})
+
+setConstructorS3("RspEndifDirective", function(...) {
+  extend(RspDirective("endif", ...), "RspEndifDirective")
+})
+
+
 ##############################################################################
 # HISTORY:
 # 2013-02-13
