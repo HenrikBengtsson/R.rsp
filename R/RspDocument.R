@@ -529,11 +529,16 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # RspIncludeDirective => ...
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(expr, "RspIncludeDirective")) {
-      file <- getFileT(expr, path=getPath(object), index=idx, verbose=verbose);
-      lines <- readLines(file, warn=FALSE);
+      text <- getText(expr);
+      if (is.null(text)) {
+        file <- getFileT(expr, path=getPath(object), index=idx, verbose=verbose);
+        text <- readLines(file, warn=FALSE);
+      } else {
+        file <- getSource(object);
+      }
   
       # Parse RSP string to RSP document
-      rstr <- RspString(lines, type=getType(object), source=file);
+      rstr <- RspString(text, type=getType(object), source=file);
 
       doc <- parse(rstr, envir=envir, verbose=verbose);
 
@@ -550,7 +555,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       object[[idx]] <- doc;
   
       # Not needed anymore
-      rm(rstr, lines, doc);
+      rm(rstr, text, doc);
   
       verbose && exit(verbose);
       next;

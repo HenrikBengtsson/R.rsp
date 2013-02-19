@@ -40,7 +40,8 @@ extends \link[R.rsp]{RspDirective}\cr
  \usage{RspIncludeDirective(attributes=list(), ...)}
 
  \arguments{
-   \item{attributes}{A named \code{\link[base]{list}}, which must contain a 'file' element.}
+   \item{attributes}{A named \code{\link[base]{list}}, which must contain either
+      a 'file' or a 'text' element.}
    \item{...}{Optional arguments passed to the constructor
               of \code{\link{RspDirective}}.}
  }
@@ -49,6 +50,7 @@ extends \link[R.rsp]{RspDirective}\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:getFile.RspIncludeDirective]{getFile}} \tab Gets the file attribute.\cr
+ \tab \code{getText} \tab  -\cr
 }
 
 

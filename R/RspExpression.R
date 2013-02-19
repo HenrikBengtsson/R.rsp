@@ -411,7 +411,8 @@ setConstructorS3("RspUnknownDirective", function(...) {
 # @synopsis
 #
 # \arguments{
-#   \item{attributes}{A named @list, which must contain a 'file' element.}
+#   \item{attributes}{A named @list, which must contain either 
+#      a 'file' or a 'text' element.}
 #   \item{...}{Optional arguments passed to the constructor 
 #              of @see "RspDirective".}
 # }
@@ -428,8 +429,8 @@ setConstructorS3("RspIncludeDirective", function(attributes=list(), ...) {
   # Argument 'attributes':
   if (!missing(attributes)) {
     keys <- names(attributes);
-    if (!any(is.element(c("file"), keys))) {
-      throw("Missing attribute 'file' for the RSP 'include' directive: ", hpaste(keys));
+    if (!any(is.element(c("file", "text"), keys))) {
+      throw("A RSP 'include' directive must contain either a 'file' or a 'text' attribute: ", hpaste(keys));
     }
   }
 
@@ -466,6 +467,36 @@ setConstructorS3("RspIncludeDirective", function(attributes=list(), ...) {
 setMethodS3("getFile", "RspIncludeDirective", function(directive, ...) {
   attr(directive, "file");
 })
+
+#########################################################################/**
+# @RdocMethod getText
+#
+# @title "Gets the text"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getText", "RspIncludeDirective", function(directive, ...) {
+  attr(directive, "text");
+})
+
 
 
 
@@ -758,6 +789,8 @@ setConstructorS3("RspEndifDirective", function(...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-02-19
+# o Added support for attribute 'text' of RspIncludeDirective:s.
 # 2013-02-18
 # o Added RspIfeqDirective, RspElseDirective, and RspEndifDirective.
 # 2013-02-13
