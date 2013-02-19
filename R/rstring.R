@@ -53,7 +53,7 @@ setMethodS3("rstring", "default", function(..., file=NULL, path=NULL, envir=pare
   if (is.null(file)) {
     s <- RspString(...);
   } else {
-    s <- readLines(file);
+    s <- readLines(file, warn=FALSE);
     s <- RspString(s, source=file);
   }
 

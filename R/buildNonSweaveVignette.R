@@ -35,7 +35,7 @@ parseVignette <- function(pathname, commentPrefix="^%[ \t]*", ...) {
     stop("Cannot build vignette. File not found: ", pathname);
   }
 
-  bfr <- readLines(pathname);
+  bfr <- readLines(pathname, warn=FALSE);
 
   # Parse for "\Vignette" options
   pattern <- sprintf("%s\\\\Vignette(.*)\\{(.*)\\}", commentPrefix);

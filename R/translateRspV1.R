@@ -310,7 +310,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
         if (!isFile(pathname))
           throw("Cannot translate RSP file. File not found: ", pathname);
       }
-      text <- readLines(pathname);
+      text <- readLines(pathname, warn=FALSE);
     }
   } else {
     # When does this happen? /HB 2006-07-04
@@ -436,7 +436,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
 
           if (isUrl(file)) {
             fh <- url(file);
-            lines <- readLines(fh);
+            lines <- readLines(fh, warn=FALSE);
           } else {
             if (!isAbsolutePath(file)) {
               file <- filePath(path, file);
@@ -446,7 +446,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
             if (!isFile(file)) {
               throw("Cannot include file. File not found: ", file);
             }
-            lines <- readLines(file);
+            lines <- readLines(file, warn=FALSE);
           }
 
           if (verbatim) {

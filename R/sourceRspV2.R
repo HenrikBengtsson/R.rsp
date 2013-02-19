@@ -42,7 +42,7 @@ setMethodS3("sourceRspV2", "default", function(..., response=FileRspResponse(fil
 
   # Translate RSP document to an R servlet
   pathnameT <- translateRsp(..., verbose=verbose);
-  rCode <- readLines(pathnameT);
+  rCode <- readLines(pathnameT, warn=FALSE);
   attr(rCode, "pathname") <- pathnameT;
 
   verbose && capture(verbose, paste("22", displayCode(code=rCode)));

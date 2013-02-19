@@ -160,7 +160,7 @@ setMethodS3("translateRsp", "default", function(filename, path=NULL, ..., force=
     verbose && cat(verbose, "Pathname: ", pathname);
 
     # Read RSP code
-    rspCode <- readLines(pathname);
+    rspCode <- readLines(pathname, warn=FALSE);
     verbose && str(verbose, rspCode);
 
     # Compile RSP to output file

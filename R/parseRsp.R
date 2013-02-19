@@ -162,7 +162,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
         part <- NULL;
         for (pathname in pathnames) {
-          bfrT <- readLines(pathname);
+          bfrT <- readLines(pathname, warn=FALSE);
 ##          bfrT <- gsub("\\", "\\\\", bfrT, fixed=TRUE);
           bfrT <- paste(bfrT, collapse="\n");
           part <- c(part, bfrT);
@@ -524,7 +524,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
           if (isUrl(file)) {
             fh <- url(file);
-            lines <- readLines(fh);
+            lines <- readLines(fh, warn=FALSE);
           } else {
             if (!isAbsolutePath(file)) {
               path <- getwd();
@@ -535,7 +535,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
             if (!isFile(file)) {
               throw("Cannot include file. File not found: ", file);
             }
-            lines <- readLines(file);
+            lines <- readLines(file, warn=FALSE);
           }
 
           if (verbatim) {

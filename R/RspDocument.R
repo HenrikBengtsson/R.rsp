@@ -461,7 +461,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(expr, "RspIncludeDirective")) {
       file <- getFileT(expr, path=getPath(object), index=idx, verbose=verbose);
-      lines <- readLines(file);
+      lines <- readLines(file, warn=FALSE);
   
       # Parse RSP string to RSP document
       rstr <- RspString(lines, type=getType(object), source=file);
@@ -518,7 +518,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
       if (!is.null(file)) {
         file <- getFileT(expr, path=getPath(object), index=idx, verbose=verbose);
-        text <- readLines(file);
+        text <- readLines(file, warn=FALSE);
       }
 
       verbose && print(verbose, getAttributes(expr));
