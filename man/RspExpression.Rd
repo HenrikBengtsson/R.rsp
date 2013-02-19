@@ -22,7 +22,7 @@
 \code{~~+--}\code{RspExpression}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.rsp]{RspCode}, \link[R.rsp]{RspCodeChunk}, \link[R.rsp]{RspComment}, \link[R.rsp]{RspDefineDirective}, \link[R.rsp]{RspDirective}, \link[R.rsp]{RspEndifDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspIfeqDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspPageDirective}, \link[R.rsp]{RspText}, \link[R.rsp]{RspUnknownDirective}\cr
+\link[R.rsp]{RspCode}, \link[R.rsp]{RspCodeChunk}, \link[R.rsp]{RspComment}, \link[R.rsp]{RspDefineDirective}, \link[R.rsp]{RspDirective}, \link[R.rsp]{RspElseDirective}, \link[R.rsp]{RspEndifDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspIfDirective}, \link[R.rsp]{RspIfeqDirective}, \link[R.rsp]{RspIfneqDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspPageDirective}, \link[R.rsp]{RspText}, \link[R.rsp]{RspUnknownDirective}\cr
 
 public class \bold{RspExpression}\cr
 extends character\cr

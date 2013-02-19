@@ -6,42 +6,47 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspDirective}
+ \name{RspIfDirective}
 \docType{class}
-\alias{RspDirective}
+\alias{RspIfDirective}
 
+ \alias{RspIfeqDirective}
+ \alias{RspIfneqDirective}
+ \alias{RspElseDirective}
+ \alias{RspEndifDirective}
 
- \title{The abstract RspDirective class}
+ \title{The RspIfeqDirective class}
 
  \description{
   Package:  R.rsp \cr
-\bold{Class RspDirective}\cr
+\bold{Class RspIfDirective}\cr
 
 \code{character}\cr
 \code{~~|}\cr
 \code{~~+--}\code{\link[R.rsp]{RspExpression}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{RspDirective}\cr
+\code{~~~~~~~+--}\code{\link[R.rsp]{RspDirective}}\cr
+\code{~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~+--}\code{RspIfDirective}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.rsp]{RspDefineDirective}, \link[R.rsp]{RspElseDirective}, \link[R.rsp]{RspEndifDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspIfDirective}, \link[R.rsp]{RspIfeqDirective}, \link[R.rsp]{RspIfneqDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspPageDirective}, \link[R.rsp]{RspUnknownDirective}\cr
+\link[R.rsp]{RspIfeqDirective}, \link[R.rsp]{RspIfneqDirective}\cr
 
-public class \bold{RspDirective}\cr
-extends \link[R.rsp]{RspExpression}\cr
+public class \bold{RspIfDirective}\cr
+extends \link[R.rsp]{RspDirective}\cr
 
 
 
-  An RspDirective is an \code{\link{RspExpression}} that represents a directive
-  to the RSP parser.
-  The directive is independent of the underlying programming language.
+  An RspIfDirective is an \code{\link{RspDirective}} that will include or
+  exclude all \code{\link{RspExpression}} until the next \code{\link{RspEndifDirective}}
+  based on the preprocessing value of the particular if clause.
+  Inclusiion/exclusion can be reverse via an \code{\link{RspElseDirective}}.
  }
 
- \usage{RspDirective(directive=character(), attributes=list(), ...)}
+ \usage{RspIfDirective(...)}
 
  \arguments{
-   \item{directive}{A \code{\link[base]{character}} string.}
-   \item{attributes}{A named \code{\link[base]{list}}.}
-   \item{...}{Not used.}
+   \item{...}{Arguments passed to the constructor of \code{\link{RspDirective}}.}
  }
 
  \section{Fields and Methods}{

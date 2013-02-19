@@ -6,42 +6,40 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspDirective}
+ \name{RspUnknownDirective}
 \docType{class}
-\alias{RspDirective}
+\alias{RspUnknownDirective}
 
 
- \title{The abstract RspDirective class}
+ \title{The RspUnknownDirective class}
 
  \description{
   Package:  R.rsp \cr
-\bold{Class RspDirective}\cr
+\bold{Class RspUnknownDirective}\cr
 
 \code{character}\cr
 \code{~~|}\cr
 \code{~~+--}\code{\link[R.rsp]{RspExpression}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{RspDirective}\cr
+\code{~~~~~~~+--}\code{\link[R.rsp]{RspDirective}}\cr
+\code{~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~+--}\code{RspUnknownDirective}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.rsp]{RspDefineDirective}, \link[R.rsp]{RspElseDirective}, \link[R.rsp]{RspEndifDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspIfDirective}, \link[R.rsp]{RspIfeqDirective}, \link[R.rsp]{RspIfneqDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspPageDirective}, \link[R.rsp]{RspUnknownDirective}\cr
+\cr
 
-public class \bold{RspDirective}\cr
-extends \link[R.rsp]{RspExpression}\cr
+public class \bold{RspUnknownDirective}\cr
+extends \link[R.rsp]{RspDirective}\cr
 
 
 
-  An RspDirective is an \code{\link{RspExpression}} that represents a directive
-  to the RSP parser.
-  The directive is independent of the underlying programming language.
+  An RspUnknownDirective is an \code{\link{RspDirective}} that is unknown.
  }
 
- \usage{RspDirective(directive=character(), attributes=list(), ...)}
+ \usage{RspUnknownDirective(...)}
 
  \arguments{
-   \item{directive}{A \code{\link[base]{character}} string.}
-   \item{attributes}{A named \code{\link[base]{list}}.}
-   \item{...}{Not used.}
+   \item{...}{Arguments passed to the constructor of \code{\link{RspDirective}}.}
  }
 
  \section{Fields and Methods}{

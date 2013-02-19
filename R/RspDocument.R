@@ -443,35 +443,54 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     verbose && enter(verbose, sprintf("RSP expresson #%d ('%s') of %d", idx, class(expr)[1L], length(idxs)));
 
     if (verbose) {
-      cat(verbose, "Number of skip rules: ", length(untilStack));
+      cat(verbose, "Number of if rules: ", length(untilStack));
       if (length(untilStack) > 0L) {
         rule <- untilStack[[1L]];
-        class <- rule$class;
-        skip <- rule$skip;
-        if (skip) {
-          verbose && cat(verbose, "Excluding until ", class);
+        until <- rule$until;
+        include <- rule$include;
+        if (include) {
+          verbose && cat(verbose, "Including until ", until);
         } else {
-          verbose && cat(verbose, "Including until ", class);
+          verbose && cat(verbose, "Excluding until ", until);
         }
       }
     } # if (verbose)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Skip until a particular RspDirective, e.g. RspEndifDirective
+    # Exclude until a particular RspDirective, e.g. RspEndifDirective
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (length(untilStack) > 0L) {
       rule <- untilStack[[1L]];
-      class <- rule$class;
-      skip <- rule$skip;
+      until <- rule$until;
+      include <- rule$include;
+      useElse <- rule$useElse;
 
-      if (skip) {
-        verbose && enter(verbose, sprintf("Skipping until %s", class));
+      if (inherits(expr, "RspElseDirective")) {
+        if (useElse) {
+          verbose && printf(verbose, "Got %s directive.\n", until);
+          # Reverse include rule
+          rule$include <- !include;
+          # No more RSP 'else' directive are allowed
+          rule$useElse <- FALSE;
+          untilStack[[1L]] <- rule;
+          # Drop
+          object[[idx]] <- NA;
 
-        if (inherits(expr, class)) {
-          verbose && printf(verbose, "Got %s directive.\n", class);
+          verbose && exit(verbose);
+          next;
+        }
+
+        throw(sprintf("Detected a stray RSP 'else' directive (#%d) within RSP '%s' directive: %s", idx, rule$clause, as.character(expr)[1L]));
+      }
+
+      if (!include) {
+        verbose && enter(verbose, sprintf("Excluding until %s", until));
+
+        if (inherits(expr, until)) {
+          verbose && printf(verbose, "Got %s directive.\n", until);
           untilStack <- untilStack[-1L];
         } else {
-          verbose && printf(verbose, "Dropping %s.\n", class(expr)[1L]);
+          verbose && printf(verbose, "Ignoring %s.\n", class(expr)[1L]);
         }
 
         # Drop
@@ -485,9 +504,9 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Keep RSP text expression as is
+    # Keep RSP text and code expression as is
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    if (inherits(expr, "RspText")) {
+    if (inherits(expr, c("RspText", "RspCode"))) {
       verbose && exit(verbose);
       next;
     } # RspText
@@ -665,14 +684,22 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # RspIfeqDirective => ...
+    # Stray RSP 'else' directive?
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    if (inherits(expr, "RspIfeqDirective")) {
+    if (inherits(expr, "RspElseDirective")) {
+      throw(sprintf("Detected a stray RSP 'else' directive (#%d): %s", idx, as.character(expr)[1L]));
+    }
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # RspIfDirective => ...
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (inherits(expr, "RspIfDirective")) {
       attrs <- getAttributes(expr);
 
       n <- length(attrs);
       if (n != 1L) {
-        throw("RSP 'ifeq' preprocessing directive must take exactly one attribute: ", hpaste(names(attrs)));
+        throw("RSP 'if' preprocessing directive must take exactly one attribute: ", hpaste(names(attrs)));
       }
 
       name <- names(attrs)[1L];
@@ -680,7 +707,15 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       value <- gstring(gname, envir=envir);
       target <- gstring(attrs[[1L]], envir=envir);
 
-      rule <- list(class="RspEndifDirective", skip=!identical(value, target));
+      if (inherits(expr, "RspIfeqDirective")) {
+        include <- identical(value, target);
+      } else if (inherits(expr, "RspIfneqDirective")) {
+        include <- !identical(value, target);
+      } else {
+        throw(sprintf("Unknown RSP 'if' directive (#%d): %s", idx, as.character(expr)[1L]));
+      }
+
+      rule <- list(clause=expr, until="RspEndifDirective", include=include, useElse=TRUE);
       untilStack <- c(list(rule), untilStack);
   
       # Drop RSP expression
@@ -700,16 +735,16 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Skip until a particular RspDirective, e.g. RspEndifDirective
+    # Including until a particular RspDirective, e.g. RspEndifDirective
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (length(untilStack) > 0L) {
       rule <- untilStack[[1L]];
-      class <- rule$class;
-      skip <- rule$skip;
-      stopifnot(!skip);  # Sanity check
+      until <- rule$until;
+      include <- rule$include;
+      stopifnot(include);  # Sanity check
 
-      if (inherits(expr, class)) {
-        verbose && printf(verbose, "Got %s directive.\n", class);
+      if (inherits(expr, until)) {
+        verbose && printf(verbose, "Got %s directive.\n", until);
         untilStack <- untilStack[-1L];
       }
 
@@ -728,6 +763,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       throw("Detected a stray RSP 'endif' preprocessing directive.");
     }
   
+print(expr);
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Unknown RSP directive?
@@ -798,8 +834,8 @@ setMethodS3("[", "RspDocument", function(x, i) {
 
 ##############################################################################
 # HISTORY:
-# 2013-02-18
-# o Added support for <%@ifeq ...%> ... <%@endif%> directives.
+# 2013-02-19
+# o Added support for <%@ifeq ...%> ... <%@else%> ... <%@endif%> directives.
 # 2013-02-14
 # o Now RspDocument can include URLs as well.
 # 2013-02-13
