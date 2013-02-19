@@ -19,7 +19,7 @@
  Processes an RSP file product.
 }
 
-\usage{\method{process}{RspProduct}(object, type=NULL, envir=parent.frame(), workdir=NULL, ..., verbose=FALSE)}
+\usage{\method{process}{RspProduct}(object, type=NULL, envir=parent.frame(), workdir=NULL, ..., fake=FALSE, verbose=FALSE)}
 
 \arguments{
   \item{type}{A \code{\link[base]{character}} string specifying the content type.}
@@ -31,6 +31,7 @@
 
 \value{
   Returns the processed RSP product output as another \code{\link{RspProduct}}.
+  If no processor exists, the input object itself is returned.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

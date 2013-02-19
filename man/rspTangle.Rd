@@ -17,11 +17,13 @@
  This function is for RSP what \code{\link[utils]{Stangle}} is for Sweave documents.
 }
 
-\usage{rspTangle(file, ..., envir=parent.frame())}
+\usage{rspTangle(file, ..., fake=FALSE, envir=parent.frame())}
 
 \arguments{
   \item{file}{The file to be tangled.}
   \item{...}{Not used.}
+  \item{fake}{If \code{\link[base:logical]{TRUE}}, nothing is done, but the pathname of the
+     output file that would have been created is still returned.}
   \item{envir}{The \code{\link[base]{environment}} where the RSP document is parsed.}
 }
 

@@ -18,13 +18,15 @@
  which in turn generates either a PDF or a DVI document.
 }
 
-\usage{\method{compileKnitr}{default}(filename, path=NULL, ..., outPath=".", verbose=FALSE)}
+\usage{\method{compileKnitr}{default}(filename, path=NULL, ..., outPath=".", fake=FALSE, verbose=FALSE)}
 
 \arguments{
   \item{filename, path}{The filename and (optional) path of the
      Knitr document to be compiled.}
   \item{...}{Additional arguments passed to \code{\link{compileLaTeX}}().}
   \item{outPath}{The output and working directory.}
+  \item{fake}{If \code{\link[base:logical]{TRUE}}, nothing is done, but the pathname of the
+     output file that would have been created is still returned.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 

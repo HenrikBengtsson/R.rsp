@@ -35,11 +35,12 @@ extends \link[R.rsp]{RspProduct}\cr
   RSP product in form of a file, e.g. LaTeX, Sweave and knitr documents.
  }
 
- \usage{RspFileProduct(pathname=NA, ...)}
+ \usage{RspFileProduct(pathname=NA, ..., mustExist=TRUE)}
 
  \arguments{
    \item{pathname}{An existing file.}
    \item{...}{Additional arguments passed to \code{\link{RspProduct}}.}
+   \item{mustExist}{If \code{\link[base:logical]{TRUE}}, it is asserted that the file exists.}
  }
 
  \section{Fields and Methods}{
