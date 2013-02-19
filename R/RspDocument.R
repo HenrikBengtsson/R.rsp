@@ -373,15 +373,6 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  gstring <- function(s, envir=parent.frame(), ...) {
-    g <- GString(s);
-    tmp <- envir$g;
-    envir$g <- g;
-    res <- with(envir, as.character(g));
-    envir$g <- tmp;
-    res;
-  } # gstring()
-
   getFileT <- function(expr, path=".", ..., index=NA, verbose=FALSE) {
     file <- getFile(expr);
     verbose && cat(verbose, "Attribute 'file': ", file);
