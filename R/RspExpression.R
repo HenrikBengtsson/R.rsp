@@ -365,6 +365,36 @@ setConstructorS3("RspDirective", function(directive=character(), attributes=list
 })
 
 
+###########################################################################/**
+# @RdocClass RspUnknownDirective
+#
+# @title "The RspUnknownDirective class"
+#
+# \description{
+#  @classhierarchy
+#
+#  An RspUnknownDirective is an @see "RspDirective" that is unknown.
+# }
+# 
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
+# }
+#
+# \section{Fields and Methods}{
+#  @allmethods
+# }
+# 
+# @author
+#
+# @keyword internal
+#*/###########################################################################
+setConstructorS3("RspUnknownDirective", function(...) {
+  extend(RspDirective(...), "RspUnknownDirective")
+})
+
+
 
 ###########################################################################/**
 # @RdocClass RspIncludeDirective
@@ -673,6 +703,34 @@ setMethodS3("getType", "RspPageDirective", function(directive, ...) {
 })
 
 
+###########################################################################/**
+# @RdocClass RspIfeqDirective
+# @alias RspEndifDirective
+#
+# @title "The RspIfeqDirective class"
+#
+# \description{
+#  @classhierarchy
+#
+#  An RspIfeqDirective is an @see "RspDirective" that will include or
+#  skip all @see "RspExpression" until the next @see "RspEndifDirective"
+#  based on the value of an attribute.
+# }
+# 
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
+# }
+#
+# \section{Fields and Methods}{
+#  @allmethods
+# }
+# 
+# @author
+#
+# @keyword internal
+#*/###########################################################################
 setConstructorS3("RspIfeqDirective", function(...) {
   extend(RspDirective("ifeq", ...), "RspIfeqDirective")
 })
@@ -684,6 +742,8 @@ setConstructorS3("RspEndifDirective", function(...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-02-18
+# o Added RspIfeqDirective and RspEndifDirective.
 # 2013-02-13
 # o Added RspPageDirective.
 # o Added 'language' attribute to RspEvalDirective.

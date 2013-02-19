@@ -24,7 +24,7 @@
 \code{~~~~~~~+--}\code{RspDirective}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.rsp]{RspDefineDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspPageDirective}\cr
+\link[R.rsp]{RspDefineDirective}, \link[R.rsp]{RspEndifDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspIfeqDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspPageDirective}, \link[R.rsp]{RspUnknownDirective}\cr
 
 public class \bold{RspDirective}\cr
 extends \link[R.rsp]{RspExpression}\cr

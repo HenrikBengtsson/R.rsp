@@ -479,11 +479,16 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
       if (regexpr(pattern, part) != -1L) {
         # <%@foo attr1="bar" attr2="geek"%> => ...
         directive <- gsub(pattern, "\\1", part);
+        directive <- tolower(directive);
         attrs <- gsub(pattern, "\\2", part);
         attrs <- parseAttributes(attrs, known=NULL);
-        class <- sprintf("Rsp%sDirective", capitalize(tolower(directive)));
-        clazz <- Class$forName(class);
-        part <- newInstance(clazz, attributes=attrs);
+        class <- sprintf("Rsp%sDirective", capitalize(directive));
+        part <- tryCatch({
+          clazz <- Class$forName(class);
+          newInstance(clazz, attributes=attrs);
+        }, error = function(ex) {
+          RspUnknownDirective(directive, attributes=attrs);
+        })
         object[[kk]] <- part;
         next;
       }

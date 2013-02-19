@@ -423,7 +423,6 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   stopifnot(!is.null(envir));
 
   # Argument 'verbose':
-verbose <- TRUE;
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
     pushState(verbose);
@@ -443,7 +442,19 @@ verbose <- TRUE;
     expr <- object[[idx]];
     verbose && enter(verbose, sprintf("RSP expresson #%d ('%s') of %d", idx, class(expr)[1L], length(idxs)));
 
-    verbose && cat(verbose, "Number of skip rules: ", length(untilStack));
+    if (verbose) {
+      cat(verbose, "Number of skip rules: ", length(untilStack));
+      if (length(untilStack) > 0L) {
+        rule <- untilStack[[1L]];
+        class <- rule$class;
+        skip <- rule$skip;
+        if (skip) {
+          verbose && cat(verbose, "Excluding until ", class);
+        } else {
+          verbose && cat(verbose, "Including until ", class);
+        }
+      }
+    } # if (verbose)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Skip until a particular RspDirective, e.g. RspEndifDirective
@@ -467,8 +478,8 @@ verbose <- TRUE;
         object[[idx]] <- NA;
         verbose && exit(verbose);
 
-        next;
         verbose && exit(verbose);
+        next;
       }
     }
 
@@ -681,6 +692,14 @@ verbose <- TRUE;
   
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Stray RSP 'unknown' directive?
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (inherits(expr, "RspUnknownDirective")) {
+      throw(sprintf("Detected a stray RSP 'unknown' directive (#%d): %s", idx, as.character(expr)[1L]));
+    }
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Skip until a particular RspDirective, e.g. RspEndifDirective
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (length(untilStack) > 0L) {
@@ -703,13 +722,12 @@ verbose <- TRUE;
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # RspEndifDirective => ...
+    # Stray RSP 'endif' directive?
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(expr, "RspEndifDirective")) {
       throw("Detected a stray RSP 'endif' preprocessing directive.");
     }
   
-
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Unknown RSP directive?
