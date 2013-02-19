@@ -1,8 +1,8 @@
 .conflicts.OK <- TRUE
 
-.onLoad <- function(lib, pkg) {
+.onLoad <- function(libname, pkgname) {
   # Register vignette engine via tools::vignetteEngine(), if it exists.
-  ns <- getNamespace("tools");
+  ns <- loadNamespace("tools");
   name <- "vignetteEngine";
   if (exists(name, envir=ns, mode="function")) {
     fcn <- get(name, envir=ns, mode="function");
