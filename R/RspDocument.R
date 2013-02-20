@@ -387,12 +387,12 @@ setMethodS3("flatten", "RspDocument", function(object, ..., verbose=FALSE) {
     res <- append(res, expr);
   } # for (kk ...)
 
-  # Merge neighboring RspText objects
-  res <- mergeTexts(res);
-
   class(res) <- class(object);
   attr(res, "type") <- getType(object);
   attr(res, "source") <- getSource(object);
+
+  # Merge neighboring RspText objects
+  res <- mergeTexts(res);
 
   res;
 }, protected=TRUE) # flatten()
@@ -435,6 +435,22 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  suffixSpecToCounts <- function(spec, ...) {
+    if (is.null(spec)) {
+      count <- 0L;
+    } else if (spec == "") {
+      count <- 1L;
+    } else if (spec == "*") {
+      count <- Inf;
+    } else {
+      count <- as.numeric(spec);
+      if (is.na(count)) {
+        throw(sprintf("Invalid count specifier in RSP comment (#%d): ", idx, spec));
+      }
+    }
+    count;
+  } # suffixSpecToCounts()
+
   getFileT <- function(expr, path=".", ..., index=NA, verbose=FALSE) {
     file <- getFile(expr);
     verbose && cat(verbose, "Attribute 'file': ", file);
@@ -505,9 +521,9 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         until <- rule$until;
         include <- rule$include;
         if (include) {
-          verbose && cat(verbose, "Including until ", until);
+          cat(verbose, "Including until ", until);
         } else {
-          verbose && cat(verbose, "Excluding until ", until);
+          cat(verbose, "Excluding until ", until);
         }
       }
     } # if (verbose)
@@ -518,6 +534,22 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     if (nbrOfEmptyTextLinesToDropNext != 0L) {
       nbrOfEmptyTextLinesToDrop <- nbrOfEmptyTextLinesToDropNext;
       nbrOfEmptyTextLinesToDropNext <- 0L;
+    }
+
+
+    # Get the suffix specifications
+    spec <- getSuffixSpecs(expr);
+    verbose && cat(verbose, "Suffix specifications: ", spec);
+    if (!is.null(spec)) {
+      # Expand specifications
+      specT <- gstring(spec, envir=envir);
+      if (specT != spec) {
+        verbose && cat(verbose, "Expanded suffix specifications: ", specT);
+        spec <- specT;
+      }
+
+      # Trim following RSP 'text' expression according to suffix specs?
+      nbrOfEmptyTextLinesToDropNext <- suffixSpecToCounts(spec);
     }
 
 
@@ -568,29 +600,10 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     } # if (length(untilStack) > 0L)
 
 
-
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # RSP comments
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(expr, "RspComment")) {
-      spec <- getSuffixSpecs(expr);
-      if (!is.null(spec)) {
-        # Expand specifications
-        spec <- gstring(spec, envir=envir);
-
-        if (spec == "") {
-          count <- 1;
-        } else if (spec == "*") {
-          count <- Inf;
-        } else {
-          count <- as.numeric(spec);
-          if (is.na(count)) {
-            throw(sprintf("Invalid count specifier in RSP comment (#%d): ", idx, spec));
-          }
-        }
-        nbrOfEmptyTextLinesToDropNext <- count;
-      }
-
       # Drop comment
       object[[idx]] <- NA;
       verbose && exit(verbose);
@@ -626,7 +639,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
           posT <- regexpr(patternR, text);
           if (posT == 1L) {
             nT <- attr(posT, "match.length");
-            bfrT <- substring(rspCode, first=1L, last=nT);
+            bfrT <- substring(text, first=1L, last=nT);
             bfrT <- gsub("[ \t\v]*", "", bfrT);
             bfrT <- gsub("\r\n", "\n", bfrT);
             max <- nchar(bfrT);
@@ -997,6 +1010,7 @@ setMethodS3("[", "RspDocument", function(x, i) {
 ##############################################################################
 # HISTORY:
 # 2013-02-19
+# o Now support suffix comment specifications for all RSP expressions.
 # o Added mergeTexts() for RspDocument.
 # o Added support for <%@ifeq ...%> ... <%@else%> ... <%@endif%> directives.
 # 2013-02-14

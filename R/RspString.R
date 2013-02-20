@@ -319,7 +319,9 @@ setMethodS3("parseRaw", "RspString", function(object, ...) {
         state <- STOP;
       } else if (state == STOP) {
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Is it an RSP comment?
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         pos <- regexpr("^([-]+)", bfr);
         if (pos == 1L) {
           # Length in comment prefix
@@ -386,26 +388,24 @@ setMethodS3("parseRaw", "RspString", function(object, ...) {
         if (pos == -1L)
           break;
 
-        trimNewline <- FALSE;
-        if (getOption("rsp/emulateBrew", FALSE)) {
-          trimNewline <- (substring(bfr, first=pos-1L, last=pos-1L) == "-");
-        }
+        # Extract RSP body
+        body <- substring(bfr, first=1L, last=pos-1L);
 
-        # Trim trailing white space and newline from RSP tag?
-        if (trimNewline) {
-          rsp <- substring(bfr, first=1L, last=pos-2L);
-          part <- list(rsp=rsp);
-          bfr <- substring(bfr, first=pos+2L);
-          pattern <- "^[ \t\v]*(\n|\r|\r\n)";
-          bfr <- gsub(pattern, "", bfr);
+        # Check for suffix comment specifications, i.e. '-[{specs}]%>'
+        patternR <- "(.*)-(\\[[^]]*\\])?$";
+        if ((posR <- regexpr(patternR, body)) != -1L) {
+          suffixSpecs <- gsub(patternR, "\\2", body);
+          rsp <- gsub(patternR, "\\1", body);
+          attr(rsp, "suffixSpecs") <- suffixSpecs;
         } else {
-          rsp <- substring(bfr, first=1L, last=pos-1L);
-          part <- list(rsp=rsp);
-          bfr <- substring(bfr, first=pos+2L);
+          rsp <- body;
         }
+      
+        part <- list(rsp=rsp);
+        bfr <- substring(bfr, first=pos+2L);
 
         state <- START;
-      }
+      } # if (state == ...)
 
       parts <- c(parts, part);
     } # while(TRUE);
@@ -572,7 +572,8 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
       part <- object[[kk]];
       rspCode <- part;
 
- 
+      suffixSpecs <- attr(part, "suffixSpecs");
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # RSP Scripting Elements and Variables
       #
@@ -584,6 +585,7 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
       if (regexpr(pattern, part) != -1L) {
         comment <- gsub(pattern, "\\1", part);
         part <- RspComment(comment);
+        attr(part, "suffixSpecs") <- suffixSpecs;
         object[[kk]] <- part;
         next;
       }
@@ -598,6 +600,7 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
         code <- gsub(pattern, "\\1", part);
         code <- trim(code);
         part <- RspCodeChunk(code, return=TRUE);
+        attr(part, "suffixSpecs") <- suffixSpecs;
         object[[kk]] <- part;
         next;
       } 
@@ -612,6 +615,7 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
       if (regexpr(pattern, part) != -1L) {
         code <- gsub(pattern, "\\3", part);
         part <- RspCode(code, echo=TRUE);
+        attr(part, "suffixSpecs") <- suffixSpecs;
         object[[kk]] <- part;
         next;
       } 
@@ -636,6 +640,7 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
         }, error = function(ex) {
           RspUnknownDirective(directive, attributes=attrs);
         })
+        attr(part, "suffixSpecs") <- suffixSpecs;
         object[[kk]] <- part;
         next;
       }
@@ -649,6 +654,7 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
       # This applies to anything not recognized above.
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       part <- RspCode(trim(rspCode));
+        attr(part, "suffixSpecs") <- suffixSpecs;
       object[[kk]] <- part;
     } # for (kk ...)
   
