@@ -278,7 +278,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
     setwd(workdir);
   }
 
-  res <- rcat(rcode, file=output, envir=envir, args=NULL, ...);
+  res <- rcat(rcode, output=output, envir=envir, args=NULL, ...);
   type <- attr(res, "type");
   rm(rcode, res);
 

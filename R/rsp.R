@@ -112,7 +112,7 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
     on.exit({ if (!is.null(opwd)) setwd(opwd) }, add=TRUE);
     setwd(outPath);
 
-    res <- rcat(text, file=response, envir=envir, ...);
+    res <- rcat(text, output=response, envir=envir, ...);
 
     # Reset working directory
     if (!is.null(opwd)) {

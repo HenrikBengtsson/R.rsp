@@ -44,7 +44,7 @@ extends \link[R.rsp]{RspExpression}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{getComment} \tab  -\cr
+ \tab \code{\link[R.rsp:getComment.RspComment]{getComment}} \tab Gets the comment.\cr
 }
 
 

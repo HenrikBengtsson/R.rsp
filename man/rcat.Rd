@@ -19,13 +19,13 @@
  Evaluates an RSP string and outputs the generated string.
 }
 
-\usage{\method{rcat}{default}(..., file="", append=FALSE, envir=parent.frame(), args="*")}
+\usage{\method{rcat}{default}(..., output="", append=FALSE, envir=parent.frame(), args="*")}
 
 \arguments{
   \item{...}{\code{\link[base]{character}} strings with RSP markup.}
-  \item{file}{A \code{\link[base:connections]{connection}}, or a pathname where to direct the output.
+  \item{output}{A \code{\link[base:connections]{connection}}, or a pathname where to direct the output.
               If \code{""}, the output is sent to the standard output.}
-  \item{append}{Only applied if \code{file} specifies a pathname;
+  \item{append}{Only applied if \code{output} specifies a pathname;
     If \code{\link[base:logical]{TRUE}}, then the output is appended to the file, otherwise
     the files content is overwritten.}
   \item{envir}{The \code{\link[base]{environment}} in which the RSP string is

@@ -14,9 +14,9 @@
 #
 # \arguments{
 #   \item{...}{@character strings with RSP markup.}
-#   \item{file}{A @connection, or a pathname where to direct the output.
+#   \item{output}{A @connection, or a pathname where to direct the output.
 #               If \code{""}, the output is sent to the standard output.}
-#   \item{append}{Only applied if \code{file} specifies a pathname;
+#   \item{append}{Only applied if \code{output} specifies a pathname;
 #     If @TRUE, then the output is appended to the file, otherwise 
 #     the files content is overwritten.}
 #   \item{envir}{The @environment in which the RSP string is 
@@ -47,36 +47,40 @@
 #  @see "rstring" and @see "rfile".
 # }
 #*/###########################################################################
-setMethodS3("rcat", "default", function(..., file="", append=FALSE, envir=parent.frame(), args="*") {
+setMethodS3("rcat", "default", function(..., output="", append=FALSE, envir=parent.frame(), args="*") {
   s <- rstring(..., envir=envir, args=args);
-  cat(s, file=file, append=append);
+  cat(s, file=output, append=append);
   invisible(s);
 }) # rcat()
 
 
-setMethodS3("rcat", "RspString", function(..., file="", append=FALSE, envir=parent.frame(), args="*") {
+setMethodS3("rcat", "RspString", function(..., output="", append=FALSE, envir=parent.frame(), args="*") {
   s <- rstring(..., envir=envir, args=args);
-  cat(s, file=file, append=append);
+  cat(s, file=output, append=append);
   invisible(s);
 }) # rcat()
 
 
-setMethodS3("rcat", "RspDocument", function(..., file="", append=FALSE, envir=parent.frame(), args="*") {
+setMethodS3("rcat", "RspDocument", function(..., output="", append=FALSE, envir=parent.frame(), args="*") {
   s <- rstring(..., envir=envir, args=args);
-  cat(s, file=file, append=append);
+  cat(s, file=output, append=append);
   invisible(s);
 }) # rcat()
 
 
-setMethodS3("rcat", "RspRSourceCode", function(..., file="", append=FALSE, envir=parent.frame(), args="*") {
+setMethodS3("rcat", "RspRSourceCode", function(..., output="", append=FALSE, envir=parent.frame(), args="*") {
   s <- rstring(..., envir=envir, args=args);
-  cat(s, file=file, append=append);
+  cat(s, file=output, append=append);
   invisible(s);
 }) # rcat()
 
 
 ##############################################################################
 # HISTORY:
+# 2013-02-20
+# o Renamed argument 'file' for rcat() to 'output', cf. rfile().  This
+#   automatically makes argument 'file' & 'path' work also for rcat()
+#   just as it works for rstring() and rfile().
 # 2013-02-13
 # o Added rcat() for several RSP-related classes.
 # 2013-02-11
