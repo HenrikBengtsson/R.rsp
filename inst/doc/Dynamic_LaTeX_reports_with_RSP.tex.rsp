@@ -335,7 +335,7 @@ Note that there exist no corresponding markup in Sweave.  Instead, contrary to R
 
 \subsection{Trimming whitespace following RSP constructs}
 \label{TrimmingWhitespace}
-Because of readability of the RSP source document, RSP constructors are often placed on separate lines than the text blocks but also other RSP constructs.  Depending on how whitespace and line breaks (as introduced by the above coding style) are handled in the output format, this may or may not affect how the output documents renders.  For instance, line breaks explicitly introduced in the RSP source documents will make a plain text documents look different whereas single line breaks will not affect what how a LaTeX document is compiled.
+Because of readability of the RSP source document, RSP constructors are often placed on separate lines than the text blocks but also other RSP constructs.  Depending on how whitespace and line breaks (as introduced by the above coding style) are handled in the output format, this may or may not affect how the output document renders.  For instance, line breaks explicitly introduced in an RSP source document will make the an outputted plain text document look different whereas single line breaks will not affect how a LaTeX document is compiled.
 
 It is possible to control how whitespace and line breaks following RSP constructs are trimmed.  By adding a so called "suffix hyphen" at the end of an RSP construct, all following whitespace (space and tabs) including the first line break (the newline) is dropped ("trimmed"), if and only if there are no other characters following the RSP construct.  How this works is illustrated by the following three examples
 \begin{escapeRspVerbatim}
