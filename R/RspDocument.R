@@ -550,6 +550,10 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
       # Trim following RSP 'text' expression according to suffix specs?
       nbrOfEmptyTextLinesToDropNext <- suffixSpecToCounts(spec);
+
+      # Reset suffix specifications
+      attr(expr, "suffixSpecs") <- NULL;
+      object[[idx]] <- expr;
     }
 
 

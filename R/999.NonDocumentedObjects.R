@@ -114,6 +114,8 @@
 # @alias process
 # @alias tangle
 # @alias getCompleteCode
+# @alias getSuffixSpecs
+# @alias mergeTexts
 #
 # \description{
 # This page contains aliases for all "non-documented" objects that 

@@ -44,6 +44,7 @@ extends character\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:getAttributes.RspExpression]{getAttributes}} \tab Gets the attributes of an RSP expression.\cr
+ \tab \code{getSuffixSpecs} \tab  -\cr
 }
 
 

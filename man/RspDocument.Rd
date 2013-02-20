@@ -51,6 +51,7 @@ extends list\cr
  \tab \code{\link[R.rsp:getPath.RspDocument]{getPath}} \tab Gets the path to the source reference of an RSP string.\cr
  \tab \code{\link[R.rsp:getSource.RspDocument]{getSource}} \tab Gets the source reference of an RSP document.\cr
  \tab \code{\link[R.rsp:getType.RspDocument]{getType}} \tab Gets the type of the RspDocument.\cr
+ \tab \code{mergeTexts} \tab  -\cr
  \tab \code{\link[R.rsp:preprocess.RspDocument]{preprocess}} \tab Processes all RSP preprocessing directives.\cr
  \tab \code{\link[R.rsp:print.RspDocument]{print}} \tab Prints a summary of an RspDocument.\cr
  \tab \code{rcat} \tab  -\cr
