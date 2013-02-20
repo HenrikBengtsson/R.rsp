@@ -440,7 +440,7 @@ produces
 When an RSP-embedded document in processed, it is (i) \emph{parsed}, (ii) \emph{preprocessed}, (iii) \emph{translated} to R source code, which is then (iv) \emph{parsed and evaluated} by the R engine.
 During the initial parsing, RSP comments and their contents are dropped.
 During preprocessing, RSP \emph{preprocessing directives}, which are RSP constructors of format \code{<\%@...\%>}, are processed.
-Such directives can be used to for instance programmatically control how parts of an RSP document are included or excluded based on some conditions or include an external RSP documents into the main RSP document.
+Such directives can be used to for instance programmatically control how parts of an RSP document are included or excluded based on some conditions or they can be used to include an external RSP source into the main RSP document.
 Although the afformentioned maybe achieved with by plain R \code{<\%~...~\%>} constructs, these tasks are much bettered handled by RSP preprocessing directives.  It is also useful to understand that preprocessing directives are RSP constructs that are \emph{independent of the R language} per se and are processed before the RSP document is interpreted as R source code\footnote{There is nothing preventing an RSP document to be parsed and preprocessed by another implementation in a different programming language.  It is only the succeeding steps that are specific to the R language.}.
 After preprocessing, there are no remaining RSP preprocessing directives left in the RSP document, which then only contains text and basic RSP constructs (Sections~\ref{RspCodeChunkInlining}-\ref{RspCodeEmbed}).
 
