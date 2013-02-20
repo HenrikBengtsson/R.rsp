@@ -333,6 +333,28 @@ the analysis of the current chromosome.
 Note that there exist no corresponding markup in Sweave.  Instead, contrary to RSP, Sweave requires that each of the code chunks contains a complete R expression.  This means that, in terms of the above example, in Sweave it is not possible to begin a for loop in one code chunk and end it in a succeeding one.  This has to do with the fundamentally different way RSP and Sweave documents are processed.  If using Sweave, one solution is to use RSP markup in the Sweave document, process it via RSP to generate a pure Sweave document, which can then in turn be processed using the Sweave engine to get a TeX file and eventually the final PDF document.  Alternatively, one can use \code{rfile()} to complete all these steps at once, e.g. \code{rfile("report.Rnw.rsp")} will generate \code{report.pdf} as well as the intermediate \code{report.Rnw} and \code{report.pdf} files.  This illustrates the power of the RSP language and how it can be used as a preprocessor of any other literate programming language.
 
 
+\subsection{Trimming whitespace following RSP constructs}
+\label{TrimmingWhitespace}
+Because of readability of the RSP source document, RSP constructors are often placed on separate lines than the text blocks but also other RSP constructs.  Depending on how whitespace and line breaks (as introduced by the above coding style) are handled in the output format, this may or may not affect how the output documents renders.  For instance, line breaks explicitly introduced in the RSP source documents will make a plain text documents look different whereas single line breaks will not affect what how a LaTeX document is compiled.
+
+It is possible to control how whitespace and line breaks following RSP constructs are trimmed.  By adding a so called "suffix hyphen" at the end of an RSP construct, all following whitespace (space and tabs) including the first line break (the newline) is dropped ("trimmed"), if and only if there are no other characters following the RSP construct.  How this works is illustrated by the following three examples
+\begin{escapeRspVerbatim}
+> rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
+[1] "A random integer in [1,100]: 48{\bs}n"
+\end{escapeRspVerbatim}
+to
+\begin{escapeRspVerbatim}
+> rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)-\%>{\bs}n")
+[1] "A random integer in [1,100]: 48"
+\end{escapeRspVerbatim}
+and
+\begin{escapeRspVerbatim}
+> rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)-\%> {\bs}t {\bs}n{\bs}n{\bs}n")
+[1] "A random integer in [1,100]: 48{\bs}n{\bs}n"
+\end{escapeRspVerbatim}
+Note that this also applies to all used RSP comments, a construct that is introduced next.
+
+
 \subsection{Comments (\code{<\%--\{anything\}--\%>})}
 \label{RspComments}
 The RSP markup \code{<\%--\{anything\}--\%>}, \code{<\%---\{anything\}---\%>} and so on\footnote{The number of prefix and suffix hyphens in an RSP comment must match, i.e. \code{<\%--- A comment --\%>} is \emph{not} recognized as a RSP comment.} represents RSP comments, which can be used to drop large sections of an RSP document\footnote{An RSP comment may can contain \emph{anything} because it is dropped by the RSP parser at the very beginning before parsing the text and the other RSP constructs.}.  Unlike other RSP constructs, an RSP comment may contain other RSP constructs (also incomplete ones) including RSP comments.  
@@ -361,7 +383,9 @@ There are <%=n%> red <%=type%>s
 which is nested. ---%> RSP comments.
 \end{verbatim}
 
-Moreover, RSP comments are special in the sense that if (and only if) the remainder of the line following the comment consists of only whitespace symbols, then they are also dropped, including the newline.  Thus, an \code{<\%----\%>} (or the short form \code{<\%-\%>}) at the end of a line will prevent a newline from being inserted.
+As explained in Section~\ref{TrimmingWhitespace}, \emph{all} RSP constructs with a suffix hyphen causes any following whitespace including the first following line break to be trimmed, if no other characters appear after the contruct.  This means that all RSP comments automatically trims such empty text.
+This explains why there are no empty lines after dropping the RSP comments in the above example.
+Further more, note that trailing whitespace can be trimmed from any line by adding \code{<\%----\%>} at the end of that line.  For convenience, one can also use \code{<\%-\%>}, which is a short form for \code{<\%----\%>}.
 
 
 <%-------------------------------------------------------------------
@@ -384,8 +408,8 @@ The sum of $x=<\%=hpaste(1:n, abbreviate="{\bs}{\bs}ldots")\%>$ is <\%=sum(1:n)\
 The sum of $x=<%=hpaste(1:n, abbreviate="\\ldots")%>$ is <%=sum(1:n)%>.<%-%>
 <% } # myTemplate() %><%-- TO FIX: Should not be needed! /HB 2011-03-31 --%>
 Recall that there is no limitation in how many text and RSP blocks you can use.
-Note how we use an empty RSP comment (\code{<\%-\%>}) at the end of the template function.  That is used in order to escape the trailing newline (Section~\ref{RspComments}).  Without the trailing RSP comment, the final document would contain a whitespace after the period (and before the closing single-quote in the previous sentence).
-The above template function can now now be used as by calling it within an RSP code block as
+Note also how we use an empty RSP comment (\code{<\%-\%>}) at the end of the template function.  That is used in order to escape the trailing newline (Section~\ref{RspComments}).  Without the trailing RSP comment, the final document would contain a whitespace after the period (and before the closing single-quote in the previous sentence).
+The above template function can now be used by calling it within an RSP code block as
 \begin{rspVerbatim}
 <\% myTemplate(n=3) \%>
 \end{rspVerbatim}
