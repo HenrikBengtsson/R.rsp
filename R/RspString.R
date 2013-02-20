@@ -318,6 +318,70 @@ setMethodS3("parseRaw", "RspString", function(object, ...) {
         bfr <- substring(bfr, first=pos+2L);
         state <- STOP;
       } else if (state == STOP) {
+
+        # Is it an RSP comment?
+        pos <- regexpr("^([-]+)", bfr);
+        if (pos == 1L) {
+          # Length in comment prefix
+          nPrefix <- attr(pos, "match.length");
+          bfrT <- substring(bfr, first=1L+nPrefix);
+
+          if (nPrefix == 1L) {
+            types <- c("empty")
+          } else {
+            types <- c("empty", "paired")
+          }
+
+          part <- NULL;
+          for (type in types) {
+            part <- NULL;
+            if (type == "empty") {
+              # <%-[{count}]%>, <%--[{count}]%>, <%---[{count}]%>, ...
+              pattern <- "()()(\\[[^]]*\\])?(%>)(.*)";
+            } else if (type == "paired") {
+              # <%-{n} comment \n comment -{n}%>, where n >= 2
+              pattern <- sprintf("^(|.*[^-])([-]{%d})(\\[[^]]*\\])?(%%>)(.*)", nPrefix);
+            }
+
+            pos <- regexpr(pattern, bfrT);
+            if (pos == 1L) {
+              comment <- gsub(pattern, "\\1", bfrT);
+
+              suffix <- gsub(pattern, "\\2", bfrT);
+              nSuffix <- nchar(suffix);
+
+              suffixSpecs <- gsub(pattern, "\\3", bfrT);
+              nSuffixSpecs <- nchar(suffixSpecs);
+
+              tail <- gsub(pattern, "\\4", bfrT);
+              nTail <- nchar(tail);
+
+              # Regular expressions are greedy, so we might have
+              # matched too far.  Does the comment contain a match?
+              while ((posT <- regexpr(pattern, comment)) == 1L) {
+                comment <- gsub(pattern, "\\1", comment);
+              }
+              nComment <- nchar(comment);
+
+              prefix <- substring(bfr, first=1L, last=nPrefix);
+              attr(comment, "delimiters") <- c(prefix, suffix);
+              attr(comment, "suffixSpecs") <- suffixSpecs;
+
+              part <- list(comment=comment);
+              bfr <- substring(bfrT, first=nComment+nSuffix+nSuffixSpecs+nTail+1L);
+              break;
+            }
+          } # for (type ...)
+
+          # Found a comment?
+          if (!is.null(part)) {
+            state <- START;
+            parts <- c(parts, part);
+            next;
+          }
+        } # if (pos == 1L) # Is it an RSP comment?
+
+
         pos <- indexOfNonQuoted(bfr, "%>");
         if (pos == -1L)
           break;
@@ -394,6 +458,17 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  coerceComments <- function(object, ...) {
+    idxs <- which(names(object) == "comment");
+    for (kk in idxs) {
+      part <- object[[kk]];
+      part <- RspComment(part);
+      object[[kk]] <- part;
+    }
+    object;
+  } # coerceComments()
+
+
   coerceText <- function(object, ...) {
     idxs <- which(names(object) == "text");
     for (kk in idxs) {
@@ -581,14 +656,17 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
     } # coerceRsp()
 
 
-  object <- dropComments(object, envir=envir);
+##  object <- dropComments(object, envir=envir);
   doc <- parseRaw(object);
+  doc <- coerceComments(doc);
   doc <- coerceText(doc);
   doc <- coerceRsp(doc);
   doc <- trim(doc);
+  doc <- mergeTexts(doc);
 
   if (preprocess) {
     doc <- preprocess(doc, envir=envir, ...);
+    doc <- mergeTexts(doc);
   }
 
   doc;
@@ -599,6 +677,9 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
 ##############################################################################
 # HISTORY:
 # 2013-02-19
+# o Now RSP comments are parsed and part of the resulting RspDocument as
+#   RspComment:s, which are RspExpression:s.  This was mainly done for
+#   the purpose of generalizing white-space trimming after RspExpressions.
 # o Added support for RSP comments of format <%-+[{count}]%>', where {count}
 #   specifies the maximum number of empty lines to drop after the comment,
 #   including the trailing whitespace and newline of the current line.

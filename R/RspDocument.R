@@ -279,6 +279,62 @@ setMethodS3("trim", "RspDocument", function(object, ...) {
 
 
 #########################################################################/**
+# @RdocMethod mergeTexts
+#
+# @title "Merge neighboring RspText:s"
+#
+# \description{
+#  @get "title" by pasting them together.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns an @see "RspDocument" with equal or fever number of
+#   @see "RspExpression":s.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("mergeTexts", "RspDocument", function(object, ...) {
+  # All RSP text expressions
+  isText <- sapply(object, FUN=inherits, "RspText");
+  idxs <- which(isText);
+
+  # Nothing todo?
+  if (length(idxs) == 0L) {
+    return(object);
+  }
+
+  # Locate neighboring RSP text expressions
+  while (length(nidxs <- which(diff(idxs) == 1L)) > 0L) {
+    idx <- idxs[nidxs[1L]];
+    # Merge (idx,idx+1)
+    texts <- object[c(idx,idx+1L)];
+    text <- paste(texts, collapse="");
+    class(text) <- class(texts[[1L]]);
+    object[[idx]] <- text;
+
+    # Drop
+    object <- object[-(idx+1L)];
+    isText <- isText[-(idx+1L)];
+    idxs <- which(isText);
+  }
+
+  object;
+}, protected=TRUE) # mergeTexts()
+
+
+
+#########################################################################/**
 # @RdocMethod flatten
 #
 # @title "Flattens an RspDocument"
@@ -307,6 +363,9 @@ setMethodS3("trim", "RspDocument", function(object, ...) {
 # }
 #*/######################################################################### 
 setMethodS3("flatten", "RspDocument", function(object, ..., verbose=FALSE) {
+  # Merge neighboring RspText objects
+  object <- mergeTexts(object);
+
   # Nothing todo?
   idxs <- which(sapply(object, FUN=inherits, "RspDocument"));
   if (length(idxs) == 0L) {
@@ -327,6 +386,9 @@ setMethodS3("flatten", "RspDocument", function(object, ..., verbose=FALSE) {
     }
     res <- append(res, expr);
   } # for (kk ...)
+
+  # Merge neighboring RspText objects
+  res <- mergeTexts(res);
 
   class(res) <- class(object);
   attr(res, "type") <- getType(object);
@@ -427,11 +489,14 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   # Identifying RSP preprocessing directives
   idxs <- which(sapply(object, FUN=inherits, "RspDirective"));
   verbose && cat(verbose, "Number of RSP preprocessing directives: ", length(idxs));
+
+  # Number of empty lines to drop from RSP texts
+  nbrOfEmptyTextLinesToDropNext <- 0L;
   
   untilStack <- list();
   for (idx in seq_along(object)) {
     expr <- object[[idx]];
-    verbose && enter(verbose, sprintf("RSP expresson #%d ('%s') of %d", idx, class(expr)[1L], length(idxs)));
+    verbose && enter(verbose, sprintf("RSP expresson #%d ('%s') of %d", idx, class(expr)[1L], length(object)));
 
     if (verbose) {
       cat(verbose, "Number of if rules: ", length(untilStack));
@@ -446,6 +511,15 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         }
       }
     } # if (verbose)
+
+
+    # Number of empty lines to drop from RSP texts
+    nbrOfEmptyTextLinesToDrop <- 0L;
+    if (nbrOfEmptyTextLinesToDropNext != 0L) {
+      nbrOfEmptyTextLinesToDrop <- nbrOfEmptyTextLinesToDropNext;
+      nbrOfEmptyTextLinesToDropNext <- 0L;
+    }
+
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Exclude until a particular RspDirective, e.g. RspEndifDirective
@@ -491,16 +565,106 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         verbose && exit(verbose);
         next;
       }
-    }
+    } # if (length(untilStack) > 0L)
+
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Keep RSP text and code expression as is
+    # RSP comments
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    if (inherits(expr, c("RspText", "RspCode"))) {
+    if (inherits(expr, "RspComment")) {
+      spec <- getSuffixSpecs(expr);
+      if (!is.null(spec)) {
+        # Expand specifications
+        spec <- gstring(spec, envir=envir);
+
+        if (spec == "") {
+          count <- 1;
+        } else if (spec == "*") {
+          count <- Inf;
+        } else {
+          count <- as.numeric(spec);
+          if (is.na(count)) {
+            throw(sprintf("Invalid count specifier in RSP comment (#%d): ", idx, spec));
+          }
+        }
+        nbrOfEmptyTextLinesToDropNext <- count;
+      }
+
+      # Drop comment
+      object[[idx]] <- NA;
       verbose && exit(verbose);
       next;
-    } # RspText
+    } # RspComment
+
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Keep RSP code expression as is
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (inherits(expr, "RspCode")) {
+      verbose && exit(verbose);
+      next;
+    } # RspCode
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Keep RSP text as is, unless empty lines should be dropped
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (inherits(expr, "RspText")) {
+      # Drop empty lines?
+      if (nbrOfEmptyTextLinesToDrop != 0L) {
+        text <- getText(expr);
+
+        count <- nbrOfEmptyTextLinesToDrop;
+
+        # Drop all but 'count' empty rows
+        if (count < 0) {
+          verbose && cat(verbose, "Number of empty lines to drop from the end: ", -count);
+          # Count max number of empty rows
+          patternR <- "([ \t\v]*(\n|\r|\r\n))*";
+          posT <- regexpr(patternR, text);
+          if (posT == 1L) {
+            nT <- attr(posT, "match.length");
+            bfrT <- substring(rspCode, first=1L, last=nT);
+            bfrT <- gsub("[ \t\v]*", "", bfrT);
+            bfrT <- gsub("\r\n", "\n", bfrT);
+            max <- nchar(bfrT);
+          } else {
+            max <- 0L;
+          }
+
+          count <- max + count;
+          if (count < 0) count <- 0;
+        }
+
+        verbose && cat(verbose, "Number of empty lines to drop: ", count);
+
+        # Drop lines?
+        if (count != 0) {
+          if (count == 1) {
+            patternC <- "?";
+          } else if (is.infinite(count)) {
+            patternC <- "*";
+          } else if (count > 1) {
+            patternC <- sprintf("{0,%d}", count);
+          }
+
+          # Row pattern
+          patternR <- sprintf("([ \t\v]*(\n|\r|\r\n))%s", patternC);
+
+          # Drop empty lines
+          text <- sub(patternR, "", text);
+          # Update RspText object
+          expr2 <- text;
+          class(expr2) <- class(expr);
+          object[[idx]] <- expr2;
+        }
+      } # if (nbrOfEmptyTextLinesToDrop != 0L)
+
+      verbose && exit(verbose);
+      next;
+    } # RspText & RspCode
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -759,7 +923,6 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       throw("Detected a stray RSP 'endif' preprocessing directive.");
     }
   
-print(expr);
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Unknown RSP directive?
@@ -776,6 +939,9 @@ print(expr);
   if (length(excl) > 0L) {
     object <- object[-excl];
   }
+
+  # Merge neighboring RspText objects
+  object <- mergeTexts(object);
 
   if (flatten) {
     verbose && enter(verbose, "Flatten RSP document");
@@ -831,6 +997,7 @@ setMethodS3("[", "RspDocument", function(x, i) {
 ##############################################################################
 # HISTORY:
 # 2013-02-19
+# o Added mergeTexts() for RspDocument.
 # o Added support for <%@ifeq ...%> ... <%@else%> ... <%@endif%> directives.
 # 2013-02-14
 # o Now RspDocument can include URLs as well.

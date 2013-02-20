@@ -64,6 +64,40 @@ setMethodS3("getAttributes", "RspExpression", function(directive, ...) {
 })
  
  
+#########################################################################/**
+# @RdocMethod getSuffixSpecs
+#
+# @title "Gets the suffix specifications"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a trimmed @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getSuffixSpecs", "RspExpression", function(object, ...) {
+  specs <- attr(object, "suffixSpecs");
+  if (is.null(specs)) return(NULL);
+  if (nchar(specs) == 0L) return(NULL);
+  specs <- gsub("^\\[[ \t\v]*", "", specs);
+  specs <- gsub("[ \t\v]*\\]$", "", specs);
+  specs;
+})
+
 
 
 ###########################################################################/**
@@ -96,6 +130,35 @@ setConstructorS3("RspComment", function(str=character(), ...) {
   extend(RspExpression(str), "RspComment");
 })
 
+
+#########################################################################/**
+# @RdocMethod getComment
+#
+# @title "Gets the comment"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getComment", "RspComment", function(comment, ...) {
+  as.character(comment);
+})
 
 
 ###########################################################################/**
