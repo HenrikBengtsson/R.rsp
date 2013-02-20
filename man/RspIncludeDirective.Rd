@@ -50,7 +50,7 @@ extends \link[R.rsp]{RspDirective}\cr
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:getFile.RspIncludeDirective]{getFile}} \tab Gets the file attribute.\cr
- \tab \code{getText} \tab  -\cr
+ \tab \code{\link[R.rsp:getText.RspIncludeDirective]{getText}} \tab Gets the text.\cr
 }
 
 

@@ -19,7 +19,7 @@
  Drops all RSP comments.
 }
 
-\usage{\method{dropComments}{RspString}(object, ...)}
+\usage{\method{dropComments}{RspString}(object, envir=parent.frame(), ...)}
 
 \arguments{
   \item{...}{Not used.}

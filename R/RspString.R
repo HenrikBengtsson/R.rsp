@@ -132,16 +132,14 @@ setMethodS3("getSource", "RspString", function(object, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("dropComments", "RspString", function(object, ...) {
-  ## <%[-]+%>
+setMethodS3("dropComments", "RspString", function(object, envir=parent.frame(), ...) {
   dropRspEmptyComments <- function(rspCode, trimNewline=TRUE, ...) {
     pattern <- "<%[-]+%>";
     if (trimNewline) {
       pattern <- sprintf("%s(|[ \t\v]*(\n|\r|\r\n))", pattern);
     }
     gsub(pattern, "", rspCode);
-  } # dropRspComments()
-
+  } # dropEmptyRspComments()
 
   ## <%-{n} comment \n comment -{n}%>, where n >= 2
   dropRspComments <- function(rspCode, trimNewline=TRUE, ...) {
@@ -170,6 +168,81 @@ setMethodS3("dropComments", "RspString", function(object, ...) {
     rspCode;
   } # dropRspComments()
 
+
+  ## <%[-]+[{count}]%>
+  dropRspCountComments <- function(rspCode, envir=parent.frame(), ...) {
+    pattern <- "<%[-]+(\\[([^]]*)\\])?%>";
+    res <- NULL;
+    while ((pos <- regexpr(pattern, rspCode)) != -1L) {
+      if (pos > 1L) {
+        res <- c(res, substring(rspCode, first=1L, last=pos-1L));
+      }
+
+      n <- attr(pos, "match.length");
+      expr <- substring(rspCode, first=pos, last=pos+n-1L);
+      rspCode <- substring(rspCode, first=pos+n);
+
+      # Infer count pattern from count specifiers
+      patternC <- "?"; # Exactly zero or one occurance.
+      spec <- sub(pattern, "\\2", expr);
+      if (nchar(spec) > 0L) {
+        count <- gstring(spec, envir=envir);
+        if (count == "") {
+        } else if (count == "*") {
+          patternC <- "*"; # Zero or more occurances.
+        } else {
+          count <- as.numeric(count);
+          if (is.na(count)) {
+            throw("Detected missing/NA count specifier in RSP comments: ", spec);
+          }
+
+          # Drop all but 'count' empty rows
+          if (count < 0) {
+            # Count max number of empty rows
+            patternR <- sprintf("([ \t\v]*(\n|\r|\r\n))*", patternC);
+            posT <- regexpr(patternR, rspCode);
+            if (posT == 1L) {
+              nT <- attr(posT, "match.length");
+              bfrT <- substring(rspCode, first=1L, last=nT);
+              bfrT <- gsub("[ \t\v]*", "", bfrT);
+              bfrT <- gsub("\r\n", "\n", bfrT);
+              max <- nchar(bfrT);
+              count <- max + count;
+              if (count < 0) count <- 0;
+            } else {
+              count <- 0;
+            }
+          }
+
+          if (count == 0) {
+            patternC <- NULL;
+          } else if (count == 1) {
+            patternC <- "?";
+          } else if (is.infinite(count)) {
+            patternC <- "*";
+          } else if (count > 1) {
+            patternC <- sprintf("{0,%d}", count);
+          }
+        }
+      } # if (nchar(spec) > 0L)
+
+      # Nothing drop?
+      if (!is.null(patternC)) {
+        # Row pattern
+        patternR <- sprintf("([ \t\v]*(\n|\r|\r\n))%s", patternC);
+        rspCode <- sub(patternR, "", rspCode);
+      }
+    } # while()
+
+    # Append tail?
+    if (nchar(rspCode) > 0L) {
+      res <- c(res, rspCode);
+    }
+
+    paste(res, collapse="");
+  } # dropRspCountComments()
+
+
   ## <%# comment \n comment %>
   dropBrewComments <- function(rspCode, trimNewline=FALSE, ...) {
     pattern <- "<%#.*%>";
@@ -183,9 +256,8 @@ setMethodS3("dropComments", "RspString", function(object, ...) {
   rspCode <- paste(object, collapse="\n");
 
   rspCode <- dropRspEmptyComments(rspCode, trimNewline=TRUE);
-
   rspCode <- dropRspComments(rspCode, trimNewline=TRUE);
-
+  rspCode <- dropRspCountComments(rspCode, envir=envir);
   if (getOption("rsp/emulateBrew", FALSE)) {
     rspCode <- dropBrewComments(rspCode, trimNewline=TRUE);
   }
@@ -509,7 +581,7 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
     } # coerceRsp()
 
 
-  object <- dropComments(object);
+  object <- dropComments(object, envir=envir);
   doc <- parseRaw(object);
   doc <- coerceText(doc);
   doc <- coerceRsp(doc);
@@ -526,6 +598,12 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
 
 ##############################################################################
 # HISTORY:
+# 2013-02-19
+# o Added support for RSP comments of format <%-+[{count}]%>', where {count}
+#   specifies the maximum number of empty lines to drop after the comment,
+#   including the trailing whitespace and newline of the current line.
+#   If {count} is negative, it drops all but the last {count} empty rows.
+#   If {count} is zero, nothing is dropped.
 # 2013-02-18
 # o BUG FIX: Preprocessing directives without attributes where not recognized.
 # 2013-02-13
