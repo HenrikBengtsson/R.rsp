@@ -662,14 +662,29 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
     } # coerceRsp()
 
 
-##  object <- dropComments(object, envir=envir);
+  # RSP comment must be dropped by the parser so that they can be
+  # nested, because all other RSP expressions must not be nested.
+  object <- dropComments(object, envir=envir);
+
+  # Split RSP text into non-nested blocks of RSP 'text' and 'rsp' chunks.
   doc <- parseRaw(object);
-  doc <- coerceComments(doc);
+
+  # Turn 'text' chunks into RspTexts
   doc <- coerceText(doc);
+
+  # Turn 'text' chunks into RspExpressions
   doc <- coerceRsp(doc);
+
+  # Turn 'comment' chunks into RspComments (which should be none!)
+  doc <- coerceComments(doc);
+
+  # Trim RspTexts
   doc <- trim(doc);
+
+  # Merge any neighboring RspTexts
   doc <- mergeTexts(doc);
 
+  # Process the RSP preprocessing directives, i.e. <%@...%>
   if (preprocess) {
     doc <- preprocess(doc, envir=envir, ...);
     doc <- mergeTexts(doc);
@@ -683,9 +698,9 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
 ##############################################################################
 # HISTORY:
 # 2013-02-19
-# o Now RSP comments are parsed and part of the resulting RspDocument as
-#   RspComment:s, which are RspExpression:s.  This was mainly done for
-#   the purpose of generalizing white-space trimming after RspExpressions.
+# o RSP comments must be dropped by the RSP parser at the very beginning,
+#   otherwise they cannot be nested.  All other RSP constructs must not
+#   be nested.
 # o Added support for RSP comments of format <%-+[{count}]%>', where {count}
 #   specifies the maximum number of empty lines to drop after the comment,
 #   including the trailing whitespace and newline of the current line.

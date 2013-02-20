@@ -435,6 +435,22 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  wrapText <- function(text, wrap=NULL) {
+    if (is.null(wrap)) return(text);
+    text <- paste(text, collapse="\n");
+    text <- gsub("(\r|\r\n)", "\n", text);
+    text <- unlist(strsplit(text, split="\n", fixed=TRUE));
+    text <- lapply(text, FUN=function(line) {
+      first <- seq(from=1L, to=nchar(line), by=wrap);
+      last <- first + wrap - 1L;
+      substring(line, first=first, last=last);
+    }); 
+    text <- unlist(text, use.names=FALSE);
+    text <- paste(text, collapse="\n");
+    text;
+  } # wrapText()
+
+
   suffixSpecToCounts <- function(spec, ...) {
     if (is.null(spec)) {
       count <- 0L;
@@ -450,6 +466,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     }
     count;
   } # suffixSpecToCounts()
+
 
   getFileT <- function(expr, path=".", ..., index=NA, verbose=FALSE) {
     file <- getFile(expr);
@@ -702,6 +719,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # RspIncludeDirective => ...
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(expr, "RspIncludeDirective")) {
+      verbatim <- getVerbatim(expr);
       text <- getText(expr);
       if (is.null(text)) {
         file <- getFileT(expr, path=getPath(object), index=idx, verbose=verbose);
@@ -709,26 +727,31 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       } else {
         file <- getSource(object);
       }
-  
-      # Parse RSP string to RSP document
-      rstr <- RspString(text, type=getType(object), source=file);
+      text <- paste(text, collapse="\n");
 
-      doc <- parse(rstr, envir=envir, verbose=verbose);
-
-      verbose && cat(verbose, "Included RSP document:");
-      verbose && print(verbose, doc);
-  
-      if (recursive) {
-        verbose && enter(verbose, "Recursively preprocessing included RSP document");
-        doc <- preprocess(doc, recursive=TRUE, flatten=flatten, envir=envir, ..., verbose=verbose);
-        verbose && exit(verbose);
+      if (verbatim) {
+        text <- wrapText(text, wrap=getWrap(expr));
+        expr <- RspText(text, source=file);
+      } else {  
+        # Parse RSP string to RSP document
+        rstr <- RspString(text, type=getType(object), source=file);
+        doc <- parse(rstr, envir=envir, verbose=verbose);
+        verbose && cat(verbose, "Included RSP document:");
+        verbose && print(verbose, doc);
+        if (recursive) {
+          verbose && enter(verbose, "Recursively preprocessing included RSP document");
+          doc <- preprocess(doc, recursive=TRUE, flatten=flatten, envir=envir, ..., verbose=verbose);
+          verbose && exit(verbose);
+        }
+        expr <- doc;
+        rm(rstr, doc);
       }
   
       # Replace RSP directive with imported RSP document
-      object[[idx]] <- doc;
+      object[[idx]] <- expr;
   
       # Not needed anymore
-      rm(rstr, text, doc);
+      rm(text, expr);
   
       verbose && exit(verbose);
       next;

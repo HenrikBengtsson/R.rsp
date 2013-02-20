@@ -116,6 +116,7 @@
 # @alias getCompleteCode
 # @alias getSuffixSpecs
 # @alias mergeTexts
+# @alias getWrap
 #
 # \description{
 # This page contains aliases for all "non-documented" objects that 

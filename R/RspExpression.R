@@ -560,6 +560,74 @@ setMethodS3("getText", "RspIncludeDirective", function(directive, ...) {
 })
 
 
+#########################################################################/**
+# @RdocMethod getVerbatim
+#
+# @title "Checks if verbatim include should be used or not"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @logical.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getVerbatim", "RspIncludeDirective", function(directive, ...) {
+  res <- attr(directive, "verbatim");
+  if (is.null(res)) res <- FALSE;
+  res <- as.logical(res);
+  res <- isTRUE(res);
+  res;
+})
+
+
+#########################################################################/**
+# @RdocMethod getWrap
+#
+# @title "Get the wrap length"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns an @integer, or @NULL.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getWrap", "RspIncludeDirective", function(directive, ...) {
+  res <- attr(directive, "wrap");
+  if (!is.null(res)) {
+    res <- as.integer(res);
+  }
+  res;
+})
+
+
 
 
 ###########################################################################/**

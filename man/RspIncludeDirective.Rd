@@ -51,6 +51,8 @@ extends \link[R.rsp]{RspDirective}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:getFile.RspIncludeDirective]{getFile}} \tab Gets the file attribute.\cr
  \tab \code{\link[R.rsp:getText.RspIncludeDirective]{getText}} \tab Gets the text.\cr
+ \tab \code{\link[R.rsp:getVerbatim.RspIncludeDirective]{getVerbatim}} \tab Checks if verbatim include should be used or not.\cr
+ \tab \code{\link[R.rsp:getWrap.RspIncludeDirective]{getWrap}} \tab Get the wrap length.\cr
 }
 
 
