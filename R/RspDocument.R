@@ -536,15 +536,16 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       nbrOfEmptyTextLinesToDropNext <- 0L;
     }
 
-
     # Get the suffix specifications
     spec <- getSuffixSpecs(expr);
-    verbose && cat(verbose, "Suffix specifications: ", spec);
-    if (!is.null(spec)) {
+    if (is.null(spec)) {
+      verbose && cat(verbose, "Suffix specifications: <none>");
+    } else {
+      verbose && printf(verbose, "Suffix specifications: '%s'\n", spec);
       # Expand specifications
       specT <- gstring(spec, envir=envir);
       if (specT != spec) {
-        verbose && cat(verbose, "Expanded suffix specifications: ", specT);
+        verbose && printf(verbose, "Expanded suffix specifications: '%s'\n", specT);
         spec <- specT;
       }
 
