@@ -119,7 +119,7 @@ In this document we introduce the RSP markup language and explain how it can be 
 
 RSP provides an easy, yet powerful and flexible way for generating reports and other documents in R.  With a single R command it is possible to compile an RSP-embedded LaTeX, Sweave or knitr document into a read-to-view PDF file to name a few examples.  As an example, we show how to produce this very document from an RSP-embedded LaTeX file.
 
-Furthermore, because RSP is a so called \emph{content-indepent} markup language, it can be used to produce documents of any kind, e.g. plain text, LaTeX, Sweave, knitr, AsciiDoc, Markdown, HTML, XML, SVG, and even Javascript, R scripts and so on.  More over, with RSP it is possible to use literate programming constructs that are not possible in Sweave, e.g. looping of a mix of R source code and LaTeX text blocks.
+Furthermore, because RSP is a so called content-indepent markup language, it can be used to produce documents of any kind, e.g. plain text, LaTeX, Sweave, knitr, AsciiDoc, Markdown, HTML, XML, SVG, and even Javascript, R scripts and so on.  More over, with RSP it is possible to use literate programming constructs that are not possible in Sweave, e.g. looping over a mix of R source code and LaTeX text blocks.
 \end{abstract}
 
 \keywords{RSP markup language, literate programming, reproducible research, report generator, Sweave, knitr, TeX, LaTeX, Markdown, HTML, AsciiDoc, reStructuredText, Org-Mode, PDF}
