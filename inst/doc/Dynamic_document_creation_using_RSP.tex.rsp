@@ -237,8 +237,8 @@ To separate the elements with commas, use \code{<\%=paste(LETTERS, collapse=", "
 %% \clearpage
 \subsection{Evaluating and capturing expression and output (\code{<\%=}\code{evalCapture}\code{(\{code chunk\})\%>})}
 \label{RspCodeChunkCapture}
-The \code{evalCapture()} function allows us to evaluate, embed and echo the output of an R code chunk\footnote{\code{\{code chunk\}} must be a complete and valid code expression, because the expression is parsed and evaluated in place.}. 
-Formatting of the capture has to be done in the format of the output document.  For instance, the following RSP-embedded LaTeX text
+The \code{evalCapture()} function allows us to evaluate, embed and echo the text output of an R code chunk\footnote{\code{\{code chunk\}} must be a complete and valid code expression, because the expression is parsed and evaluated in place.}.  Note that it is only standard output that is echoed, i.e. plots are \emph{not} automatically embedded as figures.  To include figures, see Section~\ref{WorkingWithFigures}.  
+Continuing, any formatting of the capture has to be done in the format of the output document.  For instance, the following RSP-embedded LaTeX text
 \begin{rspVerbatim}
 {\textbackslash}begin\{verbatim\}
 <\%=evalCapture(\{
@@ -494,6 +494,7 @@ Finally, it is important to understand that the paths used for inserting these f
   FIGURES
   -------------------------------------------------------------------%>
 \section{Working with figures}
+\label{WorkingWithFigures}
 Because the RSP language is context unaware, it does not have constructs for inserting content such as figures and tables.  However, as we will show in this section, it is still very easy to create and include figures in the output document.
 We will first explain how to create image files and then show how they can be included in LaTeX, Markdown and HTML documents in a standard and unified way.
 
