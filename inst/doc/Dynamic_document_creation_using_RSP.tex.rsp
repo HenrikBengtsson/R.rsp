@@ -534,7 +534,7 @@ which is preferably added to the beginning of the LaTeX document.  This tells La
  \label{fig:MyFigure}
 \end{figure}
 
-With this setup, it is possible to create and embed a figure as the one in Figure~\ref{fig:MyFigure} using the following tidy RSP and LaTeX markup
+With this setup, it is possible to create and embed a figure as the one in Figure~\ref{fig:MyFigure} using the following tidy RSP and LaTeX markup\footnote{For readability, we have dropped the usual LaTeX commands for setting up the \code{figure} environment, centering and rescaling the image and creating the figure caption.}%
 \begin{rspVerbatim}
 {\bs}includegraphics\{<\%=toPDF("MyFigure,yeah,cool", aspectRatio=0.6, \{
   curve(dnorm, from=-5, to=+5);
@@ -550,10 +550,21 @@ Note that by replacing \code{toPDF()} with \code{toPNG()}, a PNG image file is i
 \subsection{Including image files in HTML}
 \emph{To be continued...}
 
+\begin{rspVerbatim}
+<img src="<\%=toPNG("MyFigure,yeah,cool", aspectRatio=0.6, \{
+  curve(dnorm, from=-5, to=+5);
+\})\%>">
+\end{rspVerbatim}
 
 \subsection{Including image files in Markdown}
 \emph{To be continued...}
 
+\begin{rspVerbatim}
+![This figure was generated and inserted into the LaTeX document using RSP.]
+(<\%=toPNG("MyFigure,yeah,cool", aspectRatio=0.6, \{
+  curve(dnorm, from=-5, to=+5);
+\})\%>)
+\end{rspVerbatim}
 
 
 
