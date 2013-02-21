@@ -105,7 +105,7 @@ devOptions("png", width=840)
 %>
 
 
-\title{Dynamic LaTeX reports with RSP<%=ifelse(docVersion == "devel", "*", "")%>}
+\title{Dynamic document creation using RSP<%=ifelse(docVersion == "devel", "*", "")%>}
 \author{Henrik Bengtsson}
 \date{<%=format(as.Date(getDate(R.rsp)), format="%B %d, %Y")%>}
 
@@ -113,15 +113,16 @@ devOptions("png", width=840)
 
 \maketitle
 \begin{abstract}
-An important part of a statistical analysis is to document the analysis and its results.  A common approach is to build up an R script as the the analysis progresses.  This script may generate image files and tables that are later inserted manually into a, say, LaTeX report.  This strategy works alright for small one-off analyzes, whereas for larger and partly repetitive analyzes an automatic report generator is more suitable.
+An important part of a statistical analysis is to document the analysis and its results.  A common approach is to build up an R script as the the analysis progresses.  This script may generate image files and tables that are later inserted manually into, say, a LaTeX report.  This strategy works alright for small one-off analyzes, whereas for larger and partly repetitive analyzes an automatic report generator is more suitable.
 
-In this document we will illustrate how a LaTeX document can be extended with the RSP markup language resulting in a very powerful tool for generating dynamic reports in R.  
-As we will discover, with RSP it is possible to generate document constructs that are not possible in Sweave, e.g. looping of a mix of R and LaTeX blocks.
-Because RSP is a so called \emph{context-indepent} markup language, RSP can be used to produce documents of any text-based format, e.g. plain text, HTML, XML, SVG, as well as Javascript, R, and Sweave.
-This document was produced using RSP-embedded LaTeX.
+In this document we introduce the RSP markup language and explain how it can be embedded in virtually any text-based source document which then may be compile into a final document.  We will describe all of the RSP constructs available and illustrate how to they can be used for plain text as well as for LaTeX documents.
+
+RSP provides an easy, yet powerful and flexible way for generating reports and other documents in R.  With a single R command it is possible to compile an RSP-embedded LaTeX, Sweave or knitr document into a read-to-view PDF file to name a few examples.  As an example, we show how to produce this very document from an RSP-embedded LaTeX file.
+
+Furthermore, because RSP is a so called \emph{content-indepent} markup language, it can be used to produce documents of any kind, e.g. plain text, LaTeX, Sweave, knitr, AsciiDoc, Markdown, HTML, XML, SVG, and even Javascript, R scripts and so on.  More over, with RSP it is possible to use literate programming constructs that are not possible in Sweave, e.g. looping of a mix of R source code and LaTeX text blocks.
 \end{abstract}
 
-\keywords{reproducible research, report generator, markup language, LaTeX}
+\keywords{RSP markup language, literate programming, reproducible research, report generator, Sweave, knitr, TeX, LaTeX, Markdown, HTML, AsciiDoc, reStructuredText, Org-Mode, PDF}
 
 \begin{center}
 \emph{This vignette is distributed as part of the \pkg{R.rsp} package, which is available on CRAN.}
@@ -441,7 +442,7 @@ When an RSP-embedded document in processed, it is (i) \emph{parsed}, (ii) \emph{
 During the initial parsing, RSP comments and their contents are dropped.
 During preprocessing, RSP \emph{preprocessing directives}, which are RSP constructors of format \code{<\%@...\%>}, are processed.
 Such directives can be used to for instance programmatically control how parts of an RSP document are included or excluded based on some conditions or they can be used to include an external RSP source into the main RSP document.
-Although the afformentioned maybe achieved with by plain R \code{<\%~...~\%>} constructs, these tasks are much bettered handled by RSP preprocessing directives.  It is also useful to understand that preprocessing directives are RSP constructs that are \emph{independent of the R language} per se and are processed before the RSP document is interpreted as R source code\footnote{There is nothing preventing an RSP document to be parsed and preprocessed by another implementation in a different programming language.  It is only the succeeding steps that are specific to the R language.}.
+Although the afformentioned maybe achieved with by plain R \code{<\%~...~\%>} constructs, these tasks are much bettered handled by RSP preprocessing directives.  It is also useful to understand that preprocessing directives are RSP constructs that are \emph{independent of the R language} per se and are processed before the RSP document is interpreted as R source code\footnote{Conceptually, there is nothing preventing an RSP document to be parsed and preprocessed by another implementation in a different programming language than R.  It is only the succeeding steps that are specific to the R language.}.
 After preprocessing, there are no remaining RSP preprocessing directives left in the RSP document, which then only contains text and basic RSP constructs (Sections~\ref{RspCodeChunkInlining}-\ref{RspCodeEmbed}).
 
 \emph{To be continued...}
@@ -492,12 +493,13 @@ Finally, it is important to understand that the paths used for inserting these f
 <%-------------------------------------------------------------------
   FIGURES
   -------------------------------------------------------------------%>
-\section{Generating and inserting figures}
-Since the above RSP markup is powerful enough, there is no need for a specific markup for figures.  This section shows how to create and embed image files into the final document.
+\section{Working with figures}
+Because the RSP language is context unaware, it does not have constructs for inserting content such as figures and tables.  However, as we will show in this section, it is still very easy to create and include figures in the output document.
+We will first explain how to create image files and then show how they can be included in LaTeX, Markdown and HTML documents in a standard and unified way.
 
 
-%% \subsection{Creating image files}
-The \code{toPDF()} and \code{toPNG()} functions of the \pkg{R.devices} package are useful when creating image files that are recognized by LaTeX.  For instance,
+\subsection{Creating image files}
+The \code{toPDF()} and \code{toPNG()} functions of the \pkg{R.devices} package\footnote{The \pkg{R.devices} package is automatically loaded when \pkg{R.rsp} is loaded.} are useful for creating image files to be included in for instance LaTeX and HTML.  For example,
 \begin{verbatim}
 # Use greater objects by default
 setOption("devNew/args/par", list(lwd=2));
@@ -508,16 +510,16 @@ toPDF("myFigure,yeah,cool", aspectRatio=0.6, {
 \end{verbatim}
 creates a PDF image file named \code{myFigure,yeah,cool.png} whose height is 60\% of its width and displays the Guassian density distribution.
 The function returns the filename without the filename extension, i.e. \code{"myFigure,yeah,cool"}.
-  Moreover, (by default) these functions writes the image file to the figures/ directory.  For more information, see \code{help("toPDF")}.\\
+  Moreover, (by default) the \code{toPDF()} and \code{toPNG()} functions write image files to the \code{figures/} directory.  For more information, see \code{help("toPDF")}.\\
 
 
-%% \subsection{Brief on including image files in LaTeX}
-When inserting a figure in LaTeX, it is recommended to do so without specifying neither the path nor the filename extension of the image file, e.g. \code{{\textbackslash}includegraphics\{MyFigure\}}.
-In order for this to work, one must specify the "image search path", e.g.
+\subsection{Including image files in LaTeX}
+When inserting a figure in LaTeX, it is recommended to do so without specifying neither the path nor the filename extension of the image file when including the image, e.g. \code{{\textbackslash}includegraphics\{MyFigure\}}.
+In order for this to work, one must specify the "image search path" in LaTeX, e.g.
 \begin{verbatim}
 \graphicspath{{figures/}{figures/external/}}
 \end{verbatim}
-which is preferably added to the beginning of the LaTeX file.  This tells LaTeX to search for image files in directory figures/ as well as directory figures/external/.   Moreover, when leaving out the filename extension, LaTeX will automatically search for image files with different filename extensions, e.g. \code{*.png} and \code{*.pdf}.
+which is preferably added to the beginning of the LaTeX document.  This tells LaTeX to search for image files in directory \code{figures/} as well as directory \code{figures/external/}.   Moreover, by leaving out the filename extension, LaTeX will automatically search\footnote{In order for \code{{\bs}includegraphics\{\}} to locate a proper image files when leaving out the filename extension, the image file must not have other periods in the filename other than the one used for the extension.} for image files with different filename extensions, e.g. \code{*.png} and \code{*.pdf}.
 
 %% \subsection{Generating and embedding figures}
 \begin{figure}[htp]
@@ -528,23 +530,29 @@ which is preferably added to the beginning of the LaTeX file.  This tells LaTeX 
   })%>}
  }%
  \end{center}
- \caption{This figure was generated and inserted into the LaTeX document by RSP-embedded markup.}
+ \caption{This figure was generated and inserted into the LaTeX document using RSP.}
  \label{fig:MyFigure}
 \end{figure}
 
-With this setup, it is possible to create and embed a figure as the one in Figure~\ref{fig:MyFigure} with the following tidy markup
+With this setup, it is possible to create and embed a figure as the one in Figure~\ref{fig:MyFigure} using the following tidy RSP and LaTeX markup
 \begin{rspVerbatim}
 {\bs}includegraphics\{<\%=toPDF("MyFigure,yeah,cool", aspectRatio=0.6, \{
   curve(dnorm, from=-5, to=+5);
 \})\%>\}
 \end{rspVerbatim}
-After the RSP code has been processed, and the image file has been created, the above simply produces the following markup in the generated LaTeX document:
+After the RSP code has been processed, and the image file has been created, the above simply produces the following LaTeX block in the generated LaTeX document:
 \begin{verbatim}
 \includegraphics{MyFigure,yeah,cool}
 \end{verbatim}
 Note that by replacing \code{toPDF()} with \code{toPNG()}, a PNG image file is inserted instead, which can dramatically reduce the size of the final PDF document when for instance a high-density scatter plot is used.
 
 
+\subsection{Including image files in HTML}
+\emph{To be continued...}
+
+
+\subsection{Including image files in Markdown}
+\emph{To be continued...}
 
 
 

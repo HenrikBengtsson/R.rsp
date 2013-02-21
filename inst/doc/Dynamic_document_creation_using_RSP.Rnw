@@ -6,10 +6,10 @@
 % 1. open help(package="R.rsp"), and
 % 2. go to 'Overview of user guides and package vignettes'
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-%\VignetteIndexEntry{Dynamic LaTeX reports with RSP}
-%\VignetteKeyword{reproducible research, report generator, markup language, LaTeX}
-%\VignetteSource{Dynamic_LaTeX_reports_with_RSP.tex.rsp}
-%\VignetteBuild{R.rsp::rfile("Dynamic_LaTeX_reports_with_RSP.tex.rsp")}
+%\VignetteIndexEntry{Dynamic document creation using RSP}
+%\VignetteKeyword{RSP markup language, literate programming, reproducible research, report generator, Sweave, knitr, TeX, LaTeX, Markdown, HTML, AsciiDoc, reStructuredText, Org-Mode, PDF}
+%\VignetteSource{Dynamic_document_creation_using_RSP.tex.rsp}
+%\VignetteBuild{R.rsp::rfile("Dynamic_document_creation_using_RSP.tex.rsp")}
 %\ VignetteEngine{rsp}
 \documentclass{article}
 \begin{document}
