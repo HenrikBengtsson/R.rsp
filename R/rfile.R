@@ -29,7 +29,8 @@
 #   \item{envir}{The @environment in which the RSP document is 
 #      preprocessed and evaluated.}
 #   \item{args}{A named @list of arguments assigned to the environment
-#     in which the RSP string is parsed and evaluated. See @see "rargs".}
+#     in which the RSP string is parsed and evaluated. 
+#     See @see "R.utils::cmdArgs".}
 #   \item{postprocess}{If @TRUE, and a postprocessing method exists for
 #      the generated RSP product, it is postprocessed as well.}
 #   \item{...}{Additional arguments passed to the RSP engine.}
@@ -149,7 +150,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   stopifnot(is.environment(envir));
 
   # Argument 'args':
-  args <- rargs(args);
+  args <- cmdArgs(args);
 
   # Argument 'fake':
   fake <- Arguments$getLogical(fake);

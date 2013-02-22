@@ -20,7 +20,8 @@
 #   \item{envir}{The @environment in which the RSP string is 
 #      preprocessed and evaluated.}
 #   \item{args}{A named @list of arguments assigned to the environment
-#     in which the RSP string is parsed and evaluated. See @see "rargs".}
+#     in which the RSP string is parsed and evaluated.
+#     See @see "R.utils::cmdArgs".}
 # }
 #
 # \value{
@@ -63,7 +64,7 @@ setMethodS3("rstring", "default", function(..., file=NULL, path=NULL, envir=pare
 
 setMethodS3("rstring", "RspString", function(object, envir=parent.frame(), args="*", ...) {
   # Argument 'args':
-  args <- rargs(args);
+  args <- cmdArgs(args);
 
   # Assign arguments to the parse/evaluation environment
   attachLocally(args, envir=envir);

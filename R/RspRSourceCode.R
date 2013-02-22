@@ -195,7 +195,8 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
 #   \item{output}{A @character string specifying type of output function.}
 #   \item{envir}{The @environment in which the RSP string is evaluated.}
 #   \item{args}{A named @list of arguments assigned to the environment
-#     in which the RSP string is parsed and evaluated. See @see "rargs".}
+#     in which the RSP string is parsed and evaluated. 
+#     See @see "R.utils::cmdArgs".}
 #   \item{...}{Optional arguments passed to @see "base::eval".}
 # }
 #
@@ -211,7 +212,7 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
 #*/######################################################################### 
 setMethodS3("evaluate", "RspRSourceCode", function(object, output=c("string"), envir=parent.frame(), args="*", ..., verbose=FALSE) {
   # Argument 'args':
-  args <- rargs(args);
+  args <- cmdArgs(args);
 
 
   # Parse R RSP source code
