@@ -38,7 +38,8 @@
   \item{envir}{The \code{\link[base]{environment}} in which the RSP document is
      preprocessed and evaluated.}
   \item{args}{A named \code{\link[base]{list}} of arguments assigned to the environment
-    in which the RSP string is parsed and evaluated. See \code{\link{rargs}}().}
+    in which the RSP string is parsed and evaluated.
+    See \code{\link[R.utils]{cmdArgs}}.}
   \item{postprocess}{If \code{\link[base:logical]{TRUE}}, and a postprocessing method exists for
      the generated RSP product, it is postprocessed as well.}
   \item{...}{Additional arguments passed to the RSP engine.}

@@ -29,7 +29,8 @@
   \item{envir}{The \code{\link[base]{environment}} in which the RSP string is
      preprocessed and evaluated.}
   \item{args}{A named \code{\link[base]{list}} of arguments assigned to the environment
-    in which the RSP string is parsed and evaluated. See \code{\link{rargs}}().}
+    in which the RSP string is parsed and evaluated.
+    See \code{\link[R.utils]{cmdArgs}}.}
 }
 
 \value{
