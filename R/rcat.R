@@ -22,7 +22,8 @@
 #   \item{envir}{The @environment in which the RSP string is 
 #     preprocessed and evaluated.}
 #   \item{args}{A named @list of arguments assigned to the environment
-#     in which the RSP string is parsed and evaluated. See @see "rargs".}
+#     in which the RSP string is parsed and evaluated.
+#     See @see "R.utils::cmdArgs".}
 # }
 #
 # \value{
