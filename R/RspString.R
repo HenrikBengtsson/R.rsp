@@ -295,130 +295,108 @@ setMethodS3("dropComments", "RspString", function(object, envir=parent.frame(), 
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("parseRaw", "RspString", function(object, ...) {
+setMethodS3("parseRaw", "RspString", function(object, what=c("comment", "directive", "expression"), commentLength=2L, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Local function
+  # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  splitRspTags <- function(...) {
-    bfr <- paste(..., collapse="\n", sep="");
-  
-    START <- 0L;
-    STOP <- 1L;
+  # Argument 'what':
+  what <- match.arg(what);
 
-    parts <- list();
-    state <- START;
-    while(TRUE) {
-      if (state == START) {
-        # The start tag may exists *anywhere* in static code
-        pos <- regexpr("<%", bfr);
-        if (pos == -1L)
-          break;
-
-        part <- list(text=substring(bfr, first=1L, last=pos-1L));
-        bfr <- substring(bfr, first=pos+2L);
-        state <- STOP;
-      } else if (state == STOP) {
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        # Is it an RSP comment?
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        pos <- regexpr("^([-]+)", bfr);
-        if (pos == 1L) {
-          # Length in comment prefix
-          nPrefix <- attr(pos, "match.length");
-          bfrT <- substring(bfr, first=1L+nPrefix);
-
-          if (nPrefix == 1L) {
-            types <- c("empty")
-          } else {
-            types <- c("empty", "paired")
-          }
-
-          part <- NULL;
-          for (type in types) {
-            part <- NULL;
-            if (type == "empty") {
-              # <%-[{count}]%>, <%--[{count}]%>, <%---[{count}]%>, ...
-              pattern <- "()()(\\[[^]]*\\])?(%>)(.*)";
-            } else if (type == "paired") {
-              # <%-{n} comment \n comment -{n}%>, where n >= 2
-              pattern <- sprintf("^(|.*[^-])([-]{%d})(\\[[^]]*\\])?(%%>)(.*)", nPrefix);
-            }
-
-            pos <- regexpr(pattern, bfrT);
-            if (pos == 1L) {
-              comment <- gsub(pattern, "\\1", bfrT);
-
-              suffix <- gsub(pattern, "\\2", bfrT);
-              nSuffix <- nchar(suffix);
-
-              suffixSpecs <- gsub(pattern, "\\3", bfrT);
-              nSuffixSpecs <- nchar(suffixSpecs);
-
-              tail <- gsub(pattern, "\\4", bfrT);
-              nTail <- nchar(tail);
-
-              # Regular expressions are greedy, so we might have
-              # matched too far.  Does the comment contain a match?
-              while ((posT <- regexpr(pattern, comment)) == 1L) {
-                comment <- gsub(pattern, "\\1", comment);
-              }
-              nComment <- nchar(comment);
-
-              prefix <- substring(bfr, first=1L, last=nPrefix);
-              attr(comment, "delimiters") <- c(prefix, suffix);
-              attr(comment, "suffixSpecs") <- suffixSpecs;
-
-              part <- list(comment=comment);
-              bfr <- substring(bfrT, first=nComment+nSuffix+nSuffixSpecs+nTail+1L);
-              break;
-            }
-          } # for (type ...)
-
-          # Found a comment?
-          if (!is.null(part)) {
-            state <- START;
-            parts <- c(parts, part);
-            next;
-          }
-        } # if (pos == 1L) # Is it an RSP comment?
+  # Argument 'commentLength':
+  commentLength <- as.integer(commentLength);
+  stopifnot(is.finite(commentLength));
+  stopifnot(commentLength >= 2L);
 
 
-        pos <- indexOfNonQuoted(bfr, "%>");
-        if (pos == -1L)
-          break;
+  # Work with one large character string
+  bfr <- paste(object, collapse="\n", sep="");
 
-        # Extract RSP body
-        body <- substring(bfr, first=1L, last=pos-1L);
+  # Setup the regular expressions for start and stop RSP constructs
+  if (what == "comment") {
+    patternL <- sprintf("<%%-{%d}([^-])", commentLength);
+    patternR <- sprintf("(|[^-])(-{%d}(\\[[^]]*\\]))?%%>", commentLength);
+  } else if (what == "directive") {
+    patternL <- "<%@()";
+    patternR <- "()(|-(\\[[^]]*\\])?)%>";
+  } else if (what == "expression") {
+    patternL <- "<%()";
+    patternR <- "()(|-(\\[[^]]*\\])?)%>";
+  }
 
-        # Check for suffix comment specifications, i.e. '-[{specs}]%>'
-        patternR <- "(.*)-(\\[[^]]*\\])?$";
-        if ((posR <- regexpr(patternR, body)) != -1L) {
-          suffixSpecs <- gsub(patternR, "\\2", body);
-          rsp <- gsub(patternR, "\\1", body);
-          attr(rsp, "suffixSpecs") <- suffixSpecs;
-        } else {
-          rsp <- body;
-        }
-      
-        part <- list(rsp=rsp);
-        bfr <- substring(bfr, first=pos+2L);
+  # Constants
+  START <- 0L;
+  STOP <- 1L;
 
-        state <- START;
-      } # if (state == ...)
+  parts <- list();
+  state <- START;
+  while(TRUE) {
+    if (state == START) {
+      # The start tag may exists *anywhere* in static code
+      posL <- regexpr(patternL, bfr);
+      if (posL == -1L)
+        break;
 
-      parts <- c(parts, part);
-    } # while(TRUE);
+      nL <- attr(posL, "match.length");
+      stopifnot(is.integer(nL));
 
-    # Add the rest of the buffer as text
-    parts <- c(parts, list(text=bfr));
-  
-    parts;
-  } # splitRspTags() 
+      # Adjust if parsed into the tailing text
+      tag <- substring(bfr, first=posL, posL+nL-1L);
+      bfrX <- gsub(patternL, "\\1", tag);
+      nL <- nL - nchar(bfrX);
 
-  code <- paste(object, collapse="\n");
-  expr <- splitRspTags(code, ...);
-  RspDocument(expr, type=getType(object), source=getSource(object));
+      part <- list(text=substring(bfr, first=1L, last=posL-1L));
+      bfr <- substring(bfr, first=posL+nL);
+      state <- STOP;
+    } else if (state == STOP) {
+      posR <- indexOfNonQuoted(bfr, patternR);
+      if (posR == -1L)
+        break;
+
+      # Extract RSP tail
+      nR <- attr(posR, "match.length");
+      stopifnot(is.integer(nR));
+      tail <- substring(bfr, first=posR, last=posR+nR-1L);
+
+      # Adjust for tail parsed into preceeding body?
+      bodyX <- gsub(patternR, "\\1", tail);
+      posR <- posR + nchar(bodyX);
+
+      # Extract body
+      body <- substring(bfr, first=1L, last=posR-1L);
+
+      # Get optional suffix specifications, i.e. '-[{specs}]%>'
+      suffixSpecs <- gsub(patternR, "\\3", tail);
+      # Trim?
+      if (nchar(suffixSpecs > 0L)) {
+        suffixSpecs <- gsub("^\\[[ \t\v]*", "", suffixSpecs);
+        suffixSpecs <- gsub("[ \t\v]*\\]$", "", suffixSpecs);
+      }
+      attr(body, "suffixSpecs") <- suffixSpecs;
+
+      if (what == "comment") {
+        attr(body, "commentLength") <- commentLength;           
+      }
+
+      part <- list(rsp=body);
+      if (what != "expression") {
+        names(part)[1L] <- what;
+      }
+      bfr <- substring(bfr, first=posR+nR);
+
+      state <- START;
+    } # if (state == ...)
+
+    parts <- c(parts, part);
+  } # while(TRUE);
+
+  # Add the rest of the buffer as text
+  parts <- c(parts, list(text=bfr));
+
+  # Setup results
+  doc <- RspDocument(parts, type=getType(object), source=getSource(object));
+  attr(doc, "what") <- what;
+
+  doc;
 }, protected=TRUE) # parseRaw()
 
 
@@ -661,13 +639,22 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
     object; 
     } # coerceRsp()
 
-
   # RSP comment must be dropped by the parser so that they can be
   # nested, because all other RSP expressions must not be nested.
   object <- dropComments(object, envir=envir);
 
+  for (n in 2:10) {
+    docC <- parseRaw(object, what="comment", commentLength=n);
+    docC <- docC[names(docC) != "comment"];
+    text <- unlist(docC, use.names=FALSE);
+    text <- paste(text, collapse="");
+    text <- RspString(text, type=getType(object));
+    class(text) <- class(object);
+    object <- text;
+  } # for (n ...)
+
   # Split RSP text into non-nested blocks of RSP 'text' and 'rsp' chunks.
-  doc <- parseRaw(object);
+  doc <- parseRaw(object, what="expression");
 
   # Turn 'text' chunks into RspTexts
   doc <- coerceText(doc);
