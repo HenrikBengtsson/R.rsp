@@ -43,7 +43,6 @@ extends character\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:dropComments.RspString]{dropComments}} \tab Drops all RSP comments.\cr
  \tab \code{\link[R.rsp:evaluate.RspString]{evaluate}} \tab Parses, translates, and evaluates the RSP string.\cr
  \tab \code{\link[R.rsp:getSource.RspString]{getSource}} \tab Gets the source reference of an RSP string.\cr
  \tab \code{\link[R.rsp:getType.RspString]{getType}} \tab Gets the type of an RSP string.\cr

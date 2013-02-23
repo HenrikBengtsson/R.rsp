@@ -1,38 +1,38 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspExpression.R
+%  RspDocument.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getSuffixSpecs.RspExpression}
-\alias{getSuffixSpecs.RspExpression}
-\alias{RspExpression.getSuffixSpecs}
-\alias{getSuffixSpecs.RspExpression}
-\alias{getSuffixSpecs,RspExpression-method}
+\name{asRspString.RspDocument}
+\alias{asRspString.RspDocument}
+\alias{RspDocument.asRspString}
+\alias{asRspString.RspDocument}
+\alias{asRspString,RspDocument-method}
 
 
-\title{Gets the suffix specifications}
+\title{Recreates an RSP string from an RspDocument}
 
 \description{
- Gets the suffix specifications.
+ Recreates an RSP string from an RspDocument.
 }
 
-\usage{\method{getSuffixSpecs}{RspExpression}(object, ...)}
+\usage{\method{asRspString}{RspDocument}(doc, ...)}
 
 \arguments{
   \item{...}{Not used.}
 }
 
 \value{
- Returns a trimmed \code{\link[base]{character}} string.
+ Returns an \code{\link{RspString}}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  For more information see \code{\link{RspExpression}}.
+  For more information see \code{\link{RspDocument}}.
 }
 \keyword{internal}
 \keyword{methods}

@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspExpression.R
+%  RspComment.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,7 +19,7 @@
 
 \code{character}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[R.rsp]{RspExpression}}\cr
+\code{~~+--}\code{\link[R.rsp]{RspConstruct}}\cr
 \code{~~~~~~~|}\cr
 \code{~~~~~~~+--}\code{RspComment}\cr
 
@@ -27,11 +27,14 @@
 \cr
 
 public class \bold{RspComment}\cr
-extends \link[R.rsp]{RspExpression}\cr
+extends \link[R.rsp]{RspConstruct}\cr
 
 
 
-  An RspComment is an \code{\link{RspExpression}} that represents an RSP comment.
+  An RspComment is an \code{\link{RspConstruct}} that represents an RSP comment,
+  which are of format \code{<\%-- ... --\%>}, \code{<\%--- ... ---\%>}
+  and so on.  They can also be so called "empty" RSP comments of format
+  \code{<\%-\%>}, \code{<\%--\%>}, \code{<\%---\%>} and so on.
  }
 
  \usage{RspComment(str=character(), ...)}
@@ -48,7 +51,7 @@ extends \link[R.rsp]{RspExpression}\cr
 }
 
 
- \bold{Methods inherited from RspExpression}:\cr
+ \bold{Methods inherited from RspConstruct}:\cr
 getAttributes, getSuffixSpecs
 
  \bold{Methods inherited from character}:\cr

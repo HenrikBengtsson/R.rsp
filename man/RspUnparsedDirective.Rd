@@ -1,53 +1,53 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspText.R
+%  RspDirective.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspText}
+ \name{RspUnparsedDirective}
 \docType{class}
-\alias{RspText}
+\alias{RspUnparsedDirective}
 
 
- \title{The RspText class}
+ \title{The RspUnparsedDirective class}
 
  \description{
   Package:  R.rsp \cr
-\bold{Class RspText}\cr
+\bold{Class RspUnparsedDirective}\cr
 
 \code{character}\cr
 \code{~~|}\cr
 \code{~~+--}\code{\link[R.rsp]{RspConstruct}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{RspText}\cr
+\code{~~~~~~~+--}\code{\link[R.rsp]{RspDirective}}\cr
+\code{~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~+--}\code{RspUnparsedDirective}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public class \bold{RspText}\cr
-extends \link[R.rsp]{RspConstruct}\cr
+public class \bold{RspUnparsedDirective}\cr
+extends \link[R.rsp]{RspDirective}\cr
 
 
 
-  An RspText is an \code{\link{RspConstruct}} that represents a plain text
-  section, i.e. everything that is inbetween any other types of
-  \code{\link{RspConstruct}}:s.
-  Its content is independent of the underlying programming language.
+  An RspUnparsedDirective is an \code{\link{RspDirective}} that still has not
+  been parsed for its class and content.  After \code{\link{parse}}():ing such
+  an object, the class of this RSP directive will be known.
  }
 
- \usage{RspText(text=character(), ...)}
+ \usage{RspUnparsedDirective(...)}
 
  \arguments{
-   \item{text}{A \code{\link[base]{character}} string.}
-   \item{...}{Not used.}
+   \item{...}{Arguments passed to \code{\link{RspDirective}}.}
  }
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:getText.RspText]{getText}} \tab Gets the text.\cr
+ \tab \code{\link[R.rsp:parse.RspUnparsedDirective]{parse}} \tab Parses the unknown RSP directive for its class.\cr
 }
 
 

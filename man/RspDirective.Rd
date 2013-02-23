@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspExpression.R
+%  RspDirective.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,20 +19,20 @@
 
 \code{character}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[R.rsp]{RspExpression}}\cr
+\code{~~+--}\code{\link[R.rsp]{RspConstruct}}\cr
 \code{~~~~~~~|}\cr
 \code{~~~~~~~+--}\code{RspDirective}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.rsp]{RspDefineDirective}, \link[R.rsp]{RspElseDirective}, \link[R.rsp]{RspEndifDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspIfDirective}, \link[R.rsp]{RspIfeqDirective}, \link[R.rsp]{RspIfneqDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspPageDirective}, \link[R.rsp]{RspUnknownDirective}\cr
+\link[R.rsp]{RspDefineDirective}, \link[R.rsp]{RspElseDirective}, \link[R.rsp]{RspEndifDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspIfDirective}, \link[R.rsp]{RspIfeqDirective}, \link[R.rsp]{RspIfneqDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspPageDirective}, \link[R.rsp]{RspUnknownDirective}, \link[R.rsp]{RspUnparsedDirective}\cr
 
 public class \bold{RspDirective}\cr
-extends \link[R.rsp]{RspExpression}\cr
+extends \link[R.rsp]{RspConstruct}\cr
 
 
 
-  An RspDirective is an \code{\link{RspExpression}} that represents a directive
-  to the RSP parser.
+  An RspDirective is an \code{\link{RspConstruct}} that represents an
+  RSP preprocesing directive of format \code{<\%@ ... \%>}.
   The directive is independent of the underlying programming language.
  }
 
@@ -49,7 +49,7 @@ extends \link[R.rsp]{RspExpression}\cr
 \emph{No methods defined}.
 
 
- \bold{Methods inherited from RspExpression}:\cr
+ \bold{Methods inherited from RspConstruct}:\cr
 getAttributes, getSuffixSpecs
 
  \bold{Methods inherited from character}:\cr

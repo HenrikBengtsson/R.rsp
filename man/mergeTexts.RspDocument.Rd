@@ -13,10 +13,10 @@
 \alias{mergeTexts,RspDocument-method}
 
 
-\title{Merge neighboring RspText:s}
+\title{Merge neighboring 'text' elements}
 
 \description{
- Merge neighboring RspText:s by pasting them together.
+ Merge neighboring 'text' elements by pasting them together.
 }
 
 \usage{\method{mergeTexts}{RspDocument}(object, ...)}
@@ -26,8 +26,7 @@
 }
 
 \value{
-  Returns an \code{\link{RspDocument}} with equal or fever number of
-  \code{\link{RspExpression}}:s.
+  Returns an \code{\link{RspDocument}} with equal or fever number of elements.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

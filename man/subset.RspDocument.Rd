@@ -1,38 +1,39 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspString.R
+%  RspDocument.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{dropComments.RspString}
-\alias{dropComments.RspString}
-\alias{RspString.dropComments}
-\alias{dropComments.RspString}
-\alias{dropComments,RspString-method}
+\name{subset.RspDocument}
+\alias{subset.RspDocument}
+\alias{RspDocument.subset}
+\alias{subset.RspDocument}
+\alias{subset,RspDocument-method}
 
 
-\title{Drops all RSP comments}
+\title{Subsets an RspDocument}
 
 \description{
- Drops all RSP comments.
+ Subsets an RspDocument.
 }
 
-\usage{\method{dropComments}{RspString}(object, envir=parent.frame(), ...)}
+\usage{\method{subset}{RspDocument}(x, subset, ...)}
 
 \arguments{
+  \item{subset}{An \code{\link[base]{expression}} used for subsetting.}
   \item{...}{Not used.}
 }
 
 \value{
- Returns an \code{\link{RspString}} without the RSP comments.
+ Returns an \code{\link{RspDocument}}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  For more information see \code{\link{RspString}}.
+  For more information see \code{\link{RspDocument}}.
 }
 \keyword{internal}
 \keyword{methods}

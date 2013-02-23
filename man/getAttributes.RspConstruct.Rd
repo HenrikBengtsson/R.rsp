@@ -1,38 +1,38 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspDirective.R
+%  RspConstruct.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getType.RspPageDirective}
-\alias{getType.RspPageDirective}
-\alias{RspPageDirective.getType}
-\alias{getType.RspPageDirective}
-\alias{getType,RspPageDirective-method}
+\name{getAttributes.RspConstruct}
+\alias{getAttributes.RspConstruct}
+\alias{RspConstruct.getAttributes}
+\alias{getAttributes.RspConstruct}
+\alias{getAttributes,RspConstruct-method}
 
 
-\title{Gets the content type}
+\title{Gets the attributes of an RSP expression}
 
 \description{
- Gets the content type.
+ Gets the attributes of an RSP expression.
 }
 
-\usage{\method{getType}{RspPageDirective}(directive, ...)}
+\usage{\method{getAttributes}{RspConstruct}(directive, ...)}
 
 \arguments{
   \item{...}{Not used.}
 }
 
 \value{
- Returns a \code{\link[base]{character}} string.
+ Returns a named \code{\link[base]{list}}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  For more information see \code{\link{RspPageDirective}}.
+  For more information see \code{\link{RspConstruct}}.
 }
 \keyword{internal}
 \keyword{methods}

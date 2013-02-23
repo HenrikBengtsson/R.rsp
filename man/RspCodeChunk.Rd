@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspExpression.R
+%  RspCode.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,11 +19,13 @@
 
 \code{character}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[R.rsp]{RspExpression}}\cr
+\code{~~+--}\code{\link[R.rsp]{RspConstruct}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{\link[R.rsp]{RspCode}}\cr
+\code{~~~~~~~+--}\code{\link[R.rsp]{RspExpression}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\code{RspCodeChunk}\cr
+\code{~~~~~~~~~~~~+--}\code{\link[R.rsp]{RspCode}}\cr
+\code{~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\code{RspCodeChunk}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
@@ -54,7 +56,7 @@ extends \link[R.rsp]{RspCode}\cr
  \bold{Methods inherited from RspCode}:\cr
 getCode, getEcho
 
- \bold{Methods inherited from RspExpression}:\cr
+ \bold{Methods inherited from RspConstruct}:\cr
 getAttributes, getSuffixSpecs
 
  \bold{Methods inherited from character}:\cr

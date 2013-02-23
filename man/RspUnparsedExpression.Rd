@@ -1,53 +1,53 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspText.R
+%  RspExpression.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspText}
+ \name{RspUnparsedExpression}
 \docType{class}
-\alias{RspText}
+\alias{RspUnparsedExpression}
 
 
- \title{The RspText class}
+ \title{The RspUnparsedExpression class}
 
  \description{
   Package:  R.rsp \cr
-\bold{Class RspText}\cr
+\bold{Class RspUnparsedExpression}\cr
 
 \code{character}\cr
 \code{~~|}\cr
 \code{~~+--}\code{\link[R.rsp]{RspConstruct}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{RspText}\cr
+\code{~~~~~~~+--}\code{\link[R.rsp]{RspExpression}}\cr
+\code{~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~+--}\code{RspUnparsedExpression}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public class \bold{RspText}\cr
-extends \link[R.rsp]{RspConstruct}\cr
+public class \bold{RspUnparsedExpression}\cr
+extends \link[R.rsp]{RspExpression}\cr
 
 
 
-  An RspText is an \code{\link{RspConstruct}} that represents a plain text
-  section, i.e. everything that is inbetween any other types of
-  \code{\link{RspConstruct}}:s.
-  Its content is independent of the underlying programming language.
+  An RspUnparsedExpression is an \code{\link{RspExpression}} that still has not
+  been parsed for its class and content.  After \code{\link{parse}}():ing such
+  an object, the class of this RSP expression will be known.
  }
 
- \usage{RspText(text=character(), ...)}
+ \usage{RspUnparsedExpression(...)}
 
  \arguments{
-   \item{text}{A \code{\link[base]{character}} string.}
-   \item{...}{Not used.}
+   \item{...}{Arguments passed to \code{\link{RspExpression}}.}
  }
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:getText.RspText]{getText}} \tab Gets the text.\cr
+ \tab \code{\link[R.rsp:parse.RspUnparsedExpression]{parse}} \tab Parses the unknown RSP expression for its class.\cr
 }
 
 

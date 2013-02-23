@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspExpression.R
+%  RspDirective.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,7 +19,7 @@
 
 \code{character}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[R.rsp]{RspExpression}}\cr
+\code{~~+--}\code{\link[R.rsp]{RspConstruct}}\cr
 \code{~~~~~~~|}\cr
 \code{~~~~~~~+--}\code{\link[R.rsp]{RspDirective}}\cr
 \code{~~~~~~~~~~~~|}\cr
@@ -49,7 +49,7 @@ extends \link[R.rsp]{RspDirective}\cr
 \emph{No methods defined}.
 
 
- \bold{Methods inherited from RspExpression}:\cr
+ \bold{Methods inherited from RspConstruct}:\cr
 getAttributes, getSuffixSpecs
 
  \bold{Methods inherited from character}:\cr

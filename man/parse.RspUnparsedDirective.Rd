@@ -6,33 +6,33 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getType.RspPageDirective}
-\alias{getType.RspPageDirective}
-\alias{RspPageDirective.getType}
-\alias{getType.RspPageDirective}
-\alias{getType,RspPageDirective-method}
+\name{parse.RspUnparsedDirective}
+\alias{parse.RspUnparsedDirective}
+\alias{RspUnparsedDirective.parse}
+\alias{parse.RspUnparsedDirective}
+\alias{parse,RspUnparsedDirective-method}
 
 
-\title{Gets the content type}
+\title{Parses the unknown RSP directive for its class}
 
 \description{
- Gets the content type.
+ Parses the unknown RSP directive for its class.
 }
 
-\usage{\method{getType}{RspPageDirective}(directive, ...)}
+\usage{\method{parse}{RspUnparsedDirective}(expr, ...)}
 
 \arguments{
   \item{...}{Not used.}
 }
 
 \value{
- Returns a \code{\link[base]{character}} string.
+ Returns an \code{\link{RspDirective}} of known class.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  For more information see \code{\link{RspPageDirective}}.
+  For more information see \code{\link{RspUnparsedDirective}}.
 }
 \keyword{internal}
 \keyword{methods}
