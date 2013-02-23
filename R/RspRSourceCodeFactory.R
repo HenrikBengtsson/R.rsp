@@ -74,7 +74,10 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'expr':
-  expr <- Arguments$getInstanceOf(expr, "RspExpression");
+  reqClasses <- c("RspText", "RspExpression");
+  if (!inherits(expr, reqClasses)) {
+    throw("Argument 'expr' must be of class RspText or RspExpression: ", class(expr)[1L]);
+  }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -166,14 +166,28 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
   doc <- Arguments$getInstanceOf(doc, "RspDocument");
 
 
-  # Assert that the RspDocument 'doc' contains other RspDocument:s
+  # Assert that the RspDocument 'doc' contains no RspDocument:s
   if (any(sapply(doc, FUN=inherits, "RspDocument"))) {
     throw(sprintf("%s argument 'doc' contains other RspDocuments, which indicates that it has not been flattened.", class(doc)[1L]));
   }
 
-  # Assert that the RspDocument 'doc' contains other RspDocument:s
+  # Assert that the RspDocument 'doc' contains no RspDirective:s
   if (any(sapply(doc, FUN=inherits, "RspDirective"))) {
     throw(sprintf("%s argument 'doc' contains RSP preprocessing directives, which indicates that it has not been preprocessed.", class(doc)[1L]));
+  }
+
+  # Assert that 'doc' contains only RspText:s and RspExpression:s
+  nok <- sapply(doc, FUN=function(expr) {
+    if (inherits(expr, "RspText") || inherits(expr, "RspExpression")) {
+      NA;
+    } else {
+      class(expr);
+    }
+  });
+  nok <- nok[!is.na(nok)];
+  nok <- unique(nok);
+  if (length(nok) > 0L) {
+    throw(sprintf("%s argument 'doc' contains RSP preprocessing directives, which indicates that it has not been preprocessed: %s", class(doc)[1L], hpaste(nok)));
   }
 
 

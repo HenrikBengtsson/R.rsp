@@ -216,64 +216,57 @@ setMethodS3("getPath", "RspDocument", function(object, ...) {
 # }
 #*/######################################################################### 
 setMethodS3("trim", "RspDocument", function(object, ...) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Local function
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  trimTextParts <- function(parts, ...) {
-    ## cat("TRIMMING...\n");
-    # Identify RSP-only lines by looking at the preceeding
-    # and succeeding text parts of each RSP part
+  doc <- object;
 
-    # This code assumes that the first and the last part in 'parts'
-    # is always a "text" part.
-    stopifnot(names(parts)[1] == "text");
-    stopifnot(names(parts)[length(parts)] == "text");
+  ## cat("TRIMMING...\n");
+  # Identify RSP-only lines by looking at the preceeding
+  # and succeeding text parts of each RSP part
 
-    # Identify all text parts
-    idxs <- which(names(parts) == "text");
-    partsT <- unlist(parts[idxs], use.names=FALSE);
+  # Identify all text parts
+  idxs <- which(names(doc) == "text");
 
-    # Find text parts that ends with a new line
-    endsWithNewline <- (regexpr("(\n|\r|\r\n)[ \t\v]*$", partsT[-length(partsT)]) != -1L);
-    endsWithNewline <- which(endsWithNewline);
+  # This code assumes that the first and the last part in 'doc'
+  # is always a "text" part.
+  stopifnot(idxs[1L] == 1L);
+  stopifnot(idxs[length(idxs)] == length(doc));
 
-    # Any candidates?
-    if (length(endsWithNewline) > 0L) {
-      # Check the following text part
-      nextT <- endsWithNewline + 1L;
-      partsTT <- partsT[nextT];
+  docT <- unlist(doc[idxs], use.names=FALSE);
 
-      # Among those, which starts with a new line?
-      startsWithNewline <- (regexpr("^[ \t\v]*(\n|\r|\r\n)", partsTT) != -1L);
-      startsWithNewline <- nextT[startsWithNewline];
+  # Find text parts that ends with a new line
+  endsWithNewline <- (regexpr("(\n|\r|\r\n)[ \t\v]*$", docT[-length(docT)]) != -1L);
+  endsWithNewline <- which(endsWithNewline);
 
-      # Any remaining candidates?
-      if (length(startsWithNewline) > 0L) {
-        # Trim matching text blocks
-        endsWithNewline <- startsWithNewline - 1L;
+  # Any candidates?
+  if (length(endsWithNewline) > 0L) {
+    # Check the following text part
+    nextT <- endsWithNewline + 1L;
+    docTT <- docT[nextT];
 
-        # Trim to the right (excluding new line because it belongs to text)
-        partsT[endsWithNewline] <- sub("[ \t\v]*$", "", partsT[endsWithNewline]);
+    # Among those, which starts with a new line?
+    startsWithNewline <- (regexpr("^[ \t\v]*(\n|\r|\r\n)", docTT) != -1L);
+    startsWithNewline <- nextT[startsWithNewline];
 
-        # Trim to the left (drop also any new line because it then
-        # belongs to preceeding RSP expression)
-        partsT[startsWithNewline] <- sub("^[ \t\v]*(\n|\r|\r\n)", "", partsT[startsWithNewline]);
+    # Any remaining candidates?
+    if (length(startsWithNewline) > 0L) {
+      # Trim matching text blocks
+      endsWithNewline <- startsWithNewline - 1L;
 
-        for (kk in seq_along(partsT)) {
-          value <- RspText(partsT[kk]);
-          parts[[idxs[kk]]] <- value;
-        }
+      # Trim to the right (excluding new line because it belongs to text)
+      docT[endsWithNewline] <- sub("[ \t\v]*$", "", docT[endsWithNewline]);
+
+      # Trim to the left (drop also any new line because it then
+      # belongs to preceeding RSP expression)
+      docT[startsWithNewline] <- sub("^[ \t\v]*(\n|\r|\r\n)", "", docT[startsWithNewline]);
+
+      for (kk in seq_along(docT)) {
+        value <- RspText(docT[kk]);
+        doc[[idxs[kk]]] <- value;
       }
     }
-    ## cat("TRIMMING...done\n");
+  }
+  ## cat("TRIMMING...done\n");
 
-    parts;
-  } # trimTextParts()
-
-  res <- trimTextParts(object);
-##  class(res) <- class(object);
-
-  res;
+  doc;
 }, protected=TRUE) # trim()
 
 
@@ -281,7 +274,7 @@ setMethodS3("trim", "RspDocument", function(object, ...) {
 #########################################################################/**
 # @RdocMethod mergeTexts
 #
-# @title "Merge neighboring RspText:s"
+# @title "Merge neighboring 'text' elements"
 #
 # \description{
 #  @get "title" by pasting them together.
@@ -294,8 +287,7 @@ setMethodS3("trim", "RspDocument", function(object, ...) {
 # }
 #
 # \value{
-#   Returns an @see "RspDocument" with equal or fever number of
-#   @see "RspExpression":s.
+#   Returns an @see "RspDocument" with equal or fever number of elements.
 # }
 #
 # @author
@@ -451,7 +443,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   } # wrapText()
 
 
-  suffixSpecToCounts <- function(spec, ...) {
+  suffixSpecToCounts <- function(spec, specOrg=spec, ...) {
     if (is.null(spec)) {
       count <- 0L;
     } else if (spec == "") {
@@ -461,7 +453,10 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     } else {
       count <- as.numeric(spec);
       if (is.na(count)) {
-        throw(sprintf("Invalid count specifier in RSP comment (#%d): ", idx, spec));
+        if (!identical(spec, specOrg)) {
+          spec <- specOrg;
+        }
+        throw(sprintf("Invalid/unknown count specifier in RSP comment (#%d): '%s'", idx, spec));
       }
     }
     count;
@@ -563,11 +558,10 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       specT <- gstring(spec, envir=envir);
       if (specT != spec) {
         verbose && printf(verbose, "Expanded suffix specifications: '%s'\n", specT);
-        spec <- specT;
       }
 
       # Trim following RSP 'text' expression according to suffix specs?
-      nbrOfEmptyTextLinesToDropNext <- suffixSpecToCounts(spec);
+      nbrOfEmptyTextLinesToDropNext <- suffixSpecToCounts(specT, specOrg=spec);
 
       # Reset suffix specifications
       attr(expr, "suffixSpecs") <- NULL;
@@ -1035,8 +1029,94 @@ setMethodS3("[", "RspDocument", function(x, i) {
 }, protected=TRUE)
 
 
+
+#########################################################################/**
+# @RdocMethod "subset"
+#
+# @title "Subsets an RspDocument"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{subset}{An @expression used for subsetting.}
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns an @see "RspDocument".
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("subset", "RspDocument", function(x, subset, ...) {
+  # To please R CMD check
+  doc <- x;
+
+  if (missing(subset)) {
+  } else {
+    expr <- substitute(subset);
+    env <- new.env();
+    env$types <- env$names <- names(doc);
+    subset <- eval(expr, envir=env, enclos=parent.frame());
+    doc <- doc[subset];
+  }
+
+  doc;
+}, protected=TRUE) # subset()
+
+
+
+#########################################################################/**
+# @RdocMethod "asRspString"
+#
+# @title "Recreates an RSP string from an RspDocument"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns an @see "RspString".
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("asRspString", "RspDocument", function(doc, ...) {
+  isText <- (names(doc) == "text");
+  if (!all(isText)) {
+    throw("Currently it is not possible to coerce an RspDocument to an RspString if it contains elements of other types than 'text': ", hpaste(unique(names(doc))));
+  }
+
+  text <- lapply(doc, FUN=as.character);
+  text <- unlist(text, use.names=FALSE);
+  text <- paste(text, collapse="");
+  res <- RspString(text, type=getType(doc));
+  res;
+}, protected=TRUE) # asRspString()
+
+
 ##############################################################################
 # HISTORY:
+# 2013-02-22
+# o Added subset() and asRspString() for RspDocument.
 # 2013-02-19
 # o Now support suffix comment specifications for all RSP expressions.
 # o Added mergeTexts() for RspDocument.

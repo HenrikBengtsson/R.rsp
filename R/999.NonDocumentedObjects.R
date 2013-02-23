@@ -94,7 +94,6 @@
 # @alias sourceRspV2 
 # @alias sourceRspV2.default
 #
-# @alias dropComments
 # @alias exprToCode
 # @alias getAttributes
 # @alias getCode
@@ -117,6 +116,7 @@
 # @alias getSuffixSpecs
 # @alias mergeTexts
 # @alias getWrap
+# @alias asRspString
 #
 # \description{
 # This page contains aliases for all "non-documented" objects that 

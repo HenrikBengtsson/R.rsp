@@ -6,8 +6,7 @@
 # \description{
 #  @classhierarchy
 #
-#  An RspExpression object represents an RSP expression, which can either
-#  be a plain text section or an RSP section.
+#  An RspExpression is an @see RspConstruct of format \code{<\% ... \%>}.
 # }
 # 
 # @synopsis
@@ -25,15 +24,47 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspExpression", function(object=character(), ...) {
-  extend(object, "RspExpression");
+setConstructorS3("RspExpression", function(...) {
+  extend(RspConstruct(...), "RspExpression");
+})
+
+
+###########################################################################/**
+# @RdocClass RspUnparsedExpression
+#
+# @title "The RspUnparsedExpression class"
+#
+# \description{
+#  @classhierarchy
+#
+#  An RspUnparsedExpression is an @see RspExpression that still has not
+#  been parsed for its class and content.  After @see "parse":ing such 
+#  an object, the class of this RSP expression will be known.
+# }
+# 
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Arguments passed to @see "RspExpression".}
+# }
+#
+# \section{Fields and Methods}{
+#  @allmethods
+# }
+# 
+# @author
+#
+# @keyword internal
+#*/###########################################################################
+setConstructorS3("RspUnparsedExpression", function(...) {
+  extend(RspExpression(...), "RspUnparsedExpression");
 })
 
 
 #########################################################################/**
-# @RdocMethod getAttributes
+# @RdocMethod parse
 #
-# @title "Gets the attributes of an RSP expression"
+# @title "Parses the unknown RSP expression for its class"
 #
 # \description{
 #  @get "title".
@@ -46,7 +77,7 @@ setConstructorS3("RspExpression", function(object=character(), ...) {
 # }
 #
 # \value{
-#  Returns a named @list.
+#  Returns an @see "RspExpression" of known class.
 # }
 #
 # @author
@@ -55,877 +86,55 @@ setConstructorS3("RspExpression", function(object=character(), ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getAttributes", "RspExpression", function(directive, ...) {
-  attrs <- attributes(directive);
-  keys <- names(attrs);
-  keys <- setdiff(keys, "class");
-  attrs <- attrs[keys];
-  attrs;
-})
- 
- 
-#########################################################################/**
-# @RdocMethod getSuffixSpecs
-#
-# @title "Gets the suffix specifications"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a trimmed @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getSuffixSpecs", "RspExpression", function(object, ...) {
-  specs <- attr(object, "suffixSpecs");
-  if (is.null(specs)) return(NULL);
-  specs <- gsub("^\\[[ \t\v]*", "", specs);
-  specs <- gsub("[ \t\v]*\\]$", "", specs);
-  specs;
-})
+setMethodS3("parse", "RspUnparsedExpression", function(expr, ...) {
+  suffixSpecs <- attr(expr, "suffixSpecs");
+  body <- expr;
 
-
-
-###########################################################################/**
-# @RdocClass RspComment
-#
-# @title "The RspComment class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspComment is an @see "RspExpression" that represents an RSP comment.
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{str}{A @character string.}
-#   \item{...}{Not used.}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspComment", function(str=character(), ...) {
-  extend(RspExpression(str), "RspComment");
-})
-
-
-#########################################################################/**
-# @RdocMethod getComment
-#
-# @title "Gets the comment"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getComment", "RspComment", function(comment, ...) {
-  as.character(comment);
-})
-
-
-###########################################################################/**
-# @RdocClass RspText
-#
-# @title "The RspText class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspText is an @see "RspExpression" that represents an 
-#  plain text section.
-#  Its content is independent of the underlying programming language.
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{text}{A @character string.}
-#   \item{...}{Not used.}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspText", function(text=character(), ...) {
-  extend(RspExpression(text), "RspText");
-})
-
-
-#########################################################################/**
-# @RdocMethod getText
-#
-# @title "Gets the text"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getText", "RspText", function(text, ...) {
-  as.character(text);
-})
-
-
-
-###########################################################################/**
-# @RdocClass RspCode
-#
-# @title "The RspCode class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspCode is an @see "RspExpression" that represents a piece of source
-#  code, which may or may not be a complete code chunk (expression).
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{code}{A @character string.}
-#   \item{echo}{If @TRUE, code is echoed to the output.}
-#   \item{...}{Not used.}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspCode", function(code=character(), echo=FALSE, ...) {
-  # Replace all '\r\n' and '\r' with '\n' newlines
-  code <- gsub("\r\n", "\n", code);
-  code <- gsub("\r", "\n", code);
-
-  this <- extend(RspExpression(code), "RspCode");
-  attr(this, "echo") <- echo;
-  this;
-})
-
-
-#########################################################################/**
-# @RdocMethod getCode
-#
-# @title "Gets the source code"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getCode", "RspCode", function(code, ...) {
-  as.character(code);
-})
-
-
-#########################################################################/**
-# @RdocMethod getEcho
-#
-# @title "Checks whether the source code should be echoed or not"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @logical.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getEcho", "RspCode", function(code, ...) {
-  isTRUE(attr(code, "echo"));
-})
-
-
-
-###########################################################################/**
-# @RdocClass RspCodeChunk
-#
-# @title "The RspCodeChunk class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspCodeChunk is an @see "RspCode" that represents a complete
-#  RSP code chunk.
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Arguments passed to the constructor of @see "RspCode".}
-#   \item{return}{If @TRUE, the value of the evaluated code chunk is returned.}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspCodeChunk", function(..., return=FALSE) {
-  this <- extend(RspCode(...), "RspCodeChunk");
-  attr(this, "return") <- return;
-  this;
-})
-
-
-#########################################################################/**
-# @RdocMethod getReturn
-#
-# @title "Checks whether the value of the evaluated code chunk should be returned or not"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @logical.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getReturn", "RspCodeChunk", function(code, ...) {
-  isTRUE(attr(code, "return"));
-})
-
-
-
-###########################################################################/**
-# @RdocClass RspDirective
-#
-# @title "The abstract RspDirective class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspDirective is an @see "RspExpression" that represents a directive
-#  to the RSP parser.
-#  The directive is independent of the underlying programming language.
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{directive}{A @character string.}
-#   \item{attributes}{A named @list.}
-#   \item{...}{Not used.}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspDirective", function(directive=character(), attributes=list(), ...) {
-  this <- extend(RspExpression(directive), "RspDirective");
-  for (key in names(attributes)) {
-    attr(this, key) <- attributes[[key]];
-  }
-  this;
-})
-
-
-###########################################################################/**
-# @RdocClass RspUnknownDirective
-#
-# @title "The RspUnknownDirective class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspUnknownDirective is an @see "RspDirective" that is unknown.
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspUnknownDirective", function(...) {
-  extend(RspDirective(...), "RspUnknownDirective")
-})
-
-
-
-###########################################################################/**
-# @RdocClass RspIncludeDirective
-#
-# @title "The RspIncludeDirective class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspIncludeDirective is an @see "RspDirective" that causes the
-#  RSP parser to include (and parse) an external RSP file.
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{attributes}{A named @list, which must contain either 
-#      a 'file' or a 'text' element.}
-#   \item{...}{Optional arguments passed to the constructor 
-#              of @see "RspDirective".}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspIncludeDirective", function(attributes=list(), ...) {
-  # Argument 'attributes':
-  if (!missing(attributes)) {
-    keys <- names(attributes);
-    if (!any(is.element(c("file", "text"), keys))) {
-      throw("A RSP 'include' directive must contain either a 'file' or a 'text' attribute: ", hpaste(keys));
-    }
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # RSP Scripting Elements and Variables
+  #
+  # <%=[expression]%>
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  pattern <- "^=(.*)$";
+  if (regexpr(pattern, body) != -1L) {
+    code <- gsub(pattern, "\\1", body);
+    code <- trim(code);
+    res <- RspCodeChunk(code, return=TRUE);
+    attr(res, "suffixSpecs") <- suffixSpecs;
+    return(res);
   }
 
-  extend(RspDirective("include", attributes=attributes, ...), "RspIncludeDirective")
-})
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # RSP Scripting Elements and Variables
+  #
+  # <%:[expression]%>
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  pattern <- "^:(|[ \t\v]*(\n|\r|\r\n))(.*)$";
+  if (regexpr(pattern, body) != -1L) {
+    code <- gsub(pattern, "\\3", body);
+    res <- RspCode(code, echo=TRUE);
+    attr(res, "suffixSpecs") <- suffixSpecs;
+    return(res);
+  } 
 
-
-
-#########################################################################/**
-# @RdocMethod getFile
-#
-# @title "Gets the file attribute"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getFile", "RspIncludeDirective", function(directive, ...) {
-  attr(directive, "file");
-})
-
-#########################################################################/**
-# @RdocMethod getText
-#
-# @title "Gets the text"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getText", "RspIncludeDirective", function(directive, ...) {
-  attr(directive, "text");
-})
-
-
-#########################################################################/**
-# @RdocMethod getVerbatim
-#
-# @title "Checks if verbatim include should be used or not"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @logical.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getVerbatim", "RspIncludeDirective", function(directive, ...) {
-  res <- attr(directive, "verbatim");
-  if (is.null(res)) res <- FALSE;
-  res <- as.logical(res);
-  res <- isTRUE(res);
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # RSP Scripting Elements and Variables
+  #
+  # <% [expressions] %>
+  #
+  # This applies to anything not recognized above.
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  res <- RspCode(trim(body));
+  attr(res, "suffixSpecs") <- suffixSpecs;
   res;
-})
+}) # parse()
 
-
-#########################################################################/**
-# @RdocMethod getWrap
-#
-# @title "Get the wrap length"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns an @integer, or @NULL.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getWrap", "RspIncludeDirective", function(directive, ...) {
-  res <- attr(directive, "wrap");
-  if (!is.null(res)) {
-    res <- as.integer(res);
-  }
-  res;
-})
-
-
-
-
-###########################################################################/**
-# @RdocClass RspDefineDirective
-#
-# @title "The RspDefineDirective class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspDefineDirective is an @see "RspDirective" that causes the
-#  RSP parser to assign the value of an attribute to an R object of
-#  the same name as the attribute at the time of parsing.
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspDefineDirective", function(...) {
-  extend(RspDirective("define", ...), "RspDefineDirective")
-})
-
-
-
-
-###########################################################################/**
-# @RdocClass RspEvalDirective
-#
-# @title "The RspEvalDirective class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspEvalDirective is an @see "RspDirective" that causes the
-#  RSP parser to evaluate a piece of R code (either in a text string
-#  or in a file) as it is being parsed.
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{attributes}{A named @list, which must contain a 'file' 
-#      or a 'text' element.}
-#   \item{...}{Optional arguments passed to the constructor 
-#              of @see "RspDirective".}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspEvalDirective", function(attributes=list(), ...) {
-  # Argument 'attributes':
-  if (!missing(attributes)) {
-    keys <- names(attributes);
-    if (!any(is.element(c("file", "text"), keys))) {
-      throw("Either attribute 'file' or 'text' for the RSP 'eval' directive must be given: ", hpaste(keys));
-    }
-
-    # Default programming language is "R".
-    if (is.null(attributes$language)) attributes$language <- "R";
-  }
-
-  extend(RspDirective("eval", attributes=attributes, ...), "RspEvalDirective")
-})
-
-
-#########################################################################/**
-# @RdocMethod getFile
-#
-# @title "Gets the file attribute"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getFile", "RspEvalDirective", function(directive, ...) {
-  attr(directive, "file");
-})
-
-
-#########################################################################/**
-# @RdocMethod getText
-#
-# @title "Gets the text"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getText", "RspEvalDirective", function(directive, ...) {
-  attr(directive, "text");
-})
-
-#########################################################################/**
-# @RdocMethod getLanguage
-#
-# @title "Gets the programming language"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getLanguage", "RspEvalDirective", function(directive, ...) {
-  res <- attr(directive, "language");
-  if (is.null(res)) res <- as.character(NA);
-  res;
-})
-
-
-###########################################################################/**
-# @RdocClass RspPageDirective
-#
-# @title "The RspPageDirective class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspPageDirective is an @see "RspDirective" that annotates the
-#  content of the RSP document, e.g. the content type.
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspPageDirective", function(...) {
-  extend(RspDirective("page", ...), "RspPageDirective")
-})
-
-
-#########################################################################/**
-# @RdocMethod getType
-#
-# @title "Gets the content type"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getType", "RspPageDirective", function(directive, ...) {
-  res <- attr(directive, "type");
-  if (is.null(res)) res <- as.character(NA);
-  res;
-})
-
-
-###########################################################################/**
-# @RdocClass RspIfDirective
-# @alias RspIfeqDirective
-# @alias RspIfneqDirective
-# @alias RspElseDirective
-# @alias RspEndifDirective
-#
-# @title "The RspIfeqDirective class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspIfDirective is an @see "RspDirective" that will include or
-#  exclude all @see "RspExpression" until the next @see "RspEndifDirective"
-#  based on the preprocessing value of the particular if clause.
-#  Inclusiion/exclusion can be reverse via an @see "RspElseDirective".
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspIfDirective", function(...) {
-  extend(RspDirective("if", ...), "RspIfDirective")
-})
-
-setConstructorS3("RspIfeqDirective", function(...) {
-  extend(RspIfDirective("ifeq", ...), "RspIfeqDirective")
-})
-
-setConstructorS3("RspIfneqDirective", function(...) {
-  extend(RspIfDirective("ifneq", ...), "RspIfneqDirective")
-})
-
-setConstructorS3("RspElseDirective", function(...) {
-  extend(RspDirective("else", ...), "RspElseDirective")
-})
-
-setConstructorS3("RspEndifDirective", function(...) {
-  extend(RspDirective("endif", ...), "RspEndifDirective")
-})
 
 
 ##############################################################################
 # HISTORY:
-# 2013-02-19
-# o Added support for attribute 'text' of RspIncludeDirective:s.
-# 2013-02-18
-# o Added RspIfeqDirective, RspElseDirective, and RspEndifDirective.
-# 2013-02-13
-# o Added RspPageDirective.
-# o Added 'language' attribute to RspEvalDirective.
+# 2013-02-22
+# o Added RspUnparsedExpression.
 # 2013-02-11
 # o Added Rdoc help.
 # 2013-02-09
