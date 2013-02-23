@@ -41,18 +41,20 @@ setMethodS3("indexOfNonQuoted", "default", function(str, pattern, ...) {
   pattern <- as.character(pattern);
 
   
-  totalPos <- 0;      # The position from the start of the string
+  totalPos <- 0L;     # The position from the start of the string
+  len <- 0L;          # The default match length
   qm <- NULL;         # The current qoutation mark of a string, if exists.
   ready <- FALSE;
   while(!ready) {
     # Get the first occurance of pattern in buffer 
     pos <- regexpr(pattern, str);
-    if (pos == -1)
-      return(as.integer(-1));
+    if (pos == -1L) {
+      return(as.integer(-1L));
+    }
 
     totalPos <- totalPos + pos;
 
-    tmp <- substring(str, first=1, last=pos-1);
+    tmp <- substring(str, first=1L, last=pos-1L);
 
     # a. Remove all espaced (doubled) backslashes, i.e. '\\'
     #    (A backslash has to be escaped in C gsub(), i.e. '\\'. Each of
@@ -67,11 +69,11 @@ setMethodS3("indexOfNonQuoted", "default", function(str, pattern, ...) {
     tmp <- gsub("[^'\"]", "", tmp);
 
     # d. Exclude all single or double quoted strings.
-    while (nchar(tmp) > 0) {
+    while (nchar(tmp) > 0L) {
       if (is.null(qm)) {
         # d. Get first quotation mark
-        qm <- substring(tmp, first=1, last=1);
-        tmp <- substring(tmp, first=2);
+        qm <- substring(tmp, first=1L, last=1L);
+        tmp <- substring(tmp, first=2L);
       }
 
       # e. Exclude first (single or double) quoted string.
@@ -81,7 +83,7 @@ setMethodS3("indexOfNonQuoted", "default", function(str, pattern, ...) {
         pattern <- "^[^\"]*\"";
       }
 
-      if (regexpr(pattern, str) != -1) {
+      if (regexpr(pattern, str) != -1L) {
         str <- gsub(pattern, "", str);
         qm <- NULL;
       }
@@ -91,9 +93,13 @@ setMethodS3("indexOfNonQuoted", "default", function(str, pattern, ...) {
     str <- substring(str, first=pos+len);
 
     ready <- is.null(qm);
-  }
+  } # while (!ready)
 
-  as.integer(totalPos);
+  # The found position
+  pos <- as.integer(totalPos);
+  attr(pos, "match.length") <- len;
+
+  pos;
 }, protected=TRUE) # indexOfNonQuoted()
 
 
