@@ -19,17 +19,20 @@
  Parses the RSP string with RSP comments dropped.
 }
 
-\usage{\method{parse}{RspString}(object, preprocess=TRUE, envir=parent.frame(), ...)}
+\usage{\method{parse}{RspString}(object, preprocess=TRUE, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"))}
 
 \arguments{
   \item{preprocess}{If \code{\link[base:logical]{TRUE}}, all RSP preprocessing directives
      are processed after the RSP string is parsed, otherwise not.}
   \item{envir}{The \code{\link[base]{environment}} where the RSP document is preprocessed.}
-  \item{...}{Not used.}
+  \item{...}{Passed to the processor in each step.}
+  \item{until}{Specifies how far the parse should proceed, which is useful
+     for troubleshooting and rebugging.}
 }
 
 \value{
- Returns a \code{\link{RspDocument}}.
+ Returns a \code{\link{RspDocument}} (unless \code{until != "*"} in case it
+ returns a deparsed \code{\link{RspString}}.)
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

@@ -48,13 +48,14 @@ extends \link[R.rsp]{RspExpression}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
+ \tab \code{\link[R.rsp:asRspString.RspCode]{asRspString}} \tab Recreates an RSP string from an RspCode.\cr
  \tab \code{\link[R.rsp:getCode.RspCode]{getCode}} \tab Gets the source code.\cr
  \tab \code{\link[R.rsp:getEcho.RspCode]{getEcho}} \tab Checks whether the source code should be echoed or not.\cr
 }
 
 
  \bold{Methods inherited from RspConstruct}:\cr
-getAttributes, getSuffixSpecs
+asRspString, getAttributes, getSuffixSpecs
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap

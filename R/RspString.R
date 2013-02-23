@@ -289,11 +289,14 @@ setMethodS3("parseRaw", "RspString", function(object, what=c("comment", "directi
 #   \item{preprocess}{If @TRUE, all RSP preprocessing directives
 #      are processed after the RSP string is parsed, otherwise not.}
 #   \item{envir}{The @environment where the RSP document is preprocessed.}
-#   \item{...}{Not used.}
+#   \item{...}{Passed to the processor in each step.}
+#   \item{until}{Specifies how far the parse should proceed, which is useful
+#      for troubleshooting and rebugging.}
 # }
 #
 # \value{
-#  Returns a @see "RspDocument".
+#  Returns a @see "RspDocument" (unless \code{until != "*"} in case it
+#  returns a deparsed @see "RspString".)
 # }
 #
 # @author
@@ -302,9 +305,12 @@ setMethodS3("parseRaw", "RspString", function(object, what=c("comment", "directi
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent.frame(), ...) {
+setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments")) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
+
+  # Argument 'until':
+  until <- match.arg(until);
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -320,6 +326,8 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
     # Coerce to RspString
     object <- asRspString(doc);
   }
+
+  if (until == "comments") return(object);
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -349,6 +357,8 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
     rm(doc);
   }
 
+  if (until == "directives") return(object);
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # (2a) Parse RSP preprocessing directive
@@ -372,6 +382,9 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
   object <- asRspString(doc);
   rm(doc);
 
+  if (until == "expressions") return(object);
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # (3) Parse all other RSP constructs
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -384,12 +397,7 @@ setMethodS3("parse", "RspString", function(object, preprocess=TRUE, envir=parent
   # Preprocess (=trim all empty lines)
   doc <- preprocess(doc, envir=envir, ...);
 
-
-##  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-##  # (4) Trim and merge RspTexts
-##  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-##  doc <- trim(doc);
-##  doc <- mergeTexts(doc);
+  if (until == "end") return(asRspString(doc));
 
   doc;
 }, protected=TRUE) # parse()

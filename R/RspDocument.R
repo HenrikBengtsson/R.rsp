@@ -740,7 +740,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         expr <- doc;
         rm(rstr, doc);
       }
-  
+
       # Replace RSP directive with imported RSP document
       object[[idx]] <- expr;
   
@@ -1100,12 +1100,12 @@ setMethodS3("subset", "RspDocument", function(x, subset, ...) {
 # }
 #*/######################################################################### 
 setMethodS3("asRspString", "RspDocument", function(doc, ...) {
-  isText <- (names(doc) == "text");
-  if (!all(isText)) {
-    throw("Currently it is not possible to coerce an RspDocument to an RspString if it contains elements of other types than 'text': ", hpaste(unique(names(doc))));
-  }
+##  isText <- (names(doc) == "text");
+##  if (!all(isText)) {
+##    throw("Currently it is not possible to coerce an RspDocument to an RspString if it contains elements of other types than 'text': ", hpaste(unique(names(doc))));
+##  }
 
-  text <- lapply(doc, FUN=as.character);
+  text <- lapply(doc, FUN=asRspString);
   text <- unlist(text, use.names=FALSE);
   text <- paste(text, collapse="");
   res <- RspString(text, type=getType(doc));

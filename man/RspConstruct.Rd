@@ -44,8 +44,9 @@ extends character\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{getAttributes} \tab  -\cr
- \tab \code{getSuffixSpecs} \tab  -\cr
+ \tab \code{\link[R.rsp:asRspString.RspConstruct]{asRspString}} \tab Recreates an RSP string from an RspConstruct.\cr
+ \tab \code{\link[R.rsp:getAttributes.RspConstruct]{getAttributes}} \tab Gets the attributes of an RSP expression.\cr
+ \tab \code{\link[R.rsp:getSuffixSpecs.RspConstruct]{getSuffixSpecs}} \tab Gets the suffix specifications.\cr
 }
 
 

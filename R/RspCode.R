@@ -97,6 +97,47 @@ setMethodS3("getEcho", "RspCode", function(code, ...) {
 })
 
 
+#########################################################################/**
+# @RdocMethod "asRspString"
+#
+# @title "Recreates an RSP string from an RspCode"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns an @see "RspString".
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/#########################################################################
+setMethodS3("asRspString", "RspCode", function(code, ...) {
+  body <- getCode(code);
+
+  if (getEcho(code)) {
+    fmtstr <- ":%s";
+  } else {
+    fmtstr <- "%s";
+  }
+
+  fmtstr <- paste("<%%", fmtstr, "%%>", sep="");
+  s <- sprintf(fmtstr, body);
+  RspString(s);
+})
+
+
+
 
 ###########################################################################/**
 # @RdocClass RspCodeChunk
@@ -161,6 +202,47 @@ setMethodS3("getReturn", "RspCodeChunk", function(code, ...) {
   isTRUE(attr(code, "return"));
 })
 
+
+#########################################################################/**
+# @RdocMethod "asRspString"
+#
+# @title "Recreates an RSP string from an RspCodeChunk"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns an @see "RspString".
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/#########################################################################
+setMethodS3("asRspString", "RspCodeChunk", function(code, ...) {
+  body <- getCode(code);
+
+  if (getEcho(code)) {
+    fmtstr <- ":%s";
+  } else if (getReturn(code)) {
+    fmtstr <- "=%s";
+  } else {
+    fmtstr <- "%s";
+  }
+
+  fmtstr <- paste("<%%", fmtstr, "%%>", sep="");
+  s <- sprintf(fmtstr, body);
+  RspString(s);
+})
 
 
 ##############################################################################

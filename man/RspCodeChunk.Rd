@@ -49,15 +49,16 @@ extends \link[R.rsp]{RspCode}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
+ \tab \code{\link[R.rsp:asRspString.RspCodeChunk]{asRspString}} \tab Recreates an RSP string from an RspCodeChunk.\cr
  \tab \code{\link[R.rsp:getReturn.RspCodeChunk]{getReturn}} \tab Checks whether the value of the evaluated code chunk should be returned or not.\cr
 }
 
 
  \bold{Methods inherited from RspCode}:\cr
-getCode, getEcho
+asRspString, getCode, getEcho
 
  \bold{Methods inherited from RspConstruct}:\cr
-getAttributes, getSuffixSpecs
+asRspString, getAttributes, getSuffixSpecs
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap

@@ -100,6 +100,37 @@ setMethodS3("getSuffixSpecs", "RspConstruct", function(object, ...) {
 
 
 
+#########################################################################/**
+# @RdocMethod "asRspString"
+#
+# @title "Recreates an RSP string from an RspConstruct"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns an @see "RspString".
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/#########################################################################
+setMethodS3("asRspString", "RspConstruct", function(object, ...) {
+  throw(sprintf("Do not know to construct an RSP string from %s: %s", class(object)[1L], capture.output(str(object))));
+})
+
+
+
 ##############################################################################
 # HISTORY:
 # 2013-02-22
