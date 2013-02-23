@@ -13,10 +13,10 @@
 \alias{trim,RspDocument-method}
 
 
-\title{Trims each of the RSP expressions}
+\title{Trims each of the RSP constructs}
 
 \description{
- Trims each of the RSP expressions.
+ Trims each of the RSP constructs.
 }
 
 \usage{\method{trim}{RspDocument}(object, ...)}

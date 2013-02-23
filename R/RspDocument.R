@@ -72,7 +72,7 @@ setConstructorS3("RspDocument", function(expressions=list(), type=NA, source=NA,
 setMethodS3("print", "RspDocument", function(x, ...) {
   s <- sprintf("%s:", class(x)[1L]);
   s <- c(s, sprintf("Source: %s", getSource(x)));
-  s <- c(s, sprintf("Total number of RSP expressions: %d", length(x)));
+  s <- c(s, sprintf("Total number of RSP constructs: %d", length(x)));
   types <- sapply(x, FUN=function(x) class(x)[1L]);
   tbl <- table(types);
   for (kk in seq_along(tbl)) {
@@ -192,7 +192,7 @@ setMethodS3("getPath", "RspDocument", function(object, ...) {
 #########################################################################/**
 # @RdocMethod trim
 #
-# @title "Trims each of the RSP expressions"
+# @title "Trims each of the RSP constructs"
 #
 # \description{
 #  @get "title".
@@ -443,11 +443,11 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   } # wrapText()
 
 
-  suffixSpecToCounts <- function(spec, specOrg=spec, ...) {
+  suffixSpecToCounts <- function(spec, default=1L, specOrg=spec, ...) {
     if (is.null(spec)) {
       count <- 0L;
     } else if (spec == "") {
-      count <- 1L;
+      count <- default;
     } else if (spec == "*") {
       count <- Inf;
     } else {
@@ -512,11 +512,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 
   verbose && enter(verbose, "Preprocessing RSP document");
-  verbose && cat(verbose, "Number of RSP expressions: ", length(object));
-
-  # Identifying RSP preprocessing directives
-  idxs <- which(sapply(object, FUN=inherits, "RspDirective"));
-  verbose && cat(verbose, "Number of RSP preprocessing directives: ", length(idxs));
+  verbose && cat(verbose, "Number of RSP constructs: ", length(object));
 
   # Number of empty lines to drop from RSP texts
   nbrOfEmptyTextLinesToDropNext <- 0L;
@@ -524,10 +520,10 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   untilStack <- list();
   for (idx in seq_along(object)) {
     expr <- object[[idx]];
-    verbose && enter(verbose, sprintf("RSP expresson #%d ('%s') of %d", idx, class(expr)[1L], length(object)));
+    verbose && enter(verbose, sprintf("RSP construct #%d ('%s') of %d", idx, class(expr)[1L], length(object)));
 
-    if (verbose) {
-      cat(verbose, "Number of if rules: ", length(untilStack));
+    if (verbose && length(untilStack) > 0L) {
+      cat(verbose, "Number of active if rules: ", length(untilStack));
       if (length(untilStack) > 0L) {
         rule <- untilStack[[1L]];
         until <- rule$until;
@@ -562,6 +558,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
       # Trim following RSP 'text' expression according to suffix specs?
       nbrOfEmptyTextLinesToDropNext <- suffixSpecToCounts(specT, specOrg=spec);
+      verbose && cat(verbose, "Max number of empty lines to drop in next RSP text: ", nbrOfEmptyTextLinesToDropNext);
 
       # Reset suffix specifications
       attr(expr, "suffixSpecs") <- NULL;
@@ -776,7 +773,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         }
       }
   
-      # Drop RSP expression
+      # Drop RSP construct
       object[[idx]] <- NA;
 
       verbose && exit(verbose);
@@ -817,7 +814,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
           throw("Failed to processes RSP 'eval' directive (language='R'): ", ex$message);
         })
 
-        # Drop RSP expression
+        # Drop RSP construct
         object[[idx]] <- NA;
 
         verbose && exit(verbose);
@@ -833,7 +830,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
           throw("Failed to processes RSP 'eval' directive (language='system'): ", ex$message);
         })
 
-        # Drop RSP expression
+        # Drop RSP construct
         object[[idx]] <- NA;
 
         verbose && exit(verbose);
@@ -849,7 +846,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
           throw("Failed to processes RSP 'eval' directive (language='shell'): ", ex$message);
         })
 
-        # Drop RSP expression
+        # Drop RSP construct
         object[[idx]] <- NA;
 
         verbose && exit(verbose);
@@ -870,7 +867,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       # Set the type of the RSP document
       attr(object, "type") <- type;
   
-      # Drop RSP expression
+      # Drop RSP construct
       object[[idx]] <- NA;
 
       verbose && exit(verbose);
@@ -913,7 +910,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       rule <- list(clause=expr, until="RspEndifDirective", include=include, useElse=TRUE);
       untilStack <- c(list(rule), untilStack);
   
-      # Drop RSP expression
+      # Drop RSP construct
       object[[idx]] <- NA;
 
       verbose && exit(verbose);
@@ -984,7 +981,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     verbose && exit(verbose);
   }
 
-  verbose && printf(verbose, "Returning RSP document with %d RSP expression.\n", length(object));
+  verbose && printf(verbose, "Returning RSP document with %d RSP constructs.\n", length(object));
 
   verbose && exit(verbose);
 

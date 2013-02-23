@@ -19,11 +19,9 @@
  Parses the RSP string with RSP comments dropped.
 }
 
-\usage{\method{parse}{RspString}(object, preprocess=TRUE, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"))}
+\usage{\method{parse}{RspString}(object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), verbose=FALSE)}
 
 \arguments{
-  \item{preprocess}{If \code{\link[base:logical]{TRUE}}, all RSP preprocessing directives
-     are processed after the RSP string is parsed, otherwise not.}
   \item{envir}{The \code{\link[base]{environment}} where the RSP document is preprocessed.}
   \item{...}{Passed to the processor in each step.}
   \item{until}{Specifies how far the parse should proceed, which is useful

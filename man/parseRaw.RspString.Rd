@@ -19,7 +19,7 @@
  Parses the string into blocks of text and RSP.
 }
 
-\usage{\method{parseRaw}{RspString}(object, what=c("comment", "directive", "expression"), commentLength=-1, ...)}
+\usage{\method{parseRaw}{RspString}(object, what=c("comment", "directive", "expression"), commentLength=-1, ..., verbose=FALSE)}
 
 \arguments{
   \item{...}{Not used.}
