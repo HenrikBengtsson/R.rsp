@@ -102,8 +102,18 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
     if (inherits(file, "connection")) {
       throw("When argument 'file' is a connection, then 'output' must be specified.");
     }
+    filename <- basename(file);
+    if (isUrl(file)) {
+      # Drop any URL-style parameters
+      pattern <- "(.*)[?](.*)$";
+      if (regexpr(pattern, filename) != -1L) {
+##        params <- gsub(pattern, "\\2", filename);
+##        params <- strsplit(params, split="&", fixed=TRUE);
+        filename <- gsub(pattern, "\\1", filename);
+      }
+    }
     pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
-    outputF <- gsub(pattern, "\\1", basename(file));
+    outputF <- gsub(pattern, "\\1", filename);
     output <- Arguments$getWritablePathname(outputF, path=workdir);
     output <- getAbsolutePath(output);
     if (output == file) {
@@ -312,6 +322,8 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
 
 ############################################################################
 # HISTORY:
+# 2013-02-23
+# o Now rfile() can also infer default filenames from URLs with parameters.
 # 2013-02-18
 # o Added argument 'fake' to rfile().
 # 2013-02-13
