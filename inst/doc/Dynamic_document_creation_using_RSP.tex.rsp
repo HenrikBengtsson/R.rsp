@@ -340,11 +340,34 @@ the analysis of the current chromosome.
 Note that there exist no corresponding markup in Sweave.  Instead, contrary to RSP, Sweave requires that each of the code chunks contains a complete R expression.  This means that, in terms of the above example, in Sweave it is not possible to begin a for loop in one code chunk and end it in a succeeding one.  This has to do with the fundamentally different way RSP and Sweave documents are processed.  If using Sweave, one solution is to use RSP markup in the Sweave document, process it via RSP to generate a pure Sweave document, which can then in turn be processed using the Sweave engine to get a TeX file and eventually the final PDF document.  Alternatively, one can use \code{rfile()} to complete all these steps at once, e.g. \code{rfile("report.Rnw.rsp")} will generate \code{report.pdf} as well as the intermediate \code{report.Rnw} and \code{report.pdf} files.  This illustrates the power of the RSP language and how it can be used as a preprocessor of any other literate programming language.
 
 
-\subsection{Trimming whitespace following RSP constructs}
+\subsection{Trimming whitespace for RSP constructs}
 \label{TrimmingWhitespace}
 Because of readability of the RSP source document, RSP constructors are often placed on separate lines than the text blocks but also other RSP constructs.  Depending on how whitespace and line breaks (as introduced by the above coding style) are handled in the output format, this may or may not affect how the output document renders.  For instance, line breaks explicitly introduced in an RSP source document will make the an outputted plain text document look different whereas single line breaks will not affect how a LaTeX document is compiled.
 
-It is possible to control how whitespace and line breaks following RSP constructs are trimmed.  By adding a so called "suffix hyphen" at the end of an RSP construct, all following whitespace (space and tabs) including the first line break (the newline) is dropped ("trimmed"), if and only if there are no other characters following the RSP construct.  How this works is illustrated by the following three examples
+
+\subsubsection{Trimming of lines with only non-text RSP constructs}
+The whitespace before and after RSP constructs that are on their own lines without no other non-whitespace text will \emph{always} have their surround whitespace trimmed off.  They will also have the first following line break removed, unless it is manually controlled as describe in the next subsection.  This automatic trimming of "stand-alone" RSP constructs enhanced readability of RSP source documents without introducing unnecessary whitespace and line breaks.  Consider the following example and think about how whitespace and line breaks are removed or kept:
+\begin{rspVerbatim}
+You don't have to worry too much about whitespace, e.g. the
+  <\%
+     s <- "will have its surrounding whitespace"
+  \%>
+above RSP expression <\%=s\%>
+trimmed off as well as its trailing line break.
+\end{rspVerbatim}
+which produces
+\begin{verbatim}
+You don't have to worry too much about whitespace, e.g. the
+  <%
+     s <- "will have its surrounding whitespace"
+  %>
+above RSP expression <%=s%>
+trimmed off as well as its trailing line break.
+\end{verbatim}
+
+
+\subsubsection{Manually controlling trailing whitespace and newlines}
+Also for RSP constructs that are not surrounded by only whitespace, it is possible to control how whitespace and line breaks following RSP constructs are trimmed.  By adding a so called "suffix hyphen" at the end of an RSP construct, all following whitespace (space and tabs) including the first line break (the newline) is dropped ("trimmed"), if and only if there are no other characters following the RSP construct.  How this works is illustrated by the following three examples
 \begin{escapeRspVerbatim}
 > rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
 [1] "A random integer in [1,100]: 48{\bs}n"
@@ -359,7 +382,8 @@ and
 > rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)-\%> {\bs}t {\bs}n{\bs}n{\bs}n")
 [1] "A random integer in [1,100]: 48{\bs}n{\bs}n"
 \end{escapeRspVerbatim}
-Note that this applies to all types of RSP constructrs, including all existing RSP comments, a construct that introduced next.
+
+Note that the above applies to all types of RSP constructs, including all existing RSP comments, a construct that introduced next.
 
 
 \subsection{Comments (\code{<\%--\{anything\}--\%>})}
