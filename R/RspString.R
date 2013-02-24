@@ -123,7 +123,12 @@ setMethodS3("getSource", "RspString", function(object, ...) {
 # @synopsis
 #
 # \arguments{
+#   \item{what}{A @character string specifying what type of RSP construct
+#     to parse for.}
+#   \item{commentLength}{Specify the number of hypens in RSP comments
+#     to parse for.}
 #   \item{...}{Not used.}
+#   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{
@@ -332,6 +337,7 @@ setMethodS3("parseRaw", "RspString", function(object, what=c("comment", "directi
 #   \item{...}{Passed to the processor in each step.}
 #   \item{until}{Specifies how far the parse should proceed, which is useful
 #      for troubleshooting and rebugging.}
+#   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{
@@ -461,9 +467,9 @@ setMethodS3("parse", "RspString", function(object, envir=parent.frame(), ..., un
 
   doc <- parseRaw(object, what="directive", verbose=less(verbose, 50));
   idxs <- which(sapply(doc, FUN=inherits, "RspUnparsedDirective"));
-  verbose && cat(verbose, "Number of (unparsed) RSP preprocessing directives found: ", length(idxs));
-
   if (length(idxs) > 0L) {
+    verbose && cat(verbose, "Number of (unparsed) RSP preprocessing directives found: ", length(idxs));
+
     # Parse each of them
     for (idx in idxs) {
       doc[[idx]] <- parse(doc[[idx]]);
@@ -498,20 +504,26 @@ setMethodS3("parse", "RspString", function(object, envir=parent.frame(), ..., un
 
   doc <- parseRaw(object, what="expression", verbose=less(verbose, 50));
   idxs <- which(sapply(doc, FUN=inherits, "RspUnparsedExpression"));
-  verbose && cat(verbose, "Number of (unparsed) RSP expressions found: ", length(idxs));
 
-  # Parse them
-  for (idx in idxs) {
-    doc[[idx]] <- parse(doc[[idx]]);
+  if (length(idxs) > 0L) {
+    verbose && cat(verbose, "Number of (unparsed) RSP expressions found: ", length(idxs));
+
+    # Parse them
+    for (idx in idxs) {
+      doc[[idx]] <- parse(doc[[idx]]);
+    }
+
+    # Preprocess (=trim all empty lines)
+    doc <- preprocess(doc, envir=envir, ..., verbose=less(verbose, 10));
+
+    if (verbose && isVisible(verbose)) {
+      object <- asRspString(doc);
+      verbose && cat(verbose, "Length of RSP string after: ", nchar(object));
+    }
+  } else {
+    verbose && cat(verbose, "No RSP expressions found.");
   }
 
-  # Preprocess (=trim all empty lines)
-  doc <- preprocess(doc, envir=envir, ..., verbose=less(verbose, 10));
-
-  if (verbose && isVisible(verbose)) {
-    object <- asRspString(doc);
-    verbose && cat(verbose, "Length of RSP string after: ", nchar(object));
-  }
   verbose && exit(verbose);
 
   if (until == "end") {

@@ -26,6 +26,7 @@
   \item{...}{Passed to the processor in each step.}
   \item{until}{Specifies how far the parse should proceed, which is useful
      for troubleshooting and rebugging.}
+  \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{

@@ -19,7 +19,7 @@
  Evaluates an RSP string and returns the generated string.
 }
 
-\usage{\method{rstring}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*")}
+\usage{\method{rstring}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", verbose=FALSE)}
 
 \arguments{
   \item{...}{\code{\link[base]{character}} strings with RSP markup.}
@@ -31,6 +31,7 @@
   \item{args}{A named \code{\link[base]{list}} of arguments assigned to the environment
     in which the RSP string is parsed and evaluated.
     See \code{\link[R.utils]{cmdArgs}}.}
+  \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{

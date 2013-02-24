@@ -22,7 +22,12 @@
 \usage{\method{parseRaw}{RspString}(object, what=c("comment", "directive", "expression"), commentLength=-1, ..., verbose=FALSE)}
 
 \arguments{
+  \item{what}{A \code{\link[base]{character}} string specifying what type of RSP construct
+    to parse for.}
+  \item{commentLength}{Specify the number of hypens in RSP comments
+    to parse for.}
   \item{...}{Not used.}
+  \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{
