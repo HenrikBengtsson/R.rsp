@@ -209,9 +209,9 @@ To try postprocessing yourself, you can compile this very document by
 \end{verbatim}
 and even the latest developers version of it by
 \begin{verbatim}
-url <- "http://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/R.rsp/inst/doc/
-        Dynamic_document_creation_using_RSP.tex.rsp?root=r-dots"
-rfile(url)
+> url <- "http://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/R.rsp/inst/doc/
+          Dynamic_document_creation_using_RSP.tex.rsp?root=r-dots"
+> rfile(url)
 \end{verbatim}
 The generated PDF (\code{Dynamic\_LaTeX\_reports\_with\_RSP.pdf}) will be available in the current directory of R (see \code{getwd()}).
 
