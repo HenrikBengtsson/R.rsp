@@ -185,7 +185,7 @@ path <- system.file("exData", package="R.rsp")
 s <- rstring(file="random.txt.rsp", path=path)
 cat(s)
 \end{verbatim}
-The latter example illustrates how \code{rstring()} also can load strings from a file (or a URL or a connection) as alternative to taking plain strings as input.
+The latter example illustrates how \code{rstring()} also can load strings from either a file (or a URL or a connection) as an alternative to taking plain strings as input.
 
 
 
@@ -202,12 +202,17 @@ the \code{rfile()} method will as before
 (iii) compile the LaTeX document into a PDF (\code{report.pdf}).
 To disable RSP postprocessing, specify argument \code{postprocess=FALSE} when calling \code{rfile()}.
 %
-To try postprocessing yourself, by compiling this very document as
+To try postprocessing yourself, you can compile this very document by
 \begin{verbatim}
 > path <- system.file("doc", package="R.rsp")
 > rfile("Dynamic_LaTeX_reports_with_RSP.tex.rsp", path=path)
 \end{verbatim}
-The PDF (\code{Dynamic\_LaTeX\_reports\_with\_RSP.pdf}) created will be available in the current directory of R (see \code{getwd()}).
+and even the latest developers version of it by
+\begin{verbatim}
+url <- "http://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/R.rsp/inst/doc/Dynamic_document_creation_using_RSP.tex.rsp?root=r-dots"
+rfile(url)
+\end{verbatim}
+The generated PDF (\code{Dynamic\_LaTeX\_reports\_with\_RSP.pdf}) will be available in the current directory of R (see \code{getwd()}).
 
 
 
