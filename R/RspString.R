@@ -220,7 +220,13 @@ setMethodS3("parseRaw", "RspString", function(object, what=c("comment", "directi
       nL <- nL - nchar(bfrX);
 
       text <- substring(bfr, first=1L, last=posL-1L);
-      part <- list(text=RspText(text));
+     
+      # Add RSP text, unless empty.
+      if (nchar(text) > 0L) {
+        part <- list(text=RspText(text));
+      } else {
+        part <- NULL;
+      }
 
       if (is.null(patternR)) {
         body <- "";
@@ -303,7 +309,7 @@ setMethodS3("parseRaw", "RspString", function(object, what=c("comment", "directi
     verbose && cat(verbose, "Number of RSP constructs parsed: ", length(parts));
   } # while(TRUE);
 
-  # Add the rest of the buffer as text
+  # Add the rest of the buffer as text, unless empty.
   if (nchar(bfr) > 0L) {
     text <- RspText(bfr);
     parts <- c(parts, list(text=text));
@@ -351,7 +357,7 @@ setMethodS3("parseRaw", "RspString", function(object, what=c("comment", "directi
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("parse", "RspString", function(object, envir=parent.frame(), ..., until=c("*", "end", "trim", "expressions", "directives", "comments"), verbose=FALSE) {
+setMethodS3("parse", "RspString", function(object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -474,14 +480,15 @@ setMethodS3("parse", "RspString", function(object, envir=parent.frame(), ..., un
     for (idx in idxs) {
       doc[[idx]] <- parse(doc[[idx]]);
     }
+
+    # Trim non-text RSP constructs
+    doc <- trimNonText(doc, verbose=less(verbose, 10));
   
     # Process all RSP preprocessing directives, i.e. <%@...%>
     doc <- preprocess(doc, envir=envir, ..., verbose=less(verbose, 10));
-    doc <- mergeTexts(doc);
     
     # Coerce to RspString
     object <- asRspString(doc);
-
     verbose && cat(verbose, "Length of RSP string after: ", nchar(object));
   } else {
     verbose && cat(verbose, "No RSP preprocessing directives found.");
@@ -513,6 +520,9 @@ setMethodS3("parse", "RspString", function(object, envir=parent.frame(), ..., un
       doc[[idx]] <- parse(doc[[idx]]);
     }
 
+    # Trim non-text RSP constructs
+    doc <- trimNonText(doc, verbose=less(verbose, 10));
+
     # Preprocess (=trim all empty lines)
     doc <- preprocess(doc, envir=envir, ..., verbose=less(verbose, 10));
 
@@ -524,25 +534,6 @@ setMethodS3("parse", "RspString", function(object, envir=parent.frame(), ..., un
     verbose && cat(verbose, "No RSP expressions found.");
   }
 
-  verbose && exit(verbose);
-
-  if (until == "trim") {
-    object <- asRspString(doc);
-    verbose && exit(verbose);
-    return(object);
-  }
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # (4) Trim RSP texts when surrounding RSP constructs are on
-  #     lines by themselves
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Trimming RSP texts");
-  verbose && cat(verbose, "Length of RSP string before: ", nchar(object));
-  doc <- trim(doc, verbose=verbose);
-  if (verbose && isVisible(verbose)) {
-    object <- asRspString(doc);
-    verbose && cat(verbose, "Length of RSP string after: ", nchar(object));
-  }
   verbose && exit(verbose);
 
   if (until == "end") {
@@ -561,6 +552,8 @@ setMethodS3("parse", "RspString", function(object, envir=parent.frame(), ..., un
 ##############################################################################
 # HISTORY:
 # 2013-02-23
+# o Now parseRaw() always ignores empty text, i.e. it never adds an
+#   empty RspText object.
 # o Readded trim() at the end of parse().
 # o Added verbose output to parse().
 # o Replaced argument 'preprocess' with 'until' for parse().

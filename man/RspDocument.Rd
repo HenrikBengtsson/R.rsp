@@ -47,6 +47,7 @@ extends list\cr
 \tabular{rll}{
  \tab \code{[} \tab  -\cr
  \tab \code{\link[R.rsp:asRspString.RspDocument]{asRspString}} \tab Recreates an RSP string from an RspDocument.\cr
+ \tab \code{dropEmptyText} \tab  -\cr
  \tab \code{\link[R.rsp:evaluate.RspDocument]{evaluate}} \tab Parses, translates, and evaluates the RSP document.\cr
  \tab \code{\link[R.rsp:flatten.RspDocument]{flatten}} \tab Flattens an RspDocument.\cr
  \tab \code{\link[R.rsp:getPath.RspDocument]{getPath}} \tab Gets the path to the source reference of an RSP string.\cr
@@ -60,6 +61,7 @@ extends list\cr
  \tab \code{\link[R.rsp:subset.RspDocument]{subset}} \tab Subsets an RspDocument.\cr
  \tab \code{\link[R.rsp:toR.RspDocument]{toR}} \tab Translates the RSP document into R source code.\cr
  \tab \code{\link[R.rsp:trim.RspDocument]{trim}} \tab Trims each of the RSP constructs.\cr
+ \tab \code{trimNonText} \tab  -\cr
 }
 
 

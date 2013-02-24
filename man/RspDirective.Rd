@@ -46,7 +46,9 @@ extends \link[R.rsp]{RspConstruct}\cr
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
-\emph{No methods defined}.
+\tabular{rll}{
+ \tab \code{asRspString} \tab  -\cr
+}
 
 
  \bold{Methods inherited from RspConstruct}:\cr

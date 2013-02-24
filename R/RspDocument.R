@@ -189,6 +189,164 @@ setMethodS3("getPath", "RspDocument", function(object, ...) {
 
 
 
+setMethodS3("dropEmptyText", "RspDocument", function(object, ..., verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+
+  verbose && enter(verbose, "Dropping empty RSP text constructs");
+
+  isEmptyText <- sapply(object, FUN=function(expr) {
+    (inherits(expr, "RspText") && (nchar(getText(expr)) == 0L));
+  })
+  idxs <- which(isEmptyText);
+  verbose && cat(verbose, "Number of empty RSP texts: ", length(idxs));
+
+  # Nothing todo?
+  if (length(idxs) > 0L) {
+    object <- object[-idxs];
+  }
+
+  verbose && exit(verbose);
+
+  object;
+}) # dropEmptyText()
+
+
+
+setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+
+  verbose && enter(verbose, "Trimming non-text RSP constructs");
+
+  # Merge neighboring RSP texts
+  object <- mergeTexts(object);
+
+  # Drop empty RSP texts
+  object <- dropEmptyText(object);
+
+  isText <- sapply(object, FUN=inherits, "RspText");
+  idxsText <- unname(which(isText));
+  idxsNonText <- unname(which(!isText));
+  verbose && cat(verbose, "Number text RSP constructs: ", length(idxsText));
+  verbose && cat(verbose, "Number non-text RSP constructs: ", length(idxsNonText));
+
+  # Nothing todo?
+  if (length(idxsNonText) == 0L) {
+    verbose && exit(verbose);
+    return(object);
+  }
+
+  for (kk in seq_along(idxsNonText)) {
+    idx <- idxsNonText[kk];
+    expr <- object[[idx]];
+    verbose && enter(verbose, sprintf("Trimming non-text RSP construct #%d ('%s') of %d", kk, class(expr)[1L], length(idxsNonText)));
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # (1) Is the RSP construct on its own line?
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # (a) Find preceeding RSP text
+    idxTextL <- idxsText[idxsText < idx];
+    if (length(idxTextL) == 0L) {
+      textL <- NULL;
+      emptyL <- TRUE;
+    } else {
+      idxTextL <- idxTextL[length(idxTextL)];
+      exprL <- object[[idxTextL]];
+      textL <- getText(exprL);
+      emptyL <- (regexpr("\n[ \t\v]*$", textL) != -1L);
+    }
+
+    # Not on an empty line?
+    if (!emptyL) {
+      verbose && printf(verbose, "The text to the left is non-empty: '%s'\n", substring(textL, first=nchar(textL)-6L));
+      verbose && exit(verbose);
+      next;
+    }
+
+    # (b) Find succeeding RSP text
+    idxTextR <- idxsText[idxsText > idx];
+    if (length(idxTextR) == 0L) {
+      textR <- NULL;
+      emptyR <- TRUE;
+    } else {
+      idxTextR <- idxTextR[1L];
+      exprR <- object[[idxTextR]];
+      textR <- getText(exprR);
+      emptyR <- (regexpr("^[ \t\v]*\n", textR) != -1L);
+    }
+
+    # Not on an empty line?
+    if (!emptyR) {
+      verbose && printf(verbose, "The text to the right is non-empty: '%s'\n", substring(textR, first=1L, last=6L));
+      verbose && exit(verbose);
+      next;
+    }
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # (2) Trim whitespace and trailing newline
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # (a) Trim white space (excluding newline) to the left
+    if (!is.null(textL)) {
+      textL2 <- gsub("[ \t\v]*$", "", textL);
+      if (textL2 != textL) {
+        verbose && printf(verbose, "Trimmed %d white-space characters to the left.\n", nchar(textL)-nchar(textL2));
+        exprL2 <- RspText(textL2);
+        object[[idxTextL]] <- exprL2;
+      }
+    }
+
+    # (b) Trim white space (including newline) to the right
+    if (!is.null(textR)) {
+      if (regexpr("^[ \t\v]*\n", textR) != -1L) {
+        textR2 <- gsub("^[ \t\v]*", "", textR);
+        if (textR2 != textR) {
+          verbose && printf(verbose, "Trimmed %d white-space characters to the right.\n", nchar(textR)-nchar(textR2));
+        }
+
+        # Postspone dropping the newline until processing?
+        specs <- getSuffixSpecs(expr);
+        if (!is.null(specs)) {
+          verbose && printf(verbose, "Postponing newline trimming due to suffix specifications: '%s'\n", specs);
+        } else {
+          textR3 <- gsub("^\n", "", textR2);
+          if (textR3 != textR2) {
+            verbose && cat(verbose, "Dropped newline to the right.");
+            textR2 <- textR3;
+          }
+        }
+
+        exprR2 <- RspText(textR2);
+        object[[idxTextR]] <- exprR2;
+      }
+    }
+    
+    verbose && exit(verbose);
+  } # for (kk ...)
+
+  verbose && exit(verbose);
+
+  object;
+}) # trimNonText()
+
+
 #########################################################################/**
 # @RdocMethod trim
 #
@@ -246,21 +404,23 @@ setMethodS3("trim", "RspDocument", function(object, ..., verbose=FALSE) {
     return(object);
   }
 
-  # This code assumes that the first and the last part in 'doc'
-  # is always a "text" part.
-  stopifnot(idxs[1L] == 1L);
-  stopifnot(idxs[length(idxs)] == length(doc));
-
   # Extract RSP texts as plain text
   docT <- unlist(doc[idxs], use.names=FALSE);
   verbose && cat(verbose, "RSP texts as plain text: ");
   verbose && str(verbose, docT);
-  verbose && print(verbose, docT);
+
+  # This code assumes that the first and the last part in 'doc'
+  # is always a "text" part.
+  stopifnot(idxs[1L] == 1L);
+#  stopifnot(idxs[length(idxs)] == length(doc));
 
   # Find text parts that ends with a new line
   endsWithNewline <- (regexpr("(\n|\r|\r\n)[ \t\v]*$", docT[-length(docT)]) != -1L);
   endsWithNewline <- which(endsWithNewline);
   verbose && cat(verbose, "Number of RSP texts ending with an empty line: ", length(endsWithNewline));
+
+  # Don't trim the last RSP text if it is the second last RSP construct
+  endsWithNewline <- setdiff(endsWithNewline, length(doc)-1L);
 
   # Total count of RSP texts trimmed
   count <- 0L;
@@ -330,7 +490,18 @@ setMethodS3("trim", "RspDocument", function(object, ..., verbose=FALSE) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("mergeTexts", "RspDocument", function(object, ...) {
+setMethodS3("mergeTexts", "RspDocument", function(object, trim=FALSE, ..., verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+
   # All RSP text expressions
   isText <- sapply(object, FUN=inherits, "RspText");
   idxs <- which(isText);
@@ -339,6 +510,8 @@ setMethodS3("mergeTexts", "RspDocument", function(object, ...) {
   if (length(idxs) == 0L) {
     return(object);
   }
+
+  verbose && enter(verbose, "Merging RSP texts");
 
   # Locate neighboring RSP text expressions
   while (length(nidxs <- which(diff(idxs) == 1L)) > 0L) {
@@ -354,6 +527,15 @@ setMethodS3("mergeTexts", "RspDocument", function(object, ...) {
     isText <- isText[-(idx+1L)];
     idxs <- which(isText);
   }
+
+  if (trim) {
+    verbose && enter(verbose, "Trimming RSP texts");
+    object <- trim(object, verbose=verbose);
+    verbose && exit(verbose);
+  }
+
+  verbose && exit(verbose);
+
 
   object;
 }, protected=TRUE) # mergeTexts()
@@ -417,8 +599,9 @@ setMethodS3("flatten", "RspDocument", function(object, ..., verbose=FALSE) {
   attr(res, "type") <- getType(object);
   attr(res, "source") <- getSource(object);
 
-  # Merge neighboring RspText objects
-  res <- mergeTexts(res);
+  # RSP text cleanup
+  object <- dropEmptyText(object);
+  object <- mergeTexts(object);
 
   res;
 }, protected=TRUE) # flatten()
@@ -1006,14 +1189,15 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     object <- object[-excl];
   }
 
-  # Merge neighboring RspText objects
-  object <- mergeTexts(object);
-
   if (flatten) {
     verbose && enter(verbose, "Flatten RSP document");
     object <- flatten(object, verbose=less(verbose, 10));
     verbose && exit(verbose);
   }
+
+  # RSP text cleanup
+  object <- dropEmptyText(object);
+  object <- mergeTexts(object);
 
   verbose && printf(verbose, "Returning RSP document with %d RSP constructs.\n", length(object));
 
@@ -1146,6 +1330,8 @@ setMethodS3("asRspString", "RspDocument", function(doc, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-02-23
+# o Added dropEmptyText() and trimNonText() for RspDocument.
 # 2013-02-22
 # o Added subset() and asRspString() for RspDocument.
 # 2013-02-19

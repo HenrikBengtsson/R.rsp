@@ -47,6 +47,9 @@ extends \link[R.rsp]{RspDirective}\cr
 \emph{No methods defined}.
 
 
+ \bold{Methods inherited from RspDirective}:\cr
+asRspString
+
  \bold{Methods inherited from RspConstruct}:\cr
 asRspString, getAttributes, getSuffixSpecs
 

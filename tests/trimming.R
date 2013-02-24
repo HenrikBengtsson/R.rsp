@@ -1,15 +1,21 @@
 library("R.rsp")
 
-# RULES:
-# o During preprocessing of directives, none of variables that are *later*
-#   assigned by the RSP code are available to the preprocessor.
-# o During evaluation of the RSP document, none of variables assigned by
-#   the preprocessor are available, unless assigned as shown below.
+# TRIMMING:
+# RSP constructs do not take up space in the output document,
+# except from their returned or echoed output.
+# Special case: RSP constructs on their own lines trims off:
+#  (1) all surrounding whitespace,
+#  (2) including the following newline, unless there is a
+#      suffix specification that will be applied later.
 
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Assert that white-space and newline trimming works
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 text='
 <%-- Assign a preprocessor variable a value from an R option.
      If not available, a default value is used. --%>
-<%@define version="${\'R.rsp/HttpDaemon/RspVersion\'}" default="2.0"%>
+<%@define version="${\'R.rsp/HttpDaemon/RspVersion\'}" default="2.0"-%>
 
 <%-- Include the value of the preprocessor variable to the document. --%>
 Current version is <%@include text="${version}"%> (at preprocessing).
@@ -42,3 +48,21 @@ Not "not v1.0", but v<%=ver%>.
 '
 
 s <- rstring(text)
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Compare to ground truth
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+text0='
+
+Current version is 2.0 (at preprocessing).
+
+Current version is 2.0 (at runtime).
+
+Not v1.0, but v2.0.
+
+Not "not v1.0", but v2.0.
+'
+
+s0 <- rstring(text0)
+stopifnot(identical(s, s0))

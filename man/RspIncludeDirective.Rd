@@ -56,6 +56,9 @@ extends \link[R.rsp]{RspDirective}\cr
 }
 
 
+ \bold{Methods inherited from RspDirective}:\cr
+asRspString
+
  \bold{Methods inherited from RspConstruct}:\cr
 asRspString, getAttributes, getSuffixSpecs
 

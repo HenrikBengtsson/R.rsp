@@ -69,6 +69,21 @@ setConstructorS3("RspUnparsedDirective", function(...) {
 })
 
 
+setMethodS3("asRspString", "RspDirective", function(object, ...) {
+  body <- unclass(object);
+  attrs <- getAttributes(object);
+  if (length(attrs) == 0L) {
+    attrs <- "";
+  } else {
+    attrs <- sprintf('%s="%s"', names(attrs), attrs);
+    attrs <- paste(c("", attrs), collapse=" ");
+  }
+  fmtstr <- "<%%@%s%s%%>";
+  s <- sprintf(fmtstr, body, attrs);
+  RspString(s);
+})
+
+
 #########################################################################/**
 # @RdocMethod parse
 #
@@ -214,6 +229,13 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
   res;
 }) # parse()
 
+
+setMethodS3("asRspString", "RspUnparsedDirective", function(object, ...) {
+  body <- unclass(object);
+  fmtstr <- "<%%@%s%%>";
+  s <- sprintf(fmtstr, body);
+  RspString(s);
+})
 
 
 
@@ -706,8 +728,11 @@ setConstructorS3("RspUnknownDirective", function(...) {
 })
 
 
+
 ##############################################################################
 # HISTORY:
+# 2013-02-23
+# o Added asRspString() for RspDirective and RspUnparsedDirective.
 # 2013-02-22
 # o Added RspUnparsedDirective.
 # 2013-02-19

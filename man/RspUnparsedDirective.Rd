@@ -47,9 +47,13 @@ extends \link[R.rsp]{RspDirective}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
+ \tab \code{asRspString} \tab  -\cr
  \tab \code{\link[R.rsp:parse.RspUnparsedDirective]{parse}} \tab Parses the unknown RSP directive for its class.\cr
 }
 
+
+ \bold{Methods inherited from RspDirective}:\cr
+asRspString
 
  \bold{Methods inherited from RspConstruct}:\cr
 asRspString, getAttributes, getSuffixSpecs

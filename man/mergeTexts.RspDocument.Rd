@@ -19,7 +19,7 @@
  Merge neighboring 'text' elements by pasting them together.
 }
 
-\usage{\method{mergeTexts}{RspDocument}(object, ...)}
+\usage{\method{mergeTexts}{RspDocument}(object, trim=FALSE, ..., verbose=FALSE)}
 
 \arguments{
   \item{...}{Not used.}

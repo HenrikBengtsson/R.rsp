@@ -182,6 +182,16 @@ setMethodS3("rstring", "RspRSourceCode", function(object, envir=parent.frame(), 
   verbose && enter(verbose, "rstring() for ", class(object)[1L]);
   verbose && cat(verbose, "Environment: ", getName(envir));
 
+  # Write R code?
+  pathname <- getOption("R.rsp/debug/writeCode", NULL);
+  if (!is.null(pathname)) {
+    if (regexpr("%s", pathname, fixed=TRUE) != -1) {
+      pathname <- sprintf(pathname, digest::digest(object));
+    }
+    writeLines(object, con=pathname);
+    verbose && cat(verbose, "R source code written to file: ", pathname);
+  }
+
   res <- process(object, envir=envir, ..., verbose=less(verbose,10));
 
   verbose && exit(verbose);
