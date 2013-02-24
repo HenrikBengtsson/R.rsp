@@ -351,7 +351,7 @@ setMethodS3("parseRaw", "RspString", function(object, what=c("comment", "directi
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("parse", "RspString", function(object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), verbose=FALSE) {
+setMethodS3("parse", "RspString", function(object, envir=parent.frame(), ..., until=c("*", "end", "trim", "expressions", "directives", "comments"), verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -526,6 +526,25 @@ setMethodS3("parse", "RspString", function(object, envir=parent.frame(), ..., un
 
   verbose && exit(verbose);
 
+  if (until == "trim") {
+    object <- asRspString(doc);
+    verbose && exit(verbose);
+    return(object);
+  }
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # (4) Trim RSP texts when surrounding RSP constructs are on
+  #     lines by themselves
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Trimming RSP texts");
+  verbose && cat(verbose, "Length of RSP string before: ", nchar(object));
+  doc <- trim(doc, verbose=verbose);
+  if (verbose && isVisible(verbose)) {
+    object <- asRspString(doc);
+    verbose && cat(verbose, "Length of RSP string after: ", nchar(object));
+  }
+  verbose && exit(verbose);
+
   if (until == "end") {
     object <- asRspString(doc);
     verbose && exit(verbose);
@@ -542,6 +561,7 @@ setMethodS3("parse", "RspString", function(object, envir=parent.frame(), ..., un
 ##############################################################################
 # HISTORY:
 # 2013-02-23
+# o Readded trim() at the end of parse().
 # o Added verbose output to parse().
 # o Replaced argument 'preprocess' with 'until' for parse().
 # 2013-02-22

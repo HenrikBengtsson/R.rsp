@@ -203,6 +203,7 @@ setMethodS3("getPath", "RspDocument", function(object, ...) {
 # \arguments{
 #   \item{envir}{The @environment where the RSP document is evaluated.}
 #   \item{...}{Not used.}
+#   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{
@@ -215,26 +216,54 @@ setMethodS3("getPath", "RspDocument", function(object, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("trim", "RspDocument", function(object, ...) {
+setMethodS3("trim", "RspDocument", function(object, ..., verbose=FALSE) {
   doc <- object;
 
-  ## cat("TRIMMING...\n");
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+
+  verbose && enter(verbose, "Trimming RSP text based on surrounding RSP expressions");
+
   # Identify RSP-only lines by looking at the preceeding
   # and succeeding text parts of each RSP part
 
-  # Identify all text parts
-  idxs <- which(names(doc) == "text");
+  # All RSP text expressions
+  isText <- sapply(object, FUN=inherits, "RspText");
+  idxs <- which(isText);
+  verbose && cat(verbose, "Number of RSP texts: ", length(idxs));
+
+  # Nothing todo?
+  if (length(idxs) == 0L) {
+    verbose && exit(verbose);
+    return(object);
+  }
 
   # This code assumes that the first and the last part in 'doc'
   # is always a "text" part.
   stopifnot(idxs[1L] == 1L);
   stopifnot(idxs[length(idxs)] == length(doc));
 
+  # Extract RSP texts as plain text
   docT <- unlist(doc[idxs], use.names=FALSE);
+  verbose && cat(verbose, "RSP texts as plain text: ");
+  verbose && str(verbose, docT);
+  verbose && print(verbose, docT);
 
   # Find text parts that ends with a new line
   endsWithNewline <- (regexpr("(\n|\r|\r\n)[ \t\v]*$", docT[-length(docT)]) != -1L);
   endsWithNewline <- which(endsWithNewline);
+  verbose && cat(verbose, "Number of RSP texts ending with an empty line: ", length(endsWithNewline));
+
+  # Total count of RSP texts trimmed
+  count <- 0L;
 
   # Any candidates?
   if (length(endsWithNewline) > 0L) {
@@ -242,12 +271,14 @@ setMethodS3("trim", "RspDocument", function(object, ...) {
     nextT <- endsWithNewline + 1L;
     docTT <- docT[nextT];
 
-    # Among those, which starts with a new line?
+    # Among those, which starts with an empty line?
     startsWithNewline <- (regexpr("^[ \t\v]*(\n|\r|\r\n)", docTT) != -1L);
     startsWithNewline <- nextT[startsWithNewline];
+    count <- length(startsWithNewline);
+    verbose && cat(verbose, "Number of those RSP texts starting with an empty line: ", count);
 
     # Any remaining candidates?
-    if (length(startsWithNewline) > 0L) {
+    if (count > 0L) {
       # Trim matching text blocks
       endsWithNewline <- startsWithNewline - 1L;
 
@@ -263,8 +294,11 @@ setMethodS3("trim", "RspDocument", function(object, ...) {
         doc[[idxs[kk]]] <- value;
       }
     }
-  }
-  ## cat("TRIMMING...done\n");
+  } # if (length(endsWithNewline) > 0L)
+
+  verbose && cat(verbose, "Number of RSP texts trimmed: ", count);
+
+  verbose && exit(verbose);
 
   doc;
 }, protected=TRUE) # trim()

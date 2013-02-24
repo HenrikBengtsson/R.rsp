@@ -359,7 +359,7 @@ and
 > rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)-\%> {\bs}t {\bs}n{\bs}n{\bs}n")
 [1] "A random integer in [1,100]: 48{\bs}n{\bs}n"
 \end{escapeRspVerbatim}
-Note that this also applies to all used RSP comments, a construct that is introduced next.
+Note that this applies to all types of RSP constructrs, including all existing RSP comments, a construct that introduced next.
 
 
 \subsection{Comments (\code{<\%--\{anything\}--\%>})}
