@@ -366,7 +366,7 @@ trimmed off as well as its trailing line break.
 \end{verbatim}
 
 
-\subsubsection{Manually controlling trailing whitespace and newlines}
+\subsubsection{Manually controlling trailing whitespace and line breaks}
 Also for RSP constructs that are not surrounded by only whitespace, it is possible to control how whitespace and line breaks following RSP constructs are trimmed.  By adding a so called "suffix hyphen" at the end of an RSP construct, all following whitespace (space and tabs) including the first line break (the newline) is dropped ("trimmed"), if and only if there are no other characters following the RSP construct.  How this works is illustrated by the following three examples
 \begin{escapeRspVerbatim}
 > rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
@@ -432,14 +432,14 @@ The sum of $x=<\%=hpaste(1:n, abbreviate="{\bs}{\bs}ldots")\%>$ is <\%=sum(1:n)\
 The solution is to wrap it up in a \emph{template} function
 \begin{rspVerbatim}
 <\% myTemplate <- function(n, ...) \{ \%>
-The sum of $x=<\%=hpaste(1:n, abbreviate="{\bs}{\bs}ldots")\%>$ is <\%=sum(1:n)\%>.<\%-\%>
+The sum of $x=<\%=hpaste(1:n, abbreviate="{\bs}{\bs}ldots")\%>$ is <\%=sum(1:n)-\%>.<\%-\%>
 <\% \} # myTemplate() \%>
 \end{rspVerbatim}
 <% myTemplate <- function(n, ...) { %>
 The sum of $x=<%=hpaste(1:n, abbreviate="\\ldots")%>$ is <%=sum(1:n)%>.<%-%>
 <% } # myTemplate() %><%-- TO FIX: Should not be needed! /HB 2011-03-31 --%>
 Recall that there is no limitation in how many text and RSP blocks you can use.
-Note also how we use an empty RSP comment (\code{<\%-\%>}) at the end of the template function.  That is used in order to escape the trailing newline (Section~\ref{RspComments}).  Without the trailing RSP comment, the final document would contain a whitespace after the period (and before the closing single-quote in the previous sentence).
+Note also how we use an empty RSP comment (\code{<\%-\%>}) at the end of the template function.  That is used in order to escape the trailing line break (Section~\ref{RspComments}).  Without the trailing RSP comment, the final document would contain a whitespace after the period (and before the closing single-quote in the previous sentence).
 The above template function can now be used by calling it within an RSP code block as
 \begin{rspVerbatim}
 <\% myTemplate(n=3) \%>
@@ -540,8 +540,7 @@ toPDF("myFigure,yeah,cool", aspectRatio=0.6, {
 })
 \end{verbatim}
 creates a PDF image file named \code{myFigure,yeah,cool.png} whose height is 60\% of its width and displays the Guassian density distribution.
-The function returns the filename without the filename extension, i.e. \code{"myFigure,yeah,cool"}.
-  Moreover, (by default) the \code{toPDF()} and \code{toPNG()} functions write image files to the \code{figures/} directory.  For more information, see \code{help("toPDF")}.\\
+By default, the \code{toPDF()} and \code{toPNG()} functions write image files to the \code{figures/} directory.  For more information, see \code{help("toPDF")}.
 
 
 \subsection{Including image files in LaTeX}
@@ -551,8 +550,7 @@ In order for this to work, one must specify the "image search path" in LaTeX, e.
 \graphicspath{{figures/}{figures/external/}}
 \end{verbatim}
 which is preferably added to the beginning of the LaTeX document.  This tells LaTeX to search for image files in directory \code{figures/} as well as directory \code{figures/external/}.   Moreover, by leaving out the filename extension, LaTeX will automatically search\footnote{In order for \code{{\bs}includegraphics\{\}} to locate a proper image files when leaving out the filename extension, the image file must not have other periods in the filename other than the one used for the extension.} for image files with different filename extensions, e.g. \code{*.png} and \code{*.pdf}.
-
-%% \subsection{Generating and embedding figures}
+%
 \begin{figure}[htp]
  \begin{center}
  \resizebox{0.70\textwidth}{!}{%
@@ -564,7 +562,7 @@ which is preferably added to the beginning of the LaTeX document.  This tells La
  \caption{This figure was generated and inserted into the LaTeX document using RSP.}
  \label{fig:MyFigure}
 \end{figure}
-
+%
 With this setup, it is possible to create and embed a figure as the one in Figure~\ref{fig:MyFigure} using the following tidy RSP and LaTeX markup\footnote{For readability, we have dropped the usual LaTeX commands for setting up the \code{figure} environment, centering and rescaling the image and creating the figure caption.}%
 \begin{rspVerbatim}
 {\bs}includegraphics\{<\%=toPDF("MyFigure,yeah,cool", aspectRatio=0.6, \{
@@ -575,27 +573,42 @@ After the RSP code has been processed, and the image file has been created, the 
 \begin{verbatim}
 \includegraphics{MyFigure,yeah,cool}
 \end{verbatim}
-Note that by replacing \code{toPDF()} with \code{toPNG()}, a PNG image file is inserted instead, which can dramatically reduce the size of the final PDF document when for instance a high-density scatter plot is used.
+The reason for the latter is that by default \code{toPDF()} and \code{toPNG()} return the filename of the created image file without its directory and without its filename extension, i.e. \code{"myFigure,yeah,cool"}.
+As a final remark, note that by replacing \code{toPDF()} with \code{toPNG()}, a PNG image file is inserted instead, which can dramatically reduce the size of the final PDF document, especially when scatter plots with a large number of data points are generated.
 
 
 \subsection{Including image files in HTML}
-\emph{To be continued...}
-
+An image file is included in an HTML document via its pathname.  To have \code{toPNG()}, \code{toSVG()} and so on, return the (relative) pathname of files created, add the following to the top of your RSP document:
+\begin{rspVerbatim}
+<\%
+setOption("devEval/args/field", "pathname")
+\%>
+\end{rspVerbatim}
+With this setting, one can then include PNG image files in the HTML document as
 \begin{rspVerbatim}
 <img src="<\%=toPNG("MyFigure,yeah,cool", aspectRatio=0.6, \{
   curve(dnorm, from=-5, to=+5);
 \})\%>">
 \end{rspVerbatim}
+which results in
+\begin{verbatim}
+<img src="figures/MyFigure,yeah,cool.png">
+\end{verbatim}
+
 
 \subsection{Including image files in Markdown}
-\emph{To be continued...}
-
+Just as for HTML documents, on need to set the option that images created by \code{toPNG()} etc are returned by their (relative) pathnames by specifying option \code{devEval/args/field} (see above subsection).  With this setting, one can then include PNG image files in the Markdown document as
 \begin{rspVerbatim}
-![This figure was generated and inserted into the LaTeX document using RSP.]
+![This figure was generated and inserted into the Markdown document using RSP.]
 (<\%=toPNG("MyFigure,yeah,cool", aspectRatio=0.6, \{
   curve(dnorm, from=-5, to=+5);
 \})\%>)
 \end{rspVerbatim}
+which results in
+\begin{verbatim}
+![This figure was generated and inserted into the Markdown document using RSP.]
+(figures/MyFigure,yeah,cool.png)
+\end{verbatim}
 
 
 
