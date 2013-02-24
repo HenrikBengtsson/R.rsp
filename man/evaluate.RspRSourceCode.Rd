@@ -23,7 +23,7 @@
  Parses and evaluates the R code.
 }
 
-\usage{\method{evaluate}{RspRSourceCode}(object, output=c("string"), envir=parent.frame(), args="*", ..., verbose=FALSE)}
+\usage{\method{evaluate}{RspRSourceCode}(object, output=c("stdout", "string"), envir=parent.frame(), args="*", ..., verbose=FALSE)}
 
 \arguments{
   \item{output}{A \code{\link[base]{character}} string specifying type of output function.}

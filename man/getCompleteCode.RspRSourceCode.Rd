@@ -19,7 +19,7 @@
  Gets the complete R source code with output functions defined.
 }
 
-\usage{\method{getCompleteCode}{RspRSourceCode}(object, output=c("string"), ...)}
+\usage{\method{getCompleteCode}{RspRSourceCode}(object, output=c("stdout", "string"), ...)}
 
 \arguments{
   \item{output}{A \code{\link[base]{character}} string specifying type of output function.}

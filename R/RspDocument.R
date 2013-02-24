@@ -189,6 +189,32 @@ setMethodS3("getPath", "RspDocument", function(object, ...) {
 
 
 
+#########################################################################/**
+# @RdocMethod dropEmptyText
+#
+# @title "Drops all empty RSP text constructs"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+#   \item{verbose}{See @see "R.utils::Verbose".}
+# }
+#
+# \value{
+#  Returns an @see "RspDocument".
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
 setMethodS3("dropEmptyText", "RspDocument", function(object, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -221,6 +247,32 @@ setMethodS3("dropEmptyText", "RspDocument", function(object, ..., verbose=FALSE)
 
 
 
+#########################################################################/**
+# @RdocMethod trimNonText
+#
+# @title "Trims all non-text RSP constructs"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+#   \item{verbose}{See @see "R.utils::Verbose".}
+# }
+#
+# \value{
+#  Returns an @see "RspDocument".
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
 setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

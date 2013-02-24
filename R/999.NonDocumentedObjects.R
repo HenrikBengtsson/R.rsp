@@ -117,6 +117,8 @@
 # @alias mergeTexts
 # @alias getWrap
 # @alias asRspString
+# @alias dropEmptyText
+# @alias trimNonText
 #
 # \description{
 # This page contains aliases for all "non-documented" objects that 

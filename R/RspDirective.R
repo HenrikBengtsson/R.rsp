@@ -36,6 +36,45 @@ setConstructorS3("RspDirective", function(directive=character(), attributes=list
 })
 
 
+#########################################################################/**
+# @RdocMethod "asRspString"
+#
+# @title "Recreates an RSP string from an RSP preprocessing directive"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns an @see "RspString".
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/#########################################################################
+setMethodS3("asRspString", "RspDirective", function(object, ...) {
+  body <- unclass(object);
+  attrs <- getAttributes(object);
+  if (length(attrs) == 0L) {
+    attrs <- "";
+  } else {
+    attrs <- sprintf('%s="%s"', names(attrs), attrs);
+    attrs <- paste(c("", attrs), collapse=" ");
+  }
+  fmtstr <- "<%%@%s%s%%>";
+  s <- sprintf(fmtstr, body, attrs);
+  RspString(s);
+})
+
 
 ###########################################################################/**
 # @RdocClass RspUnparsedDirective
@@ -68,20 +107,6 @@ setConstructorS3("RspUnparsedDirective", function(...) {
   extend(RspDirective(...), "RspUnparsedDirective");
 })
 
-
-setMethodS3("asRspString", "RspDirective", function(object, ...) {
-  body <- unclass(object);
-  attrs <- getAttributes(object);
-  if (length(attrs) == 0L) {
-    attrs <- "";
-  } else {
-    attrs <- sprintf('%s="%s"', names(attrs), attrs);
-    attrs <- paste(c("", attrs), collapse=" ");
-  }
-  fmtstr <- "<%%@%s%s%%>";
-  s <- sprintf(fmtstr, body, attrs);
-  RspString(s);
-})
 
 
 #########################################################################/**
@@ -230,6 +255,31 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
 }) # parse()
 
 
+#########################################################################/**
+# @RdocMethod "asRspString"
+#
+# @title "Recreates an RSP string from an unparsed RSP preprocessing directive"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns an @see "RspString".
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/#########################################################################
 setMethodS3("asRspString", "RspUnparsedDirective", function(object, ...) {
   body <- unclass(object);
   fmtstr <- "<%%@%s%%>";

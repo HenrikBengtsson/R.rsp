@@ -182,17 +182,7 @@ setMethodS3("rstring", "RspRSourceCode", function(object, envir=parent.frame(), 
   verbose && enter(verbose, "rstring() for ", class(object)[1L]);
   verbose && cat(verbose, "Environment: ", getName(envir));
 
-  # Write R code?
-  pathname <- getOption("R.rsp/debug/writeCode", NULL);
-  if (!is.null(pathname)) {
-    if (regexpr("%s", pathname, fixed=TRUE) != -1) {
-      pathname <- sprintf(pathname, digest::digest(object));
-    }
-    writeLines(object, con=pathname);
-    verbose && cat(verbose, "R source code written to file: ", pathname);
-  }
-
-  res <- process(object, envir=envir, ..., verbose=less(verbose,10));
+  res <- process(object, envir=envir, output="stdout", ..., verbose=less(verbose,10));
 
   verbose && exit(verbose);
 
@@ -204,6 +194,9 @@ setMethodS3("rstring", "RspRSourceCode", function(object, envir=parent.frame(), 
 
 ##############################################################################
 # HISTORY:
+# 2013-02-23
+# o Now rstring() captures standard output such that all user output to
+#   stdout will be part of the output document in the order they occur.
 # 2013-02-16
 # o Now rstring() only takes a character vector; it no longer c(...) the
 #   '...' arguments.

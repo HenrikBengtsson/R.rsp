@@ -56,7 +56,7 @@ setConstructorS3("RspRSourceCode", function(...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("string"), ...) {
+setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("stdout", "string"), ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -98,8 +98,6 @@ setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("stri
   # Argument 'output':
   output <- match.arg(output);
 
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Create header and footer code
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -116,7 +114,7 @@ setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("stri
     ');
 
     footer <- minIndent('
-      .ro("\n"); # Force a last complete line
+      .ro("\\n"); # Force a last complete line
       rm(.ro);
       .rres <- paste(textConnectionValue(.rcon), collapse="\n");
       close(.rcon); rm(.rcon);
@@ -127,6 +125,17 @@ setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("stri
         rm(".rres", envir=parent.frame());
         res;
       })(.rres);
+    ');
+  } else if (output == "stdout") {
+    # Build R source code
+    header <- minIndent('
+      .ro <- function(..., collapse="", sep="") {
+        msg <- paste(..., collapse=collapse, sep=sep);
+        base::cat(msg, sep="");
+      } # .ro()
+    ');
+
+    footer <- minIndent('
     ');
   } # if (output == ...)
 
@@ -171,6 +180,17 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
   # Make R source code header and footer
   code <- getCompleteCode(object, ...);
 
+  # Write R code?
+  pathname <- getOption("R.rsp/debug/writeCode", NULL);
+  if (!is.null(pathname)) {
+    if (regexpr("%s", pathname, fixed=TRUE) != -1) {
+      pathname <- sprintf(pathname, digest::digest(code));
+    }
+    pathname <- Arguments$getWritablePathname(pathname, mustNotExist=FALSE);
+    writeLines(code, con=pathname);
+##    verbose && cat(verbose, "R source code written to file: ", pathname);
+  }
+
   # Parse R source code
   expr <- base::parse(text=code);
 
@@ -210,7 +230,7 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("evaluate", "RspRSourceCode", function(object, output=c("string"), envir=parent.frame(), args="*", ..., verbose=FALSE) {
+setMethodS3("evaluate", "RspRSourceCode", function(object, output=c("stdout", "string"), envir=parent.frame(), args="*", ..., verbose=FALSE) {
   # Argument 'args':
   args <- cmdArgs(args);
 
@@ -222,7 +242,16 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, output=c("string"), e
   attachLocally(args, envir=envir);
 
   # Evaluate R source code
-  res <- eval(expr, envir=envir, ...);
+  if (output == "stdout") {
+    res <- capture.output({
+      eval(expr, envir=envir, ...);
+      # Force a last complete line
+      cat("\n");
+    });
+    res <- paste(res, collapse="\n");
+  } else if (output == "string") {
+    res <- eval(expr, envir=envir, ...);
+  }
 
   RspStringProduct(res, type=getType(object));
 }) # evaluate()
@@ -283,6 +312,9 @@ setMethodS3("tangle", "RspRSourceCode", function(code, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-02-23
+# o Added support for getCompleteCode(..., output="stdout")
+# o Added debug option() for have parse() write R code to file.
 # 2013-02-16
 # o Added findProcessor() for RspRSourceCode, which returns the evaluate()
 #   method.
