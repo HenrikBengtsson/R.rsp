@@ -1,7 +1,7 @@
 Package: R.rsp
 ==============
 
-Version: 0.9.x [2013-02-19]
+Version: 0.9.x [2013-02-27]
 o The internal RSP engine has undergone a major redesign.
 o More functions can now be called without loading the package.
 

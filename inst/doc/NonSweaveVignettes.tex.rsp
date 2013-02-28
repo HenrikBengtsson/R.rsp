@@ -1,3 +1,11 @@
+<%-------------------------------------------------------------------
+  DIRECTIVES FOR R:
+
+  \VignetteIndexEntry{Include static PDFs and non-Sweave vignettes in an R package}
+  \VignetteKeyword{R, package, vignette, static PDF}
+  \VignetteEngine{R.rsp::rsp}
+  -------------------------------------------------------------------%>
+
 <% t0 <- Sys.time() %>
 
 \documentclass[letter,12pt]{article}

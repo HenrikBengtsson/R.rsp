@@ -10,6 +10,7 @@
 %\VignetteKeyword{R, package, vignette, static PDF}
 %\VignetteSource{NonSweaveVignettes.tex.rsp}
 %\VignetteBuild{R.rsp::rfile("NonSweaveVignettes.tex.rsp")}
+%\ VignetteEngine{rsp}
 \documentclass{article}
 \begin{document}
 \end{document}
