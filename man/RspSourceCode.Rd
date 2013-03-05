@@ -35,7 +35,9 @@ extends \link[R.rsp]{RspProduct}\cr
   source code for a particular programming language.
  }
 
- \usage{RspSourceCode(code=character(), ...)}
+ \usage{
+RspSourceCode(code=character(), ...)
+}
 
  \arguments{
    \item{code}{\code{\link[base]{character}} \code{\link[base]{vector}}.}

@@ -9,9 +9,7 @@
 \name{findProcessor.RspFileProduct}
 \alias{findProcessor.RspFileProduct}
 \alias{RspFileProduct.findProcessor}
-\alias{findProcessor.RspFileProduct}
 \alias{findProcessor,RspFileProduct-method}
-
 
 \title{Locates a processor for an RSP file product}
 
@@ -19,7 +17,9 @@
  Locates a processor for an RSP file product.
 }
 
-\usage{\method{findProcessor}{RspFileProduct}(object, ..., verbose=FALSE)}
+\usage{
+\method{findProcessor}{RspFileProduct}(object, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

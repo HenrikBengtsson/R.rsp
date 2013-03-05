@@ -16,7 +16,9 @@
  Imports an RSP file.
 }
 
-\usage{\method{importRsp}{default}(...)}
+\usage{
+\method{importRsp}{default}(...)
+}
 
 \arguments{
   \item{...}{Arguments passed to \code{\link{sourceRsp}}().}

@@ -19,7 +19,9 @@
  RSP, but also other package RSP pages.
 }
 
-\usage{\method{browseRsp}{default}(url=sprintf("http://\%s:\%d/\%s", host, port, path), host="127.0.0.1", port=8074, path="", start=TRUE, stop=FALSE, ...)}
+\usage{
+\method{browseRsp}{default}(url=sprintf("http://\%s:\%d/\%s", host, port, path), host="127.0.0.1", port=8074, path="", start=TRUE, stop=FALSE, ...)
+}
 
 \arguments{
   \item{url}{A \code{\link[base]{character}} string for the URL to be viewed.

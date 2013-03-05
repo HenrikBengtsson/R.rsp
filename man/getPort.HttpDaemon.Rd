@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getPort.HttpDaemon}
+\name{HttpDaemon$getPort}
+\alias{HttpDaemon$getPort}
 \alias{getPort.HttpDaemon}
 \alias{HttpDaemon.getPort}
-\alias{getPort.HttpDaemon}
 \alias{getPort,HttpDaemon-method}
-
 
 \title{Gets the socket port of the HTTP daemon}
 
@@ -19,8 +18,13 @@
  Gets the socket port of the HTTP daemon, if started.
 }
 
-\synopsis{getPort.HttpDaemon(static, ...)}
-\usage{HttpDaemon$getPort(...)}
+\usage{
+## Static method (use this):
+## HttpDaemon$getPort(...)
+
+## Don't use the below:
+\method{getPort}{HttpDaemon}(static, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

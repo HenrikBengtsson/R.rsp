@@ -16,7 +16,9 @@
  Checks whether an Rnw file is a Sweave or a knitr file.
 }
 
-\usage{\method{typeOfRnw}{default}(filename, path=NULL, default=c("sweave", "knitr"), ..., fake=FALSE)}
+\usage{
+\method{typeOfRnw}{default}(filename, path=NULL, default=c("sweave", "knitr"), ..., fake=FALSE)
+}
 
 \arguments{
   \item{filename, path}{The filename and (optional) path of the Rnw file.}

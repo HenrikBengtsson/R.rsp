@@ -19,7 +19,9 @@
  Evaluates an RSP string and returns the generated string.
 }
 
-\usage{\method{rstring}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", verbose=FALSE)}
+\usage{
+\method{rstring}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", verbose=FALSE)
+}
 
 \arguments{
   \item{...}{\code{\link[base]{character}} strings with RSP markup.}

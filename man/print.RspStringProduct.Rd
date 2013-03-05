@@ -9,9 +9,7 @@
 \name{print.RspStringProduct}
 \alias{print.RspStringProduct}
 \alias{RspStringProduct.print}
-\alias{print.RspStringProduct}
 \alias{print,RspStringProduct-method}
-
 
 \title{Prints an RSP string product}
 
@@ -19,7 +17,9 @@
  Prints an RSP string product.
 }
 
-\usage{\method{print}{RspStringProduct}(x, ...)}
+\usage{
+\method{print}{RspStringProduct}(x, ...)
+}
 
 \arguments{
   \item{...}{Additional arguments passed to \code{\link[base]{print}}().}

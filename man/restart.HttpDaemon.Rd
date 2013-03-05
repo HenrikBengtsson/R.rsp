@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{restart.HttpDaemon}
+\name{HttpDaemon$restart}
+\alias{HttpDaemon$restart}
 \alias{restart.HttpDaemon}
 \alias{HttpDaemon.restart}
-\alias{restart.HttpDaemon}
 \alias{restart,HttpDaemon-method}
-
 
 \title{Restarts the HTTP daemon}
 
@@ -19,8 +18,13 @@
  Restarts the HTTP daemon.
 }
 
-\synopsis{restart.HttpDaemon(static, ...)}
-\usage{HttpDaemon$restart(...)}
+\usage{
+## Static method (use this):
+## HttpDaemon$restart(...)
+
+## Don't use the below:
+\method{restart}{HttpDaemon}(static, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

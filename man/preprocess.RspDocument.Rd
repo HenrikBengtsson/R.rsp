@@ -9,9 +9,7 @@
 \name{preprocess.RspDocument}
 \alias{preprocess.RspDocument}
 \alias{RspDocument.preprocess}
-\alias{preprocess.RspDocument}
 \alias{preprocess,RspDocument-method}
-
 
 \title{Processes all RSP preprocessing directives}
 
@@ -19,7 +17,9 @@
  Processes all RSP preprocessing directives.
 }
 
-\usage{\method{preprocess}{RspDocument}(object, recursive=TRUE, flatten=TRUE, envir=parent.frame(), ..., verbose=FALSE)}
+\usage{
+\method{preprocess}{RspDocument}(object, recursive=TRUE, flatten=TRUE, envir=parent.frame(), ..., verbose=FALSE)
+}
 
 \arguments{
   \item{recursive}{If \code{\link[base:logical]{TRUE}}, any \code{\link{RspDocument}}s introduced via

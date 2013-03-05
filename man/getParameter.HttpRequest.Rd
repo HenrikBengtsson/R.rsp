@@ -9,9 +9,7 @@
 \name{getParameter.HttpRequest}
 \alias{getParameter.HttpRequest}
 \alias{HttpRequest.getParameter}
-\alias{getParameter.HttpRequest}
 \alias{getParameter,HttpRequest-method}
-
 
 \title{Gets a parameter}
 
@@ -19,7 +17,9 @@
  Gets a parameter.
 }
 
-\usage{\method{getParameter}{HttpRequest}(this, name, default=NULL, drop=TRUE, ...)}
+\usage{
+\method{getParameter}{HttpRequest}(this, name, default=NULL, drop=TRUE, ...)
+}
 
 \arguments{
   \item{name}{Name of parameter to be retrieved.}

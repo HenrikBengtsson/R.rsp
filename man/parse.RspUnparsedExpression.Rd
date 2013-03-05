@@ -9,9 +9,7 @@
 \name{parse.RspUnparsedExpression}
 \alias{parse.RspUnparsedExpression}
 \alias{RspUnparsedExpression.parse}
-\alias{parse.RspUnparsedExpression}
 \alias{parse,RspUnparsedExpression-method}
-
 
 \title{Parses the unknown RSP expression for its class}
 
@@ -19,7 +17,9 @@
  Parses the unknown RSP expression for its class.
 }
 
-\usage{\method{parse}{RspUnparsedExpression}(expr, ...)}
+\usage{
+\method{parse}{RspUnparsedExpression}(expr, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

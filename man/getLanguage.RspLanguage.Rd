@@ -9,9 +9,7 @@
 \name{getLanguage.RspLanguage}
 \alias{getLanguage.RspLanguage}
 \alias{RspLanguage.getLanguage}
-\alias{getLanguage.RspLanguage}
 \alias{getLanguage,RspLanguage-method}
-
 
 \title{Gets the language string}
 
@@ -19,7 +17,9 @@
  Gets the language string.
 }
 
-\usage{\method{getLanguage}{RspLanguage}(this, ...)}
+\usage{
+\method{getLanguage}{RspLanguage}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

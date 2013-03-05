@@ -9,9 +9,7 @@
 \name{asRspString.RspDirective}
 \alias{asRspString.RspDirective}
 \alias{RspDirective.asRspString}
-\alias{asRspString.RspDirective}
 \alias{asRspString,RspDirective-method}
-
 
 \title{Recreates an RSP string from an RSP preprocessing directive}
 
@@ -19,7 +17,9 @@
  Recreates an RSP string from an RSP preprocessing directive.
 }
 
-\usage{\method{asRspString}{RspDirective}(object, ...)}
+\usage{
+\method{asRspString}{RspDirective}(object, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

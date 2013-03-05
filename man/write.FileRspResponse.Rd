@@ -9,9 +9,7 @@
 \name{write.FileRspResponse}
 \alias{write.FileRspResponse}
 \alias{FileRspResponse.write}
-\alias{write.FileRspResponse}
 \alias{write,FileRspResponse-method}
-
 
 \title{Writes an RSP response to the predefined output file}
 
@@ -19,7 +17,9 @@
  Writes an RSP response to the predefined output file.
 }
 
-\usage{\method{write}{FileRspResponse}(this, ..., collapse="", sep="")}
+\usage{
+\method{write}{FileRspResponse}(this, ..., collapse="", sep="")
+}
 
 \arguments{
   \item{...}{Objects to be pasted together and outputted.}

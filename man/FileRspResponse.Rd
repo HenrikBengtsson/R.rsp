@@ -32,7 +32,9 @@ extends \emph{\link[R.rsp]{RspResponse}}\cr
 
  }
 
- \usage{FileRspResponse(file=stdout(), path=NULL, overwrite=FALSE, ...)}
+ \usage{
+FileRspResponse(file=stdout(), path=NULL, overwrite=FALSE, ...)
+}
 
  \arguments{
    \item{file}{A filename or a \code{\link[base:connections]{connection}} to write responses to.}

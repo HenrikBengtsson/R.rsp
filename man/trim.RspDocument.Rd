@@ -9,9 +9,7 @@
 \name{trim.RspDocument}
 \alias{trim.RspDocument}
 \alias{RspDocument.trim}
-\alias{trim.RspDocument}
 \alias{trim,RspDocument-method}
-
 
 \title{Trims each of the RSP constructs}
 
@@ -19,7 +17,9 @@
  Trims each of the RSP constructs.
 }
 
-\usage{\method{trim}{RspDocument}(object, ..., verbose=FALSE)}
+\usage{
+\method{trim}{RspDocument}(object, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{envir}{The \code{\link[base]{environment}} where the RSP document is evaluated.}

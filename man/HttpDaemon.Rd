@@ -32,7 +32,9 @@ extends \link[R.oo]{Object}\cr
   A minimalistic HTTP daemon (web server) that also preprocesses RSP.
  }
 
- \usage{HttpDaemon(...)}
+ \usage{
+HttpDaemon(...)
+}
 
  \arguments{
    \item{...}{Not used.}

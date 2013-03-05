@@ -7,12 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\name{processRsp.HttpDaemon}
+\name{HttpDaemon$processRsp}
+\alias{HttpDaemon$processRsp}
 \alias{processRsp.HttpDaemon}
 \alias{HttpDaemon.processRsp}
-\alias{processRsp.HttpDaemon}
 \alias{processRsp,HttpDaemon-method}
-
 
 \title{Processes an RSP page}
 
@@ -20,8 +19,13 @@
  Processes an RSP page.
 }
 
-\synopsis{processRsp.HttpDaemon(static=getStaticInstance(HttpDaemon), pathname=tcltk::tclvalue("mypath"), version=getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0"), ...)}
-\usage{HttpDaemon$processRsp(pathname=tcltk::tclvalue("mypath"), version=getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0"), ...)}
+\usage{
+## Static method (use this):
+## HttpDaemon$processRsp(pathname=tcltk::tclvalue("mypath"), version=getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0"), ...)
+
+## Don't use the below:
+\method{processRsp}{HttpDaemon}(static=getStaticInstance(HttpDaemon), pathname=tcltk::tclvalue("mypath"), version=getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0"), ...)
+}
 
 \arguments{
   \item{pathname}{The RSP file to be processed.}

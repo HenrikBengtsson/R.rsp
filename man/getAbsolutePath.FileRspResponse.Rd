@@ -9,9 +9,7 @@
 \name{getAbsolutePath.FileRspResponse}
 \alias{getAbsolutePath.FileRspResponse}
 \alias{FileRspResponse.getAbsolutePath}
-\alias{getAbsolutePath.FileRspResponse}
 \alias{getAbsolutePath,FileRspResponse-method}
-
 
 \title{Gets the absolute pathname to the current RSP file}
 
@@ -19,7 +17,9 @@
  Gets the absolute pathname to the current RSP file.
 }
 
-\usage{\method{getAbsolutePath}{FileRspResponse}(this, ...)}
+\usage{
+\method{getAbsolutePath}{FileRspResponse}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

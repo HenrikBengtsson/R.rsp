@@ -9,9 +9,7 @@
 \name{print.RspDocument}
 \alias{print.RspDocument}
 \alias{RspDocument.print}
-\alias{print.RspDocument}
 \alias{print,RspDocument-method}
-
 
 \title{Prints a summary of an RspDocument}
 
@@ -19,7 +17,9 @@
  Prints a summary of an RspDocument.
 }
 
-\usage{\method{print}{RspDocument}(x, ...)}
+\usage{
+\method{print}{RspDocument}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

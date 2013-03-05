@@ -9,9 +9,7 @@
 \name{getLanguage.RspEvalDirective}
 \alias{getLanguage.RspEvalDirective}
 \alias{RspEvalDirective.getLanguage}
-\alias{getLanguage.RspEvalDirective}
 \alias{getLanguage,RspEvalDirective-method}
-
 
 \title{Gets the programming language}
 
@@ -19,7 +17,9 @@
  Gets the programming language.
 }
 
-\usage{\method{getLanguage}{RspEvalDirective}(directive, ...)}
+\usage{
+\method{getLanguage}{RspEvalDirective}(directive, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

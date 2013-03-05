@@ -33,7 +33,9 @@ extends logical\cr
   an RSP document.
  }
 
- \usage{RspProduct(object=NA, type=attr(object, "type"), ...)}
+ \usage{
+RspProduct(object=NA, type=attr(object, "type"), ...)
+}
 
  \arguments{
    \item{object}{The RSP product.}

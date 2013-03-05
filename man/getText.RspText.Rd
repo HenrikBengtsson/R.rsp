@@ -9,9 +9,7 @@
 \name{getText.RspText}
 \alias{getText.RspText}
 \alias{RspText.getText}
-\alias{getText.RspText}
 \alias{getText,RspText-method}
-
 
 \title{Gets the text}
 
@@ -19,7 +17,9 @@
  Gets the text.
 }
 
-\usage{\method{getText}{RspText}(text, ...)}
+\usage{
+\method{getText}{RspText}(text, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

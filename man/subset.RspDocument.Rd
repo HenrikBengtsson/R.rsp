@@ -9,9 +9,7 @@
 \name{subset.RspDocument}
 \alias{subset.RspDocument}
 \alias{RspDocument.subset}
-\alias{subset.RspDocument}
 \alias{subset,RspDocument-method}
-
 
 \title{Subsets an RspDocument}
 
@@ -19,7 +17,9 @@
  Subsets an RspDocument.
 }
 
-\usage{\method{subset}{RspDocument}(x, subset, ...)}
+\usage{
+\method{subset}{RspDocument}(x, subset, ...)
+}
 
 \arguments{
   \item{subset}{An \code{\link[base]{expression}} used for subsetting.}

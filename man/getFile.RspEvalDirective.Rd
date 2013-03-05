@@ -9,9 +9,7 @@
 \name{getFile.RspEvalDirective}
 \alias{getFile.RspEvalDirective}
 \alias{RspEvalDirective.getFile}
-\alias{getFile.RspEvalDirective}
 \alias{getFile,RspEvalDirective-method}
-
 
 \title{Gets the file attribute}
 
@@ -19,7 +17,9 @@
  Gets the file attribute.
 }
 
-\usage{\method{getFile}{RspEvalDirective}(directive, ...)}
+\usage{
+\method{getFile}{RspEvalDirective}(directive, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

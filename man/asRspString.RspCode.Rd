@@ -9,9 +9,7 @@
 \name{asRspString.RspCode}
 \alias{asRspString.RspCode}
 \alias{RspCode.asRspString}
-\alias{asRspString.RspCode}
 \alias{asRspString,RspCode-method}
-
 
 \title{Recreates an RSP string from an RspCode}
 
@@ -19,7 +17,9 @@
  Recreates an RSP string from an RspCode.
 }
 
-\usage{\method{asRspString}{RspCode}(code, ...)}
+\usage{
+\method{asRspString}{RspCode}(code, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

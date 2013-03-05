@@ -9,9 +9,7 @@
 \name{getFile.RspIncludeDirective}
 \alias{getFile.RspIncludeDirective}
 \alias{RspIncludeDirective.getFile}
-\alias{getFile.RspIncludeDirective}
 \alias{getFile,RspIncludeDirective-method}
-
 
 \title{Gets the file attribute}
 
@@ -19,7 +17,9 @@
  Gets the file attribute.
 }
 
-\usage{\method{getFile}{RspIncludeDirective}(directive, ...)}
+\usage{
+\method{getFile}{RspIncludeDirective}(directive, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

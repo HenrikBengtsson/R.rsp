@@ -37,7 +37,9 @@ extends \link[R.rsp]{RspConstruct}\cr
   \code{<\%-\%>}, \code{<\%--\%>}, \code{<\%---\%>} and so on.
  }
 
- \usage{RspComment(str=character(), ...)}
+ \usage{
+RspComment(str=character(), ...)
+}
 
  \arguments{
    \item{str}{A \code{\link[base]{character}} string.}

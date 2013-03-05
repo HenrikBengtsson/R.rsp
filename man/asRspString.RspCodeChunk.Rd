@@ -9,9 +9,7 @@
 \name{asRspString.RspCodeChunk}
 \alias{asRspString.RspCodeChunk}
 \alias{RspCodeChunk.asRspString}
-\alias{asRspString.RspCodeChunk}
 \alias{asRspString,RspCodeChunk-method}
-
 
 \title{Recreates an RSP string from an RspCodeChunk}
 
@@ -19,7 +17,9 @@
  Recreates an RSP string from an RspCodeChunk.
 }
 
-\usage{\method{asRspString}{RspCodeChunk}(code, ...)}
+\usage{
+\method{asRspString}{RspCodeChunk}(code, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

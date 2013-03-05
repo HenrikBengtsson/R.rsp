@@ -9,9 +9,7 @@
 \name{evaluate.RspSourceCode}
 \alias{evaluate.RspSourceCode}
 \alias{RspSourceCode.evaluate}
-\alias{evaluate.RspSourceCode}
 \alias{evaluate,RspSourceCode-method}
-
 
 \title{Evaluates the source code}
 
@@ -19,7 +17,9 @@
  Evaluates the source code.
 }
 
-\usage{\method{evaluate}{RspSourceCode}(...)}
+\usage{
+\method{evaluate}{RspSourceCode}(...)
+}
 
 \arguments{
   \item{...}{Not used.}

@@ -16,7 +16,9 @@
  Evaluates an RSP file and outputs the generated string.
 }
 
-\usage{\method{rfile}{default}(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), args="*", postprocess=TRUE, fake=FALSE, ..., verbose=FALSE)}
+\usage{
+\method{rfile}{default}(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), args="*", postprocess=TRUE, fake=FALSE, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{file, path}{Specifies the RSP file to processed, which can

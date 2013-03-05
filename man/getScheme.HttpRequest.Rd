@@ -9,9 +9,7 @@
 \name{getScheme.HttpRequest}
 \alias{getScheme.HttpRequest}
 \alias{HttpRequest.getScheme}
-\alias{getScheme.HttpRequest}
 \alias{getScheme,HttpRequest-method}
-
 
 \title{Gets the scheme used to make this request}
 
@@ -19,7 +17,9 @@
  Gets the scheme used to make this request, e.g. http, https, or ftp.
 }
 
-\usage{\method{getScheme}{HttpRequest}(this, ...)}
+\usage{
+\method{getScheme}{HttpRequest}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

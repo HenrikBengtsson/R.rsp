@@ -35,7 +35,9 @@ extends \link[R.rsp]{RspProduct}\cr
   RSP product in form of a \code{\link[base]{character}} string.
  }
 
- \usage{RspStringProduct(...)}
+ \usage{
+RspStringProduct(...)
+}
 
  \arguments{
    \item{...}{\code{\link[base]{character}} strings passed to \code{\link{RspProduct}}.}

@@ -40,7 +40,9 @@ extends \link[R.rsp]{FileRspResponse}\cr
   the HTTP daemon.
  }
 
- \usage{HttpDaemonRspResponse(httpDaemon=NULL, ...)}
+ \usage{
+HttpDaemonRspResponse(httpDaemon=NULL, ...)
+}
 
  \arguments{
    \item{httpDaemon}{An \code{\link{HttpDaemon}} object.}

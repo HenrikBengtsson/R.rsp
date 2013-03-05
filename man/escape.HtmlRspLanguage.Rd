@@ -9,9 +9,7 @@
 \name{escape.HtmlRspLanguage}
 \alias{escape.HtmlRspLanguage}
 \alias{HtmlRspLanguage.escape}
-\alias{escape.HtmlRspLanguage}
 \alias{escape,HtmlRspLanguage-method}
-
 
 \title{Escapes a string specifically for the HTML language}
 
@@ -19,7 +17,9 @@
  Escapes a string specifically for the HTML language.
 }
 
-\usage{\method{escape}{HtmlRspLanguage}(object, ...)}
+\usage{
+\method{escape}{HtmlRspLanguage}(object, ...)
+}
 
 \arguments{
   \item{...}{R objects to be pasted together.}

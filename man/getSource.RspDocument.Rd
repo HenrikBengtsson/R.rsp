@@ -9,9 +9,7 @@
 \name{getSource.RspDocument}
 \alias{getSource.RspDocument}
 \alias{RspDocument.getSource}
-\alias{getSource.RspDocument}
 \alias{getSource,RspDocument-method}
-
 
 \title{Gets the source reference of an RSP document}
 
@@ -19,7 +17,9 @@
  Gets the source reference of an RSP document.
 }
 
-\usage{\method{getSource}{RspDocument}(object, ...)}
+\usage{
+\method{getSource}{RspDocument}(object, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

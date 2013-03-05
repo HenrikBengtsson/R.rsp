@@ -17,7 +17,9 @@
  This function is for RSP what \code{\link[utils]{Stangle}} is for Sweave documents.
 }
 
-\usage{rspTangle(file, ..., fake=FALSE, envir=parent.frame())}
+\usage{
+rspTangle(file, ..., fake=FALSE, envir=parent.frame())
+}
 
 \arguments{
   \item{file}{The file to be tangled.}

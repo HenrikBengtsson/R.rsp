@@ -37,7 +37,9 @@ extends \link[R.rsp]{RspDirective}\cr
   content of the RSP document, e.g. the content type.
  }
 
- \usage{RspPageDirective(...)}
+ \usage{
+RspPageDirective(...)
+}
 
  \arguments{
    \item{...}{Arguments passed to the constructor of \code{\link{RspDirective}}.}
@@ -57,7 +59,7 @@ asRspString
 asRspString, getAttributes, getSuffixSpecs
 
  \bold{Methods inherited from character}:\cr
-all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses
+all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
 
  }
 

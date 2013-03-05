@@ -34,7 +34,9 @@ extends character\cr
   (iii) an RSP preprocessing directive, or (iv) an RSP expression.
  }
 
- \usage{RspConstruct(object=character(), ...)}
+ \usage{
+RspConstruct(object=character(), ...)
+}
 
  \arguments{
    \item{object}{A R object.}

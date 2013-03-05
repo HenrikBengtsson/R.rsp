@@ -9,9 +9,7 @@
 \name{print.RspFileProduct}
 \alias{print.RspFileProduct}
 \alias{RspFileProduct.print}
-\alias{print.RspFileProduct}
 \alias{print,RspFileProduct-method}
-
 
 \title{Prints a summary of an RSP file product}
 
@@ -19,7 +17,9 @@
  Prints a summary of an RSP file product.
 }
 
-\usage{\method{print}{RspFileProduct}(x, ...)}
+\usage{
+\method{print}{RspFileProduct}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

@@ -32,7 +32,9 @@ extends character\cr
   An RspString is a \code{\link[base]{character}} \code{\link[base]{vector}} with RSP markup.
  }
 
- \usage{RspString(str=character(), ..., type=NA, source=NA)}
+ \usage{
+RspString(str=character(), ..., type=NA, source=NA)
+}
 
  \arguments{
    \item{str, ...}{\code{\link[base]{character}} strings.}

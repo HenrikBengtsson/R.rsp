@@ -9,9 +9,7 @@
 \name{getRemoteHost.HttpRequest}
 \alias{getRemoteHost.HttpRequest}
 \alias{HttpRequest.getRemoteHost}
-\alias{getRemoteHost.HttpRequest}
 \alias{getRemoteHost,HttpRequest-method}
-
 
 \title{Gets the fully qualified name of the client that sent the request}
 
@@ -21,7 +19,9 @@
  form of the IP address.
 }
 
-\usage{\method{getRemoteHost}{HttpRequest}(this, ...)}
+\usage{
+\method{getRemoteHost}{HttpRequest}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

@@ -33,7 +33,9 @@ extends \link[R.oo]{Object}\cr
   the generated document.
  }
 
- \usage{RspResponse(...)}
+ \usage{
+RspResponse(...)
+}
 
  \arguments{
    \item{...}{Not used.}

@@ -9,9 +9,7 @@
 \name{getText.RspIncludeDirective}
 \alias{getText.RspIncludeDirective}
 \alias{RspIncludeDirective.getText}
-\alias{getText.RspIncludeDirective}
 \alias{getText,RspIncludeDirective-method}
-
 
 \title{Gets the text}
 
@@ -19,7 +17,9 @@
  Gets the text.
 }
 
-\usage{\method{getText}{RspIncludeDirective}(directive, ...)}
+\usage{
+\method{getText}{RspIncludeDirective}(directive, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

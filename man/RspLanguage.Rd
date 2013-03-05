@@ -37,7 +37,9 @@ extends \link[R.oo]{Object}\cr
   see the \code{\link{HtmlRspLanguage}} subclass.
  }
 
- \usage{RspLanguage(language="plain", ...)}
+ \usage{
+RspLanguage(language="plain", ...)
+}
 
  \arguments{
    \item{language}{A \code{\link[base]{character}} string.}

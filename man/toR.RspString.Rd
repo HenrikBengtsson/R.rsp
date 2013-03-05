@@ -10,9 +10,7 @@
 \name{toR.RspString}
 \alias{toR.RspString}
 \alias{RspString.toR}
-\alias{toR.RspString}
 \alias{toR,RspString-method}
-
 
 \title{Parses and translates the RSP string into R code}
 
@@ -20,7 +18,9 @@
  Parses and translates the RSP string into R code.
 }
 
-\usage{\method{toR}{RspString}(object, envir=parent.frame(), ...)}
+\usage{
+\method{toR}{RspString}(object, envir=parent.frame(), ...)
+}
 
 \arguments{
   \item{envir}{The \code{\link[base]{environment}} where the RSP string is preprocessed.}

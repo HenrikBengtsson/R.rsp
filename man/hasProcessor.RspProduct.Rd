@@ -9,9 +9,7 @@
 \name{hasProcessor.RspProduct}
 \alias{hasProcessor.RspProduct}
 \alias{RspProduct.hasProcessor}
-\alias{hasProcessor.RspProduct}
 \alias{hasProcessor,RspProduct-method}
-
 
 \title{Checks whether a processor exist or not for an RSP product}
 
@@ -19,7 +17,9 @@
  Checks whether a processor exist or not for an RSP product.
 }
 
-\usage{\method{hasProcessor}{RspProduct}(object, ...)}
+\usage{
+\method{hasProcessor}{RspProduct}(object, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

@@ -9,9 +9,7 @@
 \name{getCode.RspCode}
 \alias{getCode.RspCode}
 \alias{RspCode.getCode}
-\alias{getCode.RspCode}
 \alias{getCode,RspCode-method}
-
 
 \title{Gets the source code}
 
@@ -19,7 +17,9 @@
  Gets the source code.
 }
 
-\usage{\method{getCode}{RspCode}(code, ...)}
+\usage{
+\method{getCode}{RspCode}(code, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

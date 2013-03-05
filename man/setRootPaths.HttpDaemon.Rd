@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{setRootPaths.HttpDaemon}
+\name{HttpDaemon$setRootPaths}
+\alias{HttpDaemon$setRootPaths}
 \alias{setRootPaths.HttpDaemon}
 \alias{HttpDaemon.setRootPaths}
-\alias{setRootPaths.HttpDaemon}
 \alias{setRootPaths,HttpDaemon-method}
-
 
 \title{Sets a new set of root directories for the HTTP daemon}
 
@@ -19,8 +18,13 @@
  Sets a new set of root directories for the HTTP daemon, if started.
 }
 
-\synopsis{setRootPaths.HttpDaemon(static, paths, ...)}
-\usage{HttpDaemon$setRootPaths(paths, ...)}
+\usage{
+## Static method (use this):
+## HttpDaemon$setRootPaths(paths, ...)
+
+## Don't use the below:
+\method{setRootPaths}{HttpDaemon}(static, paths, ...)
+}
 
 \arguments{
   \item{paths}{A \code{\link[base]{vector}} of paths.}

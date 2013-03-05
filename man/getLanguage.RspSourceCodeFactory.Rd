@@ -9,9 +9,7 @@
 \name{getLanguage.RspSourceCodeFactory}
 \alias{getLanguage.RspSourceCodeFactory}
 \alias{RspSourceCodeFactory.getLanguage}
-\alias{getLanguage.RspSourceCodeFactory}
 \alias{getLanguage,RspSourceCodeFactory-method}
-
 
 \title{Gets the language}
 
@@ -19,7 +17,9 @@
  Gets the language.
 }
 
-\usage{\method{getLanguage}{RspSourceCodeFactory}(this, ...)}
+\usage{
+\method{getLanguage}{RspSourceCodeFactory}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

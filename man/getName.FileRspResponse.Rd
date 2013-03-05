@@ -9,9 +9,7 @@
 \name{getName.FileRspResponse}
 \alias{getName.FileRspResponse}
 \alias{FileRspResponse.getName}
-\alias{getName.FileRspResponse}
 \alias{getName,FileRspResponse-method}
-
 
 \title{Gets the (base)name of the current RSP file}
 
@@ -19,7 +17,9 @@
  Gets the (base)name of the current RSP file.
 }
 
-\usage{\method{getName}{FileRspResponse}(this, ...)}
+\usage{
+\method{getName}{FileRspResponse}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

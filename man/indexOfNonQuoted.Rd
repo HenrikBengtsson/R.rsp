@@ -16,7 +16,9 @@
  Gets the first index of a string that is not inside a double qouted string.
 }
 
-\usage{\method{indexOfNonQuoted}{default}(str, pattern, ...)}
+\usage{
+\method{indexOfNonQuoted}{default}(str, pattern, ...)
+}
 
 \arguments{
   \item{str}{The \code{\link[base]{character}} string to be scanned.}

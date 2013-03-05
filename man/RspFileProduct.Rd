@@ -35,7 +35,9 @@ extends \link[R.rsp]{RspProduct}\cr
   RSP product in form of a file, e.g. LaTeX, Sweave and knitr documents.
  }
 
- \usage{RspFileProduct(pathname=NA, ..., mustExist=TRUE)}
+ \usage{
+RspFileProduct(pathname=NA, ..., mustExist=TRUE)
+}
 
  \arguments{
    \item{pathname}{An existing file.}

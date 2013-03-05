@@ -9,9 +9,7 @@
 \name{getContentType.HttpRequest}
 \alias{getContentType.HttpRequest}
 \alias{HttpRequest.getContentType}
-\alias{getContentType.HttpRequest}
 \alias{getContentType,HttpRequest-method}
-
 
 \title{Gets the MIME type of the body of the request}
 
@@ -19,7 +17,9 @@
  Gets the MIME type of the body of the request, or \code{\link[base]{NULL}} if the type is not known.
 }
 
-\usage{\method{getContentType}{HttpRequest}(this, ...)}
+\usage{
+\method{getContentType}{HttpRequest}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

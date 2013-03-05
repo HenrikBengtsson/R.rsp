@@ -37,7 +37,9 @@ extends \link[R.rsp]{RspDirective}\cr
   RSP parser to include (and parse) an external RSP file.
  }
 
- \usage{RspIncludeDirective(attributes=list(), ...)}
+ \usage{
+RspIncludeDirective(attributes=list(), ...)
+}
 
  \arguments{
    \item{attributes}{A named \code{\link[base]{list}}, which must contain either
@@ -63,7 +65,7 @@ asRspString
 asRspString, getAttributes, getSuffixSpecs
 
  \bold{Methods inherited from character}:\cr
-all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses
+all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
 
  }
 

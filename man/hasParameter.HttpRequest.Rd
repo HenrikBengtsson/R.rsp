@@ -9,9 +9,7 @@
 \name{hasParameter.HttpRequest}
 \alias{hasParameter.HttpRequest}
 \alias{HttpRequest.hasParameter}
-\alias{hasParameter.HttpRequest}
 \alias{hasParameter,HttpRequest-method}
-
 
 \title{Checks if a parameter exists}
 
@@ -19,7 +17,9 @@
  Checks if a parameter exists.
 }
 
-\usage{\method{hasParameter}{HttpRequest}(this, name, ...)}
+\usage{
+\method{hasParameter}{HttpRequest}(this, name, ...)
+}
 
 \arguments{
   \item{name}{Name of parameter to be checked.}

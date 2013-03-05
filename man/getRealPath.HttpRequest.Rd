@@ -9,9 +9,7 @@
 \name{getRealPath.HttpRequest}
 \alias{getRealPath.HttpRequest}
 \alias{HttpRequest.getRealPath}
-\alias{getRealPath.HttpRequest}
 \alias{getRealPath,HttpRequest-method}
-
 
 \title{Gets the file system path for a given URI}
 
@@ -19,7 +17,9 @@
  Gets the file system path for a given URI.
 }
 
-\usage{\method{getRealPath}{HttpRequest}(this, uri, ...)}
+\usage{
+\method{getRealPath}{HttpRequest}(this, uri, ...)
+}
 
 \arguments{
   \item{uri}{A URI as a \code{\link[base]{character}} string.}

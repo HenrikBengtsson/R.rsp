@@ -9,9 +9,7 @@
 \name{getComment.RspComment}
 \alias{getComment.RspComment}
 \alias{RspComment.getComment}
-\alias{getComment.RspComment}
 \alias{getComment,RspComment-method}
-
 
 \title{Gets the comment}
 
@@ -19,7 +17,9 @@
  Gets the comment.
 }
 
-\usage{\method{getComment}{RspComment}(comment, ...)}
+\usage{
+\method{getComment}{RspComment}(comment, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

@@ -9,9 +9,7 @@
 \name{parse.RspString}
 \alias{parse.RspString}
 \alias{RspString.parse}
-\alias{parse.RspString}
 \alias{parse,RspString-method}
-
 
 \title{Parses the RSP string}
 
@@ -19,7 +17,9 @@
  Parses the RSP string with RSP comments dropped.
 }
 
-\usage{\method{parse}{RspString}(object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), verbose=FALSE)}
+\usage{
+\method{parse}{RspString}(object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), verbose=FALSE)
+}
 
 \arguments{
   \item{envir}{The \code{\link[base]{environment}} where the RSP document is preprocessed.}

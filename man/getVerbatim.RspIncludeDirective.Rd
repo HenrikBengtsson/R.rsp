@@ -9,9 +9,7 @@
 \name{getVerbatim.RspIncludeDirective}
 \alias{getVerbatim.RspIncludeDirective}
 \alias{RspIncludeDirective.getVerbatim}
-\alias{getVerbatim.RspIncludeDirective}
 \alias{getVerbatim,RspIncludeDirective-method}
-
 
 \title{Checks if verbatim include should be used or not}
 
@@ -19,7 +17,9 @@
  Checks if verbatim include should be used or not.
 }
 
-\usage{\method{getVerbatim}{RspIncludeDirective}(directive, ...)}
+\usage{
+\method{getVerbatim}{RspIncludeDirective}(directive, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

@@ -9,9 +9,7 @@
 \name{evaluate.RspDocument}
 \alias{evaluate.RspDocument}
 \alias{RspDocument.evaluate}
-\alias{evaluate.RspDocument}
 \alias{evaluate,RspDocument-method}
-
 
 \title{Parses, translates, and evaluates the RSP document}
 
@@ -19,7 +17,9 @@
  Parses, translates, and evaluates the RSP document.
 }
 
-\usage{\method{evaluate}{RspDocument}(object, envir=parent.frame(), ...)}
+\usage{
+\method{evaluate}{RspDocument}(object, envir=parent.frame(), ...)
+}
 
 \arguments{
   \item{envir}{The \code{\link[base]{environment}} where the RSP document is evaluated.}

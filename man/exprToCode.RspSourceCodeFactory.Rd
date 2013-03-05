@@ -9,9 +9,7 @@
 \name{exprToCode.RspSourceCodeFactory}
 \alias{exprToCode.RspSourceCodeFactory}
 \alias{RspSourceCodeFactory.exprToCode}
-\alias{exprToCode.RspSourceCodeFactory}
 \alias{exprToCode,RspSourceCodeFactory-method}
-
 
 \title{Translates an RspExpression into source code}
 
@@ -19,7 +17,9 @@
  Translates an RspExpression into source code.
 }
 
-\usage{\method{exprToCode}{RspSourceCodeFactory}(...)}
+\usage{
+\method{exprToCode}{RspSourceCodeFactory}(...)
+}
 
 \arguments{
   \item{expr}{An \code{\link{RspExpression}}.}

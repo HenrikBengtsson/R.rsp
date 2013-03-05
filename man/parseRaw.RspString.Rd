@@ -9,9 +9,7 @@
 \name{parseRaw.RspString}
 \alias{parseRaw.RspString}
 \alias{RspString.parseRaw}
-\alias{parseRaw.RspString}
 \alias{parseRaw,RspString-method}
-
 
 \title{Parses the string into blocks of text and RSP}
 
@@ -19,7 +17,9 @@
  Parses the string into blocks of text and RSP.
 }
 
-\usage{\method{parseRaw}{RspString}(object, what=c("comment", "directive", "expression"), commentLength=-1, ..., verbose=FALSE)}
+\usage{
+\method{parseRaw}{RspString}(object, what=c("comment", "directive", "expression"), commentLength=-1, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{what}{A \code{\link[base]{character}} string specifying what type of RSP construct

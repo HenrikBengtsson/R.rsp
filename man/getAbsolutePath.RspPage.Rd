@@ -9,9 +9,7 @@
 \name{getAbsolutePath.RspPage}
 \alias{getAbsolutePath.RspPage}
 \alias{RspPage.getAbsolutePath}
-\alias{getAbsolutePath.RspPage}
 \alias{getAbsolutePath,RspPage-method}
-
 
 \title{Gets the absolute pathname to the current RSP file}
 
@@ -19,7 +17,9 @@
  Gets the absolute pathname to the current RSP file.
 }
 
-\usage{\method{getAbsolutePath}{RspPage}(this, ...)}
+\usage{
+\method{getAbsolutePath}{RspPage}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

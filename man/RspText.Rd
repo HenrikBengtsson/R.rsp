@@ -37,7 +37,9 @@ extends \link[R.rsp]{RspConstruct}\cr
   Its content is independent of the underlying programming language.
  }
 
- \usage{RspText(text=character(), ...)}
+ \usage{
+RspText(text=character(), ...)
+}
 
  \arguments{
    \item{text}{A \code{\link[base]{character}} string.}

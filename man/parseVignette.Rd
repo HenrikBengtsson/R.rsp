@@ -16,7 +16,9 @@
  Parses an Rnw file.
 }
 
-\usage{parseVignette(pathname, commentPrefix="^\%[ 	]*", ...)}
+\usage{
+parseVignette(pathname, commentPrefix="^\%[ 	]*", ...)
+}
 
 \arguments{
   \item{pathname}{The Rnw file to be parsed.}

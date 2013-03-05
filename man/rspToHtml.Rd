@@ -16,7 +16,9 @@
  Compiles an RSP file to an HTML file.
 }
 
-\usage{\method{rspToHtml}{default}(file=NULL, path=NULL, outFile=NULL, outPath=NULL, extension="html", overwrite=TRUE, ...)}
+\usage{
+\method{rspToHtml}{default}(file=NULL, path=NULL, outFile=NULL, outPath=NULL, extension="html", overwrite=TRUE, ...)
+}
 
 \arguments{
   \item{file}{The filename of the RSP file to be compiled.}

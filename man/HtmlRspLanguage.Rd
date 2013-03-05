@@ -32,7 +32,9 @@ extends \link[R.rsp]{RspLanguage}\cr
 
  }
 
- \usage{HtmlRspLanguage(...)}
+ \usage{
+HtmlRspLanguage(...)
+}
 
  \arguments{
    \item{...}{Arguments passed to the constructor of the \code{\link{RspLanguage}}.}

@@ -9,9 +9,7 @@
 \name{getVerbatim.RspLanguage}
 \alias{getVerbatim.RspLanguage}
 \alias{RspLanguage.getVerbatim}
-\alias{getVerbatim.RspLanguage}
 \alias{getVerbatim,RspLanguage-method}
-
 
 \title{Gets a verbatim string specific for a given RSP response language}
 
@@ -19,7 +17,9 @@
  Gets a verbatim string specific for a given RSP response language.
 }
 
-\usage{\method{getVerbatim}{RspLanguage}(this, ...)}
+\usage{
+\method{getVerbatim}{RspLanguage}(this, ...)
+}
 
 \arguments{
   \item{...}{R objects to be pasted together.}

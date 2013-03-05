@@ -16,7 +16,9 @@
  Compiles an RSP LaTeX file into a DVI file.
 }
 
-\usage{\method{rsptex}{default}(..., pdf=TRUE, force=FALSE, verbose=FALSE)}
+\usage{
+\method{rsptex}{default}(..., pdf=TRUE, force=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Arguments passed to \code{\link{compileRsp}}().}

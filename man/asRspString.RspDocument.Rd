@@ -9,9 +9,7 @@
 \name{asRspString.RspDocument}
 \alias{asRspString.RspDocument}
 \alias{RspDocument.asRspString}
-\alias{asRspString.RspDocument}
 \alias{asRspString,RspDocument-method}
-
 
 \title{Recreates an RSP string from an RspDocument}
 
@@ -19,7 +17,9 @@
  Recreates an RSP string from an RspDocument.
 }
 
-\usage{\method{asRspString}{RspDocument}(doc, ...)}
+\usage{
+\method{asRspString}{RspDocument}(doc, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

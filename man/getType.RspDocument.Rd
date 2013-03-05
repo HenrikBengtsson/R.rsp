@@ -9,9 +9,7 @@
 \name{getType.RspDocument}
 \alias{getType.RspDocument}
 \alias{RspDocument.getType}
-\alias{getType.RspDocument}
 \alias{getType,RspDocument-method}
-
 
 \title{Gets the type of the RspDocument}
 
@@ -19,7 +17,9 @@
  Gets the type of the RspDocument.
 }
 
-\usage{\method{getType}{RspDocument}(object, ...)}
+\usage{
+\method{getType}{RspDocument}(object, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

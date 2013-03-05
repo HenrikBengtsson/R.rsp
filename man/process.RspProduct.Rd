@@ -9,9 +9,7 @@
 \name{process.RspProduct}
 \alias{process.RspProduct}
 \alias{RspProduct.process}
-\alias{process.RspProduct}
 \alias{process,RspProduct-method}
-
 
 \title{Processes an RSP file product}
 
@@ -19,7 +17,9 @@
  Processes an RSP file product.
 }
 
-\usage{\method{process}{RspProduct}(object, type=NULL, envir=parent.frame(), workdir=NULL, ..., fake=FALSE, verbose=FALSE)}
+\usage{
+\method{process}{RspProduct}(object, type=NULL, envir=parent.frame(), workdir=NULL, ..., fake=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{type}{A \code{\link[base]{character}} string specifying the content type.}

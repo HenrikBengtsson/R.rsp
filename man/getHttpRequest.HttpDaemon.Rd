@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getHttpRequest.HttpDaemon}
+\name{HttpDaemon$getHttpRequest}
+\alias{HttpDaemon$getHttpRequest}
 \alias{getHttpRequest.HttpDaemon}
 \alias{HttpDaemon.getHttpRequest}
-\alias{getHttpRequest.HttpDaemon}
 \alias{getHttpRequest,HttpDaemon-method}
-
 
 \title{Gets the HTTP request}
 
@@ -19,8 +18,13 @@
  Gets the HTTP request.
 }
 
-\synopsis{getHttpRequest.HttpDaemon(static, ...)}
-\usage{HttpDaemon$getHttpRequest(...)}
+\usage{
+## Static method (use this):
+## HttpDaemon$getHttpRequest(...)
+
+## Don't use the below:
+\method{getHttpRequest}{HttpDaemon}(static, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

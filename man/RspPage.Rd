@@ -30,7 +30,9 @@ extends \link[R.oo]{Object}\cr
 
  }
 
- \usage{RspPage(pathname=NULL, ...)}
+ \usage{
+RspPage(pathname=NULL, ...)
+}
 
  \arguments{
    \item{pathname}{A \code{\link[base]{character}} string.}

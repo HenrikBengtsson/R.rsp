@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{isStarted.HttpDaemon}
+\name{HttpDaemon$isStarted}
+\alias{HttpDaemon$isStarted}
 \alias{isStarted.HttpDaemon}
 \alias{HttpDaemon.isStarted}
-\alias{isStarted.HttpDaemon}
 \alias{isStarted,HttpDaemon-method}
-
 
 \title{Checks if the HTTP daemon is started}
 
@@ -19,8 +18,13 @@
  Checks if the HTTP daemon is started.
 }
 
-\synopsis{isStarted.HttpDaemon(x, ...)}
-\usage{HttpDaemon$isStarted(...)}
+\usage{
+## Static method (use this):
+## HttpDaemon$isStarted(...)
+
+## Don't use the below:
+\method{isStarted}{HttpDaemon}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

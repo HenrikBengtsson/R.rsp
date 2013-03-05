@@ -36,7 +36,9 @@ extends \emph{\link[R.rsp]{RspSourceCode}}\cr
   An RspRSourceCode object is an \code{\link{RspSourceCode}} holding R source code.
  }
 
- \usage{RspRSourceCode(...)}
+ \usage{
+RspRSourceCode(...)
+}
 
  \arguments{
    \item{...}{\code{\link[base]{character}} strings.}

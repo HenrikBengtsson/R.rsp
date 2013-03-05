@@ -9,9 +9,7 @@
 \name{getEcho.RspCode}
 \alias{getEcho.RspCode}
 \alias{RspCode.getEcho}
-\alias{getEcho.RspCode}
 \alias{getEcho,RspCode-method}
-
 
 \title{Checks whether the source code should be echoed or not}
 
@@ -19,7 +17,9 @@
  Checks whether the source code should be echoed or not.
 }
 
-\usage{\method{getEcho}{RspCode}(code, ...)}
+\usage{
+\method{getEcho}{RspCode}(code, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

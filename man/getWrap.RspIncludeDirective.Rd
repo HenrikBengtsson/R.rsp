@@ -9,9 +9,7 @@
 \name{getWrap.RspIncludeDirective}
 \alias{getWrap.RspIncludeDirective}
 \alias{RspIncludeDirective.getWrap}
-\alias{getWrap.RspIncludeDirective}
 \alias{getWrap,RspIncludeDirective-method}
-
 
 \title{Get the wrap length}
 
@@ -19,7 +17,9 @@
  Get the wrap length.
 }
 
-\usage{\method{getWrap}{RspIncludeDirective}(directive, ...)}
+\usage{
+\method{getWrap}{RspIncludeDirective}(directive, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

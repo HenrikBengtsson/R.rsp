@@ -9,9 +9,7 @@
 \name{parse.RspUnparsedDirective}
 \alias{parse.RspUnparsedDirective}
 \alias{RspUnparsedDirective.parse}
-\alias{parse.RspUnparsedDirective}
 \alias{parse,RspUnparsedDirective-method}
-
 
 \title{Parses the unknown RSP directive for its class}
 
@@ -19,7 +17,9 @@
  Parses the unknown RSP directive for its class.
 }
 
-\usage{\method{parse}{RspUnparsedDirective}(expr, ...)}
+\usage{
+\method{parse}{RspUnparsedDirective}(expr, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

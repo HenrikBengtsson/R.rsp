@@ -9,9 +9,7 @@
 \name{getServerName.HttpRequest}
 \alias{getServerName.HttpRequest}
 \alias{HttpRequest.getServerName}
-\alias{getServerName.HttpRequest}
 \alias{getServerName,HttpRequest-method}
-
 
 \title{Gets the host name of the server that revieved the request}
 
@@ -19,7 +17,9 @@
  Gets the host name of the server that revieved the request. 
 }
 
-\usage{\method{getServerName}{HttpRequest}(this, ...)}
+\usage{
+\method{getServerName}{HttpRequest}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

@@ -18,7 +18,9 @@
  that it is a Sweave or a knitr Rnw file.
 }
 
-\usage{\method{compileRnw}{default}(filename, path=NULL, ..., type=typeOfRnw(filename, path = path, fake = fake), fake=FALSE, verbose=FALSE)}
+\usage{
+\method{compileRnw}{default}(filename, path=NULL, ..., type=typeOfRnw(filename, path = path, fake = fake), fake=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{filename, path}{The filename and (optional) path of the

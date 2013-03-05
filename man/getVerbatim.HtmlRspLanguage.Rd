@@ -9,9 +9,7 @@
 \name{getVerbatim.HtmlRspLanguage}
 \alias{getVerbatim.HtmlRspLanguage}
 \alias{HtmlRspLanguage.getVerbatim}
-\alias{getVerbatim.HtmlRspLanguage}
 \alias{getVerbatim,HtmlRspLanguage-method}
-
 
 \title{Gets a verbatim string specifically for the HTML language}
 
@@ -19,7 +17,9 @@
  Gets a verbatim string specifically for the HTML language.
 }
 
-\usage{\method{getVerbatim}{HtmlRspLanguage}(object, ..., newline=NULL)}
+\usage{
+\method{getVerbatim}{HtmlRspLanguage}(object, ..., newline=NULL)
+}
 
 \arguments{
   \item{...}{R objects to be pasted together.}

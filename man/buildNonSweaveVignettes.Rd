@@ -16,7 +16,9 @@
  Builds all non-Sweave Rnw vignette.
 }
 
-\usage{buildNonSweaveVignettes(path=".", pattern="[.]Rnw$", ...)}
+\usage{
+buildNonSweaveVignettes(path=".", pattern="[.]Rnw$", ...)
+}
 
 \arguments{
   \item{path}{The directory where to search for non-Sweave vignettes.}

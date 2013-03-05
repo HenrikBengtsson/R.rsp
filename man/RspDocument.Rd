@@ -32,7 +32,9 @@ extends list\cr
   An RspDocument represents a \code{\link[base]{list}} of \code{\link{RspExpression}}:s.
  }
 
- \usage{RspDocument(expressions=list(), type=NA, source=NA, ...)}
+ \usage{
+RspDocument(expressions=list(), type=NA, source=NA, ...)
+}
 
  \arguments{
    \item{expressions}{A \code{\link[base]{list}} of \code{\link{RspExpression}}:s and
@@ -47,7 +49,7 @@ extends list\cr
 \tabular{rll}{
  \tab \code{[} \tab  -\cr
  \tab \code{\link[R.rsp:asRspString.RspDocument]{asRspString}} \tab Recreates an RSP string from an RspDocument.\cr
- \tab \code{dropEmptyText} \tab  -\cr
+ \tab \code{\link[R.rsp:dropEmptyText.RspDocument]{dropEmptyText}} \tab Drops all empty RSP text constructs.\cr
  \tab \code{\link[R.rsp:evaluate.RspDocument]{evaluate}} \tab Parses, translates, and evaluates the RSP document.\cr
  \tab \code{\link[R.rsp:flatten.RspDocument]{flatten}} \tab Flattens an RspDocument.\cr
  \tab \code{\link[R.rsp:getPath.RspDocument]{getPath}} \tab Gets the path to the source reference of an RSP string.\cr
@@ -61,7 +63,7 @@ extends list\cr
  \tab \code{\link[R.rsp:subset.RspDocument]{subset}} \tab Subsets an RspDocument.\cr
  \tab \code{\link[R.rsp:toR.RspDocument]{toR}} \tab Translates the RSP document into R source code.\cr
  \tab \code{\link[R.rsp:trim.RspDocument]{trim}} \tab Trims each of the RSP constructs.\cr
- \tab \code{trimNonText} \tab  -\cr
+ \tab \code{\link[R.rsp:trimNonText.RspDocument]{trimNonText}} \tab Trims all non-text RSP constructs.\cr
 }
 
 

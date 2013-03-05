@@ -9,9 +9,7 @@
 \name{mergeTexts.RspDocument}
 \alias{mergeTexts.RspDocument}
 \alias{RspDocument.mergeTexts}
-\alias{mergeTexts.RspDocument}
 \alias{mergeTexts,RspDocument-method}
-
 
 \title{Merge neighboring 'text' elements}
 
@@ -19,7 +17,9 @@
  Merge neighboring 'text' elements by pasting them together.
 }
 
-\usage{\method{mergeTexts}{RspDocument}(object, trim=FALSE, ..., verbose=FALSE)}
+\usage{
+\method{mergeTexts}{RspDocument}(object, trim=FALSE, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

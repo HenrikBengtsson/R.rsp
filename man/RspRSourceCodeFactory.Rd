@@ -35,7 +35,9 @@ extends \emph{\link[R.rsp]{RspSourceCodeFactory}}\cr
   the R language.
  }
 
- \usage{RspRSourceCodeFactory(...)}
+ \usage{
+RspRSourceCodeFactory(...)
+}
 
  \arguments{
    \item{...}{Not used.}

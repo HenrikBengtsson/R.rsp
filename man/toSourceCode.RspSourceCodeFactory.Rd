@@ -9,9 +9,7 @@
 \name{toSourceCode.RspSourceCodeFactory}
 \alias{toSourceCode.RspSourceCodeFactory}
 \alias{RspSourceCodeFactory.toSourceCode}
-\alias{toSourceCode.RspSourceCodeFactory}
 \alias{toSourceCode,RspSourceCodeFactory-method}
-
 
 \title{Translates an RSP document to source code}
 
@@ -19,7 +17,9 @@
  Translates an RSP document to source code.
 }
 
-\usage{\method{toSourceCode}{RspSourceCodeFactory}(object, doc, ...)}
+\usage{
+\method{toSourceCode}{RspSourceCodeFactory}(object, doc, ...)
+}
 
 \arguments{
   \item{expr}{An \code{\link{RspDocument}} that has been preprocessed

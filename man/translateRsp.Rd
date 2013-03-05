@@ -16,7 +16,9 @@
  Translates an RSP file to an R RSP source file.
 }
 
-\usage{\method{translateRsp}{default}(filename, path=NULL, ..., force=FALSE, verbose=FALSE)}
+\usage{
+\method{translateRsp}{default}(filename, path=NULL, ..., force=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{filename}{A filename to be read.}

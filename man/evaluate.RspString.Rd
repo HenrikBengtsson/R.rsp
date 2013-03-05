@@ -9,9 +9,7 @@
 \name{evaluate.RspString}
 \alias{evaluate.RspString}
 \alias{RspString.evaluate}
-\alias{evaluate.RspString}
 \alias{evaluate,RspString-method}
-
 
 \title{Parses, translates, and evaluates the RSP string}
 
@@ -19,7 +17,9 @@
  Parses, translates, and evaluates the RSP string.
 }
 
-\usage{\method{evaluate}{RspString}(object, envir=parent.frame(), ...)}
+\usage{
+\method{evaluate}{RspString}(object, envir=parent.frame(), ...)
+}
 
 \arguments{
   \item{envir}{The \code{\link[base]{environment}} where the RSP string is evaluated.}

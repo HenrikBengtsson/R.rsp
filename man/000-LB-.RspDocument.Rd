@@ -9,9 +9,7 @@
 \name{[.RspDocument}
 \alias{[.RspDocument}
 \alias{RspDocument.[}
-\alias{[.RspDocument}
 \alias{[,RspDocument-method}
-
 
 \title{Subsets an RspDocument}
 
@@ -19,7 +17,9 @@
  Subsets an RspDocument.
 }
 
-\usage{\method{[}{RspDocument}(x, i)}
+\usage{
+\method{[}{RspDocument}(x, i)
+}
 
 \arguments{
   \item{i}{Indices of the RSP elements to extract.}

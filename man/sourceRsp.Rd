@@ -16,7 +16,9 @@
  Processes an RSP file by translating it to an R servlet, which is then sourced.
 }
 
-\usage{\method{sourceRsp}{default}(..., response=FileRspResponse(file = stdout()), request=NULL, envir=parent.frame(), verbose=FALSE)}
+\usage{
+\method{sourceRsp}{default}(..., response=FileRspResponse(file = stdout()), request=NULL, envir=parent.frame(), verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Arguments passed to \code{\link{translateRspV1}}(), e.g. \code{file}

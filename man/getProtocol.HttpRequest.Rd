@@ -9,9 +9,7 @@
 \name{getProtocol.HttpRequest}
 \alias{getProtocol.HttpRequest}
 \alias{HttpRequest.getProtocol}
-\alias{getProtocol.HttpRequest}
 \alias{getProtocol,HttpRequest-method}
-
 
 \title{Gets the name and version of the protocol used to make this request}
 
@@ -19,7 +17,9 @@
  Gets the name and version of the protocol used to make this request, e.g. HTTP/1.1.
 }
 
-\usage{\method{getProtocol}{HttpRequest}(this, ...)}
+\usage{
+\method{getProtocol}{HttpRequest}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getRootPaths.HttpDaemon}
+\name{HttpDaemon$getRootPaths}
+\alias{HttpDaemon$getRootPaths}
 \alias{getRootPaths.HttpDaemon}
 \alias{HttpDaemon.getRootPaths}
-\alias{getRootPaths.HttpDaemon}
 \alias{getRootPaths,HttpDaemon-method}
-
 
 \title{Gets the root directories of the HTTP daemon}
 
@@ -19,8 +18,13 @@
  Gets the root directories of the HTTP daemon.
 }
 
-\synopsis{getRootPaths.HttpDaemon(static, ...)}
-\usage{HttpDaemon$getRootPaths(...)}
+\usage{
+## Static method (use this):
+## HttpDaemon$getRootPaths(...)
+
+## Don't use the below:
+\method{getRootPaths}{HttpDaemon}(static, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

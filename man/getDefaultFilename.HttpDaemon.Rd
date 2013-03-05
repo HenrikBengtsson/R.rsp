@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getDefaultFilename.HttpDaemon}
+\name{HttpDaemon$getDefaultFilename}
+\alias{HttpDaemon$getDefaultFilename}
 \alias{getDefaultFilename.HttpDaemon}
 \alias{HttpDaemon.getDefaultFilename}
-\alias{getDefaultFilename.HttpDaemon}
 \alias{getDefaultFilename,HttpDaemon-method}
-
 
 \title{Gets the default filename to be loaded by the HTTP daemon}
 
@@ -19,8 +18,13 @@
  Gets the default filename to be loaded by the HTTP daemon, if started.
 }
 
-\synopsis{getDefaultFilename.HttpDaemon(static, ...)}
-\usage{HttpDaemon$getDefaultFilename(...)}
+\usage{
+## Static method (use this):
+## HttpDaemon$getDefaultFilename(...)
+
+## Don't use the below:
+\method{getDefaultFilename}{HttpDaemon}(static, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

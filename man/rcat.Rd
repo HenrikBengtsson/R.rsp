@@ -19,7 +19,9 @@
  Evaluates an RSP string and outputs the generated string.
 }
 
-\usage{\method{rcat}{default}(..., output="", append=FALSE, envir=parent.frame(), args="*")}
+\usage{
+\method{rcat}{default}(..., output="", append=FALSE, envir=parent.frame(), args="*")
+}
 
 \arguments{
   \item{...}{\code{\link[base]{character}} strings with RSP markup.}

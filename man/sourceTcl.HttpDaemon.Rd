@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{sourceTcl.HttpDaemon}
+\name{HttpDaemon$sourceTcl}
+\alias{HttpDaemon$sourceTcl}
 \alias{sourceTcl.HttpDaemon}
 \alias{HttpDaemon.sourceTcl}
-\alias{sourceTcl.HttpDaemon}
 \alias{sourceTcl,HttpDaemon-method}
-
 
 \title{Loads the Tcl source for the HTTP daemon into R}
 
@@ -19,8 +18,13 @@
  Loads the Tcl source for the HTTP daemon into R.
 }
 
-\synopsis{sourceTcl.HttpDaemon(static, ...)}
-\usage{HttpDaemon$sourceTcl(...)}
+\usage{
+## Static method (use this):
+## HttpDaemon$sourceTcl(...)
+
+## Don't use the below:
+\method{sourceTcl}{HttpDaemon}(static, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

@@ -9,9 +9,7 @@
 \name{getSource.RspString}
 \alias{getSource.RspString}
 \alias{RspString.getSource}
-\alias{getSource.RspString}
 \alias{getSource,RspString-method}
-
 
 \title{Gets the source reference of an RSP string}
 
@@ -19,7 +17,9 @@
  Gets the source reference of an RSP string.
 }
 
-\usage{\method{getSource}{RspString}(object, ...)}
+\usage{
+\method{getSource}{RspString}(object, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

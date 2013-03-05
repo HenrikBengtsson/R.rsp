@@ -9,9 +9,7 @@
 \name{asRspString.RspUnparsedDirective}
 \alias{asRspString.RspUnparsedDirective}
 \alias{RspUnparsedDirective.asRspString}
-\alias{asRspString.RspUnparsedDirective}
 \alias{asRspString,RspUnparsedDirective-method}
-
 
 \title{Recreates an RSP string from an unparsed RSP preprocessing directive}
 
@@ -19,7 +17,9 @@
  Recreates an RSP string from an unparsed RSP preprocessing directive.
 }
 
-\usage{\method{asRspString}{RspUnparsedDirective}(object, ...)}
+\usage{
+\method{asRspString}{RspUnparsedDirective}(object, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

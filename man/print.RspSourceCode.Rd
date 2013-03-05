@@ -9,9 +9,7 @@
 \name{print.RspSourceCode}
 \alias{print.RspSourceCode}
 \alias{RspSourceCode.print}
-\alias{print.RspSourceCode}
 \alias{print,RspSourceCode-method}
-
 
 \title{Prints the source code}
 
@@ -19,7 +17,9 @@
  Prints the source code.
 }
 
-\usage{\method{print}{RspSourceCode}(x, ...)}
+\usage{
+\method{print}{RspSourceCode}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

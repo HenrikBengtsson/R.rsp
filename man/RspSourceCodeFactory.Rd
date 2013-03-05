@@ -34,7 +34,9 @@ extends character\cr
   programming language.
  }
 
- \usage{RspSourceCodeFactory(language=NA, ...)}
+ \usage{
+RspSourceCodeFactory(language=NA, ...)
+}
 
  \arguments{
    \item{language}{A \code{\link[base]{character}} string.}

@@ -16,7 +16,9 @@
  Compiles an RSP document.
 }
 
-\usage{\method{rsp}{default}(filename=NULL, path=NULL, text=NULL, response=NULL, ..., envir=parent.frame(), outPath=".", postprocess=TRUE, verbose=FALSE)}
+\usage{
+\method{rsp}{default}(filename=NULL, path=NULL, text=NULL, response=NULL, ..., envir=parent.frame(), outPath=".", postprocess=TRUE, verbose=FALSE)
+}
 
 \arguments{
   \item{filename, path}{The filename and (optional) path of the

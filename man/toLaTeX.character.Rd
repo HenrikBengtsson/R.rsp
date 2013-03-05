@@ -9,8 +9,6 @@
 
 \name{toLatex.character}
 \alias{toLatex.character}
-\alias{toLatex.character}
-
 \alias{le}
 
 \title{Escapes character strings to become LaTeX compatible}
@@ -19,7 +17,9 @@
  Escapes character strings to become LaTeX compatible.
 }
 
-\usage{\method{toLatex}{character}(object, ...)}
+\usage{
+\method{toLatex}{character}(object, ...)
+}
 
 \arguments{
   \item{object}{A \code{\link[base]{character}} \code{\link[base]{vector}} of N strings.}

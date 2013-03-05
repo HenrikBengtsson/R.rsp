@@ -9,9 +9,7 @@
 \name{getContentLength.HttpRequest}
 \alias{getContentLength.HttpRequest}
 \alias{HttpRequest.getContentLength}
-\alias{getContentLength.HttpRequest}
 \alias{getContentLength,HttpRequest-method}
-
 
 \title{Gets the length of contents}
 
@@ -19,7 +17,9 @@
  Gets the length of contents (in bytes), or -1 if the length is not known.
 }
 
-\usage{\method{getContentLength}{HttpRequest}(this, ...)}
+\usage{
+\method{getContentLength}{HttpRequest}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

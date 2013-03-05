@@ -16,7 +16,9 @@
  Compiles a LaTeX file to either PDF or DVI.
 }
 
-\usage{\method{compileLaTeX}{default}(filename, path=NULL, format=c("pdf", "dvi"), clean=FALSE, quiet=TRUE, ..., outPath=".", fake=FALSE, verbose=FALSE)}
+\usage{
+\method{compileLaTeX}{default}(filename, path=NULL, format=c("pdf", "dvi"), clean=FALSE, quiet=TRUE, ..., outPath=".", fake=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{filename, path}{The filename and (optional) path of the

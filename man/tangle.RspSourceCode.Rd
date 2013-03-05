@@ -9,9 +9,7 @@
 \name{tangle.RspSourceCode}
 \alias{tangle.RspSourceCode}
 \alias{RspSourceCode.tangle}
-\alias{tangle.RspSourceCode}
 \alias{tangle,RspSourceCode-method}
-
 
 \title{Drops all text-outputting calls from the source code}
 
@@ -19,7 +17,9 @@
  Drops all text-outputting calls from the source code.
 }
 
-\usage{\method{tangle}{RspSourceCode}(...)}
+\usage{
+\method{tangle}{RspSourceCode}(...)
+}
 
 \arguments{
   \item{...}{Not used.}

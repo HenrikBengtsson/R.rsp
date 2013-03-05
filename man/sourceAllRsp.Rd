@@ -16,7 +16,9 @@
  Processes one or several RSP files.
 }
 
-\usage{\method{sourceAllRsp}{default}(pattern="[.]rsp$", path=".", extension="html", outputPath=extension, overwrite=FALSE, ..., envir=parent.frame())}
+\usage{
+\method{sourceAllRsp}{default}(pattern="[.]rsp$", path=".", extension="html", outputPath=extension, overwrite=FALSE, ..., envir=parent.frame())
+}
 
 \arguments{
   \item{pattern}{A filename pattern.}

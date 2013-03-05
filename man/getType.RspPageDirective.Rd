@@ -9,9 +9,7 @@
 \name{getType.RspPageDirective}
 \alias{getType.RspPageDirective}
 \alias{RspPageDirective.getType}
-\alias{getType.RspPageDirective}
 \alias{getType,RspPageDirective-method}
-
 
 \title{Gets the content type}
 
@@ -19,7 +17,9 @@
  Gets the content type.
 }
 
-\usage{\method{getType}{RspPageDirective}(directive, ...)}
+\usage{
+\method{getType}{RspPageDirective}(directive, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

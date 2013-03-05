@@ -39,7 +39,9 @@ extends \link[R.rsp]{RspCode}\cr
   RSP code chunk.
  }
 
- \usage{RspCodeChunk(..., return=FALSE)}
+ \usage{
+RspCodeChunk(..., return=FALSE)
+}
 
  \arguments{
    \item{...}{Arguments passed to the constructor of \code{\link{RspCode}}.}

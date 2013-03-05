@@ -18,7 +18,9 @@
  which in turn generates either a PDF or a DVI document.
 }
 
-\usage{\method{compileKnitr}{default}(filename, path=NULL, ..., outPath=".", fake=FALSE, verbose=FALSE)}
+\usage{
+\method{compileKnitr}{default}(filename, path=NULL, ..., outPath=".", fake=FALSE, verbose=FALSE)
+}
 
 \arguments{
   \item{filename, path}{The filename and (optional) path of the

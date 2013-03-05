@@ -9,9 +9,7 @@
 \name{makeSourceCode.RspSourceCodeFactory}
 \alias{makeSourceCode.RspSourceCodeFactory}
 \alias{RspSourceCodeFactory.makeSourceCode}
-\alias{makeSourceCode.RspSourceCodeFactory}
 \alias{makeSourceCode,RspSourceCodeFactory-method}
-
 
 \title{Makes a RspSourceCode object}
 
@@ -19,7 +17,9 @@
  Makes a RspSourceCode object.
 }
 
-\usage{\method{makeSourceCode}{RspSourceCodeFactory}(this, ...)}
+\usage{
+\method{makeSourceCode}{RspSourceCodeFactory}(this, ...)
+}
 
 \arguments{
   \item{...}{Arguments passed to the language-specific

@@ -9,9 +9,7 @@
 \name{getSuffixSpecs.RspConstruct}
 \alias{getSuffixSpecs.RspConstruct}
 \alias{RspConstruct.getSuffixSpecs}
-\alias{getSuffixSpecs.RspConstruct}
 \alias{getSuffixSpecs,RspConstruct-method}
-
 
 \title{Gets the suffix specifications}
 
@@ -19,7 +17,9 @@
  Gets the suffix specifications.
 }
 
-\usage{\method{getSuffixSpecs}{RspConstruct}(object, ...)}
+\usage{
+\method{getSuffixSpecs}{RspConstruct}(object, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

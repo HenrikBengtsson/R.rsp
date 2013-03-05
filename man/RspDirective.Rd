@@ -36,7 +36,9 @@ extends \link[R.rsp]{RspConstruct}\cr
   The directive is independent of the underlying programming language.
  }
 
- \usage{RspDirective(directive=character(), attributes=list(), ...)}
+ \usage{
+RspDirective(directive=character(), attributes=list(), ...)
+}
 
  \arguments{
    \item{directive}{A \code{\link[base]{character}} string.}
@@ -47,7 +49,7 @@ extends \link[R.rsp]{RspConstruct}\cr
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{asRspString} \tab  -\cr
+ \tab \code{\link[R.rsp:asRspString.RspDirective]{asRspString}} \tab Recreates an RSP string from an RSP preprocessing directive.\cr
 }
 
 
@@ -55,7 +57,7 @@ extends \link[R.rsp]{RspConstruct}\cr
 asRspString, getAttributes, getSuffixSpecs
 
  \bold{Methods inherited from character}:\cr
-all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses
+all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
 
  }
 

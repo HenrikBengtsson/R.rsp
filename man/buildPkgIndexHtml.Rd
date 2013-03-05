@@ -16,7 +16,9 @@
  Builds a package index HTML file, iff missing.
 }
 
-\usage{buildPkgIndexHtml(...)}
+\usage{
+buildPkgIndexHtml(...)
+}
 
 \arguments{
   \item{...}{Not used.}

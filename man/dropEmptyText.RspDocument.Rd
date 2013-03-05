@@ -9,9 +9,7 @@
 \name{dropEmptyText.RspDocument}
 \alias{dropEmptyText.RspDocument}
 \alias{RspDocument.dropEmptyText}
-\alias{dropEmptyText.RspDocument}
 \alias{dropEmptyText,RspDocument-method}
-
 
 \title{Drops all empty RSP text constructs}
 
@@ -19,7 +17,9 @@
  Drops all empty RSP text constructs.
 }
 
-\usage{\method{dropEmptyText}{RspDocument}(object, ..., verbose=FALSE)}
+\usage{
+\method{dropEmptyText}{RspDocument}(object, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

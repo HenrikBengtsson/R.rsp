@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getConfig.HttpDaemon}
+\name{HttpDaemon$getConfig}
+\alias{HttpDaemon$getConfig}
 \alias{getConfig.HttpDaemon}
 \alias{HttpDaemon.getConfig}
-\alias{getConfig.HttpDaemon}
 \alias{getConfig,HttpDaemon-method}
-
 
 \title{Retrieves the server's 'config' structure from Tcl}
 
@@ -19,8 +18,13 @@
  Retrieves the server's 'config' structure from Tcl.
 }
 
-\synopsis{getConfig.HttpDaemon(static, ...)}
-\usage{HttpDaemon$getConfig(...)}
+\usage{
+## Static method (use this):
+## HttpDaemon$getConfig(...)
+
+## Don't use the below:
+\method{getConfig}{HttpDaemon}(static, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

@@ -5,8 +5,7 @@
   # Register vignette engines
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   try({
-    ns <- loadNamespace("tools");
-    vignetteEngine <- get("vignetteEngine", envir=ns, mode="function");
+    vignetteEngine <- get("vignetteEngine", envir=asNamespace("tools"));
     vignetteEngine("rsp", package=pkgname, pattern="[.][^.]*[.]rsp$",
                     weave=rspWeave, tangle=rspTangle);
   }, silent=TRUE)

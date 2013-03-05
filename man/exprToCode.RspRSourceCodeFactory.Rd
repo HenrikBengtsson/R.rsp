@@ -9,9 +9,7 @@
 \name{exprToCode.RspRSourceCodeFactory}
 \alias{exprToCode.RspRSourceCodeFactory}
 \alias{RspRSourceCodeFactory.exprToCode}
-\alias{exprToCode.RspRSourceCodeFactory}
 \alias{exprToCode,RspRSourceCodeFactory-method}
-
 
 \title{Translates an RspExpression into R source code}
 
@@ -19,7 +17,9 @@
  Translates an RspExpression into R source code.
 }
 
-\usage{\method{exprToCode}{RspRSourceCodeFactory}(object, expr, ..., index=NA)}
+\usage{
+\method{exprToCode}{RspRSourceCodeFactory}(object, expr, ..., index=NA)
+}
 
 \arguments{
   \item{expr}{An \code{\link{RspExpression}}.}

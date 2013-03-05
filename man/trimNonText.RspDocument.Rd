@@ -9,9 +9,7 @@
 \name{trimNonText.RspDocument}
 \alias{trimNonText.RspDocument}
 \alias{RspDocument.trimNonText}
-\alias{trimNonText.RspDocument}
 \alias{trimNonText,RspDocument-method}
-
 
 \title{Trims all non-text RSP constructs}
 
@@ -19,7 +17,9 @@
  Trims all non-text RSP constructs.
 }
 
-\usage{\method{trimNonText}{RspDocument}(object, ..., verbose=FALSE)}
+\usage{
+\method{trimNonText}{RspDocument}(object, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}

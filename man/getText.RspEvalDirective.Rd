@@ -9,9 +9,7 @@
 \name{getText.RspEvalDirective}
 \alias{getText.RspEvalDirective}
 \alias{RspEvalDirective.getText}
-\alias{getText.RspEvalDirective}
 \alias{getText,RspEvalDirective-method}
-
 
 \title{Gets the text}
 
@@ -19,7 +17,9 @@
  Gets the text.
 }
 
-\usage{\method{getText}{RspEvalDirective}(directive, ...)}
+\usage{
+\method{getText}{RspEvalDirective}(directive, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

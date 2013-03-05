@@ -37,7 +37,9 @@ extends \link[R.rsp]{RspExpression}\cr
   code, which may or may not be a complete code chunk (expression).
  }
 
- \usage{RspCode(code=character(), echo=FALSE, ...)}
+ \usage{
+RspCode(code=character(), echo=FALSE, ...)
+}
 
  \arguments{
    \item{code}{A \code{\link[base]{character}} string.}

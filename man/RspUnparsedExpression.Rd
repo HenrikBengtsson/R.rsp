@@ -38,7 +38,9 @@ extends \link[R.rsp]{RspExpression}\cr
   an object, the class of this RSP expression will be known.
  }
 
- \usage{RspUnparsedExpression(...)}
+ \usage{
+RspUnparsedExpression(...)
+}
 
  \arguments{
    \item{...}{Arguments passed to \code{\link{RspExpression}}.}

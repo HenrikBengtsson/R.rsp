@@ -9,9 +9,7 @@
 \name{getCompleteCode.RspRSourceCode}
 \alias{getCompleteCode.RspRSourceCode}
 \alias{RspRSourceCode.getCompleteCode}
-\alias{getCompleteCode.RspRSourceCode}
 \alias{getCompleteCode,RspRSourceCode-method}
-
 
 \title{Gets the complete R source code}
 
@@ -19,7 +17,9 @@
  Gets the complete R source code with output functions defined.
 }
 
-\usage{\method{getCompleteCode}{RspRSourceCode}(object, output=c("stdout", "string"), ...)}
+\usage{
+\method{getCompleteCode}{RspRSourceCode}(object, output=c("stdout", "string"), ...)
+}
 
 \arguments{
   \item{output}{A \code{\link[base]{character}} string specifying type of output function.}

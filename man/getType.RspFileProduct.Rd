@@ -9,9 +9,7 @@
 \name{getType.RspFileProduct}
 \alias{getType.RspFileProduct}
 \alias{RspFileProduct.getType}
-\alias{getType.RspFileProduct}
 \alias{getType,RspFileProduct-method}
-
 
 \title{Gets the type of an RSP file product}
 
@@ -19,7 +17,9 @@
  Gets the type of an RSP file product.
 }
 
-\usage{\method{getType}{RspFileProduct}(object, ...)}
+\usage{
+\method{getType}{RspFileProduct}(object, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

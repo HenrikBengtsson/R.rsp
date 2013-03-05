@@ -16,7 +16,9 @@
  Builds a non-Sweave Rnw vignette.
 }
 
-\usage{buildNonSweaveVignette(pathname, ...)}
+\usage{
+buildNonSweaveVignette(pathname, ...)
+}
 
 \arguments{
   \item{pathname}{The Rnw file to be built.}

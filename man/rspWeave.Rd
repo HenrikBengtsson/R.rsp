@@ -17,7 +17,9 @@
  This function is for RSP what \code{\link[utils]{Sweave}} is for Sweave documents.
 }
 
-\usage{rspWeave(file, ..., fake=FALSE, envir=parent.frame())}
+\usage{
+rspWeave(file, ..., fake=FALSE, envir=parent.frame())
+}
 
 \arguments{
   \item{file}{The file to be weaved.}

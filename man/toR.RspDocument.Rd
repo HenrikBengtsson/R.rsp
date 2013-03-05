@@ -10,9 +10,7 @@
 \name{toR.RspDocument}
 \alias{toR.RspDocument}
 \alias{RspDocument.toR}
-\alias{toR.RspDocument}
 \alias{toR,RspDocument-method}
-
 
 \title{Translates the RSP document into R source code}
 
@@ -20,7 +18,9 @@
  Translates the RSP document into R source code.
 }
 
-\usage{\method{toR}{RspDocument}(object, factory=RspRSourceCodeFactory(), ...)}
+\usage{
+\method{toR}{RspDocument}(object, factory=RspRSourceCodeFactory(), ...)
+}
 
 \arguments{
   \item{factory}{A \code{\link{RspSourceCodeFactory}}.}

@@ -9,16 +9,16 @@
 \name{write.HttpDaemonRspResponse}
 \alias{write.HttpDaemonRspResponse}
 \alias{HttpDaemonRspResponse.write}
-\alias{write.HttpDaemonRspResponse}
 \alias{write,HttpDaemonRspResponse-method}
-
 
 \title{Writes strings to an HttpDaemonRspResponse buffer}
 \description{
  Writes strings to an HttpDaemonRspResponse buffer.
 }
 
-\usage{\method{write}{HttpDaemonRspResponse}(this, ..., collapse="", sep="")}
+\usage{
+\method{write}{HttpDaemonRspResponse}(this, ..., collapse="", sep="")
+}
 
 \arguments{
   \item{...}{One or several strings, which will be concatenated.}

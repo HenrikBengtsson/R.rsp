@@ -34,7 +34,9 @@ extends \link[R.rsp]{RspConstruct}\cr
   An RspExpression is an \code{\link{RspConstruct}} of format \code{<\% ... \%>}.
  }
 
- \usage{RspExpression(...)}
+ \usage{
+RspExpression(...)
+}
 
  \arguments{
    \item{object}{A R object.}

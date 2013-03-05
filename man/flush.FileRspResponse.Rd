@@ -9,9 +9,7 @@
 \name{flush.FileRspResponse}
 \alias{flush.FileRspResponse}
 \alias{FileRspResponse.flush}
-\alias{flush.FileRspResponse}
 \alias{flush,FileRspResponse-method}
-
 
 \title{Flushes the response buffer}
 
@@ -19,7 +17,9 @@
  Flushes the response buffer.
 }
 
-\usage{\method{flush}{FileRspResponse}(con, ...)}
+\usage{
+\method{flush}{FileRspResponse}(con, ...)
+}
 
 \arguments{
   \item{...}{Not used.}

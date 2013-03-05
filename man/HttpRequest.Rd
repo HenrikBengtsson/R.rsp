@@ -30,7 +30,9 @@ extends \link[R.oo]{Object}\cr
 
  }
 
- \usage{HttpRequest(requestUri=NULL, parameters=list(), ...)}
+ \usage{
+HttpRequest(requestUri=NULL, parameters=list(), ...)
+}
 
  \arguments{
    \item{requestUri}{A \code{\link[base]{character}} string of the requested URI.}

@@ -9,9 +9,7 @@
 \name{getType.RspProduct}
 \alias{getType.RspProduct}
 \alias{RspProduct.getType}
-\alias{getType.RspProduct}
 \alias{getType,RspProduct-method}
-
 
 \title{Gets the type of an RSP product}
 
@@ -19,7 +17,9 @@
  Gets the type of an RSP product.
 }
 
-\usage{\method{getType}{RspProduct}(object, ...)}
+\usage{
+\method{getType}{RspProduct}(object, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
