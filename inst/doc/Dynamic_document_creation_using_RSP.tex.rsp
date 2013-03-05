@@ -1,9 +1,9 @@
 <%-------------------------------------------------------------------
   DIRECTIVES FOR R:
 
-  \VignetteIndexEntry{Dynamic document creation using RSP}
-  \VignetteKeyword{RSP markup language, literate programming, reproducible research, report generator, Sweave, knitr, TeX, LaTeX, Markdown, HTML, AsciiDoc, reStructuredText, Org-Mode, PDF}
-  \VignetteEngine{R.rsp::rsp}
+  %\VignetteIndexEntry{Dynamic document creation using RSP}
+  %\VignetteKeyword{RSP markup language, literate programming, reproducible research, report generator, Sweave, knitr, TeX, LaTeX, Markdown, HTML, AsciiDoc, reStructuredText, Org-Mode, PDF}
+  %\VignetteEngine{R.rsp::rsp}
   -------------------------------------------------------------------%>
 
 <% t0 <- Sys.time() %>

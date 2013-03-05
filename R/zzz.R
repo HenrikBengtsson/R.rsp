@@ -1,13 +1,15 @@
 .conflicts.OK <- TRUE
 
 .onLoad <- function(libname, pkgname) {
-  # Register vignette engine via tools::vignetteEngine(), if it exists.
-  ns <- loadNamespace("tools");
-  name <- "vignetteEngine";
-  if (exists(name, envir=ns, mode="function")) {
-    fcn <- get(name, envir=ns, mode="function");
-    fcn("rsp", weave=rspWeave, tangle=rspTangle);
-  }
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Register vignette engines
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  try({
+    ns <- loadNamespace("tools");
+    vignetteEngine <- get("vignetteEngine", envir=ns, mode="function");
+    vignetteEngine("rsp", package=pkgname, pattern="[.][^.]*[.]rsp$",
+                    weave=rspWeave, tangle=rspTangle);
+  }, silent=TRUE)
 }
 
 
