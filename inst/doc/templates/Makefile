@@ -1,18 +1,19 @@
 # MACRO DEFINITIONS
 RM=rm -f
-R=$(R_HOME)/bin/R
+R=$(R_HOME)/bin/Rscript
 
 # TARGET DEFINITIONS
 all: rnw index.html
 
 rnw: *.Rnw
-	"$(R)" --vanilla -e "R.rsp::buildNonSweaveVignettes()"
+	"$(R)" -e "R.rsp::buildNonSweaveVignettes()"
 
 index.html:
-	"$(R)" --vanilla -e "R.rsp::buildPkgIndexHtml()"
+	"$(R)" -e "R.rsp::buildPkgIndexHtml()"
 
 clean:
 	$(RM) index.html.rsp
-	$(RM) *.aux *.bbl *.blg *.bst *.log *.out *.sty *.toc *.tex *.rsp.R
+	$(RM) *.aux *.bbl *.blg *.bst *.log *.out *.sty *.toc
+	$(RM) *.tex *.rsp.R
 	$(RM) -r figures/
 	$(RM) Makefile

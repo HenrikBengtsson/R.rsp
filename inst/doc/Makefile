@@ -1,24 +1,27 @@
 # MACRO DEFINITIONS
 RM=rm -f
-R=$(R_HOME)/bin/R
+R=$(R_HOME)/bin/Rscript
 
 # TARGET DEFINITIONS
 all: rnw index.html
 
 rnw: *.Rnw
-	"$(R)" --vanilla -e "R.rsp::buildNonSweaveVignettes()"
+	"$(R)" -e "R.rsp::buildNonSweaveVignettes()"
 
 index.html:
-	"$(R)" --vanilla -e "R.rsp::buildPkgIndexHtml()"
+	"$(R)" -e "R.rsp::buildPkgIndexHtml()"
 
 clean:
 	$(RM) index.html.rsp
-	$(RM) *.aux *.bbl *.blg *.bst *.log *.out *.sty *.toc *.tex *.rsp.R
+	$(RM) *.aux *.bbl *.blg *.bst *.log *.out *.sty *.toc
+	$(RM) *.tex *.rsp.R
 	$(RM) -r figures/
 	$(RM) Makefile
 
 #########################################################################
 # HISTORY:
+# 2013-03-05
+# o Now using $(R_HOME)/bin/Rscript to avoid the --vanilla argument.
 # 2012-06-22
 # o Now using $(R_HOME)/bin/R. Thanks Kasper Hansen for the suggestion.
 # 2012-03-20
