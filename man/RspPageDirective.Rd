@@ -48,6 +48,8 @@ RspPageDirective(...)
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
+ \tab \code{getKeywords} \tab  -\cr
+ \tab \code{getTitle} \tab  -\cr
  \tab \code{\link[R.rsp:getType.RspPageDirective]{getType}} \tab Gets the content type.\cr
 }
 

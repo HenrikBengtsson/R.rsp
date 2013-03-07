@@ -33,19 +33,21 @@ extends character\cr
  }
 
  \usage{
-RspString(str=character(), ..., type=NA, source=NA)
+RspString(str=character(), ..., type=NA, source=NA, annotation=list())
 }
 
  \arguments{
    \item{str, ...}{\code{\link[base]{character}} strings.}
    \item{type}{The content type of the RSP string.}
    \item{source}{A reference to the source RSP document, iff any.}
+   \item{annotation}{A named \code{\link[base]{list}} of other content annotations.}
  }
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RspString]{evaluate}} \tab Parses, translates, and evaluates the RSP string.\cr
+ \tab \code{getAnnotation} \tab  -\cr
  \tab \code{\link[R.rsp:getSource.RspString]{getSource}} \tab Gets the source reference of an RSP string.\cr
  \tab \code{\link[R.rsp:getType.RspString]{getType}} \tab Gets the type of an RSP string.\cr
  \tab \code{\link[R.rsp:parse.RspString]{parse}} \tab Parses the RSP string.\cr
