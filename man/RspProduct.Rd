@@ -48,7 +48,7 @@ RspProduct(object=NA, type=attr(object, "type"), annotations=list(), ...)
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:findProcessor.RspProduct]{findProcessor}} \tab Locates a processor for an RSP product.\cr
- \tab \code{getAnnotations} \tab  -\cr
+ \tab \code{\link[R.rsp:getAnnotations.RspProduct]{getAnnotations}} \tab Gets the annotations an RSP product.\cr
  \tab \code{\link[R.rsp:getType.RspProduct]{getType}} \tab Gets the type of an RSP product.\cr
  \tab \code{\link[R.rsp:hasProcessor.RspProduct]{hasProcessor}} \tab Checks whether a processor exist or not for an RSP product.\cr
  \tab \code{\link[R.rsp:print.RspProduct]{print}} \tab Prints a summary of an RSP product.\cr

@@ -47,7 +47,7 @@ RspString(str=character(), ..., type=NA, source=NA, annotations=list())
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RspString]{evaluate}} \tab Parses, translates, and evaluates the RSP string.\cr
- \tab \code{getAnnotations} \tab  -\cr
+ \tab \code{\link[R.rsp:getAnnotations.RspString]{getAnnotations}} \tab Gets the annotations of the RspDocument.\cr
  \tab \code{\link[R.rsp:getSource.RspString]{getSource}} \tab Gets the source reference of an RSP string.\cr
  \tab \code{\link[R.rsp:getType.RspString]{getType}} \tab Gets the type of an RSP string.\cr
  \tab \code{\link[R.rsp:parse.RspString]{parse}} \tab Parses the RSP string.\cr
