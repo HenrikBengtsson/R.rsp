@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getHttpRequest.HttpDaemon}
+\name{HttpDaemon$getHttpRequest}
+\alias{HttpDaemon$getHttpRequest}
 \alias{getHttpRequest.HttpDaemon}
 \alias{HttpDaemon.getHttpRequest}
-\alias{getHttpRequest.HttpDaemon}
 \alias{getHttpRequest,HttpDaemon-method}
-
 
 \title{Gets the HTTP request}
 

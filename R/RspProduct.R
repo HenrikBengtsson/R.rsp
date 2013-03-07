@@ -15,6 +15,7 @@
 # \arguments{
 #   \item{object}{The RSP product.}
 #   \item{type}{The content type of the RSP product.}
+#   \item{annotations}{A named @list of other content annotations.}
 #   \item{...}{Not used.}
 # }
 #
@@ -26,7 +27,7 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspProduct", function(object=NA, type=attr(object, "type"), annotation=list(), ...) {
+setConstructorS3("RspProduct", function(object=NA, type=attr(object, "type"), annotations=list(), ...) {
   # Argument 'type':
   if (is.null(type)) {
     type <- NA;
@@ -34,7 +35,7 @@ setConstructorS3("RspProduct", function(object=NA, type=attr(object, "type"), an
 
   this <- extend(object, "RspProduct");
   attr(this, "type") <- as.character(type);
-  attr(this, "annotation") <- annotation;
+  attr(this, "annotations") <- annotations;
   this;
 })
 
@@ -109,9 +110,9 @@ setMethodS3("getType", "RspProduct", function(object, ...) {
 
 
 #########################################################################/**
-# @RdocMethod getAnnotation
+# @RdocMethod getAnnotations
 #
-# @title "Gets the annotation an RSP product"
+# @title "Gets the annotations an RSP product"
 #
 # \description{
 #  @get "title".
@@ -133,8 +134,8 @@ setMethodS3("getType", "RspProduct", function(object, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getAnnotation", "RspProduct", function(object, name=NULL, ...) {
-  res <- attr(object, "annotation");
+setMethodS3("getAnnotations", "RspProduct", function(object, name=NULL, ...) {
+  res <- attr(object, "annotations");
   if (!is.null(name)) {
     res <- res[[name]];
   }

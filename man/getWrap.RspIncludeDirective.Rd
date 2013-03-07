@@ -9,9 +9,7 @@
 \name{getWrap.RspIncludeDirective}
 \alias{getWrap.RspIncludeDirective}
 \alias{RspIncludeDirective.getWrap}
-\alias{getWrap.RspIncludeDirective}
 \alias{getWrap,RspIncludeDirective-method}
-
 
 \title{Get the wrap length}
 

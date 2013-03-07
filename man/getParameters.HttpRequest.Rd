@@ -9,9 +9,7 @@
 \name{getParameters.HttpRequest}
 \alias{getParameters.HttpRequest}
 \alias{HttpRequest.getParameters}
-\alias{getParameters.HttpRequest}
 \alias{getParameters,HttpRequest-method}
-
 
 \title{Gets all parameters}
 

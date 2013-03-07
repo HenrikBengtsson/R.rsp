@@ -9,9 +9,7 @@
 \name{getSource.RspString}
 \alias{getSource.RspString}
 \alias{RspString.getSource}
-\alias{getSource.RspString}
 \alias{getSource,RspString-method}
-
 
 \title{Gets the source reference of an RSP string}
 

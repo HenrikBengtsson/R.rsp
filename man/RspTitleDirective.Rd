@@ -6,16 +6,16 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspPageDirective}
+ \name{RspTitleDirective}
 \docType{class}
-\alias{RspPageDirective}
+\alias{RspTitleDirective}
 
 
- \title{The RspPageDirective class}
+ \title{The RspTitleDirective class}
 
  \description{
   Package:  R.rsp \cr
-\bold{Class RspPageDirective}\cr
+\bold{Class RspTitleDirective}\cr
 
 \code{character}\cr
 \code{~~|}\cr
@@ -23,22 +23,22 @@
 \code{~~~~~~~|}\cr
 \code{~~~~~~~+--}\code{\link[R.rsp]{RspDirective}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\code{RspPageDirective}\cr
+\code{~~~~~~~~~~~~+--}\code{RspTitleDirective}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public class \bold{RspPageDirective}\cr
+public class \bold{RspTitleDirective}\cr
 extends \link[R.rsp]{RspDirective}\cr
 
 
 
-  An RspPageDirective is an \code{\link{RspDirective}} that annotates the
-  content of the RSP document, e.g. the content type.
+  An RspTitleDirective is an \code{\link{RspDirective}} that represents
+  the title of the RSP document.
  }
 
  \usage{
-RspPageDirective(...)
+RspTitleDirective(...)
 }
 
  \arguments{
@@ -47,11 +47,7 @@ RspPageDirective(...)
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
-\tabular{rll}{
- \tab \code{\link[R.rsp:getKeywords.RspPageDirective]{getKeywords}} \tab Gets the keywords.\cr
- \tab \code{\link[R.rsp:getTitle.RspPageDirective]{getTitle}} \tab Gets the title.\cr
- \tab \code{\link[R.rsp:getType.RspPageDirective]{getType}} \tab Gets the content type.\cr
-}
+\emph{No methods defined}.
 
 
  \bold{Methods inherited from RspDirective}:\cr

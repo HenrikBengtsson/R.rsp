@@ -9,9 +9,7 @@
 \name{getContentType.HttpRequest}
 \alias{getContentType.HttpRequest}
 \alias{HttpRequest.getContentType}
-\alias{getContentType.HttpRequest}
 \alias{getContentType,HttpRequest-method}
-
 
 \title{Gets the MIME type of the body of the request}
 

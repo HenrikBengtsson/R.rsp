@@ -9,9 +9,7 @@
 \name{getServerName.HttpRequest}
 \alias{getServerName.HttpRequest}
 \alias{HttpRequest.getServerName}
-\alias{getServerName.HttpRequest}
 \alias{getServerName,HttpRequest-method}
-
 
 \title{Gets the host name of the server that revieved the request}
 

@@ -34,12 +34,13 @@ extends logical\cr
  }
 
  \usage{
-RspProduct(object=NA, type=attr(object, "type"), annotation=list(), ...)
+RspProduct(object=NA, type=attr(object, "type"), annotations=list(), ...)
 }
 
  \arguments{
    \item{object}{The RSP product.}
    \item{type}{The content type of the RSP product.}
+   \item{annotations}{A named \code{\link[base]{list}} of other content annotations.}
    \item{...}{Not used.}
  }
 
@@ -47,7 +48,7 @@ RspProduct(object=NA, type=attr(object, "type"), annotation=list(), ...)
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:findProcessor.RspProduct]{findProcessor}} \tab Locates a processor for an RSP product.\cr
- \tab \code{getAnnotation} \tab  -\cr
+ \tab \code{getAnnotations} \tab  -\cr
  \tab \code{\link[R.rsp:getType.RspProduct]{getType}} \tab Gets the type of an RSP product.\cr
  \tab \code{\link[R.rsp:hasProcessor.RspProduct]{hasProcessor}} \tab Checks whether a processor exist or not for an RSP product.\cr
  \tab \code{\link[R.rsp:print.RspProduct]{print}} \tab Prints a summary of an RSP product.\cr

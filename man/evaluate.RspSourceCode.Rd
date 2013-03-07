@@ -9,9 +9,7 @@
 \name{evaluate.RspSourceCode}
 \alias{evaluate.RspSourceCode}
 \alias{RspSourceCode.evaluate}
-\alias{evaluate.RspSourceCode}
 \alias{evaluate,RspSourceCode-method}
-
 
 \title{Evaluates the source code}
 

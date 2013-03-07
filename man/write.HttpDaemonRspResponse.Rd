@@ -9,9 +9,7 @@
 \name{write.HttpDaemonRspResponse}
 \alias{write.HttpDaemonRspResponse}
 \alias{HttpDaemonRspResponse.write}
-\alias{write.HttpDaemonRspResponse}
 \alias{write,HttpDaemonRspResponse-method}
-
 
 \title{Writes strings to an HttpDaemonRspResponse buffer}
 \description{

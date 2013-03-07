@@ -7,12 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\name{processRsp.HttpDaemon}
+\name{HttpDaemon$processRsp}
+\alias{HttpDaemon$processRsp}
 \alias{processRsp.HttpDaemon}
 \alias{HttpDaemon.processRsp}
-\alias{processRsp.HttpDaemon}
 \alias{processRsp,HttpDaemon-method}
-
 
 \title{Processes an RSP page}
 

@@ -9,9 +9,7 @@
 \name{getPath.RspPage}
 \alias{getPath.RspPage}
 \alias{RspPage.getPath}
-\alias{getPath.RspPage}
 \alias{getPath,RspPage-method}
-
 
 \title{Gets the path of the directory of the current RSP file}
 

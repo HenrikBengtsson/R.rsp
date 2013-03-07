@@ -9,9 +9,7 @@
 \name{getProtocol.HttpRequest}
 \alias{getProtocol.HttpRequest}
 \alias{HttpRequest.getProtocol}
-\alias{getProtocol.HttpRequest}
 \alias{getProtocol,HttpRequest-method}
-
 
 \title{Gets the name and version of the protocol used to make this request}
 

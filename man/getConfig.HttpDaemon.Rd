@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getConfig.HttpDaemon}
+\name{HttpDaemon$getConfig}
+\alias{HttpDaemon$getConfig}
 \alias{getConfig.HttpDaemon}
 \alias{HttpDaemon.getConfig}
-\alias{getConfig.HttpDaemon}
 \alias{getConfig,HttpDaemon-method}
-
 
 \title{Retrieves the server's 'config' structure from Tcl}
 

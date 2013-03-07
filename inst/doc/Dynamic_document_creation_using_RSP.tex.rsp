@@ -1,54 +1,38 @@
-<%-------------------------------------------------------------------
+<%-------------------------------%><%@eval language="R-vignette" text="
   DIRECTIVES FOR R:
 
   %\VignetteIndexEntry{Dynamic document creation using RSP}
   %\VignetteKeyword{RSP markup language, literate programming, reproducible research, report generator, Sweave, knitr, TeX, LaTeX, Markdown, HTML, AsciiDoc, reStructuredText, Org-Mode, PDF}
   %\VignetteEngine{R.rsp::rsp}
-  -------------------------------------------------------------------%>
+"%><%----------------------------------------------------------------%>
 
 <% t0 <- Sys.time() %>
 
-<%--
-<%
-setOption("R.rsp/vignettes/docMode", "slides");
-setOption("R.rsp/vignettes/docVersion", "devel");
-%>
---%>
 
 <%-------------------------------------------------------------------
-  ARTICLE OR SLIDES?
+  ARTICLE OR SLIDES?  RELEASE OR DEVEL?
   -------------------------------------------------------------------%>
-<%
-docMode <- getOption("R.rsp/vignettes/docMode", "article");
-docMode <- match.arg(docMode, choices=c("article", "slides"));
-if (docMode == "article") {
-  docOptions <- "letter,12pt";
-} else if (docMode == "slides") {
-  docOptions <- "a5paper,12pt,landscape";
-}
-%>
+<%@define docMode="${'R.rsp/vignettes/docMode'}" default="article"%>
+<%@define docVersion="${'R.rsp/vignettes/docVersion'}" default="devel"%>
+<%@ifeq docMode = "slides"%>
+\documentclass[a5paper,12pt,landscape]{article}
+<%@else%>
+\documentclass[letter,12pt]{article}
+<%@endif%>
 
-
-<%-------------------------------------------------------------------
-  RELEASE OR DEVEL?
-  -------------------------------------------------------------------%>
-<%
-docVersion <- getOption("R.rsp/vignettes/docVersion", "release");
-docVersion <- match.arg(docVersion, choices=c("release", "devel"));
-%>
-
-\documentclass[<%=docOptions%>]{article}
 \usepackage{graphicx}
 \usepackage{xspace}
 \usepackage{xcolor}
 \usepackage{alltt}
 \graphicspath{{figures/}}
 
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
 
 <%-------------------------------------------------------------------
   DOCUMENT MODE SPECIFIC SETTINGS
   -------------------------------------------------------------------%>
-<% if (docMode == "slides") { %>
+<%@ifeq docMode = "slides"%>
 % Adjust margins
 \addtolength{\oddsidemargin}{-0.75in}	
 \addtolength{\evensidemargin}{-0.75in}	
@@ -76,14 +60,14 @@ docVersion <- match.arg(docVersion, choices=c("release", "devel"));
 %%\usepackage{mathpazo}  % palatino, including math (where possible)
 %% \usepackage{helvetica}    % helvetica
 \renewcommand{\familydefault}{\sfdefault}
-<% } else { %>
+<%@else%>
 % Adjust margins
 \addtolength{\oddsidemargin}{-0.5in}	
 \addtolength{\evensidemargin}{-0.5in}	
 \addtolength{\textwidth}{1in}
 \addtolength{\topmargin}{-0.5in}	
 \addtolength{\textheight}{1in}
-<% } # if (docMode ...) %>
+<%@endif%> <%-- docMode --%>
 
 
 
@@ -113,7 +97,7 @@ devOptions("png", width=840)
 %>
 
 
-\title{Dynamic document creation using RSP<%=ifelse(docVersion == "devel", "*", "")%>}
+\title{<%@title%><%@ifeq docVersion = "devel"%>*<%@endif%>}
 \author{Henrik Bengtsson}
 \date{<%=format(as.Date(getDate(R.rsp)), format="%B %d, %Y")%>}
 
@@ -130,7 +114,7 @@ RSP provides an easy, yet powerful and flexible way for generating reports and o
 Furthermore, because RSP is a so called content-indepent markup language, it can be used to produce documents of any kind, e.g. plain text, LaTeX, Sweave, knitr, AsciiDoc, Markdown, HTML, XML, SVG, and even Javascript, R scripts and so on.  More over, with RSP it is possible to use literate programming constructs that are not possible in Sweave, e.g. looping over a mix of R source code and LaTeX text blocks.
 \end{abstract}
 
-\keywords{RSP markup language, literate programming, reproducible research, report generator, Sweave, knitr, TeX, LaTeX, Markdown, HTML, AsciiDoc, reStructuredText, Org-Mode, PDF}
+\keywords{<%@keywords%>}
 
 \begin{center}
 \emph{This vignette is distributed as part of the \pkg{R.rsp} package, which is available on CRAN.}
@@ -476,55 +460,67 @@ produces
   -------------------------------------------------------------------%>
 \subsection{Preprocessing directives (\code{<\%@...\%>})}
 \label{PreprocessingDirectives}
-When an RSP-embedded document in processed, it is (i) \emph{parsed}, (ii) \emph{preprocessed}, (iii) \emph{translated} to R source code, which is then (iv) \emph{parsed and evaluated} by the R engine.
+When an RSP-embedded document in processed, it is (i) \emph{parsed}, (ii) \emph{preprocessed}, (iii) \emph{translated} to R source code, which is then (iv) \emph{parsed and evaluated} by the R engine.  It is during this last step the RSP document is outputted (as a file or as a character string).
 During the initial parsing, RSP comments and their contents are dropped.
 During preprocessing, RSP \emph{preprocessing directives}, which are RSP constructors of format \code{<\%@...\%>}, are processed.
 Such directives can be used to for instance programmatically control how parts of an RSP document are included or excluded based on some conditions or they can be used to include an external RSP source into the main RSP document.
 Although the afformentioned maybe achieved with by plain R \code{<\%~...~\%>} constructs, these tasks are much bettered handled by RSP preprocessing directives.  It is also useful to understand that preprocessing directives are RSP constructs that are \emph{independent of the R language} per se and are processed before the RSP document is interpreted as R source code\footnote{Conceptually, there is nothing preventing an RSP document to be parsed and preprocessed by another implementation in a different programming language than R.  It is only the succeeding steps that are specific to the R language.}.
 After preprocessing, there are no remaining RSP preprocessing directives left in the RSP document, which then only contains text and basic RSP constructs (Sections~\ref{RspCodeChunkInlining}-\ref{RspCodeEmbed}).
 
-\emph{To be continued...}
+\emph{To be continued.}
 
-<% if (docVersion == "devel") { %>
+\subsubsection{RSP document annotation}
 
-\subsubsection{Including other RSP files (\code{<\%\@include file="\{pathname\}"\%>})}
+\paragraph{Setting type, title and more (\code{<\%@page type="{type}" ...\%>})}
+\emph{To be continued.}
 
-\subsubsection{Conditional inclusion/exclusion (\code{<\%\@ifeq var="\{value\}"\%>})}
+\paragraph{Including the title (\code{<\%@title\%>})}
+\emph{To be continued.}
+
+\paragraph{Including the keywords (\code{<\%@keywords\%>})}
+\emph{To be continued.}
+
+\paragraph{Setting title and keywords via R vignette directives}
+ (\code{<\%\@eval language="R-vignette"\%>})
+\emph{To be continued.}
+
+
+\subsubsection{Preprocessing variables and code evaluation}
+
+\paragraph{Defining variable (\code{<\%@define var="\{value\}"\%>})}
+\emph{To be continued.}
+
+\paragraph{Evaluating R code (\code{<\%@eval language="R" ...\%>})}
+\emph{To be continued.}
+
+\paragraph{Evaluating R vignette directives (\code{<\%@eval language="R-vignette" ...\%>})}
+\emph{To be continued.}
+
+\paragraph{Evaluating system call (\code{<\%@eval language="system" ...\%>})}
+\emph{To be continued.}
+
+
+
+\subsubsection{Including files}
+
+\paragraph{Including text (\code{<\%@include text="\{text\}"\%>})}
+\emph{To be continued.}
+
+\paragraph{Including a file as is (\code{<\%@include file="\{pathname\}"\%>})}
+\emph{To be continued.}
+
+\paragraph{Including an RSP file (\code{<\%@include file="\{pathname\}"\%>})}
+\emph{To be continued.}
+
+
+\subsubsection{Conditional inclusion/exclusion}
 \emph{To be documented.}
 
+\paragraph{If equal to, else, end if (\code{<\%@ifeq var="\{value\}"\%>})}
+\emph{To be continued.}
 
-\subsection{Inserting files (\code{<\%\#insert file="\{pathname\}"\%>})}
-The \emph{insert} directive can be used to insert the content of a file into the main RSP-embedded document \emph{just as if the content was pasted manually}.
- This makes it possible to reuse commonly used R scripts, text paragraphs, page layouts and so on.
-For instance, assume that the file 'R/graphics.R' contains
-\begin{verbatim}
-setOption("devNew/args/par", list(lwd=2));
-\end{verbatim}
-Then it is possible to insert its content into a \code{<\%\{code\}\%>} block\footnote{Note, if the insert directive is not wrapped up in a \code{<\%\{code\}\%>} block, the inserted source code will be inserted as text to the document rather than as code.} of the main RSP-embedded document by:
-\begin{rspVerbatim}
-<\%
-# Graphics settings
-<\%\#insert file="R/graphics.R"\%>
-\%>
-\end{rspVerbatim}
-which "updates" the main document to:
-\begin{rspVerbatim}
-<\%
-# Graphics settings
-setOption("devNew/args/par", list(lwd=2));
-\%>
-\end{rspVerbatim}
-In addition to the \code{file} attribute, the insert directive also takes an optional \code{path} attribute, which provides an alternative for specifying the path, e.g. \code{<\%\#insert file="graphics.R" path="R/"\%>}.\\
-
-It is also possible to insert the content of all files in a directory that match a given \emph{filename pattern}, which is specified by the \code{pattern} attribute.  For instance,
-\begin{rspVerbatim}
-<\%\#insert path="R/" pattern="[.]R$"\%>
-\end{rspVerbatim}
-inserts the content of all *.R files that are available in the R/ directory.\footnote{Files are guaranteed to be inserted in lexicographic order when using the 'insert' preprocessing directive.  Their content is by default concatenated using the newline symbol, which can be changed by setting the \code{collapse} attribute.}\\
-
-Finally, it is important to understand that the paths used for inserting these files are all relative to the current working directory of R \emph{at the time of the preprocessing}\footnote{The current working directory as seen by the RSP preprocessor \emph{cannot} be modified via a \code{<\%setwd(newPath)\%>} construct, because that is only evaluated after the preprocessing step.}.
-
-<% } # if (docVersion == "devel") %>
+\paragraph{If not equal to, else, end if (\code{<\%@ifneq var="\{value\}"\%>})}
+\emph{To be continued.}
 
 
 
@@ -622,7 +618,7 @@ which results in
 
 
 
-<% if (docVersion == "devel") { %>
+<%@ifeq docVersion = "devel"%>
 <%-------------------------------------------------------------------
   RSP-EMBEDDED SWEAVE DOCUMENTS
   -------------------------------------------------------------------%>
@@ -704,10 +700,10 @@ for (i in 1:4) {
 @
 \end{verbatim}
 This latter approach is error prone, especially because of how the LaTeX code has to be escaped and generated using R code.
-<% } # if (docVersion == "devel") %>
+<%@endif%> <%-- docVersion --%>
 
 
-<% if (docVersion == "devel") { %>
+<%@ifeq docVersion = "devel"%>
 <%-------------------------------------------------------------------
   COMPARISON TO OTHER METHODS
   -------------------------------------------------------------------%>
@@ -729,7 +725,7 @@ Nested multiline markup comments               & yes &   ? &  - \\
 \end{center}
 \caption{Comparison of features in different R-related markup languages.}
 \end{table}
-<% } # if (docVersion == "devel") %>
+<%@endif%> <%-- docVersion --%>
 
 
 <%-------------------------------------------------------------------

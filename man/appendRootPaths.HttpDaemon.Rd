@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{appendRootPaths.HttpDaemon}
+\name{HttpDaemon$appendRootPaths}
+\alias{HttpDaemon$appendRootPaths}
 \alias{appendRootPaths.HttpDaemon}
 \alias{HttpDaemon.appendRootPaths}
-\alias{appendRootPaths.HttpDaemon}
 \alias{appendRootPaths,HttpDaemon-method}
-
 \alias{HttpDaemon.insertRootPaths}
 \alias{insertRootPaths.HttpDaemon}
 \alias{insertRootPaths,HttpDaemon-method}

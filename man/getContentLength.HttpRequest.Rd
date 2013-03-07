@@ -9,9 +9,7 @@
 \name{getContentLength.HttpRequest}
 \alias{getContentLength.HttpRequest}
 \alias{HttpRequest.getContentLength}
-\alias{getContentLength.HttpRequest}
 \alias{getContentLength,HttpRequest-method}
-
 
 \title{Gets the length of contents}
 

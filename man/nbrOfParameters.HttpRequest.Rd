@@ -9,9 +9,7 @@
 \name{nbrOfParameters.HttpRequest}
 \alias{nbrOfParameters.HttpRequest}
 \alias{HttpRequest.nbrOfParameters}
-\alias{nbrOfParameters.HttpRequest}
 \alias{nbrOfParameters,HttpRequest-method}
-
 
 \title{Gets the number of parameters}
 

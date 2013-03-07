@@ -9,9 +9,7 @@
 \name{flush.FileRspResponse}
 \alias{flush.FileRspResponse}
 \alias{FileRspResponse.flush}
-\alias{flush.FileRspResponse}
 \alias{flush,FileRspResponse-method}
-
 
 \title{Flushes the response buffer}
 

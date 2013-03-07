@@ -9,9 +9,7 @@
 \name{getPath.RspDocument}
 \alias{getPath.RspDocument}
 \alias{RspDocument.getPath}
-\alias{getPath.RspDocument}
 \alias{getPath,RspDocument-method}
-
 
 \title{Gets the path to the source reference of an RSP string}
 

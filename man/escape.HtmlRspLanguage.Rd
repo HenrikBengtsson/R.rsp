@@ -9,9 +9,7 @@
 \name{escape.HtmlRspLanguage}
 \alias{escape.HtmlRspLanguage}
 \alias{HtmlRspLanguage.escape}
-\alias{escape.HtmlRspLanguage}
 \alias{escape,HtmlRspLanguage-method}
-
 
 \title{Escapes a string specifically for the HTML language}
 

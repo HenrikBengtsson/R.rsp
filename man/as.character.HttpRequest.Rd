@@ -9,9 +9,7 @@
 \name{as.character.HttpRequest}
 \alias{as.character.HttpRequest}
 \alias{HttpRequest.as.character}
-\alias{as.character.HttpRequest}
 \alias{as.character,HttpRequest-method}
-
 
 \title{Returns a short string describing the HTTP request}
 

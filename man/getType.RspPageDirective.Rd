@@ -9,9 +9,7 @@
 \name{getType.RspPageDirective}
 \alias{getType.RspPageDirective}
 \alias{RspPageDirective.getType}
-\alias{getType.RspPageDirective}
 \alias{getType,RspPageDirective-method}
-
 
 \title{Gets the content type}
 

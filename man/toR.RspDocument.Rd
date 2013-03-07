@@ -10,9 +10,7 @@
 \name{toR.RspDocument}
 \alias{toR.RspDocument}
 \alias{RspDocument.toR}
-\alias{toR.RspDocument}
 \alias{toR,RspDocument-method}
-
 
 \title{Translates the RSP document into R source code}
 

@@ -9,9 +9,7 @@
 \name{escape.RspLanguage}
 \alias{escape.RspLanguage}
 \alias{RspLanguage.escape}
-\alias{escape.RspLanguage}
 \alias{escape,RspLanguage-method}
-
 
 \title{Escapes a string specifically for a given RSP response language}
 

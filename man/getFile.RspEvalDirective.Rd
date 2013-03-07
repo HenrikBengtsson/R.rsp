@@ -9,9 +9,7 @@
 \name{getFile.RspEvalDirective}
 \alias{getFile.RspEvalDirective}
 \alias{RspEvalDirective.getFile}
-\alias{getFile.RspEvalDirective}
 \alias{getFile,RspEvalDirective-method}
-
 
 \title{Gets the file attribute}
 

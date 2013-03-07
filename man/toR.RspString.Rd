@@ -10,9 +10,7 @@
 \name{toR.RspString}
 \alias{toR.RspString}
 \alias{RspString.toR}
-\alias{toR.RspString}
 \alias{toR,RspString-method}
-
 
 \title{Parses and translates the RSP string into R code}
 

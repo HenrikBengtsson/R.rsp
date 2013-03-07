@@ -52,7 +52,7 @@ RspStringProduct(...)
 
 
  \bold{Methods inherited from RspProduct}:\cr
-findProcessor, getAnnotation, getType, hasProcessor, print, process
+findProcessor, getAnnotations, getType, hasProcessor, print, process
 
  \bold{Methods inherited from logical}:\cr
 as.data.frame, as.raster, whichVector

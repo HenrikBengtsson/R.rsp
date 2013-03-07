@@ -758,6 +758,68 @@ setMethodS3("getKeywords", "RspPageDirective", function(directive, ...) {
   res;
 })
 
+###########################################################################/**
+# @RdocClass RspTitleDirective
+#
+# @title "The RspTitleDirective class"
+#
+# \description{
+#  @classhierarchy
+#
+#  An RspTitleDirective is an @see "RspDirective" that represents
+#  the title of the RSP document.
+# }
+# 
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
+# }
+#
+# \section{Fields and Methods}{
+#  @allmethods
+# }
+# 
+# @author
+#
+# @keyword internal
+#*/###########################################################################
+setConstructorS3("RspTitleDirective", function(...) {
+  extend(RspDirective("title", ...), "RspTitleDirective")
+})
+
+
+
+###########################################################################/**
+# @RdocClass RspKeywordsDirective
+#
+# @title "The RspKeywordsDirective class"
+#
+# \description{
+#  @classhierarchy
+#
+#  An RspKeywordsDirective is an @see "RspDirective" that represents
+#  the keywords of the RSP document.
+# }
+# 
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
+# }
+#
+# \section{Fields and Methods}{
+#  @allmethods
+# }
+# 
+# @author
+#
+# @keyword internal
+#*/###########################################################################
+setConstructorS3("RspKeywordsDirective", function(...) {
+  extend(RspDirective("keywords", ...), "RspKeywordsDirective")
+})
+
 
 ###########################################################################/**
 # @RdocClass RspIfDirective

@@ -9,9 +9,7 @@
 \name{asRspString.RspCodeChunk}
 \alias{asRspString.RspCodeChunk}
 \alias{RspCodeChunk.asRspString}
-\alias{asRspString.RspCodeChunk}
 \alias{asRspString,RspCodeChunk-method}
-
 
 \title{Recreates an RSP string from an RspCodeChunk}
 

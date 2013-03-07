@@ -9,9 +9,7 @@
 \name{makeSourceCode.RspSourceCodeFactory}
 \alias{makeSourceCode.RspSourceCodeFactory}
 \alias{RspSourceCodeFactory.makeSourceCode}
-\alias{makeSourceCode.RspSourceCodeFactory}
 \alias{makeSourceCode,RspSourceCodeFactory-method}
-
 
 \title{Makes a RspSourceCode object}
 

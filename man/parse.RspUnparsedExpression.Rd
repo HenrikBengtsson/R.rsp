@@ -9,9 +9,7 @@
 \name{parse.RspUnparsedExpression}
 \alias{parse.RspUnparsedExpression}
 \alias{RspUnparsedExpression.parse}
-\alias{parse.RspUnparsedExpression}
 \alias{parse,RspUnparsedExpression-method}
-
 
 \title{Parses the unknown RSP expression for its class}
 

@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{setRootPaths.HttpDaemon}
+\name{HttpDaemon$setRootPaths}
+\alias{HttpDaemon$setRootPaths}
 \alias{setRootPaths.HttpDaemon}
 \alias{HttpDaemon.setRootPaths}
-\alias{setRootPaths.HttpDaemon}
 \alias{setRootPaths,HttpDaemon-method}
-
 
 \title{Sets a new set of root directories for the HTTP daemon}
 

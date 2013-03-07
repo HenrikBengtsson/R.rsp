@@ -125,32 +125,41 @@ setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("stdo
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Create header and footer code
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  annotationCode <- NULL;
-  annotations <- getAnnotation(object);
+  annotations <- getAnnotations(object);
+  code <- NULL;
   for (key in names(annotations)) {
-     value <- sprintf('      .r%s <- "%s";', key, annotations[[key]]);
-     annotationCode <- c(annotationCode, value);
+     value <- annotations[[key]];
+     value <- gsub('"', '\\"', value, fixed=TRUE);
+     value <- sprintf('  %s = "%s"', key, value);
+     code <- c(code, value);
   }
+  code <- unlist(strsplit(paste(code, collapse=",\n"), split="\n", fixed=TRUE))
+  code <- c('## RSP document annotations', '.rd <- list(', code, ');');
+  header0 <- paste('      ', code, sep="");
 
   if (output == "string") {
     # Build R source code
-    header <- minIndent(annotationCode, '
+    header <- minIndent(header0, '
+      ## RSP output to string
       .rcon <- textConnection(NULL, open="w", local=TRUE);
       on.exit({ if (exists(".rcon")) { close(.rcon); rm(.rcon); }}, add=TRUE);
   
+      ## RSP output function
       .ro <- function(..., collapse="", sep="") {
         msg <- paste(..., collapse=collapse, sep=sep);
         base::cat(msg, sep="", file=.rcon);
-      } # .ro()
+      }
     ');
 
     footer <- minIndent('
-      .ro("\\n"); # Force a last complete line
-      rm(.ro);
+      .ro("\\n"); ## Force a last complete line
+
+      ## RSP cleanup
+      rm(.ro, .rd);
       .rres <- paste(textConnectionValue(.rcon), collapse="\n");
       close(.rcon); rm(.rcon);
 
-      # Return result and remove ".rres" at the same time
+      ## Return result and remove ".rres" at the same time
       (function(x) {
         res <- force(x);
         rm(".rres", envir=parent.frame());
@@ -159,22 +168,22 @@ setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("stdo
     ');
   } else if (output == "stdout") {
     # Build R source code
-    header <- minIndent(annotationCode, '
+    header <- minIndent(header0, '
+      ## RSP output function
       .ro <- function(..., collapse="", sep="") {
         msg <- paste(..., collapse=collapse, sep=sep);
         base::cat(msg, sep="");
-      } # .ro()
+      }
     ');
 
-    footer <- minIndent('
-    ');
+    footer <- '';
   } # if (output == ...)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Merge all code
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  code <- c(header, object, footer);
+  code <- c(header, '## RSP document', object, footer);
   code <- paste(code, collapse="\n");
 
   code;

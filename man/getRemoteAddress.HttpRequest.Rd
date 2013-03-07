@@ -9,9 +9,7 @@
 \name{getRemoteAddress.HttpRequest}
 \alias{getRemoteAddress.HttpRequest}
 \alias{HttpRequest.getRemoteAddress}
-\alias{getRemoteAddress.HttpRequest}
 \alias{getRemoteAddress,HttpRequest-method}
-
 
 \title{Gets the IP address of the client that sent the request}
 

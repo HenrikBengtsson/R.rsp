@@ -1,19 +1,21 @@
+library("R.rsp")
+
 text='
-<%---------------------------------------------------------------------------%>
-<%@eval language="R-vignette" text="
+<%-------------------------------%><%@eval language="R-vignette" text="
+  DIRECTIVES FOR R:
 
-%\VignetteIndexEntry{Paired PSCBS}
-%\VignetteKeyword{copy numbers, allele specific, parent specific, genomic aberrations}
-%\VignetteEngine{rsp}
-                                                                            "%>
-<%---------------------------------------------------------------------------%>
-
-[...]
-\title{<%=.rtitle%>}
+%\\VignetteIndexEntry{Paired PSCBS}
+%\\VignetteKeyword{copy numbers, allele specific, parent specific, genomic aberrations}
+%\\VignetteEngine{rsp}
+                                                                            
+"%><%----------------------------------------------------------------%>
 
 [...]
+\\title{<%@title%>}
 
-\keywords{<%=.rkeywords%>}
+[...]
+
+\\keywords{<%@keywords%>}
 '
 
 rcat(text)

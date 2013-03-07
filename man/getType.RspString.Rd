@@ -9,9 +9,7 @@
 \name{getType.RspString}
 \alias{getType.RspString}
 \alias{RspString.getType}
-\alias{getType.RspString}
 \alias{getType,RspString-method}
-
 
 \title{Gets the type of an RSP string}
 

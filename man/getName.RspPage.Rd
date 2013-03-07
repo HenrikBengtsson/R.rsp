@@ -9,9 +9,7 @@
 \name{getName.RspPage}
 \alias{getName.RspPage}
 \alias{RspPage.getName}
-\alias{getName.RspPage}
 \alias{getName,RspPage-method}
-
 
 \title{Gets the (base)name of the current RSP file}
 

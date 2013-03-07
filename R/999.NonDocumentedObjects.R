@@ -119,6 +119,7 @@
 # @alias asRspString
 # @alias dropEmptyText
 # @alias trimNonText
+# @alias getAnnotations
 #
 # \description{
 # This page contains aliases for all "non-documented" objects that 

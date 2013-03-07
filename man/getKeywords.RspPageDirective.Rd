@@ -9,9 +9,7 @@
 \name{getKeywords.RspPageDirective}
 \alias{getKeywords.RspPageDirective}
 \alias{RspPageDirective.getKeywords}
-\alias{getKeywords.RspPageDirective}
 \alias{getKeywords,RspPageDirective-method}
-
 
 \title{Gets the keywords}
 

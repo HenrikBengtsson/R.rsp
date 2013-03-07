@@ -9,9 +9,7 @@
 \name{getSuffixSpecs.RspConstruct}
 \alias{getSuffixSpecs.RspConstruct}
 \alias{RspConstruct.getSuffixSpecs}
-\alias{getSuffixSpecs.RspConstruct}
 \alias{getSuffixSpecs,RspConstruct-method}
-
 
 \title{Gets the suffix specifications}
 

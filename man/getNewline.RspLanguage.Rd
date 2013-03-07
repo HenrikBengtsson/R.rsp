@@ -9,9 +9,7 @@
 \name{getNewline.RspLanguage}
 \alias{getNewline.RspLanguage}
 \alias{RspLanguage.getNewline}
-\alias{getNewline.RspLanguage}
 \alias{getNewline,RspLanguage-method}
-
 
 \title{Gets the newline string specific for a given RSP response language}
 

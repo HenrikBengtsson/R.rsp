@@ -16,7 +16,7 @@
 #      @see "RspDocument":s.}
 #   \item{type}{The content type of the RSP document.}
 #   \item{source}{A reference to the source RSP document, iff any.}
-#   \item{annotation}{A named @list of other content annotations.}
+#   \item{annotations}{A named @list of other content annotations.}
 #   \item{...}{Not used.}
 # }
 #
@@ -28,7 +28,7 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspDocument", function(expressions=list(), type=NA, source=NA, annotation=list(), ...) {
+setConstructorS3("RspDocument", function(expressions=list(), type=NA, source=NA, annotations=list(), ...) {
   # Argument 'source':
   if (is.character(source)) {
     if (isUrl(source)) {
@@ -40,7 +40,7 @@ setConstructorS3("RspDocument", function(expressions=list(), type=NA, source=NA,
   this <- extend(expressions, "RspDocument");
   attr(this, "type") <- as.character(type);
   attr(this, "source") <- source;
-  attr(this, "annotation") <- annotation;
+  attr(this, "annotations") <- annotations;
   this;
 })
 
@@ -81,7 +81,7 @@ setMethodS3("print", "RspDocument", function(x, ...) {
     s <- c(s, sprintf("Number of %s(s): %d", names(tbl)[kk], tbl[kk]));
   }
   s <- c(s, sprintf("Content type: %s", getType(x)));
-  an <- getAnnotation(x);
+  an <- getAnnotations(x);
   for (key in names(an)) {
     s <- c(s, sprintf("Annotation '%s': %s", key, an[[key]]));
   }
@@ -126,9 +126,9 @@ setMethodS3("getType", "RspDocument", function(object, ...) {
 
 
 #########################################################################/**
-# @RdocMethod getAnnotation
+# @RdocMethod getAnnotations
 #
-# @title "Gets the annotation of the RspDocument"
+# @title "Gets the annotations of the RspDocument"
 #
 # \description{
 #  @get "title".
@@ -150,8 +150,8 @@ setMethodS3("getType", "RspDocument", function(object, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getAnnotation", "RspDocument", function(object, name=NULL, ...) {
-  res <- attr(object, "annotation");
+setMethodS3("getAnnotations", "RspDocument", function(object, name=NULL, ...) {
+  res <- attr(object, "annotations");
   if (is.null(res)) res <- list();
   if (!is.null(name)) {
     res <- res[[name]];
@@ -692,7 +692,7 @@ setMethodS3("flatten", "RspDocument", function(object, ..., verbose=FALSE) {
 
   class(res) <- class(object);
   attr(res, "type") <- getType(object);
-  attr(res, "annotation") <- getAnnotation(object);
+  attr(res, "annotations") <- getAnnotations(object);
   attr(res, "source") <- getSource(object);
 
   # RSP text cleanup
@@ -1149,19 +1149,19 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
           names(values) <- keys;
           opts <- as.list(values);
 
-          annotation <- getAnnotation(object);
+          annotations <- getAnnotations(object);
 
           # Set the title of the RSP document?
           if (!is.null(opts$IndexEntry)) {
-             annotation[["title"]] <- opts$IndexEntry;
+             annotations[["title"]] <- opts$IndexEntry;
           }
 
           # Set the keywords of the RSP document?
           if (!is.null(opts$Keyword)) {
-             annotation[["keywords"]] <- opts$Keyword;
+             annotations[["keywords"]] <- opts$Keyword;
           }
 
-          attr(object, "annotation") <- annotation;
+          attr(object, "annotations") <- annotations;
         }
 
         # Drop RSP construct
@@ -1216,10 +1216,10 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       type <- getType(expr);
       attr(object, "type") <- type;
 
-      annotation <- getAnnotation(object);
-      annotation[["title"]] <- getTitle(expr);
-      annotation[["keywords"]] <- getKeywords(expr);
-      attr(object, "annotation") <- annotation;
+      annotations <- getAnnotations(object);
+      annotations[["title"]] <- getTitle(expr);
+      annotations[["keywords"]] <- getKeywords(expr);
+      attr(object, "annotations") <- annotations;
   
       # Drop RSP construct
       object[[idx]] <- NA;
@@ -1227,6 +1227,34 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       verbose && exit(verbose);
       next;
     } # RspPageDirective
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # RspTitleDirective => ...
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (inherits(expr, "RspTitleDirective")) {
+      expr2 <- RspText(getAnnotations(object, "title"));
+
+      # Drop RSP construct
+      object[[idx]] <- expr2;
+
+      verbose && exit(verbose);
+      next;
+    } # RspTitleDirective
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # RspKeywordsDirective => ...
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (inherits(expr, "RspKeywordsDirective")) {
+      expr2 <- RspText(getAnnotations(object, "keywords"));
+
+      # Drop RSP construct
+      object[[idx]] <- expr2;
+
+      verbose && exit(verbose);
+      next;
+    } # RspKeywordsDirective
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1314,7 +1342,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # Unknown RSP directive?
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(expr, "RspDirective")) {
-      throw(sprintf("Unknown type of RSP preprocessing directive (#%d): %s", idx, class(expr)[1L]));
+      throw(sprintf("Do not know how to process (unknown) RSP '%s' preprocessing directive (#%d): %s", unclass(expr), idx, class(expr)[1L]));
     }
 
     verbose && exit(verbose);
@@ -1376,7 +1404,7 @@ setMethodS3("[", "RspDocument", function(x, i) {
   res <- .subset(x, i);
   class(res) <- class(x);
   attr(res, "type") <- getType(x);
-  attr(res, "annotation") <- getAnnotation(x);
+  attr(res, "annotations") <- getAnnotations(x);
   res;
 }, protected=TRUE)
 
@@ -1460,7 +1488,7 @@ setMethodS3("asRspString", "RspDocument", function(doc, ...) {
   text <- lapply(doc, FUN=asRspString);
   text <- unlist(text, use.names=FALSE);
   text <- paste(text, collapse="");
-  res <- RspString(text, type=getType(doc), annotation=getAnnotation(doc));
+  res <- RspString(text, type=getType(doc), annotations=getAnnotations(doc));
   res;
 }, protected=TRUE) # asRspString()
 

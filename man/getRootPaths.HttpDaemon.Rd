@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getRootPaths.HttpDaemon}
+\name{HttpDaemon$getRootPaths}
+\alias{HttpDaemon$getRootPaths}
 \alias{getRootPaths.HttpDaemon}
 \alias{HttpDaemon.getRootPaths}
-\alias{getRootPaths.HttpDaemon}
 \alias{getRootPaths,HttpDaemon-method}
-
 
 \title{Gets the root directories of the HTTP daemon}
 

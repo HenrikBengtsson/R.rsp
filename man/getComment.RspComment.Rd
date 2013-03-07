@@ -9,9 +9,7 @@
 \name{getComment.RspComment}
 \alias{getComment.RspComment}
 \alias{RspComment.getComment}
-\alias{getComment.RspComment}
 \alias{getComment,RspComment-method}
-
 
 \title{Gets the comment}
 

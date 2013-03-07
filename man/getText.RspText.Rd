@@ -9,9 +9,7 @@
 \name{getText.RspText}
 \alias{getText.RspText}
 \alias{RspText.getText}
-\alias{getText.RspText}
 \alias{getText,RspText-method}
-
 
 \title{Gets the text}
 

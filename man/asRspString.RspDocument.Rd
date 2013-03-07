@@ -9,9 +9,7 @@
 \name{asRspString.RspDocument}
 \alias{asRspString.RspDocument}
 \alias{RspDocument.asRspString}
-\alias{asRspString.RspDocument}
 \alias{asRspString,RspDocument-method}
-
 
 \title{Recreates an RSP string from an RspDocument}
 

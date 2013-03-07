@@ -9,9 +9,7 @@
 \name{getLanguage.RspSourceCodeFactory}
 \alias{getLanguage.RspSourceCodeFactory}
 \alias{RspSourceCodeFactory.getLanguage}
-\alias{getLanguage.RspSourceCodeFactory}
 \alias{getLanguage,RspSourceCodeFactory-method}
-
 
 \title{Gets the language}
 

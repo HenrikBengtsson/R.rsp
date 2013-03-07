@@ -9,9 +9,7 @@
 \name{print.RspProduct}
 \alias{print.RspProduct}
 \alias{RspProduct.print}
-\alias{print.RspProduct}
 \alias{print,RspProduct-method}
-
 
 \title{Prints a summary of an RSP product}
 

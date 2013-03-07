@@ -9,9 +9,7 @@
 \name{tangle.RspRSourceCode}
 \alias{tangle.RspRSourceCode}
 \alias{RspRSourceCode.tangle}
-\alias{tangle.RspRSourceCode}
 \alias{tangle,RspRSourceCode-method}
-
 
 \title{Drops all text-outputting calls from the R code}
 

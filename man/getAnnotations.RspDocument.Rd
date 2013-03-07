@@ -1,26 +1,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspProduct.R
+%  RspDocument.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getAnnotation.RspProduct}
-\alias{getAnnotation.RspProduct}
-\alias{RspProduct.getAnnotation}
-\alias{getAnnotation.RspProduct}
-\alias{getAnnotation,RspProduct-method}
+\name{getAnnotations.RspDocument}
+\alias{getAnnotations.RspDocument}
+\alias{RspDocument.getAnnotations}
+\alias{getAnnotations,RspDocument-method}
 
-
-\title{Gets the annotation an RSP product}
+\title{Gets the annotations of the RspDocument}
 
 \description{
- Gets the annotation an RSP product.
+ Gets the annotations of the RspDocument.
 }
 
 \usage{
-\method{getAnnotation}{RspProduct}(object, name=NULL, ...)
+\method{getAnnotations}{RspDocument}(object, name=NULL, ...)
 }
 
 \arguments{
@@ -28,13 +26,13 @@
 }
 
 \value{
- Returns a named \code{\link[base]{list}}.
+ Returns a \code{\link[base]{character}} string.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  For more information see \code{\link{RspProduct}}.
+  For more information see \code{\link{RspDocument}}.
 }
 \keyword{internal}
 \keyword{methods}

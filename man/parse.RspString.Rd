@@ -9,9 +9,7 @@
 \name{parse.RspString}
 \alias{parse.RspString}
 \alias{RspString.parse}
-\alias{parse.RspString}
 \alias{parse,RspString-method}
-
 
 \title{Parses the RSP string}
 

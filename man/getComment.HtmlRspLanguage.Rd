@@ -9,9 +9,7 @@
 \name{getComment.HtmlRspLanguage}
 \alias{getComment.HtmlRspLanguage}
 \alias{HtmlRspLanguage.getComment}
-\alias{getComment.HtmlRspLanguage}
 \alias{getComment,HtmlRspLanguage-method}
-
 
 \title{Gets a comment string specifically for the HTML language}
 

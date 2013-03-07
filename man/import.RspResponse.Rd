@@ -9,9 +9,7 @@
 \name{import.RspResponse}
 \alias{import.RspResponse}
 \alias{RspResponse.import}
-\alias{import.RspResponse}
 \alias{import,RspResponse-method}
-
 
 \title{Imports the output from another RSP file}
 

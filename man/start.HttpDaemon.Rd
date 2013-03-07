@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{start.HttpDaemon}
+\name{HttpDaemon$start}
+\alias{HttpDaemon$start}
 \alias{start.HttpDaemon}
 \alias{HttpDaemon.start}
-\alias{start.HttpDaemon}
 \alias{start,HttpDaemon-method}
-
 
 \title{Starts the HTTP daemon}
 

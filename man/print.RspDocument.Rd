@@ -9,9 +9,7 @@
 \name{print.RspDocument}
 \alias{print.RspDocument}
 \alias{RspDocument.print}
-\alias{print.RspDocument}
 \alias{print,RspDocument-method}
-
 
 \title{Prints a summary of an RspDocument}
 

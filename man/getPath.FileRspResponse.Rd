@@ -9,9 +9,7 @@
 \name{getPath.FileRspResponse}
 \alias{getPath.FileRspResponse}
 \alias{FileRspResponse.getPath}
-\alias{getPath.FileRspResponse}
 \alias{getPath,FileRspResponse-method}
-
 
 \title{Gets the path of the directory of the current RSP file}
 

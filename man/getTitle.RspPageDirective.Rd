@@ -9,9 +9,7 @@
 \name{getTitle.RspPageDirective}
 \alias{getTitle.RspPageDirective}
 \alias{RspPageDirective.getTitle}
-\alias{getTitle.RspPageDirective}
 \alias{getTitle,RspPageDirective-method}
-
 
 \title{Gets the title}
 

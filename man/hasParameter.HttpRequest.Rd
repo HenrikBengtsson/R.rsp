@@ -9,9 +9,7 @@
 \name{hasParameter.HttpRequest}
 \alias{hasParameter.HttpRequest}
 \alias{HttpRequest.hasParameter}
-\alias{hasParameter.HttpRequest}
 \alias{hasParameter,HttpRequest-method}
-
 
 \title{Checks if a parameter exists}
 

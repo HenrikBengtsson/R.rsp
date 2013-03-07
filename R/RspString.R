@@ -15,7 +15,7 @@
 #   \item{str, ...}{@character strings.}
 #   \item{type}{The content type of the RSP string.}
 #   \item{source}{A reference to the source RSP document, iff any.}
-#   \item{annotation}{A named @list of other content annotations.}
+#   \item{annotations}{A named @list of other content annotations.}
 # }
 #
 # \section{Fields and Methods}{
@@ -26,7 +26,7 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspString", function(str=character(), ..., type=NA, source=NA,  annotation=list()) {
+setConstructorS3("RspString", function(str=character(), ..., type=NA, source=NA,  annotations=list()) {
   # Argument 'str':
   str <- paste(c(str, ...), collapse="\n");
 
@@ -41,7 +41,7 @@ setConstructorS3("RspString", function(str=character(), ..., type=NA, source=NA,
   this <- extend(str, "RspString");
   attr(this, "type") <- as.character(type);
   attr(this, "source") <- source;
-  attr(this, "annotation") <- annotation;
+  attr(this, "annotations") <- annotations;
   this;
 })
 
@@ -79,9 +79,9 @@ setMethodS3("getType", "RspString", function(object, ...) {
 
 
 #########################################################################/**
-# @RdocMethod getAnnotation
+# @RdocMethod getAnnotations
 #
-# @title "Gets the annotation of the RspDocument"
+# @title "Gets the annotations of the RspDocument"
 #
 # \description{
 #  @get "title".
@@ -103,8 +103,8 @@ setMethodS3("getType", "RspString", function(object, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getAnnotation", "RspString", function(object, name=NULL, ...) {
-  res <- attr(object, "annotation");
+setMethodS3("getAnnotations", "RspString", function(object, name=NULL, ...) {
+  res <- attr(object, "annotations");
   if (is.null(res)) res <- list();
   if (!is.null(name)) {
     res <- res[[name]];
@@ -353,7 +353,7 @@ setMethodS3("parseRaw", "RspString", function(object, what=c("comment", "directi
   verbose && cat(verbose, "Total number of RSP constructs parsed: ", length(parts));
 
   # Setup results
-  doc <- RspDocument(parts, type=getType(object), source=getSource(object), annotation=getAnnotation(object));
+  doc <- RspDocument(parts, type=getType(object), source=getSource(object), annotations=getAnnotations(object));
   attr(doc, "what") <- what;
 
   verbose && exit(verbose);

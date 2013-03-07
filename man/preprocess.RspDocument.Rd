@@ -9,9 +9,7 @@
 \name{preprocess.RspDocument}
 \alias{preprocess.RspDocument}
 \alias{RspDocument.preprocess}
-\alias{preprocess.RspDocument}
 \alias{preprocess,RspDocument-method}
-
 
 \title{Processes all RSP preprocessing directives}
 
