@@ -1137,7 +1137,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
       if (language == "R-vignette") {
         # Parse and assign "\Vignette" directives
-        bfr <- unlist(strsplit(bfr, split="\n", fixed=TRUE));
+        bfr <- unlist(strsplit(text, split="\n", fixed=TRUE));
         pattern <- "[[:space:]]*%+[[:space:]]*\\\\Vignette(.*)\\{([^}]*)\\}";
         keep <- (regexpr(pattern, bfr) != -1L);
         bfr <- bfr[keep];

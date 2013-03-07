@@ -125,14 +125,16 @@ setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("stdo
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Create header and footer code
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  header0 <- sprintf('
-      .rtitle <- "%s";
-      .rkeywords <- "%s";
-  ', getAnnotation(object, "title"), getAnnotation(object, "keywords"));
+  annotationCode <- NULL;
+  annotations <- getAnnotation(object);
+  for (key in names(annotations)) {
+     value <- sprintf('      .r%s <- "%s";', key, annotations[[key]]);
+     annotationCode <- c(annotationCode, value);
+  }
 
   if (output == "string") {
     # Build R source code
-    header <- minIndent(header0, '
+    header <- minIndent(annotationCode, '
       .rcon <- textConnection(NULL, open="w", local=TRUE);
       on.exit({ if (exists(".rcon")) { close(.rcon); rm(.rcon); }}, add=TRUE);
   
@@ -157,7 +159,7 @@ setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("stdo
     ');
   } else if (output == "stdout") {
     # Build R source code
-    header <- minIndent(header0, '
+    header <- minIndent(annotationCode, '
       .ro <- function(..., collapse="", sep="") {
         msg <- paste(..., collapse=collapse, sep=sep);
         base::cat(msg, sep="");
