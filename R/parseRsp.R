@@ -251,13 +251,13 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         # Read all (mandatory) white spaces
         pos <- regexpr("^[ \t]+", bfr);
         if (pos == -1)
-          throw(Exception("Error when parsing attributes. Expected a white space.", code=rspCode));
+          throw(Exception("Error when parsing attributes for RSP preprocessing directive. Expected a white space.", code=rspCode));
         len <- attr(pos, "match.length");
         bfr <- substring(bfr, len+1);
         # Read the attribute name
         pos <- regexpr("^[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*", bfr);
         if (pos == -1)
-          throw(Exception("Error when parsing attributes. Expected an attribute name.", code=rspCode));
+          throw(Exception("Error when parsing attributes for RSP preprocessing directive. Expected an attribute name.", code=rspCode));
         len <- attr(pos, "match.length");
         name <- substring(bfr, 1, len);
         bfr <- substring(bfr, len+1);
@@ -265,14 +265,14 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         # Read the '=' with optional white spaces around it
         pos <- regexpr("^[ ]*=[ ]*", bfr);
         if (pos == -1)
-          throw(Exception("Error when parsing attributes. Expected an equal sign.", code=rspCode));
+          throw(Exception("Error when parsing attributes for RSP preprocessing directive. Expected an equal sign.", code=rspCode));
         len <- attr(pos, "match.length");
         bfr <- substring(bfr, len+1);
     
         # Read the value with mandatory quotation marks around it
         pos <- regexpr("^\"[^\"]*\"", bfr);
         if (pos == -1)
-          throw(Exception("Error when parsing attributes. Expected a quoted attribute value string.", code=rspCode));
+          throw(Exception("Error when parsing attributes for RSP preprocessing directive. Expected a quoted attribute value string.", code=rspCode));
         len <- attr(pos, "match.length");
         value <- substring(bfr, 2, len-1);
         bfr <- substring(bfr, len+1);
@@ -283,14 +283,14 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
   
     # Check for duplicated attributes  
     if (length(names(attrs)) != length(unique(names(attrs))))
-        throw(Exception("Duplicated attributes.", code=rspCode));
+        throw(Exception("Duplicated attributes in RSP preprocessing directive.", code=rspCode));
   
     # Check for unknown attributes
     if (!is.null(known)) {
       nok <- which(is.na(match(names(attrs), known)));
       if (length(nok) > 0) {
         nok <- paste("'", names(attrs)[nok], "'", collapse=", ", sep="");
-        throw(Exception("Unknown attribute(s): ", nok, code=rspCode));
+        throw(Exception("Unknown attribute(s) in RSP preprocessing directive: ", nok, code=rspCode));
       }
     }
   
@@ -299,7 +299,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
       nok <- which(is.na(match(mandatory, names(attrs))));
       if (length(nok) > 0) {
         nok <- paste("'", mandatory[nok], "'", collapse=", ", sep="");
-        throw(Exception("Missing attribute(s): ", nok, code=rspCode));
+        throw(Exception("Missing attribute(s) in RSP preprocessing directive: ", nok, code=rspCode));
       }
     }
   

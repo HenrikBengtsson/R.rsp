@@ -10,10 +10,11 @@
 
 
 <%-------------------------------------------------------------------
-  ARTICLE OR SLIDES?  RELEASE OR DEVEL?
+  RELEASE OR DEVEL?
+  ARTICLE OR SLIDES?
   -------------------------------------------------------------------%>
+<%@define docVersion="${'R.rsp/vignettes/docVersion'}" default=""%>
 <%@define docMode="${'R.rsp/vignettes/docMode'}" default="article"%>
-<%@define docVersion="${'R.rsp/vignettes/docVersion'}" default="devel"%>
 <%@ifeq docMode = "slides"%>
 \documentclass[a5paper,12pt,landscape]{article}
 <%@else%>
