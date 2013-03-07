@@ -60,14 +60,38 @@ setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("stdo
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  minIndent <- function(s) {
+  minIndent <- function(...) {
+    s <- c(...);
     s <- gsub('"\n"', '"\r"', s);
-    s <- strsplit(s, split="\n", fixed=TRUE)[[1]];
+    s <- unlist(strsplit(s, split="\n", fixed=TRUE));
     s <- sapply(s, FUN=function(s) gsub('"\r"', '"\n"', s));
     names(s) <- NULL;
 
+    # Nothing todo?
+    if (length(s) == 0L) return(s);
+
     # Clean all-blank lines
     s <- gsub("^[ ]*$", "", s);
+    # Drop empty lines at the top and the end
+    while (nchar(s[1L]) == 0L) {
+      s <- s[-1L];
+    }
+
+    # Nothing todo?
+    if (length(s) == 0L) return(s);
+
+    while (nchar(s[length(s)]) == 0L) {
+      s <- s[-length(s)];
+    }
+
+    # Drop duplicated empty lines
+    idxs <- which(nchar(s) == 0L);
+    if (length(idxs) > 0L) {
+      idxs <- idxs[which(diff(idxs) == 1L)];
+      if (length(idxs) > 0L) {
+        s <- s[-idxs];
+      }
+    }
 
     # Find minimum indentation of non-blank lines
     idxs <- which(nchar(s) > 0L);
@@ -101,9 +125,14 @@ setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("stdo
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Create header and footer code
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  header0 <- sprintf('
+      .rtitle <- "%s";
+      .rkeywords <- "%s";
+  ', getAnnotation(object, "title"), getAnnotation(object, "keywords"));
+
   if (output == "string") {
     # Build R source code
-    header <- minIndent('
+    header <- minIndent(header0, '
       .rcon <- textConnection(NULL, open="w", local=TRUE);
       on.exit({ if (exists(".rcon")) { close(.rcon); rm(.rcon); }}, add=TRUE);
   
@@ -128,7 +157,7 @@ setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("stdo
     ');
   } else if (output == "stdout") {
     # Build R source code
-    header <- minIndent('
+    header <- minIndent(header0, '
       .ro <- function(..., collapse="", sep="") {
         msg <- paste(..., collapse=collapse, sep=sep);
         base::cat(msg, sep="");
@@ -233,6 +262,9 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
 setMethodS3("evaluate", "RspRSourceCode", function(object, output=c("stdout", "string"), envir=parent.frame(), args="*", ..., verbose=FALSE) {
   # Argument 'args':
   args <- cmdArgs(args);
+
+  # Argument 'output':
+  output <- match.arg(output);
 
 
   # Parse R RSP source code

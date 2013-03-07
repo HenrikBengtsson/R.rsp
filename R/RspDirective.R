@@ -695,6 +695,70 @@ setMethodS3("getType", "RspPageDirective", function(directive, ...) {
 })
 
 
+#########################################################################/**
+# @RdocMethod getTitle
+#
+# @title "Gets the title"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getTitle", "RspPageDirective", function(directive, ...) {
+  res <- attr(directive, "title");
+  if (is.null(res)) res <- as.character(NA);
+  res;
+})
+
+
+#########################################################################/**
+# @RdocMethod getKeywords
+#
+# @title "Gets the keywords"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getKeywords", "RspPageDirective", function(directive, ...) {
+  res <- attr(directive, "keywords");
+  if (is.null(res)) res <- "";
+  res;
+})
+
+
 ###########################################################################/**
 # @RdocClass RspIfDirective
 # @alias RspIfeqDirective

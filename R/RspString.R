@@ -15,6 +15,7 @@
 #   \item{str, ...}{@character strings.}
 #   \item{type}{The content type of the RSP string.}
 #   \item{source}{A reference to the source RSP document, iff any.}
+#   \item{annotation}{A named @list of other content annotations.}
 # }
 #
 # \section{Fields and Methods}{
@@ -25,7 +26,7 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspString", function(str=character(), ..., type=NA, source=NA) {
+setConstructorS3("RspString", function(str=character(), ..., type=NA, source=NA,  annotation=list()) {
   # Argument 'str':
   str <- paste(c(str, ...), collapse="\n");
 
@@ -40,6 +41,7 @@ setConstructorS3("RspString", function(str=character(), ..., type=NA, source=NA)
   this <- extend(str, "RspString");
   attr(this, "type") <- as.character(type);
   attr(this, "source") <- source;
+  attr(this, "annotation") <- annotation;
   this;
 })
 
@@ -75,6 +77,40 @@ setMethodS3("getType", "RspString", function(object, ...) {
   res;
 }, protected=TRUE)
 
+
+#########################################################################/**
+# @RdocMethod getAnnotation
+#
+# @title "Gets the annotation of the RspDocument"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getAnnotation", "RspString", function(object, name=NULL, ...) {
+  res <- attr(object, "annotation");
+  if (is.null(res)) res <- list();
+  if (!is.null(name)) {
+    res <- res[[name]];
+  }
+  res;
+}, protected=TRUE)
 
 
 #########################################################################/**
@@ -317,7 +353,7 @@ setMethodS3("parseRaw", "RspString", function(object, what=c("comment", "directi
   verbose && cat(verbose, "Total number of RSP constructs parsed: ", length(parts));
 
   # Setup results
-  doc <- RspDocument(parts, type=getType(object), source=getSource(object));
+  doc <- RspDocument(parts, type=getType(object), source=getSource(object), annotation=getAnnotation(object));
   attr(doc, "what") <- what;
 
   verbose && exit(verbose);
@@ -551,6 +587,8 @@ setMethodS3("parse", "RspString", function(object, envir=parent.frame(), ..., un
 
 ##############################################################################
 # HISTORY:
+# 2013-03-07
+# o Added annotation attributes to RspString and RspDocument.
 # 2013-02-23
 # o Now parseRaw() always ignores empty text, i.e. it never adds an
 #   empty RspText object.

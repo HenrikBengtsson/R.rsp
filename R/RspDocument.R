@@ -16,6 +16,7 @@
 #      @see "RspDocument":s.}
 #   \item{type}{The content type of the RSP document.}
 #   \item{source}{A reference to the source RSP document, iff any.}
+#   \item{annotation}{A named @list of other content annotations.}
 #   \item{...}{Not used.}
 # }
 #
@@ -27,7 +28,7 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspDocument", function(expressions=list(), type=NA, source=NA, ...) {
+setConstructorS3("RspDocument", function(expressions=list(), type=NA, source=NA, annotation=list(), ...) {
   # Argument 'source':
   if (is.character(source)) {
     if (isUrl(source)) {
@@ -39,6 +40,7 @@ setConstructorS3("RspDocument", function(expressions=list(), type=NA, source=NA,
   this <- extend(expressions, "RspDocument");
   attr(this, "type") <- as.character(type);
   attr(this, "source") <- source;
+  attr(this, "annotation") <- annotation;
   this;
 })
 
@@ -79,6 +81,10 @@ setMethodS3("print", "RspDocument", function(x, ...) {
     s <- c(s, sprintf("Number of %s(s): %d", names(tbl)[kk], tbl[kk]));
   }
   s <- c(s, sprintf("Content type: %s", getType(x)));
+  an <- getAnnotation(x);
+  for (key in names(an)) {
+    s <- c(s, sprintf("Annotation '%s': %s", key, an[[key]]));
+  }
   s <- paste(s, collapse="\n");
   cat(s, "\n", sep="");
 }, protected=TRUE)
@@ -116,6 +122,43 @@ setMethodS3("getType", "RspDocument", function(object, ...) {
   if (is.null(res)) res <- as.character(NA);
   res;
 }, protected=TRUE)
+
+
+
+#########################################################################/**
+# @RdocMethod getAnnotation
+#
+# @title "Gets the annotation of the RspDocument"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getAnnotation", "RspDocument", function(object, name=NULL, ...) {
+  res <- attr(object, "annotation");
+  if (is.null(res)) res <- list();
+  if (!is.null(name)) {
+    res <- res[[name]];
+  }
+  res;
+}, protected=TRUE)
+
 
 
 
@@ -649,6 +692,7 @@ setMethodS3("flatten", "RspDocument", function(object, ..., verbose=FALSE) {
 
   class(res) <- class(object);
   attr(res, "type") <- getType(object);
+  attr(res, "annotation") <- getAnnotation(object);
   attr(res, "source") <- getSource(object);
 
   # RSP text cleanup
@@ -1091,6 +1135,43 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       } # if (language == "R")
 
 
+      if (language == "R-vignette") {
+        # Parse and assign "\Vignette" directives
+        bfr <- unlist(strsplit(bfr, split="\n", fixed=TRUE));
+        pattern <- "[[:space:]]*%+[[:space:]]*\\\\Vignette(.*)\\{([^}]*)\\}";
+        keep <- (regexpr(pattern, bfr) != -1L);
+        bfr <- bfr[keep];
+        if (length(bfr) > 0L) {
+          opts <- grep(pattern, bfr, value=TRUE);
+          keys <- gsub(pattern, "\\1", opts);
+          values <- gsub(pattern, "\\2", opts);
+          values <- trim(values);
+          names(values) <- keys;
+          opts <- as.list(values);
+
+          annotation <- getAnnotation(object);
+
+          # Set the title of the RSP document?
+          if (!is.null(opts$IndexEntry)) {
+             annotation[["title"]] <- opts$IndexEntry;
+          }
+
+          # Set the keywords of the RSP document?
+          if (!is.null(opts$Keyword)) {
+             annotation[["keywords"]] <- opts$Keyword;
+          }
+
+          attr(object, "annotation") <- annotation;
+        }
+
+        # Drop RSP construct
+        object[[idx]] <- NA;
+
+        verbose && exit(verbose);
+        next;
+      } # if (language == "R-vignette")
+
+
       if (language == "system") {
         # Evaluate code using system()
         tryCatch({
@@ -1131,10 +1212,14 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # RspPageDirective => ...
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(expr, "RspPageDirective")) {
-      type <- getType(expr);
-
       # Set the type of the RSP document
+      type <- getType(expr);
       attr(object, "type") <- type;
+
+      annotation <- getAnnotation(object);
+      annotation[["title"]] <- getTitle(expr);
+      annotation[["keywords"]] <- getKeywords(expr);
+      attr(object, "annotation") <- annotation;
   
       # Drop RSP construct
       object[[idx]] <- NA;
@@ -1291,7 +1376,7 @@ setMethodS3("[", "RspDocument", function(x, i) {
   res <- .subset(x, i);
   class(res) <- class(x);
   attr(res, "type") <- getType(x);
-  attr(res, "source") <- getSource(x);
+  attr(res, "annotation") <- getAnnotation(x);
   res;
 }, protected=TRUE)
 
@@ -1375,13 +1460,18 @@ setMethodS3("asRspString", "RspDocument", function(doc, ...) {
   text <- lapply(doc, FUN=asRspString);
   text <- unlist(text, use.names=FALSE);
   text <- paste(text, collapse="");
-  res <- RspString(text, type=getType(doc));
+  res <- RspString(text, type=getType(doc), annotation=getAnnotation(doc));
   res;
 }, protected=TRUE) # asRspString()
 
 
 ##############################################################################
 # HISTORY:
+# 2013-03-07
+# o Added annotation attributes to RspString and RspDocument.
+# o Added support for language = "R-vignette" to the RSP 'eval' directive.
+#   It parses \Vignette*{} entries to infer RSP title and keywords.
+#   The can also be set by the RSP 'page' directive.
 # 2013-02-23
 # o Added dropEmptyText() and trimNonText() for RspDocument.
 # 2013-02-22
