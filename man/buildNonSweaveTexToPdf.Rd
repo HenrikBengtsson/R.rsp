@@ -6,30 +6,28 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{parseVignette}
-\alias{parseVignette}
+\name{buildNonSweaveTexToPdf}
+\alias{buildNonSweaveTexToPdf}
 
 
-\title{Parses an Rnw file}
+\title{Compiles all TeX files into PDFs}
 
 \description{
- Parses an Rnw file.
+ Compiles all TeX files into PDFs, unless already done.
 }
 
 \usage{
-parseVignette(pathname, commentPrefix="^[ 	]*\%[ 	]*", maxLines=50, ...)
+buildNonSweaveTexToPdf(path=".", pattern="[.]tex$", ...)
 }
 
 \arguments{
-  \item{pathname}{The Rnw file to be parsed.}
-  \item{commentPrefix}{A regular expression specifying the prefix
-    pattern of vignette comments.}
-  \item{maxLines}{The maximum number of lines to scan.}
-  \item{...}{Not used.}
+  \item{path}{The directory where to search for TeX files.}
+  \item{pattern}{Filename pattern to locate TeX files.}
+  \item{...}{Additional arguments passed to \code{\link[tools]{texi2pdf}}.}
 }
 
 \value{
-  Returns a named \code{\link[base]{list}} or NULL if a non-vignette.
+  Returns (invisibly) a named \code{\link[base]{list}} of results.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

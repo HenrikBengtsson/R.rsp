@@ -13,8 +13,7 @@
 # \arguments{
 #   \item{file}{The file to be weaved.}
 #   \item{...}{Not used.}
-#   \item{fake}{If @TRUE, nothing is done, but the pathname of the 
-#      output file that would have been created is still returned.}
+#   \item{quiet}{If @TRUE, no verbose output is generated.}
 #   \item{envir}{The @environment where the RSP document is 
 #         parsed and evaluated.}
 # }
@@ -34,35 +33,8 @@
 # @keyword IO
 # @keyword internal
 #*/########################################################################### 
-rspWeave <- function(file, ..., fake=FALSE, envir=parent.frame()) {
-  # From help("vignetteEngine", package="tools"):
-  #  "If the filename being processed has one of the Sweave extensions
-  # (i.e. matching the regular expression ".[RrSs](nw|tex)$", the weave
-  # function should produce a '.tex' file in the same directory.
-  # If it has the extension '.Rmd', weaving should produce an .html' file.
-  if (is.character(file)) {
-    output <- NULL;
-    filename <- basename(file);
-    patterns <- c(tex="[.][RrSs](nw|tex)$", html="[.]Rmd$");
-    for (kk in seq_along(patterns)) {
-      ext <- names(patterns)[kk];
-      pattern <- patterns[kk];
-      if (regexpr(pattern, filename, ignore.case=TRUE) == -1L) {
-        next;
-      }
-      fullname <- gsub(pattern, "", filename, ignore.case=TRUE);
-      extT <- tolower(gsub("[.]([^.]*)$", "\\1", fullname, ignore.case=TRUE));
-      if (extT == ext) {
-        output <- fullname;
-      } else {
-        output <- sprintf("%s.%s", fullname, ext);
-      }
-    } # for (kk ...)
-  } else {
-    output <- NULL;
-  }
-
-  rfile(file, output=output, workdir=".", postprocess=FALSE, envir=envir, fake=fake);
+rspWeave <- function(file, ..., postprocess=FALSE, quiet=FALSE, envir=parent.frame()) {
+  rfile(file, ..., workdir=".", postprocess=postprocess, envir=envir, verbose=!quiet);
 } # rspWeave()
 
 
@@ -82,8 +54,6 @@ rspWeave <- function(file, ..., fake=FALSE, envir=parent.frame()) {
 # \arguments{
 #   \item{file}{The file to be tangled.}
 #   \item{...}{Not used.}
-#   \item{fake}{If @TRUE, nothing is done, but the pathname of the 
-#      output file that would have been created is still returned.}
 #   \item{envir}{The @environment where the RSP document is parsed.}
 # }
 #
@@ -101,18 +71,17 @@ rspWeave <- function(file, ..., fake=FALSE, envir=parent.frame()) {
 # @keyword IO
 # @keyword internal
 #*/########################################################################### 
-rspTangle <- function(file, ..., fake=FALSE, envir=parent.frame()) {
+rspTangle <- function(file, ..., envir=parent.frame()) {
+  require("R.utils") || throw("Package not loaded: R.utils");
+
   # Setup output R file
   workdir <- ".";
   filename <- basename(file);
-  fullname <- gsub("[.]([^.])$", "", filename);
+  pattern <- "(|[.][^.]*)[.]rsp$";
+  fullname <- gsub(pattern, "", filename);
   filenameR <- sprintf("%s.R", fullname);
   pathnameR <- Arguments$getWritablePathname(filenameR, path=workdir);
   pathnameR <- getAbsolutePath(pathnameR);
-
-  if (fake) {
-    return(pathnameR);
-  }
 
   # Read RSP file
   lines <- readLines(file, warn=FALSE);
@@ -122,7 +91,6 @@ rspTangle <- function(file, ..., fake=FALSE, envir=parent.frame()) {
 
   # Parse as RSP document
   doc <- parse(s, envir=envir);
-  print(doc);
 
   # Translate to R code
   rcode <- toR(doc);
@@ -137,8 +105,52 @@ rspTangle <- function(file, ..., fake=FALSE, envir=parent.frame()) {
 } # rspTangle()
 
 
+###########################################################################/**
+# @RdocFunction rspWeaveTangle
+#
+# @title "A weave and tangle function for RSP documents"
+#
+# \description{
+#  @get "title".
+#  This function calls both @see "rspWeave" and @see "rspTangle" on
+#  the same vignette source file.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{file}{The file to be processed.}
+#   \item{...}{Passed to @see "rspWeave" and @see "rspTangle".}
+#   \item{envir}{The @environment where the RSP document is processed.}
+# }
+#
+# \value{
+#   Returns the absolute pathname of the generated weave product.
+# }
+#
+# @author
+#
+# \seealso{
+#   @see "rspWeave" and @see "rspTangle"
+# }
+#
+# @keyword file
+# @keyword IO
+# @keyword internal
+#*/########################################################################### 
+rspWeaveTangle <- function(file, ..., envir=parent.frame()) {
+  pathnameR <- rspWeave(file, ..., envir=envir);
+  rspTangle(file, ..., envir=envir);
+  invisible(pathnameR)
+}
+
 ###############################################################################
 # HISTORY:
+# 2013-03-07
+# o CLEANUP: Dropped 'fake' processing again.
+# o Added rspWeaveTangle() for conveniency.
+# 2013-03-01
+# o BUG FIX: rspTangle() assumed R.utils is loaded.
 # 2013-02-18
 # o Added argument 'fake' to rspSweave() and rspTangle().
 # 2013-02-14

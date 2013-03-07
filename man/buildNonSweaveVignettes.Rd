@@ -17,7 +17,7 @@
 }
 
 \usage{
-buildNonSweaveVignettes(path=".", pattern="[.]Rnw$", ...)
+buildNonSweaveVignettes(...)
 }
 
 \arguments{
@@ -34,7 +34,7 @@ buildNonSweaveVignettes(path=".", pattern="[.]Rnw$", ...)
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  To build one non-Sweave vignette, see \code{\link{buildNonSweaveVignette}}().
+  To build vignette, see \code{\link{buildNonSweaveVignette}}().
 }
 
 

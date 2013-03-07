@@ -4,6 +4,9 @@
   %\VignetteIndexEntry{Include static PDFs and non-Sweave vignettes in an R package}
   %\VignetteKeyword{R, package, vignette, static PDF}
   %\VignetteEngine{R.rsp::rsp}
+
+  DIRECTIVES FOR R (< 3.0.0)
+  %\VignetteBuild{R.rsp::rspWeaveTangle}
   -------------------------------------------------------------------%>
 
 <% t0 <- Sys.time() %>
@@ -103,15 +106,13 @@ Assume you have an RSP-embedded LaTeX vignette named \file{manual.tex.rsp} that 
 
 \begin{verbatim}
 %\VignetteIndexEntry{User manual}
-%\VignetteSource{manual.tex.rsp}
-%\VignetteBuild{R.rsp::file("manual.tex.rsp")}
+%\VignetteBuild{R.rsp::rspWeaveTangle}
 \documentclass{article}
 \begin{document}
 \end{document}
 \end{verbatim}
-Note that the "commands" \code{{\bs}VignetteSource\{\}} and \code{{\bs}VignetteBuild\{\}} are custom to our setup (recognized by the above Makefile) and are \emph{not} recognized by the R system.
-The optional \code{{\bs}VignetteSource\{\}} command specifies which source file should be listed in the \code{help.start()} vignette overview.  If left out or left empty, no source file will be listed.
-The \code{{\bs}VignetteBuild\{\}} command specifies what R command to run for building the vignette.  Here we use the \code{rfile()} command of the \pkg{R.rsp} package to build the \file{manual.pdf} from the \file{manual.tex.rsp} file.   The build command can be any R expression, which means that it is possible to compile virtually any type of documents using this technique.
+Note that the \code{{\bs}VignetteBuild\{\}} markup is custom to our setup (recognized by the above Makefile) but is \emph{not} recognized by the R system.
+The \code{{\bs}VignetteBuild\{\}} command specifies what R command to run for building the vignette.  Here we use the \code{rspWeaveTangle()} command of the \pkg{R.rsp} package to build the \file{manual.pdf} from the \file{manual.tex.rsp} file and extract the R source code.   The build command can be any R expression, which means that it is possible to compile virtually any type of documents using this technique.  If a function, the function will be called with the filename of the vignette as the first argument.
 
 
 
@@ -126,7 +127,7 @@ The customized Makefile that builds non-Sweave vignettes and missing \file{/inst
 {\scriptsize\begin{verbatim}
 <%=
 pathname <- system.file(pathMk, "Makefile", package="R.rsp");
-bfr <- readLines(pathname);
+bfr <- readLines(pathname, warn=FALSE);
 rr <- grep("^# HISTORY", bfr);
 if (length(rr) > 0) {
   bfr <- bfr[1:(rr-2L)];
@@ -148,7 +149,7 @@ However, in this package we have choosen to build it dynamically during package 
 {\scriptsize\begin{verbatim}
 <%=
 pathname <- system.file("doc/NonSweaveVignettes.Rnw", package="R.rsp");
-bfr <- readLines(pathname);
+bfr <- readLines(pathname, warn=FALSE);
 paste(bfr, collapse="\n");
 %>
 \end{verbatim}}

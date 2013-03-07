@@ -1,26 +1,16 @@
 <%
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Build meta data for vignettes
+# Setup
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-pathnames <- list.files(path=".", pattern="[.]Rnw$", full.names=FALSE);
-fullnames <- gsub("[.]Rnw$", "", pathnames);
-pdfs <- sprintf("%s.pdf", fullnames);
-meta <- lapply(pathnames, FUN=parseVignette);
-titles <- sapply(meta, FUN=function(x) x$IndexEntry);
-sources <- sapply(meta, FUN=function(x) {
-  ifelse(is.null(x$Source), "", x$Source);
-});
-exts <- mapply(sources, fullnames, FUN=function(s, prefix) {
-  pattern <- sprintf("^%s[.]", prefix);
-  gsub(pattern, "", s);
-});
-toc <- data.frame(title=titles, pdf=pdfs, source=sources, ext=exts, stringsAsFactors=FALSE);
+file_type <- function(file) {
+  ext <- gsub(".*[.]([^.]*)$", "\\1", basename(file));
+  toupper(ext);
+}
 
+# Find all vignettes
+vigns <- parseVignettes(final=TRUE, source=TRUE);
 
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Identify package name
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 pkgName <- grep("Package:", readLines("../../DESCRIPTION"), value=TRUE);
 pkgName <- gsub("Package:", "", pkgName);
 pkgName <- gsub("[ \t]*", "", pkgName);
@@ -39,15 +29,16 @@ pkg <- Package(pkgName);
 
 <h2>User Guides and Package Vignettes</h2>
 <ul>
-<% for (ii in seq(length=nrow(toc))) { %>
+<% for (vign in vigns) { %>
  <li>
- <strong><%=toc$title[[ii]]%></strong> 
- [<a href="<%=toc$pdf[[ii]]%>">pdf</a>]
- <% if (toc$source[[ii]] != "") { %>
-   [<a href="<%=toc$source[[ii]]%>"><%=toc$ext[[ii]]%></a>]
- <% } %>
+ <strong><%=vign$IndexEntry%></strong> 
+ [<a href="<%=file <- vign$final%>"><%=file_type(file)%></a>]
+ [<a href="<%=file <- vign$pathname%>">source</a>]
+<% if (length(file <- vign$source) == 1L) { %>
+ [<a href="<%=file%>">R code</a>]
+<% } %>
  </li>
-<% } # for (ii ...) %>
+<% } # for (vign ...) %>
 </ul>
 <br>
 

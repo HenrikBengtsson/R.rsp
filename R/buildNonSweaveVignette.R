@@ -13,41 +13,146 @@
 #   \item{pathname}{The Rnw file to be parsed.}
 #   \item{commentPrefix}{A regular expression specifying the prefix
 #     pattern of vignette comments.}
+#   \item{final}{If @TRUE, the output PDF or HTML file is also located.}
+#   \item{source}{If @TRUE, the output R source code file is also located.}
+#   \item{maxLines}{The maximum number of lines to scan.}
 #   \item{...}{Not used.}
 # }
 #
 # \value{
-#   Returns a named @list.
+#   Returns a named @list or NULL if a non-vignette.
 # }
 #
 # @author
-#
-# \seealso{
-#   To build all non-Sweave vignettes, see @see "buildNonSweaveVignettes".
-# }
 #
 # @keyword file
 # @keyword IO
 # @keyword internal
 #*/########################################################################### 
-parseVignette <- function(pathname, commentPrefix="^%[ \t]*", ...) {
+parseVignette <- function(pathname, commentPrefix="^[ \t]*%[ \t]*", final=FALSE, source=FALSE, maxLines=50L, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  findOutput <- function(pathname, pattern) {
+     path <- dirname(pathname);
+     filename <- basename(pathname);
+     ext <- gsub(".*[.]([^.]*)$", "\\1", filename);
+
+     # All available output files
+     filenames <- list.files(path=path, pattern=pattern);
+     fullnames <- gsub("[.][^.]*$", "", filenames);
+     patterns <- sprintf("^%s.*[.]%s$", fullnames, ext);
+     keep <- (unlist(lapply(patterns, FUN=regexpr, filename)) != -1L);
+     filenames <- filenames[keep];
+     if (length(filenames) == 0L) return(NULL);
+
+     # Order by decreasing filename lengths
+     o <- order(nchar(filenames), decreasing=TRUE);
+     filenames <- filenames[o];
+     file.path(path, filenames);
+  }
+
+
   if (!file.exists(pathname)) {
     stop("Cannot build vignette. File not found: ", pathname);
   }
 
-  bfr <- readLines(pathname, warn=FALSE);
+  bfr <- readLines(pathname, warn=FALSE, n=maxLines);
 
   # Parse for "\Vignette" options
   pattern <- sprintf("%s\\\\Vignette(.*)\\{(.*)\\}", commentPrefix);
-  keep <- (regexpr(pattern, bfr) != -1);
+  keep <- (regexpr(pattern, bfr) != -1L);
+  bfr <- bfr[keep];
+
+  # Nothing found?
+  if (length(bfr) == 0L) {
+    return(NULL);
+  }
+
   opts <- grep(pattern, bfr, value=TRUE);
   keys <- gsub(pattern, "\\1", opts);
   values <- gsub(pattern, "\\2", opts);
   names(values) <- keys;
   opts <- as.list(values);
 
-  opts;
+  vign <- c(list(pathname=pathname), opts);
+
+
+  # Look for a generated PDF or HTML file?
+  if (final) {
+     output <- findOutput(pathname, pattern="[.](pdf|PDF|html|HTML)$");
+     if (length(output) == 0L) {
+       stop("Failed to located PDF or HTML output file for vignette: ", pathname);
+     } else if (length(output) > 1L) {
+       stop("Located more than one PDF or HTML output file for vignette: ", pathname);
+     }
+     vign$final <- output;
+  }
+
+  # Look for a generated R source code file?
+  if (source) {
+     output <- findOutput(pathname, pattern="[.][rRsS]$");
+     if (length(output) > 1L) {
+       output <- output[1L];
+     }
+     vign$source <- output;
+  }
+
+  vign;
 } # parseVignette()
+
+
+
+###########################################################################/**
+# @RdocFunction parseVignettes
+#
+# @title "Locates and parses all vignettes"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{path}{The directory where to search for vignettes.}
+#   \item{pattern}{Filename pattern to locate vignettes.}
+#   \item{...}{Additional arguments passed to @see "parseVignette".}
+# }
+#
+# \value{
+#   Returns a @list where each element corresponds to an
+#   identified vignette source file.  A file is considered to be
+#   a vignette source file if it has \code{\\Vignette.*\{\}} markups
+#   in the top 50 lines.
+#   Each such vignette element consists of a named @list with
+#   the parse \code{\\Vignette.*\{\}} information.
+# }
+#
+# @author
+#
+# @keyword file
+# @keyword IO
+# @keyword internal
+#*/########################################################################### 
+parseVignettes <- function(path=".", pattern="[.][^.~]*$", ...) {
+  pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE);
+
+  # Ignore dummy.Rnw (and dummy.tex which is created by R just before make)
+  keep <- !is.element(basename(pathnames), c("dummy.Rnw", "dummy.tex"));
+  pathnames <- pathnames[keep];
+
+  vigns <- list();
+  for (kk in seq_along(pathnames)) {
+    pathname <- pathnames[kk];
+    vign <- parseVignette(pathname, ...);
+    if (length(vign) == 0L)
+       next;
+    vigns[[pathname]] <- vign;
+  }
+
+  vigns;
+} # parseVignettes()
 
 
 
@@ -63,12 +168,12 @@ parseVignette <- function(pathname, commentPrefix="^%[ \t]*", ...) {
 # @synopsis
 #
 # \arguments{
-#   \item{pathname}{The Rnw file to be built.}
+#   \item{pathname}{The vignette file to be built.}
 #   \item{...}{Not used.}
 # }
 #
 # \value{
-#   Returns (invisibly) what the vignette builder returns.
+#   Returns (invisibly) a named @list.
 # }
 #
 # @author
@@ -77,25 +182,18 @@ parseVignette <- function(pathname, commentPrefix="^%[ \t]*", ...) {
 # @keyword IO
 # @keyword internal
 #*/########################################################################### 
-buildNonSweaveVignette <- function(pathname, ...) {
-  opts <- parseVignette(pathname, ...);
-
-  # Nothing do to, i.e. will R take care of it?
-  if (is.null(opts$Build)) {
-    return(NULL);
+buildNonSweaveVignette <- function(vign, ...) {
+  # A filename?
+  if (is.character(vign)) {
+    pathname <- vigns;
+    vign <- parseVignette(pathname, ...);
   }
 
-  # Build vignette according to \VignetteBuild{} command
-  cmd <- opts$Build;
-
-  # No command, that is, no source, just leave as is?
-  if (cmd == "") {
-    return(NULL);
-  }
+  pathname <- vign$pathname;
 
   # Load required packages
-  if (!is.null(opts$Depends)) {
-    pkgNames <- opts$Depends;
+  if (!is.null(vign$Depends)) {
+    pkgNames <- vign$Depends;
     pkgNames <- unlist(strsplit(pkgNames, split=","));
     pkgNames <- gsub("(^[ \t]*|[ \t]*$)", "", pkgNames);
     for (pkgName in pkgNames) {
@@ -103,25 +201,31 @@ buildNonSweaveVignette <- function(pathname, ...) {
     }
   }
 
-  # Parse \VignetteBuild{} command
-  tryCatch({
-    expr <- parse(text=cmd);
-  }, error = function(ex) {
-    stop(sprintf("Syntax error in \\VignetteBuild{%s}: %s", cmd, ex$message));
-  });
+  # Build vignette according to \VignetteBuild{} command
+  cmd <- vign$Build;
+  if (is.null(cmd) || nchar(vign$Build) == 0L) {
+     # If not specified, assume Sweave
+     res <- function(file, ...) {
+        pathnameR <- utils::Sweave(file, ...);
+        utils::Stangle(file, ...);
+        pathnameR;
+     }
+  } else {
+    # Parse \VignetteBuild{} expression
+    tryCatch({
+      expr <- parse(text=cmd);
+    }, error = function(ex) {
+      stop(sprintf("Syntax error in \\VignetteBuild{%s}: %s", cmd, ex$message));
+    });
 
-  # Evaluate \VignetteBuild{} command
-  res <- eval(expr);
+    # Evaluate \VignetteBuild{} expression
+    res <- eval(expr);
+  }
 
   # Was a function specified?
   if (is.function(res)) {
     fcn <- res;
-    # ...then process the file specified by \VignetteSource{}
-    file <- opts$Source;
-    if (is.null(file)) {
-      throw("If \\VignetteBuild{} specifies a function, then \\VignetteSource{} must specify the file to compile.");
-    }
-    res <- fcn(file);
+    res <- fcn(pathname);
   }
 
   invisible(res);
@@ -154,23 +258,63 @@ buildNonSweaveVignette <- function(pathname, ...) {
 # @author
 #
 # \seealso{
-#   To build one non-Sweave vignette, see @see "buildNonSweaveVignette".
+#   To build vignette, see @see "buildNonSweaveVignette".
 # }
 #
 # @keyword file
 # @keyword IO
 # @keyword internal
 #*/########################################################################### 
-buildNonSweaveVignettes <- function(path=".", pattern="[.]Rnw$", ...) {
-  pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE);
-  res <- list();
-  for (pathname in pathnames) {
-    res[[pathname]] <- buildNonSweaveVignette(pathname, ...);
+buildNonSweaveVignettes <- function(...) {
+  vigns <- parseVignettes(...);
+  for (kk in seq_along(vigns)) {
+    vign <- vigns[[kk]];
+    vign$result <- buildNonSweaveVignette(vign, ...);
+    vigns[[kk]] <- vign;
   }
-  invisible(res);
+  invisible(vigns);
 } # buildNonSweaveVignettes()
 
 
+
+###########################################################################/**
+# @RdocFunction buildNonSweaveTexToPdf
+#
+# @title "Compiles all TeX files into PDFs"
+#
+# \description{
+#  @get "title", unless already done.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{path}{The directory where to search for TeX files.}
+#   \item{pattern}{Filename pattern to locate TeX files.}
+#   \item{...}{Additional arguments passed to @see "tools::texi2pdf".}
+# }
+#
+# \value{
+#   Returns (invisibly) a named @list of results.
+# }
+#
+# @author
+#
+# @keyword file
+# @keyword IO
+# @keyword internal
+#*/########################################################################### 
+buildNonSweaveTexToPdf <- function(path=".", pattern="[.]tex$", ...) {
+  pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE);
+  res <- list();
+  for (pathname in pathnames) {
+    pathnamePDF <- sprintf("%s.pdf", gsub(pattern, "", pathname));
+    if (!isFile(pathnamePDF)) {
+       res[[pathname]] <- tools::texi2pdf(file=pathname, ...);
+    }
+  }
+  invisible(res);
+} # buildNonSweaveTexToPdf()
 
 
 ###########################################################################/**
@@ -229,6 +373,10 @@ buildPkgIndexHtml <- function(...) {
 
 ############################################################################
 # HISTORY:
+# 2013-03-07
+# o Dropped use of \VignetteSource{}.
+# o Added parseVignettes().
+# o Now parseVignette() only scans the first 50 lines.
 # 2013-02-14
 # o Added Rdoc help for all functions.
 # o Now buildNonSweaveVignette() also handles \VignetteBuild{R.rsp::rfile}

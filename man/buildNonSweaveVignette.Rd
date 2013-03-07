@@ -21,12 +21,12 @@ buildNonSweaveVignette(pathname, ...)
 }
 
 \arguments{
-  \item{pathname}{The Rnw file to be built.}
+  \item{pathname}{The vignette file to be built.}
   \item{...}{Not used.}
 }
 
 \value{
-  Returns (invisibly) what the vignette builder returns.
+  Returns (invisibly) a named \code{\link[base]{list}}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

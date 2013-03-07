@@ -18,14 +18,13 @@
 }
 
 \usage{
-rspWeave(file, ..., fake=FALSE, envir=parent.frame())
+rspWeave(file, ..., postprocess=FALSE, quiet=FALSE, envir=parent.frame())
 }
 
 \arguments{
   \item{file}{The file to be weaved.}
   \item{...}{Not used.}
-  \item{fake}{If \code{\link[base:logical]{TRUE}}, nothing is done, but the pathname of the
-     output file that would have been created is still returned.}
+  \item{quiet}{If \code{\link[base:logical]{TRUE}}, no verbose output is generated.}
   \item{envir}{The \code{\link[base]{environment}} where the RSP document is
         parsed and evaluated.}
 }

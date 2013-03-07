@@ -3,17 +3,25 @@ RM=rm -f
 R=$(R_HOME)/bin/Rscript
 
 # TARGET DEFINITIONS
-all: rnw index.html
+all: vignettes tex index.html
 
-rnw: *.Rnw
-	"$(R)" -e "R.rsp::buildNonSweaveVignettes()"
+# Build all vignettes that has a %\VignetteBuild{} markup
+vignettes:
+	"$(R)" -e "if (getRversion() < 3) R.rsp::buildNonSweaveVignettes()"
 
+# Compile any TeX files for which a PDF is missing
+tex:
+	"$(R)" -e "R.rsp::buildNonSweaveTexToPdf()"
+
+# Create an HTML vignette index page
 index.html:
-	"$(R)" -e "R.rsp::buildPkgIndexHtml()"
+	"$(R)" -e "if (getRversion() < 3) R.rsp::buildPkgIndexHtml()"
 
 clean:
+	$(RM) dummy.Rnw
 	$(RM) index.html.rsp
 	$(RM) *.aux *.bbl *.blg *.bst *.log *.out *.sty *.toc
-	$(RM) *.tex *.rsp.R
+	$(RM) *.tex
+	$(RM) *.rsp.R
 	$(RM) -r figures/
 	$(RM) Makefile
