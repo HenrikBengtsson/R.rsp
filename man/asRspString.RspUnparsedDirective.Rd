@@ -9,7 +9,9 @@
 \name{asRspString.RspUnparsedDirective}
 \alias{asRspString.RspUnparsedDirective}
 \alias{RspUnparsedDirective.asRspString}
+\alias{asRspString.RspUnparsedDirective}
 \alias{asRspString,RspUnparsedDirective-method}
+
 
 \title{Recreates an RSP string from an unparsed RSP preprocessing directive}
 

@@ -9,7 +9,9 @@
 \name{getEcho.RspCode}
 \alias{getEcho.RspCode}
 \alias{RspCode.getEcho}
+\alias{getEcho.RspCode}
 \alias{getEcho,RspCode-method}
+
 
 \title{Checks whether the source code should be echoed or not}
 

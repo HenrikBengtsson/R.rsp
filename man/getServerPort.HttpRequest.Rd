@@ -9,7 +9,9 @@
 \name{getServerPort.HttpRequest}
 \alias{getServerPort.HttpRequest}
 \alias{HttpRequest.getServerPort}
+\alias{getServerPort.HttpRequest}
 \alias{getServerPort,HttpRequest-method}
+
 
 \title{Gets the port number on which this request was received}
 

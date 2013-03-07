@@ -4,7 +4,7 @@ Depends: R (>= 2.5.0), R.utils (>= 1.20.0), R.devices (>= 2.1.6)
 Imports: R.methodsS3 (>= 1.4.2), R.oo (>= 1.11.7), R.utils (>= 1.20.0), digest (>= 0.6.3)
 Suggests: tcltk, knitr
 VignetteBuilder: R.rsp
-Date: 2013-02-27
+Date: 2013-03-07
 Title: Dynamic generation of scientific reports
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>

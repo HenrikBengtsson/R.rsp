@@ -9,7 +9,9 @@
 \name{evaluate.RspString}
 \alias{evaluate.RspString}
 \alias{RspString.evaluate}
+\alias{evaluate.RspString}
 \alias{evaluate,RspString-method}
+
 
 \title{Parses, translates, and evaluates the RSP string}
 

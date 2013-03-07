@@ -9,7 +9,9 @@
 \name{asRspString.RspConstruct}
 \alias{asRspString.RspConstruct}
 \alias{RspConstruct.asRspString}
+\alias{asRspString.RspConstruct}
 \alias{asRspString,RspConstruct-method}
+
 
 \title{Recreates an RSP string from an RspConstruct}
 

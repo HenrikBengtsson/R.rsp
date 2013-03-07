@@ -105,50 +105,10 @@ rspTangle <- function(file, ..., envir=parent.frame()) {
 } # rspTangle()
 
 
-###########################################################################/**
-# @RdocFunction rspWeaveTangle
-#
-# @title "A weave and tangle function for RSP documents"
-#
-# \description{
-#  @get "title".
-#  This function calls both @see "rspWeave" and @see "rspTangle" on
-#  the same vignette source file.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{file}{The file to be processed.}
-#   \item{...}{Passed to @see "rspWeave" and @see "rspTangle".}
-#   \item{envir}{The @environment where the RSP document is processed.}
-# }
-#
-# \value{
-#   Returns the absolute pathname of the generated weave product.
-# }
-#
-# @author
-#
-# \seealso{
-#   @see "rspWeave" and @see "rspTangle"
-# }
-#
-# @keyword file
-# @keyword IO
-# @keyword internal
-#*/########################################################################### 
-rspWeaveTangle <- function(file, ..., envir=parent.frame()) {
-  pathnameR <- rspWeave(file, ..., envir=envir);
-  rspTangle(file, ..., envir=envir);
-  invisible(pathnameR)
-}
-
 ###############################################################################
 # HISTORY:
 # 2013-03-07
 # o CLEANUP: Dropped 'fake' processing again.
-# o Added rspWeaveTangle() for conveniency.
 # 2013-03-01
 # o BUG FIX: rspTangle() assumed R.utils is loaded.
 # 2013-02-18

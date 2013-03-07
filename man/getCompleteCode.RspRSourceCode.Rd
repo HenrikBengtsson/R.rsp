@@ -9,7 +9,9 @@
 \name{getCompleteCode.RspRSourceCode}
 \alias{getCompleteCode.RspRSourceCode}
 \alias{RspRSourceCode.getCompleteCode}
+\alias{getCompleteCode.RspRSourceCode}
 \alias{getCompleteCode,RspRSourceCode-method}
+
 
 \title{Gets the complete R source code}
 

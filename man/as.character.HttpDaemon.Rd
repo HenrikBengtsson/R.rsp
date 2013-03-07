@@ -9,7 +9,9 @@
 \name{as.character.HttpDaemon}
 \alias{as.character.HttpDaemon}
 \alias{HttpDaemon.as.character}
+\alias{as.character.HttpDaemon}
 \alias{as.character,HttpDaemon-method}
+
 
 \title{Returns a short string describing the HTTP daemon}
 

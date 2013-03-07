@@ -9,7 +9,9 @@
 \name{parseRaw.RspString}
 \alias{parseRaw.RspString}
 \alias{RspString.parseRaw}
+\alias{parseRaw.RspString}
 \alias{parseRaw,RspString-method}
+
 
 \title{Parses the string into blocks of text and RSP}
 

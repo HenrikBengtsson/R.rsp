@@ -17,13 +17,15 @@
 }
 
 \usage{
-parseVignette(pathname, commentPrefix="^[ 	]*\%[ 	]*", maxLines=50, ...)
+parseVignette(pathname, commentPrefix="^[ 	]*\%[ 	]*", final=FALSE, source=FALSE, maxLines=-1, ...)
 }
 
 \arguments{
   \item{pathname}{The Rnw file to be parsed.}
   \item{commentPrefix}{A regular expression specifying the prefix
     pattern of vignette comments.}
+  \item{final}{If \code{\link[base:logical]{TRUE}}, the output PDF or HTML file is also located.}
+  \item{source}{If \code{\link[base:logical]{TRUE}}, the output R source code file is also located.}
   \item{maxLines}{The maximum number of lines to scan.}
   \item{...}{Not used.}
 }

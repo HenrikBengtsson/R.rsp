@@ -9,7 +9,9 @@
 \name{exprToCode.RspRSourceCodeFactory}
 \alias{exprToCode.RspRSourceCodeFactory}
 \alias{RspRSourceCodeFactory.exprToCode}
+\alias{exprToCode.RspRSourceCodeFactory}
 \alias{exprToCode,RspRSourceCodeFactory-method}
+
 
 \title{Translates an RspExpression into R source code}
 

@@ -9,7 +9,9 @@
 \name{getAttributes.RspConstruct}
 \alias{getAttributes.RspConstruct}
 \alias{RspConstruct.getAttributes}
+\alias{getAttributes.RspConstruct}
 \alias{getAttributes,RspConstruct-method}
+
 
 \title{Gets the attributes of an RSP expression}
 

@@ -9,7 +9,9 @@
 \name{getRealPath.HttpRequest}
 \alias{getRealPath.HttpRequest}
 \alias{HttpRequest.getRealPath}
+\alias{getRealPath.HttpRequest}
 \alias{getRealPath,HttpRequest-method}
+
 
 \title{Gets the file system path for a given URI}
 

@@ -9,7 +9,9 @@
 \name{getReturn.RspCodeChunk}
 \alias{getReturn.RspCodeChunk}
 \alias{RspCodeChunk.getReturn}
+\alias{getReturn.RspCodeChunk}
 \alias{getReturn,RspCodeChunk-method}
+
 
 \title{Checks whether the value of the evaluated code chunk should be returned or not}
 

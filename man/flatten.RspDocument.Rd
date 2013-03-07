@@ -9,7 +9,9 @@
 \name{flatten.RspDocument}
 \alias{flatten.RspDocument}
 \alias{RspDocument.flatten}
+\alias{flatten.RspDocument}
 \alias{flatten,RspDocument-method}
+
 
 \title{Flattens an RspDocument}
 

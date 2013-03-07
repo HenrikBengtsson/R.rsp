@@ -9,7 +9,9 @@
 \name{getType.RspDocument}
 \alias{getType.RspDocument}
 \alias{RspDocument.getType}
+\alias{getType.RspDocument}
 \alias{getType,RspDocument-method}
+
 
 \title{Gets the type of the RspDocument}
 

@@ -9,7 +9,9 @@
 \name{mergeTexts.RspDocument}
 \alias{mergeTexts.RspDocument}
 \alias{RspDocument.mergeTexts}
+\alias{mergeTexts.RspDocument}
 \alias{mergeTexts,RspDocument-method}
+
 
 \title{Merge neighboring 'text' elements}
 

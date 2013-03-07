@@ -9,7 +9,9 @@
 \name{getSource.RspDocument}
 \alias{getSource.RspDocument}
 \alias{RspDocument.getSource}
+\alias{getSource.RspDocument}
 \alias{getSource,RspDocument-method}
+
 
 \title{Gets the source reference of an RSP document}
 

@@ -9,7 +9,9 @@
 \name{getRemoteHost.HttpRequest}
 \alias{getRemoteHost.HttpRequest}
 \alias{HttpRequest.getRemoteHost}
+\alias{getRemoteHost.HttpRequest}
 \alias{getRemoteHost,HttpRequest-method}
+
 
 \title{Gets the fully qualified name of the client that sent the request}
 

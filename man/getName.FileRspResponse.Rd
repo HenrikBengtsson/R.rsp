@@ -9,7 +9,9 @@
 \name{getName.FileRspResponse}
 \alias{getName.FileRspResponse}
 \alias{FileRspResponse.getName}
+\alias{getName.FileRspResponse}
 \alias{getName,FileRspResponse-method}
+
 
 \title{Gets the (base)name of the current RSP file}
 

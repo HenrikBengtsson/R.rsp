@@ -9,7 +9,9 @@
 \name{writeResponse.HttpDaemon}
 \alias{writeResponse.HttpDaemon}
 \alias{HttpDaemon.writeResponse}
+\alias{writeResponse.HttpDaemon}
 \alias{writeResponse,HttpDaemon-method}
+
 
 \title{Writes a string to the HTTP output connection}
 

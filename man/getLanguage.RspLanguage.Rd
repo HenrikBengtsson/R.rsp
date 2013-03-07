@@ -9,7 +9,9 @@
 \name{getLanguage.RspLanguage}
 \alias{getLanguage.RspLanguage}
 \alias{RspLanguage.getLanguage}
+\alias{getLanguage.RspLanguage}
 \alias{getLanguage,RspLanguage-method}
+
 
 \title{Gets the language string}
 

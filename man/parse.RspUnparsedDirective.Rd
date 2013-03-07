@@ -9,7 +9,9 @@
 \name{parse.RspUnparsedDirective}
 \alias{parse.RspUnparsedDirective}
 \alias{RspUnparsedDirective.parse}
+\alias{parse.RspUnparsedDirective}
 \alias{parse,RspUnparsedDirective-method}
+
 
 \title{Parses the unknown RSP directive for its class}
 

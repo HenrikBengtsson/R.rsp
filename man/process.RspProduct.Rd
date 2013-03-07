@@ -9,7 +9,9 @@
 \name{process.RspProduct}
 \alias{process.RspProduct}
 \alias{RspProduct.process}
+\alias{process.RspProduct}
 \alias{process,RspProduct-method}
+
 
 \title{Processes an RSP file product}
 

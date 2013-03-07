@@ -9,7 +9,9 @@
 \name{getOutput.FileRspResponse}
 \alias{getOutput.FileRspResponse}
 \alias{FileRspResponse.getOutput}
+\alias{getOutput.FileRspResponse}
 \alias{getOutput,FileRspResponse-method}
+
 
 \title{Gets the output for an RSP response}
 

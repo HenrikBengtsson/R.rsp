@@ -9,7 +9,9 @@
 \name{startHelp.HttpDaemon}
 \alias{startHelp.HttpDaemon}
 \alias{HttpDaemon.startHelp}
+\alias{startHelp.HttpDaemon}
 \alias{startHelp,HttpDaemon-method}
+
 
 \title{Starts the HTTP daemon and launches the help page}
 

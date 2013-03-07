@@ -4,9 +4,6 @@
   %\VignetteIndexEntry{Dynamic document creation using RSP}
   %\VignetteKeyword{RSP markup language, literate programming, reproducible research, report generator, Sweave, knitr, TeX, LaTeX, Markdown, HTML, AsciiDoc, reStructuredText, Org-Mode, PDF}
   %\VignetteEngine{R.rsp::rsp}
-
-  DIRECTIVES FOR R (< 3.0.0)
-  %\VignetteBuild{R.rsp::rspWeaveTangle}
   -------------------------------------------------------------------%>
 
 <% t0 <- Sys.time() %>

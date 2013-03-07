@@ -9,7 +9,9 @@
 \name{getLanguage.RspEvalDirective}
 \alias{getLanguage.RspEvalDirective}
 \alias{RspEvalDirective.getLanguage}
+\alias{getLanguage.RspEvalDirective}
 \alias{getLanguage,RspEvalDirective-method}
+
 
 \title{Gets the programming language}
 

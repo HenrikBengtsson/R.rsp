@@ -9,7 +9,9 @@
 \name{getComment.RspLanguage}
 \alias{getComment.RspLanguage}
 \alias{RspLanguage.getComment}
+\alias{getComment.RspLanguage}
 \alias{getComment,RspLanguage-method}
+
 
 \title{Gets a comment string specific for a given RSP response language}
 

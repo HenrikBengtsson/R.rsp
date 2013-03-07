@@ -9,7 +9,9 @@
 \name{getScheme.HttpRequest}
 \alias{getScheme.HttpRequest}
 \alias{HttpRequest.getScheme}
+\alias{getScheme.HttpRequest}
 \alias{getScheme,HttpRequest-method}
+
 
 \title{Gets the scheme used to make this request}
 

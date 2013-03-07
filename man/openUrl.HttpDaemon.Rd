@@ -9,7 +9,9 @@
 \name{openUrl.HttpDaemon}
 \alias{openUrl.HttpDaemon}
 \alias{HttpDaemon.openUrl}
+\alias{openUrl.HttpDaemon}
 \alias{openUrl,HttpDaemon-method}
+
 
 \title{Starts the HTTP daemon and launches the specified URL}
 

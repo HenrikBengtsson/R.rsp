@@ -9,7 +9,9 @@
 \name{print.RspStringProduct}
 \alias{print.RspStringProduct}
 \alias{RspStringProduct.print}
+\alias{print.RspStringProduct}
 \alias{print,RspStringProduct-method}
+
 
 \title{Prints an RSP string product}
 

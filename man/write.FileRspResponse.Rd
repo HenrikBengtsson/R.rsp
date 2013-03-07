@@ -9,7 +9,9 @@
 \name{write.FileRspResponse}
 \alias{write.FileRspResponse}
 \alias{FileRspResponse.write}
+\alias{write.FileRspResponse}
 \alias{write,FileRspResponse-method}
+
 
 \title{Writes an RSP response to the predefined output file}
 

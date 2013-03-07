@@ -9,7 +9,9 @@
 \name{flush.HttpDaemonRspResponse}
 \alias{flush.HttpDaemonRspResponse}
 \alias{HttpDaemonRspResponse.flush}
+\alias{flush.HttpDaemonRspResponse}
 \alias{flush,HttpDaemonRspResponse-method}
+
 
 \title{Flushes the buffer of an HttpDaemonRspResponse to the HttpDaemon}
 \description{

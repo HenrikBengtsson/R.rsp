@@ -6,11 +6,12 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{HttpDaemon$sourceTcl}
-\alias{HttpDaemon$sourceTcl}
+\name{sourceTcl.HttpDaemon}
 \alias{sourceTcl.HttpDaemon}
 \alias{HttpDaemon.sourceTcl}
+\alias{sourceTcl.HttpDaemon}
 \alias{sourceTcl,HttpDaemon-method}
+
 
 \title{Loads the Tcl source for the HTTP daemon into R}
 

@@ -9,7 +9,9 @@
 \name{evaluate.RspRSourceCode}
 \alias{evaluate.RspRSourceCode}
 \alias{RspRSourceCode.evaluate}
+\alias{evaluate.RspRSourceCode}
 \alias{evaluate,RspRSourceCode-method}
+
 \alias{RspRSourceCode.findProcessor}
 \alias{findProcessor.RspRSourceCode}
 \alias{findProcessor,RspRSourceCode-method}

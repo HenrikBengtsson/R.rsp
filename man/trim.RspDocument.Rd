@@ -9,7 +9,9 @@
 \name{trim.RspDocument}
 \alias{trim.RspDocument}
 \alias{RspDocument.trim}
+\alias{trim.RspDocument}
 \alias{trim,RspDocument-method}
+
 
 \title{Trims each of the RSP constructs}
 

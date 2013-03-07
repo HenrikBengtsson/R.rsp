@@ -9,7 +9,9 @@
 \name{trimNonText.RspDocument}
 \alias{trimNonText.RspDocument}
 \alias{RspDocument.trimNonText}
+\alias{trimNonText.RspDocument}
 \alias{trimNonText,RspDocument-method}
+
 
 \title{Trims all non-text RSP constructs}
 

@@ -9,7 +9,9 @@
 \name{parse.RspRSourceCode}
 \alias{parse.RspRSourceCode}
 \alias{RspRSourceCode.parse}
+\alias{parse.RspRSourceCode}
 \alias{parse,RspRSourceCode-method}
+
 
 \title{Parses the R code}
 

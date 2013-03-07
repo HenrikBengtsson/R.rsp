@@ -29,7 +29,7 @@
 # @keyword IO
 # @keyword internal
 #*/########################################################################### 
-parseVignette <- function(pathname, commentPrefix="^[ \t]*%[ \t]*", final=FALSE, source=FALSE, maxLines=50L, ...) {
+parseVignette <- function(pathname, commentPrefix="^[ \t]*%[ \t]*", final=FALSE, source=FALSE, maxLines=-1L, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -182,10 +182,10 @@ parseVignettes <- function(path=".", pattern="[.][^.~]*$", ...) {
 # @keyword IO
 # @keyword internal
 #*/########################################################################### 
-buildNonSweaveVignette <- function(vign, ...) {
+buildNonSweaveVignette <- function(vign, envir=new.env(), ...) {
   # A filename?
   if (is.character(vign)) {
-    pathname <- vigns;
+    pathname <- vign;
     vign <- parseVignette(pathname, ...);
   }
 
@@ -202,15 +202,10 @@ buildNonSweaveVignette <- function(vign, ...) {
   }
 
   # Build vignette according to \VignetteBuild{} command
-  cmd <- vign$Build;
-  if (is.null(cmd) || nchar(vign$Build) == 0L) {
-     # If not specified, assume Sweave
-     res <- function(file, ...) {
-        pathnameR <- utils::Sweave(file, ...);
-        utils::Stangle(file, ...);
-        pathnameR;
-     }
-  } else {
+  if (!is.null(cmd <- vign$Engine) && nchar(cmd) > 0L) {
+    # Retrieve the "engine" according to \VignetteEngine{} expression
+    res <- get(cmd, envir=envir, mode="function");
+  } else if (!is.null(cmd <- vign$Build) && nchar(cmd) > 0L) {
     # Parse \VignetteBuild{} expression
     tryCatch({
       expr <- parse(text=cmd);
@@ -220,6 +215,13 @@ buildNonSweaveVignette <- function(vign, ...) {
 
     # Evaluate \VignetteBuild{} expression
     res <- eval(expr);
+  } else {
+     # If not specified, assume Sweave
+     res <- function(file, ...) {
+        pathnameR <- utils::Sweave(file, ...);
+        utils::Stangle(file, ...);
+        pathnameR;
+     }
   }
 
   # Was a function specified?
@@ -267,9 +269,18 @@ buildNonSweaveVignette <- function(vign, ...) {
 #*/########################################################################### 
 buildNonSweaveVignettes <- function(...) {
   vigns <- parseVignettes(...);
+  if (length(vigns) > 0L) {
+     path <- dirname(vigns[[1L]]$pathname);
+     pathname <- file.path(path, "enginesMap.R");
+     envir <- new.env();
+     if (isFile(pathname)) {
+       expr <- parse(pathname);
+       eval(expr, envir=envir);
+     }
+  }
   for (kk in seq_along(vigns)) {
     vign <- vigns[[kk]];
-    vign$result <- buildNonSweaveVignette(vign, ...);
+    vign$result <- buildNonSweaveVignette(vign, envir=envir, ...);
     vigns[[kk]] <- vign;
   }
   invisible(vigns);
@@ -374,6 +385,8 @@ buildPkgIndexHtml <- function(...) {
 ############################################################################
 # HISTORY:
 # 2013-03-07
+# o Deprecated use of \VignetteBuild{} in favor of \VignetteEngine{}
+#   together with an 'enginesMap.R' file.
 # o Dropped use of \VignetteSource{}.
 # o Added parseVignettes().
 # o Now parseVignette() only scans the first 50 lines.

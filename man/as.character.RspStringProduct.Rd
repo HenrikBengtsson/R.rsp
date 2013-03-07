@@ -9,7 +9,9 @@
 \name{as.character.RspStringProduct}
 \alias{as.character.RspStringProduct}
 \alias{RspStringProduct.as.character}
+\alias{as.character.RspStringProduct}
 \alias{as.character,RspStringProduct-method}
+
 
 \title{Returns a plain character string representation of an RSP string product}
 

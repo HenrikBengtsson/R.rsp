@@ -9,7 +9,9 @@
 \name{dropEmptyText.RspDocument}
 \alias{dropEmptyText.RspDocument}
 \alias{RspDocument.dropEmptyText}
+\alias{dropEmptyText.RspDocument}
 \alias{dropEmptyText,RspDocument-method}
+
 
 \title{Drops all empty RSP text constructs}
 

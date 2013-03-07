@@ -9,7 +9,9 @@
 \name{getText.RspEvalDirective}
 \alias{getText.RspEvalDirective}
 \alias{RspEvalDirective.getText}
+\alias{getText.RspEvalDirective}
 \alias{getText,RspEvalDirective-method}
+
 
 \title{Gets the text}
 

@@ -6,11 +6,12 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{HttpDaemon$isStarted}
-\alias{HttpDaemon$isStarted}
+\name{isStarted.HttpDaemon}
 \alias{isStarted.HttpDaemon}
 \alias{HttpDaemon.isStarted}
+\alias{isStarted.HttpDaemon}
 \alias{isStarted,HttpDaemon-method}
+
 
 \title{Checks if the HTTP daemon is started}
 

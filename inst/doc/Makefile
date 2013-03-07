@@ -18,6 +18,7 @@ index.html:
 	"$(R)" -e "if (getRversion() < 3) R.rsp::buildPkgIndexHtml()"
 
 clean:
+	$(RM) enginesMap.R
 	$(RM) dummy.Rnw
 	$(RM) index.html.rsp
 	$(RM) *.aux *.bbl *.blg *.bst *.log *.out *.sty *.toc

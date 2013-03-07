@@ -9,7 +9,9 @@
 \name{subset.RspDocument}
 \alias{subset.RspDocument}
 \alias{RspDocument.subset}
+\alias{subset.RspDocument}
 \alias{subset,RspDocument-method}
+
 
 \title{Subsets an RspDocument}
 

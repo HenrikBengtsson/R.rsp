@@ -9,7 +9,9 @@
 \name{toSourceCode.RspSourceCodeFactory}
 \alias{toSourceCode.RspSourceCodeFactory}
 \alias{RspSourceCodeFactory.toSourceCode}
+\alias{toSourceCode.RspSourceCodeFactory}
 \alias{toSourceCode,RspSourceCodeFactory-method}
+
 
 \title{Translates an RSP document to source code}
 

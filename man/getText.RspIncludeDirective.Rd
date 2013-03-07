@@ -9,7 +9,9 @@
 \name{getText.RspIncludeDirective}
 \alias{getText.RspIncludeDirective}
 \alias{RspIncludeDirective.getText}
+\alias{getText.RspIncludeDirective}
 \alias{getText,RspIncludeDirective-method}
+
 
 \title{Gets the text}
 

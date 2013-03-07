@@ -9,7 +9,9 @@
 \name{getVerbatim.RspLanguage}
 \alias{getVerbatim.RspLanguage}
 \alias{RspLanguage.getVerbatim}
+\alias{getVerbatim.RspLanguage}
 \alias{getVerbatim,RspLanguage-method}
+
 
 \title{Gets a verbatim string specific for a given RSP response language}
 

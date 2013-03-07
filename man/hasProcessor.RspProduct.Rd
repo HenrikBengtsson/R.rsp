@@ -9,7 +9,9 @@
 \name{hasProcessor.RspProduct}
 \alias{hasProcessor.RspProduct}
 \alias{RspProduct.hasProcessor}
+\alias{hasProcessor.RspProduct}
 \alias{hasProcessor,RspProduct-method}
+
 
 \title{Checks whether a processor exist or not for an RSP product}
 

@@ -17,7 +17,7 @@
 }
 
 \usage{
-buildNonSweaveVignette(pathname, ...)
+buildNonSweaveVignette(vign, envir=new.env(), ...)
 }
 
 \arguments{

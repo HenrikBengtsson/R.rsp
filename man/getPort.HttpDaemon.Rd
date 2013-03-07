@@ -6,11 +6,12 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{HttpDaemon$getPort}
-\alias{HttpDaemon$getPort}
+\name{getPort.HttpDaemon}
 \alias{getPort.HttpDaemon}
 \alias{HttpDaemon.getPort}
+\alias{getPort.HttpDaemon}
 \alias{getPort,HttpDaemon-method}
+
 
 \title{Gets the socket port of the HTTP daemon}
 

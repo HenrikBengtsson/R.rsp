@@ -6,11 +6,12 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{HttpDaemon$getDefaultFilename}
-\alias{HttpDaemon$getDefaultFilename}
+\name{getDefaultFilename.HttpDaemon}
 \alias{getDefaultFilename.HttpDaemon}
 \alias{HttpDaemon.getDefaultFilename}
+\alias{getDefaultFilename.HttpDaemon}
 \alias{getDefaultFilename,HttpDaemon-method}
+
 
 \title{Gets the default filename to be loaded by the HTTP daemon}
 

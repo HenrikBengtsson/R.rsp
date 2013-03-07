@@ -9,7 +9,9 @@
 \name{evaluate.RspDocument}
 \alias{evaluate.RspDocument}
 \alias{RspDocument.evaluate}
+\alias{evaluate.RspDocument}
 \alias{evaluate,RspDocument-method}
+
 
 \title{Parses, translates, and evaluates the RSP document}
 
