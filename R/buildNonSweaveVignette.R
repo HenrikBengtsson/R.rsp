@@ -183,6 +183,13 @@ parseVignettes <- function(path=".", pattern="[.][^.~]*$", ...) {
 # @keyword internal
 #*/########################################################################### 
 buildNonSweaveVignette <- function(vign, envir=new.env(), ...) {
+  # Local functions
+  SweaveStangle <- function(file, ...) {
+    pathnameR <- utils::Sweave(file, ...);
+    utils::Stangle(file, ...);
+    pathnameR;
+  }
+
   # A filename?
   if (is.character(vign)) {
     pathname <- vign;
@@ -217,11 +224,7 @@ buildNonSweaveVignette <- function(vign, envir=new.env(), ...) {
     res <- eval(expr);
   } else {
      # If not specified, assume Sweave
-     res <- function(file, ...) {
-        pathnameR <- utils::Sweave(file, ...);
-        utils::Stangle(file, ...);
-        pathnameR;
-     }
+     res <- SweaveStangle;
   }
 
   # Was a function specified?
@@ -270,10 +273,12 @@ buildNonSweaveVignette <- function(vign, envir=new.env(), ...) {
 buildNonSweaveVignettes <- function(...) {
   vigns <- parseVignettes(...);
   if (length(vigns) > 0L) {
-     path <- dirname(vigns[[1L]]$pathname);
-     pathname <- file.path(path, "enginesMap.R");
      envir <- new.env();
-     if (isFile(pathname)) {
+     path <- system.file("doc", "templates", package="R.rsp");
+     path <- c(path, dirname(vigns[[1L]]$pathname));
+     pathnames <- file.path(path, "enginesMap.R");
+     pathnames <- pathnames[file_test("-f", pathnames)];
+     for (pathname in pathnames) {
        expr <- parse(pathname);
        eval(expr, envir=envir);
      }

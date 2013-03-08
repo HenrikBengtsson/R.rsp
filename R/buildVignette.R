@@ -41,6 +41,11 @@ buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = 
     vignetteEngine <- tools:::vignetteEngine
     file_path_as_absolute <- tools::file_path_as_absolute
     texi2pdf <- tools::texi2pdf
+    list.files <- function(..., no..=FALSE) {
+      res <- base::list.files(...);
+      if (no..) res <- setdiff(res, c(".", ".."));
+      res;
+    }
 
     if (!file_test("-f", file))
         stop("No such file: ", file)
