@@ -1,8 +1,8 @@
 Package: R.rsp
 ==============
 
-Version: 0.9.x [2013-03-07]
-o The internal RSP engine has undergone a major redesign.
+Version: 0.9.1 [2013-03-07]
+o The internal RSP engine has undergone the first steps of a major redesign.
 o More functions can now be called without loading the package.
 o DOCUMENTATION: Updated the help usage section for all static methods.
 o Prepared package for the upcoming R (>= 3.0.0) generic vignette support.
