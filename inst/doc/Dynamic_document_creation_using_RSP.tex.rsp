@@ -303,8 +303,6 @@ type <- "horse"
 Note that with this construct it is \emph{not} possible the capture the \emph{output}, only the source code.
 
 
-
-
 \subsection{Iterating over a mixture of RSP and text blocks}
 \label{MixtureOfRSPAndTextBlocks}
 A useful feature of RSP is that it is possible to use RSP constructs that span multiple code and text blocks.  For instance, the following will iterate over a set of text and code blocks
@@ -410,6 +408,20 @@ which is nested. ---%> RSP comments.
 As explained in Section~\ref{TrimmingWhitespace}, \emph{all} RSP constructs with a suffix hyphen causes any following whitespace including the first following line break to be trimmed, if no other characters appear after the contruct.  This means that all RSP comments automatically trims such empty text.
 This explains why there are no empty lines after dropping the RSP comments in the above example.
 Further more, note that trailing whitespace can be trimmed from any line by adding \code{<\%----\%>} at the end of that line.  For convenience, one can also use \code{<\%-\%>}, which is a short form for \code{<\%----\%>}.
+
+
+\subsection{Escaping RSP start and end tags (\code{<\%\%} and \code{\%\%>})}
+\label{RspEscape}
+To include '\code{<\%}' and '\code{\%>}' in the text of the RSP product
+they need to escaped so that the RSP parser do not recognize them as
+part of an RSP constructs.  This can be done as '\code{<\%\%}' and
+'\code{\%\%>}', respectively.  For instance,
+\begin{escapeRspVerbatim}
+> rcat("A random integer in [1,100]: <\%\%=sample(1:100, size=1)\%\%>{\bs}n")
+A random integer in [1,100]: <\%=sample(1:100, size=1)\%>
+\end{escapeRspVerbatim}
+
+
 
 
 <%-------------------------------------------------------------------

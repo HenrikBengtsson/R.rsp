@@ -250,8 +250,17 @@ setMethodS3("parseRaw", "RspString", function(object, what=c("comment", "directi
       nL <- attr(posL, "match.length");
       stopifnot(is.integer(nL));
 
-      # Adjust if parsed into the tailing text
+      # Extract RSP construct
       tag <- substring(bfr, first=posL, posL+nL-1L);
+
+      # An escaped RSP start tag, i.e. '<%%'?
+      if (what == "expression") {
+        tagX <- substring(bfr, first=posL, posL+nL);
+        if (tagX == "<%%")
+          break;
+      }
+
+      # Adjust if parsed into the tailing text
       bfrX <- gsub(patternL, "\\4", tag);
       nL <- nL - nchar(bfrX);
 
@@ -307,6 +316,13 @@ setMethodS3("parseRaw", "RspString", function(object, what=c("comment", "directi
       nR <- attr(posR, "match.length");
       stopifnot(is.integer(nR));
       tail <- substring(bfr, first=posR, last=posR+nR-1L);
+
+      # An escaped RSP end tag, i.e. '%%>'?
+      if (what == "expression") {
+        nT <- nchar(tail);
+        if (nT >= 3L && substring(tail, first=nT-2L, last=nT) == "%%>")
+          break;
+      }
 
       # Adjust for tail parsed into preceeding body?
       bodyX <- gsub(patternR, "\\1", tail);
@@ -587,6 +603,8 @@ setMethodS3("parse", "RspString", function(object, envir=parent.frame(), ..., un
 
 ##############################################################################
 # HISTORY:
+# 2013-03-08
+# o Now parseRaw() handles RSP tags '<%%' and '%%>'.
 # 2013-03-07
 # o Added annotation attributes to RspString and RspDocument.
 # 2013-02-23
