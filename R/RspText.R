@@ -27,7 +27,11 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspText", function(text=character(), ...) {
+setConstructorS3("RspText", function(text=character(), escape=FALSE, ...) {
+  if (escape) {
+    text <- gsub("<%", "<|%", text, fixed=TRUE);
+    text <- gsub("%>", "%|>", text, fixed=TRUE);
+  }
   extend(RspConstruct(text), "RspText");
 })
 
@@ -45,6 +49,8 @@ setConstructorS3("RspText", function(text=character(), ...) {
 #
 # \arguments{
 #   \item{...}{Not used.}
+#   \item{unescaped}{If @TRUE, then escaped RSP start and end tags are 
+#      unescaped.}
 # }
 #
 # \value{
@@ -57,8 +63,16 @@ setConstructorS3("RspText", function(text=character(), ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getText", "RspText", function(text, ...) {
-  as.character(text);
+setMethodS3("getText", "RspText", function(text, unescape=FALSE, ...) {
+  text <- as.character(text);
+
+  # Unenscape?
+  if (unescape) {
+    text <- gsub("<|%", "<%", text, fixed=TRUE);
+    text <- gsub("%|>", "%>", text, fixed=TRUE);
+  }
+
+  text;
 })
 
 
@@ -94,6 +108,9 @@ setMethodS3("asRspString", "RspText", function(text, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-03-08
+# o Added argument 'escaped' to getText() for RspText.
+# o Now asRspString() returns escaped RSP texts.
 # 2013-02-11
 # o Added Rdoc help.
 # 2013-02-09

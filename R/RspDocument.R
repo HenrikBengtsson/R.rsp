@@ -1035,7 +1035,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
       if (verbatim) {
         text <- wrapText(text, wrap=getWrap(expr));
-        expr <- RspText(text, source=file);
+        expr <- RspText(text, escape=TRUE, source=file);
       } else {  
         # Parse RSP string to RSP document
         rstr <- RspString(text, type=getType(object), source=file);

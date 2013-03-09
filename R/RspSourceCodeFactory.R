@@ -190,8 +190,13 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
     throw(sprintf("%s argument 'doc' contains RSP preprocessing directives, which indicates that it has not been preprocessed: %s", class(doc)[1L], hpaste(nok)));
   }
 
+  # Unescape RspText
+  isText <- sapply(doc, FUN=inherits, "RspText");
+  doc[isText] <- lapply(doc[isText], FUN=function(expr) {
+    RspText(getText(expr, unescape=TRUE));
+  });
 
-  # Coerce all RspExpression:s to source code
+  # Coerce all RspConstruct:s to source code
   code <- vector("list", length=length(doc));
   for (kk in seq_along(doc)) {
     code[[kk]] <- exprToCode(object, doc[[kk]], index=kk);
