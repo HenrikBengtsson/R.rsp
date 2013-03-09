@@ -32,7 +32,7 @@
   If an error occurs, the error message is written too.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link{sourceRsp}}().

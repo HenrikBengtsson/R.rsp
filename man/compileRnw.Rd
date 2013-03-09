@@ -37,7 +37,7 @@
   Returns (invisibly) the pathname of the generated document.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 

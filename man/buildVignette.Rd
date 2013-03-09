@@ -38,7 +38,7 @@ buildVignette(file, dir=".", latex=TRUE, tangle=TRUE, quiet=TRUE, clean=TRUE, ..
   If \code{latex = FALSE}, it may be a TeX file.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 

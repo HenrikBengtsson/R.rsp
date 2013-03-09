@@ -34,7 +34,7 @@
  Returns an \code{\link[base]{character}} string if started, otherwise \code{\link[base]{NA}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{HttpDaemon}}.

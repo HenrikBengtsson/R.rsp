@@ -56,7 +56,7 @@ all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula,
 
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
 
 \keyword{classes}

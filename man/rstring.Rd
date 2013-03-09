@@ -49,7 +49,7 @@ x <- rstring("A random integer in [1,<\%=K\%>]: <\%=sample(1:K, size=1)\%>\n", a
 cat(x)
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
  \code{\link{rcat}}() and \code{\link{rfile}}().

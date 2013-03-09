@@ -35,7 +35,7 @@ parseVignettes(path=".", pattern="[.][^.~]*$", ...)
   the parse \code{\\Vignette.*\{\}} information.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 

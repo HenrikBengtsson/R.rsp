@@ -33,7 +33,7 @@
  Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   Called by for instance \code{\link[R.rsp:startHelp.HttpDaemon]{*startHelp}()}.

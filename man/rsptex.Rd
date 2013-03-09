@@ -47,7 +47,7 @@ rsptex("report.tex.rsp", path=path)
 
 }}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   The generated TeX document is compiled by \code{\link[tools]{texi2dvi}} in

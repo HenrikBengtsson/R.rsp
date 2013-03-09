@@ -31,7 +31,7 @@ rspTangle(file, ..., envir=parent.frame())
   Returns the absolute pathname of the generated R source code file.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link{rspWeave}}()

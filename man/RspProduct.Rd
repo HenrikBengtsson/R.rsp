@@ -61,7 +61,7 @@ as.data.frame, as.raster, whichVector
 
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
 
 \keyword{classes}

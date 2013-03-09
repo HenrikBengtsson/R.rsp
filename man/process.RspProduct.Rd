@@ -34,7 +34,7 @@
   If no processor exists, the input object itself is returned.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 

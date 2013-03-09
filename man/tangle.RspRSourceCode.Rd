@@ -29,7 +29,7 @@
  Returns an \code{\link{RspRSourceCode}} objects without output calls.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{RspRSourceCode}}.

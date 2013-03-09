@@ -31,7 +31,7 @@ buildNonSweaveVignettes(...)
   the vignette builder returns.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   To build vignette, see \code{\link{buildNonSweaveVignette}}().

@@ -39,7 +39,7 @@
  Returns (invisibly) the previously known root directories.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.rsp:getRootPaths.HttpDaemon]{*getRootPaths}()}

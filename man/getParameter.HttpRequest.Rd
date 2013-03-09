@@ -35,7 +35,7 @@
  If the parameter does not exist, the default value is returned as is.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.rsp:hasParameter.HttpRequest]{*hasParameter}()}.

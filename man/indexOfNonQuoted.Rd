@@ -31,7 +31,7 @@
   the search string in the main string.  If not found, -1 is returned.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{grep}}().

@@ -41,7 +41,7 @@
   Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   Internally, \code{\link[utils]{browseURL}} is used to launch the browser.

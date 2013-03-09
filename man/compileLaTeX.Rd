@@ -36,7 +36,7 @@
   Returns (invisibly) the pathname of the generated (PDF or DVI) document.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   Internally, \code{\link[tools]{texi2dvi}} is used.

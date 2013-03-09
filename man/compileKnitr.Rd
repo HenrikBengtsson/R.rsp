@@ -36,7 +36,7 @@
   Returns (invisibly) the pathname of the generated document.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   Internally, \code{\link[knitr]{knit}} and \code{\link{compileLaTeX}}() are used.

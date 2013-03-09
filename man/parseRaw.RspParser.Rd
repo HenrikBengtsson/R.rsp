@@ -1,15 +1,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspString.R
+%  RspParser.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{parseRaw.RspString}
-\alias{parseRaw.RspString}
-\alias{RspString.parseRaw}
-\alias{parseRaw,RspString-method}
+\name{parseRaw.RspParser}
+\alias{parseRaw.RspParser}
+\alias{RspParser.parseRaw}
+\alias{parseRaw,RspParser-method}
 
 \title{Parses the string into blocks of text and RSP}
 
@@ -18,10 +18,11 @@
 }
 
 \usage{
-\method{parseRaw}{RspString}(object, what=c("comment", "directive", "expression"), commentLength=-1, ..., verbose=FALSE)
+\method{parseRaw}{RspParser}(parser, object, what=c("comment", "directive", "expression"), commentLength=-1, ..., verbose=FALSE)
 }
 
 \arguments{
+  \item{object}{An \code{\link{RspString}} to be parsed.}
   \item{what}{A \code{\link[base]{character}} string specifying what type of RSP construct
     to parse for.}
   \item{commentLength}{Specify the number of hypens in RSP comments
@@ -34,10 +35,10 @@
  Returns a named \code{\link[base]{list}} with elements named "text" and "rsp".
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
-  For more information see \code{\link{RspString}}.
+  For more information see \code{\link{RspParser}}.
 }
 \keyword{internal}
 \keyword{methods}

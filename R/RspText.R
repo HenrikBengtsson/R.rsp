@@ -16,8 +16,8 @@
 #
 # \arguments{
 #   \item{text}{A @character string.}
-#   \item{escape}{If @TRUE, character sequences \code{<%} and \code{%>}
-#                 are escaped to \code{<%%} and \code{%%>}.}
+#   \item{escape}{If @TRUE, character sequences \code{<\%} and \code{\%>}
+#                 are escaped to \code{<\%\%} and \code{\%\%>}.}
 #   \item{...}{Not used.}
 # }
 #
@@ -51,8 +51,8 @@ setConstructorS3("RspText", function(text=character(), escape=FALSE, ...) {
 #
 # \arguments{
 #   \item{...}{Not used.}
-#   \item{unescaped}{If @TRUE, character sequences \code{<%%} and \code{%%>}
-#                 are unescaped to \code{<%} and \code{%>}.}
+#   \item{unescaped}{If @TRUE, character sequences \code{<\%\%} and 
+#                \code{\%\%>} are unescaped to \code{<\%} and \code{\%>}.}
 # }
 #
 # \value{

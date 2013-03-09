@@ -41,7 +41,7 @@
   Returns a \code{\link[base]{character}} string of \R source code.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link{sourceRsp}}().

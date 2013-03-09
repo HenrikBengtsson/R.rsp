@@ -28,7 +28,7 @@
  Returns (invisibly) the number of characters flushed.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{HttpDaemonRspResponse}}.

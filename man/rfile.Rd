@@ -92,7 +92,7 @@ printf("Created document: \%s\n", pathname)
 if (interactive()) browseURL(pathname)
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
  \code{\link{rstring}}() and \code{\link{rcat}}().

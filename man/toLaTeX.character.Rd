@@ -30,7 +30,7 @@
   A \code{\link[base]{character}} \code{\link[base]{vector}} of N strings.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[utils]{toLatex}} for escaping \code{\link[utils]{sessionInfo}} objects.

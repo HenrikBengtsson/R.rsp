@@ -30,7 +30,7 @@ buildNonSweaveTexToPdf(path=".", pattern="[.]tex$", ...)
   Returns (invisibly) a named \code{\link[base]{list}} of results.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 

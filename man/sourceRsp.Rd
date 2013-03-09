@@ -67,7 +67,7 @@ file.show(getOutput(response))
 
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link{translateRspV1}}().

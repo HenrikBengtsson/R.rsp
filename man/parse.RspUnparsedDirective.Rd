@@ -29,7 +29,7 @@
  Returns an \code{\link{RspDirective}} of known class.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{RspUnparsedDirective}}.

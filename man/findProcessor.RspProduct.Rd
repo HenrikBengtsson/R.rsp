@@ -30,7 +30,7 @@
   or \code{\link[base]{NULL}} if no processor was found.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 

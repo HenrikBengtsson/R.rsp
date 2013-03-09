@@ -41,7 +41,7 @@
   "release" license above.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \section{How to cite this package}{
   Not available.

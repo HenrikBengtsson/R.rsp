@@ -34,7 +34,7 @@ rspWeave(file, ..., postprocess=FALSE, quiet=FALSE, envir=parent.frame())
   The generated RSP product is not postprocessed.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link{rspTangle}}()

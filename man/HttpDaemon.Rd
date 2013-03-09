@@ -105,7 +105,7 @@ if (interactive()) {
    [1] Rpad package, Tom Short, 2005.\cr
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
 
 

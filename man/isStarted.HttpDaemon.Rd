@@ -34,7 +34,7 @@
  Returns \code{\link[base:logical]{TRUE}} if the server is started, otherwise \code{\link[base:logical]{FALSE}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.rsp:start.HttpDaemon]{*start}()} and \code{\link[R.rsp:stop.HttpDaemon]{*stop}()}.

@@ -29,7 +29,7 @@ buildNonSweaveVignette(vign, envir=new.env(), ...)
   Returns (invisibly) a named \code{\link[base]{list}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 

@@ -38,11 +38,13 @@ extends \link[R.rsp]{RspConstruct}\cr
  }
 
  \usage{
-RspText(text=character(), ...)
+RspText(text=character(), escape=FALSE, ...)
 }
 
  \arguments{
    \item{text}{A \code{\link[base]{character}} string.}
+   \item{escape}{If \code{\link[base:logical]{TRUE}}, character sequences \code{<\%} and \code{\%>}
+                 are escaped to \code{<\%\%} and \code{\%\%>}.}
    \item{...}{Not used.}
  }
 
@@ -62,7 +64,7 @@ all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula,
 
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
 
 \keyword{classes}

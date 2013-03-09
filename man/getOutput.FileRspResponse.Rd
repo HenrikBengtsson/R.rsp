@@ -29,7 +29,7 @@
  Returns a \code{\link[base:connections]{connection}} or a filename.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{FileRspResponse}}.

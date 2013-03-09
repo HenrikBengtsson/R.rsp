@@ -32,7 +32,7 @@
   Returns (invisibly) the pathname to the R RSP source code.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   Internally \code{\link{parseRsp}}() parses the RSP file into an R code string.

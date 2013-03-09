@@ -34,7 +34,7 @@ parseVignette(pathname, commentPrefix="^[ 	]*\%[ 	]*", final=FALSE, source=FALSE
   Returns a named \code{\link[base]{list}} or NULL if a non-vignette.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 

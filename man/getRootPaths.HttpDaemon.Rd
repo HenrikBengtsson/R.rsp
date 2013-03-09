@@ -34,7 +34,7 @@
  Returns a \code{\link[base]{vector}} of \code{\link[base]{character}} string if started, otherwise \code{\link[base]{NA}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.rsp:setRootPaths.HttpDaemon]{*setRootPaths}()}

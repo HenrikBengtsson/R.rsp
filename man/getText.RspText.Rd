@@ -18,18 +18,20 @@
 }
 
 \usage{
-\method{getText}{RspText}(text, ...)
+\method{getText}{RspText}(text, unescape=FALSE, ...)
 }
 
 \arguments{
   \item{...}{Not used.}
+  \item{unescaped}{If \code{\link[base:logical]{TRUE}}, character sequences \code{<\%\%} and
+               \code{\%\%>} are unescaped to \code{<\%} and \code{\%>}.}
 }
 
 \value{
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{RspText}}.

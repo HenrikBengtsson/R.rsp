@@ -29,7 +29,7 @@
  Returns a named \code{\link[base]{list}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.rsp:getParameter.HttpRequest]{*getParameter}()}.

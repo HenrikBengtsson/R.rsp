@@ -14,19 +14,17 @@
 \title{Parses the RSP string}
 
 \description{
- Parses the RSP string with RSP comments dropped.
+ Parses the RSP string.
 }
 
 \usage{
-\method{parse}{RspString}(object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), verbose=FALSE)
+\method{parse}{RspString}(object, ..., envir=parent.frame(), parser=RspParser())
 }
 
 \arguments{
-  \item{envir}{The \code{\link[base]{environment}} where the RSP document is preprocessed.}
-  \item{...}{Passed to the processor in each step.}
-  \item{until}{Specifies how far the parse should proceed, which is useful
-     for troubleshooting and rebugging.}
-  \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
+  \item{...}{Additional arguments passed to the RSP parser.}
+  \item{envir}{The \code{\link[base]{environment}} where the RSP document is parsed.}
+  \item{parser}{An \code{\link{RspParser}}.}
 }
 
 \value{
@@ -34,7 +32,7 @@
  returns a deparsed \code{\link{RspString}}.)
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{RspString}}.

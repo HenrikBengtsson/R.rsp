@@ -32,7 +32,7 @@
  Returns the R source code as an \code{\link{RspRSourceCode}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{RspDocument}}.
