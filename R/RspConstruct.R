@@ -33,6 +33,7 @@ setConstructorS3("RspConstruct", function(object=character(), ...) {
 
 #########################################################################/**
 # @RdocMethod getAttributes
+# @aliasmethod getAttribute
 #
 # @title "Gets the attributes of an RSP expression"
 #
@@ -62,6 +63,16 @@ setMethodS3("getAttributes", "RspConstruct", function(directive, ...) {
   keys <- setdiff(keys, "class");
   attrs <- attrs[keys];
   attrs;
+})
+
+setMethodS3("getAttribute", "RspConstruct", function(directive, name, default=NULL, ...) {
+  attrs <- getAttributes(directive, ...);
+  if (!is.element(name, names(attrs))) {
+    attr <- default;
+  } else {
+    attr <- attrs[[name]];
+  }
+  attr;
 })
  
  

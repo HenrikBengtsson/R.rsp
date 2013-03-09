@@ -70,7 +70,7 @@ RspDocument(expressions=list(), type=NA, source=NA, annotations=list(), ...)
 
 
  \bold{Methods inherited from list}:\cr
-all.equal, as.data.frame, attachLocally, callHooks, relist, within
+all.equal, as.data.frame, attachLocally, callHooks, relist, within, wrap
 
  }
 

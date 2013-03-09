@@ -787,9 +787,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       return(fh);
     }
 
-    if (isAbsolutePath(file)) {
-      pathname <- file;
-    } else {
+    if (!isAbsolutePath(file)) {
       verbose && cat(verbose, "Path: ", path);
       file <- file.path(path, file);
       verbose && cat(verbose, "File: ", file);
@@ -803,6 +801,9 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         throw(sprintf("RSP '%s' preprocessing directive (#%d) specifies an non-existing 'file' (%s): %s", expr, index, file, gsub("Pathname not found: ", "", ex$message)));
       });
     }
+
+    ext <- tolower(tools::file_ext(file));;
+    attr(file, "ext") <- ext;
 
     verbose && cat(verbose, "File: ", file);
 
@@ -1023,20 +1024,54 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # RspIncludeDirective => ...
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(expr, "RspIncludeDirective")) {
-      verbatim <- getVerbatim(expr);
+      language <- getAttribute(expr, "language");
+
+      # Backward compatibility
+      if (is.null(language)) {
+        verbatim <- getAttribute(expr, "verbatim");
+        if (!is.null(verbatim)) {
+          warning("Attribute 'verbatim' for RSP 'include' preprocessing directives is deprecated. Use attribute 'language' instead.");
+          if (isTRUE(as.logical(verbatim)))
+            language <- "text";
+        }
+      }
+
       text <- getText(expr);
-      if (is.null(text)) {
+      if (!is.null(text)) {
+        file <- getSource(object);
+
+        # The default language for the 'text' attribute is always "text".
+        if (is.null(language)) {
+          language <- "text";
+        }
+      } else {
         file <- getFileT(expr, path=getPath(object), index=idx, verbose=verbose);
         text <- readLines(file, warn=FALSE);
-      } else {
-        file <- getSource(object);
+
+        # The default language for the 'file' attribute is
+        # inferred from the filename extension, iff possible
+        if (is.null(language)) {
+          ext <- attr(file, "ext");
+          if (is.null(ext)) {
+            throw(sprintf("RSP 'include' preprocessing directive (#%d) needs an explicit 'language' attribute because it can not be inferred from the  'file' attribute.", idx));
+          }
+
+          if (ext == "rsp") {
+            language <- "rsp";
+          } else {
+            language <- "text";
+          }
+        }
       }
       text <- paste(text, collapse="\n");
 
-      if (verbatim) {
+      # Sanity check
+      stopifnot(!is.null(language));
+
+      if (language == "text") {
         text <- wrapText(text, wrap=getWrap(expr));
         expr <- RspText(text, escape=TRUE, source=file);
-      } else {  
+      } else if (language == "rsp") {
         # Parse RSP string to RSP document
         rstr <- RspString(text, type=getType(object), source=file);
         doc <- parse(rstr, envir=envir, verbose=verbose);
@@ -1049,6 +1084,8 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         }
         expr <- doc;
         rm(rstr, doc);
+      } else {
+        throw(sprintf("RSP 'include' preprocessing directive (#%d) specifies an unknown 'language': %s", idx, language));
       }
 
       # Replace RSP directive with imported RSP document
@@ -1495,6 +1532,8 @@ setMethodS3("asRspString", "RspDocument", function(doc, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-03-08
+# o Added 'language' attribute to RspIncludeDirective.
 # 2013-03-07
 # o Added annotation attributes to RspString and RspDocument.
 # o Added support for language = "R-vignette" to the RSP 'eval' directive.

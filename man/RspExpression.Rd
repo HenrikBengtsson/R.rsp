@@ -49,7 +49,7 @@ RspExpression(...)
 
 
  \bold{Methods inherited from RspConstruct}:\cr
-asRspString, getAttributes, getSuffixSpecs
+asRspString, getAttribute, getAttributes, getSuffixSpecs
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
