@@ -216,8 +216,38 @@ The generated PDF (\code{Dynamic\_LaTeX\_reports\_with\_RSP.pdf}) will be availa
   -------------------------------------------------------------------%>
 \section{The RSP markup language}
 \label{RspMarkupLanguage}
+An \emph{RSP-embedded text document}, or short an \emph{RSP document},
+is a text document (string or file) that contains a set of
+\emph{RSP constructs}, which each is defined by a pair of 
+RSP start (\code{<\%}) and end (\code{\%>}) tags.
+There are three types of RSP constructs:
+\begin{enumerate}
+ \item \emph{RSP code expressions} (\code{<\%...\%>}),
+ \item \emph{RSP comments} (\code{<\%--...--\%>}), and
+ \item \emph{RSP preprocessing directives} (\code{<\%@...\%>}).
+\end{enumerate}
+Everything outside of RSP constructs is referred to as \emph{RSP text}.
+%
+When an RSP document is \emph{evaluated} ("compiled"), it is first (i) \emph{parsed} where comments are dropped and preprocessing directives are processed, then (ii) \emph{translated} into plain R code, which when (iii) evaluated generates an \emph{RSP product} (as a string or an output file).
 
-\subsection{Inlining values of variables and expressions (\code{<\%=\{code chunk\}\%>})}
+The simplest RSP document possible is a string that contains none of the above RSP constructs, just a single RSP text, which will be outputted "as is"\footnote{Except for escaped RSP start and end tags as explained in Section~\ref{RspEscape}.} in the outputted RSP product.
+%
+A slightly more ellaborate example is the RSP string
+\begin{rspVerbatim}
+"A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n"
+\end{rspVerbatim}
+is parsed by the RSP parser into the following sequence of RSP constructs:
+(i) RSP text '\code{A random integer in [1,100]: }', 
+(ii) RSP code expression '\code{<\%=sample(1:100, size=1)\%>}', and
+(iii) RSP text '\code{{\bs}n}'.
+When this sequence is later evaluated, the two RSP texts are inserted into the output \emph{RSP product} "as is", whereas for the RSP code expression its contained R code is evaluated and its return value is then inserted into the \emph{RSP product} as text.
+%
+
+\subsection{RSP code expressions (\code{<\%...\%>})}
+\label{RspCodeExpressions}
+
+
+\subsubsection{Inlining values of variables and expressions (\code{<\%=\{code chunk\}\%>})}
 \label{RspCodeChunkInlining}
 
 The RSP markup \code{<\%=\{code chunk\}\%>} evaluates the code chunk\footnote{\code{\{code chunk\}} must be a complete and valid R expression, because \code{evalCapture()} is a function call.} (without inserting it into the document) and inserts the character representation\footnote{The \emph{character representation} of an object \code{x} is what \code{as.character(x)} gives.} of the returned object.  For instance,
@@ -234,7 +264,7 @@ To separate the elements with commas, use \code{<\%=paste(LETTERS, collapse=", "
 
 
 %% \clearpage
-\subsection{Evaluating and capturing expression and output (\code{<\%=}\code{evalCapture}\code{(\{code chunk\})\%>})}
+\subsubsection{Evaluating and capturing expression and output (\code{<\%=}\code{evalCapture}\code{(\{code chunk\})\%>})}
 \label{RspCodeChunkCapture}
 The \code{evalCapture()} function allows us to evaluate, embed and echo the text output of an R code chunk\footnote{\code{\{code chunk\}} must be a complete and valid code expression, because the expression is parsed and evaluated in place.}.  Note that it is only standard output that is echoed, i.e. plots are \emph{not} automatically embedded as figures.  To include figures, see Section~\ref{WorkingWithFigures}.  
 Continuing, any formatting of the capture has to be done in the format of the output document.  For instance, the following RSP-embedded LaTeX text
@@ -267,7 +297,7 @@ By adding arguments \code{code=FALSE} and/or \code{output=FALSE} to \code{evalCa
 Note that code is parsed and formatted by the R parser, meaning that indentation, empty lines, spacing and so on are \emph{not} preserved when echoing this way.  This is also why comments, semicolons and other R code constructs are dropped from the displayed code.
 
 
-\subsection{Evaluating code (\code{<\%\{code\}\%>})}
+\subsubsection{Evaluating code (\code{<\%\{code\}\%>})}
 \label{RspCode}
 The RSP markup \code{<\%\{code\}\%>} evaluates the source code (without displaying it in the output document).  For instance,
 \begin{rspVerbatim}
@@ -284,7 +314,7 @@ Counting:<\% for (i in 1:3) \{ \%> <\%=ii\%><\% \} \%>.
 For more details, see Section~\ref{MixtureOfRSPAndTextBlocks}.
 
 
-\subsection{Evaluating and embedding code verbatim (\code{<\%:\{code\}\%>})}
+\subsubsection{Evaluating and embedding code verbatim (\code{<\%:\{code\}\%>})}
 \label{RspCodeEmbed}
 Just as \code{<\%\{code\}\%>}, the RSP markup \code{<\%:\{code\}\%>} also evaluates source code (also incomplete code expressions), but in addition it also inserts the code verbatim into the document.  For instance,
 \begin{rspVerbatim}
@@ -303,7 +333,7 @@ type <- "horse"
 Note that with this construct it is \emph{not} possible the capture the \emph{output}, only the source code.
 
 
-\subsection{Iterating over a mixture of RSP and text blocks}
+\subsubsection{Iterating over a mixture of RSP and text blocks}
 \label{MixtureOfRSPAndTextBlocks}
 A useful feature of RSP is that it is possible to use RSP constructs that span multiple code and text blocks.  For instance, the following will iterate over a set of text and code blocks
 \begin{rspVerbatim}
@@ -329,6 +359,47 @@ the analysis of the current chromosome.
 \end{rspVerbatim}
 
 Note that there exist no corresponding markup in Sweave.  Instead, contrary to RSP, Sweave requires that each of the code chunks contains a complete R expression.  This means that, in terms of the above example, in Sweave it is not possible to begin a for loop in one code chunk and end it in a succeeding one.  This has to do with the fundamentally different way RSP and Sweave documents are processed.  If using Sweave, one solution is to use RSP markup in the Sweave document, process it via RSP to generate a pure Sweave document, which can then in turn be processed using the Sweave engine to get a TeX file and eventually the final PDF document.  Alternatively, one can use \code{rfile()} to complete all these steps at once, e.g. \code{rfile("report.Rnw.rsp")} will generate \code{report.pdf} as well as the intermediate \code{report.Rnw} and \code{report.pdf} files.  This illustrates the power of the RSP language and how it can be used as a preprocessor of any other literate programming language.
+
+
+\subsubsection{Templates - reusing a mixture of RSP and text blocks}
+Sometimes rather similar paragraphs of text, tables, or figures are used throughout a document with only minor differences.  Instead of manually cut'n'pasting the same pieces to other places of the document over and over, it is more robust and much easier to setup a template function which can then used in place.
+
+Because of the nature of the RSP language, setting up a template is as simple as wrapping the mixture of RSP and code blocks (Section~\ref{MixtureOfRSPAndTextBlocks}) in a function definition.  For example, assume you wish to reuse the following RSP passage multiple times with different values of \code{n} in a LaTeX document
+\begin{rspVerbatim}
+The sum of $x=<\%=hpaste(1:n, abbreviate="{\bs}{\bs}ldots")\%>$ is <\%=sum(1:n)\%>.
+\end{rspVerbatim}
+The solution is to wrap it up in a \emph{template} function
+\begin{rspVerbatim}
+<\% myTemplate <- function(n, ...) \{ \%>
+The sum of $x=<\%=hpaste(1:n, abbreviate="{\bs}{\bs}ldots")\%>$ is <\%=sum(1:n)-\%>.<\%-\%>
+<\% \} # myTemplate() \%>
+\end{rspVerbatim}
+<% myTemplate <- function(n, ...) { %>
+The sum of $x=<%=hpaste(1:n, abbreviate="\\ldots")%>$ is <%=sum(1:n)%>.<%-%>
+<% } # myTemplate() %><%-- TO FIX: Should not be needed! /HB 2011-03-31 --%>
+Recall that there is no limitation in how many text and RSP blocks you can use.
+Note also how we use an empty RSP comment (\code{<\%-\%>}) at the end of the template function.  That is used in order to escape the trailing line break (Section~\ref{RspComments}).  Without the trailing RSP comment, the final document would contain a whitespace after the period (and before the closing single-quote in the previous sentence).
+The above template function can now be used by calling it within an RSP code block as
+\begin{rspVerbatim}
+<\% myTemplate(n=3) \%>
+\end{rspVerbatim}
+which produces '<% myTemplate(n=3) %>'.
+%
+Naturally, a template function can be reused any number of times.  For example, the following RSP-embedded LaTeX block
+\begin{rspVerbatim}
+{\bs}begin\{itemize\}
+<\% for (ii in c(3,5,10,100)) \{ \%>
+ {\bs}item <\% myTemplate(n=ii) \%>
+<\% \} # for (ii ...) \%>
+{\bs}end\{itemize\}
+\end{rspVerbatim}
+produces
+\begin{itemize}
+<% for (ii in c(3,5,10,100)) { %>
+ \item <%= myTemplate(ii) %>
+<% } # for (ii ...) %>
+\end{itemize}
+
 
 
 \subsection{Trimming whitespace for RSP constructs}
@@ -427,46 +498,6 @@ A random integer in [1,100]: <\%=sample(1:100, size=1)\%>
 <%-------------------------------------------------------------------
   ADDITIONAL FEATURES
   -------------------------------------------------------------------%>
-\subsection{Templates - reusing a mixture of RSP and text blocks}
-Sometimes rather similar paragraphs of text, tables, or figures are used throughout a document with only minor differences.  Instead of manually cut'n'pasting the same pieces to other places of the document over and over, it is more robust and much easier to setup a template function which can then used in place.
-
-Because of the nature of the RSP language, setting up a template is as simple as wrapping the mixture of RSP and code blocks (Section~\ref{MixtureOfRSPAndTextBlocks}) in a function definition.  For example, assume you wish to reuse the following RSP passage multiple times with different values of \code{n} in a LaTeX document
-\begin{rspVerbatim}
-The sum of $x=<\%=hpaste(1:n, abbreviate="{\bs}{\bs}ldots")\%>$ is <\%=sum(1:n)\%>.
-\end{rspVerbatim}
-The solution is to wrap it up in a \emph{template} function
-\begin{rspVerbatim}
-<\% myTemplate <- function(n, ...) \{ \%>
-The sum of $x=<\%=hpaste(1:n, abbreviate="{\bs}{\bs}ldots")\%>$ is <\%=sum(1:n)-\%>.<\%-\%>
-<\% \} # myTemplate() \%>
-\end{rspVerbatim}
-<% myTemplate <- function(n, ...) { %>
-The sum of $x=<%=hpaste(1:n, abbreviate="\\ldots")%>$ is <%=sum(1:n)%>.<%-%>
-<% } # myTemplate() %><%-- TO FIX: Should not be needed! /HB 2011-03-31 --%>
-Recall that there is no limitation in how many text and RSP blocks you can use.
-Note also how we use an empty RSP comment (\code{<\%-\%>}) at the end of the template function.  That is used in order to escape the trailing line break (Section~\ref{RspComments}).  Without the trailing RSP comment, the final document would contain a whitespace after the period (and before the closing single-quote in the previous sentence).
-The above template function can now be used by calling it within an RSP code block as
-\begin{rspVerbatim}
-<\% myTemplate(n=3) \%>
-\end{rspVerbatim}
-which produces '<% myTemplate(n=3) %>'.
-%
-Naturally, a template function can be reused any number of times.  For example, the following RSP-embedded LaTeX block
-\begin{rspVerbatim}
-{\bs}begin\{itemize\}
-<\% for (ii in c(3,5,10,100)) \{ \%>
- {\bs}item <\% myTemplate(n=ii) \%>
-<\% \} # for (ii ...) \%>
-{\bs}end\{itemize\}
-\end{rspVerbatim}
-produces
-\begin{itemize}
-<% for (ii in c(3,5,10,100)) { %>
- \item <%= myTemplate(ii) %>
-<% } # for (ii ...) %>
-\end{itemize}
-
-
 
 <%-------------------------------------------------------------------
   PREPROCESSING DIRECTIVES

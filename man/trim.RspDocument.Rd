@@ -28,7 +28,7 @@
 }
 
 \value{
- Returns the last evaluated expression, iff any.
+ Returns the trimmed \code{\link{RspDocument}}.
 }
 
 \author{Henrik Bengtsson}

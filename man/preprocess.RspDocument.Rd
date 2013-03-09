@@ -26,7 +26,7 @@
      preprocessing directives are recursively preprocessed as well.}
   \item{flatten}{If \code{\link[base:logical]{TRUE}}, any \code{\link{RspDocument}} introduced is
      replaced (inserted and expanded) by its \code{\link[base]{list}} of
-     \code{\link{RspExpression}}s.}
+     \code{\link{RspConstruct}}s.}
   \item{envir}{The \code{\link[base]{environment}} where the preprocessing is evaluated.}
   \item{...}{Not used.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}

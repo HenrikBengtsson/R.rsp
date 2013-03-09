@@ -29,7 +29,7 @@ extends list\cr
 
 
 
-  An RspDocument represents a \code{\link[base]{list}} of \code{\link{RspExpression}}:s.
+  An RspDocument represents a \code{\link[base]{list}} of \code{\link{RspConstruct}}:s.
  }
 
  \usage{
@@ -37,7 +37,7 @@ RspDocument(expressions=list(), type=NA, source=NA, annotations=list(), ...)
 }
 
  \arguments{
-   \item{expressions}{A \code{\link[base]{list}} of \code{\link{RspExpression}}:s and
+   \item{expressions}{A \code{\link[base]{list}} of \code{\link{RspConstruct}}:s and
       \code{\link{RspDocument}}:s.}
    \item{type}{The content type of the RSP document.}
    \item{source}{A reference to the source RSP document, iff any.}
@@ -70,7 +70,7 @@ RspDocument(expressions=list(), type=NA, source=NA, annotations=list(), ...)
 
 
  \bold{Methods inherited from list}:\cr
-all.equal, as.data.frame, attachLocally, callHooks, relist, within, wrap
+all.equal, as.data.frame, attachLocally, callHooks, relist, within
 
  }
 

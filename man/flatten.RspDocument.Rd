@@ -15,7 +15,7 @@
 
 \description{
  Flattens an RspDocument by expanding and inserting the \code{\link[base]{list}} of
- \code{\link{RspExpression}}s for any \code{\link{RspDocument}}.
+ \code{\link{RspConstruct}}s for any \code{\link{RspDocument}}.
 }
 
 \usage{
@@ -28,7 +28,7 @@
 }
 
 \value{
-  Returns an \code{\link{RspDocument}} that contains only \code{\link{RspExpression}}:s
+  Returns an \code{\link{RspDocument}} that contains only \code{\link{RspConstruct}}:s
   (and no \code{\link{RspDocument}}).
 }
 

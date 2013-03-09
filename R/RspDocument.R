@@ -6,13 +6,13 @@
 # \description{
 #  @classhierarchy
 #
-#  An RspDocument represents a @list of @see "RspExpression":s.
+#  An RspDocument represents a @list of @see "RspConstruct":s.
 # }
 # 
 # @synopsis
 #
 # \arguments{
-#   \item{expressions}{A @list of @see "RspExpression":s and
+#   \item{expressions}{A @list of @see "RspConstruct":s and
 #      @see "RspDocument":s.}
 #   \item{type}{The content type of the RSP document.}
 #   \item{source}{A reference to the source RSP document, iff any.}
@@ -460,7 +460,7 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
 # }
 #
 # \value{
-#  Returns the last evaluated expression, iff any.
+#  Returns the trimmed @see "RspDocument".
 # }
 #
 # @author
@@ -483,12 +483,12 @@ setMethodS3("trim", "RspDocument", function(object, ..., verbose=FALSE) {
   }
 
 
-  verbose && enter(verbose, "Trimming RSP text based on surrounding RSP expressions");
+  verbose && enter(verbose, "Trimming RSP text based on surrounding RSP constructs");
 
   # Identify RSP-only lines by looking at the preceeding
   # and succeeding text parts of each RSP part
 
-  # All RSP text expressions
+  # All RSP text constructs
   isText <- sapply(object, FUN=inherits, "RspText");
   idxs <- which(isText);
   verbose && cat(verbose, "Number of RSP texts: ", length(idxs));
@@ -541,7 +541,7 @@ setMethodS3("trim", "RspDocument", function(object, ..., verbose=FALSE) {
       docT[endsWithNewline] <- sub("[ \t\v]*$", "", docT[endsWithNewline]);
 
       # Trim to the left (drop also any new line because it then
-      # belongs to preceeding RSP expression)
+      # belongs to preceeding RSP construct)
       docT[startsWithNewline] <- sub("^[ \t\v]*(\n|\r|\r\n)", "", docT[startsWithNewline]);
 
       for (kk in seq_along(docT)) {
@@ -597,7 +597,7 @@ setMethodS3("mergeTexts", "RspDocument", function(object, trim=FALSE, ..., verbo
   }
 
 
-  # All RSP text expressions
+  # All RSP text constructs
   isText <- sapply(object, FUN=inherits, "RspText");
   idxs <- which(isText);
 
@@ -608,7 +608,7 @@ setMethodS3("mergeTexts", "RspDocument", function(object, trim=FALSE, ..., verbo
 
   verbose && enter(verbose, "Merging RSP texts");
 
-  # Locate neighboring RSP text expressions
+  # Locate neighboring RSP text constructs
   while (length(nidxs <- which(diff(idxs) == 1L)) > 0L) {
     idx <- idxs[nidxs[1L]];
     # Merge (idx,idx+1)
@@ -644,7 +644,7 @@ setMethodS3("mergeTexts", "RspDocument", function(object, trim=FALSE, ..., verbo
 #
 # \description{
 #  @get "title" by expanding and inserting the @list of 
-#  @see "RspExpression"s for any @see "RspDocument".
+#  @see "RspConstruct"s for any @see "RspDocument".
 # }
 #
 # @synopsis
@@ -655,7 +655,7 @@ setMethodS3("mergeTexts", "RspDocument", function(object, trim=FALSE, ..., verbo
 # }
 #
 # \value{
-#   Returns an @see "RspDocument" that contains only @see "RspExpression":s
+#   Returns an @see "RspDocument" that contains only @see "RspConstruct":s
 #   (and no @see "RspDocument").
 # }
 #
@@ -720,7 +720,7 @@ setMethodS3("flatten", "RspDocument", function(object, ..., verbose=FALSE) {
 #      preprocessing directives are recursively preprocessed as well.}
 #   \item{flatten}{If @TRUE, any @see "RspDocument" introduced is
 #      replaced (inserted and expanded) by its @list of 
-#      @see "RspExpression"s.}
+#      @see "RspConstruct"s.}
 #   \item{envir}{The @environment where the preprocessing is evaluated.}
 #   \item{...}{Not used.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
@@ -869,7 +869,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         verbose && printf(verbose, "Expanded suffix specifications: '%s'\n", specT);
       }
 
-      # Trim following RSP 'text' expression according to suffix specs?
+      # Trim following RSP 'text' construct according to suffix specs?
       nbrOfEmptyTextLinesToDropNext <- suffixSpecToCounts(specT, specOrg=spec);
       verbose && cat(verbose, "Max number of empty lines to drop in next RSP text: ", nbrOfEmptyTextLinesToDropNext);
 
