@@ -488,12 +488,19 @@ Further more, note that trailing whitespace can be trimmed from any line by addi
 \subsection{Escaping RSP start and end tags (\code{<\%\%} and \code{\%\%>})}
 \label{RspEscape}
 To include '\code{<\%}' and '\code{\%>}' in the text of the RSP product
-they need to be escaped so that the RSP parser do not recognize them as
-part of an RSP constructs.  This can be done as '\code{<\%\%}' and
+they need to be escaped so that the RSP parser does not recognize them as
+being part of an RSP construct.  This can be done as '\code{<\%\%}' and
 '\code{\%\%>}', respectively.  For instance,
 \begin{escapeRspVerbatim}
 > rcat("A random integer in [1,100]: <\%\%=sample(1:100, size=1)\%\%>{\bs}n")
 A random integer in [1,100]: <\%=sample(1:100, size=1)\%>
+\end{escapeRspVerbatim}
+To clarify this further, consider the output of the following steps
+\begin{escapeRspVerbatim}
+> a <- "A random integer in [1,100]: <\%\%=sample(1:100, size=1)\%\%>{\bs}n"
+> b <- rstring(a)
+> rcat(b)
+A random integer in [1,100]: 8
 \end{escapeRspVerbatim}
 
 
@@ -531,7 +538,7 @@ After preprocessing, there are no remaining RSP preprocessing directives left in
 
 All RSP directive arguments (also known as "attributes") must be named with names having the correct case and not being abbreviated.  For instance, \code{<\%@include file=\lb"random.tex.rsp"\%>} is correct whereas \code{<\%@include "random.tex.rsp"\%>}, \code{<\%@include Language=\lb"random.tex.rsp"\%>} and \code{<\%@include lang=\lb"random.tex.rsp"\%>} are not.
 %
-The value of an RSP directive argument is parsed as a \emph{GString}\footnote{In R, GString can be processed by the \code{gstring()} function in the \pkg{R.utils} package.}.  A GString is a regular string that optionally may contain bash-like syntax for inserting values of system environment variables.  For instance, if environment variable \code{INCNAME} is set to '\code{random}', then \code{<\%@include file=\lb"\$\{INCNAME\}.tex.rsp"\%>} evaluates as \code{<\%@include file="random.tex.rsp"\%>}.  Note how this substitution is indepent of the R language.
+The value of an RSP directive argument is parsed as a \emph{GString}\footnote{In R, GString can be processed by the \code{gstring()} function in the \pkg{R.utils} package.}.  A GString is a regular string that optionally may contain bash-like syntax for inserting values of system environment variables.  For instance, if the environment variable '\code{R\_HOME}' is set to the home directory of the R installation, then \code{<\%@include file=\lb"\$\{R\_HOME\}/doc/AUTHORS"\%>} is parsed as \code{<\%@include file=\lb"/path/to/R/doc/AUTHORS"\%>} (resulting in the content of that 'AUTHORS' file to be included "as is").  Note how this substitution is indepent of the R language.
 For conveniency, when processing an RSP document using the RSP parser of the \pkg{R.rsp} package, GString also looks for a matching variables elsewhere.  Notably, it searches (i) among the variables in the R workspace, (ii) among the R options, and then (iii) among the system environment variable.\footnote{Although the RSP parser of the \pkg{R.rsp} package also looks for GString variable in the R environment and its options, it does not mean that these variables are dependent on the R language.  The substituted value will always be interpreted as a character string.  An RSP parser implemented in Python could take a similar approach}
 Importantly, note that variables set in RSP code expressions \emph{cannot} be used in RSP directives, because they are only assigned after the RSP preprocessing directives have been processed.
 
@@ -558,7 +565,7 @@ Whenever using the '\code{text}' argument, the 'language' attribute is assumed t
   To include a parsed RSP string, one need to specify the 'language' attribute as:
 \begin{rspVerbatim}
 <\%@include text="Current time is '<\%=Sys.time()\%>'." language="rsp"\%>
-at the time when this document was preprocessed.
+at the time this document was preprocessed.
 \end{rspVerbatim}
 results in an preprocessed RSP document consisting of
 \begin{rspVerbatim}
@@ -567,7 +574,7 @@ results in an preprocessed RSP document consisting of
 ---%>
 
 
-\paragraph{Including the content of a file (\code{<\%@include file="\{pathname\}"\%>})}
+\paragraph{Including file contents (\code{<\%@include file="\{pathname\}"\%>})}
 To include the content of a text file "as is" during preprocessing, use the '\code{file}' argument.  This may be used to include a local file or a file online (specified as a URL).  For instance,
 \begin{rspVerbatim}
 ... '<\%@include file="randoms.txt"\%>'  ## <== Update
@@ -578,6 +585,25 @@ To include the RSP parsed content of a text file with RSP markup, do
 \end{rspVerbatim}
 The 'language' attribute, which specifies how the content is included, is by default inferred from the filename extension of the included filename.  If the extension (in lower case) is '\code{txt}', the language is assumed to be 'text'.  If it is '\code{rsp}', then the language is assumed to be 'rsp'.  For unknown extensions, it is always assumed to be 'text'.  The 'language' attribute can be specified using the '\code{language}' argument.
 
+File content that is included as 'text' language will be included "as is", except that RSP start and end tags are escaped such that they appear verbatim in the final RSP product.  For instance, consider the difference between the following two include statements:
+\begin{escapeRspVerbatim}
+> cat("<\%=Sys.time()\%>", file="time.txt.rsp")
+> rcat('The current time is <\%@include file="time.txt.rsp"\%>.{\bs}n')
+The current time is <%=Sys.time()%>.
+> rcat('The current time is <\%@include file="time.txt.rsp" language="text"\%>.{\bs}')
+The current time is <\%=Sys.time()\%>.
+\end{escapeRspVerbatim}
+
+\emph{To be continued.}
+
+
+\subsubsection{Conditional inclusion/exclusion}
+\emph{To be documented.}
+
+\paragraph{If equal to, else, end if (\code{<\%@ifeq var="\{value\}"\%>})}
+\emph{To be continued.}
+
+\paragraph{If not equal to, else, end if (\code{<\%@ifneq var="\{value\}"\%>})}
 \emph{To be continued.}
 
 
@@ -614,15 +640,6 @@ The 'language' attribute, which specifies how the content is included, is by def
 
 
 
-
-\subsubsection{Conditional inclusion/exclusion}
-\emph{To be documented.}
-
-\paragraph{If equal to, else, end if (\code{<\%@ifeq var="\{value\}"\%>})}
-\emph{To be continued.}
-
-\paragraph{If not equal to, else, end if (\code{<\%@ifneq var="\{value\}"\%>})}
-\emph{To be continued.}
 
 
 \subsubsection{Compiling a standalone RSP document
