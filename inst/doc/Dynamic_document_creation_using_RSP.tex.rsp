@@ -80,6 +80,7 @@
 \newcommand{\pkg}[1]{\textsl{#1}\xspace}
 \newcommand{\code}[1]{\texttt{#1}\xspace}
 \newcommand{\bs}{$\backslash$}
+\newcommand{\lb}{\linebreak[0]}
 
 \newenvironment{rspVerbatim}{\vspace{-\parskip}\begin{alltt}\color{blue}}{\end{alltt}}
 \newenvironment{escapeRspVerbatim}{\vspace{-\parskip}\begin{alltt}}{\end{alltt}}
@@ -225,11 +226,11 @@ is a text document (string or file) that contains a set of
 RSP start (\code{<\%}) and end (\code{\%>}) tags.
 There are three types of RSP constructs:
 \begin{enumerate}
- \item \emph{RSP code expressions} (\code{<\%...\%>}),
- \item \emph{RSP comments} (\code{<\%--...--\%>}), and
+ \item \emph{RSP comments} (\code{<\%--...--\%>}), 
+ \item \emph{RSP code expressions} (\code{<\%...\%>}), and
  \item \emph{RSP preprocessing directives} (\code{<\%@...\%>}).
 \end{enumerate}
-Everything outside of RSP constructs is referred to as \emph{RSP text}.
+Everything outside of RSP constructs is referred to as \emph{RSP text}.  Except from RSP comments, RSP constructs must not be nested or contain other constructs.
 %
 When an RSP document is \emph{evaluated} ("compiled"), it is first (i) \emph{parsed} where comments are dropped and preprocessing directives are processed, then (ii) \emph{translated} into plain R code, which when (iii) evaluated generates an \emph{RSP product} (as a string or an output file).
 
@@ -487,7 +488,7 @@ Further more, note that trailing whitespace can be trimmed from any line by addi
 \subsection{Escaping RSP start and end tags (\code{<\%\%} and \code{\%\%>})}
 \label{RspEscape}
 To include '\code{<\%}' and '\code{\%>}' in the text of the RSP product
-they need to escaped so that the RSP parser do not recognize them as
+they need to be escaped so that the RSP parser do not recognize them as
 part of an RSP constructs.  This can be done as '\code{<\%\%}' and
 '\code{\%\%>}', respectively.  For instance,
 \begin{escapeRspVerbatim}
@@ -507,14 +508,79 @@ A random integer in [1,100]: <\%=sample(1:100, size=1)\%>
   -------------------------------------------------------------------%>
 \subsection{Preprocessing directives (\code{<\%@...\%>})}
 \label{PreprocessingDirectives}
+An \emph{RSP preprocessing directive}, or short an \emph{RSP directive}, is an RSP construct that starts with an '\code{@}' followed by a \emph{directive} and zero or more \emph{named arguments}, e.g. \code{<\%@include file="random.tex.rsp"\%>}.    RSP directives can for instance be used to include the content of another file or conditionally include/exclude parts of the existing document.  RSP preprocessing directives facilitates modularizing RSP documents such that the same RSP module can be reused in many places, which in turn minimizes and often eliminates the manual and often error-prone process of cut-and-pasting content between documents.
+
+The formal syntax for an RSP preprocessing directive is \code{<\%@\{directive\} [\{name\}=\{value\}]*\%>}.
+RSP preprocessing directives are processed during the parsing of the RSP document.  This is done \emph{after} RSP comments have been dropped and \emph{before} RSP code expressions are parsed.  This means that:
+\begin{itemize}
+ \item RSP comments can be used to commenting out and hence exclude RSP preprocessing directives, e.g. \code{<\%-- <\%@include file=\lb"random.tex.rsp"\%> --\%>}.
+ \item RSP preprocessing directives may insert new RSP code expressions as if they where part of the original RSP document, e.g. \code{<\%@include file="random.tex.rsp"\%>}.  Any RSP comments inserted will be dropped as expected.  If other RSP directives are inserted, they are processed immediately.
+ \item After being processed, only RSP text and RSP code expressions remains (no RSP preprocessing directives).   Notably, RSP code expression \emph{does not see or have access} to RSP preprocessing directives or any of their assigned variables.
+\end{itemize}
+
+Just like RSP comments, RSP directives are designed to be independent of the programming language.  In other words, by design these constructs are not relying on the R language.  Another way look at it is that the processing of RSP comments and RSP directives may be done by an \emph{RSP processor} written in a different language than R, e.g. Python or C.
+
+<%----
 When an RSP-embedded document in processed, it is (i) \emph{parsed}, (ii) \emph{preprocessed}, (iii) \emph{translated} to R source code, which is then (iv) \emph{parsed and evaluated} by the R engine.  It is during this last step the RSP document is outputted (as a file or as a character string).
 During the initial parsing, RSP comments and their contents are dropped.
 During preprocessing, RSP \emph{preprocessing directives}, which are RSP constructors of format \code{<\%@...\%>}, are processed.
 Such directives can be used to for instance programmatically control how parts of an RSP document are included or excluded based on some conditions or they can be used to include an external RSP source into the main RSP document.
 Although the afformentioned maybe achieved with by plain R \code{<\%~...~\%>} constructs, these tasks are much bettered handled by RSP preprocessing directives.  It is also useful to understand that preprocessing directives are RSP constructs that are \emph{independent of the R language} per se and are processed before the RSP document is interpreted as R source code\footnote{Conceptually, there is nothing preventing an RSP document to be parsed and preprocessed by another implementation in a different programming language than R.  It is only the succeeding steps that are specific to the R language.}.
 After preprocessing, there are no remaining RSP preprocessing directives left in the RSP document, which then only contains text and basic RSP constructs (Sections~\ref{RspCodeChunkInlining}-\ref{RspCodeEmbed}).
+----%>
+
+All RSP directive arguments (also known as "attributes") must be named with names having the correct case and not being abbreviated.  For instance, \code{<\%@include file=\lb"random.tex.rsp"\%>} is correct whereas \code{<\%@include "random.tex.rsp"\%>}, \code{<\%@include Language=\lb"random.tex.rsp"\%>} and \code{<\%@include lang=\lb"random.tex.rsp"\%>} are not.
+%
+The value of an RSP directive argument is parsed as a \emph{GString}\footnote{In R, GString can be processed by the \code{gstring()} function in the \pkg{R.utils} package.}.  A GString is a regular string that optionally may contain bash-like syntax for inserting values of system environment variables.  For instance, if environment variable \code{INCNAME} is set to '\code{random}', then \code{<\%@include file=\lb"\$\{INCNAME\}.tex.rsp"\%>} evaluates as \code{<\%@include file="random.tex.rsp"\%>}.  Note how this substitution is indepent of the R language.
+For conveniency, when processing an RSP document using the RSP parser of the \pkg{R.rsp} package, GString also looks for a matching variables elsewhere.  Notably, it searches (i) among the variables in the R workspace, (ii) among the R options, and then (iii) among the system environment variable.\footnote{Although the RSP parser of the \pkg{R.rsp} package also looks for GString variable in the R environment and its options, it does not mean that these variables are dependent on the R language.  The substituted value will always be interpreted as a character string.  An RSP parser implemented in Python could take a similar approach}
+Importantly, note that variables set in RSP code expressions \emph{cannot} be used in RSP directives, because they are only assigned after the RSP preprocessing directives have been processed.
+
+\subsubsection{Including text and RSP contents}
+It is possible to include the contents of other text and RSP documents.  These can be either specified as strings (argument '\code{text}') or as files (argument '\code{file}'), which may be either a file on the file system or URL/document online.
+All contents included is considered to have a certain \emph{language} attribute.   The language attribute specifies how the content is included in the document.  For instance, plain text has language attribute 'text' and is included "as is"\footnote{RSP start and end tags in plain text are escaped before being included.  How to escape in RSP, see Section~\ref{RspEscape}.}.
+An RSP document has language attribute 'rsp', and is included in the main RSP document as an parsed RSP document.
+The default is to infer the language attribute automatically, e.g. from the filename extension of the \code{file} argument.  When this is not possible, it may be necessary to specify the '\code{language}' argument, e.g. \code{language="text"}.
+
+\paragraph{Including plain text (\code{<\%@include text="\{text\}"\%>})}
+Although not commonly needed, it is possible to include plain text during the preprocessing of the RSP document.  For example, the template RSP document
+\begin{rspVerbatim}
+The \code{R_HOME} environment variable was '<\%@include text="${R_HOME}"\%>'
+at the time when this document was preprocessed.
+\end{rspVerbatim}
+results in an preprocessed RSP document consisting of
+\begin{rspVerbatim}
+The \code{R_HOME} environment variable was '<%@include text="${R_HOME}"%>'
+at the time when this document was preprocessed.
+\end{rspVerbatim}
+Whenever using the '\code{text}' argument, the 'language' attribute is assumed to be 'text'.
+
+<%---
+  To include a parsed RSP string, one need to specify the 'language' attribute as:
+\begin{rspVerbatim}
+<\%@include text="Current time is '<\%=Sys.time()\%>'." language="rsp"\%>
+at the time when this document was preprocessed.
+\end{rspVerbatim}
+results in an preprocessed RSP document consisting of
+\begin{rspVerbatim}
+<%@include text="Current time is '<%=Sys.time()%>'." language="rsp"%>
+\end{rspVerbatim}
+---%>
+
+
+\paragraph{Including the content of a file (\code{<\%@include file="\{pathname\}"\%>})}
+To include the content of a text file "as is" during preprocessing, use the '\code{file}' argument.  This may be used to include a local file or a file online (specified as a URL).  For instance,
+\begin{rspVerbatim}
+... '<\%@include file="randoms.txt"\%>'  ## <== Update
+\end{rspVerbatim}
+To include the RSP parsed content of a text file with RSP markup, do
+\begin{rspVerbatim}
+... '<\%@include file="randoms.txt.rsp"\%>'  ## <== Update
+\end{rspVerbatim}
+The 'language' attribute, which specifies how the content is included, is by default inferred from the filename extension of the included filename.  If the extension (in lower case) is '\code{txt}', the language is assumed to be 'text'.  If it is '\code{rsp}', then the language is assumed to be 'rsp'.  For unknown extensions, it is always assumed to be 'text'.  The 'language' attribute can be specified using the '\code{language}' argument.
 
 \emph{To be continued.}
+
+
 
 \subsubsection{RSP document annotation}
 
@@ -548,17 +614,6 @@ After preprocessing, there are no remaining RSP preprocessing directives left in
 
 
 
-\subsubsection{Including files}
-
-\paragraph{Including text (\code{<\%@include text="\{text\}"\%>})}
-\emph{To be continued.}
-
-\paragraph{Including a file as is (\code{<\%@include file="\{pathname\}"\%>})}
-\emph{To be continued.}
-
-\paragraph{Including an RSP file (\code{<\%@include file="\{pathname\}"\%>})}
-\emph{To be continued.}
-
 
 \subsubsection{Conditional inclusion/exclusion}
 \emph{To be documented.}
@@ -568,6 +623,18 @@ After preprocessing, there are no remaining RSP preprocessing directives left in
 
 \paragraph{If not equal to, else, end if (\code{<\%@ifneq var="\{value\}"\%>})}
 \emph{To be continued.}
+
+
+\subsubsection{Compiling a standalone RSP document
+from a preprocessed but not evaluated RSP document template}
+However convenient it is to use a modularized RSP document that reuses many different RSP subdocuments, it may be tedious to share such as document with others.  In order for someone else to compile the same RSP document, it is necessary to make sure all files being used are also shared with the receiver together with instructions where to put them.  Some of these files may only be included under certain conditions, making the just add to the overall clutter at the receiver's end.
+ In such cases, it may be useful to produce \emph{a preprocessed but not yet evaluated RSP document} from the main RSP document.  Such an RSP document will not contain any preprocessing directives and in that sense be self-contained and easier to share.  It is also likely be easier for the reciever to follow.
+To compile such a stand-alone RSP document, do:
+\begin{escapeRspVerbatim}
+> rcompile("random.txt.rsp") ## <= Not yet implemented in R.rsp!
+\end{escapeRspVerbatim}
+This outputs a file \code{preprocessed-random.txt.rsp} in the current directory.
+Documents compiled this way will contain neither RSP comments nor RSP preprocessing directives.  This may be useful if the source RSP subdocuments contain private comments and private parts that are conditional excluded during preprocessing.
 
 
 
