@@ -141,9 +141,9 @@ Using the \pkg{R.rsp} package\footnote{To install the \pkg{R.rsp} package, call 
 > rcat("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
 A random integer in [1,100]: 77
 \end{escapeRspVerbatim}
-As explained further in Section~\ref{RspMarkupLanguage}, the RSP expression \code{<\%=\{code chunk\}\%>} causes the R expression '\code{\{code chunk\}}' to be evaulated and its value to be inserted into the text (replacing the RSP expression itself).
+As explained further in Section~\ref{RspMarkupLanguage}, the RSP construct \code{<\%=\{code chunk\}\%>} causes the R expression '\code{\{code chunk\}}' to be evaulated and its value to be inserted into the text (replacing the RSP construct).
 %
-To processed the RSP string without outputting the result, but instead storing it in a character variable, do
+To process the RSP string without outputting the result, but instead returning it in a character string, do
 \begin{escapeRspVerbatim}
 > s <- rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
 > cat(s)
@@ -152,19 +152,21 @@ A random integer in [1,100]: 43
 
 
 
-\section{Compiling RSP documents to files}
+%% \section{Compiling RSP documents to files}
 \subsection{rfile()}
 Consider an RSP-embedded text file \code{random.txt.rsp} that contains the above RSP string, i.e.
 \begin{rspVerbatim}
 A random integer in [1,100]: <\%=sample(1:100, size=1)\%>
 \end{rspVerbatim}
-This file can be compiled into a plain text file (\code{random.txt}) as
+This file can be compiled as
 \begin{verbatim}
 > rfile("random.txt.rsp")
 \end{verbatim}
-This will
-(i) parse the RSP text file and translate it into valid R source code, and
-(ii) evaluate the R code which outputs a plain text file (\code{random.txt}), which pathname is (by default) the same as the RSP file with the file extension dropped.
+which generates a plain text file (\code{random.txt}) that contains
+\begin{escapeRspVerbatim}
+A random integer in [1,100]: 96
+\end{escapeRspVerbatim}
+The filename of the output is the same as the RSP file with the file extension dropped.
 %
 To try this example yourself, do
 \begin{verbatim}
@@ -184,15 +186,14 @@ The latter example illustrates how \code{rstring()} also can load strings from e
 
 \subsection{Automatic postprocessing}
 For RSP documents that outputs certain file formats such as LaTeX, Sweave, and knitr further processing of the RSP file output is often necessary before obtaining the final RSP product, e.g. a PDF file.
-The \code{rfile()} function will, based on the content type of the generated RSP output, detected if further processing ("postprocessing") can be done or not.  If so, it is postprocessed to arrive at the final product.
+The \code{rfile()} function will, based on the content type of the generated RSP output, detected if further processing ("postprocessing") is possible.  If so, it is postprocessed to arrive at the final product.
 For instance, consider an RSP-embedded LaTeX document \code{report.tex.rsp}.  When compiling it by
 \begin{verbatim}
 > rfile("report.tex.rsp")
 \end{verbatim}
-the \code{rfile()} method will as before
-(i) translate the RSP-embedded LaTeX document into valid R source code, and
-(ii) evaluate the R code resulting in a LaTeX document (\code{report.tex}), but it will also
-(iii) compile the LaTeX document into a PDF (\code{report.pdf}).
+the \code{rfile()} method will
+(i) parse and evaluate the RSP-embedded LaTeX document resulting in a LaTeX document (\code{report.tex}), but in addition it will also
+(ii) compile the LaTeX document into a PDF (\code{report.pdf}).
 To disable RSP postprocessing, specify argument \code{postprocess=FALSE} when calling \code{rfile()}.
 %
 To try postprocessing yourself, you can compile this very document by
@@ -200,13 +201,15 @@ To try postprocessing yourself, you can compile this very document by
 > path <- system.file("doc", package="R.rsp")
 > rfile("Dynamic_LaTeX_reports_with_RSP.tex.rsp", path=path)
 \end{verbatim}
-and even the latest developers version of it by
+The generated PDF (\code{Dynamic\_LaTeX\_reports\_with\_RSP.pdf}) will be available in the current directory of R (see \code{getwd()}).
+%
+It is even possible to compile online RSP documents, e.g.
 \begin{verbatim}
 > url <- "http://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/R.rsp/inst/doc/
           Dynamic_document_creation_using_RSP.tex.rsp?root=r-dots"
 > rfile(url)
 \end{verbatim}
-The generated PDF (\code{Dynamic\_LaTeX\_reports\_with\_RSP.pdf}) will be available in the current directory of R (see \code{getwd()}).
+which produces a PDF of the current developer's version of this vignette.
 
 
 
@@ -240,7 +243,7 @@ is parsed by the RSP parser into the following sequence of RSP constructs:
 (i) RSP text '\code{A random integer in [1,100]: }', 
 (ii) RSP code expression '\code{<\%=sample(1:100, size=1)\%>}', and
 (iii) RSP text '\code{{\bs}n}'.
-When this sequence is later evaluated, the two RSP texts are inserted into the output \emph{RSP product} "as is", whereas for the RSP code expression its contained R code is evaluated and its return value is then inserted into the \emph{RSP product} as text.
+When this sequence is later evaluated, the two RSP texts are inserted into the RSP product "as is", whereas for the RSP code expression its contained R code is evaluated and its return value is then inserted into the RSP product as text.
 %
 
 \subsection{RSP code expressions (\code{<\%...\%>})}
