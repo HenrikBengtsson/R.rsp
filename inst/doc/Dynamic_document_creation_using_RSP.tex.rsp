@@ -454,7 +454,7 @@ Note that the above applies to all types of RSP constructs, including all existi
 
 \subsection{Comments (\code{<\%--\{anything\}--\%>})}
 \label{RspComments}
-The RSP markup \code{<\%--\{anything\}--\%>}, \code{<\%---\{anything\}---\%>} and so on\footnote{The number of prefix and suffix hyphens in an RSP comment must match, i.e. \code{<\%--- A comment --\%>} is \emph{not} recognized as an RSP comment.} represents RSP comments, which can be used to drop large sections of an RSP document\footnote{An RSP comment may can contain \emph{anything} because it is dropped by the RSP parser at the very beginning before parsing the text and the other RSP constructs.}.  Unlike other RSP constructs, an RSP comment may contain other RSP constructs (also incomplete ones) including RSP comments.  
+The RSP markups \code{<\%--\{anything\}--\%>}, \code{<\%---\{anything\}---\%>} and so on\footnote{The number of prefix and suffix hyphens in an RSP comment must match, i.e. \code{<\%--- A comment --\%>} is \emph{not} recognized as an RSP comment.} represent RSP comments, which can be used to drop large sections of an RSP document\footnote{An RSP comment may can contain \emph{anything} because it is dropped by the RSP parser at the very beginning before parsing the text and the other RSP constructs.}.  Unlike other RSP constructs, an RSP comment may contain other RSP constructs (also incomplete ones) including RSP comments.  
 In order to nest RSP comments, any nested comment must use a different number of hyphens compared to the surrounding RSP comment\footnote{The reason for needing a different number of hyphens in nested RSP comments is because RSP comments are \emph{non-greedy}, that is, anything between (and including) the \code{<\%--} and the \emph{first} following \code{--\%>} will be dropped.}.
 For example, the following RSP document
 \begin{rspVerbatim}
@@ -517,10 +517,10 @@ A random integer in [1,100]: 8
 \label{PreprocessingDirectives}
 An \emph{RSP preprocessing directive}, or short an \emph{RSP directive}, is an RSP construct that starts with an '\code{@}' followed by a \emph{directive} and zero or more \emph{named arguments}, e.g. \code{<\%@include file="random.tex.rsp"\%>}.    RSP directives can for instance be used to include the content of another file or conditionally include/exclude parts of the existing document.  RSP preprocessing directives facilitates modularizing RSP documents such that the same RSP module can be reused in many places, which in turn minimizes and often eliminates the manual and often error-prone process of cut-and-pasting content between documents.
 
-The formal syntax for an RSP preprocessing directive is \code{<\%@\{directive\} [\{name\}=\{value\}]*\%>}.
+The formal syntax for an RSP preprocessing directive is \code{<\%@\{directive\} [\{name\}="\{value\}"]*\%>}.
 RSP preprocessing directives are processed during the parsing of the RSP document.  This is done \emph{after} RSP comments have been dropped and \emph{before} RSP code expressions are parsed.  This means that:
 \begin{itemize}
- \item RSP comments can be used to commenting out and hence exclude RSP preprocessing directives, e.g. \code{<\%-- <\%@include file=\lb"random.tex.rsp"\%> --\%>}.
+ \item RSP comments can be used to commenting out and hence exclude RSP preprocessing directives, e.g. \code{<\%--- <\%@include file=\lb"random.tex.rsp"\%> ---\%>}.
  \item RSP preprocessing directives may insert new RSP code expressions as if they where part of the original RSP document, e.g. \code{<\%@include file="random.tex.rsp"\%>}.  Any RSP comments inserted will be dropped as expected.  If other RSP directives are inserted, they are processed immediately.
  \item After being processed, only RSP text and RSP code expressions remains (no RSP preprocessing directives).   Notably, RSP code expression \emph{does not see or have access} to RSP preprocessing directives or any of their assigned variables.
 \end{itemize}
@@ -593,6 +593,14 @@ The current time is <%=Sys.time()%>.
 > rcat('The current time is <\%@include file="time.txt.rsp" language="text"\%>.{\bs}')
 The current time is <\%=Sys.time()\%>.
 \end{escapeRspVerbatim}
+
+Be careful not to include the same file recursively over and over as the following case would do:
+\begin{escapeRspVerbatim}
+> cat('Recursive <\%@include file="endless.txt.rsp"\%>', file="endless.txt.rsp")
+> rcat(file="endless.txt.rsp")
+\end{escapeRspVerbatim}
+The RSP parser implemented in the \pkg{R.rsp} package will give an error if it detects such endless loops.
+
 
 \emph{To be continued.}
 
