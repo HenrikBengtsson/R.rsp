@@ -95,6 +95,7 @@
 # @alias sourceRspV2.default
 #
 # @alias exprToCode
+# @alias getAttribute
 # @alias getAttributes
 # @alias getCode
 # @alias getEcho

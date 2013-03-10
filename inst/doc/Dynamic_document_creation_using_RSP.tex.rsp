@@ -599,7 +599,7 @@ Be careful not to include the same file recursively over and over as the followi
 > cat('Recursive <\%@include file="endless.txt.rsp"\%>', file="endless.txt.rsp")
 > rcat(file="endless.txt.rsp")
 \end{escapeRspVerbatim}
-The RSP parser implemented in the \pkg{R.rsp} package will give an error if it detects such endless loops.
+The RSP parser implemented in the \pkg{R.rsp} package will give an error if it detects file inclusions that are nested too deeply.
 
 
 \emph{To be continued.}
