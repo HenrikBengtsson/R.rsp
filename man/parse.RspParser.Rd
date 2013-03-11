@@ -18,7 +18,7 @@
 }
 
 \usage{
-\method{parse}{RspParser}(parser, object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), verbose=FALSE)
+\method{parse}{RspParser}(parser, object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), as=c("RspDocument", "RspString"), verbose=FALSE)
 }
 
 \arguments{
@@ -27,12 +27,14 @@
   \item{...}{Passed to the processor in each step.}
   \item{until}{Specifies how far the parse should proceed, which is useful
      for troubleshooting and rebugging.}
+  \item{as}{Specifies in what format the parsed RSP document
+     should be returned.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{
- Returns a \code{\link{RspDocument}} (unless \code{until != "*"} in case it
- returns a deparsed \code{\link{RspString}}.)
+ Returns a \code{\link{RspDocument}} (when \code{as = "RspDocument"}; default)
+ or \code{\link{RspString}} (when \code{as = "RspString"}).
 }
 
 \author{Henrik Bengtsson}

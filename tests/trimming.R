@@ -1,4 +1,5 @@
 library("R.rsp")
+verbose <- Arguments$getVerbose(TRUE)
 
 # TRIMMING:
 # RSP constructs do not take up space in the output document,
@@ -15,7 +16,7 @@ library("R.rsp")
 text='
 <%-- Assign a preprocessor variable a value from an R option.
      If not available, a default value is used. --%>
-<%@define version="${\'R.rsp/HttpDaemon/RspVersion\'}" default="2.0"-%>
+<%@define version="${\'R.rsp/HttpDaemon/RspVersion\'}" default="2.0"%>
 
 <%-- Include the value of the preprocessor variable to the document. --%>
 Current version is <%@include text="${version}"%> (at preprocessing).
@@ -49,10 +50,7 @@ Not "not v1.0", but v<%=ver%>.
 
 s <- rstring(text)
 
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Compare to ground truth
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Generate ground truth reference
 text0='
 
 Current version is 2.0 (at preprocessing).
@@ -65,4 +63,14 @@ Not "not v1.0", but v2.0.
 '
 
 s0 <- rstring(text0)
+
+verbose && enter(verbose, "rstring()")
+verbose && ruler(verbose, char="--- INPUT ")
+cat(text)
+verbose && ruler(verbose, char="--- OUTPUT ")
+cat(s)
+verbose && ruler(verbose, char="--- REFERENCE ")
+cat(s0)
+verbose && ruler(verbose)
 stopifnot(identical(s, s0))
+verbose && exit(verbose)

@@ -61,6 +61,7 @@ RspDocument(expressions=list(), type=NA, source=NA, annotations=list(), ...)
  \tab \code{\link[R.rsp:preprocess.RspDocument]{preprocess}} \tab Processes all RSP preprocessing directives.\cr
  \tab \code{\link[R.rsp:print.RspDocument]{print}} \tab Prints a summary of an RspDocument.\cr
  \tab \code{rcat} \tab  -\cr
+ \tab \code{rcompile} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
  \tab \code{\link[R.rsp:subset.RspDocument]{subset}} \tab Subsets an RspDocument.\cr
  \tab \code{\link[R.rsp:toR.RspDocument]{toR}} \tab Translates the RSP document into R source code.\cr

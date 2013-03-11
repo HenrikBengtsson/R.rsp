@@ -147,8 +147,8 @@ As explained further in Section~\ref{RspMarkupLanguage}, the RSP construct \code
 To process the RSP string without outputting the result, but instead returning it in a character string, do
 \begin{escapeRspVerbatim}
 > s <- rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
-> cat(s)
-A random integer in [1,100]: 43
+> print(s)
+[1] "A random integer in [1,100]: 43{\bs}n"
 \end{escapeRspVerbatim}
 
 
@@ -408,7 +408,7 @@ produces
 
 \subsection{Trimming whitespace for RSP constructs}
 \label{TrimmingWhitespace}
-Because of readability of the RSP source document, RSP constructors are often placed on separate lines than the text blocks but also other RSP constructs.  Depending on how whitespace and line breaks (as introduced by the above coding style) are handled in the output format, this may or may not affect how the output document renders.  For instance, line breaks explicitly introduced in an RSP source document will make the an outputted plain text document look different whereas single line breaks will not affect how a LaTeX document is compiled.
+Because of readability of the RSP source document, RSP constructors are often placed on lines separate from the text blocks but also other RSP constructs.  Depending on how whitespace and line breaks (as introduced by the above coding style) are handled in the output format, this may or may not affect how the output document renders.  For instance, line breaks explicitly introduced in an RSP source document will make the an outputted plain text document look different whereas single line breaks will not affect how a LaTeX document is compiled.
 
 
 \subsubsection{Trimming of lines with only non-text RSP constructs}
@@ -433,7 +433,9 @@ trimmed off as well as its trailing line break.
 
 
 \subsubsection{Manually controlling trailing whitespace and line breaks}
-Also for RSP constructs that are not surrounded by only whitespace, it is possible to control how whitespace and line breaks following RSP constructs are trimmed.  By adding a so called "suffix hyphen" at the end of an RSP construct, all following whitespace (space and tabs) including the first line break (the newline) is dropped ("trimmed"), if and only if there are no other characters following the RSP construct.  How this works is illustrated by the following three examples
+Also for RSP constructs that are not surrounded by only whitespace, it is possible to control how whitespace and line breaks following RSP constructs are trimmed.  This is done via so called \emph{RSP end tag specifications}.   Those apply to all types of RSP constructs.
+
+By adding a "end tag hyphen" at the end of an RSP construct, all following whitespace (space and tabs) including the first line break (the newline) is dropped ("trimmed"), if and only if there are no other characters following the RSP construct.  How this works is illustrated by the following three examples
 \begin{escapeRspVerbatim}
 > rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
 [1] "A random integer in [1,100]: 48{\bs}n"
@@ -449,7 +451,15 @@ and
 [1] "A random integer in [1,100]: 48{\bs}n{\bs}n"
 \end{escapeRspVerbatim}
 
-Note that the above applies to all types of RSP constructs, including all existing RSP comments, a construct that introduced next.
+To disable the trimming of trailing whitespace and line breaks, add a "end tag plus sign", i.e. '\code{+\%>}'.  For instance,
+\begin{escapeRspVerbatim}
+> rstring('abc{\bs}n<\%="DEF"\%>{\bs}nGHI')
+[1] "abc{\bs}nDEFGHI"
+> rstring('abc{\bs}n<\%="DEF"-\%>{\bs}nGHI')
+[1] "abc{\bs}nDEFGHI"
+> rstring('abc{\bs}n<\%="DEF"+\%>{\bs}nGHI')
+[1] "abc{\bs}nDEF{\bs}nGHI"
+\end{escapeRspVerbatim}
 
 
 \subsection{Comments (\code{<\%--\{anything\}--\%>})}
@@ -463,7 +473,7 @@ You can write a paragraph and drop a large portion of it using
 <\%--- This comment contains both regular RSP expressions 
 There are <\%=n\%> red <\%=type\%>s 
 <\%-- as well as another RSP comment --\%>
-which is nested. ---\%> RSP comments.
+which is nested. ---\%>RSP comments.
 \end{rspVerbatim}
 is from the parser's point of view equivalent to the following RSP document
 \begin{rspVerbatim}
@@ -477,7 +487,7 @@ You can write a paragraph and drop a large portion of it using
 <%--- This comment contains both regular RSP expressions 
 There are <%=n%> red <%=type%>s 
 <%-- as well as another RSP comment --%>
-which is nested. ---%> RSP comments.
+which is nested. ---%>RSP comments.
 \end{verbatim}
 
 As explained in Section~\ref{TrimmingWhitespace}, \emph{all} RSP constructs with a suffix hyphen causes any following whitespace including the first following line break to be trimmed, if no other characters appear after the contruct.  This means that all RSP comments automatically trims such empty text.
@@ -502,7 +512,7 @@ To clarify this further, consider the output of the following steps
 > rcat(b)
 A random integer in [1,100]: 8
 \end{escapeRspVerbatim}
-
+Finally, notice that '\code{<\%\%>}' is interpreted as an escaped '\code{<\%}' followed by a '\code{>}' and \emph{not} as an empty RSP code expression.
 
 
 

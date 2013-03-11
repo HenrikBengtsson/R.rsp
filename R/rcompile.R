@@ -1,10 +1,9 @@
 ###########################################################################/**
-# @RdocDefault rstring
-# @alias rstring.RspString
-# @alias rstring.RspDocument
-# @alias rstring.RspRSourceCode
+# @RdocDefault rcompile
+# @alias rcompile.RspString
+# @alias rcompile.RspDocument
 #
-# @title "Evaluates an RSP string and returns the generated string"
+# @title "Compiles an RSP document"
 #
 # \description{
 #  @get "title".
@@ -22,14 +21,15 @@
 #   \item{args}{A named @list of arguments assigned to the environment
 #     in which the RSP string is parsed and evaluated.
 #     See @see "R.utils::cmdArgs".}
+#   \item{until}{Specifies how far the compilation should proceed.}
+#   \item{as}{Specifies the format of the returned compilation.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{
-#   Returns an @see "RspStringProduct".
+#   Returns an @see "RspDocument" or @see "RspString"
+#   (depending on argument \code{as}).
 # }
-#
-# @examples "../incl/rstring.Rex"
 #
 # @author
 #
@@ -39,8 +39,9 @@
 #
 # @keyword file
 # @keyword IO
+# @keyword internal
 #*/###########################################################################
-setMethodS3("rstring", "default", function(..., file=NULL, path=NULL, envir=parent.frame(), args="*", verbose=FALSE) {
+setMethodS3("rcompile", "default", function(..., file=NULL, path=NULL, envir=parent.frame(), args="*", until="*", as=c("RspString", "RspDocument"), verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
 
@@ -58,6 +59,12 @@ setMethodS3("rstring", "default", function(..., file=NULL, path=NULL, envir=pare
     }
   }
 
+  # Argument 'until':
+##  until <- match.arg(until);
+
+  # Argument 'as':
+  as <- match.arg(as);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -66,7 +73,9 @@ setMethodS3("rstring", "default", function(..., file=NULL, path=NULL, envir=pare
   }
 
 
-  verbose && enter(verbose, "rstring() for default");
+  verbose && enter(verbose, "rcompile() for default");
+  verbose && cat(verbose, "Compile until: ", sQuote(until));
+  verbose && cat(verbose, "Return as: ", sQuote(as));
 
   if (is.null(file)) {
     s <- RspString(...);
@@ -77,15 +86,15 @@ setMethodS3("rstring", "default", function(..., file=NULL, path=NULL, envir=pare
   }
   verbose && cat(verbose, "Length of RSP string: ", nchar(s));
 
-  res <- rstring(s, envir=envir, args=args, verbose=verbose);
+  res <- rcompile(s, envir=envir, args=args, until=until, as=as, verbose=verbose);
 
   verbose && exit(verbose);
 
   res;
-}) # rstring()
+}) # rcompile()
 
 
-setMethodS3("rstring", "RspString", function(object, envir=parent.frame(), args="*", ..., verbose=FALSE) {
+setMethodS3("rcompile", "RspString", function(object, envir=parent.frame(), args="*", ..., until="*", as=c("RspString", "RspDocument"), verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
 
@@ -95,6 +104,12 @@ setMethodS3("rstring", "RspString", function(object, envir=parent.frame(), args=
   # Argument 'args':
   args <- cmdArgs(args);
 
+  # Argument 'until':
+##  until <- match.arg(until);
+
+  # Argument 'as':
+  as <- match.arg(as);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -102,7 +117,9 @@ setMethodS3("rstring", "RspString", function(object, envir=parent.frame(), args=
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "rstring() for ", class(object)[1L]);
+  verbose && enter(verbose, "rcompile() for ", class(object)[1L]);
+  verbose && cat(verbose, "Compile until: ", sQuote(until));
+  verbose && cat(verbose, "Return as: ", sQuote(as));
 
   if (length(args) > 0L) {
     verbose && enter(verbose, "Assigning RSP arguments to processing environment");
@@ -124,25 +141,25 @@ setMethodS3("rstring", "RspString", function(object, envir=parent.frame(), args=
     names <- NULL;
   }
 
-  verbose && enter(verbose, "Parse RSP string to RSP document");
+  verbose && enter(verbose, "Parsing RSP string");
   verbose && cat(verbose, "Parse environment: ", getName(envir));
   if (length(names) > 0L) {
     ll <- subset(ll(envir=envir), member %in% names);
     verbose && print(verbose, ll);
   }
-  expr <- parse(object, envir=envir, ..., verbose=verbose);
-  verbose && print(verbose, expr);
+  res <- parse(object, envir=envir, ..., until=until, as=as, verbose=verbose);
+  verbose && print(verbose, res);
   verbose && exit(verbose);
 
-  res <- rstring(expr, envir=envir, args=NULL, ..., verbose=verbose);
 
   verbose && exit(verbose);
 
   res;
-}) # rstring()
+}) # rcompile()
 
 
-setMethodS3("rstring", "RspDocument", function(object, envir=parent.frame(), ..., verbose=FALSE) {
+
+setMethodS3("rcompile", "RspDocument", function(object, envir=parent.frame(), ..., verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
 
@@ -156,57 +173,25 @@ setMethodS3("rstring", "RspDocument", function(object, envir=parent.frame(), ...
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "rstring() for ", class(object)[1L]);
+  verbose && enter(verbose, "rcompile() for ", class(object)[1L]);
 
-  verbose && enter(verbose, "Coerce RSP document to RSP source code");
-  factory <- RspRSourceCodeFactory();
-  verbose && cat(verbose, "Language: ", getLanguage(factory));
-  code <- toSourceCode(factory, object, verbose=verbose);
-  verbose && cat(verbose, "Generated source code:");
-  verbose && cat(verbose, head(code, n=3L));
-  verbose && cat(verbose);
-  verbose && cat(verbose, "[...]");
-  verbose && cat(verbose);
-  verbose && cat(verbose, tail(code, n=3L));
+  verbose && enter(verbose, "Coercing RSP document to RSP string");
+  s <- asRspString(object);
   verbose && exit(verbose);
 
-  res <- rstring(code, ..., envir=envir, verbose=verbose);
+  res <- rcompile(s, ..., envir=envir, verbose=verbose);
 
   verbose && exit(verbose);
 
   res;
-}) # rstring()
-
-
-setMethodS3("rstring", "RspRSourceCode", function(object, envir=parent.frame(), ..., verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::nnn() was called.
-  suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
-  verbose && enter(verbose, "rstring() for ", class(object)[1L]);
-  verbose && cat(verbose, "Environment: ", getName(envir));
-
-  res <- process(object, envir=envir, output="stdout", ..., verbose=less(verbose,10));
-
-  verbose && exit(verbose);
-
-  res;
-}) # rstring()
-
+}) # rcompile()
 
 
 
 ##############################################################################
 # HISTORY:
+# 2013-03-10
+# o Added rcompile().
 # 2013-02-23
 # o Now rstring() captures standard output such that all user output to
 #   stdout will be part of the output document in the order they occur.

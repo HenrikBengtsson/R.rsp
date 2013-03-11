@@ -1,26 +1,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  rstring.R
+%  rcompile.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{rstring}
-\alias{rstring.default}
-\alias{rstring}
-\alias{rstring.RspString}
-\alias{rstring.RspDocument}
-\alias{rstring.RspRSourceCode}
+\name{rcompile}
+\alias{rcompile.default}
+\alias{rcompile}
+\alias{rcompile.RspString}
+\alias{rcompile.RspDocument}
 
-\title{Evaluates an RSP string and returns the generated string}
+\title{Compiles an RSP document}
 
 \description{
- Evaluates an RSP string and returns the generated string.
+ Compiles an RSP document.
 }
 
 \usage{
-\method{rstring}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", verbose=FALSE)
+\method{rcompile}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", until="*", as=c("RspString", "RspDocument"), verbose=FALSE)
 }
 
 \arguments{
@@ -33,20 +32,14 @@
   \item{args}{A named \code{\link[base]{list}} of arguments assigned to the environment
     in which the RSP string is parsed and evaluated.
     See \code{\link[R.utils]{cmdArgs}}.}
+  \item{until}{Specifies how far the compilation should proceed.}
+  \item{as}{Specifies the format of the returned compilation.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{
-  Returns an \code{\link{RspStringProduct}}.
-}
-
-\examples{
-x <- rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>\n")
-cat(x)
-
-# Passing arguments
-x <- rstring("A random integer in [1,<\%=K\%>]: <\%=sample(1:K, size=1)\%>\n", args=list(K=50))
-cat(x)
+  Returns an \code{\link{RspDocument}} or \code{\link{RspString}}
+  (depending on argument \code{as}).
 }
 
 \author{Henrik Bengtsson}
@@ -57,5 +50,7 @@ cat(x)
 
 
 
+
 \keyword{file}
 \keyword{IO}
+\keyword{internal}

@@ -47,6 +47,10 @@
 # \seealso{
 #  @see "rstring" and @see "rfile".
 # }
+#
+# @keyword print
+# @keyword IO
+# @keyword file
 #*/###########################################################################
 setMethodS3("rcat", "default", function(..., output="", append=FALSE, envir=parent.frame(), args="*") {
   s <- rstring(..., envir=envir, args=args);

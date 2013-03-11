@@ -104,8 +104,8 @@ setMethodS3("getAttribute", "RspConstruct", function(directive, name, default=NU
 setMethodS3("getSuffixSpecs", "RspConstruct", function(object, ...) {
   specs <- attr(object, "suffixSpecs");
   if (is.null(specs)) return(NULL);
-  specs <- gsub("^\\[[ \t\v]*", "", specs);
-  specs <- gsub("[ \t\v]*\\]$", "", specs);
+##  specs <- gsub("^\\[[ \t\v]*", "", specs);
+##  specs <- gsub("[ \t\v]*\\]$", "", specs);
   specs;
 })
 

@@ -66,3 +66,9 @@ rcat("A random integer in [1,<\%=K\%>]: <\%=sample(1:K, size=1)\%>\n", args=list
  \code{\link{rstring}}() and \code{\link{rfile}}().
 }
 
+
+
+
+\keyword{print}
+\keyword{IO}
+\keyword{file}

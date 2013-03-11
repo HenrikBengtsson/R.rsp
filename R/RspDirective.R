@@ -145,7 +145,7 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
     known <- unique(union(known, mandatory));
   
     # Remove all leading white spaces
-    pos <- regexpr("^[ \t]+", bfr);
+    pos <- regexpr("^[ \t\n\r]+", bfr);
     len <- attr(pos, "match.length");
     bfr <- substring(bfr, first=len+1L);
 
@@ -155,25 +155,33 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
       bfr <- paste(" ", bfr, sep="");
       while (nchar(bfr) > 0L) {
         # Read all (mandatory) white spaces
-        pos <- regexpr("^[ \t]+", bfr);
+        pos <- regexpr("^[ \t\n\r]+", bfr);
         if (pos == -1L) {
-          throw(Exception("Error when parsing attributes of RSP preprocessing directive. Expected a white space: ", code=rspCode));
+          throw(Exception("Error when parsing attributes of RSP preprocessing directive. Expected white space: ", code=sQuote(rspCode)));
         }
         len <- attr(pos, "match.length");
         bfr <- substring(bfr, first=len+1L);
+
+        # Nothing left?
+        if (nchar(bfr) == 0L) {
+          break;
+        }
+
         # Read the attribute name
         pos <- regexpr("^[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*", bfr);
         if (pos == -1L) {
-          throw(Exception("Error when parsing attributes of RSP preprocessing directive. Expected an attribute name: ", code=rspCode));
+str(pos);
+str(bfr);
+          throw(Exception("Error when parsing attributes of RSP preprocessing directive. Expected an attribute name: ", code=sQuote(rspCode)));
         }
         len <- attr(pos, "match.length");
         name <- substring(bfr, first=1L, last=len);
         bfr <- substring(bfr, first=len+1L);
     
         # Read the '=' with optional white spaces around it
-        pos <- regexpr("^[ ]*=[ ]*", bfr);
+        pos <- regexpr("^[ \t\n\r]*=[ \t\n\r]*", bfr);
         if (pos == -1L) {
-          throw(Exception("Error when parsing attributes of RSP preprocessing directive. Expected an equal sign: ", code=rspCode));
+          throw(Exception("Error when parsing attributes of RSP preprocessing directive. Expected an equal sign: ", code=sQuote(rspCode)));
         }
         len <- attr(pos, "match.length");
         bfr <- substring(bfr, first=len+1L);
@@ -183,7 +191,7 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
         if (pos == -1L) {
           pos <- regexpr("^'[^']*'", bfr);
           if (pos == -1L) {
-            throw(Exception("Error when parsing attributes of RSP preprocessing directive. Expected a quoted attribute value string: ", code=rspCode));
+            throw(Exception("Error when parsing attributes of RSP preprocessing directive. Expected a quoted attribute value string: ", code=sQuote(rspCode)));
           }
         }
         len <- attr(pos, "match.length");
@@ -192,27 +200,27 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
         names(value) <- name;
         attrs <- c(attrs, value);
       }
-    } # if (nchar(bfr) > 0)
+    } # if (nchar(bfr) > 0L)
 
     # Check for duplicated attributes  
     if (length(names(attrs)) != length(unique(names(attrs))))
-        throw(Exception("Duplicated attributes in RSP preprocessing directive.", code=rspCode));
+        throw(Exception("Duplicated attributes in RSP preprocessing directive.", code=sQuote(rspCode)));
   
     # Check for unknown attributes
     if (!is.null(known)) {
       nok <- which(is.na(match(names(attrs), known)));
-      if (length(nok) > 0) {
+      if (length(nok) > 0L) {
         nok <- paste("'", names(attrs)[nok], "'", collapse=", ", sep="");
-        throw(Exception("Unknown attribute(s) in RSP preprocessing directive: ", nok, code=rspCode));
+        throw(Exception("Unknown attribute(s) in RSP preprocessing directive: ", nok, code=sQuote(rspCode)));
       }
     }
   
     # Check for missing mandatory attributes
     if (!is.null(mandatory)) {
       nok <- which(is.na(match(mandatory, names(attrs))));
-      if (length(nok) > 0) {
+      if (length(nok) > 0L) {
         nok <- paste("'", mandatory[nok], "'", collapse=", ", sep="");
-        throw(Exception("Missing attribute(s) in RSP preprocessing directive: ", nok, code=rspCode));
+        throw(Exception("Missing attribute(s) in RSP preprocessing directive: ", nok, code=sQuote(rspCode)));
       }
     }
   
@@ -223,7 +231,7 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
 
   body <- expr;
 
-  pattern <- "^[ ]*([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*)([ ]+(.*))*";
+  pattern <- "^[ ]*([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*)([ \t\n\r]+(.*))*";
 
   # Sanity check
   if (regexpr(pattern, body) == -1L) {

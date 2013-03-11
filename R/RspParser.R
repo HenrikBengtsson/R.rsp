@@ -61,6 +61,17 @@ setConstructorS3("RspParser", function(...) {
 #*/######################################################################### 
 setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", "directive", "expression"), commentLength=-1L, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  countLineBreaks <- function(s, ...) {
+    s <- gsub("\r\n", "\n", s, fixed=TRUE);
+    s <- gsub("\r", "\n", s, fixed=TRUE);
+    s <- charToRaw(s);
+    sum(s == as.raw(0x0a));
+  } # countLineBreaks()
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'what':
@@ -80,15 +91,18 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 
 
   verbose && enter(verbose, "Raw parsing of RSP string");
-  verbose && cat(verbose, "What to parse for: ", what);
 
   # Work with one large character string
   bfr <- paste(object, collapse="\n", sep="");
-
   verbose && cat(verbose, "Length of RSP string: ", nchar(bfr));
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Setup
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Pattern for suffix specification
-  patternS <- "[-]+(\\[([^]]*)\\])?%>";
+##  patternS <- "(([+]))|([-]+\\[([^]]*)\\])?%>";
+  patternS <- "([+]|[-]+(\\[[^]]*\\])?)%>";
 
   # Setup the regular expressions for start and stop RSP constructs
   if (what == "comment") {
@@ -102,11 +116,11 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
     bodyClass <- RspComment;
   } else if (what == "directive") {
     patternL <- "<%@()()";
-    patternR <- "()(|-(\\[[^]]*\\])?)%>";
+    patternR <- "()(|[+]|-(\\[[^]]*\\])?)%>";
     bodyClass <- RspUnparsedDirective;
   } else if (what == "expression") {
     patternL <- "<%()()";
-    patternR <- "()(|-(\\[[^]]*\\])?)%>";
+    patternR <- "()(|[+]|-(\\[[^]]*\\])?)%>";
     bodyClass <- RspUnparsedExpression;
   }
 
@@ -115,7 +129,18 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
     str(verbose, list(patternL=patternL, patternR=patternR, patternS=patternS));
     cat(verbose, "Class to coerce to: ", class(bodyClass())[1L]);
   }
-  
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Parse
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && cat(verbose, "What to parse for: ", what);
+
+  # Record source line
+  lineCount <- 0L;
+
+  # Specifies whether the RSP construct being parsed is on the same
+  # line as an RSP text construct.
+##  sameLineAsRspText <- FALSE;
 
   # Constants
   START <- 0L;
@@ -125,6 +150,9 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
   state <- START;
   while(TRUE) {
     if (state == START) {
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # (a) Scan for RSP start tag, i.e. <%, <%@, or <%--
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # The start tag may exists *anywhere* in static code
       posL <- regexpr(patternL, bfr);
       if (posL == -1L)
@@ -132,40 +160,60 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
       nL <- attr(posL, "match.length");
       stopifnot(is.integer(nL));
 
-      # Extract RSP construct
+      # (i) Extract RSP construct, '<%...%>[extra]'
       tag <- substring(bfr, first=posL, posL+nL-1L);
 
-      # An escaped RSP start tag, i.e. '<%%'?
+      # Was it an escaped RSP start tag, i.e. '<%%'?
       if (what == "expression") {
         tagX <- substring(bfr, first=posL, posL+nL);
         if (tagX == "<%%")
           break;
       }
 
-      # Adjust if parsed into the tailing text
-      bfrX <- gsub(patternL, "\\4", tag);
-      nL <- nL - nchar(bfrX);
+      # If parsed too far, i.e. into the tailing text
+      # (so that '[extra]' is non-empty), then adjust
+      bfrExtra <- gsub(patternL, "\\4", tag);
+      nExtra <- nchar(bfrExtra);
+      nL <- nL - nExtra;
+      rm(bfrExtra);
 
+
+      # (ii) Extract the preceeding text
       text <- substring(bfr, first=1L, last=posL-1L);
      
-      # Add RSP text, unless empty.
+      # Record RSP text, unless empty.
       if (nchar(text) > 0L) {
+        # Update flag whether the RSP construct being parsed is
+        # on the same output line as RSP text or not.  It is not
+        # if the text ends with a line break.
+##        sameLineAsRspText <- (regexpr("[\n\r]$", text) == -1L);
         part <- list(text=RspText(text));
       } else {
+##        sameLineAsRspText <- FALSE;
         part <- NULL;
       }
 
+
+      # (iii) Special case: Locate RSP end tag immediately.
       if (is.null(patternR)) {
         body <- "";
 
+##        # Record 'same-line-as-text' flag
+##        attr(body, "sameLineAsRspText") <- sameLineAsRspText;
+
         # Extract the '<%...%>' part
-        tail <- substring(bfr, first=posL, last=posL+nL-1L);
+        if (nExtra > 0L) {
+          tail <- substring(tag, first=1L, last=nL-1L);
+        } else {
+          tail <- tag;
+        }
         # Extract the '...%>' part
         tail <- gsub(patternL, "\\1", tail);
 
-        # Get optional suffix specifications, i.e. '-[{specs}]%>'
+        # Get optional suffix specifications, i.e. '+%>' or '-[{specs}]%>'
         if (regexpr(patternS, tail) != -1L) {
-          suffixSpecs <- gsub(patternS, "\\2", tail);
+          suffixSpecs <- gsub(patternS, "\\1", tail);
+          suffixSpecs <- gsub("--*", "-", suffixSpecs);
           verbose && printf(verbose, "Identified suffix specification: '%s'\n", suffixSpecs);
           attr(body, "suffixSpecs") <- suffixSpecs;
         } else {
@@ -179,6 +227,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
         if (!is.null(bodyClass)) {
           body <- bodyClass(body);
         }
+
         part2 <- list(rsp=body);
         if (what != "expression") {
           names(part2)[1L] <- what;
@@ -188,34 +237,46 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
       } else {
         state <- STOP;
       }
+
+      # (iv) Finally, consume the read buffer
       bfr <- substring(bfr, first=posL+nL);
     } else if (state == STOP) {
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # (b) Scan for RSP end tag, i.e. %>, %>, or --%>
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Not found?
       posR <- indexOfNonQuoted(bfr, patternR);
       if (posR == -1L)
         break;
 
-      # Extract RSP tail
+      # (i) Extract RSP body with RSP end tag, '[extra][pattern]%>'
       nR <- attr(posR, "match.length");
-      stopifnot(is.integer(nR));
       tail <- substring(bfr, first=posR, last=posR+nR-1L);
 
-      # An escaped RSP end tag, i.e. '%%>'?
+      # Was it an escaped RSP end tag, i.e. '%%>'?
       if (what == "expression") {
         nT <- nchar(tail);
         if (nT >= 3L && substring(tail, first=nT-2L, last=nT) == "%%>")
           break;
       }
 
-      # Adjust for tail parsed into preceeding body?
-      bodyX <- gsub(patternR, "\\1", tail);
-      posR <- posR + nchar(bodyX);
+      # If parsed too far, i.e. into the preceeding body
+      # (so that '[extra]' is non-empty), then adjust
+      bodyExtra <- gsub(patternR, "\\1", tail);
+      nExtra <- nchar(bodyExtra);
+      posR <- posR + nExtra;
+      nR <- nR - nExtra;
+      rm(bodyExtra);
 
-      # Extract body
+      # Extract body of RSP construct (without RSP end tag)
       body <- substring(bfr, first=1L, last=posR-1L);
 
-      # Get optional suffix specifications, i.e. '-[{specs}]%>'
+##      # Record 'same-line-as-text' flag
+##      attr(body, "sameLineAsRspText") <- sameLineAsRspText;
+
+      # Get optional suffix specifications, i.e. '+%>' or '-[{specs}]%>'
       if (regexpr(patternS, tail) == 1L) {
-        suffixSpecs <- gsub(patternS, "\\2", tail);
+        suffixSpecs <- gsub(patternS, "\\1", tail);
         verbose && printf(verbose, "Identified suffix specification: '%s'\n", suffixSpecs);
         attr(body, "suffixSpecs") <- suffixSpecs;
       } else {
@@ -234,6 +295,8 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
       if (what != "expression") {
         names(part)[1L] <- what;
       }
+
+      # (iv) Finally, consume the read buffer
       bfr <- substring(bfr, first=posR+nR);
 
       state <- START;
@@ -278,12 +341,14 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 #   \item{...}{Passed to the processor in each step.}
 #   \item{until}{Specifies how far the parse should proceed, which is useful
 #      for troubleshooting and rebugging.}
+#   \item{as}{Specifies in what format the parsed RSP document
+#      should be returned.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{
-#  Returns a @see "RspDocument" (unless \code{until != "*"} in case it
-#  returns a deparsed @see "RspString".)
+#  Returns a @see "RspDocument" (when \code{as = "RspDocument"}; default)
+#  or @see "RspString" (when \code{as = "RspString"}).
 # }
 #
 # @author
@@ -292,7 +357,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), verbose=FALSE) {
+setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), as=c("RspDocument", "RspString"), verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -301,6 +366,9 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'until':
   until <- match.arg(until);
+
+  # Argument 'as':
+  as <- match.arg(as);
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -311,6 +379,8 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
 
   verbose && enter(verbose, "Parsing RSP string");
+  verbose && cat(verbose, "Compile until: ", sQuote(until));
+  verbose && cat(verbose, "Return as: ", sQuote(as));
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # (1a) Parse and drop "empty" RSP comments
@@ -344,7 +414,11 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
   if (until == "comments") {
     verbose && exit(verbose);
-    return(object);
+    if (as == "RspDocument") {
+      return(doc);
+    } else if (as == "RspString") {
+      return(object);
+    }
   }
 
 
@@ -374,6 +448,9 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
     idxs <- which(sapply(doc, FUN=inherits, "RspComment"));
     count <- count + length(idxs);
 
+    # Trim non-text RSP constructs
+    doc <- trimNonText(doc, verbose=less(verbose, 10));
+
     # Preprocess (=drop RspComments and adjust for empty lines)
     doc <- preprocess(doc, verbose=less(verbose, 10));
 
@@ -381,7 +458,7 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
     object <- asRspString(doc);
 
     posL <- pos;
-    rm(doc);
+##    rm(doc);
   }
 
   if (count > 0L) {
@@ -396,7 +473,12 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
   if (until == "directives") {
     verbose && exit(verbose);
-    return(object);
+    if (as == "RspDocument") {
+      docP <- parseRaw(parser, object, what="directive", verbose=less(verbose, 50));
+      return(docP);
+    } else if (as == "RspString") {
+      return(object);
+    }
   }
 
 
@@ -418,23 +500,28 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
     # Trim non-text RSP constructs
     doc <- trimNonText(doc, verbose=less(verbose, 10));
-  
+
     # Process all RSP preprocessing directives, i.e. <%@...%>
     doc <- preprocess(doc, envir=envir, ..., verbose=less(verbose, 10));
-    
+
     # Coerce to RspString
     object <- asRspString(doc);
     verbose && cat(verbose, "Length of RSP string after: ", nchar(object));
   } else {
     verbose && cat(verbose, "No RSP preprocessing directives found.");
   }
-  rm(doc, idxs);
+  rm(idxs);
+##  rm(doc, idxs);
 
   verbose && exit(verbose);
 
   if (until == "expressions") {
     verbose && exit(verbose);
-    return(object);
+    if (as == "RspDocument") {
+      return(doc);
+    } else if (as == "RspString") {
+      return(object);
+    }
   }
 
 
@@ -472,20 +559,32 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
   verbose && exit(verbose);
 
   if (until == "end") {
-    object <- asRspString(doc);
     verbose && exit(verbose);
-    return(object);
+    if (as == "RspDocument") {
+      return(doc);
+    } else if (as == "RspString") {
+      return(object);
+    }
   }
 
   verbose && exit(verbose);
 
-  doc;
+  if (as == "RspDocument") {
+    return(doc);
+  } else if (as == "RspString") {
+    object <- asRspString(doc);
+    return(object);
+  }
 }, protected=TRUE) # parse()
 
 
 
 ##############################################################################
 # HISTORY:
+# 2013-03-10
+# o FIX: Now parse() trims non-text RSP constructs both before and after
+#   parsing each of them.  This fixed the problem of extraneous line breaks
+#   when consecutive RSP constructs exists.
 # 2013-03-09
 # o Created by extracting the code of RspString that does parsing.
 #   Comments below reflect such code.

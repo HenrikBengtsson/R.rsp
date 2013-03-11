@@ -52,6 +52,7 @@ RspString(str=character(), ..., type=NA, source=NA, annotations=list())
  \tab \code{\link[R.rsp:getType.RspString]{getType}} \tab Gets the type of an RSP string.\cr
  \tab \code{\link[R.rsp:parse.RspString]{parse}} \tab Parses the RSP string.\cr
  \tab \code{rcat} \tab  -\cr
+ \tab \code{rcompile} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
  \tab \code{\link[R.rsp:toR.RspString]{toR}} \tab Parses and translates the RSP string into R code.\cr
 }
