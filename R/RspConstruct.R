@@ -15,6 +15,8 @@
 #
 # \arguments{
 #   \item{object}{A R object.}
+#   \item{attributes}{A named @list.}
+#   \item{comment}{An optional @character string.}
 #   \item{...}{Not used.}
 # }
 #
@@ -26,8 +28,13 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspConstruct", function(object=character(), ...) {
-  extend(object, "RspConstruct");
+setConstructorS3("RspConstruct", function(object=character(), attributes=list(), comment=NULL, ...) {
+  this <- extend(object, "RspConstruct");
+  for (key in names(attributes)) {
+    attr(this, key) <- attributes[[key]];
+  }
+  attr(this, "#comment") <- comment;
+  this;
 })
 
 
@@ -61,6 +68,9 @@ setMethodS3("getAttributes", "RspConstruct", function(directive, ...) {
   attrs <- attributes(directive);
   keys <- names(attrs);
   keys <- setdiff(keys, "class");
+  # Exclude private attributes
+  pattern <- sprintf("^[%s]", paste(c(base::letters, base::LETTERS), collapse=""));
+  keys <- keys[regexpr(pattern, keys) != -1L];
   attrs <- attrs[keys];
   attrs;
 })
@@ -73,6 +83,10 @@ setMethodS3("getAttribute", "RspConstruct", function(directive, name, default=NU
     attr <- attrs[[name]];
   }
   attr;
+})
+
+setMethodS3("getComment", "RspConstruct", function(directive, ...) {
+  attr(directive, "#comment");
 })
  
  

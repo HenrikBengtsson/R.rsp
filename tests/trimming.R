@@ -36,7 +36,7 @@ Current version is <%=ver%> (at runtime).
 v1.0!
 <%@else%>
 Not v1.0, but v<%=ver%>.
-<%@endif%>
+<%@endif #@ifeq version="1.0" %>
 
 <%-- Include or exclude parts of an RSP document during preprocessing
      conditioned on the value of a preprocessor variable. --%>
@@ -45,7 +45,7 @@ Not v1.0, but v<%=ver%>.
 Not v1.0!
 <%@else%>
 Not "not v1.0", but v<%=ver%>.
-<%@endif%>
+<%@endif %>
 '
 
 s <- rstring(text)

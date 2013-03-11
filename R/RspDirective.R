@@ -15,8 +15,7 @@
 #
 # \arguments{
 #   \item{directive}{A @character string.}
-#   \item{attributes}{A named @list.}
-#   \item{...}{Not used.}
+#   \item{...}{Arguments passed to the constructor of @see "RspConstruct".}
 # }
 #
 # \section{Fields and Methods}{
@@ -27,12 +26,8 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspDirective", function(directive=character(), attributes=list(), ...) {
-  this <- extend(RspConstruct(directive), "RspDirective");
-  for (key in names(attributes)) {
-    attr(this, key) <- attributes[[key]];
-  }
-  this;
+setConstructorS3("RspDirective", function(directive=character(), ...) {
+  extend(RspConstruct(directive, ...), "RspDirective");
 })
 
 
@@ -70,8 +65,14 @@ setMethodS3("asRspString", "RspDirective", function(object, ...) {
     attrs <- sprintf('%s="%s"', names(attrs), attrs);
     attrs <- paste(c("", attrs), collapse=" ");
   }
-  fmtstr <- "<%%@%s%s%%>";
-  s <- sprintf(fmtstr, body, attrs);
+  comment <- getComment(object);
+  if (!is.null(comment)) {
+    comment <- sprintf(" #%s", comment);
+  } else {
+    comment <- "";
+  }
+  fmtstr <- "<%%@%s%s%s%%>";
+  s <- sprintf(fmtstr, body, attrs, comment);
   RspString(s);
 })
 
@@ -167,11 +168,18 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
           break;
         }
 
+        # Is the remaining part a comment?
+        if (regexpr("^#", bfr) != -1L) {
+          # ...then add it as an (R) attribute to 'attrs'.
+          comment <- gsub("^#", "", bfr);
+          attr(attrs, "comment") <- comment;
+          # ...and finish.
+          break;
+        }
+
         # Read the attribute name
         pos <- regexpr("^[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*", bfr);
         if (pos == -1L) {
-str(pos);
-str(bfr);
           throw(Exception("Error when parsing attributes of RSP preprocessing directive. Expected an attribute name: ", code=sQuote(rspCode)));
         }
         len <- attr(pos, "match.length");
@@ -245,6 +253,7 @@ str(bfr);
   # Parse the attributes
   attrs <- gsub(pattern, "\\2", body);
   attrs <- parseAttributes(attrs, known=NULL);
+  comment <- attr(attrs, "comment");
 
   # Infer the class name
   class <- sprintf("Rsp%sDirective", capitalize(directive));
@@ -252,7 +261,7 @@ str(bfr);
   # Instantiate object
   res <- tryCatch({
     clazz <- Class$forName(class);
-    newInstance(clazz, attributes=attrs);
+    newInstance(clazz, attributes=attrs, comment=comment);
   }, error = function(ex) {
     RspUnknownDirective(directive, attributes=attrs);
   })

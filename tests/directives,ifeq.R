@@ -38,7 +38,7 @@ Not v1.0, but v<%=ver%>.
 Not v1.0!
 <%@else%>
 Not "not v1.0", but v<%=ver%>.
-<%@endif%>
+<%@endif # @ifneq version="2.0" %>
 '
 
 s <- rstring(text)
