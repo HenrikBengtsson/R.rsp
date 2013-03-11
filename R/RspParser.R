@@ -303,7 +303,10 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
     } # if (state == ...)
 
     parts <- c(parts, part);
-    verbose && cat(verbose, "Number of RSP constructs parsed: ", length(parts));
+
+    verbose && cat(verbose, "RSP construct(s) parsed:");
+    verbose && print(verbose, part);
+    verbose && cat(verbose, "Number of RSP constructs parsed this far: ", length(parts));
   } # while(TRUE);
 
   # Add the rest of the buffer as text, unless empty.

@@ -891,11 +891,13 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       return(fh);
     }
 
-    if (!isAbsolutePath(file)) {
-      verbose && cat(verbose, "Path: ", path);
-      file <- file.path(path, file);
-      verbose && cat(verbose, "File: ", file);
+    if (isAbsolutePath(file)) {
+      throw(sprintf("RSP '%s' preprocessing directive (#%d) specifies 'file' using an absolute pathname. Only relative pathnames are allowed: %s", expr, index, file));
     }
+
+    verbose && cat(verbose, "Path: ", path);
+    file <- file.path(path, file);
+    verbose && cat(verbose, "File: ", file);
 
     if (isUrl(file)) {
     } else {
