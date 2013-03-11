@@ -547,17 +547,26 @@ Although the afformentioned maybe achieved with by plain R \code{<\%~...~\%>} co
 After preprocessing, there are no remaining RSP preprocessing directives left in the RSP document, which then only contains text and basic RSP constructs (Sections~\ref{RspCodeChunkInlining}-\ref{RspCodeEmbed}).
 ----%>
 
-All RSP directive arguments (also known as "attributes") must be named with names having the correct case and not being abbreviated.  For instance, \code{<\%@include file=\lb"random.tex.rsp"\%>} is correct whereas \code{<\%@include "random.tex.rsp"\%>}, \code{<\%@include Language=\lb"random.tex.rsp"\%>} and \code{<\%@include lang=\lb"random.tex.rsp"\%>} are not.
+All RSP directive arguments (also known as "attributes") must be named with names having the correct case and not being abbreviated.  For instance, \code{<\%@include file=\lb"random.tex.rsp"\%>} is correct whereas \code{<\%@include "random.tex.rsp"\%>}, \code{<\%@include File=\lb"random.tex.rsp"\%>} and \code{<\%@include f=\lb"random.tex.rsp"\%>} are not.
 %
 The value of an RSP directive argument is parsed as a \emph{GString}\footnote{GStrings can be processed in R by the \code{gstring()} function in the \pkg{R.utils} package.}.  A GString is a regular string that optionally may contain bash-like syntax for inserting values of system environment variables.  For instance, if the environment variable '\code{R\_HOME}' is set to the home directory of the R installation, then \code{<\%@include file=\lb"\$\{R\_HOME\}/doc/AUTHORS"\%>} is parsed as \code{<\%@include file=\lb"/path/to/R/doc/AUTHORS"\%>} (resulting in the content of that 'AUTHORS' file to be included "as is").  Note how this substitution is indepent of the R language.
 For conveniency, when processing an RSP document using the RSP parser of the \pkg{R.rsp} package, GString also looks for a matching variables elsewhere.  Notably, it searches (i) among the variables in the R workspace, (ii) among the R options, and then (iii) among the system environment variable.\footnote{Although the RSP parser of the \pkg{R.rsp} package also looks for GString variable in the R environment and its options, it does not mean that these variables are dependent on the R language.  The substituted value will always be interpreted as a character string.  An RSP parser implemented in Python could take a similar approach}
 Importantly, note that variables set in RSP code expressions \emph{cannot} be used in RSP directives, because they are only assigned after the RSP preprocessing directives have been processed.
 
+
 \subsubsection{Including text and RSP contents}
 It is possible to include the contents of other text and RSP documents.  These can be either specified as strings (argument '\code{text}') or as files (argument '\code{file}'), which may be either a file on the file system or URL/document online.
-All contents included is considered to have a certain \emph{language} attribute.   The language attribute specifies how the content is included in the document.  For instance, plain text has language attribute 'text' and is included "as is"\footnote{RSP start and end tags in plain text are escaped before being included.  How to escape in RSP, see Section~\ref{RspEscape}.}.
-An RSP document has language attribute 'rsp', and is included in the main RSP document as an parsed RSP document.
-The default is to infer the language attribute automatically, e.g. from the filename extension of the \code{file} argument.  When this is not possible, it may be necessary to specify the '\code{language}' argument, e.g. \code{language="text"}.
+
+<%-- \paragraph{Content type of source and host document} --%>
+Exactly how an external document (as specified by argument \code{text} or \code{file}) is included into the host RSP document depends on the (i) \emph{content type of the imported document} as well as the (ii) \emph{content type of the host document}.
+All documents have a \emph{content type}. 
+Supported content types are currently '\code{text/plain}' and '\code{application/x-rsp}'.
+If the host content types is '\code{text/plain}' and one included is a '\code{text/plain}' document, then the imported text will be included "as is"\footnote{Internally, while processing the RSP document, RSP start and end tags in plain text are escaped before being included.  How to escape in RSP, see Section~\ref{RspEscape}.} in the generated RSP product.
+If the host content types is '\code{text/plain}' and one included is an '\code{application/x-rsp}' document, then the imported RSP document will be included as a parsed RSP document.
+
+ The content type of the inserted document can be specified either (i) via the '\code{type}' argument to the RSP include directive, or, if an RSP document, (ii) as RSP preprocessing directives.  If not specified, the content types is (iii) inferred from the filename extension (in lower case) of the \code{file} argument.  More specifically, if the filename extension is '\code{rsp}', then the content type is set to '\code{application/x-rsp}'.  If it is '\code{txt}', then it is '\code{text/plain}'.  For unknown extensions, it is always assumed to be '\code{text/plain}'.  If argument \code{text} is given, the content type is always assumed to be '\code{text/plain}'.
+
+
 
 \paragraph{Including file contents (\code{<\%@include file="\content{pathname|URL}"\%>})}
 To include the content of a text file "as is" during preprocessing, use the '\code{file}' argument.  This may be used to include a local file or a file online (specified as a URL).  For instance,
@@ -568,15 +577,13 @@ To include the RSP parsed content of a text file with RSP markup, do
 \begin{rspVerbatim}
 ... '<\%@include file="randoms.txt.rsp"\%>'  ## <== Update
 \end{rspVerbatim}
-
-The 'language' attribute (of the file content) is used to decide how the content is included.  By default, it is inferred from the filename extension of the included filename.  If the extension (in lower case) is '\code{txt}', the language is assumed to be 'text'.  If it is '\code{rsp}', then the language is assumed to be 'rsp'.  For unknown extensions, it is always assumed to be 'text'.  The 'language' attribute can be specified/overridden using the '\code{language}' argument.
 %
-File content that is included as 'text' language will be included "as is" (except that RSP start and end tags are escaped such that they appear verbatim in the final RSP product).  For instance, consider the difference between the following two include statements:
+File content that is included as '\code{text/plain}' are included "as is" in the output RSP product.  For instance, consider the difference between the following two include statements:
 \begin{escapeRspVerbatim}
 > cat("<\%=Sys.time()\%>", file="time.txt.rsp")
 > rcat("The current time is <\%@include file='time.txt.rsp'\%>.{\bs}n")
 The current time is <%=Sys.time()%>.
-> rcat("The current time is <\%@include file='time.txt.rsp' language='text'\%>.{\bs}")
+> rcat("The current time is <\%@include file='time.txt.rsp' type='text/plain'\%>.{\bs}")
 The current time is <\%=Sys.time()\%>.
 \end{escapeRspVerbatim}
 
@@ -603,17 +610,17 @@ results in an preprocessed RSP document consisting of
 The \code{R_HOME} environment variable was '<%@include text="${R_HOME}"%>'
 at the time when this document was preprocessed.
 \end{rspVerbatim}
-Whenever using the '\code{text}' argument, the 'language' attribute is assumed to be 'text'.
+Whenever using the '\code{text}' argument, the content type is assumed to be '\code{text/plain}'.
 
 <%---
-  To include a parsed RSP string, one need to specify the 'language' attribute as:
+  To include a parsed RSP string, one need to specify the '\code{type}' attribute as:
 \begin{rspVerbatim}
-<\%@include text="Current time is '<\%=Sys.time()\%>'." language="rsp"\%>
+<\%@include text="Current time is '<\%=Sys.time()\%>'." type="application/x-rsp"\%>
 at the time this document was preprocessed.
 \end{rspVerbatim}
 results in an preprocessed RSP document consisting of
 \begin{rspVerbatim}
-<%@include text="Current time is '<%=Sys.time()%>'." language="rsp"%>
+<%@include text="Current time is '<%=Sys.time()%>'." type="application/x-rsp"%>
 \end{rspVerbatim}
 ---%>
 

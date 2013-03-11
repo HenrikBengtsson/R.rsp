@@ -1141,15 +1141,15 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # RspIncludeDirective => ...
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(expr, "RspIncludeDirective")) {
-      language <- getAttribute(expr, "language");
+      contentType <- getAttribute(expr, "type");
 
       # Backward compatibility
-      if (is.null(language)) {
+      if (is.null(contentType)) {
         verbatim <- getAttribute(expr, "verbatim");
         if (!is.null(verbatim)) {
-          warning("Attribute 'verbatim' for RSP 'include' preprocessing directives is deprecated. Use attribute 'language' instead.");
+          warning("Attribute 'verbatim' for RSP 'include' preprocessing directives is deprecated. Use attribute 'type' instead.");
           if (isTRUE(as.logical(verbatim)))
-            language <- "text";
+            contentType <- "text/plain";
         }
       }
 
@@ -1157,38 +1157,40 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       if (!is.null(text)) {
         file <- getSource(object);
 
-        # The default language for the 'text' attribute is always "text".
-        if (is.null(language)) {
-          language <- "text";
+        # The default content-type the 'text' attribute is always "text".
+        if (is.null(contentType)) {
+          contentType <- "text/plain";
         }
       } else {
         file <- getFileT(expr, path=getPath(object), index=idx, verbose=verbose);
         text <- readLines(file, warn=FALSE);
 
-        # The default language for the 'file' attribute is
+        # The default content type for the 'file' attribute is
         # inferred from the filename extension, iff possible
-        if (is.null(language)) {
+        if (is.null(contentType)) {
           ext <- attr(file, "ext");
           if (is.null(ext)) {
-            throw(sprintf("RSP 'include' preprocessing directive (#%d) needs an explicit 'language' attribute because it can not be inferred from the  'file' attribute.", idx));
+            throw(sprintf("RSP 'include' preprocessing directive (#%d) needs an explicit 'type' attribute because it can not be inferred from the  'file' attribute.", idx));
           }
 
           if (ext == "rsp") {
-            language <- "rsp";
+            contentType <- "application/x-rsp";
+          } else if (ext == "txt") {
+            contentType <- "text/plain";
           } else {
-            language <- "text";
+            contentType <- "text/plain";
           }
         }
       }
       text <- paste(text, collapse="\n");
 
       # Sanity check
-      stopifnot(!is.null(language));
+      stopifnot(!is.null(contentType));
 
-      if (language == "text") {
+      if (contentType == "text/plain") {
         text <- wrapText(text, wrap=getWrap(expr));
         expr <- RspText(text, escape=TRUE, source=file);
-      } else if (language == "rsp") {
+      } else if (contentType == "application/x-rsp") {
         # Assert that an endless loop of including the same
         # file over and over does not occur.  This is tested
         # by the number of call frames, which is grows with
@@ -1196,7 +1198,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         if (sys.nframe() > 400L) {
           # For now, don't use throw() because it outputs a very
           # long traceback list.
-          stop("Too many nested RSP 'include' preprocessing directives. This indicates an endless recursive loop of including the same file over and over. This was detected while trying to include ", sQuote(file), " (file=", sQuote(getFile(expr)), "with language='rsp') in RSP document ", sQuote(getSource(object)), ".");
+          stop("Too many nested RSP 'include' preprocessing directives. This indicates an endless recursive loop of including the same file over and over. This was detected while trying to include ", sQuote(file), " (file=", sQuote(getFile(expr)), "with type='application/x-rsp') in RSP document ", sQuote(getSource(object)), ".");
         }
 
         # Parse RSP string to RSP document
@@ -1212,7 +1214,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         expr <- doc;
         rm(rstr, doc);
       } else {
-        throw(sprintf("RSP 'include' preprocessing directive (#%d) specifies an unknown 'language': %s", idx, language));
+        throw(sprintf("RSP 'include' preprocessing directive (#%d) specifies an unknown content type in argument 'type': %s", idx, type));
       }
 
       # Replace RSP directive with imported RSP document
