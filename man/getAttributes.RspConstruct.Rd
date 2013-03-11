@@ -14,6 +14,10 @@
 \alias{getAttribute.RspConstruct}
 \alias{getAttribute,RspConstruct-method}
 
+\alias{RspConstruct.getComment}
+\alias{getComment.RspConstruct}
+\alias{getComment,RspConstruct-method}
+
 
 \title{Gets the attributes of an RSP expression}
 

@@ -41,6 +41,7 @@ setConstructorS3("RspConstruct", function(object=character(), attributes=list(),
 #########################################################################/**
 # @RdocMethod getAttributes
 # @aliasmethod getAttribute
+# @aliasmethod getComment
 #
 # @title "Gets the attributes of an RSP expression"
 #

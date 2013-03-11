@@ -37,13 +37,12 @@ extends \link[R.rsp]{RspConstruct}\cr
  }
 
  \usage{
-RspDirective(directive=character(), attributes=list(), ...)
+RspDirective(directive=character(), ...)
 }
 
  \arguments{
    \item{directive}{A \code{\link[base]{character}} string.}
-   \item{attributes}{A named \code{\link[base]{list}}.}
-   \item{...}{Not used.}
+   \item{...}{Arguments passed to the constructor of \code{\link{RspConstruct}}.}
  }
 
  \section{Fields and Methods}{
@@ -54,7 +53,7 @@ RspDirective(directive=character(), attributes=list(), ...)
 
 
  \bold{Methods inherited from RspConstruct}:\cr
-asRspString, getAttribute, getAttributes, getSuffixSpecs
+asRspString, getAttribute, getAttributes, getComment, getSuffixSpecs
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
