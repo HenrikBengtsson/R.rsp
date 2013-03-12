@@ -15,7 +15,7 @@
 #   \item{str, ...}{@character strings.}
 #   \item{type}{The content type of the RSP string.}
 #   \item{source}{A reference to the source RSP document, iff any.}
-#   \item{annotations}{A named @list of other content annotations.}
+#   \item{metadata}{A named @list of other content metadata.}
 # }
 #
 # \section{Fields and Methods}{
@@ -26,7 +26,7 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspString", function(str=character(), ..., type=NA, source=NA,  annotations=list()) {
+setConstructorS3("RspString", function(str=character(), ..., type=NA, source=NA,  metadata=list()) {
   # Argument 'str':
   str <- paste(c(str, ...), collapse="\n");
 
@@ -38,7 +38,7 @@ setConstructorS3("RspString", function(str=character(), ..., type=NA, source=NA,
   this <- extend(str, "RspString");
   attr(this, "type") <- as.character(type);
   attr(this, "source") <- source;
-  attr(this, "annotations") <- annotations;
+  attr(this, "metadata") <- metadata;
   this;
 })
 
@@ -82,9 +82,9 @@ setMethodS3("getType", "RspString", function(object, default=NA, as=c("text", "I
 
 
 #########################################################################/**
-# @RdocMethod getAnnotations
+# @RdocMethod getMetadata
 #
-# @title "Gets the annotations of the RspDocument"
+# @title "Gets the metadata of the RspDocument"
 #
 # \description{
 #  @get "title".
@@ -106,8 +106,8 @@ setMethodS3("getType", "RspString", function(object, default=NA, as=c("text", "I
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getAnnotations", "RspString", function(object, name=NULL, ...) {
-  res <- attr(object, "annotations");
+setMethodS3("getMetadata", "RspString", function(object, name=NULL, ...) {
+  res <- attr(object, "metadata");
   if (is.null(res)) res <- list();
   if (!is.null(name)) {
     res <- res[[name]];

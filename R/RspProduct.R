@@ -15,7 +15,7 @@
 # \arguments{
 #   \item{object}{The RSP product.}
 #   \item{type}{The content type of the RSP product.}
-#   \item{annotations}{A named @list of other content annotations.}
+#   \item{metadata}{A named @list of other content metadata.}
 #   \item{...}{Not used.}
 # }
 #
@@ -27,7 +27,7 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspProduct", function(object=NA, type=attr(object, "type"), annotations=list(), ...) {
+setConstructorS3("RspProduct", function(object=NA, type=attr(object, "type"), metadata=list(), ...) {
   # Argument 'type':
   if (is.null(type)) {
     type <- NA;
@@ -35,7 +35,7 @@ setConstructorS3("RspProduct", function(object=NA, type=attr(object, "type"), an
 
   this <- extend(object, "RspProduct");
   attr(this, "type") <- as.character(type);
-  attr(this, "annotations") <- annotations;
+  attr(this, "metadata") <- metadata;
   this;
 })
 
@@ -115,9 +115,9 @@ setMethodS3("getType", "RspProduct", function(object, default=NA, as=c("text", "
 
 
 #########################################################################/**
-# @RdocMethod getAnnotations
+# @RdocMethod getMetadata
 #
-# @title "Gets the annotations an RSP product"
+# @title "Gets the metadata an RSP product"
 #
 # \description{
 #  @get "title".
@@ -139,8 +139,8 @@ setMethodS3("getType", "RspProduct", function(object, default=NA, as=c("text", "
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getAnnotations", "RspProduct", function(object, name=NULL, ...) {
-  res <- attr(object, "annotations");
+setMethodS3("getMetadata", "RspProduct", function(object, name=NULL, ...) {
+  res <- attr(object, "metadata");
   if (!is.null(name)) {
     res <- res[[name]];
   }
@@ -326,6 +326,8 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
 
 ############################################################################
 # HISTORY:
+# 2013-03-12
+# o Renamed annotations to metadata.
 # 2013-02-18
 # o Added argument 'fake' to process() for RspProduct.
 # 2013-02-16

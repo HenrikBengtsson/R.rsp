@@ -325,7 +325,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
   verbose && cat(verbose, "Total number of RSP constructs parsed: ", length(parts));
 
   # Setup results
-  doc <- RspDocument(parts, type=getType(object), source=getSource(object), annotations=getAnnotations(object));
+  doc <- RspDocument(parts, type=getType(object), source=getSource(object), metadata=getMetadata(object));
   attr(doc, "what") <- what;
 
   verbose && exit(verbose);

@@ -55,7 +55,7 @@ RspSourceCode(code=character(), ...)
 
 
  \bold{Methods inherited from RspProduct}:\cr
-findProcessor, getAnnotations, getType, hasProcessor, print, process
+findProcessor, getMetadata, getType, hasProcessor, print, process
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap

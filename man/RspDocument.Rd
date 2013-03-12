@@ -33,7 +33,7 @@ extends list\cr
  }
 
  \usage{
-RspDocument(expressions=list(), type=NA, source=NA, annotations=list(), ...)
+RspDocument(expressions=list(), type=NA, source=NA, metadata=list(), ...)
 }
 
  \arguments{
@@ -41,7 +41,7 @@ RspDocument(expressions=list(), type=NA, source=NA, annotations=list(), ...)
       \code{\link{RspDocument}}:s.}
    \item{type}{The content type of the RSP document.}
    \item{source}{A reference to the source RSP document, iff any.}
-   \item{annotations}{A named \code{\link[base]{list}} of other content annotations.}
+   \item{metadata}{A named \code{\link[base]{list}} of other content metadata.}
    \item{...}{Not used.}
  }
 
@@ -53,9 +53,9 @@ RspDocument(expressions=list(), type=NA, source=NA, annotations=list(), ...)
  \tab \code{\link[R.rsp:dropEmptyText.RspDocument]{dropEmptyText}} \tab Drops all empty RSP text constructs.\cr
  \tab \code{\link[R.rsp:evaluate.RspDocument]{evaluate}} \tab Parses, translates, and evaluates the RSP document.\cr
  \tab \code{\link[R.rsp:flatten.RspDocument]{flatten}} \tab Flattens an RspDocument.\cr
- \tab \code{\link[R.rsp:getAnnotations.RspDocument]{getAnnotations}} \tab Gets the annotations of the RspDocument.\cr
  \tab \code{getAttribute} \tab  -\cr
  \tab \code{\link[R.rsp:getAttributes.RspDocument]{getAttributes}} \tab Gets the attributes of an RSP document.\cr
+ \tab \code{getMetadata} \tab  -\cr
  \tab \code{\link[R.rsp:getPath.RspDocument]{getPath}} \tab Gets the path to the source reference of an RSP string.\cr
  \tab \code{\link[R.rsp:getSource.RspDocument]{getSource}} \tab Gets the source reference of an RSP document.\cr
  \tab \code{\link[R.rsp:getType.RspDocument]{getType}} \tab Gets the type of the RspDocument.\cr

@@ -120,7 +120,7 @@
 # @alias asRspString
 # @alias dropEmptyText
 # @alias trimNonText
-# @alias getAnnotations
+# @alias getMetadata
 # @alias escapeRspContent
 # @alias escapeRspTags
 # @alias extentionToIMT

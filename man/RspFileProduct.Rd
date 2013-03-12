@@ -55,7 +55,7 @@ RspFileProduct(pathname=NA, ..., mustExist=TRUE)
 
 
  \bold{Methods inherited from RspProduct}:\cr
-findProcessor, getAnnotations, getType, hasProcessor, print, process
+findProcessor, getMetadata, getType, hasProcessor, print, process
 
  \bold{Methods inherited from logical}:\cr
 as.data.frame, as.raster, whichVector

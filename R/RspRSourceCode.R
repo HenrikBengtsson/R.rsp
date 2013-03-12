@@ -125,16 +125,16 @@ setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("stdo
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Create header and footer code
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  annotations <- getAnnotations(object);
+  metadata <- getMetadata(object);
   code <- NULL;
-  for (key in names(annotations)) {
-     value <- annotations[[key]];
+  for (key in names(metadata)) {
+     value <- metadata[[key]];
      value <- gsub('"', '\\"', value, fixed=TRUE);
      value <- sprintf('  %s = "%s"', key, value);
      code <- c(code, value);
   }
   code <- unlist(strsplit(paste(code, collapse=",\n"), split="\n", fixed=TRUE))
-  code <- c('## RSP document annotations', '.rd <- list(', code, ');');
+  code <- c('## RSP document metadata', '.rd <- list(', code, ');');
   header0 <- paste('      ', code, sep="");
 
   if (output == "string") {
@@ -355,6 +355,8 @@ setMethodS3("tangle", "RspRSourceCode", function(code, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-03-12
+# o Renamed annotations to metadata.
 # 2013-02-23
 # o Added support for getCompleteCode(..., output="stdout")
 # o Added debug option() for have parse() write R code to file.
