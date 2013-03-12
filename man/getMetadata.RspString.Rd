@@ -6,19 +6,19 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getAnnotations.RspString}
-\alias{getAnnotations.RspString}
-\alias{RspString.getAnnotations}
-\alias{getAnnotations,RspString-method}
+\name{getMetadata.RspString}
+\alias{getMetadata.RspString}
+\alias{RspString.getMetadata}
+\alias{getMetadata,RspString-method}
 
-\title{Gets the annotations of the RspDocument}
+\title{Gets the metadata of the RspDocument}
 
 \description{
- Gets the annotations of the RspDocument.
+ Gets the metadata of the RspDocument.
 }
 
 \usage{
-\method{getAnnotations}{RspString}(object, name=NULL, ...)
+\method{getMetadata}{RspString}(object, name=NULL, ...)
 }
 
 \arguments{
