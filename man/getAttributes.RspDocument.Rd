@@ -6,28 +6,31 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getType.RspDocument}
-\alias{getType.RspDocument}
-\alias{RspDocument.getType}
-\alias{getType,RspDocument-method}
+\name{getAttributes.RspDocument}
+\alias{getAttributes.RspDocument}
+\alias{RspDocument.getAttributes}
+\alias{getAttributes,RspDocument-method}
+\alias{RspDocument.getAttribute}
+\alias{getAttribute.RspDocument}
+\alias{getAttribute,RspDocument-method}
 
-\title{Gets the type of the RspDocument}
+
+\title{Gets the attributes of an RSP document}
 
 \description{
- Gets the type of the RspDocument.
+ Gets the attributes of an RSP document.
 }
 
 \usage{
-\method{getType}{RspDocument}(object, default=NA, as=c("text", "IMT"), ...)
+\method{getAttributes}{RspDocument}(object, ...)
 }
 
 \arguments{
-  \item{default}{If unknown/not set, the default content type to return.}
   \item{...}{Not used.}
 }
 
 \value{
- Returns a \code{\link[base]{character}} string.
+ Returns a named \code{\link[base]{list}}.
 }
 
 \author{Henrik Bengtsson}

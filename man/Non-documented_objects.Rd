@@ -131,6 +131,11 @@
 \alias{dropEmptyText}
 \alias{trimNonText}
 \alias{getAnnotations}
+\alias{escapeRspContent}
+\alias{escapeRspTags}
+\alias{extentionToIMT}
+\alias{parseInternetMediaType}
+\alias{unescapeRspTags}
 
 \description{
 This page contains aliases for all "non-documented" objects that

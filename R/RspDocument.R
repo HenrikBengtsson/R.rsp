@@ -31,10 +31,7 @@
 setConstructorS3("RspDocument", function(expressions=list(), type=NA, source=NA, annotations=list(), ...) {
   # Argument 'source':
   if (is.character(source)) {
-    if (isUrl(source)) {
-    } else {
-      source <- getAbsolutePath(source);
-    }
+    source <- getAbsolutePath(source);
   }
 
   this <- extend(expressions, "RspDocument");
@@ -44,6 +41,54 @@ setConstructorS3("RspDocument", function(expressions=list(), type=NA, source=NA,
   this;
 })
 
+
+
+#########################################################################/**
+# @RdocMethod getAttributes
+# @aliasmethod getAttribute
+#
+# @title "Gets the attributes of an RSP document"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a named @list.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getAttributes", "RspDocument", function(object, ...) {
+  attrs <- attributes(object);
+  keys <- names(attrs);
+  keys <- setdiff(keys, "class");
+  # Exclude private attributes
+  pattern <- sprintf("^[%s]", paste(c(base::letters, base::LETTERS), collapse=""));
+  keys <- keys[regexpr(pattern, keys) != -1L];
+  attrs <- attrs[keys];
+  attrs;
+})
+
+setMethodS3("getAttribute", "RspDocument", function(object, name, default=NULL, ...) {
+  attrs <- getAttributes(object, ...);
+  if (!is.element(name, names(attrs))) {
+    attr <- default;
+  } else {
+    attr <- attrs[[name]];
+  }
+  attr;
+})
 
 
 #########################################################################/**
@@ -1160,8 +1205,10 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       }
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # (a) Infer source and host content type
+      # (a) Get content types of host and include document
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      hostContentType <- getType(object, default="text/plain");
+
       text <- getText(expr);
       if (!is.null(text)) {
         file <- getSource(object);
@@ -1191,14 +1238,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
           if (is.null(ext)) {
             throw(sprintf("RSP 'include' preprocessing directive (#%d) needs an explicit 'type' attribute because it can not be inferred from the  'file' attribute.", idx));
           }
-
-          if (ext == "rsp") {
-            contentType <- "application/x-rsp";
-          } else if (ext == "txt") {
-            contentType <- "text/plain";
-          } else {
-            contentType <- "text/plain";
-          }
+          contentType <- extentionToIMT(ext=ext, default="text/plain");
         }
       }
       text <- paste(text, collapse="\n");
@@ -1206,22 +1246,44 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       # Sanity check
       stopifnot(!is.null(contentType));
 
-      hostContentType <- getType(object, default="text/plain");
-
       # Parse content types
-      srcCT <- parseInternetMediaType(contentType);
       hostCT <- parseInternetMediaType(hostContentType);
+      inclCT <- parseInternetMediaType(contentType);
 
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # (b) Escape text from source and host content type
+      # (b) Wrap text, iff argument 'wrap' is specified
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # Wrap text, iff argument 'wrap' is specified
       text <- wrapText(text, wrap=getWrap(expr));
 
-      text <- escapeRspContent(text, srcCT=srcCT, targetCT=hostCT, verbose=verbose);
 
-      if (hostCT$contentType == "application/x-rsp") {
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # (c) Escape text from source and host content type
+      #     (This is still very shaky and because it is rather
+      #      complicated and there are so many cases to support
+      #      it may be dropped in the future.  The 'escaping'
+      #      between include to host content types should be
+      #      considered a hidden feature. /HB 2013-03-12)
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      defaultEscape <- getAttribute(object, "escape", default=FALSE);
+      defaultEscape <- isTRUE(as.logical(defaultEscape));
+      escape <- defaultEscape;
+      if (escape) {
+        text <- escapeRspContent(text, srcCT=inclCT, targetCT=hostCT, verbose=verbose);
+      }
+
+
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # (d) Escape any remaining RSP tags (hide from RSP parser)
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      if (inclCT$contentType != "application/x-rsp") {
+        text <- escapeRspTags(text);
+      }
+
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # (e) Parse into an RspText or and RspDocument
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      if (inclCT$contentType == "application/x-rsp") {
         rstr <- RspString(text, escape=FALSE, 
                                 type=hostContentType, source=file);
 
@@ -1401,9 +1463,10 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # RspPageDirective => ...
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(expr, "RspPageDirective")) {
-      # Set the type of the RSP document
-      type <- getType(expr);
-      attr(object, "type") <- type;
+      # Update host RSP document attributes
+      for (name in c("type", "escape", "language")) {
+        attr(object, name) <- getAttribute(expr, name, default=attr(object, name));
+      }
 
       annotations <- getAnnotations(object);
       annotations[["title"]] <- getTitle(expr);

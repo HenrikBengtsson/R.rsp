@@ -18,7 +18,7 @@
 }
 
 \usage{
-\method{getType}{RspFileProduct}(object, ...)
+\method{getType}{RspFileProduct}(object, as=c("text", "IMT"), ...)
 }
 
 \arguments{

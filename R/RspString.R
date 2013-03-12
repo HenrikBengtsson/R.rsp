@@ -32,10 +32,7 @@ setConstructorS3("RspString", function(str=character(), ..., type=NA, source=NA,
 
   # Argument 'source':
   if (is.character(source)) {
-    if (isUrl(source)) {
-    } else {
-      source <- getAbsolutePath(source);
-    }
+    source <- getAbsolutePath(source);
   }
 
   this <- extend(str, "RspString");

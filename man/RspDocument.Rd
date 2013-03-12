@@ -54,6 +54,8 @@ RspDocument(expressions=list(), type=NA, source=NA, annotations=list(), ...)
  \tab \code{\link[R.rsp:evaluate.RspDocument]{evaluate}} \tab Parses, translates, and evaluates the RSP document.\cr
  \tab \code{\link[R.rsp:flatten.RspDocument]{flatten}} \tab Flattens an RspDocument.\cr
  \tab \code{\link[R.rsp:getAnnotations.RspDocument]{getAnnotations}} \tab Gets the annotations of the RspDocument.\cr
+ \tab \code{getAttribute} \tab  -\cr
+ \tab \code{\link[R.rsp:getAttributes.RspDocument]{getAttributes}} \tab Gets the attributes of an RSP document.\cr
  \tab \code{\link[R.rsp:getPath.RspDocument]{getPath}} \tab Gets the path to the source reference of an RSP string.\cr
  \tab \code{\link[R.rsp:getSource.RspDocument]{getSource}} \tab Gets the source reference of an RSP document.\cr
  \tab \code{\link[R.rsp:getType.RspDocument]{getType}} \tab Gets the type of the RspDocument.\cr

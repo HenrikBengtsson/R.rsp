@@ -1,14 +1,33 @@
-extentionToIMT <- function(filename) {
-  ext <- gsub(".*[.]([^.]+)$", "\\1", filename);
+extentionToIMT <- function(filename, ext=NULL, default=NA) {
+  if (is.null(ext)) {
+    ext <- gsub(".*[.]([^.]+)$", "\\1", filename);
+  }
   ext <- tolower(ext);
-  map <- c(
-    "txt" = "text/plain",
+  type <- switch(ext,
+    "brew" = "application/x-brew",
+    "html" = "text/html",
+    "md" = "application/x-markdown",
+    "rnw" = "application/x-rnw",
+    "rsp" = "application/x-rsp",
     "tex" = "application/x-latex",
-    "rsp" = "application/x-rsp"
+    "txt" = "text/plain",
+    default
   );
-  map[ext];
+  type;
 } # extentionToIMT()
 
+
+escapeRspTags <- function(s) {
+  s <- gsub("<%", "<%%", s, fixed=TRUE);
+  s <- gsub("%>", "%%>", s, fixed=TRUE);
+  s;
+} # escapeRspTags()
+
+unescapeRspTags <- function(s) {
+  s <- gsub("<%%", "<%", s, fixed=TRUE);
+  s <- gsub("%%>", "%>", s, fixed=TRUE);
+  s;
+} # unescapeRspTags()
 
 escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
   ct <- list(src=srcCT, target=targetCT);
@@ -71,8 +90,7 @@ escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (ct$src$contentType == "text/plain") {
     if (ct$target$contentType == "text/plain") {
-      s <- gsub("<%", "<%%", s, fixed=TRUE);
-      s <- gsub("%>", "%%>", s, fixed=TRUE);
+      s <- escapeRspTags(s);
     } else if (ct$target$contentType == "application/x-tex") {
       env <- ct$src$args["environment"];
       if (is.null(env) || is.na(env)) env <- "";
@@ -80,9 +98,10 @@ escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
       env <- trim(env);
       if (is.element("math", env)) {
       }
-      replace <- c("&"="\\&", "%"="\\%", "$"="\\$", "#"="\\#", 
-                   "_"="\\_", "{"="\\{", "}"="\\}", 
-                   "~"="\\~", "^"="\\^", "\\"="\\\\");  # <== ?
+      replace <- c("\\"="\\textbackslash", "{"="\\{", "}"="\\}", 
+                   "&"="\\&", "%"="\\%", "$"="\\$", "#"="\\#", 
+                   "_"="\\_", 
+                   "~"="\\~{}", "^"="\\^{}");  # <== ?
       search <- names(replace);
       for (ii in seq_along(replace)) {
         s <- gsub(search[ii], replace[ii], s, fixed=TRUE);
@@ -96,8 +115,7 @@ escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
   if (ct$src$contentType == "application/x-rsp") {
     escaped <- identical(unname(ct$src$args["escaped"]), "TRUE");
     if (escaped) {
-      s <- gsub("<%%", "<%", s, fixed=TRUE);
-      s <- gsub("%%>", "%>", s, fixed=TRUE);
+      s <- unescapeRspTags(s);
     }
     if (ct$target$contentType == "text/plain") {
     } else if (ct$target$contentType == "application/x-tex") {

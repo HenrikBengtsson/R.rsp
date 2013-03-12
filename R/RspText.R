@@ -31,8 +31,7 @@
 #*/###########################################################################
 setConstructorS3("RspText", function(text=character(), escape=FALSE, ...) {
   if (escape) {
-    text <- gsub("<%", "<%%", text, fixed=TRUE);
-    text <- gsub("%>", "%%>", text, fixed=TRUE);
+    text <- escapeRspTags(text);
   }
   extend(RspConstruct(text), "RspText");
 })
@@ -67,13 +66,9 @@ setConstructorS3("RspText", function(text=character(), escape=FALSE, ...) {
 #*/######################################################################### 
 setMethodS3("getText", "RspText", function(text, unescape=FALSE, ...) {
   text <- as.character(text);
-
-  # Unenscape?
   if (unescape) {
-    text <- gsub("<%%", "<%", text, fixed=TRUE);
-    text <- gsub("%%>", "%>", text, fixed=TRUE);
+    text <- unescapeRspTags(text);
   }
-
   text;
 })
 

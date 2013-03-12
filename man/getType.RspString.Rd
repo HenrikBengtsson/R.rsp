@@ -18,7 +18,7 @@
 }
 
 \usage{
-\method{getType}{RspString}(object, default=NA, ...)
+\method{getType}{RspString}(object, default=NA, as=c("text", "IMT"), ...)
 }
 
 \arguments{

@@ -18,7 +18,7 @@
 }
 
 \usage{
-\method{getType}{RspPageDirective}(directive, default=NA, ...)
+\method{getType}{RspPageDirective}(directive, default=NA, as=c("text", "IMT"), ...)
 }
 
 \arguments{

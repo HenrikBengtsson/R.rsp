@@ -105,9 +105,7 @@ setMethodS3("getType", "RspFileProduct", function(object, as=c("text", "IMT"), .
   if (is.na(res)) {
     # Infer type from the filename extension?
     if (isFile(object)) {
-      filename <- basename(object);
-      res <- gsub(".*[.]([^.]+)$", "\\1", filename);
-      res <- tolower(res);
+      res <- extentionToIMT(object);
     }
   }
 
@@ -173,6 +171,7 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     return(NULL);
   }
 
+  type <- parseInternetMediaType(type)$contentType;
 
   # Find another RSP compiler
   fcn <- switch(type,
