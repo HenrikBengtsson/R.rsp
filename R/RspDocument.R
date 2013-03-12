@@ -1218,17 +1218,18 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
           contentType <- "text/plain";
         }
       } else {
+        file <- getFileT(expr, path=getPath(object), index=idx, verbose=verbose);
+
         # Assert that an endless loop of including the same
         # file over and over does not occur.  This is tested
         # by the number of call frames, which is grows with
         # the number of nested files included.
-        if (sys.nframe() > 400L) {
+        if (sys.nframe() > 300L) {
           # For now, don't use throw() because it outputs a very
           # long traceback list.
           stop("Too many nested RSP 'include' preprocessing directives. This indicates an endless recursive loop of including the same file over and over. This was detected while trying to include ", sQuote(file), " (file=", sQuote(getFile(expr)), "with type='application/x-rsp') in RSP document ", sQuote(getSource(object)), ".");
         }
 
-        file <- getFileT(expr, path=getPath(object), index=idx, verbose=verbose);
         text <- readLines(file, warn=FALSE);
 
         # The default content type for the 'file' attribute is

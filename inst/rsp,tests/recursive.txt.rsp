@@ -1,0 +1,7 @@
+This RSP document includes itself over and over.
+The RSP parser of R.rsp detects this an gives an
+informative error.
+
+Include itself:
+<%@include file="recursive.txt.rsp"%>
+
