@@ -175,35 +175,24 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
 
   # Find another RSP compiler
-  processors <- list(
+  fcn <- switch(type,
     # RSP-embedded LaTeX documents:
     # *.tex => ... => *.dvi/*.pdf
-    "tex" = compileLaTeX,
-    "latex" = compileLaTeX,
+    "application/x-tex" = compileLaTeX,
+    "application/x-latex" = compileLaTeX,
 
     # RSP-embedded Sweave and Knitr Rnw documents:
     # *.Rnw => ... => *.tex => dvi/*.pdf
-    "sweave" = compileSweave,
+    "application/x-sweave" = compileSweave,
 
     # RSP-embedded Sweave and Knitr Rnw documents:
     # *.Rnw => ... => *.tex => dvi/*.pdf
-    "knitr" = compileKnitr,
+    "application/x-knitr" = compileKnitr,
 
     # RSP-embedded Sweave and Knitr Rnw documents:
     # *.Rnw => ... => *.tex => dvi/*.pdf
-    "rnw" = compileRnw
+    "application/x-rnw" = compileRnw
   );
-
-
-  fcn <- NULL;
-  for (key in names(processors)) {
-    pattern <- key;
-    if (regexpr(pattern, type) != -1) {
-      fcn <- processors[[key]];
-      verbose && cat(verbose, "Match: ", key);
-      break;
-    }
-  } # for (key ...)
 
   if (is.null(fcn)) {
     verbose && cat(verbose, "Processor found: <none>");
