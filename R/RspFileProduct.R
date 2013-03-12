@@ -98,17 +98,24 @@ setMethodS3("print", "RspFileProduct", function(x, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getType", "RspFileProduct", function(object, ...) {
-  type <- NextMethod("getType");
+setMethodS3("getType", "RspFileProduct", function(object, as=c("text", "IMT"), ...) {
+  as <- match.arg(as);
+  res <- NextMethod("getType");
 
-  if (is.na(type)) {
+  if (is.na(res)) {
     # Infer type from the filename extension?
     if (isFile(object)) {
       filename <- basename(object);
-      type <- gsub(".*[.]([^.]+)$", "\\1", filename);
+      res <- gsub(".*[.]([^.]+)$", "\\1", filename);
+      res <- tolower(res);
     }
   }
-  tolower(type);
+
+  if (as == "IMT" && !is.na(res)) {
+    res <- parseInternetMediaType(res);
+  }
+
+  res;
 }, protected=TRUE)
 
 

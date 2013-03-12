@@ -692,6 +692,7 @@ setConstructorS3("RspPageDirective", function(...) {
 # @synopsis
 #
 # \arguments{
+#   \item{default}{If unknown/not set, the default content type to return.}
 #   \item{...}{Not used.}
 # }
 #
@@ -705,9 +706,14 @@ setConstructorS3("RspPageDirective", function(...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getType", "RspPageDirective", function(directive, ...) {
+setMethodS3("getType", "RspPageDirective", function(directive, default=NA, as=c("text", "IMT"), ...) {
+  as <- match.arg(as);
   res <- attr(directive, "type");
-  if (is.null(res)) res <- as.character(NA);
+  if (is.null(res)) res <- as.character(default);
+  res <- tolower(res);
+  if (as == "IMT" && !is.na(res)) {
+    res <- parseInternetMediaType(res);
+  }
   res;
 })
 

@@ -88,6 +88,7 @@ setMethodS3("print", "RspProduct", function(x, ...) {
 # @synopsis
 #
 # \arguments{
+#   \item{default}{If unknown/not set, the default content type to return.}
 #   \item{...}{Not used.}
 # }
 #
@@ -101,11 +102,15 @@ setMethodS3("print", "RspProduct", function(x, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getType", "RspProduct", function(object, ...) {
-  type <- attr(object, "type");
-  if (is.null(type)) type <- NA;
-  type <- tolower(type);
-  type;
+setMethodS3("getType", "RspProduct", function(object, default=NA, as=c("text", "IMT"), ...) {
+  as <- match.arg(as);
+  res <- attr(object, "type");
+  if (is.null(res) || is.na(res)) res <- as.character(default);
+  res <- tolower(res);
+  if (as == "IMT" && !is.na(res)) {
+    res <- parseInternetMediaType(res);
+  }
+  res;
 }, protected=TRUE)
 
 

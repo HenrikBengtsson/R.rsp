@@ -18,10 +18,11 @@
 }
 
 \usage{
-\method{getType}{RspPageDirective}(directive, ...)
+\method{getType}{RspPageDirective}(directive, default=NA, ...)
 }
 
 \arguments{
+  \item{default}{If unknown/not set, the default content type to return.}
   \item{...}{Not used.}
 }
 

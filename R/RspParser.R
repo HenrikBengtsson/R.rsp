@@ -70,6 +70,20 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
     sum(s == as.raw(0x0a));
   } # countLineBreaks()
 
+  # Escape '<%%' and '%%>'
+  escapeP <- function(s) {
+    s <- gsub("<%%", "---<<<---%%%---%%%---", s, fixed=TRUE);
+    s <- gsub("%%>", "---%%%---%%%--->>>---", s, fixed=TRUE);
+    s;
+  } # escapeP()
+
+  # Unescape '<%%' and '%%>'
+  unescapeP <- function(s) {
+    s <- gsub("---<<<---%%%---%%%---", "<%%", s, fixed=TRUE);
+    s <- gsub("---%%%---%%%--->>>---", "%%>", s, fixed=TRUE);
+    s;
+  } # unescapeP()
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -135,12 +149,10 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && cat(verbose, "What to parse for: ", what);
 
-  # Record source line
-  lineCount <- 0L;
-
-  # Specifies whether the RSP construct being parsed is on the same
-  # line as an RSP text construct.
-##  sameLineAsRspText <- FALSE;
+  # Hide '<%%' and '%%>' from parser
+  n <- nchar(bfr);
+  bfr <- escapeP(bfr);
+  escapedP <- (nchar(bfr) != n);
 
   # Constants
   START <- 0L;
@@ -186,10 +198,9 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
         # Update flag whether the RSP construct being parsed is
         # on the same output line as RSP text or not.  It is not
         # if the text ends with a line break.
-##        sameLineAsRspText <- (regexpr("[\n\r]$", text) == -1L);
+        if (escapedP) text <- unescapeP(text);
         part <- list(text=RspText(text));
       } else {
-##        sameLineAsRspText <- FALSE;
         part <- NULL;
       }
 
@@ -197,9 +208,6 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
       # (iii) Special case: Locate RSP end tag immediately.
       if (is.null(patternR)) {
         body <- "";
-
-##        # Record 'same-line-as-text' flag
-##        attr(body, "sameLineAsRspText") <- sameLineAsRspText;
 
         # Extract the '<%...%>' part
         if (nExtra > 0L) {
@@ -270,9 +278,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 
       # Extract body of RSP construct (without RSP end tag)
       body <- substring(bfr, first=1L, last=posR-1L);
-
-##      # Record 'same-line-as-text' flag
-##      attr(body, "sameLineAsRspText") <- sameLineAsRspText;
+      if (escapedP) body <- unescapeP(body);
 
       # Get optional suffix specifications, i.e. '+%>' or '-[{specs}]%>'
       if (regexpr(patternS, tail) == 1L) {
@@ -311,7 +317,9 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 
   # Add the rest of the buffer as text, unless empty.
   if (nchar(bfr) > 0L) {
-    text <- RspText(bfr);
+    text <- bfr;
+    if (escapedP) text <- unescapeP(text);
+    text <- RspText(text);
     parts <- c(parts, list(text=text));
   }
   verbose && cat(verbose, "Total number of RSP constructs parsed: ", length(parts));

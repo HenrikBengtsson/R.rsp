@@ -139,8 +139,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   # Argument 'type':
   if (is.null(type)) {
     if (is.character(output)) {
-      ext <- gsub(".*[.]([^.]+)$", "\\1", basename(output));
-      type <- tolower(ext);
+      type <- extentionToIMT(output);
       attr(type, "fixed") <- TRUE;
     } else {
       type <- NA;
@@ -148,8 +147,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   }
   if (is.na(type)) {
     if (is.character(output)) {
-      ext <- gsub(".*[.]([^.]+)$", "\\1", basename(output));
-      type <- tolower(ext);
+      type <- extentionToIMT(output);
     }
   }
   fixed <- attr(type, "fixed");

@@ -104,6 +104,7 @@ setMethodS3("print", "RspDocument", function(x, ...) {
 # @synopsis
 #
 # \arguments{
+#   \item{default}{If unknown/not set, the default content type to return.}
 #   \item{...}{Not used.}
 # }
 #
@@ -117,9 +118,14 @@ setMethodS3("print", "RspDocument", function(x, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getType", "RspDocument", function(object, ...) {
+setMethodS3("getType", "RspDocument", function(object, default=NA, as=c("text", "IMT"), ...) {
+  as <- match.arg(as);
   res <- attr(object, "type");
-  if (is.null(res)) res <- as.character(NA);
+  if (is.null(res) || is.na(res)) res <- as.character(default);
+  res <- tolower(res);
+  if (as == "IMT" && !is.na(res)) {
+    res <- parseInternetMediaType(res);
+  }
   res;
 }, protected=TRUE)
 
@@ -1153,6 +1159,9 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         }
       }
 
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # (a) Infer source and host content type
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       text <- getText(expr);
       if (!is.null(text)) {
         file <- getSource(object);
@@ -1162,6 +1171,16 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
           contentType <- "text/plain";
         }
       } else {
+        # Assert that an endless loop of including the same
+        # file over and over does not occur.  This is tested
+        # by the number of call frames, which is grows with
+        # the number of nested files included.
+        if (sys.nframe() > 400L) {
+          # For now, don't use throw() because it outputs a very
+          # long traceback list.
+          stop("Too many nested RSP 'include' preprocessing directives. This indicates an endless recursive loop of including the same file over and over. This was detected while trying to include ", sQuote(file), " (file=", sQuote(getFile(expr)), "with type='application/x-rsp') in RSP document ", sQuote(getSource(object)), ".");
+        }
+
         file <- getFileT(expr, path=getPath(object), index=idx, verbose=verbose);
         text <- readLines(file, warn=FALSE);
 
@@ -1187,22 +1206,26 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       # Sanity check
       stopifnot(!is.null(contentType));
 
-      if (contentType == "text/plain") {
-        text <- wrapText(text, wrap=getWrap(expr));
-        expr <- RspText(text, escape=TRUE, source=file);
-      } else if (contentType == "application/x-rsp") {
-        # Assert that an endless loop of including the same
-        # file over and over does not occur.  This is tested
-        # by the number of call frames, which is grows with
-        # the number of nested files included.
-        if (sys.nframe() > 400L) {
-          # For now, don't use throw() because it outputs a very
-          # long traceback list.
-          stop("Too many nested RSP 'include' preprocessing directives. This indicates an endless recursive loop of including the same file over and over. This was detected while trying to include ", sQuote(file), " (file=", sQuote(getFile(expr)), "with type='application/x-rsp') in RSP document ", sQuote(getSource(object)), ".");
-        }
+      hostContentType <- getType(object, default="text/plain");
+
+      # Parse content types
+      srcCT <- parseInternetMediaType(contentType);
+      hostCT <- parseInternetMediaType(hostContentType);
+
+
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # (b) Escape text from source and host content type
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      # Wrap text, iff argument 'wrap' is specified
+      text <- wrapText(text, wrap=getWrap(expr));
+
+      text <- escapeRspContent(text, srcCT=srcCT, targetCT=hostCT, verbose=verbose);
+
+      if (hostCT$contentType == "application/x-rsp") {
+        rstr <- RspString(text, escape=FALSE, 
+                                type=hostContentType, source=file);
 
         # Parse RSP string to RSP document
-        rstr <- RspString(text, type=getType(object), source=file);
         doc <- parse(rstr, envir=envir, verbose=verbose);
         verbose && cat(verbose, "Included RSP document:");
         verbose && print(verbose, doc);
@@ -1214,7 +1237,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         expr <- doc;
         rm(rstr, doc);
       } else {
-        throw(sprintf("RSP 'include' preprocessing directive (#%d) specifies an unknown content type in argument 'type': %s", idx, type));
+        expr <- RspText(text, escape=FALSE, type=hostContentType, source=file);
       }
 
       # Replace RSP directive with imported RSP document

@@ -58,6 +58,7 @@ setConstructorS3("RspString", function(str=character(), ..., type=NA, source=NA,
 # @synopsis
 #
 # \arguments{
+#   \item{default}{If unknown/not set, the default content type to return.}
 #   \item{...}{Not used.}
 # }
 #
@@ -71,9 +72,14 @@ setConstructorS3("RspString", function(str=character(), ..., type=NA, source=NA,
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getType", "RspString", function(object, ...) {
+setMethodS3("getType", "RspString", function(object, default=NA, as=c("text", "IMT"), ...) {
+  as <- match.arg(as);
   res <- attr(object, "type");
-  if (is.null(res)) res <- as.character(NA);
+  if (is.null(res) || is.na(res)) res <- as.character(default);
+  res <- tolower(res);
+  if (as == "IMT" && !is.na(res)) {
+    res <- parseInternetMediaType(res);
+  }
   res;
 }, protected=TRUE)
 
