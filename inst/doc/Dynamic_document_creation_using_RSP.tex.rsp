@@ -743,6 +743,7 @@ Whenever using the '\code{text}' argument, the content type is assumed to be '\c
 
 
 
+<%-----
 
 \subsection{Document content types}
 <%--
@@ -806,6 +807,7 @@ when including the content of a \code{random.txt} its content is assumed to be '
 For unknown extensions, the content type is always assumed to be '\code{text/plain}'.  This is also the case when the text to be included is specified by argument \code{text} (and not \code{file}).
 
 
+-----%>
 
 
 

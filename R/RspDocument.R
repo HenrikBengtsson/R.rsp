@@ -1281,12 +1281,12 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         text <- escapeRspTags(text);
       }
 
+
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # (e) Parse into an RspText or and RspDocument
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       if (inclCT$contentType == "application/x-rsp") {
-        rstr <- RspString(text, escape=FALSE, 
-                                type=hostContentType, source=file);
+        rstr <- RspString(text, type=hostContentType, source=file);
 
         # Parse RSP string to RSP document
         doc <- parse(rstr, envir=envir, verbose=verbose);
