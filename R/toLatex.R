@@ -1,6 +1,7 @@
 ###########################################################################/**
 # @set class=character
 # @RdocMethod toLatex
+# @alias toLatex.default
 # @alias le
 #
 # @title "Escapes character strings to become LaTeX compatible"
@@ -30,9 +31,23 @@
 #*/########################################################################### 
 setMethodS3("toLatex", "character", function(object, ...) {
   s <- object;
-  s <- gsub("_", "\\_", s, fixed=TRUE);
+  replace <- c("\\"="\\textbackslash", "{"="\\{", "}"="\\}", 
+                "&"="\\&", "%"="\\%", "$"="\\$", "#"="\\#", 
+                "_"="\\_", 
+                "~"="\\~{}", "^"="\\^{}");  # <== ?
+  search <- names(replace);
+  for (ii in seq_along(replace)) {
+    s <- gsub(search[ii], replace[ii], s, fixed=TRUE);
+  } 
   s;
 }) # toLatex()
+
+# To handle the NULL case
+setMethodS3("toLatex", "default", function(object, ...) {
+  if (is.null(object)) return("");
+  object;
+}) # toLatex()
+
 
 le <- function(...) { 
   sapply(c(...), FUN=function(s) {
@@ -43,6 +58,9 @@ le <- function(...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-03-12
+# o Now toLatex() for character escapes many more symbols.
+# o Added default toLatex().
 # 2012-02-28
 # o Added Rdoc comments to toLatex().
 # o Added toLatex() and le() adopted from the R.rsp.addons package.

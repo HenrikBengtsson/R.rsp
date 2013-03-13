@@ -9,6 +9,7 @@
 
 \name{toLatex.character}
 \alias{toLatex.character}
+\alias{toLatex.default}
 \alias{le}
 
 \title{Escapes character strings to become LaTeX compatible}
