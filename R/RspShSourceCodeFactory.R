@@ -30,44 +30,6 @@ setConstructorS3("RspShSourceCodeFactory", function(...) {
 
 
 
-#########################################################################/**
-# @RdocMethod exprToCode
-#
-# @title "Translates an RspExpression into sh source code"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{expr}{An @see "RspExpression".}
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character @vector.
-# }
-#
-# \details{
-#  This RSP construct to shell source code assumes that the shell
-#  supports the 'printf' command.
-#  The reason for not using 'echo' is that it is not working the
-#  same across different types of shell implementations [1].
-# }
-#
-# @author
-#
-# \references{
-#  [1] Eta Labs, \emph{Rich's sh (POSIX shell) tricks}, March 2013.
-#      \url{http://www.etalabs.net/sh_tricks.html}.
-# }
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
 setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., index=NA) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");

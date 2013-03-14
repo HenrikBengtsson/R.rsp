@@ -2,7 +2,7 @@
 # @RdocDefault rstring
 # @alias rstring.RspString
 # @alias rstring.RspDocument
-# @alias rstring.RspRSourceCode
+# @alias rstring.RspSourceCode
 #
 # @title "Evaluates an RSP string and returns the generated string"
 #

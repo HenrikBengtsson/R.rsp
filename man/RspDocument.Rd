@@ -65,6 +65,7 @@ RspDocument(expressions=list(), attrs=list(), ...)
  \tab \code{\link[R.rsp:print.RspDocument]{print}} \tab Prints a summary of an RspDocument.\cr
  \tab \code{rcat} \tab  -\cr
  \tab \code{rcompile} \tab  -\cr
+ \tab \code{rscript} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
  \tab \code{setAttribute} \tab  -\cr
  \tab \code{setAttributes} \tab  -\cr

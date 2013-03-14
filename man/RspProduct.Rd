@@ -22,7 +22,7 @@
 \code{~~+--}\code{RspProduct}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.rsp]{RspFileProduct}, \link[R.rsp]{RspRSourceCode}, \emph{\link[R.rsp]{RspSourceCode}}, \link[R.rsp]{RspStringProduct}\cr
+\link[R.rsp]{RspFileProduct}, \link[R.rsp]{RspRSourceCode}, \emph{\link[R.rsp]{RspShSourceCode}}, \emph{\link[R.rsp]{RspSourceCode}}, \link[R.rsp]{RspStringProduct}\cr
 
 public class \bold{RspProduct}\cr
 extends logical\cr

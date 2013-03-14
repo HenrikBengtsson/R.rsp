@@ -97,6 +97,8 @@
 # @alias exprToCode
 # @alias getAttribute
 # @alias getAttributes
+# @alias setAttribute
+# @alias setAttributes
 # @alias getCode
 # @alias getEcho
 # @alias getFile

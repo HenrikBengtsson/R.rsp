@@ -1,24 +1,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspRSourceCodeFactory.R
+%  RspSourceCodeFactory.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getCompleteCode.RspRSourceCodeFactory}
+\name{getCompleteCode.RspSourceCodeFactory}
+\alias{getCompleteCode.RspSourceCodeFactory}
+\alias{RspSourceCodeFactory.getCompleteCode}
+\alias{getCompleteCode,RspSourceCodeFactory-method}
 \alias{getCompleteCode.RspRSourceCodeFactory}
-\alias{RspRSourceCodeFactory.getCompleteCode}
-\alias{getCompleteCode,RspRSourceCodeFactory-method}
 
-\title{Gets the complete R source code}
+\title{Gets the source code header, body, and footer}
 
 \description{
- Gets the complete R source code with output functions defined.
+ Gets the source code header, body, and footer.
 }
 
 \usage{
-\method{getCompleteCode}{RspRSourceCodeFactory}(this, object, ...)
+\method{getCompleteCode}{RspSourceCodeFactory}(this, object, ...)
 }
 
 \arguments{
@@ -32,7 +33,7 @@
 \author{Henrik Bengtsson}
 
 \seealso{
-  For more information see \code{\link{RspRSourceCodeFactory}}.
+  For more information see \code{\link{RspSourceCodeFactory}}.
 }
 \keyword{internal}
 \keyword{methods}

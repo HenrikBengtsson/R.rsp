@@ -22,7 +22,7 @@
 \code{~~+--}\emph{\code{RspSourceCodeFactory}}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.rsp]{RspBashSourceCodeFactory}, \link[R.rsp]{RspRSourceCodeFactory}\cr
+\link[R.rsp]{RspRSourceCodeFactory}, \link[R.rsp]{RspShSourceCodeFactory}\cr
 
 public abstract class \bold{RspSourceCodeFactory}\cr
 extends character\cr
@@ -47,6 +47,7 @@ RspSourceCodeFactory(language=NA, ...)
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:exprToCode.RspSourceCodeFactory]{exprToCode}} \tab Translates an RspExpression into source code.\cr
+ \tab \code{\link[R.rsp:getCompleteCode.RspSourceCodeFactory]{getCompleteCode}} \tab Gets the source code header, body, and footer.\cr
  \tab \code{\link[R.rsp:getLanguage.RspSourceCodeFactory]{getLanguage}} \tab Gets the language.\cr
  \tab \code{\link[R.rsp:makeSourceCode.RspSourceCodeFactory]{makeSourceCode}} \tab Makes a RspSourceCode object.\cr
  \tab \code{\link[R.rsp:toSourceCode.RspSourceCodeFactory]{toSourceCode}} \tab Translates an RSP document to source code.\cr

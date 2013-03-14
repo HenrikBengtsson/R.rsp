@@ -1,42 +1,42 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspRSourceCodeFactory.R
+%  RspShSourceCodeFactory.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspRSourceCodeFactory}
+ \name{RspShSourceCodeFactory}
 \docType{class}
-\alias{RspRSourceCodeFactory}
+\alias{RspShSourceCodeFactory}
 
 
- \title{The RspRSourceCodeFactory class}
+ \title{The RspShSourceCodeFactory class}
 
  \description{
   Package:  R.rsp \cr
-\bold{Class RspRSourceCodeFactory}\cr
+\bold{Class RspShSourceCodeFactory}\cr
 
 \code{character}\cr
 \code{~~|}\cr
 \code{~~+--}\code{\link[R.rsp]{RspSourceCodeFactory}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{RspRSourceCodeFactory}\cr
+\code{~~~~~~~+--}\code{RspShSourceCodeFactory}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public class \bold{RspRSourceCodeFactory}\cr
+public class \bold{RspShSourceCodeFactory}\cr
 extends \emph{\link[R.rsp]{RspSourceCodeFactory}}\cr
 
 
 
-  An RspRSourceCodeFactory is an \code{\link{RspSourceCodeFactory}} for
-  the R language.
+  An RspShSourceCodeFactory is an \code{\link{RspSourceCodeFactory}} for
+  the shell ('sh') script language.
  }
 
  \usage{
-RspRSourceCodeFactory(...)
+RspShSourceCodeFactory(...)
 }
 
  \arguments{
@@ -47,7 +47,6 @@ RspRSourceCodeFactory(...)
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{exprToCode} \tab  -\cr
- \tab \code{getCompleteCode} \tab  -\cr
 }
 
 

@@ -1,26 +1,26 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  rstring.R
+%  rscript.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{rstring}
-\alias{rstring.default}
-\alias{rstring}
-\alias{rstring.RspString}
-\alias{rstring.RspDocument}
-\alias{rstring.RspSourceCode}
+\name{rscript}
+\alias{rscript.default}
+\alias{rscript}
+\alias{rscript.RspString}
+\alias{rscript.RspDocument}
+\alias{rscript.RspRSourceCode}
 
-\title{Evaluates an RSP string and returns the generated string}
+\title{Compiles an RSP string and returns the generated source code script}
 
 \description{
- Evaluates an RSP string and returns the generated string.
+ Compiles an RSP string and returns the generated source code script.
 }
 
 \usage{
-\method{rstring}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", verbose=FALSE)
+\method{rscript}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", verbose=FALSE)
 }
 
 \arguments{
@@ -41,12 +41,14 @@
 }
 
 \examples{
-x <- rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>\n")
-cat(x)
+# RSP-embedded text to an R script
+code <- rscript("Current time is <\%=Sys.date()\%>\n")
+cat(code, sep="\n")
 
-# Passing arguments
-x <- rstring("A random integer in [1,<\%=K\%>]: <\%=sample(1:K, size=1)\%>\n", args=list(K=50))
-cat(x)
+# RSP-embedded text to a shell script
+code <- rscript("Current time is <\%=date\%>\n", language="sh")
+cat(code, sep="\n")
+
 }
 
 \author{Henrik Bengtsson}

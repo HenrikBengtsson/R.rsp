@@ -24,7 +24,7 @@
 \code{~~~~~~~+--}\emph{\code{RspSourceCode}}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.rsp]{RspRSourceCode}\cr
+\link[R.rsp]{RspRSourceCode}, \emph{\link[R.rsp]{RspShSourceCode}}\cr
 
 public abstract class \bold{RspSourceCode}\cr
 extends \link[R.rsp]{RspProduct}\cr
@@ -50,6 +50,7 @@ RspSourceCode(code=character(), ...)
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RspSourceCode]{evaluate}} \tab Evaluates the source code.\cr
  \tab \code{\link[R.rsp:print.RspSourceCode]{print}} \tab Prints the source code.\cr
+ \tab \code{rstring} \tab  -\cr
  \tab \code{\link[R.rsp:tangle.RspSourceCode]{tangle}} \tab Drops all text-outputting calls from the source code.\cr
 }
 

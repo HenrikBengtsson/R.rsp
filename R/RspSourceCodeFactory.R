@@ -112,6 +112,8 @@ setMethodS3("makeSourceCode", "RspSourceCodeFactory", function(this, ...) {
 
 #########################################################################/**
 # @RdocMethod exprToCode
+# @alias exprToCode.RspRSourceCodeFactory
+# @alias exprToCode.RspShSourceCodeFactory
 #
 # @title "Translates an RspExpression into source code"
 #
@@ -141,6 +143,32 @@ setMethodS3("exprToCode", "RspSourceCodeFactory", abstract=TRUE);
 
 
 
+#########################################################################/**
+# @RdocMethod getCompleteCode
+# @alias getCompleteCode.RspRSourceCodeFactory
+#
+# @title "Gets the source code header, body, and footer"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
 setMethodS3("getCompleteCode", "RspSourceCodeFactory", function(this, object, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

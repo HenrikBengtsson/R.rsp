@@ -55,6 +55,7 @@ RspString(s=character(), attrs=list(), ...)
  \tab \code{\link[R.rsp:parse.RspString]{parse}} \tab Parses the RSP string.\cr
  \tab \code{rcat} \tab  -\cr
  \tab \code{rcompile} \tab  -\cr
+ \tab \code{rscript} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
  \tab \code{setAttribute} \tab  -\cr
  \tab \code{setAttributes} \tab  -\cr

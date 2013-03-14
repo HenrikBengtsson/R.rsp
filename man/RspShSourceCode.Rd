@@ -1,21 +1,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspRSourceCode.R
+%  RspShSourceCode.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspRSourceCode}
+ \name{RspShSourceCode}
 \docType{class}
-\alias{RspRSourceCode}
+\alias{RspShSourceCode}
 
 
- \title{The RspRSourceCode class}
+ \title{The RspShSourceCode class}
 
  \description{
   Package:  R.rsp \cr
-\bold{Class RspRSourceCode}\cr
+\bold{Class RspShSourceCode}\cr
 
 \code{character}\cr
 \code{~~|}\cr
@@ -23,21 +23,21 @@
 \code{~~~~~~~|}\cr
 \code{~~~~~~~+--}\code{\link[R.rsp]{RspSourceCode}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\code{RspRSourceCode}\cr
+\code{~~~~~~~~~~~~+--}\emph{\code{RspShSourceCode}}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public class \bold{RspRSourceCode}\cr
+public abstract class \bold{RspShSourceCode}\cr
 extends \emph{\link[R.rsp]{RspSourceCode}}\cr
 
 
 
-  An RspRSourceCode object is an \code{\link{RspSourceCode}} holding R source code.
+  An RspShSourceCode object is an \code{\link{RspSourceCode}} holding R source code.
  }
 
  \usage{
-RspRSourceCode(...)
+RspShSourceCode(...)
 }
 
  \arguments{
@@ -47,11 +47,8 @@ RspRSourceCode(...)
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:evaluate.RspRSourceCode]{evaluate}} \tab Parses and evaluates the R code.\cr
+ \tab \code{\link[R.rsp:evaluate.RspShSourceCode]{evaluate}} \tab Evaluates the shell (sh) code.\cr
  \tab \code{findProcessor} \tab  -\cr
- \tab \code{\link[R.rsp:parse.RspRSourceCode]{parse}} \tab Parses the R code.\cr
- \tab \code{rcat} \tab  -\cr
- \tab \code{\link[R.rsp:tangle.RspRSourceCode]{tangle}} \tab Drops all text-outputting calls from the R code.\cr
 }
 
 

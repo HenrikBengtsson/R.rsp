@@ -10,6 +10,8 @@
 \alias{exprToCode.RspSourceCodeFactory}
 \alias{RspSourceCodeFactory.exprToCode}
 \alias{exprToCode,RspSourceCodeFactory-method}
+\alias{exprToCode.RspRSourceCodeFactory}
+\alias{exprToCode.RspShSourceCodeFactory}
 
 \title{Translates an RspExpression into source code}
 

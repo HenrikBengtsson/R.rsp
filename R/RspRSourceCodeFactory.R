@@ -30,32 +30,6 @@ setConstructorS3("RspRSourceCodeFactory", function(...) {
 
 
 
-#########################################################################/**
-# @RdocMethod exprToCode
-#
-# @title "Translates an RspExpression into R source code"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{expr}{An @see "RspExpression".}
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character @vector.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
 setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., index=NA) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
@@ -159,31 +133,6 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
 
 
 
-#########################################################################/**
-# @RdocMethod getCompleteCode
-#
-# @title "Gets the complete R source code"
-#
-# \description{
-#  @get "title" with output functions defined.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
 setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
