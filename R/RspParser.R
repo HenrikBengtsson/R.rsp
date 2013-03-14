@@ -513,6 +513,7 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
     doc <- trimNonText(doc, verbose=less(verbose, 10));
 
     # Process all RSP preprocessing directives, i.e. <%@...%>
+
     doc <- preprocess(doc, envir=envir, ..., verbose=less(verbose, 10));
 
     # Coerce to RspString

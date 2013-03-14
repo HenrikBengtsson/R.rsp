@@ -49,17 +49,19 @@ RspDocument(expressions=list(), type=NA, source=NA, metadata=list(), ...)
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{[} \tab  -\cr
+ \tab \code{[<-} \tab  -\cr
  \tab \code{\link[R.rsp:asRspString.RspDocument]{asRspString}} \tab Recreates an RSP string from an RspDocument.\cr
  \tab \code{\link[R.rsp:dropEmptyText.RspDocument]{dropEmptyText}} \tab Drops all empty RSP text constructs.\cr
  \tab \code{\link[R.rsp:evaluate.RspDocument]{evaluate}} \tab Parses, translates, and evaluates the RSP document.\cr
  \tab \code{\link[R.rsp:flatten.RspDocument]{flatten}} \tab Flattens an RspDocument.\cr
  \tab \code{getAttribute} \tab  -\cr
  \tab \code{\link[R.rsp:getAttributes.RspDocument]{getAttributes}} \tab Gets the attributes of an RSP document.\cr
- \tab \code{\link[R.rsp:getMetadata.RspDocument]{getMetadata}} \tab Gets the annotations of the RspDocument.\cr
+ \tab \code{\link[R.rsp:getMetadata.RspDocument]{getMetadata}} \tab Gets the metadata of the RspDocument.\cr
  \tab \code{\link[R.rsp:getPath.RspDocument]{getPath}} \tab Gets the path to the source reference of an RSP string.\cr
  \tab \code{\link[R.rsp:getSource.RspDocument]{getSource}} \tab Gets the source reference of an RSP document.\cr
  \tab \code{\link[R.rsp:getType.RspDocument]{getType}} \tab Gets the type of the RspDocument.\cr
  \tab \code{\link[R.rsp:mergeTexts.RspDocument]{mergeTexts}} \tab Merge neighboring 'text' elements.\cr
+ \tab \code{parseIfElseDirectives} \tab  -\cr
  \tab \code{\link[R.rsp:preprocess.RspDocument]{preprocess}} \tab Processes all RSP preprocessing directives.\cr
  \tab \code{\link[R.rsp:print.RspDocument]{print}} \tab Prints a summary of an RspDocument.\cr
  \tab \code{rcat} \tab  -\cr
@@ -73,7 +75,7 @@ RspDocument(expressions=list(), type=NA, source=NA, metadata=list(), ...)
 
 
  \bold{Methods inherited from list}:\cr
-all.equal, as.data.frame, attachLocally, callHooks, relist, within, wrap
+all.equal, as.data.frame, attachLocally, callHooks, relist, within
 
  }
 

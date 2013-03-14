@@ -876,24 +876,24 @@ setConstructorS3("RspKeywordsDirective", function(...) {
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspIfDirective", function(...) {
-  extend(RspDirective("if", ...), "RspIfDirective")
+setConstructorS3("RspIfDirective", function(directive="if", ...) {
+  extend(RspDirective(directive, ...), "RspIfDirective")
 })
 
-setConstructorS3("RspIfeqDirective", function(...) {
-  extend(RspIfDirective("ifeq", ...), "RspIfeqDirective")
+setConstructorS3("RspIfeqDirective", function(directive="ifeq", ...) {
+  extend(RspIfDirective(directive, ...), "RspIfeqDirective")
 })
 
-setConstructorS3("RspIfneqDirective", function(...) {
-  extend(RspIfDirective("ifneq", ...), "RspIfneqDirective")
+setConstructorS3("RspIfneqDirective", function(directive="neq", ...) {
+  extend(RspIfDirective(directive, ...), "RspIfneqDirective")
 })
 
-setConstructorS3("RspElseDirective", function(...) {
-  extend(RspDirective("else", ...), "RspElseDirective")
+setConstructorS3("RspElseDirective", function(directive="else", ...) {
+  extend(RspDirective(directive, ...), "RspElseDirective")
 })
 
-setConstructorS3("RspEndifDirective", function(...) {
-  extend(RspDirective("endif", ...), "RspEndifDirective")
+setConstructorS3("RspEndifDirective", function(directive="endif", ...) {
+  extend(RspDirective(directive, ...), "RspEndifDirective")
 })
 
 

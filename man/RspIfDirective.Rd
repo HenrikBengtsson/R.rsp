@@ -44,7 +44,7 @@ extends \link[R.rsp]{RspDirective}\cr
  }
 
  \usage{
-RspIfDirective(...)
+RspIfDirective(directive="if", ...)
 }
 
  \arguments{

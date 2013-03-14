@@ -10,6 +10,11 @@
 \alias{preprocess.RspDocument}
 \alias{RspDocument.preprocess}
 \alias{preprocess,RspDocument-method}
+\alias{RspDocument.parseIfElseDirectives}
+\alias{parseIfElseDirectives.RspDocument}
+\alias{parseIfElseDirectives,RspDocument-method}
+
+\alias{parseIfElseDirectives}
 
 \title{Processes all RSP preprocessing directives}
 
@@ -23,7 +28,8 @@
 
 \arguments{
   \item{recursive}{If \code{\link[base:logical]{TRUE}}, any \code{\link{RspDocument}}s introduced via
-     preprocessing directives are recursively preprocessed as well.}
+     preprocessing directives are recursively parsed and preprocessed
+     as well.}
   \item{flatten}{If \code{\link[base:logical]{TRUE}}, any \code{\link{RspDocument}} introduced is
      replaced (inserted and expanded) by its \code{\link[base]{list}} of
      \code{\link{RspConstruct}}s.}

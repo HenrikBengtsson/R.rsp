@@ -10,6 +10,10 @@
 \alias{[.RspDocument}
 \alias{RspDocument.[}
 \alias{[,RspDocument-method}
+\alias{RspDocument.[<-}
+\alias{[<-.RspDocument}
+\alias{[<-,RspDocument-method}
+
 
 \title{Subsets an RspDocument}
 
