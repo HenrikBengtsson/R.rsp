@@ -95,7 +95,10 @@ setMethodS3("makeSourceCode", "RspSourceCodeFactory", function(this, ...) {
   lang <- getLanguage(this);
   className <- sprintf("Rsp%sSourceCode", capitalize(lang));
   clazz <- Class$forName(className);
-  clazz(...);
+  code <- clazz(...);
+  codeT <- getCompleteCode(this, code, ...);
+  code <- clazz(codeT, ...);
+  code;
 }, protected=TRUE)
 
 

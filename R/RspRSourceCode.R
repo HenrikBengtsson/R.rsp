@@ -29,168 +29,6 @@ setConstructorS3("RspRSourceCode", function(...) {
 
 
 
-
-#########################################################################/**
-# @RdocMethod getCompleteCode
-#
-# @title "Gets the complete R source code"
-#
-# \description{
-#  @get "title" with output functions defined.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{output}{A @character string specifying type of output function.}
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("stdout", "string"), ...) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Local functions
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  minIndent <- function(...) {
-    s <- c(...);
-    s <- gsub('"\n"', '"\r"', s);
-    s <- unlist(strsplit(s, split="\n", fixed=TRUE));
-    s <- sapply(s, FUN=function(s) gsub('"\r"', '"\n"', s));
-    names(s) <- NULL;
-
-    # Nothing todo?
-    if (length(s) == 0L) return(s);
-
-    # Clean all-blank lines
-    s <- gsub("^[ ]*$", "", s);
-    # Drop empty lines at the top and the end
-    while (nchar(s[1L]) == 0L) {
-      s <- s[-1L];
-    }
-
-    # Nothing todo?
-    if (length(s) == 0L) return(s);
-
-    while (nchar(s[length(s)]) == 0L) {
-      s <- s[-length(s)];
-    }
-
-    # Drop duplicated empty lines
-    idxs <- which(nchar(s) == 0L);
-    if (length(idxs) > 0L) {
-      idxs <- idxs[which(diff(idxs) == 1L)];
-      if (length(idxs) > 0L) {
-        s <- s[-idxs];
-      }
-    }
-
-    # Find minimum indentation of non-blank lines
-    idxs <- which(nchar(s) > 0L);
-
-    # Nothing to do?
-    if (length(idxs) == 0L) {
-      return(s);
-    }
-
-    prefix <- gsub("^([ ]*).*", "\\1", s[idxs]);
-    min <- min(nchar(prefix));
-
-    # Nothing to do?
-    if (min == 0L) {
-      return(s);
-    }
-
-    pattern <- sprintf("^%s", paste(rep(" ", times=min), collapse=""));
-    s <- gsub(pattern, "", s);
-
-    s;
-  } # minIndent()
-
-  
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'output':
-  output <- match.arg(output);
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Create header and footer code
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  metadata <- getMetadata(object);
-  code <- NULL;
-  for (key in names(metadata)) {
-     value <- metadata[[key]];
-     value <- gsub('"', '\\"', value, fixed=TRUE);
-     value <- sprintf('  %s = "%s"', key, value);
-     code <- c(code, value);
-  }
-  code <- unlist(strsplit(paste(code, collapse=",\n"), split="\n", fixed=TRUE))
-  code <- c('## RSP document metadata', '.rd <- list(', code, ');');
-  header0 <- paste('      ', code, sep="");
-
-  if (output == "string") {
-    # Build R source code
-    header <- minIndent(header0, '
-      ## RSP output to string
-      .rcon <- textConnection(NULL, open="w", local=TRUE);
-      on.exit({ if (exists(".rcon")) { close(.rcon); rm(.rcon); }}, add=TRUE);
-  
-      ## RSP output function
-      .ro <- function(..., collapse="", sep="") {
-        msg <- paste(..., collapse=collapse, sep=sep);
-        base::cat(msg, sep="", file=.rcon);
-      }
-    ');
-
-    footer <- minIndent('
-      .ro("\\n"); ## Force a last complete line
-
-      ## RSP cleanup
-      rm(.ro, .rd);
-      .rres <- paste(textConnectionValue(.rcon), collapse="\n");
-      close(.rcon); rm(.rcon);
-
-      ## Return result and remove ".rres" at the same time
-      (function(x) {
-        res <- force(x);
-        rm(".rres", envir=parent.frame());
-        res;
-      })(.rres);
-    ');
-  } else if (output == "stdout") {
-    # Build R source code
-    header <- minIndent(header0, '
-      ## RSP output function
-      .ro <- function(..., collapse="", sep="") {
-        msg <- paste(..., collapse=collapse, sep=sep);
-        base::cat(msg, sep="");
-      }
-    ');
-
-    footer <- '';
-  } # if (output == ...)
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Merge all code
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  code <- c(header, '## RSP document', object, footer);
-  code <- paste(code, collapse="\n");
-
-  code;
-}, protected=TRUE) # getCompleteCode()
-
-
-
 #########################################################################/**
 # @RdocMethod parse
 #
@@ -203,7 +41,7 @@ setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("stdo
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Additional arguments passed to @seemethod "getCompleteCode".}
+#   \item{...}{Not used.}
 # }
 #
 # \value{
@@ -217,8 +55,8 @@ setMethodS3("getCompleteCode", "RspRSourceCode", function(object, output=c("stdo
 # }
 #*/######################################################################### 
 setMethodS3("parse", "RspRSourceCode", function(object, ...) {
-  # Make R source code header and footer
-  code <- getCompleteCode(object, ...);
+  # Get the source code
+  code <- as.character(object);
 
   # Write R code?
   pathname <- getOption("R.rsp/debug/writeCode", NULL);
@@ -252,7 +90,6 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
 # @synopsis
 #
 # \arguments{
-#   \item{output}{A @character string specifying type of output function.}
 #   \item{envir}{The @environment in which the RSP string is evaluated.}
 #   \item{args}{A named @list of arguments assigned to the environment
 #     in which the RSP string is parsed and evaluated. 
@@ -270,31 +107,24 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("evaluate", "RspRSourceCode", function(object, output=c("stdout", "string"), envir=parent.frame(), args="*", ..., verbose=FALSE) {
+setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(), args="*", ..., verbose=FALSE) {
   # Argument 'args':
   args <- cmdArgs(args);
 
-  # Argument 'output':
-  output <- match.arg(output);
-
 
   # Parse R RSP source code
-  expr <- parse(object, output=output);
+  expr <- parse(object);
 
   # Assign arguments to the parse/evaluation environment
   attachLocally(args, envir=envir);
 
-  # Evaluate R source code
-  if (output == "stdout") {
-    res <- capture.output({
-      eval(expr, envir=envir, ...);
-      # Force a last complete line
-      cat("\n");
-    });
-    res <- paste(res, collapse="\n");
-  } else if (output == "string") {
-    res <- eval(expr, envir=envir, ...);
-  }
+  # Evaluate R source code and capture output
+  res <- capture.output({
+    eval(expr, envir=envir, ...);
+    # Force a last complete line
+    cat("\n");
+  });
+  res <- paste(res, collapse="\n");
 
   RspStringProduct(res, type=getType(object));
 }) # evaluate()
@@ -355,6 +185,8 @@ setMethodS3("tangle", "RspRSourceCode", function(code, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-03-14
+# o Moved getCompleteCode() from RspRSourceCode to RspRSourceCodeFactory.
 # 2013-03-12
 # o Renamed annotations to metadata.
 # 2013-02-23

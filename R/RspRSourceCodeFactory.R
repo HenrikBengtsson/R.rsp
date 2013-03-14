@@ -167,8 +167,142 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
 
 
 
+#########################################################################/**
+# @RdocMethod getCompleteCode
+#
+# @title "Gets the complete R source code"
+#
+# \description{
+#  @get "title" with output functions defined.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a @character string.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  minIndent <- function(...) {
+    s <- c(...);
+    s <- gsub('"\n"', '"\r"', s);
+    s <- unlist(strsplit(s, split="\n", fixed=TRUE));
+    s <- sapply(s, FUN=function(s) gsub('"\r"', '"\n"', s));
+    names(s) <- NULL;
+
+    # Nothing todo?
+    if (length(s) == 0L) return(s);
+
+    # Clean all-blank lines
+    s <- gsub("^[ ]*$", "", s);
+    # Drop empty lines at the top and the end
+    while (nchar(s[1L]) == 0L) {
+      s <- s[-1L];
+    }
+
+    # Nothing todo?
+    if (length(s) == 0L) return(s);
+
+    while (nchar(s[length(s)]) == 0L) {
+      s <- s[-length(s)];
+    }
+
+    # Drop duplicated empty lines
+    idxs <- which(nchar(s) == 0L);
+    if (length(idxs) > 0L) {
+      idxs <- idxs[which(diff(idxs) == 1L)];
+      if (length(idxs) > 0L) {
+        s <- s[-idxs];
+      }
+    }
+
+    # Find minimum indentation of non-blank lines
+    idxs <- which(nchar(s) > 0L);
+
+    # Nothing to do?
+    if (length(idxs) == 0L) {
+      return(s);
+    }
+
+    prefix <- gsub("^([ ]*).*", "\\1", s[idxs]);
+    min <- min(nchar(prefix));
+
+    # Nothing to do?
+    if (min == 0L) {
+      return(s);
+    }
+
+    pattern <- sprintf("^%s", paste(rep(" ", times=min), collapse=""));
+    s <- gsub(pattern, "", s);
+
+    s;
+  } # minIndent()
+
+  
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'object':
+  object <- Arguments$getInstanceOf(object, "RspSourceCode");
+  object <- Arguments$getInstanceOf(object, "RspRSourceCode");
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Create header and footer code
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  metadata <- getMetadata(object);
+  code <- NULL;
+  for (key in names(metadata)) {
+     value <- metadata[[key]];
+     value <- gsub('"', '\\"', value, fixed=TRUE);
+     value <- sprintf('  %s = "%s"', key, value);
+     code <- c(code, value);
+  }
+  code <- unlist(strsplit(paste(code, collapse=",\n"), split="\n", fixed=TRUE))
+  code <- c('## RSP document metadata', '.rd <- list(', code, ');');
+  header0 <- paste('      ', code, sep="");
+
+  # Build R source code
+  header <- minIndent(header0, '
+    ## RSP output function
+    .ro <- function(..., collapse="", sep="") {
+      msg <- paste(..., collapse=collapse, sep=sep);
+      base::cat(msg, sep="");
+    }
+  ');
+
+  footer <- '';
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Merge all code
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  code <- c(header, '## RSP document', object, footer);
+  code <- paste(code, collapse="\n");
+
+  code;
+}, protected=TRUE) # getCompleteCode()
+
+
+
+
 ##############################################################################
 # HISTORY:
+# 2013-03-14
+# o Moved getCompleteCode() from RspRSourceCode to RspRSourceCodeFactory.
 # 2013-02-13
 # o CLEANUP: RspDirective:s are now handles by preprocess() for RspDocument
 #   and are independent of programming language, except RspEvalDirective
