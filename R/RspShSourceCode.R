@@ -70,6 +70,7 @@ setMethodS3("evaluate", "RspShSourceCode", function(object, envir=parent.frame()
       file.remove(pathnameT);
     })
     res <- system2("sh", args=list(pathnameT), stdout=TRUE);
+    res <- paste(res, collapse="\n");
     res;
   } # evalSh()
 

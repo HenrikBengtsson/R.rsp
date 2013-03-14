@@ -73,7 +73,7 @@ setMethodS3("rscript", "default", function(..., file=NULL, path=NULL, envir=pare
   } else {
     verbose && cat(verbose, "Input file: ", file);
     s <- readLines(file, warn=FALSE);
-    s <- RspString(s, source=file);
+    s <- RspString(s, source=file, ...);
   }
   verbose && cat(verbose, "Length of RSP string: ", nchar(s));
 
