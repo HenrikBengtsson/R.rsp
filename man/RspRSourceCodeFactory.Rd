@@ -47,6 +47,7 @@ RspRSourceCodeFactory(...)
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:exprToCode.RspRSourceCodeFactory]{exprToCode}} \tab Translates an RspExpression into R source code.\cr
+ \tab \code{\link[R.rsp:getCompleteCode.RspRSourceCodeFactory]{getCompleteCode}} \tab Gets the complete R source code.\cr
 }
 
 

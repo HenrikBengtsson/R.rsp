@@ -52,6 +52,8 @@ setConstructorS3("RspDocument", function(expressions=list(), attrs=list(), ...) 
 #########################################################################/**
 # @RdocMethod getAttributes
 # @aliasmethod getAttribute
+# @aliasmethod setAttributes
+# @aliasmethod setAttribute
 #
 # @title "Gets the attributes of an RSP document"
 #

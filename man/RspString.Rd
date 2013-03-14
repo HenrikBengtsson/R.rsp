@@ -33,20 +33,22 @@ extends character\cr
  }
 
  \usage{
-RspString(str=character(), ..., type=NA, source=NA, metadata=list())
+RspString(s=character(), attrs=list(), ...)
 }
 
  \arguments{
-   \item{str, ...}{\code{\link[base]{character}} strings.}
-   \item{type}{The content type of the RSP string.}
-   \item{source}{A reference to the source RSP document, iff any.}
-   \item{metadata}{A named \code{\link[base]{list}} of other content metadata.}
+   \item{s}{A \code{\link[base]{character}} \code{\link[base]{vector}}.}
+   \item{attrs}{RSP attributes as a named \code{\link[base]{list}}, e.g. \code{type},
+      \code{language}, and \code{source}.}
+   \item{...}{Additional named RSP attributes.}
  }
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RspString]{evaluate}} \tab Parses, translates, and evaluates the RSP string.\cr
+ \tab \code{getAttribute} \tab  -\cr
+ \tab \code{\link[R.rsp:getAttributes.RspString]{getAttributes}} \tab Gets the attributes of an RSP document.\cr
  \tab \code{\link[R.rsp:getMetadata.RspString]{getMetadata}} \tab Gets the metadata of the RspDocument.\cr
  \tab \code{\link[R.rsp:getSource.RspString]{getSource}} \tab Gets the source reference of an RSP string.\cr
  \tab \code{\link[R.rsp:getType.RspString]{getType}} \tab Gets the type of an RSP string.\cr
@@ -54,6 +56,8 @@ RspString(str=character(), ..., type=NA, source=NA, metadata=list())
  \tab \code{rcat} \tab  -\cr
  \tab \code{rcompile} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
+ \tab \code{setAttribute} \tab  -\cr
+ \tab \code{setAttributes} \tab  -\cr
  \tab \code{\link[R.rsp:toR.RspString]{toR}} \tab Parses and translates the RSP string into R code.\cr
 }
 

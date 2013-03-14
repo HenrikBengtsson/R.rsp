@@ -14,6 +14,14 @@
 \alias{getAttribute.RspDocument}
 \alias{getAttribute,RspDocument-method}
 
+\alias{RspDocument.setAttributes}
+\alias{setAttributes.RspDocument}
+\alias{setAttributes,RspDocument-method}
+
+\alias{RspDocument.setAttribute}
+\alias{setAttribute.RspDocument}
+\alias{setAttribute,RspDocument-method}
+
 
 \title{Gets the attributes of an RSP document}
 
@@ -22,7 +30,7 @@
 }
 
 \usage{
-\method{getAttributes}{RspDocument}(object, ...)
+\method{getAttributes}{RspDocument}(object, private=FALSE, ...)
 }
 
 \arguments{

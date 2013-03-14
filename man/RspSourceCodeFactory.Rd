@@ -22,7 +22,7 @@
 \code{~~+--}\emph{\code{RspSourceCodeFactory}}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.rsp]{RspRSourceCodeFactory}\cr
+\link[R.rsp]{RspBashSourceCodeFactory}, \link[R.rsp]{RspRSourceCodeFactory}\cr
 
 public abstract class \bold{RspSourceCodeFactory}\cr
 extends character\cr

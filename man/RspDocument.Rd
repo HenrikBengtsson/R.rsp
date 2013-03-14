@@ -33,16 +33,15 @@ extends list\cr
  }
 
  \usage{
-RspDocument(expressions=list(), type=NA, source=NA, metadata=list(), ...)
+RspDocument(expressions=list(), attrs=list(), ...)
 }
 
  \arguments{
    \item{expressions}{A \code{\link[base]{list}} of \code{\link{RspConstruct}}:s and
       \code{\link{RspDocument}}:s.}
-   \item{type}{The content type of the RSP document.}
-   \item{source}{A reference to the source RSP document, iff any.}
-   \item{metadata}{A named \code{\link[base]{list}} of other content metadata.}
-   \item{...}{Not used.}
+   \item{attrs}{RSP attributes as a named \code{\link[base]{list}}, e.g. \code{type},
+      \code{language}, and \code{source}.}
+   \item{...}{Additional named RSP attributes.}
  }
 
  \section{Fields and Methods}{
@@ -67,6 +66,8 @@ RspDocument(expressions=list(), type=NA, source=NA, metadata=list(), ...)
  \tab \code{rcat} \tab  -\cr
  \tab \code{rcompile} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
+ \tab \code{setAttribute} \tab  -\cr
+ \tab \code{setAttributes} \tab  -\cr
  \tab \code{\link[R.rsp:subset.RspDocument]{subset}} \tab Subsets an RspDocument.\cr
  \tab \code{\link[R.rsp:toR.RspDocument]{toR}} \tab Translates the RSP document into R source code.\cr
  \tab \code{\link[R.rsp:trim.RspDocument]{trim}} \tab Trims each of the RSP constructs.\cr
@@ -75,7 +76,7 @@ RspDocument(expressions=list(), type=NA, source=NA, metadata=list(), ...)
 
 
  \bold{Methods inherited from list}:\cr
-all.equal, as.data.frame, attachLocally, callHooks, relist, within
+all.equal, as.data.frame, attachLocally, callHooks, relist, within, wrap
 
  }
 

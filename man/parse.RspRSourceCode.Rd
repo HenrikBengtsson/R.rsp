@@ -22,7 +22,7 @@
 }
 
 \arguments{
-  \item{...}{Additional arguments passed to \code{\link[R.rsp:getCompleteCode.RspRSourceCode]{*getCompleteCode}()}.}
+  \item{...}{Not used.}
 }
 
 \value{

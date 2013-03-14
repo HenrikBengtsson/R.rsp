@@ -22,11 +22,10 @@
 }
 
 \usage{
-\method{evaluate}{RspRSourceCode}(object, output=c("stdout", "string"), envir=parent.frame(), args="*", ..., verbose=FALSE)
+\method{evaluate}{RspRSourceCode}(object, envir=parent.frame(), args="*", ..., verbose=FALSE)
 }
 
 \arguments{
-  \item{output}{A \code{\link[base]{character}} string specifying type of output function.}
   \item{envir}{The \code{\link[base]{environment}} in which the RSP string is evaluated.}
   \item{args}{A named \code{\link[base]{list}} of arguments assigned to the environment
     in which the RSP string is parsed and evaluated.
