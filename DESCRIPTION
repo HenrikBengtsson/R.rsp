@@ -4,7 +4,7 @@ Depends: R (>= 2.5.0), R.utils (>= 1.21.1), R.devices (>= 2.1.6)
 Imports: R.methodsS3 (>= 1.4.2), R.oo (>= 1.13.0), R.utils (>= 1.21.1), digest (>= 0.6.3)
 Suggests: tcltk, knitr, tools
 VignetteBuilder: R.rsp
-Date: 2013-03-13
+Date: 2013-03-14
 Title: Dynamic generation of scientific reports
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))

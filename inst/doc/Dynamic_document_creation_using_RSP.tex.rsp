@@ -114,7 +114,7 @@ devOptions("png", width=840)
 \begin{abstract}
 An important part of a statistical analysis is to document the analysis and its results.  A common approach is to build up an R script as the the analysis progresses.  This script may generate image files and tables that are later inserted manually into, say, a LaTeX report.  This strategy works alright for small one-off analyzes, whereas for larger and partly repetitive analyzes an automatic report generator is more suitable.
 
-In this document we introduce the RSP markup language and explain how it can be embedded in virtually any text-based source document which then may be compile into a final document.  We will describe all of the RSP constructs available and illustrate how to they can be used for plain text as well as for LaTeX documents.
+In this document we introduce the RSP markup language and explain how it can be embedded in virtually any text-based source document which then may be compile into a final document.  We will describe all of the RSP constructs available and illustrate how they can be used for plain text as well as for LaTeX documents.
 
 RSP provides an easy, yet powerful and flexible way for generating reports and other documents in R.  With a single R command it is possible to compile an RSP-embedded LaTeX, Sweave or knitr document into a read-to-view PDF file to name a few examples.  As an example, we show how to produce this very document from an RSP-embedded LaTeX file.
 
@@ -373,66 +373,6 @@ When inlining results, the \code{\content{code chunk}} must be a complete and va
 \end{remark}
 
 
-%% \clearpage
-\subsubsection{Evaluating and capturing expression and output (\code{<\%=}\code{evalCapture}\code{(\content{code chunk})\%>})}
-\label{RspCodeChunkCapture}
-The \code{evalCapture()} function allows us to evaluate, embed and echo the text output of an R code chunk<%--\footnote{\code{\content{code chunk}} must be a complete and valid code expression, because the expression is parsed and evaluated in place.}--%>.  Note that it is only standard output that is echoed, i.e. plots are \emph{not} automatically embedded as figures.  To include figures, see Section~\ref{WorkingWithFigures}.  
-Continuing, any formatting of the capture has to be done in the format of the output document.  For instance, the following RSP-embedded LaTeX text
-\begin{rspVerbatim}
-{\textbackslash}begin\{verbatim\}
-<\%=evalCapture(\{
-for (kk in 1:3) \{
-  printf("Iteration #%d{\bs}n", kk)
-\}
-
-print(Sys.time())
-type <- "horse";  # Comments are dropped
-type
-\})%>
-{\textbackslash}end\{verbatim\}
-\end{rspVerbatim}
-produces
-\begin{verbatim}
-<%=evalCapture({
-for (kk in 1:3) {
-  printf("Iteration #%d\n", kk)
-}
-
-print(Sys.time())
-type <- "horse";  # Comments are dropped
-type
-})%>
-\end{verbatim}
-By adding arguments \code{code=FALSE} and/or \code{output=FALSE} to \code{evalCapture()} one can control whether the deparsed R source code and/or the output of each subexpression is captured or not.
-
-\begin{remark}
-The code is parsed and formatted by the R parser, meaning that indentation, empty lines, spacing and so on are \emph{not} preserved when echoing this way.  This is also why comments, semicolons and other R code constructs are dropped from the displayed code.
-\end{remark}
-
-
-
-<%----
-\subsubsection{Evaluating and embedding code verbatim (\code{<\%:\content{code}\%>})}
-\label{RspCodeEmbed}
-Just as \code{<\%\content{code}\%>}, the RSP markup \code{<\%:\content{code}\%>} also evaluates source code (also incomplete code expressions), but in addition it also inserts the code verbatim into the document.  For instance,
-\begin{rspVerbatim}
-<\%:
-n <- 3;  # A comment
-type <- "horse"
-%>
-\end{rspVerbatim}
-evaluates the code and insert the following into the output document
-\begin{verbatim}
-<%:
-n <- 3;  # A comment
-type <- "horse"
-%>
-\end{verbatim}
-
-\begin{remark}
-With this construct it is \emph{not} possible the capture the \emph{output}, only the source code.
-\end{remark}
-----%>
 
 
 \subsubsection{Iterating over a mixture of RSP constructs and text blocks}
@@ -504,6 +444,9 @@ produces
 <% } # for (ii ...) %>
 \end{itemize}
 
+\begin{remark}
+When using templates, use only \code{<\% ... \%>} and not \code{<\%= ... \%>}.  The reason for this is that the way templates are setup they already output their contents/results to the generated RSP product.
+\end{remark}
 
 
 \subsection{Trimming whitespace for RSP constructs}
@@ -568,7 +511,7 @@ To disable the trimming of trailing whitespace and line breaks, add an \emph{end
   -------------------------------------------------------------------%>
 \subsection{Preprocessing directives (\code{<\%@...\%>})}
 \label{PreprocessingDirectives}
-An \emph{RSP preprocessing directive}, or short an \emph{RSP directive}, is an RSP construct that starts with an '\code{@}' followed by a \emph{directive} and zero or more \emph{named arguments}, e.g. \code{<\%@include file="random.tex.rsp"\%>}.    RSP directives can for instance be used to include the content of another file or conditionally include/exclude parts of the existing document.  RSP preprocessing directives facilitates modularizing RSP documents such that the same RSP module can be reused in many places, which in turn minimizes and often eliminates the manual and often error-prone process of cut-and-pasting content between documents.
+An \emph{RSP preprocessing directive}, or short an \emph{RSP directive}, is an RSP construct that starts with an '\code{@}' followed by a \emph{directive} and zero or more \emph{named arguments}, e.g. \code{<\%@include file="random.tex.rsp"\%>}.    RSP directives can for instance be used to include the content of another file or conditionally include/exclude parts of the existing document.  RSP preprocessing directives facilitate modularization of RSP documents such that the same RSP module can be reused in many places, which in turn minimizes and often eliminates the manual and often error-prone process of cut-and-pasting content between documents.
 %
 RSP preprocessing directives are processed during the parsing of the RSP document.  This is done \emph{after} RSP comments have been dropped and \emph{before} RSP code expressions are parsed.  This means that:
 \begin{itemize}
@@ -715,8 +658,9 @@ at the time when this document was preprocessed.
 ----%>
 
 
-\subsubsection{Compiling a standalone RSP document
-from a preprocessed but not evaluated RSP document template}
+\subsection{Advanced}
+
+\subsubsection{Compiling a standalone RSP document from a preprocessed but not evaluated RSP document template}
 However convenient it is to use a modularized RSP document that reuses many different RSP subdocuments, it may be tedious to share such as document with others.  In order for someone else to compile the same RSP document, it is necessary to make sure all files being used are also shared with the receiver together with instructions where to put them.  Some of these files may only be included under certain conditions, making the just add to the overall clutter at the receiver's end.
  In such cases, it may be useful to produce \emph{a preprocessed but not yet evaluated RSP document} from the main RSP document.  Such an RSP document will not contain any preprocessing directives and in that sense be self-contained and easier to share.  It is also likely be easier for the reciever to follow.
 To compile such a stand-alone RSP document, do:
@@ -811,17 +755,21 @@ For unknown extensions, the content type is always assumed to be '\code{text/pla
 
 
 
+<%-------------------------------------------------------------------
+  SOLUTIONS SPECIFIC TO THE R ENVIRONMENT
+  -------------------------------------------------------------------%>
+\section{Solutions specific to the R environment}
 
 <%-------------------------------------------------------------------
   FIGURES
   -------------------------------------------------------------------%>
-\section{Working with figures}
+\subsection{Working with figures}
 \label{WorkingWithFigures}
 Because the RSP language is context unaware, it does not have constructs for inserting content such as figures and tables.  However, as we will show in this section, it is still very easy to create and include figures in the output document.
 We will first explain how to create image files and then show how they can be included in LaTeX, Markdown and HTML documents in a standard and unified way.
 
 
-\subsection{Creating image files}
+\subsubsection{Creating image files}
 The \code{toPDF()} and \code{toPNG()} functions of the \pkg{R.devices} package\footnote{The \pkg{R.devices} package is automatically loaded when \pkg{R.rsp} is loaded.} are useful for creating image files to be included in for instance LaTeX and HTML.  For example,
 \begin{verbatim}
 # Use greater objects by default
@@ -835,7 +783,7 @@ creates a PDF image file named \code{myFigure,yeah,cool.png} whose height is 60\
 By default, the \code{toPDF()} and \code{toPNG()} functions write image files to the \code{figures/} directory.  For more information, see \code{help("toPDF")}.
 
 
-\subsection{Including image files in LaTeX}
+\subsubsection{Including image files in LaTeX}
 When inserting a figure in LaTeX, it is recommended to do so without specifying neither the path nor the filename extension of the image file when including the image, e.g. \code{{\textbackslash}includegraphics\{MyFigure\}}.
 In order for this to work, one must specify the "image search path" in LaTeX, e.g.
 \begin{verbatim}
@@ -869,7 +817,7 @@ The reason for the latter is that by default \code{toPDF()} and \code{toPNG()} r
 As a final remark, note that by replacing \code{toPDF()} with \code{toPNG()}, a PNG image file is inserted instead, which can dramatically reduce the size of the final PDF document, especially when scatter plots with a large number of data points are generated.
 
 
-\subsection{Including image files in HTML}
+\subsubsection{Including image files in HTML}
 An image file is included in an HTML document via its pathname.  To have \code{toPNG()}, \code{toSVG()} and so on, return the (relative) pathname of files created, add the following to the top of your RSP document:
 \begin{rspVerbatim}
 <\%
@@ -888,7 +836,7 @@ which results in
 \end{verbatim}
 
 
-\subsection{Including image files in Markdown}
+\subsubsection{Including image files in Markdown}
 Just as for HTML documents, on need to set the option that images created by \code{toPNG()} etc are returned by their (relative) pathnames by specifying option \code{devEval/args/field} (see above subsection).  With this setting, one can then include PNG image files in the Markdown document as
 \begin{rspVerbatim}
 ![This figure was generated and inserted into the Markdown document using RSP.]
@@ -903,6 +851,66 @@ which results in
 \end{verbatim}
 
 
+%% \clearpage
+\subsubsection{Evaluating and capturing expression and output (\code{<\%=}\code{evalCapture}\code{(\content{code chunk})\%>})}
+\label{RspCodeChunkCapture}
+The \code{evalCapture()} function allows us to evaluate, embed and echo the text output of an R code chunk<%--\footnote{\code{\content{code chunk}} must be a complete and valid code expression, because the expression is parsed and evaluated in place.}--%>.  Note that it is only standard output that is echoed, i.e. plots are \emph{not} automatically embedded as figures.  To include figures, see Section~\ref{WorkingWithFigures}.  
+Continuing, any formatting of the capture has to be done in the format of the output document.  For instance, the following RSP-embedded LaTeX text
+\begin{rspVerbatim}
+{\textbackslash}begin\{verbatim\}
+<\%=evalCapture(\{
+for (kk in 1:3) \{
+  printf("Iteration #%d{\bs}n", kk)
+\}
+
+print(Sys.time())
+type <- "horse";  # Comments are dropped
+type
+\})%>
+{\textbackslash}end\{verbatim\}
+\end{rspVerbatim}
+produces
+\begin{verbatim}
+<%=evalCapture({
+for (kk in 1:3) {
+  printf("Iteration #%d\n", kk)
+}
+
+print(Sys.time())
+type <- "horse";  # Comments are dropped
+type
+})%>
+\end{verbatim}
+By adding arguments \code{code=FALSE} and/or \code{output=FALSE} to \code{evalCapture()} one can control whether the deparsed R source code and/or the output of each subexpression is captured or not.
+
+\begin{remark}
+The code is parsed and formatted by the R parser, meaning that indentation, empty lines, spacing and so on are \emph{not} preserved when echoing this way.  This is also why comments, semicolons and other R code constructs are dropped from the displayed code.
+\end{remark}
+
+
+
+<%----
+\subsubsection{Evaluating and embedding code verbatim (\code{<\%:\content{code}\%>})}
+\label{RspCodeEmbed}
+Just as \code{<\%\content{code}\%>}, the RSP markup \code{<\%:\content{code}\%>} also evaluates source code (also incomplete code expressions), but in addition it also inserts the code verbatim into the document.  For instance,
+\begin{rspVerbatim}
+<\%:
+n <- 3;  # A comment
+type <- "horse"
+%>
+\end{rspVerbatim}
+evaluates the code and insert the following into the output document
+\begin{verbatim}
+<%:
+n <- 3;  # A comment
+type <- "horse"
+%>
+\end{verbatim}
+
+\begin{remark}
+With this construct it is \emph{not} possible the capture the \emph{output}, only the source code.
+\end{remark}
+----%>
 
 
 
@@ -910,11 +918,11 @@ which results in
 <%-------------------------------------------------------------------
   RSP-EMBEDDED SWEAVE DOCUMENTS
   -------------------------------------------------------------------%>
-\section{RSP-embedded Sweave documents}
+\subsection{RSP-embedded Sweave documents}
 We advocate using RSP over Sweave, because of its richness and generality to the underlying document format.  However, for Sweave users, we will in this section show how to enhance Sweave with RSP-embedded markup to circumvent a few of Sweave's shortcomes.
 
 
-\subsection{Programmatically setting Sweave code chunk options}
+\subsubsection{Programmatically setting Sweave code chunk options}
 
 In the R-help thread 'sweave options with variable' on 2011-04-17, it was asked if it is possible to use a variable to control the 'eval' option of a code chunk, e.g. \code{<<eval=needRun>>=} instead of \code{<<eval=TRUE>>=} or \code{<<eval=FALSE>>=}.  As explained in the thread, this is not possible to do in plain Sweave, but using RSP it is straightforward:
 \begin{rspVerbatim}
@@ -1014,6 +1022,10 @@ Nested multiline markup comments               & yes &   ? &  - \\
 \caption{Comparison of features in different R-related markup languages.}
 \end{table}
 <%@endif%> <%-- docVersion --%>
+
+
+
+
 
 
 <%-------------------------------------------------------------------

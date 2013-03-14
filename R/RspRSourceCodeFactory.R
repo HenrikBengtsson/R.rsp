@@ -85,9 +85,6 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspText")) {
     text <- getText(expr);
-    if (nchar(text) == 0L) {
-      return("");
-    }
 
     code <- NULL;
     while (nchar(text) > 0L) {
@@ -96,6 +93,9 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
       codeT <- sprintf(".ro(\"%s\")", textT);
       code <- c(code, codeT);
       text <- substring(text, first=1025L);
+    }
+    if (is.null(code)) {
+      code <- ".ro(\"\")";
     }
 
     return(code);
@@ -152,14 +152,6 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspComment")) {
     return("");
-  }
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # RspDirective?
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (inherits(expr, "RspDirective")) {
-    throw(sprintf("Detected an %s (#%d). It appears that the %s was not preprocessed.", index, class(expr)[1L], class(object)[1L]));
   }
 
   throw(sprintf("Unknown class of RSP expression (#%d): %s", index, class(expr)[1L]));
@@ -252,16 +244,15 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
   } # minIndent()
 
   
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
+  # Get the default code header, body and footer
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'object':
-  object <- Arguments$getInstanceOf(object, "RspSourceCode");
-  object <- Arguments$getInstanceOf(object, "RspRSourceCode");
+  res <- NextMethod("getCompleteCode");
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Create header and footer code
+  # Update the header
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   metadata <- getMetadata(object);
   code <- NULL;
@@ -276,7 +267,7 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
   header0 <- paste('      ', code, sep="");
 
   # Build R source code
-  header <- minIndent(header0, '
+  res$header <- minIndent(header0, '
     ## RSP output function
     .ro <- function(..., collapse="", sep="") {
       msg <- paste(..., collapse=collapse, sep=sep);
@@ -284,16 +275,7 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
     }
   ');
 
-  footer <- '';
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Merge all code
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  code <- c(header, '## RSP document', object, footer);
-  code <- paste(code, collapse="\n");
-
-  code;
+  res;
 }, protected=TRUE) # getCompleteCode()
 
 

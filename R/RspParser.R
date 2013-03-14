@@ -373,6 +373,27 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  returnAs <- function(doc, as=c("RspDocument", "RspString")) {
+    as <- match.arg(as);
+
+    # Make sure to always output something
+    if (length(doc) == 0L) {
+      expr <- RspText("");
+      doc[[1]] <- expr;
+    }
+
+    if (as == "RspDocument") {
+      return(doc);
+    } else if (as == "RspString") {
+      object <- asRspString(doc);
+      return(object);
+    }
+  } # returnAs()
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'until':
@@ -401,6 +422,11 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
   doc <- parseRaw(parser, object, what="comment", commentLength=-1L, verbose=less(verbose, 50));
 
+  # Nothing todo?
+  if (length(doc) == 0L) {
+    return(returnAs(doc, as=as));
+  }
+
   idxs <- which(sapply(doc, FUN=inherits, "RspComment"));
   count <- length(idxs);
 
@@ -425,11 +451,7 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
   if (until == "comments") {
     verbose && exit(verbose);
-    if (as == "RspDocument") {
-      return(doc);
-    } else if (as == "RspString") {
-      return(object);
-    }
+    return(returnAs(doc, as=as));
   }
 
 
@@ -438,6 +460,11 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Dropping 'paired' RSP comments");
   verbose && cat(verbose, "Length of RSP string before: ", nchar(object));
+
+  # Nothing todo?
+  if (length(doc) == 0L) {
+    return(returnAs(doc, as=as));
+  }
 
   count <- 0L;
   posL <- -1L;
@@ -484,12 +511,8 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
   if (until == "directives") {
     verbose && exit(verbose);
-    if (as == "RspDocument") {
-      docP <- parseRaw(parser, object, what="directive", verbose=less(verbose, 50));
-      return(docP);
-    } else if (as == "RspString") {
-      return(object);
-    }
+    docP <- parseRaw(parser, object, what="directive", verbose=less(verbose, 50));
+    return(returnAs(docP, as=as));
   }
 
 
@@ -500,6 +523,12 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
   verbose && cat(verbose, "Length of RSP string before: ", nchar(object));
 
   doc <- parseRaw(parser, object, what="directive", verbose=less(verbose, 50));
+
+  # Nothing todo?
+  if (length(doc) == 0L) {
+    return(returnAs(doc, as=as));
+  }
+
   idxs <- which(sapply(doc, FUN=inherits, "RspUnparsedDirective"));
   if (length(idxs) > 0L) {
     verbose && cat(verbose, "Number of (unparsed) RSP preprocessing directives found: ", length(idxs));
@@ -529,11 +558,7 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
   if (until == "expressions") {
     verbose && exit(verbose);
-    if (as == "RspDocument") {
-      return(doc);
-    } else if (as == "RspString") {
-      return(object);
-    }
+    return(returnAs(doc, as=as));
   }
 
 
@@ -544,6 +569,12 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
   verbose && cat(verbose, "Length of RSP string before: ", nchar(object));
 
   doc <- parseRaw(parser, object, what="expression", verbose=less(verbose, 50));
+
+  # Nothing todo?
+  if (length(doc) == 0L) {
+    return(returnAs(doc, as=as));
+  }
+
   idxs <- which(sapply(doc, FUN=inherits, "RspUnparsedExpression"));
 
   if (length(idxs) > 0L) {
@@ -572,21 +603,12 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
   if (until == "end") {
     verbose && exit(verbose);
-    if (as == "RspDocument") {
-      return(doc);
-    } else if (as == "RspString") {
-      return(object);
-    }
+    return(returnAs(doc, as=as));
   }
 
   verbose && exit(verbose);
 
-  if (as == "RspDocument") {
-    return(doc);
-  } else if (as == "RspString") {
-    object <- asRspString(doc);
-    return(object);
-  }
+  returnAs(doc, as=as);
 }, protected=TRUE) # parse()
 
 

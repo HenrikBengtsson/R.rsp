@@ -96,8 +96,14 @@ setMethodS3("makeSourceCode", "RspSourceCodeFactory", function(this, ...) {
   className <- sprintf("Rsp%sSourceCode", capitalize(lang));
   clazz <- Class$forName(className);
   code <- clazz(...);
-  codeT <- getCompleteCode(this, code, ...);
-  code <- clazz(codeT, ...);
+
+  # Get source code header, body, and footer.
+  code <- getCompleteCode(this, code, ...);
+  code <- c(code$header, "## RSP document", code$body, code$footer);
+
+  # Made code object
+  code <- clazz(code, ...);
+
   code;
 }, protected=TRUE)
 
@@ -131,6 +137,34 @@ setMethodS3("makeSourceCode", "RspSourceCodeFactory", function(this, ...) {
 # }
 #*/#########################################################################
 setMethodS3("exprToCode", "RspSourceCodeFactory", abstract=TRUE);
+
+
+
+
+setMethodS3("getCompleteCode", "RspSourceCodeFactory", function(this, object, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'object':
+  object <- Arguments$getInstanceOf(object, "RspSourceCode");
+  lang <- getLanguage(this);
+  className <- sprintf("Rsp%sSourceCode", capitalize(lang));
+  object <- Arguments$getInstanceOf(object, className);
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Create header and footer code
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Default header and footer
+  header <- '';
+  footer <- '';
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Merge all code
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  list(header=header, body=object, footer=footer);
+}, protected=TRUE) # getCompleteCode()
 
 
 
@@ -168,6 +202,10 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
   # Argument 'doc':
   doc <- Arguments$getInstanceOf(doc, "RspDocument");
 
+  if (length(doc) == 0L) {
+    code <- makeSourceCode(object, "", type=getType(doc), metadata=getMetadata(doc));
+    return(code);
+  }
 
   # Assert that the RspDocument 'doc' contains no RspDocument:s
   if (any(sapply(doc, FUN=inherits, "RspDocument"))) {
@@ -212,6 +250,8 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-02-14
+# o Added a default getCompleteCode() for RspSourceCodeFactory.
 # 2013-02-13
 # o ROBUSTNESS: Now toSourceCode() for RspDocument asserts that the document
 #   has been flattened and preprocessed.
