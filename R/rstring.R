@@ -158,8 +158,12 @@ setMethodS3("rstring", "RspDocument", function(object, envir=parent.frame(), ...
 
   verbose && enter(verbose, "rstring() for ", class(object)[1L]);
 
-  verbose && enter(verbose, "Coerce RSP document to RSP source code");
-  factory <- RspRSourceCodeFactory();
+  verbose && enter(verbose, "Coerce RSP document to source code");
+  language <- getAttribute(object, "language", default="R");
+  language <- capitalize(tolower(language));
+  className <- sprintf("Rsp%sSourceCodeFactory", language);
+  clazz <- Class$forName(className);
+  factory <- newInstance(clazz);
   verbose && cat(verbose, "Language: ", getLanguage(factory));
   code <- toSourceCode(factory, object, verbose=verbose);
   verbose && cat(verbose, "Generated source code:");
@@ -195,7 +199,7 @@ setMethodS3("rstring", "RspRSourceCode", function(object, envir=parent.frame(), 
   verbose && enter(verbose, "rstring() for ", class(object)[1L]);
   verbose && cat(verbose, "Environment: ", getName(envir));
 
-  res <- process(object, envir=envir, output="stdout", ..., verbose=less(verbose,10));
+  res <- process(object, envir=envir, ..., verbose=less(verbose,10));
 
   verbose && exit(verbose);
 
