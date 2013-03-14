@@ -14,10 +14,9 @@
 # \arguments{
 #   \item{expressions}{A @list of @see "RspConstruct":s and
 #      @see "RspDocument":s.}
-#   \item{type}{The content type of the RSP document.}
-#   \item{source}{A reference to the source RSP document, iff any.}
-#   \item{metadata}{A named @list of other content metadata.}
-#   \item{...}{Not used.}
+#   \item{attrs}{RSP attributes as a named @list, e.g. \code{type}, 
+#      \code{language}, and \code{source}.}
+#   \item{...}{Additional named RSP attributes.}
 # }
 #
 # \section{Fields and Methods}{
@@ -28,16 +27,23 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspDocument", function(expressions=list(), type=NA, source=NA, metadata=list(), ...) {
+setConstructorS3("RspDocument", function(expressions=list(), attrs=list(), ...) {
   # Argument 'source':
   if (is.character(source)) {
     source <- getAbsolutePath(source);
   }
 
+  # Argument 'attrs':
+  if (!is.list(attrs)) {
+    throw("Argument 'attrs' is not a list: ", mode(attrs)[1L]);
+  }
+
+  # Argument '...':
+  userAttrs <- list(...);
+
   this <- extend(expressions, "RspDocument");
-  attr(this, "type") <- as.character(type);
-  attr(this, "source") <- source;
-  attr(this, "metadata") <- metadata;
+  this <- setAttributes(this, attrs);
+  this <- setAttributes(this, userAttrs);
   this;
 })
 
@@ -69,25 +75,60 @@ setConstructorS3("RspDocument", function(expressions=list(), type=NA, source=NA,
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getAttributes", "RspDocument", function(object, ...) {
+setMethodS3("getAttributes", "RspDocument", function(object, private=FALSE, ...) {
   attrs <- attributes(object);
   keys <- names(attrs);
-  keys <- setdiff(keys, "class");
-  # Exclude private attributes
-  pattern <- sprintf("^[%s]", paste(c(base::letters, base::LETTERS), collapse=""));
-  keys <- keys[regexpr(pattern, keys) != -1L];
+  keys <- setdiff(keys, c("class", "names"));
+
+  # Exclude private attributes?
+  if (!private) {
+    pattern <- sprintf("^[%s]", paste(c(base::letters, base::LETTERS), collapse=""));
+    keys <- keys[regexpr(pattern, keys) != -1L];
+  }
+
   attrs <- attrs[keys];
   attrs;
 })
 
-setMethodS3("getAttribute", "RspDocument", function(object, name, default=NULL, ...) {
-  attrs <- getAttributes(object, ...);
+setMethodS3("getAttribute", "RspDocument", function(object, name, default=NULL, private=TRUE, ...) {
+  attrs <- getAttributes(object, private=private, ...);
   if (!is.element(name, names(attrs))) {
     attr <- default;
   } else {
     attr <- attrs[[name]];
   }
   attr;
+})
+
+setMethodS3("setAttributes", "RspDocument", function(object, attrs, ...) {
+  # Argument 'attrs':
+  if (is.null(attrs)) {
+    return(invisible(object));
+  }
+  if (!is.list(attrs)) {
+    throw("Cannot set attributes. Argument 'attrs' is not a list: ", mode(attrs)[1L]);
+  }
+
+
+  # Current attributes
+  attrsD <- attributes(object);
+
+  # Update/add new attributes
+  keys <- names(attrs);
+  keys <- setdiff(keys, c("class", "names"));
+  for (key in keys) {
+    attrsD[[key]] <- attrs[[key]];
+  }
+
+  attributes(object) <- attrsD;
+
+  invisible(object);
+})
+
+setMethodS3("setAttribute", "RspDocument", function(object, name, value, ...) {
+  attrs <- list(value);
+  names(attrs) <- name;
+  setAttributes(object, attrs, ...);
 })
 
 
@@ -167,7 +208,7 @@ setMethodS3("print", "RspDocument", function(x, ...) {
 #*/######################################################################### 
 setMethodS3("getType", "RspDocument", function(object, default=NA, as=c("text", "IMT"), ...) {
   as <- match.arg(as);
-  res <- attr(object, "type");
+  res <- getAttribute(object, "type");
   if (is.null(res) || is.na(res)) res <- as.character(default);
   res <- tolower(res);
   if (as == "IMT" && !is.na(res)) {
@@ -204,7 +245,7 @@ setMethodS3("getType", "RspDocument", function(object, default=NA, as=c("text", 
 # }
 #*/######################################################################### 
 setMethodS3("getMetadata", "RspDocument", function(object, name=NULL, ...) {
-  res <- attr(object, "metadata");
+  res <- getAttribute(object, "metadata");
   if (is.null(res)) res <- list();
   if (!is.null(name)) {
     res <- res[[name]];
@@ -241,7 +282,7 @@ setMethodS3("getMetadata", "RspDocument", function(object, name=NULL, ...) {
 # }
 #*/######################################################################### 
 setMethodS3("getSource", "RspDocument", function(object, ...) {
-  res <- attr(object, "source");
+  res <- getAttribute(object, "source");
   if (is.null(res)) res <- as.character(NA);
   res;
 }, protected=TRUE)
@@ -848,9 +889,9 @@ setMethodS3("flatten", "RspDocument", function(object, ..., verbose=FALSE) {
   } # for (kk ...)
 
   class(res) <- class(object);
-  attr(res, "type") <- getType(object);
-  attr(res, "metadata") <- getMetadata(object);
-  attr(res, "source") <- getSource(object);
+
+  # Preserve attributes
+  res <- setAttributes(res, getAttributes(object));
 
   # RSP text cleanup
   object <- dropEmptyText(object);
@@ -892,8 +933,8 @@ setMethodS3("[", "RspDocument", function(x, i) {
   # Preserve the class and other attributes
   res <- .subset(x, i);
   class(res) <- class(x);
-  attr(res, "type") <- getType(x);
-  attr(res, "metadata") <- getMetadata(x);
+  # Preserve attributes
+  res <- setAttributes(res, getAttributes(x));
   res;
 }, protected=TRUE)
 
@@ -902,8 +943,8 @@ setMethodS3("[<-", "RspDocument", function(x, i, value) {
   res <- unclass(x);
   res[i] <- unclass(value);
   class(res) <- class(x);
-  attr(res, "type") <- getType(x);
-  attr(res, "metadata") <- getMetadata(x);
+  # Preserve attributes
+  res <- setAttributes(res, getAttributes(x));
   res;
 }, protected=TRUE)
 
@@ -987,7 +1028,7 @@ setMethodS3("asRspString", "RspDocument", function(doc, ...) {
   text <- lapply(doc, FUN=asRspString);
   text <- unlist(text, use.names=FALSE);
   text <- paste(text, collapse="");
-  res <- RspString(text, type=getType(doc), metadata=getMetadata(doc));
+  res <- RspString(text, attrs=getAttributes(doc));
   res;
 }, protected=TRUE) # asRspString()
 
@@ -1141,10 +1182,10 @@ setMethodS3("parseIfElseDirectives", "RspDocument", function(object, firstIdx=1L
     attr(res, ".idxs") <- firstIdx:(idx-1L);
 
     if (length(docT) > 0L) {
-      attr(res, ".TRUE") <- RspDocument(docT, type=getType(object), source=getSource(object));
+      attr(res, ".TRUE") <- RspDocument(docT, attrs=getAttributes(object));
     }
     if (length(docF) > 0L) {
-      attr(res, ".FALSE") <- RspDocument(docF, type=getType(object), source=getSource(object));
+      attr(res, ".FALSE") <- RspDocument(docF, attrs=getAttributes(object));
     }
 
     verbose && exit(verbose);
@@ -1290,7 +1331,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # (1) Restructure according to IF-ELSE-THEN directives
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (!isTRUE(attr(object, ".ifElseParsed"))) {
+  if (!isTRUE(getAttribute(object, ".ifElseParsed"))) {
     verbose && enter(verbose, "Parsing if-else-then statements");
 
     items <- list();
@@ -1693,7 +1734,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
              metadata[["keywords"]] <- opts$Keyword;
           }
 
-          attr(object, "metadata") <- metadata;
+          object <- setAttribute(object, "metadata", metadata);
         }
 
         # Drop RSP construct
@@ -1746,13 +1787,13 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     if (inherits(item, "RspPageDirective")) {
       # Update host RSP document attributes
       for (name in c("type", "escape", "language")) {
-        attr(object, name) <- getAttribute(item, name, default=attr(object, name));
+        object <- setAttribute(object, name, getAttribute(item, name, default=attr(object, name)));
       }
 
       metadata <- getMetadata(object);
       metadata[["title"]] <- getTitle(item);
       metadata[["keywords"]] <- getKeywords(item);
-      attr(object, "metadata") <- metadata;
+      object <- setAttribute(object, "metadata", metadata);
   
       # Drop RSP construct
       object[[idx]] <- NA;
@@ -1837,7 +1878,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       # Recursively pre-process these statements
       if (!is.null(doc)) {
         verbose && print(verbose, doc);
-        attr(doc, ".ifElseParsed") <- TRUE;
+        doc <- setAttribute(doc, ".ifElseParsed", TRUE);
         doc <- preprocess(doc, recursive=TRUE, flatten=flatten, envir=envir, ..., verbose=verbose);
         # Sanity check
         isIf <- sapply(doc, FUN=inherits, "RspIfDirective");

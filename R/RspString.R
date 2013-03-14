@@ -12,10 +12,10 @@
 # @synopsis
 #
 # \arguments{
-#   \item{str, ...}{@character strings.}
-#   \item{type}{The content type of the RSP string.}
-#   \item{source}{A reference to the source RSP document, iff any.}
-#   \item{metadata}{A named @list of other content metadata.}
+#   \item{s}{A @character @vector.}
+#   \item{attrs}{RSP attributes as a named @list, e.g. \code{type}, 
+#      \code{language}, and \code{source}.}
+#   \item{...}{Additional named RSP attributes.}
 # }
 #
 # \section{Fields and Methods}{
@@ -26,20 +26,107 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspString", function(str=character(), ..., type=NA, source=NA,  metadata=list()) {
+setConstructorS3("RspString", function(s=character(), attrs=list(), ...) {
   # Argument 'str':
-  str <- paste(c(str, ...), collapse="\n");
+  str <- paste(s, collapse="\n");
 
-  # Argument 'source':
-  if (is.character(source)) {
-    source <- getAbsolutePath(source);
+
+  # Argument 'attrs':
+  if (!is.list(attrs)) {
+    throw("Argument 'attrs' is not a list: ", mode(attrs)[1L]);
   }
 
+  # Argument '...':
+  userAttrs <- list(...);
+
+
   this <- extend(str, "RspString");
-  attr(this, "type") <- as.character(type);
-  attr(this, "source") <- source;
-  attr(this, "metadata") <- metadata;
+  this <- setAttributes(this, attrs);
+  this <- setAttributes(this, userAttrs);
   this;
+})
+
+
+#########################################################################/**
+# @RdocMethod getAttributes
+# @aliasmethod getAttribute
+#
+# @title "Gets the attributes of an RSP document"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a named @list.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
+setMethodS3("getAttributes", "RspString", function(object, private=FALSE, ...) {
+  attrs <- attributes(object);
+  keys <- names(attrs);
+  keys <- setdiff(keys, c("class", "names"));
+
+  # Exclude private attributes?
+  if (!private) {
+    pattern <- sprintf("^[%s]", paste(c(base::letters, base::LETTERS), collapse=""));
+    keys <- keys[regexpr(pattern, keys) != -1L];
+  }
+
+  attrs <- attrs[keys];
+  attrs;
+})
+
+setMethodS3("getAttribute", "RspString", function(object, name, default=NULL, private=TRUE, ...) {
+  attrs <- getAttributes(object, private=private, ...);
+  if (!is.element(name, names(attrs))) {
+    attr <- default;
+  } else {
+    attr <- attrs[[name]];
+  }
+  attr;
+})
+
+setMethodS3("setAttributes", "RspString", function(object, attrs, ...) {
+  # Argument 'attrs':
+  if (is.null(attrs)) {
+    return(invisible(object));
+  }
+  if (!is.list(attrs)) {
+    throw("Cannot set attributes. Argument 'attrs' is not a list: ", mode(attrs)[1L]);
+  }
+
+
+  # Current attributes
+  attrsD <- attributes(object);
+
+  # Update/add new attributes
+  keys <- names(attrs);
+  keys <- setdiff(keys, c("class", "names"));
+  for (key in keys) {
+    attrsD[[key]] <- attrs[[key]];
+  }
+
+  attributes(object) <- attrsD;
+
+  invisible(object);
+})
+
+setMethodS3("setAttribute", "RspString", function(object, name, value, ...) {
+  attrs <- list(value);
+  names(attrs) <- name;
+  setAttributes(object, attrs, ...);
 })
 
 
@@ -71,7 +158,7 @@ setConstructorS3("RspString", function(str=character(), ..., type=NA, source=NA,
 #*/######################################################################### 
 setMethodS3("getType", "RspString", function(object, default=NA, as=c("text", "IMT"), ...) {
   as <- match.arg(as);
-  res <- attr(object, "type");
+  res <- getAttribute(object, "type");
   if (is.null(res) || is.na(res)) res <- as.character(default);
   res <- tolower(res);
   if (as == "IMT" && !is.na(res)) {
@@ -107,7 +194,7 @@ setMethodS3("getType", "RspString", function(object, default=NA, as=c("text", "I
 # }
 #*/######################################################################### 
 setMethodS3("getMetadata", "RspString", function(object, name=NULL, ...) {
-  res <- attr(object, "metadata");
+  res <- getAttribute(object, "metadata");
   if (is.null(res)) res <- list();
   if (!is.null(name)) {
     res <- res[[name]];
@@ -142,7 +229,7 @@ setMethodS3("getMetadata", "RspString", function(object, name=NULL, ...) {
 # }
 #*/######################################################################### 
 setMethodS3("getSource", "RspString", function(object, ...) {
-  res <- attr(object, "source");
+  res <- getAttribute(object, "source");
   if (is.null(res)) res <- as.character(NA);
   res;
 }, protected=TRUE)
