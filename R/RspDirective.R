@@ -31,6 +31,31 @@ setConstructorS3("RspDirective", function(directive=character(), ...) {
 })
 
 
+#########################################################################/**
+# @RdocMethod "requireAttributes"
+#
+# @title "Asserts that certain attributes exist"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns itself (invisibly).
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/#########################################################################
 setMethodS3("requireAttributes", "RspDirective", function(this, names, ...) {
   attrs <- getAttributes(this);
   ok <- is.element(names, names(attrs));
@@ -39,6 +64,7 @@ setMethodS3("requireAttributes", "RspDirective", function(this, names, ...) {
   }
   invisible(this);
 }, protected=TRUE)
+
 
 
 #########################################################################/**
@@ -85,6 +111,38 @@ setMethodS3("asRspString", "RspDirective", function(object, ...) {
   s <- sprintf(fmtstr, body, attrs, comment);
   RspString(s);
 })
+
+
+
+###########################################################################/**
+# @RdocClass RspMetaDirective
+#
+# @title "The RspMetaDirective class"
+#
+# \description{
+#  @classhierarchy
+#
+#  An RspMetaDirective is an @see "RspDirective" representing RSP metadata.
+# }
+# 
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
+# }
+#
+# \section{Fields and Methods}{
+#  @allmethods
+# }
+# 
+# @author
+#
+# @keyword internal
+#*/###########################################################################
+setConstructorS3("RspMetaDirective", function(value="meta", ...) {
+  extend(RspDirective(value, ...), "RspMetaDirective");
+})
+
 
 
 ###########################################################################/**
@@ -875,10 +933,6 @@ setConstructorS3("RspUnknownDirective", function(...) {
   extend(RspDirective(...), "RspUnknownDirective")
 })
 
-
-setConstructorS3("RspMetaDirective", function(value="meta", ...) {
-  extend(RspDirective(value, ...), "RspMetaDirective");
-})
 
 
 ##############################################################################

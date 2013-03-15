@@ -32,6 +32,32 @@ setConstructorS3("RspString", function(s=character(), ...) {
 })
 
 
+
+#########################################################################/**
+# @RdocMethod print
+#
+# @title "Prints a summary of an RSP string"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns nothing.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
 setMethodS3("print", "RspString", function(x, ...) {
   s <- sprintf("%s:", class(x)[1L]);
   s <- c(s, sprintf("Content type: %s", getAttribute(x, "type", NA)));
