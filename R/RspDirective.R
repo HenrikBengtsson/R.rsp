@@ -31,6 +31,16 @@ setConstructorS3("RspDirective", function(directive=character(), ...) {
 })
 
 
+setMethodS3("requireAttributes", "RspDirective", function(this, names, ...) {
+  attrs <- getAttributes(this);
+  ok <- is.element(names, names(attrs));
+  if (!all(ok)) {
+    throw(sprintf("RSP '%s' directive lacks one or more required attributes (%s): %s", this[1L], paste(sQuote(names[!ok]), collapse=", "), asRspString(this)));
+  }
+  invisible(this);
+}, protected=TRUE)
+
+
 #########################################################################/**
 # @RdocMethod "asRspString"
 #
@@ -781,67 +791,6 @@ setMethodS3("getKeywords", "RspPageDirective", function(directive, ...) {
   res;
 })
 
-###########################################################################/**
-# @RdocClass RspTitleDirective
-#
-# @title "The RspTitleDirective class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspTitleDirective is an @see "RspDirective" that represents
-#  the title of the RSP document.
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspTitleDirective", function(...) {
-  extend(RspDirective("title", ...), "RspTitleDirective")
-})
-
-
-
-###########################################################################/**
-# @RdocClass RspKeywordsDirective
-#
-# @title "The RspKeywordsDirective class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspKeywordsDirective is an @see "RspDirective" that represents
-#  the keywords of the RSP document.
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspKeywordsDirective", function(...) {
-  extend(RspDirective("keywords", ...), "RspKeywordsDirective")
-})
 
 
 ###########################################################################/**
@@ -927,9 +876,16 @@ setConstructorS3("RspUnknownDirective", function(...) {
 })
 
 
+setConstructorS3("RspMetaDirective", function(value="meta", ...) {
+  extend(RspDirective(value, ...), "RspMetaDirective");
+})
+
 
 ##############################################################################
 # HISTORY:
+# 2013-03-15
+# o Added requireAttributes() to RspDirective.
+# o Added RSP meta directive.
 # 2013-02-23
 # o Added asRspString() for RspDirective and RspUnparsedDirective.
 # 2013-02-22

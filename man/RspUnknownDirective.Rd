@@ -50,7 +50,7 @@ RspUnknownDirective(...)
 
 
  \bold{Methods inherited from RspDirective}:\cr
-asRspString
+asRspString, requireAttributes
 
  \bold{Methods inherited from RspConstruct}:\cr
 asRspString, getAttribute, getAttributes, getComment, getSuffixSpecs

@@ -1,10 +1,11 @@
-<%-------------------------------%><%@eval language="R-vignette" text="
+<%@meta language="R-vignette" content="--------------------------------
   DIRECTIVES FOR R:
 
   %\VignetteIndexEntry{Dynamic document creation using RSP}
   %\VignetteKeyword{RSP markup language, literate programming, reproducible research, report generator, Sweave, knitr, TeX, LaTeX, Markdown, HTML, AsciiDoc, reStructuredText, Org-Mode, PDF}
+  %\VignetteAuthor{Henrik Bengtsson}
   %\VignetteEngine{R.rsp::rsp}
-"%><%----------------------------------------------------------------%>
+--------------------------------------------------------------------"%>
 
 <% t0 <- Sys.time() %>
 
@@ -20,6 +21,19 @@
 <%@else%>
 \documentclass[letter,12pt]{article}
 <%@endif%>
+
+<%-------------------------------------------------------------------
+  Assign PDF metadata
+  -------------------------------------------------------------------%>
+% PDF metadata
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdfauthor={<%@meta name="author"%>},
+  pdftitle={<%@meta name="title"%>},
+  pdfsubject={},
+  pdfkeywords={<%@meta name="keywords"%>},
+  pdfproducer={R.rsp v<%=R.rsp$version%> by <%=R.rsp$author%>}
+}
 
 \usepackage{graphicx}
 \usepackage{xspace}
@@ -104,8 +118,8 @@ devOptions("png", width=840)
 %>
 
 
-\title{<%@title%><%@ifeq docVersion = "devel"%>*<%@endif%>}
-\author{Henrik Bengtsson}
+\title{<%@meta name="title"%><%@ifeq docVersion = "devel"%>*<%@endif%>}
+\author{<%@meta name="author"%>}
 \date{<%=format(as.Date(getDate(R.rsp)), format="%B %d, %Y")%>}
 
 \begin{document}
@@ -121,7 +135,7 @@ RSP provides an easy, yet powerful and flexible way for generating reports and o
 Furthermore, because RSP is a so called content-indepent markup language, it can be used to produce documents of any kind, e.g. plain text, LaTeX, Sweave, knitr, AsciiDoc, Markdown, HTML, XML, SVG, and even Javascript, R scripts and so on.  More over, with RSP it is possible to use literate programming constructs that are not possible in Sweave, e.g. looping over a mix of R source code and LaTeX text blocks.
 \end{abstract}
 
-\keywords{<%@keywords%>}
+\keywords{<%@meta name="keywords"%>}
 
 \begin{center}
 \emph{This vignette is distributed as part of the \pkg{R.rsp} package, which is available on CRAN.}
@@ -611,6 +625,31 @@ at the time when this document was preprocessed.
 \end{rspVerbatim}
 
 
+\subsubsection{Document metadata (\code{<\%@meta ...\%>})}
+\label{RspMetaDirective}
+It is possible to assign non-visible metadata to RSP documents.  This metadata can be set and retrieved by RSP preprocessing directives.
+To set an RSP metadata variable, use directive \code{<\%@meta name="\content{name}" content="\content{content}"\%>}, e.g. \code{<\%@meta name="title" content="My Report"\%>}.
+To insert RSP metadata into the RSP output, use directive \code{<\%@meta name="\content{name}"\%>}, e.g. '\code{Title:~<\%@meta name="title"\%>}'.
+Note that RSP metadata may also be used in RSP-embedded LaTeX to populate PDF metadata fields, e.g. \code{{\bs}usepackage[pdfauthor=\{<\%@meta name="author"\%>\}]\{hyperref\}}.
+
+
+\paragraph{Setting metadata via R vignette metadata}
+ (\code{<\%\@eval language="R-vignette"\%>})
+The R framework uses a LaTeX-flavored markup for specifying metadata in vignettes.  The format of these metadata constructs is \code{{\bs}Vignette{\content{Name}}\{\content{value}\}}, e.g. \code{{\bs}VignetteIndexEntry\{My Report\}} and \code{{\bs}VignetteKeyword\{statistics, report\}}.
+%
+It is possible to "import" this metadata information via \code{<\%@meta content="\content{R vignette metadata markup}" language="R-vignettes"\%>}.  For instance,
+\begin{escapeRspVerbatim}
+<\%@meta content="
+  DIRECTIVES FOR R:
+  %{\bs}VignetteIndexEntry\{My Report\}
+  %{\bs}VignetteKeyword\{statistics, report\}
+  %{\bs}VignetteAuthor\{John Doe\}
+" language="R-vignette"\%>
+\end{escapeRspVerbatim}
+will import these as RSP metadata 'title', 'keywords' and 'author'.  As illustrated, any content that is not recognizes as R vignette metadata, or is of unknown markup, is ignored, which means that it is possible to include "anything" part of the '\code{content}' attribute.
+Note that this construct will (i) import the metadata into the RSP document at the same time as (ii) the R vignette mechanism can utilize it.  This elimates the need for reproducing the same information in the RSP source document.
+
+
 \subsubsection{Conditional inclusion/exclusion}
 \emph{To be documented.}
 
@@ -621,24 +660,8 @@ at the time when this document was preprocessed.
 \emph{To be continued.}
 
 
+
 <%----
-
-\subsubsection{RSP document metadata}
-
-\paragraph{Setting type, title and more (\code{<\%@page type="{type}" ...\%>})}
-\label{RspPageDirective}
-\emph{To be continued.}
-
-\paragraph{Including the title (\code{<\%@title\%>})}
-\emph{To be continued.}
-
-\paragraph{Including the keywords (\code{<\%@keywords\%>})}
-\emph{To be continued.}
-
-\paragraph{Setting title and keywords via R vignette directives}
- (\code{<\%\@eval language="R-vignette"\%>})
-\emph{To be continued.}
-
 
 \subsubsection{Preprocessing variables and code evaluation}
 

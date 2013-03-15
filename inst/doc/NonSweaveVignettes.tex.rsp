@@ -1,11 +1,11 @@
-<%-------------------------------%><%@eval language="R-vignette" text="
+<%@meta language="R-vignette" content="--------------------------------
   DIRECTIVES FOR R:
 
   %\VignetteIndexEntry{Include static PDFs and non-Sweave vignettes in an R package prior to R v3.0.0}
+  %\VignetteAuthor{Henrik Bengtsson}
   %\VignetteKeyword{R, package, vignette, static PDF}
   %\VignetteEngine{R.rsp::rsp}
-                                                                    
-"%><%----------------------------------------------------------------%>
+--------------------------------------------------------------------"%>
 
 <% t0 <- Sys.time() %>
 
@@ -30,8 +30,8 @@
 \newenvironment{escapeRspVerbatim}{\vspace{-\parskip}\begin{alltt}}{\end{alltt}}
 
 
-\title{<%@title%>}
-\author{Henrik Bengtsson}
+\title{<%@meta name="title"%>}
+\author{<%@meta name="author"%>}
 \date{<%=format(as.Date(getDate(R.rsp)), format="%B %d, %Y")%>}
 
 \begin{document}
@@ -41,7 +41,7 @@
 This document describes how to include static PDFs and non-Sweave vignettes in an R package such that they appear in the R help system.   Generic support for vignettes of any format (not only Sweave) was added in R~v3.0.0 (see 'Writing R Extensions' for more details).   The instructions given here are intendend for packages that are to be built and installed on R systems prior to R v3.0.0.  However, the instructions have been adjusted such that they are forward compatible with the new R~v3.0.0 system.
 \end{abstract}
 
-\keywords{<%@keywords%>}
+\keywords{<%@meta name="keywords"%>}
 
 \begin{center}
 \emph{This vignette is distributed as part of the \pkg{R.rsp} package, which is available on CRAN.}

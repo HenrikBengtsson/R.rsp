@@ -1223,7 +1223,52 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   } # getFileT()
 
 
+  parseRVignetteMetadata <- function(text, ...) {
+    # Parse "\Vignette" directives into RSP metadata
+    bfr <- unlist(strsplit(text, split="\n", fixed=TRUE));
 
+    pattern <- "[[:space:]]*%*[[:space:]]*\\\\Vignette(.*)\\{([^}]*)\\}";
+    keep <- (regexpr(pattern, bfr) != -1L);
+    bfr <- bfr[keep];
+
+    # Nothing todo?
+    if (length(bfr) == 0L) {
+      return(list());
+    }
+
+    # Mapping from R vignette metadata to RSP metadata
+    map <- c(
+      # Official R vignette markup
+      "IndexEntry"="title", 
+      "Keyword"="keywords", "Keywords"="keywords",
+      # Custom
+      "Subject"="subject", 
+      "Author"="author",
+      "Date"="date"
+    );
+
+    metadata <- grep(pattern, bfr, value=TRUE);
+    names <- gsub(pattern, "\\1", metadata);
+    metadata <- gsub(pattern, "\\2", metadata);
+    metadata <- trim(metadata);
+
+    # Keep only known markup
+    keep <- is.element(names, names(map));
+    metadata <- metadata[keep];
+    names <- names[keep];
+
+    # Nothing todo?
+    if (length(names) == 0L) {
+      return(list());
+    }
+
+    # Rename
+    names <- map[names];
+    names(metadata) <- names;
+    metadata <- as.list(metadata);
+
+    metadata;
+  } # parseRVignetteMetadata()
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1426,6 +1471,57 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # RspMetaDirective => ...
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (inherits(item, "RspMetaDirective")) {
+      name <- getAttribute(item, "name");
+      content <- getAttribute(item, "content");
+      if (is.null(name) && is.null(content)) {
+        throw("RSP 'meta' directive requires at least one of attributes 'name' or 'content' to be given: ", asRspString(item));
+      }
+
+      metadata <- getMetadata(object);
+      metadataT <- NULL;
+      res <- NA;
+
+      if (!is.null(name) && !is.null(content)) {
+        metadataT <- content;
+        names(metadataT) <- name;
+      } else if (is.null(name) && !is.null(content)) {
+        lang <- getAttribute(item, "language");
+        if (is.null(lang)) {
+          throw(sprintf("RSP 'meta' directive requires attribute 'language' to be specified when parsing metadata from 'content': %s", asRspString(item)));
+        }
+        if (lang == "R-vignette") {
+          metadataT <- parseRVignetteMetadata(content);
+        } else {
+          throw(sprintf("RSP 'meta' directive specifies an unknown 'language' ('%s'): %s", lang, asRspString(item)));
+        }
+      } else if (!is.null(name) && is.null(content)) {
+        content <- metadata[[name]];
+        if (is.null(content)) {
+          throw(sprintf("RSP 'meta' directive requests non-assigned metadata ('%s'): %s", name, asRspString(item)));
+        }
+        res <- RspText(content, attrs=getAttributes(object));
+      }
+
+      # Any metadata to import?
+      if (length(metadataT) > 0L) {
+        for (name in names(metadataT)) {
+          metadata[[name]] <- metadataT[[name]];
+        }
+        object <- setAttribute(object, "metadata", metadata);
+      }
+
+      # Drop RSP construct
+      object[[idx]] <- res;
+
+      verbose && exit(verbose);
+      next;
+    } # RspMetaDirective
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # RspIncludeDirective => ...
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(item, "RspIncludeDirective")) {
@@ -1623,44 +1719,6 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         next;
       } # if (language == "R")
 
-
-      if (language == "R-vignette") {
-        # Parse and assign "\Vignette" directives
-        bfr <- unlist(strsplit(text, split="\n", fixed=TRUE));
-        pattern <- "[[:space:]]*%+[[:space:]]*\\\\Vignette(.*)\\{([^}]*)\\}";
-        keep <- (regexpr(pattern, bfr) != -1L);
-        bfr <- bfr[keep];
-        if (length(bfr) > 0L) {
-          opts <- grep(pattern, bfr, value=TRUE);
-          keys <- gsub(pattern, "\\1", opts);
-          values <- gsub(pattern, "\\2", opts);
-          values <- trim(values);
-          names(values) <- keys;
-          opts <- as.list(values);
-
-          metadata <- getMetadata(object);
-
-          # Set the title of the RSP document?
-          if (!is.null(opts$IndexEntry)) {
-             metadata[["title"]] <- opts$IndexEntry;
-          }
-
-          # Set the keywords of the RSP document?
-          if (!is.null(opts$Keyword)) {
-             metadata[["keywords"]] <- opts$Keyword;
-          }
-
-          object <- setAttribute(object, "metadata", metadata);
-        }
-
-        # Drop RSP construct
-        object[[idx]] <- NA;
-
-        verbose && exit(verbose);
-        next;
-      } # if (language == "R-vignette")
-
-
       if (language == "system") {
         # Evaluate code using system()
         tryCatch({
@@ -1721,41 +1779,11 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # RspTitleDirective => ...
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    if (inherits(item, "RspTitleDirective")) {
-      item2 <- RspText(getMetadata(object, "title"));
-
-      # Drop RSP construct
-      object[[idx]] <- item2;
-
-      verbose && exit(verbose);
-      next;
-    } # RspTitleDirective
-
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # RspKeywordsDirective => ...
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    if (inherits(item, "RspKeywordsDirective")) {
-      item2 <- RspText(getMetadata(object, "keywords"));
-
-      # Drop RSP construct
-      object[[idx]] <- item2;
-
-      verbose && exit(verbose);
-      next;
-    } # RspKeywordsDirective
-
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # RspIfDirective => ...
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(item, "RspIfDirective")) {
       attrs <- getAttributes(item);
 
-      keep <- setdiff(names(attrs), c("idxs", "TRUE", "FALSE"));
-      attrs <- attrs[keep];
       # Sanity check
       n <- length(attrs);
       if (n != 1L) {
@@ -1862,6 +1890,8 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 ##############################################################################
 # HISTORY:
+# 2013-03-15
+# o Now fully supporting the RSP eval directive.
 # 2013-03-13
 # o Now preprocess() handles nested if-then-else preprocessing directives.
 # o Added protected parseIfElseStatements().
