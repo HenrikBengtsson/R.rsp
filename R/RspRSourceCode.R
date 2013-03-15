@@ -109,7 +109,7 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
 #*/######################################################################### 
 setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(), args="*", ..., verbose=FALSE) {
   # Argument 'args':
-  args <- cmdArgs(args);
+  args <- cmdArgs(args=args);
 
 
   # Parse R RSP source code

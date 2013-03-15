@@ -14,9 +14,7 @@
 # \arguments{
 #   \item{expressions}{A @list of @see "RspConstruct":s and
 #      @see "RspDocument":s.}
-#   \item{attrs}{RSP attributes as a named @list, e.g. \code{type}, 
-#      \code{language}, and \code{source}.}
-#   \item{...}{Additional named RSP attributes.}
+#   \item{...}{Arguments passed to @see "RspObject".}
 # }
 #
 # \section{Fields and Methods}{
@@ -27,111 +25,15 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspDocument", function(expressions=list(), attrs=list(), ...) {
-  # Argument 'source':
-  if (is.character(source)) {
-    source <- getAbsolutePath(source);
+setConstructorS3("RspDocument", function(expressions=list(), ...) {
+  # Argument 'expressions':
+  if (!is.list(expressions)) {
+    throw("Argument 'expressions' is not a list: ", mode(expressions)[1L]);
   }
 
-  # Argument 'attrs':
-  if (!is.list(attrs)) {
-    throw("Argument 'attrs' is not a list: ", mode(attrs)[1L]);
-  }
-
-  # Argument '...':
-  userAttrs <- list(...);
-
-  this <- extend(expressions, "RspDocument");
-  this <- setAttributes(this, attrs);
-  this <- setAttributes(this, userAttrs);
-  this;
+  extend(RspObject(expressions, ...), "RspDocument");
 })
 
-
-
-#########################################################################/**
-# @RdocMethod getAttributes
-# @aliasmethod getAttribute
-# @aliasmethod setAttributes
-# @aliasmethod setAttribute
-#
-# @title "Gets the attributes of an RSP document"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a named @list.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getAttributes", "RspDocument", function(object, private=FALSE, ...) {
-  attrs <- attributes(object);
-  keys <- names(attrs);
-  keys <- setdiff(keys, c("class", "names"));
-
-  # Exclude private attributes?
-  if (!private) {
-    pattern <- sprintf("^[%s]", paste(c(base::letters, base::LETTERS), collapse=""));
-    keys <- keys[regexpr(pattern, keys) != -1L];
-  }
-
-  attrs <- attrs[keys];
-  attrs;
-})
-
-setMethodS3("getAttribute", "RspDocument", function(object, name, default=NULL, private=TRUE, ...) {
-  attrs <- getAttributes(object, private=private, ...);
-  if (!is.element(name, names(attrs))) {
-    attr <- default;
-  } else {
-    attr <- attrs[[name]];
-  }
-  attr;
-})
-
-setMethodS3("setAttributes", "RspDocument", function(object, attrs, ...) {
-  # Argument 'attrs':
-  if (is.null(attrs)) {
-    return(invisible(object));
-  }
-  if (!is.list(attrs)) {
-    throw("Cannot set attributes. Argument 'attrs' is not a list: ", mode(attrs)[1L]);
-  }
-
-
-  # Current attributes
-  attrsD <- attributes(object);
-
-  # Update/add new attributes
-  keys <- names(attrs);
-  keys <- setdiff(keys, c("class", "names"));
-  for (key in keys) {
-    attrsD[[key]] <- attrs[[key]];
-  }
-
-  attributes(object) <- attrsD;
-
-  invisible(object);
-})
-
-setMethodS3("setAttribute", "RspDocument", function(object, name, value, ...) {
-  attrs <- list(value);
-  names(attrs) <- name;
-  setAttributes(object, attrs, ...);
-})
 
 
 #########################################################################/**
@@ -210,8 +112,7 @@ setMethodS3("print", "RspDocument", function(x, ...) {
 #*/######################################################################### 
 setMethodS3("getType", "RspDocument", function(object, default=NA, as=c("text", "IMT"), ...) {
   as <- match.arg(as);
-  res <- getAttribute(object, "type");
-  if (is.null(res) || is.na(res)) res <- as.character(default);
+  res <- getAttribute(object, "type", default=as.character(default));
   res <- tolower(res);
   if (as == "IMT" && !is.na(res)) {
     res <- parseInternetMediaType(res);
@@ -247,8 +148,7 @@ setMethodS3("getType", "RspDocument", function(object, default=NA, as=c("text", 
 # }
 #*/######################################################################### 
 setMethodS3("getMetadata", "RspDocument", function(object, name=NULL, ...) {
-  res <- getAttribute(object, "metadata");
-  if (is.null(res)) res <- list();
+  res <- getAttribute(object, "metadata", default=list());
   if (!is.null(name)) {
     res <- res[[name]];
   }
@@ -284,9 +184,7 @@ setMethodS3("getMetadata", "RspDocument", function(object, name=NULL, ...) {
 # }
 #*/######################################################################### 
 setMethodS3("getSource", "RspDocument", function(object, ...) {
-  res <- getAttribute(object, "source");
-  if (is.null(res)) res <- as.character(NA);
-  res;
+  getAttribute(object, "source", default=as.character(NA));
 }, protected=TRUE)
 
 
@@ -1805,7 +1703,8 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     if (inherits(item, "RspPageDirective")) {
       # Update host RSP document attributes
       for (name in c("type", "escape", "language")) {
-        object <- setAttribute(object, name, getAttribute(item, name, default=attr(object, name)));
+        value <- getAttribute(item, name, default=getAttribute(object, name));
+        object <- setAttribute(object, name, value);
       }
 
       metadata <- getMetadata(object);

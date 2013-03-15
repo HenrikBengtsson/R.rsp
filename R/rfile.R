@@ -158,7 +158,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   stopifnot(is.environment(envir));
 
   # Argument 'args':
-  args <- cmdArgs(args);
+  args <- cmdArgs(args=args);
 
   # Argument 'fake':
   fake <- Arguments$getLogical(fake);

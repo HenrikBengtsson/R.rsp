@@ -1,9 +1,9 @@
 ###########################################################################/**
-# @RdocDefault rscript
-# @alias rscript.RspString
-# @alias rscript.RspDocument
+# @RdocDefault rclean
+# @alias rclean.RspString
+# @alias rclean.RspDocument
 #
-# @title "Compiles an RSP string and returns the generated source code script"
+# @title "Compiles an RSP document into a preprocessed and validated RSP document"
 #
 # \description{
 #  @get "title".
@@ -16,10 +16,9 @@
 #   \item{file, path}{Alternatively, a file, a URL or a @connection from 
 #      with the strings are read.
 #      If a file, the \code{path} is prepended to the file, iff given.}
-#   \item{envir}{The @environment in which the RSP string is 
-#      preprocessed and evaluated.}
+#   \item{envir}{The @environment in which the RSP string is preprocessed.}
 #   \item{args}{A named @list of arguments assigned to the environment
-#     in which the RSP string is parsed and evaluated.
+#     in which the RSP document is parsed.
 #     See @see "R.utils::cmdArgs".}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -28,7 +27,7 @@
 #   Returns an @see "RspStringProduct".
 # }
 #
-# @examples "../incl/rscript.Rex"
+# @examples "../incl/rclean.Rex"
 #
 # @author
 #
@@ -39,7 +38,7 @@
 # @keyword file
 # @keyword IO
 #*/###########################################################################
-setMethodS3("rscript", "default", function(..., file=NULL, path=NULL, envir=parent.frame(), args="*", verbose=FALSE) {
+setMethodS3("rclean", "default", function(..., file=NULL, path=NULL, envir=parent.frame(), args="*", verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
 
@@ -65,7 +64,7 @@ setMethodS3("rscript", "default", function(..., file=NULL, path=NULL, envir=pare
   }
 
 
-  verbose && enter(verbose, "rscript() for default");
+  verbose && enter(verbose, "rclean() for default");
 
   if (is.null(file)) {
     s <- RspString(...);
@@ -76,15 +75,15 @@ setMethodS3("rscript", "default", function(..., file=NULL, path=NULL, envir=pare
   }
   verbose && cat(verbose, "Length of RSP string: ", nchar(s));
 
-  res <- rscript(s, envir=envir, args=args, verbose=verbose);
+  res <- rclean(s, envir=envir, args=args, verbose=verbose);
 
   verbose && exit(verbose);
 
   res;
-}) # rscript()
+}) # rclean()
 
 
-setMethodS3("rscript", "RspString", function(object, envir=parent.frame(), args="*", ..., verbose=FALSE) {
+setMethodS3("rclean", "RspString", function(object, envir=parent.frame(), args="*", ..., verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
 
@@ -101,7 +100,7 @@ setMethodS3("rscript", "RspString", function(object, envir=parent.frame(), args=
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "rscript() for ", class(object)[1L]);
+  verbose && enter(verbose, "rclean() for ", class(object)[1L]);
 
   if (length(args) > 0L) {
     verbose && enter(verbose, "Assigning RSP arguments to processing environment");
@@ -133,15 +132,15 @@ setMethodS3("rscript", "RspString", function(object, envir=parent.frame(), args=
   verbose && print(verbose, expr);
   verbose && exit(verbose);
 
-  res <- rscript(expr, envir=envir, args=NULL, ..., verbose=verbose);
+  res <- rclean(expr, envir=envir, args=NULL, ..., verbose=verbose);
 
   verbose && exit(verbose);
 
   res;
-}) # rscript()
+}) # rclean()
 
 
-setMethodS3("rscript", "RspDocument", function(object, envir=parent.frame(), ..., verbose=FALSE) {
+setMethodS3("rclean", "RspDocument", function(object, envir=parent.frame(), ..., verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
 
@@ -155,32 +154,20 @@ setMethodS3("rscript", "RspDocument", function(object, envir=parent.frame(), ...
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "rscript() for ", class(object)[1L]);
+  verbose && enter(verbose, "rclean() for ", class(object)[1L]);
 
-  verbose && enter(verbose, "Coerce RSP document to source code");
-  language <- getAttribute(object, "language", default="R");
-  language <- capitalize(tolower(language));
-  className <- sprintf("Rsp%sSourceCodeFactory", language);
-  clazz <- Class$forName(className);
-  factory <- newInstance(clazz);
-  verbose && cat(verbose, "Language: ", getLanguage(factory));
-  code <- toSourceCode(factory, object, verbose=verbose);
-  verbose && cat(verbose, "Generated source code:");
-  verbose && cat(verbose, head(code, n=3L));
-  verbose && cat(verbose);
-  verbose && cat(verbose, "[...]");
-  verbose && cat(verbose);
-  verbose && cat(verbose, tail(code, n=3L));
+  verbose && enter(verbose, "Coerce RSP document to RSP string");
+  s <- asRspString(object);
   verbose && exit(verbose);
 
   verbose && exit(verbose);
 
-  code;
-}) # rscript()
+  s;
+}) # rclean()
 
 
 ##############################################################################
 # HISTORY:
 # 2013-03-14
-# o Created from rstring.R.
+# o Created from rscript.R.
 ##############################################################################

@@ -19,9 +19,11 @@
 
 \code{logical}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[R.rsp]{RspProduct}}\cr
+\code{~~+--}\code{\link[R.rsp]{RspObject}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{RspStringProduct}\cr
+\code{~~~~~~~+--}\code{\link[R.rsp]{RspProduct}}\cr
+\code{~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~+--}\code{RspStringProduct}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
@@ -53,6 +55,9 @@ RspStringProduct(...)
 
  \bold{Methods inherited from RspProduct}:\cr
 findProcessor, getMetadata, getType, hasProcessor, print, process
+
+ \bold{Methods inherited from RspObject}:\cr
+getAttribute, getAttributes, setAttribute, setAttributes
 
  \bold{Methods inherited from logical}:\cr
 as.data.frame, as.raster, whichVector

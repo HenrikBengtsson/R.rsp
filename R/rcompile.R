@@ -102,7 +102,7 @@ setMethodS3("rcompile", "RspString", function(object, envir=parent.frame(), args
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'args':
-  args <- cmdArgs(args);
+  args <- cmdArgs(args=args);
 
   # Argument 'until':
 ##  until <- match.arg(until);

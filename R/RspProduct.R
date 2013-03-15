@@ -14,9 +14,7 @@
 #
 # \arguments{
 #   \item{object}{The RSP product.}
-#   \item{type}{The content type of the RSP product.}
-#   \item{metadata}{A named @list of other content metadata.}
-#   \item{...}{Not used.}
+#   \item{...}{Arguments passed to @see "RspObject".}
 # }
 #
 # \section{Fields and Methods}{
@@ -27,16 +25,8 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspProduct", function(object=NA, type=attr(object, "type"), metadata=list(), ...) {
-  # Argument 'type':
-  if (is.null(type)) {
-    type <- NA;
-  }
-
-  this <- extend(object, "RspProduct");
-  attr(this, "type") <- as.character(type);
-  attr(this, "metadata") <- metadata;
-  this;
+setConstructorS3("RspProduct", function(object=NA, ...) {
+  extend(RspObject(object, ...), "RspProduct");
 })
 
 
@@ -104,8 +94,7 @@ setMethodS3("print", "RspProduct", function(x, ...) {
 #*/######################################################################### 
 setMethodS3("getType", "RspProduct", function(object, default=NA, as=c("text", "IMT"), ...) {
   as <- match.arg(as);
-  res <- attr(object, "type");
-  if (is.null(res) || is.na(res)) res <- as.character(default);
+  res <- getAttribute(object, "type", default=as.character(default));
   res <- tolower(res);
   if (as == "IMT" && !is.na(res)) {
     res <- parseInternetMediaType(res);
@@ -140,7 +129,7 @@ setMethodS3("getType", "RspProduct", function(object, default=NA, as=c("text", "
 # }
 #*/######################################################################### 
 setMethodS3("getMetadata", "RspProduct", function(object, name=NULL, ...) {
-  res <- attr(object, "metadata");
+  res <- getAttribute(object, "metadata");
   if (!is.null(name)) {
     res <- res[[name]];
   }
@@ -303,7 +292,7 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
 
   # Override type with user argument type, if given.
   if (identical(type, getType(object))) {
-    attr(object, "type") <- type;
+    object <- setAttribute(object, "type", type);
   }
   res <- processor(object, envir=envir, ..., fake=fake, verbose=verbose);
   verbose && print(verbose, res);

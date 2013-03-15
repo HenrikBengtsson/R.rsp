@@ -13,9 +13,7 @@
 #
 # \arguments{
 #   \item{s}{A @character @vector.}
-#   \item{attrs}{RSP attributes as a named @list, e.g. \code{type}, 
-#      \code{language}, and \code{source}.}
-#   \item{...}{Additional named RSP attributes.}
+#   \item{...}{Arguments passed to @see "RspObject".}
 # }
 #
 # \section{Fields and Methods}{
@@ -26,110 +24,38 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspString", function(s=character(), attrs=list(), ...) {
-  # Argument 'str':
-  str <- paste(s, collapse="\n");
+setConstructorS3("RspString", function(s=character(), ...) {
+  # Argument 's':
+  s <- paste(s, collapse="\n");
 
-
-  # Argument 'attrs':
-  if (!is.list(attrs)) {
-    throw("Argument 'attrs' is not a list: ", mode(attrs)[1L]);
-  }
-
-  # Argument '...':
-  userAttrs <- list(...);
-
-
-  this <- extend(str, "RspString");
-  this <- setAttributes(this, attrs);
-  this <- setAttributes(this, userAttrs);
-  this;
+  extend(RspObject(s, ...), "RspString");
 })
 
 
-#########################################################################/**
-# @RdocMethod getAttributes
-# @aliasmethod getAttribute
-# @aliasmethod setAttributes
-# @aliasmethod setAttribute
-#
-# @title "Gets the attributes of an RSP document"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a named @list.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getAttributes", "RspString", function(object, private=FALSE, ...) {
-  attrs <- attributes(object);
-  keys <- names(attrs);
-  keys <- setdiff(keys, c("class", "names"));
-
-  # Exclude private attributes?
-  if (!private) {
-    pattern <- sprintf("^[%s]", paste(c(base::letters, base::LETTERS), collapse=""));
-    keys <- keys[regexpr(pattern, keys) != -1L];
-  }
-
-  attrs <- attrs[keys];
-  attrs;
-})
-
-setMethodS3("getAttribute", "RspString", function(object, name, default=NULL, private=TRUE, ...) {
-  attrs <- getAttributes(object, private=private, ...);
-  if (!is.element(name, names(attrs))) {
-    attr <- default;
+setMethodS3("print", "RspString", function(x, ...) {
+  s <- sprintf("%s:", class(x)[1L]);
+  s <- c(s, sprintf("Content type: %s", getAttribute(x, "type", NA)));
+  s <- c(s, sprintf("Language: %s", getAttribute(x, "language", NA)));
+  metadata <- getAttribute(x, "metadata", list());
+  metadata <- unlist(metadata, use.names=TRUE);
+  if (length(metadata) > 0L) {
+    s <- c(s, sprintf("Metadata '%s': %s", names(metadata), metadata));
   } else {
-    attr <- attrs[[name]];
+    s <- c(s, "Metadata to available.");
   }
-  attr;
+  s <- c(s, sprintf("Number of characters: %s", nchar(x)));
+  s <- c(s, sprintf("Number of lines: %s", nbrOfLines(x)));
+  ruler <- paste(rep("#", times=getOption("width")-2L), collapse="");
+  s <- c(s, ruler, x);
+  s <- paste(s, collapse="\n");
+  cat(s, "\n", sep="");
+}, protected=TRUE)
+
+
+setMethodS3("nbrOfLines", "RspString", function(object, ...) {
+  length(unlist(strsplit(object, split="\n", fixed=TRUE)));
 })
 
-setMethodS3("setAttributes", "RspString", function(object, attrs, ...) {
-  # Argument 'attrs':
-  if (is.null(attrs)) {
-    return(invisible(object));
-  }
-  if (!is.list(attrs)) {
-    throw("Cannot set attributes. Argument 'attrs' is not a list: ", mode(attrs)[1L]);
-  }
-
-
-  # Current attributes
-  attrsD <- attributes(object);
-
-  # Update/add new attributes
-  keys <- names(attrs);
-  keys <- setdiff(keys, c("class", "names"));
-  for (key in keys) {
-    attrsD[[key]] <- attrs[[key]];
-  }
-
-  attributes(object) <- attrsD;
-
-  invisible(object);
-})
-
-setMethodS3("setAttribute", "RspString", function(object, name, value, ...) {
-  attrs <- list(value);
-  names(attrs) <- name;
-  setAttributes(object, attrs, ...);
-})
 
 
 #########################################################################/**
@@ -160,8 +86,7 @@ setMethodS3("setAttribute", "RspString", function(object, name, value, ...) {
 #*/######################################################################### 
 setMethodS3("getType", "RspString", function(object, default=NA, as=c("text", "IMT"), ...) {
   as <- match.arg(as);
-  res <- getAttribute(object, "type");
-  if (is.null(res) || is.na(res)) res <- as.character(default);
+  res <- getAttribute(object, "type", default=as.character(default));
   res <- tolower(res);
   if (as == "IMT" && !is.na(res)) {
     res <- parseInternetMediaType(res);
@@ -196,8 +121,7 @@ setMethodS3("getType", "RspString", function(object, default=NA, as=c("text", "I
 # }
 #*/######################################################################### 
 setMethodS3("getMetadata", "RspString", function(object, name=NULL, ...) {
-  res <- getAttribute(object, "metadata");
-  if (is.null(res)) res <- list();
+  res <- getAttribute(object, "metadata", default=list());
   if (!is.null(name)) {
     res <- res[[name]];
   }
@@ -231,9 +155,7 @@ setMethodS3("getMetadata", "RspString", function(object, name=NULL, ...) {
 # }
 #*/######################################################################### 
 setMethodS3("getSource", "RspString", function(object, ...) {
-  res <- getAttribute(object, "source");
-  if (is.null(res)) res <- as.character(NA);
-  res;
+  getAttribute(object, "source", default=as.character(NA));
 }, protected=TRUE)
 
 
@@ -281,6 +203,8 @@ setMethodS3("parse", "RspString", function(object, ..., envir=parent.frame(), pa
 
 ##############################################################################
 # HISTORY:
+# 2013-03-14
+# o Added a print() method for RspStrings.
 # 2013-03-09
 # o Moved all parsing code to the new RspParser class.
 # 2013-03-07

@@ -79,7 +79,7 @@ setMethodS3("evaluate", "RspShSourceCode", function(object, envir=parent.frame()
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'args':
-  args <- cmdArgs(args);
+  args <- cmdArgs(args=args);
 
 
   code <- object;

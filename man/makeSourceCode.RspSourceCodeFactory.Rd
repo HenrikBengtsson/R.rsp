@@ -18,7 +18,7 @@
 }
 
 \usage{
-\method{makeSourceCode}{RspSourceCodeFactory}(this, ...)
+\method{makeSourceCode}{RspSourceCodeFactory}(this, code, ...)
 }
 
 \arguments{

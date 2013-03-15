@@ -665,7 +665,7 @@ However convenient it is to use a modularized RSP document that reuses many diff
  In such cases, it may be useful to produce \emph{a preprocessed but not yet evaluated RSP document} from the main RSP document.  Such an RSP document will not contain any preprocessing directives and in that sense be self-contained and easier to share.  It is also likely be easier for the reciever to follow.
 To compile such a stand-alone RSP document, do:
 \begin{escapeRspVerbatim}
-> rcompile("random.txt.rsp") ## <= Not yet implemented in R.rsp!
+> s <- rclean(file="random.txt.rsp")
 \end{escapeRspVerbatim}
 This outputs a file \code{preprocessed-random.txt.rsp} in the current directory.
 Documents compiled this way will contain neither RSP comments nor RSP preprocessing directives.  This may be useful if the source RSP subdocuments contain private comments and private parts that are conditional excluded during preprocessing.

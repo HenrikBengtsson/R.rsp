@@ -91,11 +91,11 @@ setMethodS3("getLanguage", "RspSourceCodeFactory", function(this, ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("makeSourceCode", "RspSourceCodeFactory", function(this, ...) {
+setMethodS3("makeSourceCode", "RspSourceCodeFactory", function(this, code, ...) {
   lang <- getLanguage(this);
   className <- sprintf("Rsp%sSourceCode", capitalize(lang));
   clazz <- Class$forName(className);
-  code <- clazz(...);
+  code <- clazz(code, ...);
 
   # Get source code header, body, and footer.
   code <- getCompleteCode(this, code, ...);

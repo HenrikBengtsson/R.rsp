@@ -19,11 +19,13 @@
 
 \code{character}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[R.rsp]{RspProduct}}\cr
+\code{~~+--}\code{\link[R.rsp]{RspObject}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{\link[R.rsp]{RspSourceCode}}\cr
+\code{~~~~~~~+--}\code{\link[R.rsp]{RspProduct}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\code{RspRSourceCode}\cr
+\code{~~~~~~~~~~~~+--}\code{\link[R.rsp]{RspSourceCode}}\cr
+\code{~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\code{RspRSourceCode}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
@@ -60,6 +62,9 @@ evaluate, print, rstring, tangle
 
  \bold{Methods inherited from RspProduct}:\cr
 findProcessor, getMetadata, getType, hasProcessor, print, process
+
+ \bold{Methods inherited from RspObject}:\cr
+getAttribute, getAttributes, setAttribute, setAttributes
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap

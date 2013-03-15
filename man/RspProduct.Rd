@@ -19,13 +19,15 @@
 
 \code{logical}\cr
 \code{~~|}\cr
-\code{~~+--}\code{RspProduct}\cr
+\code{~~+--}\code{\link[R.rsp]{RspObject}}\cr
+\code{~~~~~~~|}\cr
+\code{~~~~~~~+--}\code{RspProduct}\cr
 
 \bold{Directly known subclasses:}\cr
 \link[R.rsp]{RspFileProduct}, \link[R.rsp]{RspRSourceCode}, \emph{\link[R.rsp]{RspShSourceCode}}, \emph{\link[R.rsp]{RspSourceCode}}, \link[R.rsp]{RspStringProduct}\cr
 
 public class \bold{RspProduct}\cr
-extends logical\cr
+extends \link[R.rsp]{RspObject}\cr
 
 
 
@@ -34,14 +36,12 @@ extends logical\cr
  }
 
  \usage{
-RspProduct(object=NA, type=attr(object, "type"), metadata=list(), ...)
+RspProduct(object=NA, ...)
 }
 
  \arguments{
    \item{object}{The RSP product.}
-   \item{type}{The content type of the RSP product.}
-   \item{metadata}{A named \code{\link[base]{list}} of other content metadata.}
-   \item{...}{Not used.}
+   \item{...}{Arguments passed to \code{\link{RspObject}}.}
  }
 
  \section{Fields and Methods}{
@@ -55,6 +55,9 @@ RspProduct(object=NA, type=attr(object, "type"), metadata=list(), ...)
  \tab \code{\link[R.rsp:process.RspProduct]{process}} \tab Processes an RSP file product.\cr
 }
 
+
+ \bold{Methods inherited from RspObject}:\cr
+getAttribute, getAttributes, setAttribute, setAttributes
 
  \bold{Methods inherited from logical}:\cr
 as.data.frame, as.raster, whichVector
