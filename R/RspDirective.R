@@ -14,7 +14,7 @@
 # @synopsis
 #
 # \arguments{
-#   \item{directive}{A @character string.}
+#   \item{value}{A @character string.}
 #   \item{...}{Arguments passed to the constructor of @see "RspConstruct".}
 # }
 #
@@ -26,8 +26,8 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspDirective", function(directive=character(), ...) {
-  extend(RspConstruct(directive, ...), "RspDirective");
+setConstructorS3("RspDirective", function(value=character(), ...) {
+  extend(RspConstruct(value, ...), "RspDirective");
 })
 
 
@@ -56,12 +56,23 @@ setConstructorS3("RspDirective", function(directive=character(), ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("requireAttributes", "RspDirective", function(this, names, ...) {
+setMethodS3("requireAttributes", "RspDirective", function(this, names, condition=c("all", "any"), ...) {
+  # Argument 'condition':
+  condition <- match.arg(condition);
+
   attrs <- getAttributes(this);
   ok <- is.element(names, names(attrs));
-  if (!all(ok)) {
-    throw(sprintf("RSP '%s' directive lacks one or more required attributes (%s): %s", this[1L], paste(sQuote(names[!ok]), collapse=", "), asRspString(this)));
+
+  if (condition == "all") {
+    if (!all(ok)) {
+      throw(sprintf("RSP '%s' directive lacks one or more required attributes (%s): %s", this[1L], paste(sQuote(names[!ok]), collapse=", "), asRspString(this)));
+    }
+  } else if (condition == "any") {
+    if (!any(ok)) {
+      throw(sprintf("RSP '%s' directive must have at least one of the required attributes (%s): %s", this[1L], paste(sQuote(names[!ok]), collapse=", "), asRspString(this)));
+    }
   }
+
   invisible(this);
 }, protected=TRUE)
 
@@ -128,6 +139,7 @@ setMethodS3("asRspString", "RspDirective", function(object, ...) {
 # @synopsis
 #
 # \arguments{
+#   \item{value}{A @character string.}
 #   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
 # }
 #
@@ -161,6 +173,7 @@ setConstructorS3("RspMetaDirective", function(value="meta", ...) {
 # @synopsis
 #
 # \arguments{
+#   \item{value}{A @character string.}
 #   \item{...}{Arguments passed to @see "RspDirective".}
 # }
 #
@@ -172,8 +185,8 @@ setConstructorS3("RspMetaDirective", function(value="meta", ...) {
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspUnparsedDirective", function(...) {
-  extend(RspDirective(...), "RspUnparsedDirective");
+setConstructorS3("RspUnparsedDirective", function(value="unparsed", ...) {
+  extend(RspDirective(value, ...), "RspUnparsedDirective");
 })
 
 
@@ -329,9 +342,9 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
   # Instantiate object
   res <- tryCatch({
     clazz <- Class$forName(class);
-    newInstance(clazz, attributes=attrs, comment=comment);
+    newInstance(clazz, attrs=attrs, comment=comment);
   }, error = function(ex) {
-    RspUnknownDirective(directive, attributes=attrs);
+    RspUnknownDirective(directive, attrs=attrs);
   })
   # Preserve attributes
   attr(res, "suffixSpecs") <- attr(expr, "suffixSpecs");
@@ -389,6 +402,7 @@ setMethodS3("asRspString", "RspUnparsedDirective", function(object, ...) {
 # @synopsis
 #
 # \arguments{
+#   \item{value}{A @character string.}
 #   \item{attributes}{A named @list, which must contain either 
 #      a 'file' or a 'text' element.}
 #   \item{...}{Optional arguments passed to the constructor 
@@ -403,16 +417,12 @@ setMethodS3("asRspString", "RspUnparsedDirective", function(object, ...) {
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspIncludeDirective", function(attributes=list(), ...) {
-  # Argument 'attributes':
-  if (!missing(attributes)) {
-    keys <- names(attributes);
-    if (!any(is.element(c("file", "text"), keys))) {
-      throw("A RSP 'include' directive must contain either a 'file' or a 'text' attribute: ", hpaste(keys));
-    }
+setConstructorS3("RspIncludeDirective", function(value="include", ...) {
+  this <- extend(RspDirective(value, ...), "RspIncludeDirective");
+  if (!missing(value)) {
+    requireAttributes(this, names=c("file", "text"), condition="any");
   }
-
-  extend(RspDirective("include", attributes=attributes, ...), "RspIncludeDirective")
+  this;
 })
 
 
@@ -443,13 +453,13 @@ setConstructorS3("RspIncludeDirective", function(attributes=list(), ...) {
 # }
 #*/######################################################################### 
 setMethodS3("getFile", "RspIncludeDirective", function(directive, ...) {
-  attr(directive, "file");
+  getAttribute(directive, "file");
 })
 
 #########################################################################/**
-# @RdocMethod getText
+# @RdocMethod getContent
 #
-# @title "Gets the text"
+# @title "Gets the content of the RSP include directive"
 #
 # \description{
 #  @get "title".
@@ -471,8 +481,8 @@ setMethodS3("getFile", "RspIncludeDirective", function(directive, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getText", "RspIncludeDirective", function(directive, ...) {
-  attr(directive, "text");
+setMethodS3("getContent", "RspIncludeDirective", function(directive, ...) {
+  getAttribute(directive, "content");
 })
 
 
@@ -502,8 +512,7 @@ setMethodS3("getText", "RspIncludeDirective", function(directive, ...) {
 # }
 #*/######################################################################### 
 setMethodS3("getVerbatim", "RspIncludeDirective", function(directive, ...) {
-  res <- attr(directive, "verbatim");
-  if (is.null(res)) res <- FALSE;
+  res <- getAttribute(directive, "verbatim", default=FALSE);
   res <- as.logical(res);
   res <- isTRUE(res);
   res;
@@ -536,7 +545,7 @@ setMethodS3("getVerbatim", "RspIncludeDirective", function(directive, ...) {
 # }
 #*/######################################################################### 
 setMethodS3("getWrap", "RspIncludeDirective", function(directive, ...) {
-  res <- attr(directive, "wrap");
+  res <- getAttribute(directive, "wrap");
   if (!is.null(res)) {
     res <- as.integer(res);
   }
@@ -562,6 +571,7 @@ setMethodS3("getWrap", "RspIncludeDirective", function(directive, ...) {
 # @synopsis
 #
 # \arguments{
+#   \item{value}{A @character string.}
 #   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
 # }
 #
@@ -573,8 +583,8 @@ setMethodS3("getWrap", "RspIncludeDirective", function(directive, ...) {
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspDefineDirective", function(...) {
-  extend(RspDirective("define", ...), "RspDefineDirective")
+setConstructorS3("RspDefineDirective", function(value="define", ...) {
+  extend(RspDirective(value, ...), "RspDefineDirective")
 })
 
 
@@ -596,6 +606,7 @@ setConstructorS3("RspDefineDirective", function(...) {
 # @synopsis
 #
 # \arguments{
+#   \item{value}{A @character string.}
 #   \item{attributes}{A named @list, which must contain a 'file' 
 #      or a 'text' element.}
 #   \item{...}{Optional arguments passed to the constructor 
@@ -610,7 +621,7 @@ setConstructorS3("RspDefineDirective", function(...) {
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspEvalDirective", function(attributes=list(), ...) {
+setConstructorS3("RspEvalDirective", function(value="eval", attributes=list(), ...) {
   # Argument 'attributes':
   if (!missing(attributes)) {
     keys <- names(attributes);
@@ -622,7 +633,7 @@ setConstructorS3("RspEvalDirective", function(attributes=list(), ...) {
     if (is.null(attributes$language)) attributes$language <- "R";
   }
 
-  extend(RspDirective("eval", attributes=attributes, ...), "RspEvalDirective")
+  extend(RspDirective(value, attributes=attributes, ...), "RspEvalDirective")
 })
 
 
@@ -652,14 +663,14 @@ setConstructorS3("RspEvalDirective", function(attributes=list(), ...) {
 # }
 #*/######################################################################### 
 setMethodS3("getFile", "RspEvalDirective", function(directive, ...) {
-  attr(directive, "file");
+  getAttribute(directive, "file");
 })
 
 
 #########################################################################/**
-# @RdocMethod getText
+# @RdocMethod getContent
 #
-# @title "Gets the text"
+# @title "Gets the content of the RSP eval directive"
 #
 # \description{
 #  @get "title".
@@ -681,39 +692,8 @@ setMethodS3("getFile", "RspEvalDirective", function(directive, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getText", "RspEvalDirective", function(directive, ...) {
-  attr(directive, "text");
-})
-
-#########################################################################/**
-# @RdocMethod getLanguage
-#
-# @title "Gets the programming language"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getLanguage", "RspEvalDirective", function(directive, ...) {
-  res <- attr(directive, "language");
-  if (is.null(res)) res <- as.character(NA);
-  res;
+setMethodS3("getContent", "RspEvalDirective", function(directive, ...) {
+  getAttribute(directive, "content");
 })
 
 
@@ -732,6 +712,7 @@ setMethodS3("getLanguage", "RspEvalDirective", function(directive, ...) {
 # @synopsis
 #
 # \arguments{
+#   \item{value}{A @character string.}
 #   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
 # }
 #
@@ -743,8 +724,8 @@ setMethodS3("getLanguage", "RspEvalDirective", function(directive, ...) {
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspPageDirective", function(...) {
-  extend(RspDirective("page", ...), "RspPageDirective")
+setConstructorS3("RspPageDirective", function(value="page", ...) {
+  extend(RspDirective(value, ...), "RspPageDirective")
 })
 
 
@@ -776,8 +757,7 @@ setConstructorS3("RspPageDirective", function(...) {
 #*/######################################################################### 
 setMethodS3("getType", "RspPageDirective", function(directive, default=NA, as=c("text", "IMT"), ...) {
   as <- match.arg(as);
-  res <- attr(directive, "type");
-  if (is.null(res)) res <- as.character(default);
+  res <- getAttribute(directive, "type", default=as.character(default));
   res <- tolower(res);
   if (as == "IMT" && !is.na(res)) {
     res <- parseInternetMediaType(res);
@@ -785,69 +765,6 @@ setMethodS3("getType", "RspPageDirective", function(directive, default=NA, as=c(
   res;
 })
 
-
-#########################################################################/**
-# @RdocMethod getTitle
-#
-# @title "Gets the title"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getTitle", "RspPageDirective", function(directive, ...) {
-  res <- attr(directive, "title");
-  if (is.null(res)) res <- as.character(NA);
-  res;
-})
-
-
-#########################################################################/**
-# @RdocMethod getKeywords
-#
-# @title "Gets the keywords"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getKeywords", "RspPageDirective", function(directive, ...) {
-  res <- attr(directive, "keywords");
-  if (is.null(res)) res <- "";
-  res;
-})
 
 
 
@@ -872,6 +789,7 @@ setMethodS3("getKeywords", "RspPageDirective", function(directive, ...) {
 # @synopsis
 #
 # \arguments{
+#   \item{value}{A @character string.}
 #   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
 # }
 #
@@ -883,24 +801,24 @@ setMethodS3("getKeywords", "RspPageDirective", function(directive, ...) {
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspIfDirective", function(directive="if", ...) {
-  extend(RspDirective(directive, ...), "RspIfDirective")
+setConstructorS3("RspIfDirective", function(value="if", ...) {
+  extend(RspDirective(value, ...), "RspIfDirective")
 })
 
-setConstructorS3("RspIfeqDirective", function(directive="ifeq", ...) {
-  extend(RspIfDirective(directive, ...), "RspIfeqDirective")
+setConstructorS3("RspIfeqDirective", function(value="ifeq", ...) {
+  extend(RspIfDirective(value, ...), "RspIfeqDirective")
 })
 
-setConstructorS3("RspIfneqDirective", function(directive="neq", ...) {
-  extend(RspIfDirective(directive, ...), "RspIfneqDirective")
+setConstructorS3("RspIfneqDirective", function(value="neq", ...) {
+  extend(RspIfDirective(value, ...), "RspIfneqDirective")
 })
 
-setConstructorS3("RspElseDirective", function(directive="else", ...) {
-  extend(RspDirective(directive, ...), "RspElseDirective")
+setConstructorS3("RspElseDirective", function(value="else", ...) {
+  extend(RspDirective(value, ...), "RspElseDirective")
 })
 
-setConstructorS3("RspEndifDirective", function(directive="endif", ...) {
-  extend(RspDirective(directive, ...), "RspEndifDirective")
+setConstructorS3("RspEndifDirective", function(value="endif", ...) {
+  extend(RspDirective(value, ...), "RspEndifDirective")
 })
 
 
@@ -918,6 +836,7 @@ setConstructorS3("RspEndifDirective", function(directive="endif", ...) {
 # @synopsis
 #
 # \arguments{
+#   \item{value}{A @character string.}
 #   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
 # }
 #
@@ -929,8 +848,8 @@ setConstructorS3("RspEndifDirective", function(directive="endif", ...) {
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspUnknownDirective", function(...) {
-  extend(RspDirective(...), "RspUnknownDirective")
+setConstructorS3("RspUnknownDirective", function(value="unknown", ...) {
+  extend(RspDirective(value, ...), "RspUnknownDirective")
 })
 
 

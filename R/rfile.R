@@ -288,16 +288,14 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   }
 
   res <- rcat(rcode, output=output, envir=envir, args=NULL, ...);
-  type <- attr(res, "type");
-  rm(rcode, res);
 
   if (isFile(output)) {
-    res <- RspFileProduct(output, type=type);
+    res <- RspFileProduct(output, attrs=getAttributes(res));
   } else {
-    res <- RspProduct(output, type=type);
+    res <- RspProduct(output, attrs=getAttributes(res));
   }
   verbose && print(verbose, res);
-  rm(output, type);
+  rm(rcode, output, type);
 
   # Reset the working directory?
   if (!is.null(opwd)) {

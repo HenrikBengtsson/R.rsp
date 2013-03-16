@@ -1,24 +1,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspDirective.R
+%  RspConstruct.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getLanguage.RspEvalDirective}
-\alias{getLanguage.RspEvalDirective}
-\alias{RspEvalDirective.getLanguage}
-\alias{getLanguage,RspEvalDirective-method}
+\name{getComment.RspConstruct}
+\alias{getComment.RspConstruct}
+\alias{RspConstruct.getComment}
+\alias{getComment,RspConstruct-method}
 
-\title{Gets the programming language}
+\title{Gets the comment of an RSP construct}
 
 \description{
- Gets the programming language.
+ Gets the comment of an RSP construct.
 }
 
 \usage{
-\method{getLanguage}{RspEvalDirective}(directive, ...)
+\method{getComment}{RspConstruct}(directive, ...)
 }
 
 \arguments{
@@ -32,7 +32,7 @@
 \author{Henrik Bengtsson}
 
 \seealso{
-  For more information see \code{\link{RspEvalDirective}}.
+  For more information see \code{\link{RspConstruct}}.
 }
 \keyword{internal}
 \keyword{methods}

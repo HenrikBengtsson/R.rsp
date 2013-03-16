@@ -15,9 +15,8 @@
 #
 # \arguments{
 #   \item{object}{A R object.}
-#   \item{attributes}{A named @list.}
+#   \item{...}{Arguments passed to @see "RspObject".}
 #   \item{comment}{An optional @character string.}
-#   \item{...}{Not used.}
 # }
 #
 # \section{Fields and Methods}{
@@ -28,22 +27,17 @@
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspConstruct", function(object=character(), attributes=list(), comment=NULL, ...) {
-  this <- extend(object, "RspConstruct");
-  for (key in names(attributes)) {
-    attr(this, key) <- attributes[[key]];
-  }
+setConstructorS3("RspConstruct", function(object=character(), ..., comment=NULL) {
+  this <- extend(RspObject(object, ...), "RspConstruct");
   attr(this, "#comment") <- comment;
   this;
 })
 
 
 #########################################################################/**
-# @RdocMethod getAttributes
-# @aliasmethod getAttribute
-# @aliasmethod getComment
+# @RdocMethod getComment
 #
-# @title "Gets the attributes of an RSP expression"
+# @title "Gets the comment of an RSP construct"
 #
 # \description{
 #  @get "title".
@@ -56,7 +50,7 @@ setConstructorS3("RspConstruct", function(object=character(), attributes=list(),
 # }
 #
 # \value{
-#  Returns a named @list.
+#  Returns a @character string.
 # }
 #
 # @author
@@ -65,29 +59,8 @@ setConstructorS3("RspConstruct", function(object=character(), attributes=list(),
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getAttributes", "RspConstruct", function(directive, ...) {
-  attrs <- attributes(directive);
-  keys <- names(attrs);
-  keys <- setdiff(keys, "class");
-  # Exclude private attributes
-  pattern <- sprintf("^[%s]", paste(c(base::letters, base::LETTERS), collapse=""));
-  keys <- keys[regexpr(pattern, keys) != -1L];
-  attrs <- attrs[keys];
-  attrs;
-})
-
-setMethodS3("getAttribute", "RspConstruct", function(directive, name, default=NULL, ...) {
-  attrs <- getAttributes(directive, ...);
-  if (!is.element(name, names(attrs))) {
-    attr <- default;
-  } else {
-    attr <- attrs[[name]];
-  }
-  attr;
-})
-
 setMethodS3("getComment", "RspConstruct", function(directive, ...) {
-  attr(directive, "#comment");
+  getAttribute(directive, "#comment");
 })
  
  
@@ -159,6 +132,8 @@ setMethodS3("asRspString", "RspConstruct", function(object, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-03-15
+# o Now RspConstruct extends RspObject.
 # 2013-02-22
 # o Added RspUnparsedExpression.
 # 2013-02-11

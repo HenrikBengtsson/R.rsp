@@ -113,7 +113,7 @@
 \alias{getEcho}
 \alias{getFile}
 \alias{getReturn}
-\alias{getText}
+\alias{getContent}
 \alias{makeSourceCode}
 \alias{parseRaw}
 \alias{toR}
@@ -138,6 +138,8 @@
 \alias{extentionToIMT}
 \alias{parseInternetMediaType}
 \alias{unescapeRspTags}
+\alias{nbrOfLines}
+\alias{requireAttributes}
 
 \description{
 This page contains aliases for all "non-documented" objects that

@@ -1,24 +1,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspDirective.R
+%  RspString.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getTitle.RspPageDirective}
-\alias{getTitle.RspPageDirective}
-\alias{RspPageDirective.getTitle}
-\alias{getTitle,RspPageDirective-method}
+\name{nbrOfLines.RspString}
+\alias{nbrOfLines.RspString}
+\alias{RspString.nbrOfLines}
+\alias{nbrOfLines,RspString-method}
 
-\title{Gets the title}
+\title{Gets the number of lines in an RSP string}
 
 \description{
- Gets the title.
+ Gets the number of lines in an RSP string.
 }
 
 \usage{
-\method{getTitle}{RspPageDirective}(directive, ...)
+\method{nbrOfLines}{RspString}(object, ...)
 }
 
 \arguments{
@@ -26,13 +26,13 @@
 }
 
 \value{
- Returns a \code{\link[base]{character}} string.
+ Returns a non-negative \code{\link[base]{integer}}.
 }
 
 \author{Henrik Bengtsson}
 
 \seealso{
-  For more information see \code{\link{RspPageDirective}}.
+  For more information see \code{\link{RspString}}.
 }
 \keyword{internal}
 \keyword{methods}

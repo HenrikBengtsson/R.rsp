@@ -18,7 +18,7 @@
 }
 
 \usage{
-\method{requireAttributes}{RspDirective}(this, names, ...)
+\method{requireAttributes}{RspDirective}(this, names, condition=c("all", "any"), ...)
 }
 
 \arguments{

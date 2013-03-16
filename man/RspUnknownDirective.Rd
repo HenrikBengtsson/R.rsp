@@ -19,11 +19,13 @@
 
 \code{character}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[R.rsp]{RspConstruct}}\cr
+\code{~~+--}\code{\link[R.rsp]{RspObject}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{\link[R.rsp]{RspDirective}}\cr
+\code{~~~~~~~+--}\code{\link[R.rsp]{RspConstruct}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\code{RspUnknownDirective}\cr
+\code{~~~~~~~~~~~~+--}\code{\link[R.rsp]{RspDirective}}\cr
+\code{~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\code{RspUnknownDirective}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
@@ -37,10 +39,11 @@ extends \link[R.rsp]{RspDirective}\cr
  }
 
  \usage{
-RspUnknownDirective(...)
+RspUnknownDirective(value="unknown", ...)
 }
 
  \arguments{
+   \item{value}{A \code{\link[base]{character}} string.}
    \item{...}{Arguments passed to the constructor of \code{\link{RspDirective}}.}
  }
 
@@ -53,7 +56,10 @@ RspUnknownDirective(...)
 asRspString, requireAttributes
 
  \bold{Methods inherited from RspConstruct}:\cr
-asRspString, getAttribute, getAttributes, getComment, getSuffixSpecs
+asRspString, getComment, getSuffixSpecs
+
+ \bold{Methods inherited from RspObject}:\cr
+getAttribute, getAttributes, setAttribute, setAttributes
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap

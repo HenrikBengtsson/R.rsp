@@ -31,9 +31,7 @@ setConstructorS3("RspCode", function(code=character(), echo=FALSE, ...) {
   code <- gsub("\r\n", "\n", code);
   code <- gsub("\r", "\n", code);
 
-  this <- extend(RspExpression(code), "RspCode");
-  attr(this, "echo") <- echo;
-  this;
+  extend(RspExpression(code, echo=echo, ...), "RspCode");
 })
 
 
@@ -93,7 +91,7 @@ setMethodS3("getCode", "RspCode", function(code, ...) {
 # }
 #*/######################################################################### 
 setMethodS3("getEcho", "RspCode", function(code, ...) {
-  isTRUE(attr(code, "echo"));
+  isTRUE(getAttribute(code, "echo", default=FALSE));
 })
 
 
@@ -167,9 +165,7 @@ setMethodS3("asRspString", "RspCode", function(code, ...) {
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspCodeChunk", function(..., return=FALSE) {
-  this <- extend(RspCode(...), "RspCodeChunk");
-  attr(this, "return") <- return;
-  this;
+  extend(RspCode(..., return=return), "RspCodeChunk");
 })
 
 
@@ -199,7 +195,7 @@ setConstructorS3("RspCodeChunk", function(..., return=FALSE) {
 # }
 #*/######################################################################### 
 setMethodS3("getReturn", "RspCodeChunk", function(code, ...) {
-  isTRUE(attr(code, "return"));
+  isTRUE(getAttribute(code, "return", default=FALSE));
 })
 
 

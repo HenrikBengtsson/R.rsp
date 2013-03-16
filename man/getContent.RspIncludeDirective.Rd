@@ -6,19 +6,19 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getText.RspIncludeDirective}
-\alias{getText.RspIncludeDirective}
-\alias{RspIncludeDirective.getText}
-\alias{getText,RspIncludeDirective-method}
+\name{getContent.RspIncludeDirective}
+\alias{getContent.RspIncludeDirective}
+\alias{RspIncludeDirective.getContent}
+\alias{getContent,RspIncludeDirective-method}
 
-\title{Gets the text}
+\title{Gets the content of the RSP include directive}
 
 \description{
- Gets the text.
+ Gets the content of the RSP include directive.
 }
 
 \usage{
-\method{getText}{RspIncludeDirective}(directive, ...)
+\method{getContent}{RspIncludeDirective}(directive, ...)
 }
 
 \arguments{

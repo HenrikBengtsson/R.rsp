@@ -19,9 +19,11 @@
 
 \code{character}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[R.rsp]{RspConstruct}}\cr
+\code{~~+--}\code{\link[R.rsp]{RspObject}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{RspDirective}\cr
+\code{~~~~~~~+--}\code{\link[R.rsp]{RspConstruct}}\cr
+\code{~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~+--}\code{RspDirective}\cr
 
 \bold{Directly known subclasses:}\cr
 \link[R.rsp]{RspDefineDirective}, \link[R.rsp]{RspElseDirective}, \link[R.rsp]{RspEndifDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspIfDirective}, \link[R.rsp]{RspIfeqDirective}, \link[R.rsp]{RspIfneqDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspMetaDirective}, \link[R.rsp]{RspPageDirective}, \link[R.rsp]{RspUnknownDirective}, \link[R.rsp]{RspUnparsedDirective}\cr
@@ -37,11 +39,11 @@ extends \link[R.rsp]{RspConstruct}\cr
  }
 
  \usage{
-RspDirective(directive=character(), ...)
+RspDirective(value=character(), ...)
 }
 
  \arguments{
-   \item{directive}{A \code{\link[base]{character}} string.}
+   \item{value}{A \code{\link[base]{character}} string.}
    \item{...}{Arguments passed to the constructor of \code{\link{RspConstruct}}.}
  }
 
@@ -49,12 +51,15 @@ RspDirective(directive=character(), ...)
   \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:asRspString.RspDirective]{asRspString}} \tab Recreates an RSP string from an RSP preprocessing directive.\cr
- \tab \code{requireAttributes} \tab  -\cr
+ \tab \code{\link[R.rsp:requireAttributes.RspDirective]{requireAttributes}} \tab Asserts that certain attributes exist.\cr
 }
 
 
  \bold{Methods inherited from RspConstruct}:\cr
-asRspString, getAttribute, getAttributes, getComment, getSuffixSpecs
+asRspString, getComment, getSuffixSpecs
+
+ \bold{Methods inherited from RspObject}:\cr
+getAttribute, getAttributes, setAttribute, setAttributes
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap

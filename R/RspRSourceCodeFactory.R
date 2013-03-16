@@ -58,7 +58,7 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
   # RspText => .ro("<text>")
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspText")) {
-    text <- getText(expr);
+    text <- getContent(expr);
 
     code <- NULL;
     while (nchar(text) > 0L) {

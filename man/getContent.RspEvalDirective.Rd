@@ -6,19 +6,19 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getKeywords.RspPageDirective}
-\alias{getKeywords.RspPageDirective}
-\alias{RspPageDirective.getKeywords}
-\alias{getKeywords,RspPageDirective-method}
+\name{getContent.RspEvalDirective}
+\alias{getContent.RspEvalDirective}
+\alias{RspEvalDirective.getContent}
+\alias{getContent,RspEvalDirective-method}
 
-\title{Gets the keywords}
+\title{Gets the content of the RSP eval directive}
 
 \description{
- Gets the keywords.
+ Gets the content of the RSP eval directive.
 }
 
 \usage{
-\method{getKeywords}{RspPageDirective}(directive, ...)
+\method{getContent}{RspEvalDirective}(directive, ...)
 }
 
 \arguments{
@@ -32,7 +32,7 @@
 \author{Henrik Bengtsson}
 
 \seealso{
-  For more information see \code{\link{RspPageDirective}}.
+  For more information see \code{\link{RspEvalDirective}}.
 }
 \keyword{internal}
 \keyword{methods}

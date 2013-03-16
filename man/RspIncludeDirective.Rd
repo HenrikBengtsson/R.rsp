@@ -19,11 +19,13 @@
 
 \code{character}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[R.rsp]{RspConstruct}}\cr
+\code{~~+--}\code{\link[R.rsp]{RspObject}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{\link[R.rsp]{RspDirective}}\cr
+\code{~~~~~~~+--}\code{\link[R.rsp]{RspConstruct}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\code{RspIncludeDirective}\cr
+\code{~~~~~~~~~~~~+--}\code{\link[R.rsp]{RspDirective}}\cr
+\code{~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\code{RspIncludeDirective}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
@@ -38,10 +40,11 @@ extends \link[R.rsp]{RspDirective}\cr
  }
 
  \usage{
-RspIncludeDirective(attributes=list(), ...)
+RspIncludeDirective(value="include", ...)
 }
 
  \arguments{
+   \item{value}{A \code{\link[base]{character}} string.}
    \item{attributes}{A named \code{\link[base]{list}}, which must contain either
       a 'file' or a 'text' element.}
    \item{...}{Optional arguments passed to the constructor
@@ -51,8 +54,8 @@ RspIncludeDirective(attributes=list(), ...)
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
+ \tab \code{\link[R.rsp:getContent.RspIncludeDirective]{getContent}} \tab Gets the content of the RSP include directive.\cr
  \tab \code{\link[R.rsp:getFile.RspIncludeDirective]{getFile}} \tab Gets the file attribute.\cr
- \tab \code{\link[R.rsp:getText.RspIncludeDirective]{getText}} \tab Gets the text.\cr
  \tab \code{\link[R.rsp:getVerbatim.RspIncludeDirective]{getVerbatim}} \tab Checks if verbatim include should be used or not.\cr
  \tab \code{\link[R.rsp:getWrap.RspIncludeDirective]{getWrap}} \tab Get the wrap length.\cr
 }
@@ -62,7 +65,10 @@ RspIncludeDirective(attributes=list(), ...)
 asRspString, requireAttributes
 
  \bold{Methods inherited from RspConstruct}:\cr
-asRspString, getAttribute, getAttributes, getComment, getSuffixSpecs
+asRspString, getComment, getSuffixSpecs
+
+ \bold{Methods inherited from RspObject}:\cr
+getAttribute, getAttributes, setAttribute, setAttributes
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap

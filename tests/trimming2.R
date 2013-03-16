@@ -18,8 +18,8 @@ text='Line #1
   <%-- comments --%> are
   <% a <- 1 %>  <%@foo bar="FALSE"%>
 dropped ---%>
-<%@include text=""%>
-<%@include text=""%>
+<%@include content=""%>
+<%@include content=""%>
 Line #2
 <%
 a <- 2

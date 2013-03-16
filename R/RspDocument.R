@@ -271,7 +271,7 @@ setMethodS3("dropEmptyText", "RspDocument", function(object, ..., verbose=FALSE)
   verbose && enter(verbose, "Dropping empty RSP text constructs");
 
   isEmptyText <- sapply(object, FUN=function(expr) {
-    (inherits(expr, "RspText") && (nchar(getText(expr)) == 0L));
+    (inherits(expr, "RspText") && (nchar(getContent(expr)) == 0L));
   })
   idxs <- which(isEmptyText);
   verbose && cat(verbose, "Number of empty RSP texts: ", length(idxs));
@@ -387,7 +387,7 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
       expr <- object[[idx]];
   ##    verbose && enter(verbose, sprintf("RSP inbetween text #%d ('%s') of %d", idx, class(expr)[1L], length(idxsInbetweenText)));
   
-      text <- getText(expr);
+      text <- getContent(expr);
       # Is text a single line break?
       # (with optional whitespace before and after)?
       isSingleLineBreak <- (regexpr("^[ \t]*(\n|\r|\r\n)[ \t]*$", text) != -1L);
@@ -448,7 +448,7 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
     } else {
       idxTextL <- idxTextL[length(idxTextL)];
       exprL <- object[[idxTextL]];
-      textL <- getText(exprL);
+      textL <- getContent(exprL);
       emptyL <- (regexpr("\n[ \t\v]*$", textL) != -1L);
     }
 
@@ -472,7 +472,7 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
     } else {
       idxTextR <- idxTextR[1L];
       exprR <- object[[idxTextR]];
-      textR <- getText(exprR);
+      textR <- getContent(exprR);
       emptyR <- (regexpr("^[ \t\v]*\n", textR) != -1L);
     }
 
@@ -963,7 +963,7 @@ setMethodS3("parseIfElseDirectives", "RspDocument", function(object, firstIdx=1L
     }
 
     # Already done?
-    value <- attr(ifdirective, ".TRUE");
+    value <- getAttribute(ifdirective, ".TRUE");
     if (!is.null(value)) {
       verbose && cat(verbose, "Already parsed. Skipping.");
       verbose && exit(verbose);
@@ -1012,7 +1012,7 @@ setMethodS3("parseIfElseDirectives", "RspDocument", function(object, firstIdx=1L
         if (verbose) {
           for (what in c(".TRUE", ".FALSE")) {
             printf(verbose, "%s statement: {\n", gsub(".", "", what, fixed=TRUE));
-            value <- attr(item, what);
+            value <- getAttribute(item, what);
             if (!is.null(value)) {
               cat(verbose, asRspString(value));
             }
@@ -1021,7 +1021,7 @@ setMethodS3("parseIfElseDirectives", "RspDocument", function(object, firstIdx=1L
         }
 
         # Consume indices
-        idxs <- attr(item, ".idxs");
+        idxs <- getAttribute(item, ".idxs");
         verbose && printf(verbose, "Item range #%d-#%d\n", min(idxs), max(idxs));
         idx <- max(idxs);
         verbose && exit(verbose);
@@ -1061,7 +1061,7 @@ setMethodS3("parseIfElseDirectives", "RspDocument", function(object, firstIdx=1L
           if (verbose) {
             for (what in c(".TRUE", ".FALSE")) {
               printf(verbose, "%s statement: {\n", gsub(".", "", what, fixed=TRUE));
-              value <- attr(item, what);
+              value <- getAttribute(item, what);
               if (!is.null(value)) {
                 cat(verbose, asRspString(value));
               }
@@ -1070,7 +1070,7 @@ setMethodS3("parseIfElseDirectives", "RspDocument", function(object, firstIdx=1L
           }
 
           # Consume indices
-          idxs <- attr(item, ".idxs");
+          idxs <- getAttribute(item, ".idxs");
           verbose && printf(verbose, "Item range #%d-#%d\n", min(idxs), max(idxs));
           idx <- max(idxs);
 
@@ -1301,7 +1301,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       item <- object[[idx]];
       if (inherits(item, "RspIfDirective")) {
         item <- parseIfElseDirectives(object, firstIdx=idx, verbose=verbose);
-        idx <- max(attr(item, ".idxs"));
+        idx <- max(getAttribute(item, ".idxs"));
       }
       items <- c(items, list(item));
       idx <- idx + 1L;
@@ -1404,7 +1404,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     if (inherits(item, "RspText")) {
       # Drop empty lines?
       if (nbrOfEmptyTextLinesToDrop != 0L) {
-        text <- getText(item);
+        text <- getContent(item);
 
         count <- nbrOfEmptyTextLinesToDrop;
 
@@ -1542,7 +1542,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       hostContentType <- getType(object, default="text/plain");
 
-      text <- getText(item);
+      text <- getContent(item);
       if (!is.null(text)) {
         file <- getSource(object);
 
@@ -1683,9 +1683,9 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # RspEvalDirective => ...
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(item, "RspEvalDirective")) {
-      language <- getLanguage(item);
+      language <- getAttribute(item, "language", default=as.character(NA));
       file <- getFile(item);
-      text <- getText(item);
+      text <- getContent(item);
       if (is.null(text) && is.null(file)) {
         throw(sprintf("RSP 'eval' preprocessing directive (#%d) requires either attribute 'file' or 'text'.", idx));
       }
@@ -1766,8 +1766,12 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       }
 
       metadata <- getMetadata(object);
-      metadata[["title"]] <- getTitle(item);
-      metadata[["keywords"]] <- getKeywords(item);
+      for (name in c("title", "author", "keywords")) {
+        value <- getAttribute(item, name);
+        if (!is.null(value)) {
+          metadata[[name]] <- value;
+        }
+      }
       object <- setAttribute(object, "metadata", metadata);
   
       # Drop RSP construct
@@ -1815,9 +1819,9 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
       # Extract TRUE or FALSE statements?
       if (result) {
-        doc <- attr(item, ".TRUE");
+        doc <- getAttribute(item, ".TRUE");
       } else {
-        doc <- attr(item, ".FALSE");
+        doc <- getAttribute(item, ".FALSE");
       }
 
       # Recursively pre-process these statements

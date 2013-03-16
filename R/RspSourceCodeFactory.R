@@ -262,7 +262,7 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
   # Unescape RspText
   isText <- sapply(doc, FUN=inherits, "RspText");
   doc[isText] <- lapply(doc[isText], FUN=function(expr) {
-    RspText(getText(expr, unescape=TRUE));
+    RspText(getContent(expr, unescape=TRUE));
   });
 
   # Coerce all RspConstruct:s to source code

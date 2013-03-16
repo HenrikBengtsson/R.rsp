@@ -19,11 +19,13 @@
 
 \code{character}\cr
 \code{~~|}\cr
-\code{~~+--}\code{\link[R.rsp]{RspConstruct}}\cr
+\code{~~+--}\code{\link[R.rsp]{RspObject}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{\link[R.rsp]{RspExpression}}\cr
+\code{~~~~~~~+--}\code{\link[R.rsp]{RspConstruct}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\code{RspUnparsedExpression}\cr
+\code{~~~~~~~~~~~~+--}\code{\link[R.rsp]{RspExpression}}\cr
+\code{~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\code{RspUnparsedExpression}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
@@ -54,7 +56,10 @@ RspUnparsedExpression(...)
 
 
  \bold{Methods inherited from RspConstruct}:\cr
-asRspString, getAttribute, getAttributes, getComment, getSuffixSpecs
+asRspString, getComment, getSuffixSpecs
+
+ \bold{Methods inherited from RspObject}:\cr
+getAttribute, getAttributes, setAttribute, setAttributes
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap

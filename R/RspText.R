@@ -38,9 +38,9 @@ setConstructorS3("RspText", function(text=character(), escape=FALSE, ...) {
 
 
 #########################################################################/**
-# @RdocMethod getText
+# @RdocMethod getContent
 #
-# @title "Gets the text"
+# @title "Gets the contents of the RSP text"
 #
 # \description{
 #  @get "title".
@@ -64,7 +64,7 @@ setConstructorS3("RspText", function(text=character(), escape=FALSE, ...) {
 #   @seeclass
 # }
 #*/######################################################################### 
-setMethodS3("getText", "RspText", function(text, unescape=FALSE, ...) {
+setMethodS3("getContent", "RspText", function(text, unescape=FALSE, ...) {
   text <- as.character(text);
   if (unescape) {
     text <- unescapeRspTags(text);
@@ -99,7 +99,7 @@ setMethodS3("getText", "RspText", function(text, unescape=FALSE, ...) {
 # }
 #*/#########################################################################
 setMethodS3("asRspString", "RspText", function(text, ...) {
-  RspString(getText(text));
+  RspString(getContent(text));
 })
 
 

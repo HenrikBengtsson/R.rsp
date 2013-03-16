@@ -83,7 +83,7 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
   # RspText => echo "<text>"
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspText")) {
-    text <- getText(expr);
+    text <- getContent(expr);
 
     code <- NULL;
     while (nchar(text) > 0L) {

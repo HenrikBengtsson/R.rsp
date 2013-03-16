@@ -19,13 +19,13 @@ text='
 <%@define version="${\'R.rsp/HttpDaemon/RspVersion\'}" default="2.0"%>
 
 <%-- Include the value of the preprocessor variable to the document. --%>
-Current version is <%@include text="${version}"%> (at preprocessing).
+Current version is <%@include content="${version}"%> (at preprocessing).
 
 <%-- Assign the value of the preprocessor variable to an R variable. 
      Note how the preprocessor directive is inside a code expression --%>
 <%
 # This is an RSP code section
-ver <- "<%@include text="${version}"%>"
+ver <- "<%@include content="${version}"%>"
 %>
 Current version is <%=ver%> (at runtime).
 

@@ -6,19 +6,19 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getText.RspText}
-\alias{getText.RspText}
-\alias{RspText.getText}
-\alias{getText,RspText-method}
+\name{getContent.RspText}
+\alias{getContent.RspText}
+\alias{RspText.getContent}
+\alias{getContent,RspText-method}
 
-\title{Gets the text}
+\title{Gets the contents of the RSP text}
 
 \description{
- Gets the text.
+ Gets the contents of the RSP text.
 }
 
 \usage{
-\method{getText}{RspText}(text, unescape=FALSE, ...)
+\method{getContent}{RspText}(text, unescape=FALSE, ...)
 }
 
 \arguments{

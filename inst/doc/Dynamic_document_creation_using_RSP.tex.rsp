@@ -612,15 +612,15 @@ The current time is <\%=Sys.time()\%>.
 --%>
 
 
-\paragraph{Including plain text (\code{<\%@include text="\content{text}"\%>})}
+\paragraph{Including plain text (\code{<\%@include content="\content{text}"\%>})}
 Although not commonly needed, it is, as an alternative to contents of files, possible to include contents of strings.  For example, the template RSP document
 \begin{rspVerbatim}
-The \code{R_HOME} environment variable was '<\%@include text="${R_HOME}"\%>'
+The \code{R_HOME} environment variable was '<\%@include content="${R_HOME}"\%>'
 at the time when this document was preprocessed.
 \end{rspVerbatim}
 results in an preprocessed RSP document consisting of
 \begin{rspVerbatim}
-The \code{R_HOME} environment variable was '<%@include text="${R_HOME}"%>'
+The \code{R_HOME} environment variable was '<%@include content="${R_HOME}"%>'
 at the time when this document was preprocessed.
 \end{rspVerbatim}
 
@@ -734,7 +734,7 @@ Together with the host content type, this one specifies how the included text is
 
 For example, in order to include the text string '\code{<\%=Sys.time()\%>}' into a text document using an RSP preprocessing directive we can do
 \begin{rspVerbatim}
-Current time is '<\%@include text="<\%\%=Sys.time()\%\%>'.
+Current time is '<\%@include content="<\%\%=Sys.time()\%\%>'.
 \end{rspVerbatim}
 which generates the output
 \begin{rspVerbatim}
@@ -743,12 +743,12 @@ Current time is '<\%=Sys.time()\%>'.
 The reason for using \code{<\%\%} and \code{\%\%>} is because \code{<\%} and \code{\%>} need to be escaped in order to no be interpreted by the RSP parser as an RSP construct.
 Now, if we would like this text string to be included as an RSP construct to be parsed (after being inserted), we can do
 \begin{rspVerbatim}
-Current time is '<\%@include text="<\%\%=Sys.time()\%\%>" 
+Current time is '<\%@include content="<\%\%=Sys.time()\%\%>" 
                             type="application/x-rsp; escaped=TRUE"\%>'.
 \end{rspVerbatim}
 which generates the output
 \begin{rspVerbatim}
-<%@include text="Current time is '<%%=Sys.time()%%>'."
+<%@include content="Current time is '<%%=Sys.time()%%>'."
            type="application/x-rsp; escaped=TRUE"%>
 \end{rspVerbatim}
 

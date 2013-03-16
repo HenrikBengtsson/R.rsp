@@ -78,6 +78,31 @@ setMethodS3("print", "RspString", function(x, ...) {
 }, protected=TRUE)
 
 
+#########################################################################/**
+# @RdocMethod nbrOfLines
+#
+# @title "Gets the number of lines in an RSP string"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns a non-negative @integer.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/######################################################################### 
 setMethodS3("nbrOfLines", "RspString", function(object, ...) {
   length(unlist(strsplit(object, split="\n", fixed=TRUE)));
 })
