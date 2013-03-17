@@ -339,13 +339,20 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
   # Infer the class name
   class <- sprintf("Rsp%sDirective", capitalize(directive));
 
-  # Instantiate object
-  res <- tryCatch({
-    clazz <- Class$forName(class);
-    newInstance(clazz, attrs=attrs, comment=comment);
+  # Get constructor
+  clazz <- tryCatch({
+    Class$forName(class);
   }, error = function(ex) {
-    RspUnknownDirective(directive, attrs=attrs);
+    NULL;
   })
+
+  # Instantiate object
+  if (!is.null(clazz)) {
+    res <- newInstance(clazz, attrs=attrs, comment=comment);
+  } else {
+    res <- RspUnknownDirective(directive, attrs=attrs);
+  }
+
   # Preserve attributes
   attr(res, "suffixSpecs") <- attr(expr, "suffixSpecs");
 
@@ -556,41 +563,6 @@ setMethodS3("getWrap", "RspIncludeDirective", function(directive, ...) {
 
 
 ###########################################################################/**
-# @RdocClass RspDefineDirective
-#
-# @title "The RspDefineDirective class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspDefineDirective is an @see "RspDirective" that causes the
-#  RSP parser to assign the value of an attribute to an R object of
-#  the same name as the attribute at the time of parsing.
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{value}{A @character string.}
-#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspDefineDirective", function(value="define", ...) {
-  extend(RspDirective(value, ...), "RspDefineDirective")
-})
-
-
-
-
-###########################################################################/**
 # @RdocClass RspEvalDirective
 #
 # @title "The RspEvalDirective class"
@@ -766,60 +738,6 @@ setMethodS3("getType", "RspPageDirective", function(directive, default=NA, as=c(
 })
 
 
-
-
-###########################################################################/**
-# @RdocClass RspIfDirective
-# @alias RspIfeqDirective
-# @alias RspIfneqDirective
-# @alias RspElseDirective
-# @alias RspEndifDirective
-#
-# @title "The RspIfeqDirective class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspIfDirective is an @see "RspDirective" that will include or
-#  exclude all @see "RspConstruct":s until the next @see "RspEndifDirective"
-#  based on the preprocessing value of the particular if clause.
-#  Inclusiion/exclusion can be reverse via an @see "RspElseDirective".
-# }
-# 
-# @synopsis
-#
-# \arguments{
-#   \item{value}{A @character string.}
-#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-# 
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspIfDirective", function(value="if", ...) {
-  extend(RspDirective(value, ...), "RspIfDirective")
-})
-
-setConstructorS3("RspIfeqDirective", function(value="ifeq", ...) {
-  extend(RspIfDirective(value, ...), "RspIfeqDirective")
-})
-
-setConstructorS3("RspIfneqDirective", function(value="neq", ...) {
-  extend(RspIfDirective(value, ...), "RspIfneqDirective")
-})
-
-setConstructorS3("RspElseDirective", function(value="else", ...) {
-  extend(RspDirective(value, ...), "RspElseDirective")
-})
-
-setConstructorS3("RspEndifDirective", function(value="endif", ...) {
-  extend(RspDirective(value, ...), "RspEndifDirective")
-})
 
 
 ###########################################################################/**

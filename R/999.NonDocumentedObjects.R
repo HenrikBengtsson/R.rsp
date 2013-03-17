@@ -97,6 +97,7 @@
 # @alias exprToCode
 # @alias getAttribute
 # @alias getAttributes
+# @alias hasAttribute
 # @alias setAttribute
 # @alias setAttributes
 # @alias getCode

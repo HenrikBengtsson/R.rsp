@@ -16,7 +16,7 @@ verbose <- Arguments$getVerbose(TRUE)
 text='
 <%-- Assign a preprocessor variable a value from an R option.
      If not available, a default value is used. --%>
-<%@define version="${\'R.rsp/HttpDaemon/RspVersion\'}" default="2.0"%>
+<%@string version="${\'R.rsp/HttpDaemon/RspVersion\'}" default="2.0"%>
 
 <%-- Include the value of the preprocessor variable to the document. --%>
 Current version is <%@include content="${version}"%> (at preprocessing).

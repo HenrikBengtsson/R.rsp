@@ -46,6 +46,7 @@ setConstructorS3("RspObject", function(value=NA, attrs=list(), ...) {
 #########################################################################/**
 # @RdocMethod getAttributes
 # @aliasmethod getAttribute
+# @aliasmethod hasAttribute
 # @aliasmethod setAttributes
 # @aliasmethod setAttribute
 #
@@ -94,6 +95,11 @@ setMethodS3("getAttribute", "RspObject", function(object, name, default=NULL, pr
     attr <- attrs[[name]];
   }
   attr;
+})
+
+setMethodS3("hasAttribute", "RspObject", function(object, name, private=TRUE, ...) {
+  attrs <- getAttributes(object, private=private, ...);
+  is.element(name, names(attrs));
 })
 
 setMethodS3("setAttributes", "RspObject", function(object, attrs, ...) {

@@ -26,7 +26,7 @@
 \code{~~~~~~~~~~~~+--}\code{RspDirective}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.rsp]{RspDefineDirective}, \link[R.rsp]{RspElseDirective}, \link[R.rsp]{RspEndifDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspIfDirective}, \link[R.rsp]{RspIfeqDirective}, \link[R.rsp]{RspIfneqDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspMetaDirective}, \link[R.rsp]{RspPageDirective}, \link[R.rsp]{RspUnknownDirective}, \link[R.rsp]{RspUnparsedDirective}\cr
+\link[R.rsp]{RspDefineDirective}, \link[R.rsp]{RspElseDirective}, \link[R.rsp]{RspEndifDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspIfDirective}, \link[R.rsp]{RspIfeqDirective}, \link[R.rsp]{RspIfneqDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspIntegerDirective}, \link[R.rsp]{RspLogicalDirective}, \link[R.rsp]{RspMetaDirective}, \link[R.rsp]{RspNumericDirective}, \link[R.rsp]{RspPageDirective}, \link[R.rsp]{RspStringDirective}, \link[R.rsp]{RspUnknownDirective}, \link[R.rsp]{RspUnparsedDirective}, \link[R.rsp]{RspVariableDirective}\cr
 
 public class \bold{RspDirective}\cr
 extends \link[R.rsp]{RspConstruct}\cr
@@ -59,7 +59,7 @@ RspDirective(value=character(), ...)
 asRspString, getComment, getSuffixSpecs
 
  \bold{Methods inherited from RspObject}:\cr
-getAttribute, getAttributes, setAttribute, setAttributes
+getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap

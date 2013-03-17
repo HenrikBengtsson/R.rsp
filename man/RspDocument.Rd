@@ -74,7 +74,7 @@ RspDocument(expressions=list(), ...)
 
 
  \bold{Methods inherited from RspObject}:\cr
-getAttribute, getAttributes, setAttribute, setAttributes
+getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
 
  \bold{Methods inherited from list}:\cr
 all.equal, as.data.frame, attachLocally, callHooks, relist, within, wrap

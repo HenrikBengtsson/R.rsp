@@ -20,8 +20,8 @@ text0='
 '
 
 text='
-<%@define A="TRUE"%>
-<%@define B="TRUE"%>
+<%@string A="TRUE"%>
+<%@string B="TRUE"%>
 
 <%@ifeq A="TRUE"%>
  <%@ifeq B="TRUE"%>

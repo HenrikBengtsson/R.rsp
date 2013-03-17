@@ -1,21 +1,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspDirective.R
+%  RspDirective,VARIABLES.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspEvalDirective}
+ \name{RspVariableDirective}
 \docType{class}
-\alias{RspEvalDirective}
+\alias{RspVariableDirective}
 
+ \alias{RspStringDirective}
+ \alias{RspNumericDirective}
+ \alias{RspIntegerDirective}
+ \alias{RspLogicalDirective}
 
- \title{The RspEvalDirective class}
+ \title{The RspVariableDirective class}
 
  \description{
   Package:  R.rsp \cr
-\bold{Class RspEvalDirective}\cr
+\bold{Class RspVariableDirective}\cr
 
 \code{character}\cr
 \code{~~|}\cr
@@ -25,39 +29,33 @@
 \code{~~~~~~~~~~~~|}\cr
 \code{~~~~~~~~~~~~+--}\code{\link[R.rsp]{RspDirective}}\cr
 \code{~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~+--}\code{RspEvalDirective}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\code{RspVariableDirective}\cr
 
 \bold{Directly known subclasses:}\cr
-\cr
+\link[R.rsp]{RspIntegerDirective}, \link[R.rsp]{RspLogicalDirective}, \link[R.rsp]{RspNumericDirective}, \link[R.rsp]{RspStringDirective}\cr
 
-public class \bold{RspEvalDirective}\cr
+public class \bold{RspVariableDirective}\cr
 extends \link[R.rsp]{RspDirective}\cr
 
 
 
-  An RspEvalDirective is an \code{\link{RspDirective}} that causes the
-  RSP parser to evaluate a piece of R code (either in a text string
-  or in a file) as it is being parsed.
+  An RspVariableDirective is an \code{\link{RspDirective}} that causes the
+  RSP parser to assign the value of an attribute to an R object of
+  the same name as the attribute at the time of parsing.
  }
 
  \usage{
-RspEvalDirective(value="eval", attributes=list(), ...)
+RspVariableDirective(value="variable", ...)
 }
 
  \arguments{
    \item{value}{A \code{\link[base]{character}} string.}
-   \item{attributes}{A named \code{\link[base]{list}}, which must contain a 'file'
-      or a 'text' element.}
-   \item{...}{Optional arguments passed to the constructor
-              of \code{\link{RspDirective}}.}
+   \item{...}{Arguments passed to the constructor of \code{\link{RspDirective}}.}
  }
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
-\tabular{rll}{
- \tab \code{\link[R.rsp:getContent.RspEvalDirective]{getContent}} \tab Gets the content of the RSP eval directive.\cr
- \tab \code{\link[R.rsp:getFile.RspEvalDirective]{getFile}} \tab Gets the file attribute.\cr
-}
+\emph{No methods defined}.
 
 
  \bold{Methods inherited from RspDirective}:\cr

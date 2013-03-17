@@ -14,6 +14,10 @@
 \alias{getAttribute.RspObject}
 \alias{getAttribute,RspObject-method}
 
+\alias{RspObject.hasAttribute}
+\alias{hasAttribute.RspObject}
+\alias{hasAttribute,RspObject-method}
+
 \alias{RspObject.setAttributes}
 \alias{setAttributes.RspObject}
 \alias{setAttributes,RspObject-method}
