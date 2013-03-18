@@ -576,15 +576,25 @@ will include the RSP document \code{CurrentTime.tex.rsp} into the main (host) RS
 ---%>
 
 \paragraph{Including file contents (\code{<\%@include file="\content{pathname|URL}"\%>})}
-To include the content of a text file "as is" during preprocessing, use the '\code{file}' argument.  This may be used to include a local file or a file online (specified as a URL).  For instance,
+To include the content of a text file "as is" during preprocessing, use the '\code{file}' argument.  This may be used to include a local file or a file online (specified as a URL).  For instance, to include the content of text file '\code{randoms.txt}' as is into the RSP document, use
 \begin{rspVerbatim}
-... '<\%@include file="randoms.txt"\%>'  ## <== Update
+'<\%@include file="randoms.txt"\%>'
 \end{rspVerbatim}
-To include the RSP parsed content of a text file with RSP markup, do
+To include the \emph{RSP preprocessed} content of RSP file '\code{random.txt.rsp}', use
 \begin{rspVerbatim}
-... '<\%@include file="randoms.txt.rsp"\%>'  ## <== Update
+'<\%@include file="randoms.txt.rsp"\%>'
 \end{rspVerbatim}
-Any file pathname should be specified \emph{relative to the directory} of the (host) RSP document that contains the include directive.  
+Any file pathname is \emph{relative to the directory} of the (host) RSP document that contains the include directive.
+For instance, consider an RSP file '\code{rsp/overview.txt.rsp}' and a text file '\code{inst/NEWS}'.  Next, if an RSP document includes the RSP file as
+\begin{rspVerbatim}
+'<\%@include file="rsp/overview.txt.rsp"\%>'
+\end{rspVerbatim}
+then that RSP file can in turn include the text file as
+\begin{rspVerbatim}
+'<\%@include file="../inst/NEWS"\%>'
+\end{rspVerbatim}
+
+
 
 \begin{remark}
 Only \emph{relative pathnames} are allowed\footnote{The RSP compiler in the \pkg{R.rsp} package will given an error if it detects an absolute pathname.}.  If an RSP document could use absolute pathnames, then it would only compile on a particular computer system/user account and would have to be altered in order to compile elsewhere.  Note that it is always possible to use file system links\footnote{The \code{createLink()} function in \pkg{R.utils} provides a platform-independent way for creating file system links.} to link to files elsewhere on the file system without having to copy them the directory of the source RSP document (or a subdirectory therein).
@@ -708,7 +718,7 @@ produces
 \begin{escapeRspVerbatim}
 This document presents methods that are under development.
 \end{escapeRspVerbatim}
-If one remove the first line, then the output is
+If one removes the first line, then the output is
 \begin{escapeRspVerbatim}
 Preprocessing variable 'version' was not set.
 \end{escapeRspVerbatim}
@@ -738,7 +748,7 @@ To compile such a stand-alone RSP document, do:
 This outputs a file \code{preprocessed-random.txt.rsp} in the current directory.
 Documents compiled this way will contain neither RSP comments nor RSP preprocessing directives.  This may be useful if the source RSP subdocuments contain private comments and private parts that are conditional excluded during preprocessing.
 
-
+<%----
 \subsubsection{Setting the host content types (\code{<\%@page type="\content{type}"\%>}}
 \label{RspPageTypeDirective}
 As introduced in Section~\ref{}, the content type of the document (RSP product) generated from the source RSP document is referred to as the \emph{host content type}.  Among other things, this information is used to automatically escaping of inserted text.  The host content type by default inferred from the filename extension of the RSP document (after dropping the '\code{rsp}' extension), e.g. the host content type of an RSP document named \code{report.tex.rsp} defaults to '\code{application/x-tex}', \code{report.html.rsp} default to '\code{text/html}' and so on.
@@ -752,6 +762,7 @@ Documents with unknown or non-recognized content types will be treated as '\code
 
 
 Whenever using the '\code{content}' argument, the content type is assumed to be '\code{text/plain}'.
+----%>
 
 
 
