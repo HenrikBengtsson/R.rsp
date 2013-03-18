@@ -1,21 +1,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspDirective,DEPRECATED.R
+%  RspDirective.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspDefineDirective}
+ \name{RspErrorDirective}
 \docType{class}
-\alias{RspDefineDirective}
+\alias{RspErrorDirective}
 
 
- \title{The RspDefineDirective class}
+ \title{The RspErrorDirective class}
 
  \description{
   Package:  R.rsp \cr
-\bold{Class RspDefineDirective}\cr
+\bold{Class RspErrorDirective}\cr
 
 \code{character}\cr
 \code{~~|}\cr
@@ -25,23 +25,22 @@
 \code{~~~~~~~~~~~~|}\cr
 \code{~~~~~~~~~~~~+--}\code{\link[R.rsp]{RspDirective}}\cr
 \code{~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~+--}\code{RspDefineDirective}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\code{RspErrorDirective}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public class \bold{RspDefineDirective}\cr
+public class \bold{RspErrorDirective}\cr
 extends \link[R.rsp]{RspDirective}\cr
 
 
 
-  An RspDefineDirective is an \code{\link{RspDirective}} that causes the
-  RSP parser to assign the value of an attribute to an R object of
-  the same name as the attribute at the time of parsing.
+  An RspErrorDirective is an \code{\link{RspDirective}} that generates an
+  RSP preprocessing error (if processed).
  }
 
  \usage{
-RspDefineDirective(value="define", ...)
+RspErrorDirective(value="error", ...)
 }
 
  \arguments{

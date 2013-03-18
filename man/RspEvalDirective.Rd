@@ -41,7 +41,7 @@ extends \link[R.rsp]{RspDirective}\cr
  }
 
  \usage{
-RspEvalDirective(value="eval", attributes=list(), ...)
+RspEvalDirective(value="eval", ...)
 }
 
  \arguments{

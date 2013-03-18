@@ -1,5 +1,7 @@
 ###########################################################################/**
 # @RdocClass RspException
+# @alias RspParseException
+# @alias RspPreprocessingException
 #
 # @title "The RspException class"
 #
@@ -13,7 +15,6 @@
 # @synopsis
 #
 # \arguments{
-#   \item{str}{A @character string.}
 #   \item{...}{Not used.}
 # }
 #
@@ -33,6 +34,11 @@ setMethodS3("as.character", "RspException", function(x, ...) {
   s <- NextMethod("as.character");
   s;
 })
+
+setConstructorS3("RspParseException", function(...) {
+  extend(RspException(...), "RspParseException");
+})
+
 
 setConstructorS3("RspPreprocessingException", function(..., item=NULL) {
   extend(RspException(...), "RspPreprocessingException",

@@ -22,6 +22,7 @@
 }
 
 \arguments{
+  \item{condition}{A \code{\link[base]{character}} specifying the condition to be tested.}
   \item{...}{Not used.}
 }
 

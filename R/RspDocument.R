@@ -959,7 +959,7 @@ setMethodS3("parseIfElseDirectives", "RspDocument", function(object, firstIdx=1L
     idx <- firstIdx;
     ifdirective <- object[[idx]];
     if (!inherits(ifdirective, "RspIfDirective")) {
-      throw("First RSP construct is not an RSP 'if' directive: ", asRspString(ifdirective));
+      throw(RspPreprocessingException("First RSP construct is not an RSP 'if' directive", item=ifdirective));
     }
 
     # Already done?
@@ -1052,7 +1052,7 @@ setMethodS3("parseIfElseDirectives", "RspDocument", function(object, firstIdx=1L
         }
 
         if (inherits(item, "RspElseDirective")) {
-          throw(sprintf("Syntax error. Stray RSP 'else' directive (#%d: %s)", idx, asRspString(item)));
+          throw(RspPreprocessingException(sprintf("Syntax error. Stray RSP 'else' directive (#%d)", idx), item=item));
         }
 
         if (inherits(item, "RspIfDirective")) {
@@ -1089,7 +1089,7 @@ setMethodS3("parseIfElseDirectives", "RspDocument", function(object, firstIdx=1L
 
 
     if (!endFound) {
-      throw(sprintf("Syntax error. Unclosed RSP 'IF' directive (#%d: %s)", idx, asRspString(ifdirective)));
+      throw(RspPreprocessingException(sprintf("Syntax error. Unclosed RSP 'IF' directive (#%d)", idx), item=ifdirective));
     }
 
     verbose && printf(verbose, "Consumed items #%d-#%d\n", firstIdx, idx);
@@ -1179,7 +1179,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         if (!identical(spec, specOrg)) {
           spec <- specOrg;
         }
-        throw(sprintf("Invalid/unknown count specifier in RSP comment (#%d): '%s'", idx, spec));
+        throw(RspPreprocessingException(sprintf("Invalid/unknown count specifier ('%s') in RSP comment (#%d)", spec, idx)));
       }
     }
     count;
@@ -1198,7 +1198,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     }
 
     if (isAbsolutePath(file)) {
-      throw(sprintf("RSP '%s' preprocessing directive (#%d) specifies 'file' using an absolute pathname. Only relative pathnames are allowed: %s", expr, index, file));
+      throw(RspPreprocessingException(sprintf("Attribute 'file' specifies an absolute pathname ('%s'). Only relative pathnames are allowed.", file), item=expr));
     }
 
     verbose && cat(verbose, "Path: ", path);
@@ -1210,7 +1210,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       tryCatch({
         file <- Arguments$getReadablePathname(file);
       }, error = function(ex) {
-        throw(sprintf("RSP '%s' preprocessing directive (#%d) specifies an non-existing 'file' (%s): %s", expr, index, file, gsub("Pathname not found: ", "", ex$message)));
+        throw(RspPreprocessingException(sprintf("File not found (%s), because '%s'", gsub("Pathname not found: ", "", ex$message)), item=expr));
       });
     }
 
@@ -1279,15 +1279,10 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # Was directive given in short format <@<directive> <name>="<content>">?
     if (is.null(name) && is.null(content)) {
       attrs <- getAttributes(item);
-      if (length(attrs) == 0L) {
-        throw(sprintf("RSP '%s' directive requires at least one of attributes 'name' or 'content' to be given: %s", item[1L], asRspString(item)));
-      }
-
       names <- setdiff(names(attrs), c("default", known));
       if (length(names) == 0L) {
-        throw(sprintf("RSP '%s' directive requires at least one of attributes 'name' or 'content' to be given: %s", item[1L], asRspString(item)));
+        throw(RspPreprocessingException("At least one of attributes 'name' or 'content' must be given", item=item));
       }
-
       name <- names[1L];
       content <- attrs[[name]];
     }
@@ -1615,7 +1610,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       content <- getContent(item);
       language <- getAttribute(item, "language", default=as.character(NA));
       if (is.null(content) && is.null(file)) {
-        throw(sprintf("RSP '%s' preprocessing directive (#%d) requires either attribute 'file' or 'content': %s", item[1L], idx, asRspString(item)));
+        throw(RspPreprocessingException("Either attribute 'file' or 'content' must be given", item=item));
       }
 
       if (!is.null(file)) {
@@ -1679,7 +1674,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       } # if (language == "shell")
 
     
-      throw(sprintf("Unsupported 'language' for RSP '%s' directive: %s", item[1L], asRspString(item)));
+      throw(RspPreprocessingException(sprintf("Cannot evaluate preprocessing code. Unsupported 'language' ('%s')", language), item=item));
     } # RspEvalDirective
 
 
@@ -1732,7 +1727,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         if (is.null(contentType)) {
           ext <- attr(file, "ext");
           if (is.null(ext)) {
-            throw(sprintf("RSP 'include' preprocessing directive (#%d) needs an explicit 'type' attribute because it can not be inferred from the  'file' attribute.", idx));
+            throw(RspPreprocessingException(sprintf("Attribute 'type' must be given because it can not be inferred from the 'file' attribute ('%s') which has no filename extension.", file), item=item));
           }
           contentType <- extentionToIMT(ext=ext, default="text/plain");
         }
@@ -1847,13 +1842,13 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       # Special case <%@if name="<logical>"%>
       if (!hasAttribute(item, "test")) {
         if (!exists(name, envir=envir)) {
-          throw(sprintf("Failed to processes RSP '%s' directive because variable (%s) does not exist: %s", item[1L], name, asRspString(item)));
+          throw(RspPreprocessingException(sprintf("Variable (%s) not found", name), item=item));
         }
         value <- get(name, envir=envir);
         if (is.logical(value)) {
           test <- "equal-to";
         } else {
-          throw(sprintf("Failed to processes RSP '%s' directive because the type of 'test' was not specified: %s", item[1L], asRspString(item)));
+          throw(RspPreprocessingException("Failed to evaluate IF statement, because attribute 'test' is not specified", item=item));
         }
       }
 
@@ -1863,7 +1858,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         result <- exists(name, envir=envir);
       } else {
         if (!exists(name, envir=envir)) {
-          throw(sprintf("Failed to processes RSP '%s' directive because variable (%s) does not exist: %s", item[1L], name, asRspString(item)));
+          throw(RspPreprocessingException(sprintf("Variable (%s) does not exist", name), item=item));
         }
         value <- get(name, envir=envir);
 
@@ -1890,7 +1885,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         } else if (test == "less-than-or-equal-to") {
           result <- isTRUE(value <= otherValue);
         } else {
-          throw(sprintf("RSP '%s' directive specifies an unknown test ('%s'): %s", item[1L], test, asRspString(item)));
+          throw(RspPreprocessingException(sprintf("Unknown test (%s)", test), item=item));
         }
       }
 
@@ -1945,7 +1940,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # Stray RSP 'unknown' directive?
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(item, "RspUnknownDirective")) {
-      throw(sprintf("Detected a stray RSP 'unknown' directive (#%d): %s", idx, asRspString(item)));
+      throw(RspPreprocessingException(sprintf("Unknown preprocessing directive (#%d)", idx), item=item));
     }
 
 
@@ -1953,7 +1948,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # Unknown RSP directive?
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(item, "RspDirective")) {
-      throw(sprintf("Do not know how to process (unknown) RSP '%s' preprocessing directive (#%d): %s", unclass(item), idx, class(item)[1L]));
+      throw(RspPreprocessingException(sprintf("Do not know how to process an RSP '%s' preprocessing directive (#%d)", item[1L], idx), item=item));
     }
 
     verbose && exit(verbose);

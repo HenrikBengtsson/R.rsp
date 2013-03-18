@@ -14,8 +14,8 @@
   RELEASE OR DEVEL?
   ARTICLE OR SLIDES?
   -------------------------------------------------------------------%>
-<%@define docVersion="${'R.rsp/vignettes/docVersion'}" default=""%>
-<%@define docMode="${'R.rsp/vignettes/docMode'}" default="article"%>
+<%@string docVersion="${'R.rsp/vignettes/docVersion'}" default=""%>
+<%@string docMode="${'R.rsp/vignettes/docMode'}" default="article"%>
 <%@ifeq docMode = "slides"%>
 \documentclass[a5paper,12pt,landscape]{article}
 <%@else%>

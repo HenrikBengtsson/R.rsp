@@ -43,6 +43,7 @@ setConstructorS3("RspDirective", function(value=character(), ...) {
 # @synopsis
 #
 # \arguments{
+#   \item{condition}{A @character specifying the condition to be tested.}
 #   \item{...}{Not used.}
 # }
 #
@@ -65,11 +66,11 @@ setMethodS3("requireAttributes", "RspDirective", function(this, names, condition
 
   if (condition == "all") {
     if (!all(ok)) {
-      throw(sprintf("RSP '%s' directive lacks one or more required attributes (%s): %s", this[1L], paste(sQuote(names[!ok]), collapse=", "), asRspString(this)));
+      throw(RspPreprocessingException(sprintf("One or more required attributes (%s) are missing", paste(sQuote(names[!ok]), collapse=", ")), item=this));
     }
   } else if (condition == "any") {
     if (!any(ok)) {
-      throw(sprintf("RSP '%s' directive must have at least one of the required attributes (%s): %s", this[1L], paste(sQuote(names[!ok]), collapse=", "), asRspString(this)));
+      throw(RspPreprocessingException(sprintf("At least one of the required attributes (%s) must be given",  paste(sQuote(names[!ok]), collapse=", ")), item=this));
     }
   }
 
@@ -593,19 +594,14 @@ setMethodS3("getWrap", "RspIncludeDirective", function(directive, ...) {
 #
 # @keyword internal
 #*/###########################################################################
-setConstructorS3("RspEvalDirective", function(value="eval", attributes=list(), ...) {
-  # Argument 'attributes':
-  if (!missing(attributes)) {
-    keys <- names(attributes);
-    if (!any(is.element(c("file", "text"), keys))) {
-      throw("Either attribute 'file' or 'text' for the RSP 'eval' directive must be given: ", hpaste(keys));
-    }
-
-    # Default programming language is "R".
-    if (is.null(attributes$language)) attributes$language <- "R";
+setConstructorS3("RspEvalDirective", function(value="eval", ...) {
+  this <- extend(RspDirective(value, attributes=attributes, ...), "RspEvalDirective");
+  if (!missing(value)) {
+    requireAttributes(this, names=c("file", "text"), condition="any");
+    lang <- getAttribute(this, default="R");
+    this <- setAttribute(this, "language", lang);
   }
-
-  extend(RspDirective(value, attributes=attributes, ...), "RspEvalDirective")
+  this;
 })
 
 
@@ -800,7 +796,7 @@ setConstructorS3("RspUnknownDirective", function(value="unknown", ...) {
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspErrorDirective", function(value="error", ...) {
-  extend(RspDirective(value, ...), "RspErrorDirective")
+  extend(RspDirective(value, ...), "RspErrorDirective");
 })
 
 
