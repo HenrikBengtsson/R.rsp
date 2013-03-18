@@ -772,6 +772,39 @@ setConstructorS3("RspUnknownDirective", function(value="unknown", ...) {
 
 
 
+###########################################################################/**
+# @RdocClass RspErrorDirective
+#
+# @title "The RspErrorDirective class"
+#
+# \description{
+#  @classhierarchy
+#
+#  An RspErrorDirective is an @see "RspDirective" that generates an
+#  RSP preprocessing error (if processed).
+# }
+# 
+# @synopsis
+#
+# \arguments{
+#   \item{value}{A @character string.}
+#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
+# }
+#
+# \section{Fields and Methods}{
+#  @allmethods
+# }
+# 
+# @author
+#
+# @keyword internal
+#*/###########################################################################
+setConstructorS3("RspErrorDirective", function(value="error", ...) {
+  extend(RspDirective(value, ...), "RspErrorDirective")
+})
+
+
+
 ##############################################################################
 # HISTORY:
 # 2013-03-15

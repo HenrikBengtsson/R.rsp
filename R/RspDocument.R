@@ -1436,7 +1436,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     if (inherits(item, "RspText")) {
       # Drop empty lines?
       if (nbrOfEmptyTextLinesToDrop != 0L) {
-        text <- getContent(item);
+        content <- getContent(item);
 
         count <- nbrOfEmptyTextLinesToDrop;
 
@@ -1445,10 +1445,10 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
           verbose && cat(verbose, "Number of empty lines to drop from the end: ", -count);
           # Count max number of empty rows
           patternR <- "([ \t\v]*(\n|\r|\r\n))*";
-          posT <- regexpr(patternR, text);
+          posT <- regexpr(patternR, content);
           if (posT == 1L) {
             nT <- attr(posT, "match.length");
-            bfrT <- substring(text, first=1L, last=nT);
+            bfrT <- substring(content, first=1L, last=nT);
             bfrT <- gsub("[ \t\v]*", "", bfrT);
             bfrT <- gsub("\r\n", "\n", bfrT);
             max <- nchar(bfrT);
@@ -1476,9 +1476,9 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
           patternR <- sprintf("([ \t\v]*(\n|\r|\r\n))%s", patternC);
 
           # Drop empty lines
-          text <- sub(patternR, "", text);
+          content <- sub(patternR, "", content);
           # Update RspText object
-          item2 <- text;
+          item2 <- content;
           class(item2) <- class(item);
           object[[idx]] <- item2;
         }
@@ -1513,7 +1513,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       attrs <- getNameContentDefaultAttributes(item);
       name <- attrs$name;
       if (is.null(name)) {
-        throw(sprintf("RSP '%s' preprocessing directive (#%d) requires attribute 'name': %s", item[1L], idx, asRspString(item)));
+        throw(RspPreprocessingException("Missing attribute 'name'", item=item));
       }
       value <- attrs$value;
 
@@ -1534,7 +1534,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         assign(name, value, envir=envir);
       } else if (!is.null(name) && is.null(value)) {
         if (!exists(name, envir=envir, inherits=FALSE)) {
-          throw(sprintf(sprintf("RSP '%s' directive requests non-assigned variable ('%s'): %s", item[1L], name, asRspString(item))));
+          throw(RspPreprocessingException(sprintf("No such variable ('%s')", name), item=item));
         }
         value <- get(name, envir=envir);
         # Coerce value
@@ -1559,49 +1559,6 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # RspDefineDirective => ...
-    # <@define name="<name>" content="<content>"%>
-    # <@define name="<name>" content="<content>" default="<default>"%>
-    # <@define <name>="<content>"%>
-    # <@define <name>="<content>" default="<default>"%>
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    if (inherits(item, "RspDefineDirective")) {
-      attrs <- getNameContentDefaultAttributes(item);
-      name <- attrs$name;
-      value <- attrs$value;
-
-      if (!is.null(name) && !is.null(value)) {
-        metadataT <- content;
-        names(metadataT) <- name;
-      } else if (is.null(name) && !is.null(content)) {
-        lang <- getAttribute(item, "language");
-        if (is.null(lang)) {
-          throw(sprintf("RSP 'meta' directive requires attribute 'language' to be specified when parsing metadata from 'content': %s", asRspString(item)));
-        }
-        if (lang == "R-vignette") {
-          metadataT <- parseRVignetteMetadata(content);
-        } else {
-          throw(sprintf("RSP 'meta' directive specifies an unknown 'language' ('%s'): %s", lang, asRspString(item)));
-        }
-      } else if (!is.null(name) && is.null(content)) {
-        content <- metadata[[name]];
-        if (is.null(content)) {
-          throw(sprintf("RSP 'meta' directive requests non-assigned metadata ('%s'): %s", name, asRspString(item)));
-        }
-        res <- RspText(content, attrs=getAttributes(object));
-      }
-
-      assign(name, value, envir=envir);
-  
-      # Drop RSP construct
-      object[[idx]] <- NA;
-
-      verbose && exit(verbose);
-      next;
-    } # RspDefineDirective
-
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # RspMetaDirective => ...
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(item, "RspMetaDirective")) {
@@ -1619,17 +1576,17 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       } else if (is.null(name) && !is.null(content)) {
         lang <- getAttribute(item, "language");
         if (is.null(lang)) {
-          throw(sprintf("RSP 'meta' directive requires attribute 'language' to be specified when parsing metadata from 'content': %s", asRspString(item)));
+          throw(RspPreprocessingException("Attribute 'language' must be specified when parsing metadata from 'content'", item=item));
         }
         if (lang == "R-vignette") {
           metadataT <- parseRVignetteMetadata(content);
         } else {
-          throw(sprintf("RSP 'meta' directive specifies an unknown 'language' ('%s'): %s", lang, asRspString(item)));
+          throw(RspPreprocessingException(sprintf("Unknown 'language' ('%s')", lang), item=item));
         }
       } else if (!is.null(name) && is.null(content)) {
         content <- metadata[[name]];
         if (is.null(content)) {
-          throw(sprintf("RSP 'meta' directive requests non-assigned metadata ('%s'): %s", name, asRspString(item)));
+          throw(RspPreprocessingException(sprintf("No such metadata variable ('%s')", name), item=item));
         }
         res <- RspText(content, attrs=getAttributes(object));
       }
@@ -1884,8 +1841,21 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(item, "RspIfDirective")) {
       test <- getAttribute(item, "test");
-      attrs <- getNameContentDefaultAttributes(item, known="test");
+      attrs <- getNameContentDefaultAttributes(item, known=c("test", "negate"));
       name <- attrs$name;
+
+      # Special case <%@if name="<logical>"%>
+      if (!hasAttribute(item, "test")) {
+        if (!exists(name, envir=envir)) {
+          throw(sprintf("Failed to processes RSP '%s' directive because variable (%s) does not exist: %s", item[1L], name, asRspString(item)));
+        }
+        value <- get(name, envir=envir);
+        if (is.logical(value)) {
+          test <- "equal-to";
+        } else {
+          throw(sprintf("Failed to processes RSP '%s' directive because the type of 'test' was not specified: %s", item[1L], asRspString(item)));
+        }
+      }
 
       result <- NA;
       if (test == "exists") {
@@ -1959,8 +1929,17 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
       verbose && exit(verbose);
       next;
-    } # RspIfeqDirective
+    } # RspIfDirective
   
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # RspErrorDirective => ...
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (inherits(item, "RspErrorDirective")) {
+      content <- getAttribute(item, "content");
+      throw(RspPreprocessingException(content, item=item));
+    } # RspErrorDirective
+
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Stray RSP 'unknown' directive?
