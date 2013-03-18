@@ -259,7 +259,7 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
         }
 
         # Read the attribute name
-        pos <- regexpr("^[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*", bfr);
+        pos <- regexpr("^[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9_]*", bfr);
         if (pos == -1L) {
           throw(Exception("Error when parsing attributes of RSP preprocessing directive. Expected an attribute name: ", code=sQuote(rspCode)));
         }
