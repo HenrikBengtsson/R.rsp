@@ -64,7 +64,7 @@ RspException(...)
 as.character, getCall, getCalls, getLastException, getMessage, getStackTrace, getWhen, print, printStackTrace, throw
 
  \bold{Methods inherited from error}:\cr
-as.character, throw
+as.character, throw, wrap
 
  \bold{Methods inherited from condition}:\cr
 abort, as.character, conditionCall, conditionMessage, print
