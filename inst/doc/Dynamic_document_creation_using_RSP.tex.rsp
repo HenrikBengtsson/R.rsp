@@ -132,7 +132,7 @@ In this document we introduce the RSP markup language and explain how it can be 
 
 RSP provides an easy, yet powerful and flexible way for generating reports and other documents in R.  With a single R command it is possible to compile an RSP-embedded LaTeX, Sweave or knitr document into a read-to-view PDF file to name a few examples.  As an example, we show how to produce this very document from an RSP-embedded LaTeX file.
 
-Furthermore, because RSP is a so called content-indepent markup language, it can be used to produce documents of any kind, e.g. plain text, LaTeX, Sweave, knitr, AsciiDoc, Markdown, HTML, XML, SVG, and even Javascript, R scripts and so on.  More over, with RSP it is possible to use literate programming constructs that are not possible in Sweave, e.g. looping over a mix of R source code and LaTeX text blocks.
+Furthermore, because RSP is a so called content-independent markup language, it can be used to produce documents of any kind, e.g. plain text, LaTeX, Sweave, knitr, AsciiDoc, Markdown, HTML, XML, SVG, and even Javascript, R scripts and so on.  More over, with RSP it is possible to use literate programming constructs that are not possible in Sweave, e.g. looping over a mix of R source code and LaTeX text blocks.
 \end{abstract}
 
 \keywords{<%@meta name="keywords"%>}
@@ -262,7 +262,7 @@ An RSP code expression may contain RSP comments (dropped) and RSP preprocessing 
 
 The simplest RSP document possible is a string that contains none of the above RSP constructs, just a single RSP text, which will be outputted "as is"\footnote{Except for escaped RSP start and end tags as explained in Section~\ref{RspEscape}.} in the outputted RSP product.
 %
-A slightly more ellaborate example is the RSP string
+A slightly more elaborate example is the RSP string
 \begin{rspVerbatim}
 "A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n"
 \end{rspVerbatim}
@@ -307,7 +307,7 @@ The number of prefix and suffix hyphens in an RSP comment must match, i.e. \code
 \end{remark}
 
 \begin{remark}
-As explained in Section~\ref{TrimmingWhitespace}, \emph{all} RSP constructs with a suffix hyphen causes any following whitespace including the first following line break to be trimmed, if and only if no other characters appear after the contruct.  This means that all RSP comments automatically trims such empty text.
+As explained in Section~\ref{TrimmingWhitespace}, \emph{all} RSP constructs with a suffix hyphen causes any following whitespace including the first following line break to be trimmed, if and only if no other characters appear after the construct.  This means that all RSP comments automatically trims such empty text.
 This explains why there are no empty lines after dropping the RSP comments in the above example.
 \end{remark}
 
@@ -678,14 +678,14 @@ It is possible to "import" this metadata information via \code{<\%@meta content=
 \end{escapeRspVerbatim}
 will import the three R \code{{\bs}Vignette\content{Name}\{\}} "commands" into RSP metadata variables 'title', 'keywords' and 'author'.  As illustrated, any content that is not recognizes as R vignette metadata, or is of unknown markup, is ignored, which means that it is possible to include "anything" part of the '\code{content}' attribute.
 Note that this construct will (i) import the metadata into the RSP document at the same time as (ii) the R vignette mechanism can utilize it.
-This elimates the need for reproducing the same information in the RSP source document.
+This eliminates the need for reproducing the same information in the RSP source document.
 
 
 \subsubsection{Preprocessing variables (\code{<\%\@string ...\%>})}
 In addition to metadata, it is possible to define, set and get custom variables available during the preprocessing of the RSP document.
 To set an RSP preprocessing \emph{string} variable, use directive \code{<\%@string name="\content{name}" content="\content{content}" default="\content{default}"\%>}, where '\code{default}' is optional and the value used if '\code{content}' is empty.
 To insert a preprocessing variable into the RSP output, use directive \code{<\%@string name="\content{name}"\%>}.
-There exist anlogue directives for \emph{numeric}, \emph{integer} and \emph{logical} variables.
+There exist analogue directives for \emph{numeric}, \emph{integer} and \emph{logical} variables.
 
 \begin{escapeRspVerbatim}
 <\%@string name="page\_format" content="article"\%>
@@ -769,7 +769,7 @@ Note that by combining the above aliases with the short format, one can write \c
 
 \subsubsection{Compiling a standalone RSP document from a preprocessed but not evaluated RSP document template}
 However convenient it is to use a modularized RSP document that reuses many different RSP subdocuments, it may be tedious to share such as document with others.  In order for someone else to compile the same RSP document, it is necessary to make sure all files being used are also shared with the receiver together with instructions where to put them.  Some of these files may only be included under certain conditions, making the just add to the overall clutter at the receiver's end.
- In such cases, it may be useful to produce \emph{a preprocessed but not yet evaluated RSP document} from the main RSP document.  Such an RSP document will not contain any preprocessing directives and in that sense be self-contained and easier to share.  It is also likely be easier for the reciever to follow.
+ In such cases, it may be useful to produce \emph{a preprocessed but not yet evaluated RSP document} from the main RSP document.  Such an RSP document will not contain any preprocessing directives and in that sense be self-contained and easier to share.  It is also likely be easier for the receiver to follow.
 To compile such a stand-alone RSP document, do:
 \begin{escapeRspVerbatim}
 > s <- rclean(file="random.txt.rsp")
