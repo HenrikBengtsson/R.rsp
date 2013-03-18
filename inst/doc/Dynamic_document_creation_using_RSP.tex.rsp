@@ -697,7 +697,7 @@ There exist analogue directives for \emph{numeric}, \emph{integer} and \emph{log
 For convenience, there is a short format for setting a variable, which is \code{<\%@string \content{name}="\content{content}"\%>}.
 
 
-\subsubsection{Conditional inclusion/exclusion}
+\subsubsection{Conditional inclusion/exclusion (\code{<\%@if ...\%>})}
 Using so called RSP 'if-then-else' preprocessing directives, it is possible to include (exclude) parts of an RSP source document such that they appear (do not appear) in the output RSP product. 
 The full syntax of an RSP 'if-then-else' variable is \code{<\%@if test="\content{test}" name="\content{variable}" content="\content{value}" negate="\content{logical}"\%>} \content{include} \code{<\%@else\%>} \content{exclude} \code{<\%@endif\%>}, where the \code{<\%@else\%>} statement is optional.  The argument '\code{test}' specifies the type of test to conduct, '\code{name}' the variable name to be tested, and '\code{content}' the value to compare the variable to.
 The '\code{negate}' argument is optional and specifies whether the result of the test should be negated or not.
