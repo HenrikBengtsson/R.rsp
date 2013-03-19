@@ -73,13 +73,16 @@ buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = 
         for (pkg in buildPkg)
             loadNamespace(pkg)
 
-
     # Get the vignette engine
-    engine <- vignetteEngine(engineName)
+    engine <- vignetteEngine(engineName, package=buildPkg)
 
     # Infer the vignette name
-    names <- sapply(engine$pattern, FUN = gsub, "", file)
+    names <- sapply(engine$pattern, FUN = sub, "", file)
     name <- basename(names[(names != file)][1L])
+
+    # A non-matching filename?
+    if (is.na(name))
+        stop("The vignette filename ", sQuote(file), " does not match any of the ", sQuote(paste(engine$package, engine$name, sep="::")), " engine's filename patterns (", paste(sQuote(engine$pattern), collapse=", "), ")")
 
     # Set working directory temporarily
     if (dir != ".") {
