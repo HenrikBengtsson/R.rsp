@@ -203,8 +203,11 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Update the header
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  metadata <- getMetadata(object);
   code <- NULL;
+##  code <- 'library("R.rsp")';
+
+  # Add metadata
+  metadata <- getMetadata(object);
   for (key in names(metadata)) {
      value <- metadata[[key]];
      value <- gsub('"', '\\"', value, fixed=TRUE);
