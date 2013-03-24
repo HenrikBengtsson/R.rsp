@@ -1,0 +1,225 @@
+<%@meta language="R-vignette" content="--------------------------------
+  DIRECTIVES FOR R:
+
+  %\VignetteIndexEntry{RSP Reference Card}
+  %\VignetteKeyword{RSP markup language, Quick Reference Card}
+  %\VignetteAuthor{Henrik Bengtsson}
+  %\VignetteEngine{R.rsp::rsp}
+--------------------------------------------------------------------"%>
+
+<% t0 <- Sys.time() %>
+
+
+<%-------------------------------------------------------------------
+  RELEASE OR DEVEL?
+  -------------------------------------------------------------------%>
+<%@string docVersion="${'R.rsp/vignettes/docVersion'}" default=""%>
+\documentclass[a4paper,10pt,landscape]{article}
+\usepackage[landscape]{geometry}
+\usepackage{multicol}
+
+<%-------------------------------------------------------------------
+  Assign PDF metadata
+  -------------------------------------------------------------------%>
+% PDF metadata
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdfauthor={<%@meta name="author"%>},
+  pdftitle={<%@meta name="title"%>},
+  pdfsubject={},
+  pdfkeywords={<%@meta name="keywords"%>},
+  pdfproducer={R.rsp v<%=R.rsp$version%> by <%=R.rsp$author%>}
+}
+
+\usepackage{xspace}
+\usepackage{xcolor}
+\usepackage{alltt}
+
+% Do not display section numbers
+\setcounter{secnumdepth}{0}
+
+<%-------------------------------------------------------------------
+  DOCUMENT MODE SPECIFIC SETTINGS
+  -------------------------------------------------------------------%>
+% Adjust margins
+\addtolength{\oddsidemargin}{-1.0in}	
+\addtolength{\evensidemargin}{-1.0in}	
+\addtolength{\textwidth}{2in}
+\addtolength{\topmargin}{-0.5in}	
+\addtolength{\textheight}{2in}
+
+\pagestyle{empty}
+
+\newcommand{\keywords}[1]{\footnotesize{\textbf{Keywords: }#1}\xspace}
+\newcommand{\pkg}[1]{\textsl{#1}\xspace}
+\newcommand{\code}[1]{\texttt{#1}\xspace}
+\newcommand{\content}[1]{$\langle${#1}$\rangle$}
+\newcommand{\bs}{$\backslash$}
+\newcommand{\lb}{\linebreak[0]}
+
+\newenvironment{remark}{\vspace{1.0ex}\hspace{-\parindent}\textbf{Remark:}}{\vspace{0.5ex}}
+
+\newenvironment{rspVerbatim}{\vspace{-\parskip}\begin{alltt}\color{blue}}{\end{alltt}}
+\newenvironment{escapeRspVerbatim}{\vspace{-\parskip}\begin{alltt}}{\end{alltt}}
+
+
+\title{<%@meta name="title"%><%@ifeq docVersion = "devel"%>*<%@endif%>}
+\author{<%@meta name="author"%>}
+\date{<%=format(as.Date(getDate(R.rsp)), format="%B %d, %Y")%>}
+
+\begin{document}
+%%\maketitle
+\section{RSP Markup Language}
+\small{
+An RSP document consists of text with RSP-embedded markup.
+When \emph{compiled}, independently of programming language,
+(i) comments are dropped,
+(ii) preprocessing directives are processed, and
+(iii) text and code expressions are translated into a code script.
+The translated code script can then be (iv) evaluated, which generates
+the output document, which in turn may be (v) postprocessed.
+%
+Examples (in R):
+(1) main.tex.rsp $\rightarrow$ (main.tex.R) $\rightarrow$ main.tex $\rightarrow$ main.pdf.
+(2) main.md.rsp $\rightarrow$ (main.md.R) $\rightarrow$ main.md $\rightarrow$ main.html.
+(3) main.Rmd.rsp $\rightarrow$ (main.Rmd.R) $\rightarrow$ main.html.
+}
+
+\subsection{Comments \& Escapes}
+\small{
+Comments can be used to exclude code expressions and preprocessing directives.
+\\}
+
+\begin{tabular}{p{37ex}p{140ex}}
+\textit{Markup} & \textit{Description} \\
+\hline
+%%
+ \code{<\%--\content{anything}--\%>}
+<%-- \code{<\%---\content{anything}---\%>} --%>
+&
+ Drops \content{anything}.
+ Number ($\geq 2$) of hyphens must match.
+ Comments can be nested, if different number of hyphens. \\
+%%
+ \code{<\%-\%>},
+ \code{<\%--\%>},
+ $\ldots$
+&
+"Empty" comments. \\
+\hline
+%%
+ \code{<\%\%} and \code{\%\%>}
+&
+ Inserts  \code{<\%} and \code{\%>}. \\
+\end{tabular}
+
+
+\subsection{Preprocessing directives}
+\small{
+Preprocessing directives are independent of programming language used.
+They are applied after dropping comments and before translating text and code expressions to a code script. 
+It is not possible to tell from the translated code script whether preprocessing directives have been used or not, nor are their variables accessible.
+\\}
+
+\begin{tabular}{p{37ex}p{140ex}}
+\textit{Markup} & \textit{Description} \\
+%%
+\hline
+ \code{<\%@include file="\content{file|URL}"\%>} &
+ Inserts the content of file \content{file$|$URL} into the document before RSP-to-script translation. \\
+%%
+\hline
+ \code{<\%@meta \content{name}="\content{content}"\%>} &
+ Assigns \content{content} to metadata variable \content{name}. \\
+%%
+ \code{<\%@meta name="\content{name}"\%>} &
+ Inserts the content of metadata variable \content{name}. \\
+%%
+\hline
+ \code{<\%@\content{type} \content{name}="\content{content}"\%>} &
+ Assigns \content{content} to preprocessing variable \content{name} of type \content{type}. 
+ Supported types are 'string', 'numeric', 'integer' and 'logical'.\\
+%%
+ \code{<\%@\content{type} name="\content{name}"\%>} &
+ Inserts the content of preprocessing variable \content{name}. \\
+%%
+\hline
+ \code{<\%@ifeq \content{name}"="\content{content}"\%>} \linebreak
+ \content{incl}~\code{<\%@else\%>}~\content{excl} 
+ \code{<\%@endif\%>} &
+ If preprocessing variable \content{name} \emph{equals} \content{content},
+ then \content{incl} is inserted otherwise \content{excl}.
+ \code{<\%@else\%>} is optional.  %% \linebreak
+ \code{<\%@ifneq ...\%>} negates the test. \\
+\end{tabular}
+
+
+
+\subsection{Code expressions}
+\small{
+Code expressions may contains incomplete code expressions.
+These are evaluated only after translation. 
+They can be of any programming language as long as there is a code
+translator for it.
+Code expressions have no access to preprocessing variables.
+Output written to standard output is inserted into the final document.
+\\}
+
+\begin{tabular}{p{37ex}p{140ex}}
+\textit{Markup} & \textit{Description} \\
+%%
+\hline
+%%
+ \code{<\%\content{code}\%>} &
+ Inserts \content{code} into the translated code script. \\
+%%
+ \code{<\%=\content{code}\%>} &
+ Inserts \content{code} and its returned value into the translated code script. \\
+\end{tabular}
+
+\subsection{Example (in R)}
+\footnotesize%
+%%%
+\parbox[t]{46ex}{
+\textbf{RSP~document:}\\%
+\code{%
+<\%meta title="Example\%>\linebreak
+Title:~<\%meta name="title"\%>\linebreak
+A~random~number:~<\%=sample(100,1)\%>
+}}
+\parbox[t]{6ex}{$\rightarrow$}%%
+\parbox[t]{46ex}{
+\textbf{Preprocessed~RSP~document:}\\%
+\code{%
+Title:~Example\linebreak
+A~random~number:~<\%=sample(100,1)\%>
+}}
+\parbox[t]{6ex}{$\rightarrow$}%%
+\parbox[t]{30ex}{
+\textbf{Translated~code~script:}\\%
+\code{%
+cat('Title:~Example\linebreak
+A~random~number:~')\linebreak
+cat(sample(100,1))
+}}
+\parbox[t]{6ex}{$\rightarrow$}%%
+\parbox[t]{27ex}{
+\textbf{Output document:}\\%
+\code{%
+Title:~Example\linebreak
+A~random~number:~42\linebreak
+}}
+
+
+
+<%-------------------------------------------------------------------
+  APPENDIX
+  -------------------------------------------------------------------%>
+<%---
+\clearpage
+\section*{Appendix}
+This report was automatically generated using \code{rfile()} of the R.rsp package.
+Total processing time after RSP-to-R translation was <%=dt <- round(Sys.time()-t0, digits=2)%> <%=attr(dt, "units")%>.
+---%>
+
+\end{document}
