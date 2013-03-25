@@ -1,10 +1,11 @@
 <%@meta language="R-vignette" content="--------------------------------
   DIRECTIVES FOR R:
 
-  %\VignetteIndexEntry{RSP Reference Card}
+  %\VignetteIndexEntry{RSP Markup Language - Reference Card}
   %\VignetteKeyword{RSP markup language, Quick Reference Card}
   %\VignetteAuthor{Henrik Bengtsson}
   %\VignetteEngine{R.rsp::rsp}
+  %\VignetteTangle{FALSE}
 --------------------------------------------------------------------"%>
 
 <% t0 <- Sys.time() %>
@@ -69,7 +70,7 @@
 
 \begin{document}
 %%\maketitle
-\section{RSP Markup Language}
+\section{<%@meta name="title"%>}
 \small{
 An RSP document consists of text with RSP-embedded markup.
 When \emph{compiled}, independently of programming language,
@@ -87,7 +88,7 @@ Examples (in R):
 
 \subsection{Comments \& Escapes}
 \small{
-Comments can be used to exclude code expressions and preprocessing directives.
+Comments can be used to exclude text, code expressions and preprocessing directives.
 \\}
 
 \begin{tabular}{p{37ex}p{140ex}}
@@ -118,7 +119,7 @@ Comments can be used to exclude code expressions and preprocessing directives.
 \small{
 Preprocessing directives are independent of programming language used.
 They are applied after dropping comments and before translating text and code expressions to a code script. 
-It is not possible to tell from the translated code script whether preprocessing directives have been used or not, nor are their variables accessible.
+It is not possible to tell from the translated code script whether preprocessing directives have been used or not, nor are their variables accessible (except metadata).
 \\}
 
 \begin{tabular}{p{37ex}p{140ex}}
@@ -157,10 +158,7 @@ It is not possible to tell from the translated code script whether preprocessing
 
 \subsection{Code expressions}
 \small{
-Code expressions may contains incomplete code expressions.
-These are evaluated only after translation. 
-They can be of any programming language as long as there is a code
-translator for it.
+Code expressions are evaluated \emph{after} translation. They may contains incomplete code expressions and can be of any programming language as long as there is a code translator for it.
 Code expressions have no access to preprocessing variables.
 Output written to standard output is inserted into the final document.
 \\}
@@ -178,37 +176,47 @@ Output written to standard output is inserted into the final document.
 \end{tabular}
 
 \subsection{Example (in R)}
+<%@string file="incl/example.txt.rsp"%>
 \footnotesize%
 %%%
-\parbox[t]{46ex}{
-\textbf{RSP~document:}\\%
-\code{%
-<\%meta title="Example\%>\linebreak
-Title:~<\%meta name="title"\%>\linebreak
-A~random~number:~<\%=sample(100,1)\%>
-}}
+\begin{minipage}[t]{46ex}
+\textbf{RSP~document:}%
+\begin{verbatim}
+<%@include file="${file}" type="text/plain"%>
+\end{verbatim}
+\end{minipage}
+%%%
 \parbox[t]{6ex}{$\rightarrow$}%%
-\parbox[t]{46ex}{
-\textbf{Preprocessed~RSP~document:}\\%
-\code{%
-Title:~Example\linebreak
-A~random~number:~<\%=sample(100,1)\%>
-}}
+%%%
+\begin{minipage}[t]{46ex}
+\textbf{Preprocessed~RSP~document:}%
+\begin{verbatim}
+<%@include file="${file}" type="application/x-rsp; until=expressions"%>
+\end{verbatim}
+\end{minipage}
+%%%
 \parbox[t]{6ex}{$\rightarrow$}%%
-\parbox[t]{30ex}{
-\textbf{Translated~code~script:}\\%
-\code{%
-cat('Title:~Example\linebreak
-A~random~number:~')\linebreak
-cat(sample(100,1))
-}}
+%%%
+\begin{minipage}[t]{46ex}
+\textbf{Translated~code~script:}%
+\begin{verbatim}
+cat('Title: Example
+Counting:')
+for (i in 1:3) {
+  cat(' ')
+  cat(i)
+}
+\end{verbatim}
+\end{minipage}
+%%%
 \parbox[t]{6ex}{$\rightarrow$}%%
-\parbox[t]{27ex}{
-\textbf{Output document:}\\%
-\code{%
-Title:~Example\linebreak
-A~random~number:~42\linebreak
-}}
+%%%
+\begin{minipage}[t]{46ex}
+\textbf{Output document:}%
+\begin{verbatim}
+<%@include file="${file}"%>
+\end{verbatim}
+\end{minipage}
 
 
 
