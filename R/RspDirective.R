@@ -7,10 +7,10 @@
 #  @classhierarchy
 #
 #  An RspDirective is an @see "RspConstruct" that represents an
-#  RSP preprocesing directive of format \code{<\%@ ... \%>}.
+#  RSP preprocesing directive of format \code{<\% ... \%>}.
 #  The directive is independent of the underlying programming language.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -21,7 +21,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -128,7 +128,7 @@ setMethodS3("asRspString", "RspDirective", function(object, ...) {
 
 ###########################################################################/**
 # @RdocClass RspMetaDirective
-#
+# 
 # @title "The RspMetaDirective class"
 #
 # \description{
@@ -136,7 +136,7 @@ setMethodS3("asRspString", "RspDirective", function(object, ...) {
 #
 #  An RspMetaDirective is an @see "RspDirective" representing RSP metadata.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -147,7 +147,7 @@ setMethodS3("asRspString", "RspDirective", function(object, ...) {
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -160,7 +160,7 @@ setConstructorS3("RspMetaDirective", function(value="meta", ...) {
 
 ###########################################################################/**
 # @RdocClass RspUnparsedDirective
-#
+# 
 # @title "The RspUnparsedDirective class"
 #
 # \description{
@@ -170,7 +170,7 @@ setConstructorS3("RspMetaDirective", function(value="meta", ...) {
 #  been parsed for its class and content.  After @see "parse":ing such
 #  an object, the class of this RSP directive will be known.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -181,7 +181,7 @@ setConstructorS3("RspMetaDirective", function(value="meta", ...) {
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -216,17 +216,17 @@ setConstructorS3("RspUnparsedDirective", function(value="unparsed", ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   parseAttributes <- function(rspCode, known=mandatory, mandatory=NULL, ...) {
     bfr <- rspCode;
-    
+
     # Argument 'known':
     known <- unique(union(known, mandatory));
-  
+
     # Remove all leading white spaces
     pos <- regexpr("^[ \t\n\r]+", bfr);
     len <- attr(pos, "match.length");
@@ -267,7 +267,7 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
         len <- attr(pos, "match.length");
         name <- substring(bfr, first=1L, last=len);
         bfr <- substring(bfr, first=len+1L);
-    
+
         # Read the '=' with optional white spaces around it
         pos <- regexpr("^[ \t\n\r]*=[ \t\n\r]*", bfr);
         if (pos == -1L) {
@@ -275,7 +275,7 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
         }
         len <- attr(pos, "match.length");
         bfr <- substring(bfr, first=len+1L);
-    
+
         # Read the value with mandatory quotation marks around it
         pos <- regexpr("^\"[^\"]*\"", bfr);
         if (pos == -1L) {
@@ -292,10 +292,10 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
       }
     } # if (nchar(bfr) > 0L)
 
-    # Check for duplicated attributes  
+    # Check for duplicated attributes
     if (length(names(attrs)) != length(unique(names(attrs))))
         throw(Exception("Duplicated attributes in RSP preprocessing directive.", code=sQuote(rspCode)));
-  
+
     # Check for unknown attributes
     if (!is.null(known)) {
       nok <- which(is.na(match(names(attrs), known)));
@@ -304,7 +304,7 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
         throw(Exception("Unknown attribute(s) in RSP preprocessing directive: ", nok, code=sQuote(rspCode)));
       }
     }
-  
+
     # Check for missing mandatory attributes
     if (!is.null(mandatory)) {
       nok <- which(is.na(match(mandatory, names(attrs))));
@@ -313,7 +313,7 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
         throw(Exception("Missing attribute(s) in RSP preprocessing directive: ", nok, code=sQuote(rspCode)));
       }
     }
-  
+
     # Return parsed attributes.
     attrs;
   } # parseAttributes()
@@ -397,7 +397,7 @@ setMethodS3("asRspString", "RspUnparsedDirective", function(object, ...) {
 
 ###########################################################################/**
 # @RdocClass RspIncludeDirective
-#
+# 
 # @title "The RspIncludeDirective class"
 #
 # \description{
@@ -406,21 +406,21 @@ setMethodS3("asRspString", "RspUnparsedDirective", function(object, ...) {
 #  An RspIncludeDirective is an @see "RspDirective" that causes the
 #  RSP parser to include (and parse) an external RSP file.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
 #   \item{value}{A @character string.}
-#   \item{attributes}{A named @list, which must contain either 
+#   \item{attributes}{A named @list, which must contain either
 #      a 'file' or a 'text' element.}
-#   \item{...}{Optional arguments passed to the constructor 
+#   \item{...}{Optional arguments passed to the constructor
 #              of @see "RspDirective".}
 # }
 #
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -459,7 +459,7 @@ setConstructorS3("RspIncludeDirective", function(value="include", ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getFile", "RspIncludeDirective", function(directive, ...) {
   getAttribute(directive, "file");
 })
@@ -488,7 +488,7 @@ setMethodS3("getFile", "RspIncludeDirective", function(directive, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getContent", "RspIncludeDirective", function(directive, ...) {
   getAttribute(directive, "content");
 })
@@ -518,7 +518,7 @@ setMethodS3("getContent", "RspIncludeDirective", function(directive, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getVerbatim", "RspIncludeDirective", function(directive, ...) {
   res <- getAttribute(directive, "verbatim", default=FALSE);
   res <- as.logical(res);
@@ -551,7 +551,7 @@ setMethodS3("getVerbatim", "RspIncludeDirective", function(directive, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getWrap", "RspIncludeDirective", function(directive, ...) {
   res <- getAttribute(directive, "wrap");
   if (!is.null(res)) {
@@ -565,7 +565,7 @@ setMethodS3("getWrap", "RspIncludeDirective", function(directive, ...) {
 
 ###########################################################################/**
 # @RdocClass RspEvalDirective
-#
+# 
 # @title "The RspEvalDirective class"
 #
 # \description{
@@ -575,27 +575,27 @@ setMethodS3("getWrap", "RspIncludeDirective", function(directive, ...) {
 #  RSP parser to evaluate a piece of R code (either in a text string
 #  or in a file) as it is being parsed.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
 #   \item{value}{A @character string.}
-#   \item{attributes}{A named @list, which must contain a 'file' 
+#   \item{attributes}{A named @list, which must contain a 'file'
 #      or a 'text' element.}
-#   \item{...}{Optional arguments passed to the constructor 
+#   \item{...}{Optional arguments passed to the constructor
 #              of @see "RspDirective".}
 # }
 #
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspEvalDirective", function(value="eval", ...) {
-  this <- extend(RspDirective(value, attributes=attributes, ...), "RspEvalDirective");
+  this <- extend(RspDirective(value, ...), "RspEvalDirective");
   if (!missing(value)) {
     requireAttributes(this, names=c("file", "text"), condition="any");
     lang <- getAttribute(this, default="R");
@@ -629,7 +629,7 @@ setConstructorS3("RspEvalDirective", function(value="eval", ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getFile", "RspEvalDirective", function(directive, ...) {
   getAttribute(directive, "file");
 })
@@ -659,7 +659,7 @@ setMethodS3("getFile", "RspEvalDirective", function(directive, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getContent", "RspEvalDirective", function(directive, ...) {
   getAttribute(directive, "content");
 })
@@ -667,7 +667,7 @@ setMethodS3("getContent", "RspEvalDirective", function(directive, ...) {
 
 ###########################################################################/**
 # @RdocClass RspPageDirective
-#
+# 
 # @title "The RspPageDirective class"
 #
 # \description{
@@ -676,7 +676,7 @@ setMethodS3("getContent", "RspEvalDirective", function(directive, ...) {
 #  An RspPageDirective is an @see "RspDirective" that annotates the
 #  content of the RSP document, e.g. the content type.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -687,7 +687,7 @@ setMethodS3("getContent", "RspEvalDirective", function(directive, ...) {
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -722,7 +722,7 @@ setConstructorS3("RspPageDirective", function(value="page", ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getType", "RspPageDirective", function(directive, default=NA, as=c("text", "IMT"), ...) {
   as <- match.arg(as);
   res <- getAttribute(directive, "type", default=as.character(default));
@@ -738,7 +738,7 @@ setMethodS3("getType", "RspPageDirective", function(directive, default=NA, as=c(
 
 ###########################################################################/**
 # @RdocClass RspUnknownDirective
-#
+# 
 # @title "The RspUnknownDirective class"
 #
 # \description{
@@ -746,7 +746,7 @@ setMethodS3("getType", "RspPageDirective", function(directive, default=NA, as=c(
 #
 #  An RspUnknownDirective is an @see "RspDirective" that is unknown.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -757,7 +757,7 @@ setMethodS3("getType", "RspPageDirective", function(directive, default=NA, as=c(
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -770,7 +770,7 @@ setConstructorS3("RspUnknownDirective", function(value="unknown", ...) {
 
 ###########################################################################/**
 # @RdocClass RspErrorDirective
-#
+# 
 # @title "The RspErrorDirective class"
 #
 # \description{
@@ -779,7 +779,7 @@ setConstructorS3("RspUnknownDirective", function(value="unknown", ...) {
 #  An RspErrorDirective is an @see "RspDirective" that generates an
 #  RSP preprocessing error (if processed).
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -790,7 +790,7 @@ setConstructorS3("RspUnknownDirective", function(value="unknown", ...) {
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -803,6 +803,8 @@ setConstructorS3("RspErrorDirective", function(value="error", ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-03-24
+# o BUG FIX: RspEvalDirective() would add erroneous attributes.
 # 2013-03-15
 # o Added requireAttributes() to RspDirective.
 # o Added RSP meta directive.

@@ -10,7 +10,7 @@
 #  individual @see "RspExpression":s into source code of a specific
 #  programming language.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -21,7 +21,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -77,7 +77,7 @@ setMethodS3("getLanguage", "RspSourceCodeFactory", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to the language-specific 
+#   \item{...}{Arguments passed to the language-specific
 #              @see "RspSourceCode" constructor.}
 # }
 #
@@ -99,7 +99,7 @@ setMethodS3("makeSourceCode", "RspSourceCodeFactory", function(this, code, ...) 
 
   # Get source code header, body, and footer.
   code <- getCompleteCode(this, code, ...);
-  code <- c(code$header, "## RSP document", code$body, code$footer);
+  code <- c(code$header, "\n## RSP source code script", code$body, code$footer);
 
   # Made code object
   code <- clazz(code, ...);
@@ -168,7 +168,7 @@ setMethodS3("exprToCode", "RspSourceCodeFactory", abstract=TRUE);
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getCompleteCode", "RspSourceCodeFactory", function(this, object, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -208,7 +208,7 @@ setMethodS3("getCompleteCode", "RspSourceCodeFactory", function(this, object, ..
 # @synopsis
 #
 # \arguments{
-#   \item{expr}{An @see "RspDocument" that has been preprocessed 
+#   \item{expr}{An @see "RspDocument" that has been preprocessed
 #               and flattened.}
 #   \item{...}{Not used.}
 # }
@@ -272,7 +272,8 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
   }
   code <- unlist(code, use.names=FALSE);
 
-  makeSourceCode(object, code, type=getType(doc), metadata=getMetadata(doc));
+  code <- makeSourceCode(object, code, type=getType(doc), metadata=getMetadata(doc));
+  code;
 }) # toSourceCode()
 
 

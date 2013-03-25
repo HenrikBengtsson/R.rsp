@@ -9,19 +9,19 @@
 #  An RspSourceCode object is a @character @vector holding RSP generated
 #  source code for a particular programming language.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
 #   \item{code}{@character @vector.}
-#   \item{...}{Additional arguments passed to the @see "RspProduct" 
+#   \item{...}{Additional arguments passed to the @see "RspProduct"
 #     constructor.}
 # }
 #
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -56,9 +56,10 @@ setConstructorS3("RspSourceCode", function(code=character(), ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("print", "RspSourceCode", function(x, ...) {
-  code <- paste(x, collapse="\n");
+  code <- x;
+  code <- paste(code, collapse="\n");
   cat(code);
   cat("\n");
 })
@@ -88,7 +89,7 @@ setMethodS3("print", "RspSourceCode", function(x, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("evaluate", "RspSourceCode", abstract=TRUE);
 
 
@@ -117,7 +118,7 @@ setMethodS3("evaluate", "RspSourceCode", abstract=TRUE);
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("tangle", "RspSourceCode", abstract=TRUE);
 
 

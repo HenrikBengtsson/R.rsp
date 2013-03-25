@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspSourceCodeFactory}
+\name{RspSourceCodeFactory}
 \docType{class}
 \alias{RspSourceCodeFactory}
 
 
- \title{The RspSourceCodeFactory class}
+\title{The RspSourceCodeFactory class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspSourceCodeFactory}\cr
 
 \code{character}\cr
@@ -29,22 +29,22 @@ extends character\cr
 
 
 
-  An RspSourceCodeFactory is language-specific engine that knows how to translate
-  individual \code{\link{RspExpression}}:s into source code of a specific
-  programming language.
- }
+ An RspSourceCodeFactory is language-specific engine that knows how to translate
+ individual \code{\link{RspExpression}}:s into source code of a specific
+ programming language.
+}
 
- \usage{
+\usage{
 RspSourceCodeFactory(language=NA, ...)
 }
 
- \arguments{
-   \item{language}{A \code{\link[base]{character}} string.}
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{language}{A \code{\link[base]{character}} string.}
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:exprToCode.RspSourceCodeFactory]{exprToCode}} \tab Translates an RspExpression into source code.\cr
  \tab \code{\link[R.rsp:getCompleteCode.RspSourceCodeFactory]{getCompleteCode}} \tab Gets the source code header, body, and footer.\cr
@@ -57,9 +57,10 @@ RspSourceCodeFactory(language=NA, ...)
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
 
- }
 
- \author{Henrik Bengtsson}
+}
+
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

@@ -14,7 +14,6 @@
 <%-------------------------------------------------------------------
   RELEASE OR DEVEL?
   -------------------------------------------------------------------%>
-<%@string docVersion="${'R.rsp/vignettes/docVersion'}" default=""%>
 \documentclass[a4paper,10pt,landscape]{article}
 \usepackage[landscape]{geometry}
 \usepackage{multicol}
@@ -64,9 +63,9 @@
 \newenvironment{escapeRspVerbatim}{\vspace{-\parskip}\begin{alltt}}{\end{alltt}}
 
 
-\title{<%@meta name="title"%><%@ifeq docVersion = "devel"%>*<%@endif%>}
-\author{<%@meta name="author"%>}
-\date{<%=format(as.Date(getDate(R.rsp)), format="%B %d, %Y")%>}
+%%\title{<%@meta name="title"%>}
+%%\author{<%@meta name="author"%>}
+%%\date{<%=format(as.Date(getDate(R.rsp)), format="%B %d, %Y")%>}
 
 \begin{document}
 %%\maketitle
@@ -159,7 +158,7 @@ It is not possible to tell from the translated code script whether preprocessing
 \subsection{Code expressions}
 \small{
 Code expressions are evaluated \emph{after} translation. They may contains incomplete code expressions and can be of any programming language as long as there is a code translator for it.
-Code expressions have no access to preprocessing variables.
+Code expressions have no access to preprocessing variables (except metadata).
 Output written to standard output is inserted into the final document.
 \\}
 
@@ -177,9 +176,9 @@ Output written to standard output is inserted into the final document.
 
 \subsection{Example (in R)}
 <%@string file="incl/example.txt.rsp"%>
-\footnotesize%
 %%%
-\begin{minipage}[t]{46ex}
+\begin{minipage}[t]{44ex}
+\footnotesize%
 \textbf{RSP~document:}%
 \begin{verbatim}
 <%@include file="${file}" type="text/plain"%>
@@ -188,7 +187,8 @@ Output written to standard output is inserted into the final document.
 %%%
 \parbox[t]{6ex}{$\rightarrow$}%%
 %%%
-\begin{minipage}[t]{46ex}
+\begin{minipage}[t]{44ex}
+\footnotesize%
 \textbf{Preprocessed~RSP~document:}%
 \begin{verbatim}
 <%@include file="${file}" type="application/x-rsp; until=expressions"%>
@@ -197,37 +197,32 @@ Output written to standard output is inserted into the final document.
 %%%
 \parbox[t]{6ex}{$\rightarrow$}%%
 %%%
-\begin{minipage}[t]{46ex}
+\begin{minipage}[t]{44ex}
+\footnotesize%
 \textbf{Translated~code~script:}%
 \begin{verbatim}
-cat('Title: Example
-Counting:')
-for (i in 1:3) {
-  cat(' ')
-  cat(i)
-}
+<%@string name="doc" file="${file}"%>
+<%@eval language="R" content="
+## This utilizes the RSP 'eval' preprocessing directive to
+## translate the example into R code.
+code <- rscript('${doc}');
+code <- code[-(1:grep('## RSP source code script', code))];
+code <- gsub('.ro', 'cat', code, fixed=TRUE);
+code <- paste(code, collapse='\n');
+"%>
+<%@string name="code"%>
 \end{verbatim}
 \end{minipage}
 %%%
 \parbox[t]{6ex}{$\rightarrow$}%%
 %%%
-\begin{minipage}[t]{46ex}
+\begin{minipage}[t]{44ex}
+\footnotesize%
 \textbf{Output document:}%
 \begin{verbatim}
 <%@include file="${file}"%>
 \end{verbatim}
 \end{minipage}
 
-
-
-<%-------------------------------------------------------------------
-  APPENDIX
-  -------------------------------------------------------------------%>
-<%---
-\clearpage
-\section*{Appendix}
-This report was automatically generated using \code{rfile()} of the R.rsp package.
-Total processing time after RSP-to-R translation was <%=dt <- round(Sys.time()-t0, digits=2)%> <%=attr(dt, "units")%>.
----%>
-
+\hfill{\footnotesize R.rsp v<%=R.rsp$version%> (<%=R.rsp$date%>)}
 \end{document}

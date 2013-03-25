@@ -358,7 +358,7 @@ evaluates the code such that \code{n == 3} and \code{type == "horse"} afterward.
 
 Note that with this construct it is possible to insert incomplete code expression and completed it in a later RSP code block.  For example,
 \begin{rspVerbatim}
-Counting:<\% for (i in 1:3) \{ \%> <\%=ii\%><\% \} \%>.
+Counting:<\% for (i in 1:3) \{ \%> <\%=i\%><\% \} \%>.
 \end{rspVerbatim}
 For more details on this, see Section~\ref{MixtureOfRSPAndTextBlocks}.
 

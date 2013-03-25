@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspPage}
+\name{RspPage}
 \docType{class}
 \alias{RspPage}
 
 
- \title{The RspPage class}
+\title{The RspPage class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspPage}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -28,19 +28,19 @@ public static class \bold{RspPage}\cr
 extends \link[R.oo]{Object}\cr
 
 
- }
+}
 
- \usage{
+\usage{
 RspPage(pathname=NULL, ...)
 }
 
- \arguments{
-   \item{pathname}{A \code{\link[base]{character}} string.}
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{pathname}{A \code{\link[base]{character}} string.}
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:getAbsolutePath.RspPage]{getAbsolutePath}} \tab Gets the absolute pathname to the current RSP file.\cr
  \tab \code{\link[R.rsp:getName.RspPage]{getName}} \tab Gets the (base)name of the current RSP file.\cr
@@ -51,9 +51,10 @@ RspPage(pathname=NULL, ...)
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
- }
 
- \author{Henrik Bengtsson}
+}
+
+\author{Henrik Bengtsson}
 
 \keyword{classes}
 \keyword{internal}

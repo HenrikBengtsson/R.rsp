@@ -1,7 +1,7 @@
 Package: R.rsp
 ==============
 
-Version: 0.9.1 [2013-03-23]
+Version: 0.9.1 [2013-03-24]
 o The internal RSP engine is undergoning a major redesign.
   UNTIL THIS COMPLETED, use R.rsp v0.8.2 available on CRAN.
 

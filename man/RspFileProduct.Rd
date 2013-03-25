@@ -65,6 +65,7 @@ getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
  \bold{Methods inherited from logical}:\cr
 as.data.frame, as.raster, whichVector
 
+
  }
 
  \author{Henrik Bengtsson}

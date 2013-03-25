@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspDocument}
+\name{RspDocument}
 \docType{class}
 \alias{RspDocument}
 
 
- \title{The RspDocument class}
+\title{The RspDocument class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspDocument}\cr
 
 \code{list}\cr
@@ -31,21 +31,21 @@ extends \link[R.rsp]{RspObject}\cr
 
 
 
-  An RspDocument represents a \code{\link[base]{list}} of \code{\link{RspConstruct}}:s.
- }
+ An RspDocument represents a \code{\link[base]{list}} of \code{\link{RspConstruct}}:s.
+}
 
- \usage{
+\usage{
 RspDocument(expressions=list(), ...)
 }
 
- \arguments{
-   \item{expressions}{A \code{\link[base]{list}} of \code{\link{RspConstruct}}:s and
-      \code{\link{RspDocument}}:s.}
-   \item{...}{Arguments passed to \code{\link{RspObject}}.}
- }
+\arguments{
+  \item{expressions}{A \code{\link[base]{list}} of \code{\link{RspConstruct}}:s and
+     \code{\link{RspDocument}}:s.}
+  \item{...}{Arguments passed to \code{\link{RspObject}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{[} \tab  -\cr
  \tab \code{[<-} \tab  -\cr
@@ -79,9 +79,10 @@ getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
  \bold{Methods inherited from list}:\cr
 all.equal, as.data.frame, attachLocally, callHooks, relist, within, wrap
 
- }
 
- \author{Henrik Bengtsson}
+}
+
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

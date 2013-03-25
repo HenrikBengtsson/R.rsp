@@ -57,6 +57,7 @@ RspObject(value=NA, attrs=list(), ...)
  \bold{Methods inherited from logical}:\cr
 as.data.frame, as.raster, whichVector
 
+
  }
 
  \author{Henrik Bengtsson}

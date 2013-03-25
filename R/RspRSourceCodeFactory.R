@@ -6,10 +6,10 @@
 # \description{
 #  @classhierarchy
 #
-#  An RspRSourceCodeFactory is an @see "RspSourceCodeFactory" for 
+#  An RspRSourceCodeFactory is an @see "RspSourceCodeFactory" for
 #  the R language.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -19,7 +19,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -192,7 +192,7 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
     s;
   } # minIndent()
 
-  
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the default code header, body and footer
@@ -216,15 +216,13 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
   }
   code <- unlist(strsplit(paste(code, collapse=",\n"), split="\n", fixed=TRUE))
   code <- c('## RSP document metadata', '.rd <- list(', code, ');');
-  header0 <- paste('      ', code, sep="");
+  header0 <- paste('    ', code, sep="");
 
   # Build R source code
   res$header <- minIndent(header0, '
     ## RSP output function
-    .ro <- function(..., collapse="", sep="") {
-      msg <- paste(..., collapse=collapse, sep=sep);
-      base::cat(msg, sep="");
-    }
+    .ro <- function(...) base::cat(..., sep="", collapse="")
+
   ');
 
   res;

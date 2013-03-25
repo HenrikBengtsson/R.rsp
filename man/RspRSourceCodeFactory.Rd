@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspRSourceCodeFactory}
+\name{RspRSourceCodeFactory}
 \docType{class}
 \alias{RspRSourceCodeFactory}
 
 
- \title{The RspRSourceCodeFactory class}
+\title{The RspRSourceCodeFactory class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspRSourceCodeFactory}\cr
 
 \code{character}\cr
@@ -31,20 +31,20 @@ extends \emph{\link[R.rsp]{RspSourceCodeFactory}}\cr
 
 
 
-  An RspRSourceCodeFactory is an \code{\link{RspSourceCodeFactory}} for
-  the R language.
- }
+ An RspRSourceCodeFactory is an \code{\link{RspSourceCodeFactory}} for
+ the R language.
+}
 
- \usage{
+\usage{
 RspRSourceCodeFactory(...)
 }
 
- \arguments{
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{exprToCode} \tab  -\cr
  \tab \code{getCompleteCode} \tab  -\cr
@@ -57,9 +57,10 @@ exprToCode, getCompleteCode, getLanguage, makeSourceCode, toSourceCode
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
 
- }
 
- \author{Henrik Bengtsson}
+}
+
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

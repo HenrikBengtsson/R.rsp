@@ -2,11 +2,11 @@
 # @RdocClass FileRspResponse
 #
 # @title "The FileRspResponse class"
-#
+# 
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{

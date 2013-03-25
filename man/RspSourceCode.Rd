@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspSourceCode}
+\name{RspSourceCode}
 \docType{class}
 \alias{RspSourceCode}
 
 
- \title{The RspSourceCode class}
+\title{The RspSourceCode class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspSourceCode}\cr
 
 \code{character}\cr
@@ -33,22 +33,22 @@ extends \link[R.rsp]{RspProduct}\cr
 
 
 
-  An RspSourceCode object is a \code{\link[base]{character}} \code{\link[base]{vector}} holding RSP generated
-  source code for a particular programming language.
- }
+ An RspSourceCode object is a \code{\link[base]{character}} \code{\link[base]{vector}} holding RSP generated
+ source code for a particular programming language.
+}
 
- \usage{
+\usage{
 RspSourceCode(code=character(), ...)
 }
 
- \arguments{
-   \item{code}{\code{\link[base]{character}} \code{\link[base]{vector}}.}
-   \item{...}{Additional arguments passed to the \code{\link{RspProduct}}
-     constructor.}
- }
+\arguments{
+  \item{code}{\code{\link[base]{character}} \code{\link[base]{vector}}.}
+  \item{...}{Additional arguments passed to the \code{\link{RspProduct}}
+    constructor.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RspSourceCode]{evaluate}} \tab Evaluates the source code.\cr
  \tab \code{\link[R.rsp:print.RspSourceCode]{print}} \tab Prints the source code.\cr
@@ -66,9 +66,10 @@ getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
 
- }
 
- \author{Henrik Bengtsson}
+}
+
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

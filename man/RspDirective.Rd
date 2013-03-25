@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspDirective}
+\name{RspDirective}
 \docType{class}
 \alias{RspDirective}
 
 
- \title{The abstract RspDirective class}
+\title{The abstract RspDirective class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspDirective}\cr
 
 \code{character}\cr
@@ -33,22 +33,22 @@ extends \link[R.rsp]{RspConstruct}\cr
 
 
 
-  An RspDirective is an \code{\link{RspConstruct}} that represents an
-  RSP preprocesing directive of format \code{<\%@ ... \%>}.
-  The directive is independent of the underlying programming language.
- }
+ An RspDirective is an \code{\link{RspConstruct}} that represents an
+ RSP preprocesing directive of format \code{<\% ... \%>}.
+ The directive is independent of the underlying programming language.
+}
 
- \usage{
+\usage{
 RspDirective(value=character(), ...)
 }
 
- \arguments{
-   \item{value}{A \code{\link[base]{character}} string.}
-   \item{...}{Arguments passed to the constructor of \code{\link{RspConstruct}}.}
- }
+\arguments{
+  \item{value}{A \code{\link[base]{character}} string.}
+  \item{...}{Arguments passed to the constructor of \code{\link{RspConstruct}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:asRspString.RspDirective]{asRspString}} \tab Recreates an RSP string from an RSP preprocessing directive.\cr
  \tab \code{\link[R.rsp:requireAttributes.RspDirective]{requireAttributes}} \tab Asserts that certain attributes exist.\cr
@@ -64,9 +64,10 @@ getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
 
- }
 
- \author{Henrik Bengtsson}
+}
+
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

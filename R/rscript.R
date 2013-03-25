@@ -13,10 +13,10 @@
 #
 # \arguments{
 #   \item{...}{@character strings with RSP markup.}
-#   \item{file, path}{Alternatively, a file, a URL or a @connection from 
+#   \item{file, path}{Alternatively, a file, a URL or a @connection from
 #      with the strings are read.
 #      If a file, the \code{path} is prepended to the file, iff given.}
-#   \item{envir}{The @environment in which the RSP string is 
+#   \item{envir}{The @environment in which the RSP string is
 #      preprocessed and evaluated.}
 #   \item{args}{A named @list of arguments assigned to the environment
 #     in which the RSP string is parsed and evaluated.
@@ -164,7 +164,7 @@ setMethodS3("rscript", "RspDocument", function(object, envir=parent.frame(), ...
   clazz <- Class$forName(className);
   factory <- newInstance(clazz);
   verbose && cat(verbose, "Language: ", getLanguage(factory));
-  code <- toSourceCode(factory, object, verbose=verbose);
+  code <- toSourceCode(factory, object, ..., verbose=verbose);
   verbose && cat(verbose, "Generated source code:");
   verbose && cat(verbose, head(code, n=3L));
   verbose && cat(verbose);
