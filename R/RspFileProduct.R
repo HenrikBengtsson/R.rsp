@@ -9,7 +9,7 @@
 #  An RspFileProduct is an @see RspProduct that represents an
 #  RSP product in form of a file, e.g. LaTeX, Sweave and knitr documents.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -21,7 +21,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -60,7 +60,7 @@ setConstructorS3("RspFileProduct", function(pathname=NA, ..., mustExist=TRUE) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("print", "RspFileProduct", function(x, ...) {
   s <- sprintf("%s:", class(x)[1L]);
   s <- c(s, sprintf("Pathname: %s", x));
@@ -97,7 +97,7 @@ setMethodS3("print", "RspFileProduct", function(x, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getType", "RspFileProduct", function(object, as=c("text", "IMT"), ...) {
   as <- match.arg(as);
   res <- NextMethod("getType");
@@ -143,7 +143,7 @@ setMethodS3("getType", "RspFileProduct", function(object, as=c("text", "IMT"), .
 #
 # @keyword file
 # @keyword IO
-#*/########################################################################### 
+#*/###########################################################################
 setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::rsp() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
@@ -175,21 +175,25 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
   # Find another RSP compiler
   fcn <- switch(type,
-    # RSP-embedded LaTeX documents:
-    # *.tex => ... => *.dvi/*.pdf
+    # Markdown documents:
+    # *.md => *.html
+    "application/x-markdown" = compileMarkdown,
+
+    # LaTeX documents:
+    # *.tex => ... => *.pdf
     "application/x-tex" = compileLaTeX,
     "application/x-latex" = compileLaTeX,
 
-    # RSP-embedded Sweave and Knitr Rnw documents:
-    # *.Rnw => ... => *.tex => dvi/*.pdf
+    # Sweave Rnw documents:
+    # *.Rnw => *.tex => *.pdf
     "application/x-sweave" = compileSweave,
 
-    # RSP-embedded Sweave and Knitr Rnw documents:
-    # *.Rnw => ... => *.tex => dvi/*.pdf
+    # Knitr Rnw documents:
+    # *.Rnw => *.tex => *.pdf
     "application/x-knitr" = compileKnitr,
 
-    # RSP-embedded Sweave and Knitr Rnw documents:
-    # *.Rnw => ... => *.tex => dvi/*.pdf
+    # Sweave or Knitr Rnw documents:
+    # *.Rnw => *.tex => *.pdf
     "application/x-rnw" = compileRnw
   );
 
@@ -217,10 +221,12 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
 ############################################################################
 # HISTORY:
+# 2013-03-25
+# o Added Markdown processor.
 # 2013-02-18
 # o Added argument 'fake' to the returned processor.
 # 2013-02-13
-# o Added RspProduct and RspFileProduct with corresponding 
+# o Added RspProduct and RspFileProduct with corresponding
 #   process() methods.
 # o Created.
 ############################################################################

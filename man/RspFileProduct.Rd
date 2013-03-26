@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspFileProduct}
+\name{RspFileProduct}
 \docType{class}
 \alias{RspFileProduct}
 
 
- \title{The RspFileProduct class}
+\title{The RspFileProduct class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspFileProduct}\cr
 
 \code{logical}\cr
@@ -33,22 +33,22 @@ extends \link[R.rsp]{RspProduct}\cr
 
 
 
-  An RspFileProduct is an \code{\link{RspProduct}} that represents an
-  RSP product in form of a file, e.g. LaTeX, Sweave and knitr documents.
- }
+ An RspFileProduct is an \code{\link{RspProduct}} that represents an
+ RSP product in form of a file, e.g. LaTeX, Sweave and knitr documents.
+}
 
- \usage{
+\usage{
 RspFileProduct(pathname=NA, ..., mustExist=TRUE)
 }
 
- \arguments{
-   \item{pathname}{An existing file.}
-   \item{...}{Additional arguments passed to \code{\link{RspProduct}}.}
-   \item{mustExist}{If \code{\link[base:logical]{TRUE}}, it is asserted that the file exists.}
- }
+\arguments{
+  \item{pathname}{An existing file.}
+  \item{...}{Additional arguments passed to \code{\link{RspProduct}}.}
+  \item{mustExist}{If \code{\link[base:logical]{TRUE}}, it is asserted that the file exists.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:findProcessor.RspFileProduct]{findProcessor}} \tab Locates a processor for an RSP file product.\cr
  \tab \code{\link[R.rsp:getType.RspFileProduct]{getType}} \tab Gets the type of an RSP file product.\cr
@@ -66,9 +66,9 @@ getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
 as.data.frame, as.raster, whichVector
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}
