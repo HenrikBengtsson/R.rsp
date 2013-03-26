@@ -14,7 +14,7 @@
 #   \item{file}{The file to be weaved.}
 #   \item{...}{Not used.}
 #   \item{quiet}{If @TRUE, no verbose output is generated.}
-#   \item{envir}{The @environment where the RSP document is 
+#   \item{envir}{The @environment where the RSP document is
 #         parsed and evaluated.}
 # }
 #
@@ -32,8 +32,8 @@
 # @keyword file
 # @keyword IO
 # @keyword internal
-#*/########################################################################### 
-rspWeave <- function(file, ..., postprocess=FALSE, quiet=FALSE, envir=parent.frame()) {
+#*/###########################################################################
+rspWeave <- function(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env()) {
   rfile(file, ..., workdir=".", postprocess=postprocess, envir=envir, verbose=!quiet);
 } # rspWeave()
 
@@ -70,8 +70,8 @@ rspWeave <- function(file, ..., postprocess=FALSE, quiet=FALSE, envir=parent.fra
 # @keyword file
 # @keyword IO
 # @keyword internal
-#*/########################################################################### 
-rspTangle <- function(file, ..., envir=parent.frame()) {
+#*/###########################################################################
+rspTangle <- function(file, ..., envir=new.env()) {
   require("R.utils") || throw("Package not loaded: R.utils");
 
   # Setup output R file
@@ -107,6 +107,12 @@ rspTangle <- function(file, ..., envir=parent.frame()) {
 
 ###############################################################################
 # HISTORY:
+# 2013-03-25
+# o ROBUSTNESS: Now rspWeave() and rspTangle() process the RSP document
+#   in a separate environment.  This used to be the parent environment,
+#   which made it possible for the vignette to modify the variables of
+#   the function that called rspWeave(), e.g. buildVignette() and
+#   tools::buildVignettes().
 # 2013-03-07
 # o CLEANUP: Dropped 'fake' processing again.
 # 2013-03-01

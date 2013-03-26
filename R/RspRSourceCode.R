@@ -167,6 +167,13 @@ setMethodS3("tangle", "RspRSourceCode", function(code, ...) {
   # Remember attributes
   attrs <- attributes(code);
 
+  # Drop the header section
+  idx <- grep("## RSP source code script", code);
+  if (length(idx) > 0L) {
+    idx <- idx[1L];
+    code <- code[-(1:idx)];
+  }
+
   # Drop all .ro("...")
   excl <- (regexpr(".ro(\"", code, fixed=TRUE) != -1L);
   code <- code[!excl];
@@ -185,6 +192,8 @@ setMethodS3("tangle", "RspRSourceCode", function(code, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-03-25
+# o Now tangle() drops the top of the code that sets up output functions etc.
 # 2013-03-14
 # o Moved getCompleteCode() from RspRSourceCode to RspRSourceCodeFactory.
 # 2013-03-12
