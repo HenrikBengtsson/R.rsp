@@ -7,7 +7,7 @@
 #  @classhierarchy
 #
 #  An RspDirective is an @see "RspConstruct" that represents an
-#  RSP preprocesing directive of format \code{<\% ... \%>}.
+#  RSP preprocesing directive of format \code{<\%@ ... \%>}.
 #  The directive is independent of the underlying programming language.
 # }
 #
@@ -119,8 +119,9 @@ setMethodS3("asRspString", "RspDirective", function(object, ...) {
   } else {
     comment <- "";
   }
-  fmtstr <- "<%%@%s%s%s%%>";
-  s <- sprintf(fmtstr, body, attrs, comment);
+  suffixSpecs <- attr(object, "suffixSpecs");
+  fmtstr <- "<%%@%s%s%s%s%%>";
+  s <- sprintf(fmtstr, body, attrs, comment, suffixSpecs);
   RspString(s);
 })
 
@@ -128,7 +129,7 @@ setMethodS3("asRspString", "RspDirective", function(object, ...) {
 
 ###########################################################################/**
 # @RdocClass RspMetaDirective
-# 
+#
 # @title "The RspMetaDirective class"
 #
 # \description{
@@ -160,7 +161,7 @@ setConstructorS3("RspMetaDirective", function(value="meta", ...) {
 
 ###########################################################################/**
 # @RdocClass RspUnparsedDirective
-# 
+#
 # @title "The RspUnparsedDirective class"
 #
 # \description{
@@ -388,8 +389,9 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
 #*/#########################################################################
 setMethodS3("asRspString", "RspUnparsedDirective", function(object, ...) {
   body <- unclass(object);
-  fmtstr <- "<%%@%s%%>";
-  s <- sprintf(fmtstr, body);
+  suffixSpecs <- attr(object, "suffixSpecs");
+  fmtstr <- "<%%@%s%s%%>";
+  s <- sprintf(fmtstr, body, suffixSpecs);
   RspString(s);
 })
 
@@ -397,7 +399,7 @@ setMethodS3("asRspString", "RspUnparsedDirective", function(object, ...) {
 
 ###########################################################################/**
 # @RdocClass RspIncludeDirective
-# 
+#
 # @title "The RspIncludeDirective class"
 #
 # \description{
@@ -565,7 +567,7 @@ setMethodS3("getWrap", "RspIncludeDirective", function(directive, ...) {
 
 ###########################################################################/**
 # @RdocClass RspEvalDirective
-# 
+#
 # @title "The RspEvalDirective class"
 #
 # \description{
@@ -667,7 +669,7 @@ setMethodS3("getContent", "RspEvalDirective", function(directive, ...) {
 
 ###########################################################################/**
 # @RdocClass RspPageDirective
-# 
+#
 # @title "The RspPageDirective class"
 #
 # \description{
@@ -738,7 +740,7 @@ setMethodS3("getType", "RspPageDirective", function(directive, default=NA, as=c(
 
 ###########################################################################/**
 # @RdocClass RspUnknownDirective
-# 
+#
 # @title "The RspUnknownDirective class"
 #
 # \description{
@@ -770,7 +772,7 @@ setConstructorS3("RspUnknownDirective", function(value="unknown", ...) {
 
 ###########################################################################/**
 # @RdocClass RspErrorDirective
-# 
+#
 # @title "The RspErrorDirective class"
 #
 # \description{
@@ -803,6 +805,8 @@ setConstructorS3("RspErrorDirective", function(value="error", ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-03-25
+# o BUG FIX: Forgot to add 'suffixSpecs' to the asRspString() string.
 # 2013-03-24
 # o BUG FIX: RspEvalDirective() would add erroneous attributes.
 # 2013-03-15
