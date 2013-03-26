@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspEvalDirective}
+\name{RspEvalDirective}
 \docType{class}
 \alias{RspEvalDirective}
 
 
- \title{The RspEvalDirective class}
+\title{The RspEvalDirective class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspEvalDirective}\cr
 
 \code{character}\cr
@@ -35,25 +35,25 @@ extends \link[R.rsp]{RspDirective}\cr
 
 
 
-  An RspEvalDirective is an \code{\link{RspDirective}} that causes the
-  RSP parser to evaluate a piece of R code (either in a text string
-  or in a file) as it is being parsed.
- }
+ An RspEvalDirective is an \code{\link{RspDirective}} that causes the
+ RSP parser to evaluate a piece of R code (either in a text string
+ or in a file) as it is being parsed.
+}
 
- \usage{
+\usage{
 RspEvalDirective(value="eval", ...)
 }
 
- \arguments{
-   \item{value}{A \code{\link[base]{character}} string.}
-   \item{attributes}{A named \code{\link[base]{list}}, which must contain a 'file'
-      or a 'text' element.}
-   \item{...}{Optional arguments passed to the constructor
-              of \code{\link{RspDirective}}.}
- }
+\arguments{
+  \item{value}{A \code{\link[base]{character}} string.}
+  \item{attributes}{A named \code{\link[base]{list}}, which must contain a 'file'
+     or a 'text' element.}
+  \item{...}{Optional arguments passed to the constructor
+             of \code{\link{RspDirective}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:getContent.RspEvalDirective]{getContent}} \tab Gets the content of the RSP eval directive.\cr
  \tab \code{\link[R.rsp:getFile.RspEvalDirective]{getFile}} \tab Gets the file attribute.\cr
@@ -70,12 +70,12 @@ asRspString, getComment, getSuffixSpecs
 getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
 
  \bold{Methods inherited from character}:\cr
-all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
+all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspParser}
+\name{RspParser}
 \docType{class}
 \alias{RspParser}
 
 
- \title{The RspParser class}
+\title{The RspParser class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspParser}\cr
 
 \code{logical}\cr
@@ -29,19 +29,19 @@ extends logical\cr
 
 
 
-  An RspParser is parser for the RSP language.
- }
+ An RspParser is parser for the RSP language.
+}
 
- \usage{
+\usage{
 RspParser(...)
 }
 
- \arguments{
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:parse.RspParser]{parse}} \tab Parses the RSP string.\cr
  \tab \code{\link[R.rsp:parseRaw.RspParser]{parseRaw}} \tab Parses the string into blocks of text and RSP.\cr
@@ -52,9 +52,9 @@ RspParser(...)
 as.data.frame, as.raster, whichVector
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

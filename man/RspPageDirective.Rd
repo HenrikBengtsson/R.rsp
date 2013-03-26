@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspPageDirective}
+\name{RspPageDirective}
 \docType{class}
 \alias{RspPageDirective}
 
 
- \title{The RspPageDirective class}
+\title{The RspPageDirective class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspPageDirective}\cr
 
 \code{character}\cr
@@ -35,21 +35,21 @@ extends \link[R.rsp]{RspDirective}\cr
 
 
 
-  An RspPageDirective is an \code{\link{RspDirective}} that annotates the
-  content of the RSP document, e.g. the content type.
- }
+ An RspPageDirective is an \code{\link{RspDirective}} that annotates the
+ content of the RSP document, e.g. the content type.
+}
 
- \usage{
+\usage{
 RspPageDirective(value="page", ...)
 }
 
- \arguments{
-   \item{value}{A \code{\link[base]{character}} string.}
-   \item{...}{Arguments passed to the constructor of \code{\link{RspDirective}}.}
- }
+\arguments{
+  \item{value}{A \code{\link[base]{character}} string.}
+  \item{...}{Arguments passed to the constructor of \code{\link{RspDirective}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:getType.RspPageDirective]{getType}} \tab Gets the content type.\cr
 }
@@ -65,12 +65,12 @@ asRspString, getComment, getSuffixSpecs
 getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
 
  \bold{Methods inherited from character}:\cr
-all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
+all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

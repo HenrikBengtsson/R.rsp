@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspUnparsedDirective}
+\name{RspUnparsedDirective}
 \docType{class}
 \alias{RspUnparsedDirective}
 
 
- \title{The RspUnparsedDirective class}
+\title{The RspUnparsedDirective class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspUnparsedDirective}\cr
 
 \code{character}\cr
@@ -35,22 +35,22 @@ extends \link[R.rsp]{RspDirective}\cr
 
 
 
-  An RspUnparsedDirective is an \code{\link{RspDirective}} that still has not
-  been parsed for its class and content.  After \code{\link{parse}}():ing such
-  an object, the class of this RSP directive will be known.
- }
+ An RspUnparsedDirective is an \code{\link{RspDirective}} that still has not
+ been parsed for its class and content.  After \code{\link{parse}}():ing such
+ an object, the class of this RSP directive will be known.
+}
 
- \usage{
+\usage{
 RspUnparsedDirective(value="unparsed", ...)
 }
 
- \arguments{
-   \item{value}{A \code{\link[base]{character}} string.}
-   \item{...}{Arguments passed to \code{\link{RspDirective}}.}
- }
+\arguments{
+  \item{value}{A \code{\link[base]{character}} string.}
+  \item{...}{Arguments passed to \code{\link{RspDirective}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:asRspString.RspUnparsedDirective]{asRspString}} \tab Recreates an RSP string from an unparsed RSP preprocessing directive.\cr
  \tab \code{\link[R.rsp:parse.RspUnparsedDirective]{parse}} \tab Parses the unknown RSP directive for its class.\cr
@@ -67,12 +67,12 @@ asRspString, getComment, getSuffixSpecs
 getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
 
  \bold{Methods inherited from character}:\cr
-all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
+all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

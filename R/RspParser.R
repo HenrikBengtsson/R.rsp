@@ -8,7 +8,7 @@
 #
 #  An RspParser is parser for the RSP language.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -18,7 +18,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -58,7 +58,7 @@ setConstructorS3("RspParser", function(...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", "directive", "expression"), commentLength=-1L, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
@@ -192,7 +192,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 
       # (ii) Extract the preceeding text
       text <- substring(bfr, first=1L, last=posL-1L);
-     
+
       # Record RSP text, unless empty.
       if (nchar(text) > 0L) {
         # Update flag whether the RSP construct being parsed is
@@ -229,7 +229,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
         }
 
         if (what == "comment") {
-          attr(body, "commentLength") <- commentLength;           
+          attr(body, "commentLength") <- commentLength;
         }
 
         if (!is.null(bodyClass)) {
@@ -290,7 +290,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
       }
 
       if (what == "comment") {
-        attr(body, "commentLength") <- commentLength;           
+        attr(body, "commentLength") <- commentLength;
       }
 
       if (!is.null(bodyClass)) {
@@ -367,7 +367,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), as=c("RspDocument", "RspString"), verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
@@ -632,7 +632,7 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 # o Replaced argument 'preprocess' with 'until' for parse().
 # 2013-02-22
 # o Major update of parse() for RspString to the state where RSP comments
-#   can contain anything, RSP preprocessing directives can be located 
+#   can contain anything, RSP preprocessing directives can be located
 #   anywhere including inside RSP expressions (but not inside RSP comments).
 #   This means that it is possible to for instance dynamically include code
 #   into an RSP code expression using and <%@include ...%> directive.
