@@ -16,6 +16,7 @@ setMethodS3("parse", "RspDocument", function(object, what=c("directives", "expre
 })
 
 text0='
+
   (A,B) = (TRUE, TRUE)
 '
 
@@ -42,14 +43,14 @@ text='
 
 ## d0 <- rcompile(text, until="directives", as="RspDocument")
 ## d1 <- parse(d0, what="directives")
-## 
+##
 ## idx <- which(sapply(d1, FUN=inherits, "RspIfDirective"))[1L];
 ## stopifnot(!is.na(idx))
 ## d2 <- parseIfElseDirectives(d1, firstIdx=idx, verbose=verbose);
 ## print(d2)
-## 
+##
 ## d3 <- preprocess(d1, verbose=-100)
-## 
+##
 ## s <- RspString(text)
 ## d1 <- parse(s, until="directives")
 ## d2 <- parse(s, until="expressions")
