@@ -39,7 +39,7 @@
 # @keyword documentation
 # @keyword file
 # @keyword IO
-#*/########################################################################### 
+#*/###########################################################################
 buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = TRUE, clean = TRUE, engine=NULL, buildPkg=NULL, ...) {
     ### BEGIN: Workaround until buildVignette() is in the 'tools' package.
     require("tools") || throw("Package not loaded: tools")
@@ -55,7 +55,7 @@ buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = 
       res;
     }
     ### END: Workaround until buildVignette() is in the 'tools' package.
-    
+
     if (!file_test("-f", file))
         stop("No such file: ", file)
 
@@ -105,8 +105,8 @@ buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = 
     }
 
     # Record existing files
+    origfiles <- list.files(all.files = TRUE)
     if (clean) {
-        origfiles <- list.files(all.files = TRUE)
         file.create(".build.timestamp")
     }
 
@@ -121,7 +121,7 @@ buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = 
         final <- find_vignette_product(name, by = "texi2pdf", engine = engine)
     } else
         final <- output
-    
+
     # Tangle
     if (tangle) {
         engine$tangle(file, quiet = quiet, ...)
@@ -132,7 +132,7 @@ buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = 
 
     # Cleanup
     # NOTE: TeX file is useful for visually impared, cf. JR. Godfrey,
-    #       'Statistical Software from a Blind Person's Perspective', 
+    #       'Statistical Software from a Blind Person's Perspective',
     #       The R Journal, 2013 (to appear).
     keep <- c(output, sources, final)[-1L]
     if (clean) {
@@ -143,7 +143,7 @@ buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = 
     }
     f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), c(keep, origfiles))
     f <- f[file_test("-f", f)]
-    file.remove(f) 
+    file.remove(f)
 
     final
 } # buildVignette()
@@ -151,6 +151,9 @@ buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = 
 
 ############################################################################
 # HISTORY:
+# 2013-03-25
+# o BUG FIX: buildVignette(..., clean=TRUE) would give an error on a
+#   non-existing 'origfiles'.
 # 2013-03-18
 # o Added argument 'engine' and 'buildPkg'.
 # o ROBUSTNESS: buildVignette() resets the current working directory
