@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspCodeChunk}
+\name{RspCodeChunk}
 \docType{class}
 \alias{RspCodeChunk}
 
 
- \title{The RspCodeChunk class}
+\title{The RspCodeChunk class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspCodeChunk}\cr
 
 \code{character}\cr
@@ -37,24 +37,24 @@ extends \link[R.rsp]{RspCode}\cr
 
 
 
-  An RspCodeChunk is an \code{\link{RspCode}} that represents a complete
-  RSP code chunk.
- }
+ An RspCodeChunk is an \code{\link{RspCode}} that represents a complete
+ RSP code chunk.
+}
 
- \usage{
+\usage{
 RspCodeChunk(..., return=FALSE)
 }
 
- \arguments{
-   \item{...}{Arguments passed to the constructor of \code{\link{RspCode}}.}
-   \item{return}{If \code{\link[base:logical]{TRUE}}, the value of the evaluated code chunk is returned.}
- }
+\arguments{
+  \item{...}{Arguments passed to the constructor of \code{\link{RspCode}}.}
+  \item{return}{If \code{\link[base:logical]{TRUE}}, the value of the evaluated code chunk is returned.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:asRspString.RspCodeChunk]{asRspString}} \tab Recreates an RSP string from an RspCodeChunk.\cr
- \tab \code{\link[R.rsp:getReturn.RspCodeChunk]{getReturn}} \tab Checks whether the value of the evaluated code chunk should be returned or not.\cr
+ \tab \code{getInclude} \tab  -\cr
 }
 
 
@@ -62,7 +62,7 @@ RspCodeChunk(..., return=FALSE)
 asRspString, getCode, getEcho
 
  \bold{Methods inherited from RspConstruct}:\cr
-asRspString, getComment, getSuffixSpecs
+asRspString, getComment, getInclude, getSuffixSpecs
 
  \bold{Methods inherited from RspObject}:\cr
 getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
@@ -71,9 +71,9 @@ getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

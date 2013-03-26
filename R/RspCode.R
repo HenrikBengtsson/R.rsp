@@ -9,7 +9,7 @@
 #  An RspCode is an @see "RspExpression" that represents a piece of source
 #  code, which may or may not be a complete code chunk (expression).
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -21,7 +21,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -59,7 +59,7 @@ setConstructorS3("RspCode", function(code=character(), echo=FALSE, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getCode", "RspCode", function(code, ...) {
   as.character(code);
 })
@@ -89,7 +89,7 @@ setMethodS3("getCode", "RspCode", function(code, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getEcho", "RspCode", function(code, ...) {
   isTRUE(getAttribute(code, "echo", default=FALSE));
 })
@@ -148,7 +148,7 @@ setMethodS3("asRspString", "RspCode", function(code, ...) {
 #  An RspCodeChunk is an @see "RspCode" that represents a complete
 #  RSP code chunk.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -159,7 +159,7 @@ setMethodS3("asRspString", "RspCode", function(code, ...) {
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -169,32 +169,7 @@ setConstructorS3("RspCodeChunk", function(..., return=FALSE) {
 })
 
 
-#########################################################################/**
-# @RdocMethod getReturn
-#
-# @title "Checks whether the value of the evaluated code chunk should be returned or not"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @logical.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
-setMethodS3("getReturn", "RspCodeChunk", function(code, ...) {
+setMethodS3("getInclude", "RspCodeChunk", function(code, ...) {
   isTRUE(getAttribute(code, "return", default=FALSE));
 })
 
@@ -229,7 +204,7 @@ setMethodS3("asRspString", "RspCodeChunk", function(code, ...) {
 
   if (getEcho(code)) {
     fmtstr <- ":%s";
-  } else if (getReturn(code)) {
+  } else if (getInclude(code)) {
     fmtstr <- "=%s";
   } else {
     fmtstr <- "%s";
@@ -243,6 +218,8 @@ setMethodS3("asRspString", "RspCodeChunk", function(code, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-03-26
+# o HARMONIZE: Renamed getReturn() to getInclude().
 # 2013-02-11
 # o Added Rdoc help.
 # 2013-02-09

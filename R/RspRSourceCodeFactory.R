@@ -94,7 +94,7 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
       codeE <- sprintf(".ro(\"%s\")", escapeRspText(codeT));
     }
 
-    ret <- getReturn(expr);
+    ret <- getInclude(expr);
     if (echo && !ret) {
       code <- c(codeE, code);
     } else if (echo && ret) {

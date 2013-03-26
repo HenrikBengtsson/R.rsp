@@ -18,7 +18,7 @@
 }
 
 \usage{
-rspTangle(file, ..., envir=parent.frame())
+rspTangle(file, ..., envir=new.env())
 }
 
 \arguments{

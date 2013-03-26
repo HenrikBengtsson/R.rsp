@@ -145,6 +145,8 @@
 \alias{getItem}
 \alias{getItem.RspPreprocessingException}
 \alias{getMessage.RspPreprocessingException}
+\alias{getNameContentDefaultAttributes.RspDirective}
+\alias{getInclude}
 
 \description{
 This page contains aliases for all "non-documented" objects that

@@ -6,19 +6,22 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getComment.RspConstruct}
-\alias{getComment.RspConstruct}
-\alias{RspConstruct.getComment}
-\alias{getComment,RspConstruct-method}
+\name{getInclude.RspConstruct}
+\alias{getInclude.RspConstruct}
+\alias{RspConstruct.getInclude}
+\alias{getInclude,RspConstruct-method}
+\alias{getInclude.RspText}
+\alias{getInclude.RspCodeChunk}
+\alias{getInclude.RspVariableDirective}
 
-\title{Gets the comment of an RSP construct}
+\title{Checks whether an RSP construct will include text to the output or not}
 
 \description{
- Gets the comment of an RSP construct.
+ Checks whether an RSP construct will include text to the output or not.
 }
 
 \usage{
-\method{getComment}{RspConstruct}(object, ...)
+\method{getInclude}{RspConstruct}(object, ...)
 }
 
 \arguments{
@@ -26,7 +29,7 @@
 }
 
 \value{
- Returns a \code{\link[base]{character}} string.
+ Returns \code{\link[base:logical]{TRUE}} of \code{\link[base:logical]{FALSE}}.
 }
 
 \author{Henrik Bengtsson}

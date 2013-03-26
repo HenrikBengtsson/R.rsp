@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspText}
+\name{RspText}
 \docType{class}
 \alias{RspText}
 
 
- \title{The RspText class}
+\title{The RspText class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspText}\cr
 
 \code{character}\cr
@@ -33,33 +33,34 @@ extends \link[R.rsp]{RspConstruct}\cr
 
 
 
-  An RspText is an \code{\link{RspConstruct}} that represents a plain text
-  section, i.e. everything that is inbetween any other types of
-  \code{\link{RspConstruct}}:s.
-  Its content is independent of the underlying programming language.
- }
+ An RspText is an \code{\link{RspConstruct}} that represents a plain text
+ section, i.e. everything that is inbetween any other types of
+ \code{\link{RspConstruct}}:s.
+ Its content is independent of the underlying programming language.
+}
 
- \usage{
+\usage{
 RspText(text=character(), escape=FALSE, ...)
 }
 
- \arguments{
-   \item{text}{A \code{\link[base]{character}} string.}
-   \item{escape}{If \code{\link[base:logical]{TRUE}}, character sequences \code{<\%} and \code{\%>}
-                 are escaped to \code{<\%\%} and \code{\%\%>}.}
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{text}{A \code{\link[base]{character}} string.}
+  \item{escape}{If \code{\link[base:logical]{TRUE}}, character sequences \code{<\%} and \code{\%>}
+                are escaped to \code{<\%\%} and \code{\%\%>}.}
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:asRspString.RspText]{asRspString}} \tab Recreates an RSP string from an RspText.\cr
  \tab \code{\link[R.rsp:getContent.RspText]{getContent}} \tab Gets the contents of the RSP text.\cr
+ \tab \code{getInclude} \tab  -\cr
 }
 
 
  \bold{Methods inherited from RspConstruct}:\cr
-asRspString, getComment, getSuffixSpecs
+asRspString, getComment, getInclude, getSuffixSpecs
 
  \bold{Methods inherited from RspObject}:\cr
 getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
@@ -68,9 +69,9 @@ getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

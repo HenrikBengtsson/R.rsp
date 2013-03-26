@@ -6,10 +6,10 @@
 # \description{
 #  @classhierarchy
 #
-#  An RspShSourceCodeFactory is an @see "RspSourceCodeFactory" for 
+#  An RspShSourceCodeFactory is an @see "RspSourceCodeFactory" for
 #  the shell ('sh') script language.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -19,7 +19,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -43,25 +43,25 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
     text;
   } # escapeRspText()
 
-  makeCode <- function(code, echo=FALSE, ret=FALSE, ...) {
+  makeCode <- function(code, echo=FALSE, include=FALSE, ...) {
     code <- unlist(strsplit(code, split="\n", fixed=TRUE));
     codeT <- trim(code);
 
     codeE <- sprintf("printf \"%s\"", escapeRspText(code));
     suffixR <- rep(" > /dev/null", times=length(code));
-    if (ret) {
+    if (include) {
       suffixR[length(code)] <- "";
     }
     codeR <- sprintf("%s%s", codeT, suffixR);
 
     codeS <- matrix(c(codeE, codeR), nrow=2L, byrow=TRUE);
-    if (echo && !ret) {
+    if (echo && !include) {
       code <- codeS[1L,,drop=TRUE];
-    } else if (echo && ret) {
+    } else if (echo && include) {
       code <- codeS;
-    } else if (!echo && ret) {
+    } else if (!echo && include) {
       code <- codeS[2L,,drop=TRUE];
-    } else if (!echo && !ret) {
+    } else if (!echo && !include) {
       code <- codeS[2L,,drop=TRUE];
     }
 
@@ -105,7 +105,7 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
   # RspCodeChunk => ...
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspCodeChunk")) {
-    code <- makeCode(getCode(expr), echo=getEcho(expr), ret=getReturn(expr));
+    code <- makeCode(getCode(expr), echo=getEcho(expr), include=getInclude(expr));
     return(code);
   }
 
@@ -113,7 +113,7 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
   # RspCode => <code>
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspCode")) {
-    code <- makeCode(getCode(expr), echo=getEcho(expr), ret=FALSE);
+    code <- makeCode(getCode(expr), echo=getEcho(expr), include=FALSE);
     return(code);
   }
 

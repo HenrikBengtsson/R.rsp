@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspConstruct}
+\name{RspConstruct}
 \docType{class}
 \alias{RspConstruct}
 
 
- \title{The RspConstruct class}
+\title{The RspConstruct class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspConstruct}\cr
 
 \code{character}\cr
@@ -31,26 +31,27 @@ extends \link[R.rsp]{RspObject}\cr
 
 
 
-  An RspConstruct object represents an RSP construct, which can either be
-  (i) an RSP text (a plain text section), (ii) an RSP comment,
-  (iii) an RSP preprocessing directive, or (iv) an RSP expression.
- }
+ An RspConstruct object represents an RSP construct, which can either be
+ (i) an RSP text (a plain text section), (ii) an RSP comment,
+ (iii) an RSP preprocessing directive, or (iv) an RSP expression.
+}
 
- \usage{
+\usage{
 RspConstruct(object=character(), ..., comment=NULL)
 }
 
- \arguments{
-   \item{object}{A R object.}
-   \item{...}{Arguments passed to \code{\link{RspObject}}.}
-   \item{comment}{An optional \code{\link[base]{character}} string.}
- }
+\arguments{
+  \item{object}{A R object.}
+  \item{...}{Arguments passed to \code{\link{RspObject}}.}
+  \item{comment}{An optional \code{\link[base]{character}} string.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:asRspString.RspConstruct]{asRspString}} \tab Recreates an RSP string from an RspConstruct.\cr
  \tab \code{\link[R.rsp:getComment.RspConstruct]{getComment}} \tab Gets the comment of an RSP construct.\cr
+ \tab \code{\link[R.rsp:getInclude.RspConstruct]{getInclude}} \tab Checks whether an RSP construct will include text to the output or not.\cr
  \tab \code{\link[R.rsp:getSuffixSpecs.RspConstruct]{getSuffixSpecs}} \tab Gets the suffix specifications.\cr
 }
 
@@ -59,12 +60,12 @@ RspConstruct(object=character(), ..., comment=NULL)
 getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
 
  \bold{Methods inherited from character}:\cr
-all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
+all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

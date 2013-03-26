@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspCode}
+\name{RspCode}
 \docType{class}
 \alias{RspCode}
 
 
- \title{The RspCode class}
+\title{The RspCode class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspCode}\cr
 
 \code{character}\cr
@@ -35,22 +35,22 @@ extends \link[R.rsp]{RspExpression}\cr
 
 
 
-  An RspCode is an \code{\link{RspExpression}} that represents a piece of source
-  code, which may or may not be a complete code chunk (expression).
- }
+ An RspCode is an \code{\link{RspExpression}} that represents a piece of source
+ code, which may or may not be a complete code chunk (expression).
+}
 
- \usage{
+\usage{
 RspCode(code=character(), echo=FALSE, ...)
 }
 
- \arguments{
-   \item{code}{A \code{\link[base]{character}} string.}
-   \item{echo}{If \code{\link[base:logical]{TRUE}}, code is echoed to the output.}
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{code}{A \code{\link[base]{character}} string.}
+  \item{echo}{If \code{\link[base:logical]{TRUE}}, code is echoed to the output.}
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:asRspString.RspCode]{asRspString}} \tab Recreates an RSP string from an RspCode.\cr
  \tab \code{\link[R.rsp:getCode.RspCode]{getCode}} \tab Gets the source code.\cr
@@ -59,7 +59,7 @@ RspCode(code=character(), echo=FALSE, ...)
 
 
  \bold{Methods inherited from RspConstruct}:\cr
-asRspString, getComment, getSuffixSpecs
+asRspString, getComment, getInclude, getSuffixSpecs
 
  \bold{Methods inherited from RspObject}:\cr
 getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
@@ -68,9 +68,9 @@ getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

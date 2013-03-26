@@ -56,7 +56,7 @@ RspUnparsedExpression(...)
 
 
  \bold{Methods inherited from RspConstruct}:\cr
-asRspString, getComment, getSuffixSpecs
+asRspString, getComment, getInclude, getSuffixSpecs
 
  \bold{Methods inherited from RspObject}:\cr
 getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes

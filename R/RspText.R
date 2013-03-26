@@ -11,7 +11,7 @@
 #  @see "RspConstruct":s.
 #  Its content is independent of the underlying programming language.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -24,7 +24,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -34,6 +34,11 @@ setConstructorS3("RspText", function(text=character(), escape=FALSE, ...) {
     text <- escapeRspTags(text);
   }
   extend(RspConstruct(text), "RspText");
+})
+
+
+setMethodS3("getInclude", "RspText", function(object, ...) {
+  TRUE;
 })
 
 
@@ -50,7 +55,7 @@ setConstructorS3("RspText", function(text=character(), escape=FALSE, ...) {
 #
 # \arguments{
 #   \item{...}{Not used.}
-#   \item{unescaped}{If @TRUE, character sequences \code{<\%\%} and 
+#   \item{unescaped}{If @TRUE, character sequences \code{<\%\%} and
 #                \code{\%\%>} are unescaped to \code{<\%} and \code{\%>}.}
 # }
 #
@@ -63,7 +68,7 @@ setConstructorS3("RspText", function(text=character(), escape=FALSE, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getContent", "RspText", function(text, unescape=FALSE, ...) {
   text <- as.character(text);
   if (unescape) {

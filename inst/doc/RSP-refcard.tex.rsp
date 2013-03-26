@@ -8,9 +8,6 @@
   %\VignetteTangle{FALSE}
 --------------------------------------------------------------------"%>
 
-<% t0 <- Sys.time() %>
-
-
 <%-------------------------------------------------------------------
   RELEASE OR DEVEL?
   -------------------------------------------------------------------%>
@@ -174,10 +171,10 @@ Output written to standard output is inserted into the final document.
  Inserts \content{code} and its returned value into the translated code script. \\
 \end{tabular}
 
-\subsection{Example (in R)}
+\subsection{Example of text file with RSP-embedded R code}
 <%@string file="incl/example.txt.rsp"%>
 %%%
-\begin{minipage}[t]{44ex}
+\begin{minipage}[t]{42ex}
 \footnotesize%
 \textbf{RSP~document:}%
 \begin{verbatim}
@@ -197,7 +194,7 @@ Output written to standard output is inserted into the final document.
 %%%
 \parbox[t]{6ex}{$\rightarrow$}%%
 %%%
-\begin{minipage}[t]{44ex}
+\begin{minipage}[t]{38ex}
 \footnotesize%
 \textbf{Translated~code~script:}%
 \begin{verbatim}

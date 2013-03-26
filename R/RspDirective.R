@@ -78,6 +78,55 @@ setMethodS3("requireAttributes", "RspDirective", function(this, names, condition
 }, protected=TRUE)
 
 
+setMethodS3("getNameContentDefaultAttributes", "RspDirective", function(item, known=NULL, doc=NULL, ...) {
+  name <- getAttribute(item, "name");
+  content <- getAttribute(item, "content");
+  default <- getAttribute(item, "default");
+  file <- getAttribute(item, "file");
+
+  # Was directive given in short format <@<directive> file="<content>">?
+  if (is.null(name) && is.null(content) && !is.null(file)) {
+    name <- "file";
+    content <- file;
+    file <- NULL;
+  }
+
+  # Was directive given in short format <@<directive> <name>="<content>">?
+  if (is.null(name) && is.null(content)) {
+    attrs <- getAttributes(item);
+    names <- setdiff(names(attrs), c("file", "default", known));
+    if (length(names) == 0L) {
+      throw(RspPreprocessingException("At least one of attributes 'name' and 'content' must be given", item=item));
+    }
+    name <- names[1L];
+    content <- attrs[[name]];
+  }
+
+  # Was directive given with 'file' attribute?
+  if (!is.null(file) && !is.null(doc)) {
+##        str(list(item=paste(asRspString(item)), name=name, content=content, file=file));
+    path <- getPath(doc);
+    if (!is.null(path)) {
+      pathname <- file.path(getPath(doc), file);
+    } else {
+      pathname <- file;
+    }
+    # Sanity check
+    stopifnot(!is.null(pathname));
+    content <- readLines(pathname, warn=FALSE);
+    content <- paste(content, collapse="\n");
+  }
+
+  # Use default?
+  if (is.null(content) || is.na(content) || nchar(content) == 0L || content == "NA") {
+    value <- default;
+  } else {
+    value <- content;
+  }
+
+  list(name=name, value=value, content=content, file=file, default=default);
+}, protected=TRUE) # getNameContentDefaultAttributes()
+
 
 #########################################################################/**
 # @RdocMethod "asRspString"
@@ -123,38 +172,6 @@ setMethodS3("asRspString", "RspDirective", function(object, ...) {
   fmtstr <- "<%%@%s%s%s%s%%>";
   s <- sprintf(fmtstr, body, attrs, comment, suffixSpecs);
   RspString(s);
-})
-
-
-
-###########################################################################/**
-# @RdocClass RspMetaDirective
-#
-# @title "The RspMetaDirective class"
-#
-# \description{
-#  @classhierarchy
-#
-#  An RspMetaDirective is an @see "RspDirective" representing RSP metadata.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{value}{A @character string.}
-#   \item{...}{Arguments passed to the constructor of @see "RspDirective".}
-# }
-#
-# \section{Fields and Methods}{
-#  @allmethods
-# }
-#
-# @author
-#
-# @keyword internal
-#*/###########################################################################
-setConstructorS3("RspMetaDirective", function(value="meta", ...) {
-  extend(RspDirective(value, ...), "RspMetaDirective");
 })
 
 
@@ -805,6 +822,9 @@ setConstructorS3("RspErrorDirective", function(value="error", ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-03-26
+# o Added getNameContentDefaultAttributes() - used to be a local function
+#   of preprocess() for RspDocument.
 # 2013-03-25
 # o BUG FIX: Forgot to add 'suffixSpecs' to the asRspString() string.
 # 2013-03-24

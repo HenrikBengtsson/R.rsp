@@ -1281,56 +1281,6 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   } # parseRVignetteMetadata()
 
 
-  getNameContentDefaultAttributes <- function(item, known=NULL, ...) {
-    name <- getAttribute(item, "name");
-    content <- getAttribute(item, "content");
-    default <- getAttribute(item, "default");
-    file <- getAttribute(item, "file");
-
-    # Was directive given in short format <@<directive> file="<content>">?
-    if (is.null(name) && is.null(content) && !is.null(file)) {
-      name <- "file";
-      content <- file;
-      file <- NULL;
-    }
-
-    # Was directive given in short format <@<directive> <name>="<content>">?
-    if (is.null(name) && is.null(content)) {
-      attrs <- getAttributes(item);
-      names <- setdiff(names(attrs), c("file", "default", known));
-      if (length(names) == 0L) {
-        throw(RspPreprocessingException("At least one of attributes 'name' and 'content' must be given", item=item));
-      }
-      name <- names[1L];
-      content <- attrs[[name]];
-    }
-
-    # Was directive given with 'file' attribute?
-    if (!is.null(file)) {
-####        str(list(item=paste(asRspString(item)), name=name, content=content, file=file));
-      path <- getPath(object);
-      if (!is.null(path)) {
-        pathname <- file.path(getPath(object), file);
-      } else {
-        pathname <- file;
-      }
-      # Sanity check
-      stopifnot(!is.null(pathname));
-      content <- readLines(pathname, warn=FALSE);
-      content <- paste(content, collapse="\n");
-    }
-
-    # Use default?
-    if (is.null(content) || is.na(content) || nchar(content) == 0L || content == "NA") {
-      value <- default;
-    } else {
-      value <- content;
-    }
-
-    list(name=name, value=value, content=content, file=file, default=default);
-  } # getNameContentDefaultAttributes()
-
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1533,6 +1483,55 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # RspMetaDirective => ...
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (inherits(item, "RspMetaDirective")) {
+      attrs <- getNameContentDefaultAttributes(item, doc=object);
+      name <- attrs$name;
+      content <- attrs$content;
+
+      metadata <- getMetadata(object);
+      metadataT <- NULL;
+      res <- NA;
+
+      if (!is.null(name) && !is.null(content)) {
+        metadataT <- content;
+        names(metadataT) <- name;
+      } else if (is.null(name) && !is.null(content)) {
+        lang <- getAttribute(item, "language");
+        if (is.null(lang)) {
+          throw(RspPreprocessingException("Attribute 'language' must be specified when parsing metadata from 'content'", item=item));
+        }
+        if (lang == "R-vignette") {
+          metadataT <- parseRVignetteMetadata(content);
+        } else {
+          throw(RspPreprocessingException(sprintf("Unknown 'language' ('%s')", lang), item=item));
+        }
+      } else if (!is.null(name) && is.null(content)) {
+        content <- metadata[[name]];
+        if (is.null(content)) {
+          throw(RspPreprocessingException(sprintf("No such metadata variable ('%s')", name), item=item));
+        }
+        res <- RspText(content, attrs=getAttributes(object));
+      }
+
+      # Any metadata to import?
+      if (length(metadataT) > 0L) {
+        for (name in names(metadataT)) {
+          metadata[[name]] <- metadataT[[name]];
+        }
+        object <- setAttribute(object, "metadata", metadata);
+      }
+
+      # Drop/insert RSP result
+      object[[idx]] <- res;
+
+      verbose && exit(verbose);
+      next;
+    } # RspMetaDirective
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # RspVariableDirective => ...
     # <@string name="<name>" content="<content>"%>
     # <@string name="<name>" content="<content>" default="<default>"%>
@@ -1540,7 +1539,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # <@string <name>="<content>" default="<default>"%>
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(item, "RspVariableDirective")) {
-      attrs <- getNameContentDefaultAttributes(item);
+      attrs <- getNameContentDefaultAttributes(item, doc=object);
 
       name <- attrs$name;
       if (is.null(name)) {
@@ -1587,55 +1586,6 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       verbose && exit(verbose);
       next;
     } # RspVariableDirective
-
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # RspMetaDirective => ...
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    if (inherits(item, "RspMetaDirective")) {
-      attrs <- getNameContentDefaultAttributes(item);
-      name <- attrs$name;
-      content <- attrs$content;
-
-      metadata <- getMetadata(object);
-      metadataT <- NULL;
-      res <- NA;
-
-      if (!is.null(name) && !is.null(content)) {
-        metadataT <- content;
-        names(metadataT) <- name;
-      } else if (is.null(name) && !is.null(content)) {
-        lang <- getAttribute(item, "language");
-        if (is.null(lang)) {
-          throw(RspPreprocessingException("Attribute 'language' must be specified when parsing metadata from 'content'", item=item));
-        }
-        if (lang == "R-vignette") {
-          metadataT <- parseRVignetteMetadata(content);
-        } else {
-          throw(RspPreprocessingException(sprintf("Unknown 'language' ('%s')", lang), item=item));
-        }
-      } else if (!is.null(name) && is.null(content)) {
-        content <- metadata[[name]];
-        if (is.null(content)) {
-          throw(RspPreprocessingException(sprintf("No such metadata variable ('%s')", name), item=item));
-        }
-        res <- RspText(content, attrs=getAttributes(object));
-      }
-
-      # Any metadata to import?
-      if (length(metadataT) > 0L) {
-        for (name in names(metadataT)) {
-          metadata[[name]] <- metadataT[[name]];
-        }
-        object <- setAttribute(object, "metadata", metadata);
-      }
-
-      # Drop/insert RSP result
-      object[[idx]] <- res;
-
-      verbose && exit(verbose);
-      next;
-    } # RspMetaDirective
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1880,7 +1830,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(item, "RspIfDirective")) {
       test <- getAttribute(item, "test");
-      attrs <- getNameContentDefaultAttributes(item, known=c("test", "negate"));
+      attrs <- getNameContentDefaultAttributes(item, known=c("test", "negate"), doc=object);
       name <- attrs$name;
 
       # Special case <%@if name="<logical>"%>

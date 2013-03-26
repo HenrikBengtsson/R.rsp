@@ -51,12 +51,13 @@ RspDirective(value=character(), ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:asRspString.RspDirective]{asRspString}} \tab Recreates an RSP string from an RSP preprocessing directive.\cr
+ \tab \code{getNameContentDefaultAttributes} \tab  -\cr
  \tab \code{\link[R.rsp:requireAttributes.RspDirective]{requireAttributes}} \tab Asserts that certain attributes exist.\cr
 }
 
 
  \bold{Methods inherited from RspConstruct}:\cr
-asRspString, getComment, getSuffixSpecs
+asRspString, getComment, getInclude, getSuffixSpecs
 
  \bold{Methods inherited from RspObject}:\cr
 getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes

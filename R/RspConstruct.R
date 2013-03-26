@@ -10,7 +10,7 @@
 #  (i) an RSP text (a plain text section), (ii) an RSP comment,
 #  (iii) an RSP preprocessing directive, or (iv) an RSP expression.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -22,7 +22,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -32,6 +32,40 @@ setConstructorS3("RspConstruct", function(object=character(), ..., comment=NULL)
   attr(this, "#comment") <- comment;
   this;
 })
+
+
+#########################################################################/**
+# @RdocMethod getInclude
+# @alias getInclude.RspText
+# @alias getInclude.RspCodeChunk
+# @alias getInclude.RspVariableDirective
+#
+# @title "Checks whether an RSP construct will include text to the output or not"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns @TRUE of @FALSE.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/#########################################################################
+setMethodS3("getInclude", "RspConstruct", function(object, ...) {
+  FALSE;
+})
+
 
 
 #########################################################################/**
@@ -58,12 +92,12 @@ setConstructorS3("RspConstruct", function(object=character(), ..., comment=NULL)
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
-setMethodS3("getComment", "RspConstruct", function(directive, ...) {
-  getAttribute(directive, "#comment");
+#*/#########################################################################
+setMethodS3("getComment", "RspConstruct", function(object, ...) {
+  getAttribute(object, "#comment");
 })
- 
- 
+
+
 #########################################################################/**
 # @RdocMethod getSuffixSpecs
 #
@@ -88,7 +122,7 @@ setMethodS3("getComment", "RspConstruct", function(directive, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getSuffixSpecs", "RspConstruct", function(object, ...) {
   specs <- attr(object, "suffixSpecs");
   if (is.null(specs)) return(NULL);
@@ -132,6 +166,8 @@ setMethodS3("asRspString", "RspConstruct", function(object, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-03-26
+# o Added getInclude() to RspConstruct that defaults to FALSE.
 # 2013-03-15
 # o Now RspConstruct extends RspObject.
 # 2013-02-22
