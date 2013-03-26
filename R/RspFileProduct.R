@@ -66,6 +66,10 @@ setMethodS3("print", "RspFileProduct", function(x, ...) {
   s <- c(s, sprintf("Pathname: %s", x));
   s <- c(s, sprintf("File size: %g bytes", file.info(x)$size));
   s <- c(s, sprintf("Content type: %s", getType(x)));
+  md <- getMetadata(x);
+  for (key in names(md)) {
+    s <- c(s, sprintf("Metadata '%s': '%s'", key, md[[key]]));
+  }
   s <- c(s, sprintf("Has processor: %s", hasProcessor(x)));
   s <- paste(s, collapse="\n");
   cat(s, "\n", sep="");
@@ -200,14 +204,20 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
   if (is.null(fcn)) {
     verbose && cat(verbose, "Processor found: <none>");
   } else {
+    # Get the metadata attributes
+    metadata <- getMetadata(object);
+
     # Make sure the processor returns an RspFileProduct
-    processor <- fcn;
+    fcnT <- fcn
+    processor <- function(...) {
+       do.call(fcnT, args=c(list(...), metadata));
+    }
     fcn <- function(pathname, ..., fake=FALSE) {
       # Arguments 'pathname':
-      pathname <- Arguments$getReadablePathname(object, mustExist=!fake);
-      pathnameR <- processor(pathname, ..., fake=fake);
+      pathname <- Arguments$getReadablePathname(pathname);
+      pathnameR <- processor(pathname, ...);
       pathnameR <- getAbsolutePath(pathnameR);
-      pathnameR <- RspFileProduct(pathnameR, mustExist=FALSE);
+      pathnameR <- RspFileProduct(pathnameR, attrs=list(metadata=metadata), mustExist=FALSE);
     } # fcn()
     verbose && cat(verbose, "Processor found: ", type);
   }
