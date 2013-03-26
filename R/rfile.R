@@ -18,32 +18,32 @@
 #      The default is a file with a filename where the file extension
 #      (typically \code{".rsp"}) has been dropped from \code{file}
 #      in the directory given by the \code{workdir} argument.}
-#   \item{workdir}{The working directory to use after parsing and 
+#   \item{workdir}{The working directory to use after parsing and
 #      preprocessing, but while \emph{evaluating} and \emph{postprocessing}
-#      the RSP document.  
-#      If argument \code{output} specifies an absolute pathname, 
+#      the RSP document.
+#      If argument \code{output} specifies an absolute pathname,
 #      then the directory of \code{output} is used, otherwise the
 #      current directory is used.}
 #   \item{type}{The default content type of the RSP document.  By default, it
 #      is inferred from the \code{output} filename extension, iff possible.}
-#   \item{envir}{The @environment in which the RSP document is 
+#   \item{envir}{The @environment in which the RSP document is
 #      preprocessed and evaluated.}
 #   \item{args}{A named @list of arguments assigned to the environment
-#     in which the RSP string is parsed and evaluated. 
+#     in which the RSP string is parsed and evaluated.
 #     See @see "R.utils::cmdArgs".}
 #   \item{postprocess}{If @TRUE, and a postprocessing method exists for
 #      the generated RSP product, it is postprocessed as well.}
 #   \item{...}{Additional arguments passed to the RSP engine.}
 #   \item{fake}{If @TRUE, the pathname of the output file is returned as
-#      soon as the RSP file is parsed (and fakely postprocessed if 
-#      \code{postprocessed=TRUE}).  It is neither translated to R source 
+#      soon as the RSP file is parsed (and fakely postprocessed if
+#      \code{postprocessed=TRUE}).  It is neither translated to R source
 #      code nor evaluated or postprocessed and files are never created.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
 # \value{
 #   Returns an @see "RspProduct".
-#   If argument \code{output} specifies a file, then this is 
+#   If argument \code{output} specifies a file, then this is
 #   a @see "RspFileProduct".
 # }
 #
@@ -66,7 +66,7 @@
 #
 # @keyword file
 # @keyword IO
-#*/########################################################################### 
+#*/###########################################################################
 setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), args="*", postprocess=TRUE, fake=FALSE, ..., verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
@@ -188,7 +188,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
       cat(verbose, "Input pathname: ", file);
     } else if (inherits(file, "connection")) {
       ci <- summary(file);
-      printf(verbose, "Input '%s' connection: %s\n", 
+      printf(verbose, "Input '%s' connection: %s\n",
           class(ci)[1L], ci$description);
     }
 
@@ -196,7 +196,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
       cat(verbose, "Output pathname: ", output);
     } else if (inherits(output, "connection")) {
       ci <- summary(output);
-      printf(verbose, "Output '%s' connection: %s\n", 
+      printf(verbose, "Output '%s' connection: %s\n",
           class(ci)[1L], ci$description);
     }
 
@@ -220,7 +220,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
 
     verbose && print(verbose, res);
     verbose && exit(verbose);
-    
+
     verbose && exit(verbose);
     return(res);
   }
@@ -263,7 +263,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
 
     verbose && print(verbose, res);
     verbose && exit(verbose);
-    
+
     verbose && exit(verbose);
     return(res);
   }
@@ -311,7 +311,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
 
   verbose && exit(verbose);
 
-  invisible(res);
+  res;
 }, protected=TRUE) # rfile()
 
 
