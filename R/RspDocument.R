@@ -310,6 +310,12 @@ setMethodS3("dropEmptyText", "RspDocument", function(object, ..., verbose=FALSE)
 #  Returns an @see "RspDocument".
 # }
 #
+# \details{
+#   For this method to work properly, the RspDocument should not contain
+#   any @see "RspUnparsedDirective":s or @see "RspUnparsedExpression":s,
+#   i.e. they should already have been parsed.
+# }
+#
 # @author
 #
 # \seealso{
@@ -367,15 +373,20 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
   isText <- sapply(object, FUN=inherits, "RspText");
   idxsText <- unname(which(isText));
   idxsNonText <- unname(which(!isText));
+  idxsSilentNonText <- idxsNonText[!sapply(object[idxsNonText], FUN=getInclude)];
   verbose && cat(verbose, "Number text RSP constructs: ", length(idxsText));
   verbose && cat(verbose, "Number non-text RSP constructs: ", length(idxsNonText));
+  verbose && cat(verbose, "Number \"silent\" non-text RSP constructs: ", length(idxsSilentNonText));
 
   # Nothing todo?
   if (length(idxsNonText) == 0L) {
     verbose && exit(verbose);
     return(object);
   }
-
+  if (length(idxsSilentNonText) == 0L) {
+    verbose && exit(verbose);
+    return(object);
+  }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # (2) Drop "empty" RSP text inbetween (non-text) RSP constructs
@@ -408,8 +419,10 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
       isText <- sapply(object, FUN=inherits, "RspText");
       idxsText <- unname(which(isText));
       idxsNonText <- unname(which(!isText));
+      idxsSilentNonText <- idxsNonText[!sapply(object[idxsNonText], FUN=getInclude)];
       verbose && cat(verbose, "Number text RSP constructs: ", length(idxsText));
       verbose && cat(verbose, "Number non-text RSP constructs: ", length(idxsNonText));
+      verbose && cat(verbose, "Number \"silent\" non-text RSP constructs: ", length(idxsSilentNonText));
     } else {
       verbose && cat(verbose, "No 'empty' RSP text found.");
     }
@@ -423,6 +436,7 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
   # Sanity checks
   stopifnot(all(idxsText <= length(object)));
   stopifnot(all(idxsNonText <= length(object)));
+  stopifnot(all(idxsSilentNonText <= length(object)));
   stopifnot(inherits(object, "RspDocument"));
 
 
@@ -489,14 +503,20 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Now we are working with an non-text RSP construct
-    # that is on an line by itself
+    # (b) Now we are working with an non-text RSP construct
+    #     that is on an line by itself
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (getInclude(expr)) {
+      verbose && printf(verbose, "RSP construct is on its own line but itself includes content (just as RSP text does).\n");
+      verbose && exit(verbose);
+      next;
+    }
+
     verbose && printf(verbose, "RSP construct is on its own line.\n");
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # (b) Trim whitespace and trailing newline
+    # (c) Trim whitespace and trailing newline
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # (i) Trim white space (excluding newline) to the left
     #     (this white space is on the same line as the RSP construct)
@@ -1977,6 +1997,9 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 ##############################################################################
 # HISTORY:
+# 2013-03-26
+# o Now trimNonText() for RspDocument only drops following "empty" text
+#   of an RSP construct iff it does not include content itself.
 # 2013-03-25
 # o BUG FIX: trimNonText() for RspDocument would cause constructs to also
 #   drop newlines in text that is following the next construct.

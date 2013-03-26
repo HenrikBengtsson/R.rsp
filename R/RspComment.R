@@ -11,7 +11,7 @@
 #  and so on.  They can also be so called "empty" RSP comments of format
 #  \code{<\%-\%>}, \code{<\%--\%>}, \code{<\%---\%>} and so on.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -22,7 +22,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -56,15 +56,24 @@ setConstructorS3("RspComment", function(str=character(), ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getComment", "RspComment", function(comment, ...) {
   as.character(comment);
 })
 
 
+setMethodS3("asRspString", "RspComment", function(object, ...) {
+  body <- unclass(object);
+  suffixSpecs <- attr(object, "suffixSpecs");
+  fmtstr <- "<%%%s%s%%>";
+  s <- sprintf(fmtstr, body, suffixSpecs);
+  RspString(s);
+})
 
 ##############################################################################
 # HISTORY:
+# 2013-03-26
+# o Added asRspString() for RspComment.
 # 2013-02-11
 # o Added Rdoc help.
 # 2013-02-09
