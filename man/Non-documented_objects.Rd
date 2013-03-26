@@ -145,6 +145,7 @@
 \alias{getItem}
 \alias{getItem.RspPreprocessingException}
 \alias{getMessage.RspPreprocessingException}
+\alias{getNameContentDefaultAttributes}
 \alias{getNameContentDefaultAttributes.RspDirective}
 \alias{getInclude}
 
