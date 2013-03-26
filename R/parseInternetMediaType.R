@@ -4,13 +4,33 @@ extentionToIMT <- function(filename, ext=NULL, default=NA) {
   }
   ext <- tolower(ext);
   type <- switch(ext,
-    "brew" = "application/x-brew",
-    "html" = "text/html",
-    "md" = "application/x-markdown",
-    "rnw" = "application/x-rnw",
-    "rsp" = "application/x-rsp",
-    "tex" = "application/x-latex",
-    "txt" = "text/plain",
+    "atom"  = "application/atom+xml",
+    "brew"  = "application/x-brew",
+    "css"   = "text/css",
+    "csv"   = "text/csv",
+    "deb"   = "application/x-deb",
+    "dtd"   = "application/xml-dtd",
+    "htm"   = "text/html",
+    "html"  = "text/html",
+    "js"    = "application/javascript",
+    "json"  = "application/json",
+    "kml"   = "application/vnd.google-earth.kml+xml",
+    "md"    = "application/x-markdown",
+    "pdf"   = "application/pdf",
+    "ps"    = "application/postscript",
+    "rdf"   = "application/rdf+xml",
+    "rnw"   = "application/x-rnw",
+    "rsp"   = "application/x-rsp",
+    "rss"   = "application/rss+xml",
+    "svg"   = "image/svg+xml",
+    "tex"   = "application/x-latex",
+    "txt"   = "text/plain",
+    "vcard" = "text/vcard",
+    "vcf"   = "text/vcard",
+    "vrml"  = "model/vrml",
+    "xhtml" = "application/xhtml+xml",
+    "xml"   = "text/xml",  # also "application/xml"
+    "xul"   = "application/application/vnd.mozilla.xul+xml",
     default
   );
   type;
@@ -62,7 +82,7 @@ escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
     ct$target <- parseInternetMediaType("text/plain");
   }
 
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # (2) "Merge" content types with the same escape rules
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -98,9 +118,9 @@ escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
       env <- trim(env);
       if (is.element("math", env)) {
       }
-      replace <- c("\\"="\\textbackslash", "{"="\\{", "}"="\\}", 
-                   "&"="\\&", "%"="\\%", "$"="\\$", "#"="\\#", 
-                   "_"="\\_", 
+      replace <- c("\\"="\\textbackslash", "{"="\\{", "}"="\\}",
+                   "&"="\\&", "%"="\\%", "$"="\\$", "#"="\\#",
+                   "_"="\\_",
                    "~"="\\~{}", "^"="\\^{}");  # <== ?
       search <- names(replace);
       for (ii in seq_along(replace)) {
@@ -125,7 +145,7 @@ escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
   as.character(s);
 } # escapeRspContent()
 
- 
+
 # \references{
 #   [1] \emph{Internet Media Type},
 #       \url{http://www.wikipedia.org/wiki/Internet_media_type}
