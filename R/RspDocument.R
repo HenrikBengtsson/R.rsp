@@ -73,9 +73,9 @@ setMethodS3("print", "RspDocument", function(x, ...) {
     }
   }
   s <- c(s, sprintf("Content type: %s", getType(x)));
-  an <- getMetadata(x);
-  for (key in names(an)) {
-    s <- c(s, sprintf("Metadata '%s': %s", key, an[[key]]));
+  md <- getMetadata(x);
+  for (key in names(md)) {
+    s <- c(s, sprintf("Metadata '%s': '%s'", key, md[[key]]));
   }
   s <- paste(s, collapse="\n");
   cat(s, "\n", sep="");
@@ -464,16 +464,20 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
     }
 
     # (ii) Find succeeding RSP text
-##    idxsTextT <- setdiff(idxsText, idxsTextTrimmed);
     idxTextR <- idxsText[idxsText > idx];
     if (length(idxTextR) == 0L) {
       textR <- NULL;
       emptyR <- TRUE;
     } else {
       idxTextR <- idxTextR[1L];
-      exprR <- object[[idxTextR]];
-      textR <- getContent(exprR);
-      emptyR <- (regexpr("^[ \t\v]*\n", textR) != -1L);
+      if (idxTextR == idx + 1L) {
+        exprR <- object[[idxTextR]];
+        textR <- getContent(exprR);
+        emptyR <- (regexpr("^[ \t\v]*\n", textR) != -1L);
+      } else {
+        textR <- NULL;
+        emptyR <- TRUE;
+      }
     }
 
     # Not on an empty line?
@@ -1561,8 +1565,6 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         assign(name, value, envir=envir);
       } else if (!is.null(name) && is.null(value)) {
         if (!exists(name, envir=envir, inherits=FALSE)) {
-      str(list(attrs=attrs));
-      stop("XX")
           throw(RspPreprocessingException(sprintf("No such variable ('%s')", name), item=item));
         }
         value <- get(name, envir=envir);
@@ -2025,6 +2027,9 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 ##############################################################################
 # HISTORY:
+# 2013-03-25
+# o BUG FIX: trimNonText() for RspDocument would cause constructs to also
+#   drop newlines in text that is following the next construct.
 # 2013-03-24
 # o Added support for <%@include file="foo.rsp"
 #   type="application/x-rsp; until=expressions"%>.
