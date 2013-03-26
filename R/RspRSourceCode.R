@@ -8,7 +8,7 @@
 #
 #  An RspRSourceCode object is an @see "RspSourceCode" holding R source code.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -18,7 +18,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -53,7 +53,7 @@ setConstructorS3("RspRSourceCode", function(...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("parse", "RspRSourceCode", function(object, ...) {
   # Get the source code
   code <- as.character(object);
@@ -92,7 +92,7 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
 # \arguments{
 #   \item{envir}{The @environment in which the RSP string is evaluated.}
 #   \item{args}{A named @list of arguments assigned to the environment
-#     in which the RSP string is parsed and evaluated. 
+#     in which the RSP string is parsed and evaluated.
 #     See @see "R.utils::cmdArgs".}
 #   \item{...}{Optional arguments passed to @see "base::eval".}
 # }
@@ -106,7 +106,7 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(), args="*", ..., verbose=FALSE) {
   # Argument 'args':
   args <- cmdArgs(args);
@@ -126,7 +126,7 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(),
   });
   res <- paste(res, collapse="\n");
 
-  RspStringProduct(res, type=getType(object));
+  RspStringProduct(res, attrs=getAttributes(object));
 }) # evaluate()
 
 
@@ -162,7 +162,7 @@ setMethodS3("findProcessor", "RspRSourceCode", function(object, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("tangle", "RspRSourceCode", function(code, ...) {
   # Remember attributes
   attrs <- attributes(code);
