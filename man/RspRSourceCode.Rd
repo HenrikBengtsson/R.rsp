@@ -54,11 +54,12 @@ RspRSourceCode(...)
  \tab \code{\link[R.rsp:parse.RspRSourceCode]{parse}} \tab Parses the R code.\cr
  \tab \code{rcat} \tab  -\cr
  \tab \code{\link[R.rsp:tangle.RspRSourceCode]{tangle}} \tab Drops all text-outputting calls from the R code.\cr
+ \tab \code{tidy} \tab  -\cr
 }
 
 
  \bold{Methods inherited from RspSourceCode}:\cr
-evaluate, print, rstring, tangle
+evaluate, print, rstring, tangle, tidy
 
  \bold{Methods inherited from RspProduct}:\cr
 findProcessor, getMetadata, getType, hasProcessor, print, process

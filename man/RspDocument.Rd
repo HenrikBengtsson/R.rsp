@@ -49,7 +49,7 @@ RspDocument(expressions=list(), ...)
 \tabular{rll}{
  \tab \code{[} \tab  -\cr
  \tab \code{[<-} \tab  -\cr
- \tab \code{\link[R.rsp:asRspString.RspDocument]{asRspString}} \tab Recreates an RSP string from an RspDocument.\cr
+ \tab \code{asRspString} \tab  -\cr
  \tab \code{\link[R.rsp:dropEmptyText.RspDocument]{dropEmptyText}} \tab Drops all empty RSP text constructs.\cr
  \tab \code{\link[R.rsp:evaluate.RspDocument]{evaluate}} \tab Parses, translates, and evaluates the RSP document.\cr
  \tab \code{\link[R.rsp:flatten.RspDocument]{flatten}} \tab Flattens an RspDocument.\cr

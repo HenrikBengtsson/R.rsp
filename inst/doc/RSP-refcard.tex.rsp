@@ -79,15 +79,15 @@ the output document, which in turn may be (v) postprocessed.
 Examples (in R):
 (1) main.tex.rsp $\rightarrow$ (main.tex.R) $\rightarrow$ main.tex $\rightarrow$ main.pdf.
 (2) main.md.rsp $\rightarrow$ (main.md.R) $\rightarrow$ main.md $\rightarrow$ main.html.
-(3) main.Rmd.rsp $\rightarrow$ (main.Rmd.R) $\rightarrow$ main.html.
+(3) main.Rnw.rsp $\rightarrow$ (main.Rnw.R) $\rightarrow$ main.Rnw $\rightarrow$ main.tex $\rightarrow$ main.pdf.
 }
 
-\subsection{Comments \& Escapes}
+\subsection{Comments, Trimming \& Escapes}
 \small{
 Comments can be used to exclude text, code expressions and preprocessing directives.
 \\}
 
-\begin{tabular}{p{37ex}p{140ex}}
+\begin{tabular}{p{36ex}p{144ex}}
 \textit{Markup} & \textit{Description} \\
 \hline
 %%
@@ -96,18 +96,24 @@ Comments can be used to exclude text, code expressions and preprocessing directi
 &
  Drops \content{anything}.
  Number ($\geq 2$) of hyphens must match.
- Comments can be nested, if different number of hyphens. \\
+ Comments can be nested, if different number of hyphens.\\
 %%
  \code{<\%-\%>},
  \code{<\%--\%>},
  $\ldots$
 &
-"Empty" comments. \\
+"Empty" comments. Like above comments, these ones force following white space and line break to be dropped.\\
+\hline
+%%
+ \code{<\%} $\ldots$ \code{-\%>},
+ \code{<\%} $\ldots$ \code{+\%>}
+&
+A hyphen (plus) attached to the end tag, forces (prevents) following white space (including the line break) to be dropped.\\
 \hline
 %%
  \code{<\%\%} and \code{\%\%>}
 &
- Inserts  \code{<\%} and \code{\%>}. \\
+ Inserts  \code{<\%} and \code{\%>}.\\
 \end{tabular}
 
 
@@ -118,7 +124,7 @@ They are applied after dropping comments and before translating text and code ex
 It is not possible to tell from the translated code script whether preprocessing directives have been used or not, nor are their variables accessible (except metadata).
 \\}
 
-\begin{tabular}{p{37ex}p{140ex}}
+\begin{tabular}{p{36ex}p{144ex}}
 \textit{Markup} & \textit{Description} \\
 %%
 \hline
@@ -127,7 +133,8 @@ It is not possible to tell from the translated code script whether preprocessing
 %%
 \hline
  \code{<\%@meta \content{name}="\content{content}"\%>} &
- Assigns \content{content} to metadata variable \content{name}. \\
+ Assigns \content{content} to metadata variable \content{name}. 
+ Metadata may be used by preprocessors, e.g. including HTML title. \\
 %%
  \code{<\%@meta name="\content{name}"\%>} &
  Inserts the content of metadata variable \content{name}. \\
@@ -154,21 +161,24 @@ It is not possible to tell from the translated code script whether preprocessing
 
 \subsection{Code expressions}
 \small{
-Code expressions are evaluated \emph{after} translation. They may contains incomplete code expressions and can be of any programming language as long as there is a code translator for it.
+Code expressions are evaluated \emph{after} translation. They may be of any programming language as long as there is a code translator for it.
 Code expressions have no access to preprocessing variables (except metadata).
 Output written to standard output is inserted into the final document.
 \\}
 
-\begin{tabular}{p{37ex}p{140ex}}
+\begin{tabular}{p{36ex}p{144ex}}
 \textit{Markup} & \textit{Description} \\
 %%
 \hline
 %%
  \code{<\%\content{code}\%>} &
- Inserts \content{code} into the translated code script. \\
+ Inserts \content{code} (may be an incomplete expression) into the
+ translated code script without including content in the output document.\\
 %%
- \code{<\%=\content{code}\%>} &
- Inserts \content{code} and its returned value into the translated code script. \\
+ \code{<\%=\content{code chunk}\%>} &
+ Inserts \content{code chunk} (must be a complete expression) into
+ the translated code script and includes the returned value in the 
+ output document. \\
 \end{tabular}
 
 \subsection{Example of text file with RSP-embedded R code}
@@ -184,9 +194,9 @@ Output written to standard output is inserted into the final document.
 %%%
 \parbox[t]{6ex}{$\rightarrow$}%%
 %%%
-\begin{minipage}[t]{44ex}
+\begin{minipage}[t]{51ex}
 \footnotesize%
-\textbf{Preprocessed~RSP~document:}%
+\textbf{Without comments and preprocessed:}%
 \begin{verbatim}
 <%@include file="${file}" type="application/x-rsp; until=expressions"%>
 \end{verbatim}
@@ -194,7 +204,7 @@ Output written to standard output is inserted into the final document.
 %%%
 \parbox[t]{6ex}{$\rightarrow$}%%
 %%%
-\begin{minipage}[t]{38ex}
+\begin{minipage}[t]{37ex}
 \footnotesize%
 \textbf{Translated~code~script:}%
 \begin{verbatim}
@@ -203,9 +213,7 @@ Output written to standard output is inserted into the final document.
 ## This utilizes the RSP 'eval' preprocessing directive to
 ## translate the example into R code.
 code <- rscript('${doc}');
-code <- code[-(1:grep('## RSP source code script', code))];
-code <- gsub('.ro', 'cat', code, fixed=TRUE);
-code <- paste(code, collapse='\n');
+code <- tidy(code, format='demo');
 "%>
 <%@string name="code"%>
 \end{verbatim}
@@ -221,5 +229,5 @@ code <- paste(code, collapse='\n');
 \end{verbatim}
 \end{minipage}
 
-\hfill{\footnotesize R.rsp v<%=R.rsp$version%> (<%=R.rsp$date%>)}
+\hfill{\footnotesize \href{http://cran.r-project.org/package=R.rsp}{R.rsp v<%=R.rsp$version%>} (<%=R.rsp$date%>) by Henrik Bengtsson}
 \end{document}

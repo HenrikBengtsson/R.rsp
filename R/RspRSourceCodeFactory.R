@@ -79,15 +79,26 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
   # RspCodeChunk => .ro({<expr>})
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspCodeChunk")) {
-    codeT <- getCode(expr);
-    code <- sprintf("{%s}", trim(codeT));
+    code <- getCode(expr);
+    code <- trim(code);
 
-    # Validate code chunk
-    tryCatch({
-      base::parse(text=code);
-    }, error = function(ex) {
-      throw(sprintf("RSP code chunk (#%d) does not contain a complete R expression: %s", index, ex));
-    });
+    # Parse and validate code chunk
+    # (i) Try without { ... }
+    rexpr <- tryCatch({
+      codeT <- sprintf("(%s)", code);
+      base::parse(text=codeT);
+    }, error = function(ex) NULL);
+
+    # (ii) Otherwise retry with { ... }
+    if (is.null(rexpr)) {
+      code <- sprintf("{%s}", code);
+      rexpr <- tryCatch({
+        codeT <- sprintf("(%s)", code);
+        base::parse(text=codeT);
+      }, error = function(ex) {
+        throw(sprintf("RSP code chunk (#%d) does not contain a complete R expression: %s", index, ex));
+      });
+    }
 
     echo <- getEcho(expr);
     if (echo) {
@@ -223,6 +234,7 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
     ## RSP output function
     .ro <- function(...) base::cat(..., sep="", collapse="")
 
+    ## RSP source code script
   ');
 
   res;

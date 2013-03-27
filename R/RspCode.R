@@ -95,31 +95,6 @@ setMethodS3("getEcho", "RspCode", function(code, ...) {
 })
 
 
-#########################################################################/**
-# @RdocMethod "asRspString"
-#
-# @title "Recreates an RSP string from an RspCode"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns an @see "RspString".
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
 setMethodS3("asRspString", "RspCode", function(code, ...) {
   body <- getCode(code);
 
@@ -174,31 +149,6 @@ setMethodS3("getInclude", "RspCodeChunk", function(code, ...) {
 })
 
 
-#########################################################################/**
-# @RdocMethod "asRspString"
-#
-# @title "Recreates an RSP string from an RspCodeChunk"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns an @see "RspString".
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
 setMethodS3("asRspString", "RspCodeChunk", function(code, ...) {
   body <- getCode(code);
 

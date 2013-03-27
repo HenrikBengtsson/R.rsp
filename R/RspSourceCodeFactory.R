@@ -77,8 +77,9 @@ setMethodS3("getLanguage", "RspSourceCodeFactory", function(this, ...) {
 # @synopsis
 #
 # \arguments{
+#   \item{code}{A @character @vector of code strings.}
 #   \item{...}{Arguments passed to the language-specific
-#              @see "RspSourceCode" constructor.}
+#      @see "RspSourceCode" constructor.}
 # }
 #
 # \value{
@@ -99,7 +100,7 @@ setMethodS3("makeSourceCode", "RspSourceCodeFactory", function(this, code, ...) 
 
   # Get source code header, body, and footer.
   code <- getCompleteCode(this, code, ...);
-  code <- c(code$header, "\n## RSP source code script", code$body, code$footer);
+  code <- c(code$header, code$body, code$footer);
 
   # Made code object
   code <- clazz(code, ...);
@@ -231,7 +232,7 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
   doc <- Arguments$getInstanceOf(doc, "RspDocument");
 
   if (length(doc) == 0L) {
-    code <- makeSourceCode(object, "", type=getType(doc), metadata=getMetadata(doc));
+    code <- makeSourceCode(object, "", ..., type=getType(doc), metadata=getMetadata(doc));
     return(code);
   }
 
@@ -272,7 +273,7 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
   }
   code <- unlist(code, use.names=FALSE);
 
-  code <- makeSourceCode(object, code, type=getType(doc), metadata=getMetadata(doc));
+  code <- makeSourceCode(object, code, ..., type=getType(doc), metadata=getMetadata(doc));
   code;
 }) # toSourceCode()
 

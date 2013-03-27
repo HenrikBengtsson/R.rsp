@@ -65,6 +65,7 @@ setMethodS3("print", "RspSourceCode", function(x, ...) {
 })
 
 
+
 #########################################################################/**
 # @RdocMethod evaluate
 #
@@ -121,6 +122,53 @@ setMethodS3("evaluate", "RspSourceCode", abstract=TRUE);
 #*/#########################################################################
 setMethodS3("tangle", "RspSourceCode", abstract=TRUE);
 
+
+#########################################################################/**
+# @RdocMethod tidy
+# @alias tidy.RspRSourceCode
+#
+# @title "Tidy up the RSP source code"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{format}{A @character string specifying how the source code
+#     should be tidied.}
+#   \item{collapse}{How source code lines should be collapsed.}
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns an @RspSourceCode of the same class as the input source code.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/#########################################################################
+setMethodS3("tidy", "RspSourceCode", function(object, format=c("asis"), collapse="\n", ...) {
+  # Argument 'format':
+  format <- match.arg(format);
+
+  # Record attributes
+  attrs <- attributes(object);
+
+  # Collapse?
+  if (!is.null(collapse)) {
+    object <- paste(object, collapse=collapse);
+  }
+
+  # Restore attributes (if lost above)
+  attributes(object) <- attrs;
+
+  object;
+})
 
 
 ##############################################################################

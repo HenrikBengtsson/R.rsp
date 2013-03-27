@@ -138,6 +138,7 @@
 # @alias getNameContentDefaultAttributes
 # @alias getNameContentDefaultAttributes.RspDirective
 # @alias getInclude
+# @alias tidy
 #
 # \description{
 # This page contains aliases for all "non-documented" objects that

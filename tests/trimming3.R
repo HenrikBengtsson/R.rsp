@@ -30,4 +30,4 @@ s <- rstring(text)
 cat(s)
 
 s0 <- rstring(text0)
-stopifnot(identical(s, s0))
+stopifnot(all.equal(s, s0))

@@ -30,6 +30,12 @@
  Returns an \code{\link{RspDocument}}.
 }
 
+\details{
+  For this method to work properly, the RspDocument should not contain
+  any \code{\link{RspUnparsedDirective}}:s or \code{\link{RspUnparsedExpression}}:s,
+  i.e. they should already have been parsed.
+}
+
 \author{Henrik Bengtsson}
 
 \seealso{

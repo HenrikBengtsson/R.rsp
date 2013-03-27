@@ -126,6 +126,7 @@ setMethodS3("getComment", "RspConstruct", function(object, ...) {
 setMethodS3("getSuffixSpecs", "RspConstruct", function(object, ...) {
   specs <- attr(object, "suffixSpecs");
   if (is.null(specs)) return(NULL);
+  specs <- trim(specs);
 ##  specs <- gsub("^\\[[ \t\v]*", "", specs);
 ##  specs <- gsub("[ \t\v]*\\]$", "", specs);
   specs;
@@ -135,6 +136,14 @@ setMethodS3("getSuffixSpecs", "RspConstruct", function(object, ...) {
 
 #########################################################################/**
 # @RdocMethod "asRspString"
+# @alias asRspString.RspCode
+# @alias asRspString.RspCodeChunk
+# @alias asRspString.RspComment
+# @alias asRspString.RspDirective
+# @alias asRspString.RspDocument
+# @alias asRspString.RspText
+# @alias asRspString.RspUnParsedDirective
+# @alias asRspString.RspUnparsedDirective
 #
 # @title "Recreates an RSP string from an RspConstruct"
 #

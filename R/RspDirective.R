@@ -128,31 +128,6 @@ setMethodS3("getNameContentDefaultAttributes", "RspDirective", function(item, kn
 }, protected=TRUE) # getNameContentDefaultAttributes()
 
 
-#########################################################################/**
-# @RdocMethod "asRspString"
-#
-# @title "Recreates an RSP string from an RSP preprocessing directive"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns an @see "RspString".
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
 setMethodS3("asRspString", "RspDirective", function(object, ...) {
   body <- unclass(object);
   attrs <- getAttributes(object);
@@ -379,31 +354,6 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
 }) # parse()
 
 
-#########################################################################/**
-# @RdocMethod "asRspString"
-#
-# @title "Recreates an RSP string from an unparsed RSP preprocessing directive"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns an @see "RspString".
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
 setMethodS3("asRspString", "RspUnparsedDirective", function(object, ...) {
   body <- unclass(object);
   suffixSpecs <- attr(object, "suffixSpecs");

@@ -21,7 +21,7 @@ text='
 <%-- Include the value of the preprocessor variable to the document. --%>
 Current version is <%@include content="${version}"%> (at preprocessing).
 
-<%-- Assign the value of the preprocessor variable to an R variable. 
+<%-- Assign the value of the preprocessor variable to an R variable.
      Note how the preprocessor directive is inside a code expression --%>
 <%
 # This is an RSP code section
@@ -72,5 +72,5 @@ cat(s)
 verbose && ruler(verbose, char="--- REFERENCE ")
 cat(s0)
 verbose && ruler(verbose)
-stopifnot(identical(s, s0))
+stopifnot(all.equal(s, s0))
 verbose && exit(verbose)

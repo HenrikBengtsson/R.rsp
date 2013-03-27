@@ -395,6 +395,14 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
   idxsInbetweenText <- idxsText[1L < idxsText & idxsText < length(object)];
   if (length(idxsInbetweenText) > 0L) {
     for (idx in idxsInbetweenText) {
+      # (a) Does the preceeding non-text RSP construct include content?
+      item <- object[[idx-1L]];
+      if (getInclude(item)) {
+         # ... then don't do anything.
+         next;
+      }
+
+      # (b) Otherwise...
       expr <- object[[idx]];
   ##    verbose && enter(verbose, sprintf("RSP inbetween text #%d ('%s') of %d", idx, class(expr)[1L], length(idxsInbetweenText)));
 
@@ -934,31 +942,6 @@ setMethodS3("subset", "RspDocument", function(x, subset, ...) {
 
 
 
-#########################################################################/**
-# @RdocMethod "asRspString"
-#
-# @title "Recreates an RSP string from an RspDocument"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns an @see "RspString".
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
 setMethodS3("asRspString", "RspDocument", function(doc, ...) {
 ##  isText <- (names(doc) == "text");
 ##  if (!all(isText)) {
@@ -1477,10 +1460,16 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
           # Drop empty lines
           content <- sub(patternR, "", content);
-          # Update RspText object
-          item2 <- content;
-          class(item2) <- class(item);
-          object[[idx]] <- item2;
+
+          if (nchar(content) > 0L) {
+            # Update RspText object
+            item2 <- content;
+            class(item2) <- class(item);
+            object[[idx]] <- item2;
+          } else {
+            # ...or drop it if empty
+            object[[idx]] <- NA;
+          }
         }
       } # if (nbrOfEmptyTextLinesToDrop != 0L)
 

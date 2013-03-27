@@ -10,6 +10,14 @@
 \alias{asRspString.RspConstruct}
 \alias{RspConstruct.asRspString}
 \alias{asRspString,RspConstruct-method}
+\alias{asRspString.RspCode}
+\alias{asRspString.RspCodeChunk}
+\alias{asRspString.RspComment}
+\alias{asRspString.RspDirective}
+\alias{asRspString.RspDocument}
+\alias{asRspString.RspText}
+\alias{asRspString.RspUnParsedDirective}
+\alias{asRspString.RspUnparsedDirective}
 
 \title{Recreates an RSP string from an RspConstruct}
 

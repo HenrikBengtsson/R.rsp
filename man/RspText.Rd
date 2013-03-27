@@ -53,7 +53,7 @@ RspText(text=character(), escape=FALSE, ...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:asRspString.RspText]{asRspString}} \tab Recreates an RSP string from an RspText.\cr
+ \tab \code{asRspString} \tab  -\cr
  \tab \code{\link[R.rsp:getContent.RspText]{getContent}} \tab Gets the contents of the RSP text.\cr
  \tab \code{getInclude} \tab  -\cr
 }

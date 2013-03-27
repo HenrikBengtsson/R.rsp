@@ -55,7 +55,7 @@ RspShSourceCode(...)
 
 
  \bold{Methods inherited from RspSourceCode}:\cr
-evaluate, print, rstring, tangle
+evaluate, print, rstring, tangle, tidy
 
  \bold{Methods inherited from RspProduct}:\cr
 findProcessor, getMetadata, getType, hasProcessor, print, process

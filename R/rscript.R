@@ -165,13 +165,16 @@ setMethodS3("rscript", "RspDocument", function(object, envir=parent.frame(), ...
   factory <- newInstance(clazz);
   verbose && cat(verbose, "Language: ", getLanguage(factory));
   code <- toSourceCode(factory, object, ..., verbose=verbose);
-  verbose && cat(verbose, "Generated source code:");
-  verbose && cat(verbose, head(code, n=3L));
-  verbose && cat(verbose);
-  verbose && cat(verbose, "[...]");
-  verbose && cat(verbose);
-  verbose && cat(verbose, tail(code, n=3L));
-  verbose && exit(verbose);
+
+  if (verbose) {
+    cat(verbose, "Generated source code:");
+    cat(verbose, head(code, n=3L));
+    cat(verbose);
+    cat(verbose, "[...]");
+    cat(verbose);
+    cat(verbose, tail(code, n=3L));
+    exit(verbose);
+  }
 
   verbose && exit(verbose);
 

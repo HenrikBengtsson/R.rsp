@@ -53,7 +53,7 @@ RspCodeChunk(..., return=FALSE)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:asRspString.RspCodeChunk]{asRspString}} \tab Recreates an RSP string from an RspCodeChunk.\cr
+ \tab \code{asRspString} \tab  -\cr
  \tab \code{getInclude} \tab  -\cr
 }
 

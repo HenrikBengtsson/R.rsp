@@ -78,31 +78,6 @@ setMethodS3("getContent", "RspText", function(text, unescape=FALSE, ...) {
 })
 
 
-#########################################################################/**
-# @RdocMethod "asRspString"
-#
-# @title "Recreates an RSP string from an RspText"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns an @see "RspString".
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
 setMethodS3("asRspString", "RspText", function(text, ...) {
   RspString(getContent(text));
 })

@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspComment}
+\name{RspComment}
 \docType{class}
 \alias{RspComment}
 
 
- \title{The RspComment class}
+\title{The RspComment class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspComment}\cr
 
 \code{character}\cr
@@ -33,24 +33,25 @@ extends \link[R.rsp]{RspConstruct}\cr
 
 
 
-  An RspComment is an \code{\link{RspConstruct}} that represents an RSP comment,
-  which are of format \code{<\%-- ... --\%>}, \code{<\%--- ... ---\%>}
-  and so on.  They can also be so called "empty" RSP comments of format
-  \code{<\%-\%>}, \code{<\%--\%>}, \code{<\%---\%>} and so on.
- }
+ An RspComment is an \code{\link{RspConstruct}} that represents an RSP comment,
+ which are of format \code{<\%-- ... --\%>}, \code{<\%--- ... ---\%>}
+ and so on.  They can also be so called "empty" RSP comments of format
+ \code{<\%-\%>}, \code{<\%--\%>}, \code{<\%---\%>} and so on.
+}
 
- \usage{
+\usage{
 RspComment(str=character(), ...)
 }
 
- \arguments{
-   \item{str}{A \code{\link[base]{character}} string.}
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{str}{A \code{\link[base]{character}} string.}
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
+ \tab \code{asRspString} \tab  -\cr
  \tab \code{\link[R.rsp:getComment.RspComment]{getComment}} \tab Gets the comment.\cr
 }
 
@@ -65,9 +66,9 @@ getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

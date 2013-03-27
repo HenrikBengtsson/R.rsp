@@ -138,6 +138,50 @@ setMethodS3("findProcessor", "RspRSourceCode", function(object, ...) {
 
 
 
+setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "demo", "tangle"), collapse="\n", ...) {
+  # Argument 'format':
+  format <- match.arg(format);
+
+  # Record attributes
+  attrs <- attributes(object);
+
+  code <- object;
+
+  if (is.element(format, c("demo", "tangle"))) {
+    # Drop header
+    idx <- grep('## RSP source code script', code)[1L];
+    if (!is.na(idx)) {
+      code <- code[-(1:idx)];
+    }
+  }
+
+  if (format == "demo") {
+    # Replace .ro(<code chunk>) with cat(<code chunk>)
+    idxs <- grep('^.ro', code, fixed=FALSE);
+    if (length(idxs) > 0L) {
+      code[idxs] <- gsub(".ro", "cat", code[idxs], fixed=TRUE);
+    }
+  } else if (format == "tangle") {
+    # Replace .ro(<code chunk>) with (<code chunk>).
+    idxs <- grep('^.ro', code, fixed=FALSE);
+    if (length(idxs) > 0L) {
+      code[idxs] <- substring(code[idxs], first=5L, last=nchar(code[idxs])-1L);
+    }
+  } # if (format ...)
+
+  # Collapse?
+  if (!is.null(collapse)) {
+    code <- paste(code, collapse=collapse);
+  }
+
+  # Recreate RSP source code object, i.e. restore attributes (if lost)
+  object <- code;
+  attributes(object) <- attrs;
+
+  object;
+})
+
+
 #########################################################################/**
 # @RdocMethod tangle
 #
@@ -164,6 +208,7 @@ setMethodS3("findProcessor", "RspRSourceCode", function(object, ...) {
 # }
 #*/#########################################################################
 setMethodS3("tangle", "RspRSourceCode", function(code, ...) {
+  code <- tidy(code, format="tangle");
   # Remember attributes
   attrs <- attributes(code);
 
