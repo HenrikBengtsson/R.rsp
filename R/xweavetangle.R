@@ -74,6 +74,9 @@ rspWeave <- function(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env())
 rspTangle <- function(file, ..., envir=new.env()) {
   require("R.utils") || throw("Package not loaded: R.utils");
 
+  # Argument 'file':
+  file <- Arguments$getReadablePathname(file);
+
   # Setup output R file
   workdir <- ".";
   filename <- basename(file);
@@ -98,6 +101,23 @@ rspTangle <- function(file, ..., envir=new.env()) {
   # Drop text-outputting code
   rcode <- tangle(rcode);
 
+  # Create header
+  hdr <- NULL;
+  hdr <- c(hdr, "This 'tangle' R script was created from an RSP document.");
+  hdr <- c(hdr, sprintf("RSP source document: '%s'", file));
+  md <- getMetadata(rcode);
+  for (key in names(md)) {
+    value <- md[[key]];
+    value <- gsub("\n", "\\n", value, fixed=TRUE);
+    value <- gsub("\r", "\\r", value, fixed=TRUE);
+    hdr <- c(hdr, sprintf("Metadata '%s': '%s'", key, value));
+  }
+
+  # Turn into header comments and prepend to code
+  hdr <- sprintf("## %s", hdr);
+  ruler <- paste(rep("#", times=75L), collapse="");
+  rcode <- c(ruler, hdr, ruler, "", rcode);
+
   # Write R code
   writeLines(rcode, con=pathnameR);
 
@@ -107,6 +127,8 @@ rspTangle <- function(file, ..., envir=new.env()) {
 
 ###############################################################################
 # HISTORY:
+# 2013-03-26
+# o Now rspTangle() adds a header with metadata information.
 # 2013-03-25
 # o ROBUSTNESS: Now rspWeave() and rspTangle() process the RSP document
 #   in a separate environment.  This used to be the parent environment,

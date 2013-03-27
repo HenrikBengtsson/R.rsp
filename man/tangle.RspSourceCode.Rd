@@ -10,6 +10,7 @@
 \alias{tangle.RspSourceCode}
 \alias{RspSourceCode.tangle}
 \alias{tangle,RspSourceCode-method}
+\alias{tangle.RspRSourceCode}
 
 \title{Drops all text-outputting calls from the source code}
 

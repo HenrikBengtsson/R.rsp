@@ -97,6 +97,7 @@ setMethodS3("evaluate", "RspSourceCode", abstract=TRUE);
 
 #########################################################################/**
 # @RdocMethod tangle
+# @alias tangle.RspRSourceCode
 #
 # @title "Drops all text-outputting calls from the source code"
 #

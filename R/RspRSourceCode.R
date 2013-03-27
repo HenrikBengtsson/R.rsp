@@ -156,13 +156,19 @@ setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "demo", 
   }
 
   if (format == "demo") {
-    # Replace .ro(<code chunk>) with cat(<code chunk>)
+    # (a) Replace .ro(<code chunk>) with cat(<code chunk>)
     idxs <- grep('^.ro', code, fixed=FALSE);
     if (length(idxs) > 0L) {
       code[idxs] <- gsub(".ro", "cat", code[idxs], fixed=TRUE);
     }
   } else if (format == "tangle") {
-    # Replace .ro(<code chunk>) with (<code chunk>).
+    # (a) Drop all .ro("...")
+    idxs <- grep('^.ro[(]"', code, fixed=FALSE);
+    if (length(idxs) > 0L) {
+      code <- code[-idxs];
+    }
+
+    # (b) Replace .ro(<code chunk>) with (<code chunk>).
     idxs <- grep('^.ro', code, fixed=FALSE);
     if (length(idxs) > 0L) {
       code[idxs] <- substring(code[idxs], first=5L, last=nchar(code[idxs])-1L);
@@ -182,61 +188,16 @@ setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "demo", 
 })
 
 
-#########################################################################/**
-# @RdocMethod tangle
-#
-# @title "Drops all text-outputting calls from the R code"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns an @see "RspRSourceCode" objects without output calls.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
 setMethodS3("tangle", "RspRSourceCode", function(code, ...) {
-  code <- tidy(code, format="tangle");
-  # Remember attributes
-  attrs <- attributes(code);
-
-  # Drop the header section
-  idx <- grep("## RSP source code script", code);
-  if (length(idx) > 0L) {
-    idx <- idx[1L];
-    code <- code[-(1:idx)];
-  }
-
-  # Drop all .ro("...")
-  excl <- (regexpr(".ro(\"", code, fixed=TRUE) != -1L);
-  code <- code[!excl];
-
-  # Replace all .ro({...}) with {...}
-  idxs <- grep(".ro(", code, fixed=TRUE);
-  code[idxs] <- gsub(".ro(", "", code[idxs], fixed=TRUE);
-  code[idxs] <- gsub("[)]$", "", code[idxs], fixed=FALSE);
-
-  # Reset attributes
-  attributes(code) <- attrs;
-
-  code;
-}, protected=TRUE) # tangle()
+  tidy(code, format="tangle");
+})
 
 
 ##############################################################################
 # HISTORY:
+# 2013-03-26
+# o Added tidy() with support for formats 'asis', 'demo' and 'tangle'.
+# o CLEANUP: tangle() is now a wrapper for tidy(..., format="tangle").
 # 2013-03-25
 # o Now tangle() drops the top of the code that sets up output functions etc.
 # 2013-03-14
