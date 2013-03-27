@@ -31,32 +31,6 @@ setConstructorS3("RspSourceCode", function(code=character(), ...) {
 })
 
 
-
-#########################################################################/**
-# @RdocMethod print
-#
-# @title "Prints the source code"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns nothing.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
 setMethodS3("print", "RspSourceCode", function(x, ...) {
   code <- x;
   code <- paste(code, collapse="\n");

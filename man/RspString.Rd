@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspString}
+\name{RspString}
 \docType{class}
 \alias{RspString}
 
 
- \title{The RspString class}
+\title{The RspString class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspString}\cr
 
 \code{character}\cr
@@ -31,20 +31,20 @@ extends \link[R.rsp]{RspObject}\cr
 
 
 
-  An RspString is a \code{\link[base]{character}} \code{\link[base]{vector}} with RSP markup.
- }
+ An RspString is a \code{\link[base]{character}} \code{\link[base]{vector}} with RSP markup.
+}
 
- \usage{
+\usage{
 RspString(s=character(), ...)
 }
 
- \arguments{
-   \item{s}{A \code{\link[base]{character}} \code{\link[base]{vector}}.}
-   \item{...}{Arguments passed to \code{\link{RspObject}}.}
- }
+\arguments{
+  \item{s}{A \code{\link[base]{character}} \code{\link[base]{vector}}.}
+  \item{...}{Arguments passed to \code{\link{RspObject}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RspString]{evaluate}} \tab Parses, translates, and evaluates the RSP string.\cr
  \tab \code{\link[R.rsp:getMetadata.RspString]{getMetadata}} \tab Gets the metadata of the RspDocument.\cr
@@ -52,7 +52,7 @@ RspString(s=character(), ...)
  \tab \code{\link[R.rsp:getType.RspString]{getType}} \tab Gets the type of an RSP string.\cr
  \tab \code{\link[R.rsp:nbrOfLines.RspString]{nbrOfLines}} \tab Gets the number of lines in an RSP string.\cr
  \tab \code{\link[R.rsp:parse.RspString]{parse}} \tab Parses the RSP string.\cr
- \tab \code{\link[R.rsp:print.RspString]{print}} \tab Prints a summary of an RSP string.\cr
+ \tab \code{print} \tab  -\cr
  \tab \code{rcat} \tab  -\cr
  \tab \code{rclean} \tab  -\cr
  \tab \code{rcompile} \tab  -\cr
@@ -63,15 +63,15 @@ RspString(s=character(), ...)
 
 
  \bold{Methods inherited from RspObject}:\cr
-getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
+getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

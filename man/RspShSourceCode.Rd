@@ -61,7 +61,7 @@ evaluate, print, rstring, tangle, tidy
 findProcessor, getMetadata, getType, hasProcessor, print, process
 
  \bold{Methods inherited from RspObject}:\cr
-getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
+getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap

@@ -51,7 +51,7 @@ RspSourceCode(code=character(), ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RspSourceCode]{evaluate}} \tab Evaluates the source code.\cr
- \tab \code{\link[R.rsp:print.RspSourceCode]{print}} \tab Prints the source code.\cr
+ \tab \code{print} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
  \tab \code{\link[R.rsp:tangle.RspSourceCode]{tangle}} \tab Drops all text-outputting calls from the source code.\cr
  \tab \code{\link[R.rsp:tidy.RspSourceCode]{tidy}} \tab Tidy up the RSP source code.\cr
@@ -62,10 +62,10 @@ RspSourceCode(code=character(), ...)
 findProcessor, getMetadata, getType, hasProcessor, print, process
 
  \bold{Methods inherited from RspObject}:\cr
-getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
+getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes
 
  \bold{Methods inherited from character}:\cr
-all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses
+all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
 
 
 }

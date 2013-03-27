@@ -51,13 +51,13 @@ RspProduct(object=NA, ...)
  \tab \code{\link[R.rsp:getMetadata.RspProduct]{getMetadata}} \tab Gets the metadata an RSP product.\cr
  \tab \code{\link[R.rsp:getType.RspProduct]{getType}} \tab Gets the type of an RSP product.\cr
  \tab \code{\link[R.rsp:hasProcessor.RspProduct]{hasProcessor}} \tab Checks whether a processor exist or not for an RSP product.\cr
- \tab \code{\link[R.rsp:print.RspProduct]{print}} \tab Prints a summary of an RSP product.\cr
+ \tab \code{print} \tab  -\cr
  \tab \code{\link[R.rsp:process.RspProduct]{process}} \tab Processes an RSP file product.\cr
 }
 
 
  \bold{Methods inherited from RspObject}:\cr
-getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
+getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes
 
  \bold{Methods inherited from logical}:\cr
 as.data.frame, as.raster, whichVector

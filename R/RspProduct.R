@@ -30,32 +30,6 @@ setConstructorS3("RspProduct", function(object=NA, ...) {
 })
 
 
-
-#########################################################################/**
-# @RdocMethod print
-#
-# @title "Prints a summary of an RSP product"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns nothing.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
 setMethodS3("print", "RspProduct", function(x, ...) {
   s <- sprintf("%s:", class(x)[1L]);
   s <- c(s, sprintf("Content type: %s", getType(x)));

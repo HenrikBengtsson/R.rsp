@@ -52,7 +52,7 @@ RspFileProduct(pathname=NA, ..., mustExist=TRUE)
 \tabular{rll}{
  \tab \code{\link[R.rsp:findProcessor.RspFileProduct]{findProcessor}} \tab Locates a processor for an RSP file product.\cr
  \tab \code{\link[R.rsp:getType.RspFileProduct]{getType}} \tab Gets the type of an RSP file product.\cr
- \tab \code{\link[R.rsp:print.RspFileProduct]{print}} \tab Prints a summary of an RSP file product.\cr
+ \tab \code{print} \tab  -\cr
 }
 
 
@@ -60,7 +60,7 @@ RspFileProduct(pathname=NA, ..., mustExist=TRUE)
 findProcessor, getMetadata, getType, hasProcessor, print, process
 
  \bold{Methods inherited from RspObject}:\cr
-getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
+getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes
 
  \bold{Methods inherited from logical}:\cr
 as.data.frame, as.raster, whichVector

@@ -60,7 +60,7 @@ RspDocument(expressions=list(), ...)
  \tab \code{\link[R.rsp:mergeTexts.RspDocument]{mergeTexts}} \tab Merge neighboring 'text' elements.\cr
  \tab \code{parseIfElseDirectives} \tab  -\cr
  \tab \code{\link[R.rsp:preprocess.RspDocument]{preprocess}} \tab Processes all RSP preprocessing directives.\cr
- \tab \code{\link[R.rsp:print.RspDocument]{print}} \tab Prints a summary of an RspDocument.\cr
+ \tab \code{print} \tab  -\cr
  \tab \code{rcat} \tab  -\cr
  \tab \code{rclean} \tab  -\cr
  \tab \code{rcompile} \tab  -\cr
@@ -74,7 +74,7 @@ RspDocument(expressions=list(), ...)
 
 
  \bold{Methods inherited from RspObject}:\cr
-getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
+getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes
 
  \bold{Methods inherited from list}:\cr
 all.equal, as.data.frame, attachLocally, callHooks, relist, within, wrap

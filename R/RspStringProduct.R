@@ -9,7 +9,7 @@
 #  An RspStringProduct is an @see RspProduct that represents an
 #  RSP product in form of a @character string.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -19,7 +19,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -53,7 +53,7 @@ setConstructorS3("RspStringProduct", function(...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("as.character", "RspStringProduct", function(x, ...) {
   s <- unclass(x);
   attributes(s) <- NULL;
@@ -61,32 +61,6 @@ setMethodS3("as.character", "RspStringProduct", function(x, ...) {
 }, protected=TRUE)
 
 
-
-#########################################################################/**
-# @RdocMethod print
-#
-# @title "Prints an RSP string product"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Additional arguments passed to @see "base::print".}
-# }
-#
-# \value{
-#  Returns nothing.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
 setMethodS3("print", "RspStringProduct", function(x, ...) {
   print(as.character(x), ...);
 }, protected=TRUE)
@@ -97,7 +71,7 @@ setMethodS3("print", "RspStringProduct", function(x, ...) {
 ############################################################################
 # HISTORY:
 # 2013-02-13
-# o Added RspProduct and RspFileProduct with corresponding 
+# o Added RspProduct and RspFileProduct with corresponding
 #   process() methods.
 # o Created.
 ############################################################################

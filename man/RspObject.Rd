@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspObject}
+\name{RspObject}
 \docType{class}
 \alias{RspObject}
 
 
- \title{The abstract RspObject class}
+\title{The abstract RspObject class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspObject}\cr
 
 \code{logical}\cr
@@ -29,26 +29,27 @@ extends logical\cr
 
 
 
-  An RspObject represents an instance a specific RSP class.
- }
+ An RspObject represents an instance a specific RSP class.
+}
 
- \usage{
+\usage{
 RspObject(value=NA, attrs=list(), ...)
 }
 
- \arguments{
-   \item{value}{An R object.}
-   \item{attrs}{RSP attributes as a named \code{\link[base]{list}}, e.g. \code{type},
-      \code{language}, and \code{source}.}
-   \item{...}{Additional named RSP attributes.}
- }
+\arguments{
+  \item{value}{An R object.}
+  \item{attrs}{RSP attributes as a named \code{\link[base]{list}}, e.g. \code{type},
+     \code{language}, and \code{source}.}
+  \item{...}{Additional named RSP attributes.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getAttribute} \tab  -\cr
  \tab \code{\link[R.rsp:getAttributes.RspObject]{getAttributes}} \tab Gets the attributes of an RSP document.\cr
  \tab \code{hasAttribute} \tab  -\cr
+ \tab \code{print} \tab  -\cr
  \tab \code{setAttribute} \tab  -\cr
  \tab \code{setAttributes} \tab  -\cr
 }
@@ -58,9 +59,9 @@ RspObject(value=NA, attrs=list(), ...)
 as.data.frame, as.raster, whichVector
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

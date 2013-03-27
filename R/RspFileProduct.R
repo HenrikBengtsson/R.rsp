@@ -36,31 +36,6 @@ setConstructorS3("RspFileProduct", function(pathname=NA, ..., mustExist=TRUE) {
 })
 
 
-#########################################################################/**
-# @RdocMethod print
-#
-# @title "Prints a summary of an RSP file product"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns nothing.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
 setMethodS3("print", "RspFileProduct", function(x, ...) {
   s <- sprintf("%s:", class(x)[1L]);
   s <- c(s, sprintf("Pathname: %s", x));

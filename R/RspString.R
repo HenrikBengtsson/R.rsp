@@ -8,7 +8,7 @@
 #
 #  An RspString is a @character @vector with RSP markup.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -19,7 +19,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -32,32 +32,6 @@ setConstructorS3("RspString", function(s=character(), ...) {
 })
 
 
-
-#########################################################################/**
-# @RdocMethod print
-#
-# @title "Prints a summary of an RSP string"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns nothing.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/######################################################################### 
 setMethodS3("print", "RspString", function(x, ...) {
   s <- sprintf("%s:", class(x)[1L]);
   s <- c(s, sprintf("Content type: %s", getAttribute(x, "type", NA)));
@@ -102,7 +76,7 @@ setMethodS3("print", "RspString", function(x, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("nbrOfLines", "RspString", function(object, ...) {
   length(unlist(strsplit(object, split="\n", fixed=TRUE)));
 })
@@ -134,7 +108,7 @@ setMethodS3("nbrOfLines", "RspString", function(object, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getType", "RspString", function(object, default=NA, as=c("text", "IMT"), ...) {
   as <- match.arg(as);
   res <- getAttribute(object, "type", default=as.character(default));
@@ -170,7 +144,7 @@ setMethodS3("getType", "RspString", function(object, default=NA, as=c("text", "I
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getMetadata", "RspString", function(object, name=NULL, ...) {
   res <- getAttribute(object, "metadata", default=list());
   if (!is.null(name)) {
@@ -204,7 +178,7 @@ setMethodS3("getMetadata", "RspString", function(object, name=NULL, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getSource", "RspString", function(object, ...) {
   getAttribute(object, "source", default=as.character(NA));
 }, protected=TRUE)
@@ -239,7 +213,7 @@ setMethodS3("getSource", "RspString", function(object, ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("parse", "RspString", function(object, ..., envir=parent.frame(), parser=RspParser()) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");

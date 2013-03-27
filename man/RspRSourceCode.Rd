@@ -53,7 +53,7 @@ RspRSourceCode(...)
  \tab \code{findProcessor} \tab  -\cr
  \tab \code{\link[R.rsp:parse.RspRSourceCode]{parse}} \tab Parses the R code.\cr
  \tab \code{rcat} \tab  -\cr
- \tab \code{\link[R.rsp:tangle.RspRSourceCode]{tangle}} \tab Drops all text-outputting calls from the R code.\cr
+ \tab \code{tangle} \tab  -\cr
  \tab \code{tidy} \tab  -\cr
 }
 
@@ -65,7 +65,7 @@ evaluate, print, rstring, tangle, tidy
 findProcessor, getMetadata, getType, hasProcessor, print, process
 
  \bold{Methods inherited from RspObject}:\cr
-getAttribute, getAttributes, hasAttribute, setAttribute, setAttributes
+getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap

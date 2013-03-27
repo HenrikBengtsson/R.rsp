@@ -8,12 +8,12 @@
 #
 #  An RspObject represents an instance a specific RSP class.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
 #   \item{value}{An R object.}
-#   \item{attrs}{RSP attributes as a named @list, e.g. \code{type}, 
+#   \item{attrs}{RSP attributes as a named @list, e.g. \code{type},
 #      \code{language}, and \code{source}.}
 #   \item{...}{Additional named RSP attributes.}
 # }
@@ -21,7 +21,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -41,6 +41,47 @@ setConstructorS3("RspObject", function(value=NA, attrs=list(), ...) {
   this <- setAttributes(this, userAttrs);
   this;
 })
+
+
+
+#########################################################################/**
+# @RdocMethod print
+# @alias print.RspDocument
+# @alias print.RspFileProduct
+# @alias print.RspProduct
+# @alias print.RspSourceCode
+# @alias print.RspString
+# @alias print.RspStringProduct
+#
+# @title "Prints a summary of an RSP object"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns nothing.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/#########################################################################
+setMethodS3("print", "RspObject", function(x, ...) {
+  s <- NextMethod("print");
+  s <- c(sprintf("%s:", class(x)[1L]), s);
+  s <- paste(s, collapse="\n");
+  cat(s, "\n", sep="");
+}, protected=TRUE)
+
 
 
 #########################################################################/**
@@ -71,7 +112,7 @@ setConstructorS3("RspObject", function(value=NA, attrs=list(), ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("getAttributes", "RspObject", function(object, private=FALSE, ...) {
   attrs <- attributes(object);
   keys <- names(attrs);
