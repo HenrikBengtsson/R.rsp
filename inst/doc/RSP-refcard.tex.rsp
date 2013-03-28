@@ -247,19 +247,19 @@ code <- tidy(code, format='unsafedemo');
 \begin{minipage}[t]{40ex}
 \footnotesize%
 \code{rcat('Today is <\%=Sys.Date()\%>')}\linebreak
-\code{rcat(file=\content{pathname|URL})}\linebreak
+\code{rcat(file='\content{file|URL}')}\linebreak
 \end{minipage}
 %%
 \begin{minipage}[t]{48ex}
 \footnotesize%
 \code{s <- rstring('Today is <\%=Sys.Date()\%>')}\linebreak
-\code{s <- rstring(file=\content{pathname|URL})}\linebreak
+\code{s <- rstring(file='\content{file|URL}')}\linebreak
 \end{minipage}
 %%
-\begin{minipage}[t]{60ex}
+\begin{minipage}[t]{54ex}
 \footnotesize%
-\code{output <- rfile(\content{pathname|URL})}\linebreak
-\code{output <- rfile(\content{pathname|URL}, postprocess=FALSE)}\linebreak
+\code{output <- rfile('\content{file|URL}')}\linebreak
+\code{output <- rfile('\content{file|URL}', postprocess=FALSE)}\linebreak
 \end{minipage}
 
 
