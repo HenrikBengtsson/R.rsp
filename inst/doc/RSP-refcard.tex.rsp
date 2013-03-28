@@ -13,7 +13,6 @@
   -------------------------------------------------------------------%>
 \documentclass[a4paper,10pt,landscape]{article}
 \usepackage[landscape]{geometry}
-\usepackage{multicol}
 
 <%-------------------------------------------------------------------
   Assign PDF metadata
@@ -43,8 +42,22 @@
 \addtolength{\evensidemargin}{-1.0in}	
 \addtolength{\textwidth}{2in}
 \addtolength{\topmargin}{-0.5in}	
-\addtolength{\textheight}{2in}
+\addtolength{\textheight}{1.5in}
 
+% Shrink white space around section headers ({left}{above}{below})
+\usepackage[compact]{titlesec}
+\titlespacing{\section}{0pt}{2.0ex}{0.5ex}
+\titlespacing{\subsection}{0pt}{2.0ex}{0.5ex}
+
+% No paragraph indentation
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+
+% Line spacing
+\linespread{0.95}
+
+% No page numbers
 \pagestyle{empty}
 
 \newcommand{\keywords}[1]{\footnotesize{\textbf{Keywords: }#1}\xspace}
@@ -85,9 +98,9 @@ Examples (in R):
 \subsection{Comments, Trimming \& Escapes}
 \small{
 Comments can be used to exclude text, code expressions and preprocessing directives.
-\\}
-
-\begin{tabular}{p{36ex}p{144ex}}
+}\\[1ex]
+%%
+\begin{tabular}{p{38ex}p{144ex}}
 \textit{Markup} & \textit{Description} \\
 \hline
 %%
@@ -122,9 +135,8 @@ A hyphen (plus) attached to the end tag, forces (prevents) following white space
 Preprocessing directives are independent of programming language used.
 They are applied after dropping comments and before translating text and code expressions to a code script. 
 It is not possible to tell from the translated code script whether preprocessing directives have been used or not, nor are their variables accessible (except metadata).
-\\}
-
-\begin{tabular}{p{36ex}p{144ex}}
+}\\[1ex]
+\begin{tabular}{p{38ex}p{144ex}}
 \textit{Markup} & \textit{Description} \\
 %%
 \hline
@@ -153,7 +165,7 @@ It is not possible to tell from the translated code script whether preprocessing
  \code{<\%@endif\%>} &
  If preprocessing variable \content{name} \emph{equals} \content{content},
  then \content{incl} is inserted otherwise \content{excl}.
- \code{<\%@else\%>} is optional.  %% \linebreak
+ \code{<\%@else\%>} is optional. \raggedright \linebreak
  \code{<\%@ifneq ...\%>} negates the test. \\
 \end{tabular}
 
@@ -164,9 +176,8 @@ It is not possible to tell from the translated code script whether preprocessing
 Code expressions are evaluated \emph{after} translation. They may be of any programming language as long as there is a code translator for it.
 Code expressions have no access to preprocessing variables (except metadata).
 Output written to standard output is inserted into the final document.
-\\}
-
-\begin{tabular}{p{36ex}p{144ex}}
+}\\[1ex]
+\begin{tabular}{p{38ex}p{144ex}}
 \textit{Markup} & \textit{Description} \\
 %%
 \hline
@@ -180,6 +191,7 @@ Output written to standard output is inserted into the final document.
  the translated code script and includes the returned value in the 
  output document. \\
 \end{tabular}
+
 
 \subsection{Example of text file with RSP-embedded R code}
 <%@string file="incl/example.txt.rsp"%>
@@ -229,5 +241,27 @@ code <- tidy(code, format='unsafedemo');
 \end{verbatim}
 \end{minipage}
 
+
+\subsection{R.rsp commands}
+\begin{minipage}[t]{40ex}
+\footnotesize%
+\code{rcat('Today is <\%=Sys.Date()\%>')}\linebreak
+\code{rcat(file=\content{pathname|URL})}\linebreak
+\end{minipage}
+%%
+\begin{minipage}[t]{48ex}
+\footnotesize%
+\code{s <- rstring('Today is <\%=Sys.Date()\%>')}\linebreak
+\code{s <- rstring(file=\content{pathname|URL})}\linebreak
+\end{minipage}
+%%
+\begin{minipage}[t]{60ex}
+\footnotesize%
+\code{output <- rfile(\content{pathname|URL})}\linebreak
+\code{output <- rfile(\content{pathname|URL}, postprocess=FALSE)}\linebreak
+\end{minipage}
+
+
+\vfill
 \hfill{\footnotesize \href{http://cran.r-project.org/package=R.rsp}{R.rsp v<%=R.rsp$version%>} (<%=R.rsp$date%>) by Henrik Bengtsson}
 \end{document}
