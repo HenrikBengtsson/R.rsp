@@ -1,6 +1,10 @@
 \documentclass{article}
 \usepackage{graphicx}
 
+<%
+library("R.devices")
+%>
+
 \graphicspath{{<%=getOption("devEval/args/path", "figures/")%>}}
 
 \title{Lorem Ipsum}

@@ -7,6 +7,12 @@
   %\VignetteEngine{R.rsp::rsp}
 --------------------------------------------------------------------"%>
 
+<%
+# Required R packages
+library("R.rsp")
+library("R.devices")
+%>
+
 <% t0 <- Sys.time() %>
 
 
@@ -878,8 +884,10 @@ We will first explain how to create image files and then show how they can be in
 
 
 \subsubsection{Creating image files}
-The \code{toPDF()} and \code{toPNG()} functions of the \pkg{R.devices} package\footnote{The \pkg{R.devices} package is automatically loaded when \pkg{R.rsp} is loaded.} are useful for creating image files to be included in for instance LaTeX and HTML.  For example,
+The \code{toPDF()} and \code{toPNG()} functions of the \pkg{R.devices} package are useful for creating image files to be included in for instance LaTeX and HTML.  For example,
 \begin{verbatim}
+library("R.devices")
+
 # Use greater objects by default
 setOption("devNew/args/par", list(lwd=2));
 
