@@ -213,7 +213,7 @@ Output written to standard output is inserted into the final document.
 ## This utilizes the RSP 'eval' preprocessing directive to
 ## translate the example into R code.
 code <- rscript('${doc}');
-code <- tidy(code, format='demo');
+code <- tidy(code, format='unsafedemo');
 "%>
 <%@string name="code"%>
 \end{verbatim}

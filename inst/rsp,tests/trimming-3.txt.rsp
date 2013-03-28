@@ -1,0 +1,6 @@
+You don\'t have to worry too much about whitespace, e.g. the
+  <%
+     s <- "will have its surrounding whitespace"
+  %>
+above RSP expression <%=s%>
+trimmed off as well as its trailing line break.

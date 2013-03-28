@@ -1,0 +1,3 @@
+
+<%@string name="page_size" content="a4paper"%>
+Page size: <%@string name="page_size"%>

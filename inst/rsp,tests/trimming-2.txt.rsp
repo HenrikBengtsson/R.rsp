@@ -1,0 +1,15 @@
+Line #1
+<%--- Nested
+  <%-- comments --%> are
+  <% a <- 1 %>  <%@foo bar="FALSE"%>
+dropped ---%>
+<%@include content=""%>
+<%@include content=""%>
+Line #2
+<%
+a <- 2
+%>
+<%
+b <- 3
+%>
+Line #3

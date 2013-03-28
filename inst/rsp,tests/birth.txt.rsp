@@ -1,0 +1,2 @@
+<% date <- as.Date("2002-05-04") %>
+RSP first saw the light of day on <%=date%>.
