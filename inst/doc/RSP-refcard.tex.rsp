@@ -88,6 +88,7 @@ When \emph{compiled}, independently of programming language,
 (iii)~text and code expressions are translated into a code script.
 The translated code script can then be (iv)~evaluated, which generates
 the output document, which in turn may be (v)~postprocessed.
+[The R.rsp package knows how to postprocess output such as TeX, Markdown, Sweave, knitr etc.]
 %
 Examples (in R):
 (1)~main.tex.rsp $\rightarrow$ (main.tex.R) $\rightarrow$ main.tex $\rightarrow$ main.pdf.
@@ -201,7 +202,7 @@ Output written to standard output is inserted into the final document.
 \textbf{RSP~document:}%
 \begin{verbatim}
 <%@include file="${file}" type="text/plain"%>
-\end{verbatim}
+\end{verbatim}%
 \end{minipage}
 %%%
 \parbox[t]{6ex}{$\rightarrow$}%%
@@ -211,7 +212,7 @@ Output written to standard output is inserted into the final document.
 \textbf{Without comments and preprocessed:}%
 \begin{verbatim}
 <%@include file="${file}" type="application/x-rsp; until=expressions"%>
-\end{verbatim}
+\end{verbatim}%
 \end{minipage}
 %%%
 \parbox[t]{6ex}{$\rightarrow$}%%
@@ -228,7 +229,7 @@ code <- rscript('${doc}');
 code <- tidy(code, format='unsafedemo');
 "%>
 <%@string name="code"%>
-\end{verbatim}
+\end{verbatim}%
 \end{minipage}
 %%%
 \parbox[t]{6ex}{$\rightarrow$}%%
@@ -238,7 +239,7 @@ code <- tidy(code, format='unsafedemo');
 \textbf{Output document:}%
 \begin{verbatim}
 <%@include file="${file}"%>
-\end{verbatim}
+\end{verbatim}%
 \end{minipage}
 
 
