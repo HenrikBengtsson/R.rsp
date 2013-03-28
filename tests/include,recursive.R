@@ -1,7 +1,7 @@
 library("R.rsp")
 
 path <- system.file("rsp,tests", package="R.rsp")
-pathname <- Arguments$getReadablePathname("recursive.txt.rsp", path=path)
+pathname <- file.path(path, "recursive.txt.rsp")
 print(pathname)
 
 evalWithTimeout({

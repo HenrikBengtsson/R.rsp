@@ -162,9 +162,12 @@ setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "tangle"
   } else if (format == "unsafedemo") {
     # NOTE: The generated demo code may not display properly
     # (a) Replace .rout(<code chunk>) with cat(<code chunk>)
-    idxs <- grep('^.rout', code, fixed=FALSE);
-    if (length(idxs) > 0L) {
-      code[idxs] <- gsub(".rout", "cat", code[idxs], fixed=TRUE);
+    for (rout in c(".rout0", ".rout")) {
+      pattern <- sprintf('^%s', rout);
+      idxs <- grep(pattern, code, fixed=FALSE);
+      if (length(idxs) > 0L) {
+        code[idxs] <- gsub(rout, "cat", code[idxs], fixed=TRUE);
+      }
     }
   } else if (is.element(format, c("tangle", "safetangle"))) {
     # (a) Drop all .rout("...")
@@ -182,7 +185,7 @@ setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "tangle"
     }
 
     # (c) Replace .rout(<code chunk>) with (<code chunk>).
-    for (rout in c(".rout", ".rout0")) {
+    for (rout in c(".rout0", ".rout")) {
       pattern <- sprintf('^%s[(]', rout);
       idxs <- grep(pattern, code, fixed=FALSE);
       if (length(idxs) > 0L) {

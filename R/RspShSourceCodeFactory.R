@@ -47,14 +47,19 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
     code <- unlist(strsplit(code, split="\n", fixed=TRUE));
     codeT <- trim(code);
 
-    codeE <- sprintf("printf \"%s\"", escapeRspText(code));
-    suffixR <- rep(" > /dev/null", times=length(code));
-    if (include) {
-      suffixR[length(code)] <- "";
-    }
+    n <- length(code);
+    codeE <- sapply(code, FUN=escapeRspText);
+    codeE <- sprintf("printf \"%s\"", codeE);
+    suffixR <- rep(" > /dev/null", times=n);
     codeR <- sprintf("%s%s", codeT, suffixR);
+    if (include) {
+      # Output the last out
+      codeR[n] <- sprintf("printf \"%s\"", code[n]);
+    }
 
     codeS <- matrix(c(codeE, codeR), nrow=2L, byrow=TRUE);
+    rownames(codeS) <- c("echo", "include");
+
     if (echo && !include) {
       code <- codeS[1L,,drop=TRUE];
     } else if (echo && include) {

@@ -1,0 +1,15 @@
+
+<%---------------------------%><%@meta language="R-vignette" content="
+ DIRECTIVES FOR R:
+
+ %\VignetteIndexEntry{Paired PSCBS}
+ %\VignetteKeyword{copy numbers, allele specific, parent specific, genomic aberrations}
+ %\VignetteEngine{rsp}
+-------------------------------------------------------------------"%>
+
+[...]
+\title{<%@meta name="title"%>}
+
+[...]
+
+\keywords{<%@meta name="keywords"%>}

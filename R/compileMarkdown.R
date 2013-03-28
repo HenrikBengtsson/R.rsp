@@ -62,7 +62,8 @@ setMethodS3("compileMarkdown", "default", function(filename, path=NULL, ..., out
   replace <- "\\1.html";
   filenameOut <- gsub(pattern, replace, basename(pathname));
   pathnameOut <- filePath(outPath, filenameOut);
-  verbose && cat(verbose, "Output pathname: ", getAbsolutePath(pathnameOut));
+  pathnameOut <- getAbsolutePath(pathnameOut);
+  verbose && cat(verbose, "Output pathname: ", pathnameOut);
 
   opwd <- ".";
   on.exit(setwd(opwd), add=TRUE);
@@ -72,16 +73,34 @@ setMethodS3("compileMarkdown", "default", function(filename, path=NULL, ..., out
 
   verbose && enter(verbose, "Calling markdown::markdownToHTML()");
   pathnameR <- getRelativePath(pathname);
+  pathnameOutR <- getRelativePath(pathnameOut);
+
   mdToHTML <- markdown::markdownToHTML;
   userArgs <- list(...);
   keep <- is.element(names(userArgs), names(formals(mdToHTML)));
   userArgs <- userArgs[keep];
-  args <- c(list(pathnameR, output=pathnameOut), userArgs);
-  res <- do.call(mdToHTML, args=args);
+
+  # Workaround for bug in markdown v0.5.4. /HB 2013-03-28
+  hasBug <- TRUE || (packageVersion("markdown") <= "0.5.4");
+  if (hasBug) {
+    args <- c(list(pathnameR, output=NULL), userArgs);
+    verbose && cat(verbose, "Arguments to markdownToHTML():");
+    verbose && str(verbose, args);
+    bfr <- do.call(mdToHTML, args=args);
+    cat(bfr, file=pathnameOutR);
+  } else {
+    args <- c(list(pathnameR, output=pathnameOutR), userArgs);
+    verbose && cat(verbose, "Arguments to markdownToHTML():");
+    verbose && str(verbose, args);
+    do.call(mdToHTML, args=args);
+  }
   verbose && exit(verbose);
 
   setwd(opwd); opwd <- ".";
   verbose && printf(verbose, "Output file size: %g bytes\n", file.info(pathnameOut)$size);
+
+  # Sanity check
+  pathnameOut <- Arguments$getReadablePathname(pathnameOut);
 
   verbose && exit(verbose);
 
@@ -91,6 +110,10 @@ setMethodS3("compileMarkdown", "default", function(filename, path=NULL, ..., out
 
 ############################################################################
 # HISTORY:
+# 2013-03-28
+# o PATCH: compileMarkdown() works around bug in markdown v0.5.4.
+#   I have reported the bug to the 'markdown' maintainer.
+# o BUG FIX: compileMarkdown() only worked for outPath=".".
 # 2013-03-25
 # o Created (from compileLaTeX.R).
 ############################################################################

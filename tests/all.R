@@ -1,8 +1,10 @@
 library("R.rsp")
 verbose <- Arguments$getVerbose(TRUE)
 
-path <- system.file("inst", package="R.rsp")
-path <- "R.rsp/inst"
+# Change option (used in one or more of the tests)
+oopts <- options(papersize="letter")
+
+path <- system.file(package="R.rsp")
 path <- file.path(path, "rsp,tests")
 
 # Find all RSP files with matching "truth" files
@@ -20,6 +22,8 @@ for (kk in seq_along(pathnames)) {
   pathnameR <- pathnamesR[kk]
   verbose && enter(verbose, sprintf("RSP file #%d ('%s') of %d", kk, pathname, length(pathnames)))
 
+  rc <- rscript(file=pathname)
+
   rs <- rstring(file=pathname)
   s <- as.character(rs)
   sR <- readChar(pathnameR, nchars=1e6)
@@ -28,8 +32,40 @@ for (kk in seq_along(pathnames)) {
   sR <- sub("<EOF>.*", "", sR)
 
   # Compare
-  res <- all.equal(s, sR)
-  stopifnot(res)
+  res <- all.equal(s, sR, check.attributes=FALSE)
+  discrepancy <- !isTRUE(res);
+  if (discrepancy) {
+    if (verbose) {
+      enter(verbose, "Detected discrepancy of output and expected output")
+      cat(verbose, "Output:")
+      printf(verbose, ">>>%s<<<\n", gsub("\n", "\\n", s, fixed=TRUE))
+      ruler(verbose)
+      cat(verbose, "Expected output:")
+      printf(verbose, ">>>%s<<<\n", gsub("\n", "\\n", sR, fixed=TRUE))
+      ruler(verbose)
+      cat(verbose, "Difference:")
+      fs <- tempfile("s")
+      fsR <- tempfile("sR")
+      cat(s, file=fs)
+      cat(sR, file=fsR)
+      res <- system2("diff", args=c("-bw", shQuote(fs), shQuote(fsR)),
+                                             stdout=TRUE, stderr=TRUE)
+      cat(verbose, res)
+      file.remove(c(fs, fsR))
+      ruler(verbose)
+      cat(verbose, "Reason for not being equal:")
+      print(verbose, res)
+      ruler(verbose)
+      exit(verbose)
+    }
+  }
 
   verbose && exit(verbose)
+}
+
+# Restore options
+options(oopts)
+
+if (discrepancy) {
+  stop("Detected a discrepancy above.")
 }

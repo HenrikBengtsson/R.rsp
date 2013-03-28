@@ -1,7 +1,7 @@
 library("R.rsp")
 
-pathname <- system.file("exData", "LoremIpsum.tex", package="R.rsp")
-pathname <- Arguments$getReadablePathname(pathname)
+path <- system.file("rsp,LoremIpsum", package="R.rsp")
+pathname <- file.path(path, "LoremIpsum.tex")
 print(pathname)
 
 if (Sys.getenv("_R_CHECK_FULL_") != "") {

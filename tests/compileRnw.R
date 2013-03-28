@@ -1,8 +1,8 @@
 library("R.rsp")
 
 # A knitr Rnw file
-pathname <- system.file("exData", "LoremIpsum.knitr.Rnw", package="R.rsp")
-pathname <- Arguments$getReadablePathname(pathname)
+path <- system.file("rsp,LoremIpsum", package="R.rsp")
+pathname <- file.path(path, "LoremIpsum.knitr.Rnw")
 print(pathname)
 
 if (Sys.getenv("_R_CHECK_FULL_") != "") {
@@ -13,8 +13,8 @@ if (Sys.getenv("_R_CHECK_FULL_") != "") {
 
 
 # A Sweave Rnw file
-pathname <- system.file("exData", "LoremIpsum.Rnw", package="R.rsp")
-pathname <- Arguments$getReadablePathname(pathname)
+path <- system.file("rsp,LoremIpsum", package="R.rsp")
+pathname <- file.path(path, "LoremIpsum.Rnw")
 print(pathname)
 
 if (Sys.getenv("_R_CHECK_FULL_") != "") {
