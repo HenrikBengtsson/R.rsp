@@ -1197,7 +1197,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       tryCatch({
         file <- Arguments$getReadablePathname(file);
       }, error = function(ex) {
-        throw(RspPreprocessingException(sprintf("File not found (%s), because '%s'", gsub("Pathname not found: ", "", ex$message)), item=expr));
+        throw(RspPreprocessingException(sprintf("File not found (%s), because '%s'", file, gsub("Pathname not found: ", "", ex$message)), item=expr));
       });
     }
 
@@ -1584,7 +1584,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
       if (!is.null(file)) {
         file <- getFileT(item, path=getPath(object), index=idx, verbose=verbose);
-        content <- readLines(file, warn=FALSE);
+        content <- .readText(file);
       }
 
       verbose && print(verbose, getAttributes(item));
@@ -1689,7 +1689,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
           stop("Too many nested RSP 'include' preprocessing directives. This indicates an endless recursive loop of including the same file over and over. This was detected while trying to include ", sQuote(file), " (file=", sQuote(getFile(item)), "with type='application/x-rsp') in RSP document ", sQuote(getSource(object)), ".");
         }
 
-        content <- readLines(file, warn=FALSE);
+        content <- .readText(file);
 
         # The default content type for the 'file' attribute is
         # inferred from the filename extension, iff possible

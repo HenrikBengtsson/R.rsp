@@ -138,7 +138,7 @@ setMethodS3("findProcessor", "RspRSourceCode", function(object, ...) {
 
 
 
-setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "demo", "tangle"), collapse="\n", ...) {
+setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "tangle", "demo", "unsafedemo"), collapse="\n", ...) {
   # Argument 'format':
   format <- match.arg(format);
 
@@ -147,7 +147,7 @@ setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "demo", 
 
   code <- object;
 
-  if (is.element(format, c("demo", "tangle"))) {
+  if (is.element(format, c("tangle", "demo", "unsafedemo"))) {
     # Drop header
     idx <- grep('## RSP source code script', code)[1L];
     if (!is.na(idx)) {
@@ -156,20 +156,25 @@ setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "demo", 
   }
 
   if (format == "demo") {
-    # (a) Replace .ro(<code chunk>) with cat(<code chunk>)
-    idxs <- grep('^.ro', code, fixed=FALSE);
+    # (a) Display a cleaner .rout()
+    hdr <- c('.rout <- function(x)\n  cat(paste0(x, collapse=""))')
+    code <- c(hdr, code);
+  } else if (format == "unsafedemo") {
+    # NOTE: The generated demo code may not display properly
+    # (a) Replace .rout(<code chunk>) with cat(<code chunk>)
+    idxs <- grep('^.rout', code, fixed=FALSE);
     if (length(idxs) > 0L) {
-      code[idxs] <- gsub(".ro", "cat", code[idxs], fixed=TRUE);
+      code[idxs] <- gsub(".rout", "cat", code[idxs], fixed=TRUE);
     }
   } else if (format == "tangle") {
-    # (a) Drop all .ro("...")
-    idxs <- grep('^.ro[(]"', code, fixed=FALSE);
+    # (a) Drop all .rout("...")
+    idxs <- grep('^.rout[(]"', code, fixed=FALSE);
     if (length(idxs) > 0L) {
       code <- code[-idxs];
     }
 
-    # (b) Replace .ro(<code chunk>) with (<code chunk>).
-    idxs <- grep('^.ro', code, fixed=FALSE);
+    # (b) Replace .rout(<code chunk>) with (<code chunk>).
+    idxs <- grep('^.rout', code, fixed=FALSE);
     if (length(idxs) > 0L) {
       code[idxs] <- substring(code[idxs], first=5L, last=nchar(code[idxs])-1L);
     }

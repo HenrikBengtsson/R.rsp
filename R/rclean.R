@@ -13,7 +13,7 @@
 #
 # \arguments{
 #   \item{...}{@character strings with RSP markup.}
-#   \item{file, path}{Alternatively, a file, a URL or a @connection from 
+#   \item{file, path}{Alternatively, a file, a URL or a @connection from
 #      with the strings are read.
 #      If a file, the \code{path} is prepended to the file, iff given.}
 #   \item{envir}{The @environment in which the RSP string is preprocessed.}
@@ -70,7 +70,7 @@ setMethodS3("rclean", "default", function(..., file=NULL, path=NULL, envir=paren
     s <- RspString(...);
   } else {
     verbose && cat(verbose, "Input file: ", file);
-    s <- readLines(file, warn=FALSE);
+    s <- .readText(file);
     s <- RspString(s, source=file, ...);
   }
   verbose && cat(verbose, "Length of RSP string: ", nchar(s));

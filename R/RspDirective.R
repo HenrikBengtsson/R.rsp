@@ -113,8 +113,7 @@ setMethodS3("getNameContentDefaultAttributes", "RspDirective", function(item, kn
     }
     # Sanity check
     stopifnot(!is.null(pathname));
-    content <- readLines(pathname, warn=FALSE);
-    content <- paste(content, collapse="\n");
+    content <- .readText(pathname);
   }
 
   # Use default?
@@ -137,13 +136,17 @@ setMethodS3("asRspString", "RspDirective", function(object, ...) {
     attrs <- sprintf('%s="%s"', names(attrs), attrs);
     attrs <- paste(c("", attrs), collapse=" ");
   }
+
   comment <- getComment(object);
-  if (!is.null(comment)) {
-    comment <- sprintf(" #%s", comment);
-  } else {
+  if (length(comment) == 0L) {
     comment <- "";
+  } else {
+    comment <- sprintf(" #%s", comment);
   }
   suffixSpecs <- attr(object, "suffixSpecs");
+  if (length(suffixSpecs) == 0L) {
+    suffixSpecs <- "";
+  }
   fmtstr <- "<%%@%s%s%s%s%%>";
   s <- sprintf(fmtstr, body, attrs, comment, suffixSpecs);
   RspString(s);

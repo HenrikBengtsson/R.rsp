@@ -55,7 +55,7 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # RspText => .ro("<text>")
+  # RspText => .rout("<text>")
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspText")) {
     text <- getContent(expr);
@@ -64,19 +64,19 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
     while (nchar(text) > 0L) {
       textT <- substring(text, first=1L, last=1024L);
       textT <- escapeRspText(textT);
-      codeT <- sprintf(".ro(\"%s\")", textT);
+      codeT <- sprintf(".rout(\"%s\")", textT);
       code <- c(code, codeT);
       text <- substring(text, first=1025L);
     }
     if (is.null(code)) {
-      code <- ".ro(\"\")";
+      code <- ".rout(\"\")";
     }
 
     return(code);
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # RspCodeChunk => .ro({<expr>})
+  # RspCodeChunk => .rout({<expr>})
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspCodeChunk")) {
     code <- getCode(expr);
@@ -102,7 +102,7 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
 
     echo <- getEcho(expr);
     if (echo) {
-      codeE <- sprintf(".ro(\"%s\")", escapeRspText(codeT));
+      codeE <- sprintf(".rout(\"%s\")", escapeRspText(codeT));
     }
 
     ret <- getInclude(expr);
@@ -110,9 +110,9 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
       code <- c(codeE, code);
     } else if (echo && ret) {
       codeT <- sprintf(".rtmp <- %s", code);
-      code <- c(codeE, code, ".ro(.rtmp)", "rm(list=\".rtmp\")");
+      code <- c(codeE, code, ".rout(.rtmp)", "rm(list=\".rtmp\")");
     } else if (!echo && ret) {
-      code <- sprintf(".ro(%s)", code);
+      code <- sprintf(".rout(%s)", code);
     } else {
     }
 
@@ -126,7 +126,7 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
     code <- getCode(expr);
     echo <- getEcho(expr);
     if (echo) {
-      codeE <- sprintf(".ro(\"%s\")", escapeRspText(code));
+      codeE <- sprintf(".rout(\"%s\")", escapeRspText(code));
       code <- c(codeE, code);
     }
     return(code);
@@ -226,13 +226,17 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
      code <- c(code, value);
   }
   code <- unlist(strsplit(paste(code, collapse=",\n"), split="\n", fixed=TRUE))
-  code <- c('## RSP document metadata', '.rd <- list(', code, ');');
+  code <- c('## RSP document metadata', '.rmeta <- list(', code, ');');
   header0 <- paste('    ', code, sep="");
 
   # Build R source code
   res$header <- minIndent(header0, '
+    # Look up \'base\' function once (faster)
+    .base_paste0 <- base::paste0
+    .base_cat <- base::cat
+
     ## RSP output function
-    .ro <- function(...) base::cat(..., sep="", collapse="")
+    .rout <- function(x) .base_cat(.base_paste0(x, collapse=""))
 
     ## RSP source code script
   ');
@@ -245,6 +249,10 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
 
 ##############################################################################
 # HISTORY:
+# 2013-03-28
+# o Renamed .ro() to .rout().
+# o .ro() need to use cat(as.character(...)) in order to assert that
+#   the object is coerced to a character before being outputted.
 # 2013-03-14
 # o Moved getCompleteCode() from RspRSourceCode to RspRSourceCodeFactory.
 # 2013-02-13

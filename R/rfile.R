@@ -238,9 +238,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Reading RSP document");
-  str <- readLines(file, warn=FALSE);
-  verbose && printf(verbose, "Number of lines: %d\n", length(str));
-  str <- paste(str, collapse="\n");
+  str <- .readText(file);
   verbose && printf(verbose, "Number of characters: %d\n", nchar(str));
   verbose && str(verbose, str);
   verbose && exit(verbose);

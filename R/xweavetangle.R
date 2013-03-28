@@ -87,7 +87,7 @@ rspTangle <- function(file, ..., envir=new.env()) {
   pathnameR <- getAbsolutePath(pathnameR);
 
   # Read RSP file
-  lines <- readLines(file, warn=FALSE);
+  lines <- .readText(file);
 
   # Setup RSP string
   s <- RspString(lines, source=file);
