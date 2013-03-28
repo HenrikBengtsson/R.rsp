@@ -101,18 +101,26 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
     }
 
     echo <- getEcho(expr);
-    if (echo) {
-      codeE <- sprintf(".rout(\"%s\")", escapeRspText(codeT));
+    ret <- getInclude(expr);
+
+    # An <%= ... %> construct?
+    if (ret && inherits(expr, "RspCodeChunk")) {
+      rout <- ".rout0";
+    } else {
+      rout <- ".rout";
     }
 
-    ret <- getInclude(expr);
+    if (echo) {
+      codeE <- sprintf("%s(\"%s\")", rout, escapeRspText(codeT));
+    }
+
     if (echo && !ret) {
       code <- c(codeE, code);
     } else if (echo && ret) {
       codeT <- sprintf(".rtmp <- %s", code);
-      code <- c(codeE, code, ".rout(.rtmp)", "rm(list=\".rtmp\")");
+      code <- c(codeE, code, sprintf("%s(.rtmp)", "rm(list=\".rtmp\")", rout));
     } else if (!echo && ret) {
-      code <- sprintf(".rout(%s)", code);
+      code <- sprintf("%s(%s)", rout, code);
     } else {
     }
 
@@ -237,6 +245,9 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
 
     ## RSP output function
     .rout <- function(x) .base_cat(.base_paste0(x, collapse=""))
+
+    ## RSP output function for inline RSP constructs
+    .rout0 <- .rout
 
     ## RSP source code script
   ');

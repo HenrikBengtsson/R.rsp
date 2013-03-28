@@ -138,7 +138,7 @@ setMethodS3("findProcessor", "RspRSourceCode", function(object, ...) {
 
 
 
-setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "tangle", "demo", "unsafedemo"), collapse="\n", ...) {
+setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "tangle", "safetangle", "demo", "unsafedemo"), collapse="\n", ...) {
   # Argument 'format':
   format <- match.arg(format);
 
@@ -147,7 +147,7 @@ setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "tangle"
 
   code <- object;
 
-  if (is.element(format, c("tangle", "demo", "unsafedemo"))) {
+  if (is.element(format, c("tangle", "safetangle", "demo", "unsafedemo"))) {
     # Drop header
     idx <- grep('## RSP source code script', code)[1L];
     if (!is.na(idx)) {
@@ -166,17 +166,29 @@ setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "tangle"
     if (length(idxs) > 0L) {
       code[idxs] <- gsub(".rout", "cat", code[idxs], fixed=TRUE);
     }
-  } else if (format == "tangle") {
+  } else if (is.element(format, c("tangle", "safetangle"))) {
     # (a) Drop all .rout("...")
     idxs <- grep('^.rout[(]"', code, fixed=FALSE);
     if (length(idxs) > 0L) {
       code <- code[-idxs];
     }
 
-    # (b) Replace .rout(<code chunk>) with (<code chunk>).
-    idxs <- grep('^.rout', code, fixed=FALSE);
-    if (length(idxs) > 0L) {
-      code[idxs] <- substring(code[idxs], first=5L, last=nchar(code[idxs])-1L);
+    if (format == "tangle") {
+      # (b) Drop all .rout0(...)
+      idxs <- grep('^.rout0[(]', code, fixed=FALSE);
+      if (length(idxs) > 0L) {
+        code <- code[-idxs];
+      }
+    }
+
+    # (c) Replace .rout(<code chunk>) with (<code chunk>).
+    for (rout in c(".rout", ".rout0")) {
+      pattern <- sprintf('^%s[(]', rout);
+      idxs <- grep(pattern, code, fixed=FALSE);
+      if (length(idxs) > 0L) {
+        first <- nchar(rout) + 2L;
+        code[idxs] <- substring(code[idxs], first=first, last=nchar(code[idxs])-1L);
+      }
     }
   } # if (format ...)
 
@@ -193,8 +205,9 @@ setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "tangle"
 })
 
 
-setMethodS3("tangle", "RspRSourceCode", function(code, ...) {
-  tidy(code, format="tangle");
+setMethodS3("tangle", "RspRSourceCode", function(code, format=c("safetangle", "tangle"), ...) {
+  format <- match.arg(format);
+  tidy(code, format=format);
 })
 
 

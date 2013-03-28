@@ -248,12 +248,16 @@ setMethodS3("dropEmptyText", "RspDocument", function(object, ..., verbose=FALSE)
     (inherits(expr, "RspText") && (nchar(getContent(expr)) == 0L));
   })
   idxs <- which(isEmptyText);
-  verbose && cat(verbose, "Number of empty RSP texts: ", length(idxs));
-
-  # Anything to drop? (Always keep one to make sure to output something)
   n <- length(idxs);
-  if (n > 1L) {
-    idxs <- idxs[-n];
+  verbose && cat(verbose, "Number of empty RSP texts: ", n);
+
+  # Anything to drop?
+  if (n > 0L) {
+    # If dropping everything, at least keep one empty RspText
+    # so there will some output
+    if (n == length(object)) {
+      idxs <- idxs[-n];
+    }
     object <- object[-idxs];
   }
 

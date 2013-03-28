@@ -88,6 +88,7 @@ rspTangle <- function(file, ..., envir=new.env()) {
 
   # Translate RSP document to RSP code script
   rcode <- rscript(file=file);
+  rcode <- tangle(rcode);
 
   # Create header
   hdr <- NULL;
