@@ -83,16 +83,16 @@
 \small{
 An RSP document consists of text with RSP-embedded markup.
 When \emph{compiled}, independently of programming language,
-(i) comments are dropped,
-(ii) preprocessing directives are processed, and
-(iii) text and code expressions are translated into a code script.
-The translated code script can then be (iv) evaluated, which generates
-the output document, which in turn may be (v) postprocessed.
+(i)~comments are dropped,
+(ii)~preprocessing directives are processed, and
+(iii)~text and code expressions are translated into a code script.
+The translated code script can then be (iv)~evaluated, which generates
+the output document, which in turn may be (v)~postprocessed.
 %
 Examples (in R):
-(1) main.tex.rsp $\rightarrow$ (main.tex.R) $\rightarrow$ main.tex $\rightarrow$ main.pdf.
-(2) main.md.rsp $\rightarrow$ (main.md.R) $\rightarrow$ main.md $\rightarrow$ main.html.
-(3) main.Rnw.rsp $\rightarrow$ (main.Rnw.R) $\rightarrow$ main.Rnw $\rightarrow$ main.tex $\rightarrow$ main.pdf.
+(1)~main.tex.rsp $\rightarrow$ (main.tex.R) $\rightarrow$ main.tex $\rightarrow$ main.pdf.
+(2)~main.md.rsp $\rightarrow$ (main.md.R) $\rightarrow$ main.md $\rightarrow$ main.html.
+(3)~main.Rnw.rsp $\rightarrow$ (main.Rnw.R) $\rightarrow$ main.Rnw $\rightarrow$ main.tex $\rightarrow$ main.pdf.
 }
 
 \subsection{Comments, Trimming \& Escapes}
