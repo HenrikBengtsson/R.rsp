@@ -22,7 +22,7 @@
 
 ##############################################################################
 # HISTORY:
-# 2013-03-28
+# 2013-03-27
 # o Added .readText() because with readLines() it is not possible to
 #   know whether the last line had a newline or not.
 ##############################################################################

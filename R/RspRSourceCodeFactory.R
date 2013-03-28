@@ -249,7 +249,7 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
 
 ##############################################################################
 # HISTORY:
-# 2013-03-28
+# 2013-03-27
 # o Renamed .ro() to .rout().
 # o .ro() need to use cat(as.character(...)) in order to assert that
 #   the object is coerced to a character before being outputted.

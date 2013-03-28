@@ -86,20 +86,8 @@ rspTangle <- function(file, ..., envir=new.env()) {
   pathnameR <- Arguments$getWritablePathname(filenameR, path=workdir);
   pathnameR <- getAbsolutePath(pathnameR);
 
-  # Read RSP file
-  lines <- .readText(file);
-
-  # Setup RSP string
-  s <- RspString(lines, source=file);
-
-  # Parse as RSP document
-  doc <- parse(s, envir=envir);
-
-  # Translate to R code
-  rcode <- toR(doc);
-
-  # Drop text-outputting code
-  rcode <- tangle(rcode);
+  # Translate RSP document to RSP code script
+  rcode <- rscript(file=file);
 
   # Create header
   hdr <- NULL;
@@ -127,6 +115,8 @@ rspTangle <- function(file, ..., envir=new.env()) {
 
 ###############################################################################
 # HISTORY:
+# 2013-03-27
+# o Now rspTangle() uses rscript().
 # 2013-03-26
 # o Now rspTangle() adds a header with metadata information.
 # 2013-03-25
