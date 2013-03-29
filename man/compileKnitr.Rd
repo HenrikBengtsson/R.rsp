@@ -14,8 +14,6 @@
 
 \description{
  Compiles a Knitr file.
- If Knitr generates a LaTeX file, that is then compiled as well,
- which in turn generates either a PDF or a DVI document.
 }
 
 \usage{
@@ -24,7 +22,7 @@
 
 \arguments{
   \item{filename, path}{The filename and (optional) path of the
-     Knitr document to be compiled.}
+     document to be compiled.}
   \item{...}{Additional arguments passed to \code{\link{compileLaTeX}}().}
   \item{outPath}{The output and working directory.}
   \item{postprocess}{If \code{\link[base:logical]{TRUE}}, and a postprocessing method exists for

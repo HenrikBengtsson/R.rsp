@@ -21,7 +21,7 @@
 }
 
 \arguments{
-  \item{...}{Arguments passed to \code{\link{compileRsp}}().}
+  \item{...}{Arguments passed to \code{\link{compileRsp0}}().}
   \item{pdf}{If \code{\link[base:logical]{TRUE}}, a PDF is generated, otherwise a DVI file.}
   \item{force}{If \code{\link[base:logical]{TRUE}}, file timestamps are ignored.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}

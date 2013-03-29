@@ -1,7 +1,7 @@
 ###########################################################################/**
-# @RdocDefault compileKnitr
+# @RdocDefault compileAsciiDocNoweb
 #
-# @title "Compiles a Knitr file"
+# @title "Compiles a AsciiDoc noweb file"
 #
 # \description{
 #  @get "title".
@@ -12,10 +12,8 @@
 # \arguments{
 #   \item{filename, path}{The filename and (optional) path of the
 #      document to be compiled.}
-#   \item{...}{Additional arguments passed to @see "compileLaTeX".}
+#   \item{...}{Additional arguments passed to @see "ascii::Asciidoc".}
 #   \item{outPath}{The output and working directory.}
-#   \item{postprocess}{If @TRUE, and a postprocessing method exists for
-#      the generated product, it is postprocessed as well.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
@@ -25,19 +23,12 @@
 #
 # @author
 #
-# \seealso{
-#   Internally, @see "knitr::knit" is used.
-# }
-#
 # @keyword file
 # @keyword IO
 # @keyword internal
 #*/###########################################################################
-setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPath=".", postprocess=TRUE, verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::nnn() was called.
-  suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
-
-  require("knitr") || throw("Package not loaded: knitr");
+setMethodS3("compileAsciiDocNoweb", "default", function(filename, path=NULL, ..., outPath=".", postprocess=TRUE, verbose=FALSE) {
+  suppressPackageStartupMessages(require("ascii", quietly=TRUE)) || throw("Package not loaded: ascii");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -56,7 +47,8 @@ setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPat
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "Compiling Knitr document");
+
+  verbose && enter(verbose, "Compiling AsciiDoc noweb document");
   pathname <- getAbsolutePath(pathname);
   verbose && cat(verbose, "Pathname (absolute): ", pathname);
   verbose && printf(verbose, "Input file size: %g bytes\n", file.info(pathname)$size);
@@ -68,11 +60,11 @@ setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPat
     opwd <- setwd(outPath);
   }
 
-  pathname2 <- knit(pathname);
+  pathname2 <- Asciidoc(pathname);
   pathname2 <- getAbsolutePath(pathname2);
   setwd(opwd); opwd <- ".";
 
-  res <- RspFileProduct(pathname2);
+  res <- RspFileProduct(pathname2, type="applications/x-asciidoc");
   verbose && print(verbose, res);
 
   # Postprocess?
@@ -83,11 +75,11 @@ setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPat
   verbose && exit(verbose);
 
   invisible(res);
-}) # compileKnitr()
+}) # compileAsciiDocNoweb()
 
 
 ############################################################################
 # HISTORY:
-# 2013-01-20
-# o Created from compileSweave.R.
+# 2013-03-29
+# o Created (from compileMarkdown.R).
 ############################################################################

@@ -14,8 +14,6 @@
 
 \description{
  Compiles a Sweave file.
- If Sweave generates a LaTeX file, that is then compiled as well,
- which in turn generates either a PDF or a DVI document.
 }
 
 \usage{

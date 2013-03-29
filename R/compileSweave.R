@@ -5,8 +5,6 @@
 #
 # \description{
 #  @get "title".
-#  If Sweave generates a LaTeX file, that is then compiled as well,
-#  which in turn generates either a PDF or a DVI document.
 # }
 #
 # @synopsis

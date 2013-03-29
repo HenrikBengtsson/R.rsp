@@ -83,7 +83,8 @@
 # @alias write.default
 # @alias urlDecode
 # @alias compileRsp
-# @alias compileRsp.default
+# @alias compileRsp0
+# @alias compileRsp0.default
 # @alias epsDev
 # @alias dvips
 # @alias ps2pdf
@@ -139,6 +140,8 @@
 # @alias getNameContentDefaultAttributes.RspDirective
 # @alias getInclude
 # @alias tidy
+# @alias compileAsciiDocNoweb
+#
 #
 # \description{
 # This page contains aliases for all "non-documented" objects that

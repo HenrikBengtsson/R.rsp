@@ -306,7 +306,7 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
 
   verbose && exit(verbose);
 
-  invisible(res);
+  res;
 }) # process()
 
 

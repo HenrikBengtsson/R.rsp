@@ -29,7 +29,7 @@
 # @keyword IO
 # @keyword internal
 #*/###########################################################################
-setMethodS3("typeOfRnw", "default", function(filename, path=NULL, default=c("sweave", "knitr"), ...) {
+setMethodS3("typeOfRnw", "default", function(filename, path=NULL, default="application/x-sweave", ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -37,7 +37,7 @@ setMethodS3("typeOfRnw", "default", function(filename, path=NULL, default=c("swe
   pathname <- Arguments$getReadablePathname(filename, path=path);
 
   # Argument 'default':
-  default <- match.arg(default);
+  default <- Arguments$getCharacter(default);
 
 
   # Read content
@@ -48,14 +48,14 @@ setMethodS3("typeOfRnw", "default", function(filename, path=NULL, default=c("swe
   # Check for knitr-specific commands
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (any(regexpr("opts_chunk$set(", bfr, fixed=TRUE) != -1)) {
-    return("knitr");
+    return("application/x-knitr");
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check for Sweave-specific commands
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (any(regexpr("\\SweaveOpts(", bfr, fixed=TRUE) != -1)) {
-    return("Sweave");
+    return("application/x-sweave");
   }
 
   default;

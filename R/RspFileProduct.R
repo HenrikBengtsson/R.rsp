@@ -174,6 +174,10 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     # *.Rnw => *.tex
     "application/x-knitr" = function(...) { compileKnitr(..., postprocess=FALSE) },
 
+    # AsciiDoc Rnw documents:
+    # *.Rnw => *.txt
+    "application/x-asciidoc-noweb" = function(...) { compileAsciiDocNoweb(..., postprocess=FALSE) },
+
     # Sweave or Knitr Rnw documents:
     # *.Rnw => *.tex
     "application/x-rnw" = function(...) { compileRnw(..., postprocess=FALSE) }
