@@ -1690,7 +1690,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         if (sys.nframe() > 300L) {
           # For now, don't use throw() because it outputs a very
           # long traceback list.
-          stop("Too many nested RSP 'include' preprocessing directives. This indicates an endless recursive loop of including the same file over and over. This was detected while trying to include ", sQuote(file), " (file=", sQuote(getFile(item)), "with type='application/x-rsp') in RSP document ", sQuote(getSource(object)), ".");
+          stop("Too many nested RSP 'include' preprocessing directives. This indicates an endless recursive loop of including the same file over and over. This was detected while trying to include ", sQuote(file), " (file=", sQuote(getFile(item)), " with type='application/x-rsp') in RSP document ", sQuote(getSource(object)), ".");
         }
 
         content <- .readText(file);
