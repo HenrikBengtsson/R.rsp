@@ -7,12 +7,14 @@
   %\VignetteEngine{R.rsp::rsp}
   %\VignetteTangle{FALSE}
 --------------------------------------------------------------------"%>
-
-<%-------------------------------------------------------------------
-  RELEASE OR DEVEL?
-  -------------------------------------------------------------------%>
-\documentclass[a4paper,10pt,landscape]{article}
+\documentclass[a4paper,10pt]{article}
 \usepackage[landscape]{geometry}
+
+<%@logical twocolumn="${TWOCOLUMN}" default="TRUE"%>
+<%@if twocolumn="TRUE"%>
+\usepackage{multicol}
+\setlength{\columnsep}{20pt}
+<%@endif%>
 
 <%-------------------------------------------------------------------
   Assign PDF metadata
@@ -57,6 +59,8 @@
 % Line spacing
 \linespread{0.95}
 
+\usepackage{calc}
+
 % No page numbers
 \pagestyle{empty}
 
@@ -95,13 +99,17 @@ Examples (in R):
 (2)~main.md.rsp $\rightarrow$ (main.md.R) $\rightarrow$ main.md $\rightarrow$ main.html.
 (3)~main.Rnw.rsp $\rightarrow$ (main.Rnw.R) $\rightarrow$ main.Rnw $\rightarrow$ main.tex $\rightarrow$ main.pdf.
 }
-
+<%@if twocolumn="TRUE"%>
+\vspace{1.5ex}
+\hrule
+\begin{multicols}{2}
+<%@endif # twocolumn%>
 \subsection{Comments, Trimming \& Escapes}
 \small{
 Comments can be used to exclude text, code expressions and preprocessing directives.
 }\\[1ex]
 %%
-\begin{tabular}{p{38ex}p{144ex}}
+\begin{tabular}{p{38ex}p{\columnwidth-38ex-7ex}}
 \textit{Markup} & \textit{Description} \\
 \hline
 %%
@@ -131,13 +139,14 @@ A hyphen (plus) attached to the end tag, forces (prevents) following white space
 \end{tabular}
 
 
+
 \subsection{Preprocessing directives}
 \small{
 Preprocessing directives are independent of programming language used.
 They are applied after dropping comments and before translating text and code expressions to a code script. 
 It is not possible to tell from the translated code script whether preprocessing directives have been used or not, nor are their variables accessible (except metadata).
 }\\[1ex]
-\begin{tabular}{p{38ex}p{144ex}}
+\begin{tabular}{p{38ex}p{\columnwidth-38ex-7ex}}
 \textit{Markup} & \textit{Description} \\
 %%
 \hline
@@ -161,9 +170,15 @@ It is not possible to tell from the translated code script whether preprocessing
  Inserts the content of preprocessing variable \content{name}. \\
 %%
 \hline
- \code{<\%@ifeq \content{name}"="\content{content}"\%>} \linebreak
+\code{<\%@ifeq \content{name}"="\content{content}"\%>} \linebreak
+<%@if twocolumn="TRUE"%>
+ \hphantom{x}\content{incl} \linebreak
+ \code{<\%@else\%>} \linebreak
+ \hphantom{x}\content{excl} \linebreak
+<%@else%>
  \content{incl}~\code{<\%@else\%>}~\content{excl} 
- \code{<\%@endif\%>} &
+<%@endif%>
+\code{<\%@endif\%>} &
  If preprocessing variable \content{name} \emph{equals} \content{content},
  then \content{incl} is inserted otherwise \content{excl}.
  \code{<\%@else\%>} is optional. \raggedright \linebreak
@@ -178,7 +193,7 @@ Code expressions are evaluated \emph{after} translation. They may be of any prog
 Code expressions have no access to preprocessing variables (except metadata).
 Output written to standard output is inserted into the final document.
 }\\[1ex]
-\begin{tabular}{p{38ex}p{144ex}}
+\begin{tabular}{p{38ex}p{\columnwidth-38ex-7ex}}
 \textit{Markup} & \textit{Description} \\
 %%
 \hline
@@ -199,27 +214,28 @@ Output written to standard output is inserted into the final document.
 %%%
 \begin{minipage}[t]{42ex}
 \footnotesize%
-\textbf{RSP~document:}%
+\textbf{1.~RSP~document:}%
 \begin{verbatim}
 <%@include file="${file}" type="text/plain"%>
+
 \end{verbatim}%
 \end{minipage}
 %%%
-\parbox[t]{6ex}{$\rightarrow$}%%
+%%% \parbox[t]{6ex}{$\rightarrow$}%%
 %%%
 \begin{minipage}[t]{51ex}
 \footnotesize%
-\textbf{Without comments and preprocessed:}%
+\textbf{2.~Without comments and preprocessed:}%
 \begin{verbatim}
 <%@include file="${file}" type="application/x-rsp; until=expressions"%>
 \end{verbatim}%
 \end{minipage}
 %%%
-\parbox[t]{6ex}{$\rightarrow$}%%
+%%% \parbox[t]{6ex}{$\rightarrow$}%%
 %%%
-\begin{minipage}[t]{37ex}
+\begin{minipage}[t]{42ex}
 \footnotesize%
-\textbf{Translated~code~script:}%
+\textbf{3.~Translated~code~script:}%
 \begin{verbatim}
 <%@string name="doc" file="${file}"%>
 <%@eval language="R" content="
@@ -232,11 +248,11 @@ code <- tidy(code, format='unsafedemo');
 \end{verbatim}%
 \end{minipage}
 %%%
-\parbox[t]{6ex}{$\rightarrow$}%%
+%%% \parbox[t]{6ex}{$\rightarrow$}%%
 %%%
 \begin{minipage}[t]{44ex}
 \footnotesize%
-\textbf{Output document:}%
+\textbf{4.~Output document:}%
 \begin{verbatim}
 <%@include file="${file}"%>
 \end{verbatim}%
@@ -249,19 +265,22 @@ code <- tidy(code, format='unsafedemo');
 \code{rcat('Today is <\%=Sys.Date()\%>')}\linebreak
 \code{rcat(file='\content{file|URL}')}\linebreak
 \end{minipage}
-%%
+<%@if twocolumn="FALSE"%>%%<%@endif%>
 \begin{minipage}[t]{48ex}
 \footnotesize%
 \code{s <- rstring('Today is <\%=Sys.Date()\%>')}\linebreak
 \code{s <- rstring(file='\content{file|URL}')}\linebreak
 \end{minipage}
-%%
+<%@if twocolumn="FALSE"%>%%<%@endif%>
 \begin{minipage}[t]{54ex}
 \footnotesize%
 \code{output <- rfile('\content{file|URL}')}\linebreak
 \code{output <- rfile('\content{file|URL}', postprocess=FALSE)}\linebreak
 \end{minipage}
 
+<%@if twocolumn="TRUE"%>
+\end{multicols}
+<%@endif%>
 
 \vfill
 \hfill{\footnotesize \href{http://cran.r-project.org/package=R.rsp}{R.rsp v<%=R.rsp$version%>} (<%=R.rsp$date%>) by Henrik Bengtsson}
