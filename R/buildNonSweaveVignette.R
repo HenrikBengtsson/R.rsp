@@ -28,7 +28,7 @@
 # @keyword file
 # @keyword IO
 # @keyword internal
-#*/########################################################################### 
+#*/###########################################################################
 parseVignette <- function(pathname, commentPrefix="^[ \t]*%[ \t]*", final=FALSE, source=FALSE, maxLines=-1L, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
@@ -134,7 +134,7 @@ parseVignette <- function(pathname, commentPrefix="^[ \t]*%[ \t]*", final=FALSE,
 # @keyword file
 # @keyword IO
 # @keyword internal
-#*/########################################################################### 
+#*/###########################################################################
 parseVignettes <- function(path=".", pattern="[.][^.~]*$", ...) {
   pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE);
 
@@ -181,7 +181,7 @@ parseVignettes <- function(path=".", pattern="[.][^.~]*$", ...) {
 # @keyword file
 # @keyword IO
 # @keyword internal
-#*/########################################################################### 
+#*/###########################################################################
 buildNonSweaveVignette <- function(vign, envir=new.env(), ...) {
   # Local functions
   SweaveStangle <- function(file, ...) {
@@ -256,7 +256,7 @@ buildNonSweaveVignette <- function(vign, envir=new.env(), ...) {
 # }
 #
 # \value{
-#   Returns (invisibly) a named @list with elements of what 
+#   Returns (invisibly) a named @list with elements of what
 #   the vignette builder returns.
 # }
 #
@@ -269,7 +269,7 @@ buildNonSweaveVignette <- function(vign, envir=new.env(), ...) {
 # @keyword file
 # @keyword IO
 # @keyword internal
-#*/########################################################################### 
+#*/###########################################################################
 buildNonSweaveVignettes <- function(...) {
   vigns <- parseVignettes(...);
   if (length(vigns) > 0L) {
@@ -319,9 +319,14 @@ buildNonSweaveVignettes <- function(...) {
 # @keyword file
 # @keyword IO
 # @keyword internal
-#*/########################################################################### 
+#*/###########################################################################
 buildNonSweaveTexToPdf <- function(path=".", pattern="[.]tex$", ...) {
   pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE);
+
+  # Ignore dummy.tex (which is created by R from dummy.Rnw just before make)
+  keep <- !is.element(basename(pathnames), c("dummy.tex"));
+  pathnames <- pathnames[keep];
+
   res <- list();
   for (pathname in pathnames) {
     pathnamePDF <- sprintf("%s.pdf", gsub(pattern, "", pathname));
@@ -350,7 +355,7 @@ buildNonSweaveTexToPdf <- function(path=".", pattern="[.]tex$", ...) {
 #
 # \value{
 #   Returns (invisibly) the absolute pathame to the built index.html file.
-#   If an index.html file already exists, nothing is done and @NULL 
+#   If an index.html file already exists, nothing is done and @NULL
 #   is returned.
 # }
 #
@@ -359,7 +364,7 @@ buildNonSweaveTexToPdf <- function(path=".", pattern="[.]tex$", ...) {
 # @keyword file
 # @keyword IO
 # @keyword internal
-#*/########################################################################### 
+#*/###########################################################################
 buildPkgIndexHtml <- function(...) {
   # Nothing to do?
   if (file.exists("index.html")) {
@@ -389,6 +394,8 @@ buildPkgIndexHtml <- function(...) {
 
 ############################################################################
 # HISTORY:
+# 2013-03-28
+# o Now buildNonSweaveTexToPdf() ignores 'dummy.tex'.
 # 2013-03-07
 # o Deprecated use of \VignetteBuild{} in favor of \VignetteEngine{}
 #   together with an 'enginesMap.R' file.
