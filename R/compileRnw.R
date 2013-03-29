@@ -12,7 +12,7 @@
 # @synopsis
 #
 # \arguments{
-#   \item{filename, path}{The filename and (optional) path of the 
+#   \item{filename, path}{The filename and (optional) path of the
 #      Knitr document to be compiled.}
 #   \item{...}{Additional arguments passed to the compiler function
 #      used.}
@@ -31,8 +31,8 @@
 # @keyword file
 # @keyword IO
 # @keyword internal
-#*/########################################################################### 
-setMethodS3("compileRnw", "default", function(filename, path=NULL, ..., type=typeOfRnw(filename, path=path, fake=fake), fake=FALSE, verbose=FALSE) {
+#*/###########################################################################
+setMethodS3("compileRnw", "default", function(filename, path=NULL, ..., type=typeOfRnw(filename, path=path), verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -57,9 +57,9 @@ setMethodS3("compileRnw", "default", function(filename, path=NULL, ..., type=typ
   verbose && cat(verbose, "Type of Rnw file: ", type);
 
   if (type == "sweave") {
-    pathnameR <- compileSweave(filename, path=path, ..., fake=fake, verbose=verbose);
+    pathnameR <- compileSweave(filename, path=path, ..., verbose=verbose);
   } else if (type == "knitr") {
-    pathnameR <- compileKnitr(filename, path=path, ..., fake=fake, verbose=verbose);
+    pathnameR <- compileKnitr(filename, path=path, ..., verbose=verbose);
   }
   verbose && exit(verbose);
 

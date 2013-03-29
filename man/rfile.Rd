@@ -17,7 +17,7 @@
 }
 
 \usage{
-\method{rfile}{default}(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), args="*", postprocess=TRUE, fake=FALSE, ..., verbose=FALSE)
+\method{rfile}{default}(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), args="*", postprocess=TRUE, ..., verbose=FALSE)
 }
 
 \arguments{
@@ -45,10 +45,6 @@
   \item{postprocess}{If \code{\link[base:logical]{TRUE}}, and a postprocessing method exists for
      the generated RSP product, it is postprocessed as well.}
   \item{...}{Additional arguments passed to the RSP engine.}
-  \item{fake}{If \code{\link[base:logical]{TRUE}}, the pathname of the output file is returned as
-     soon as the RSP file is parsed (and fakely postprocessed if
-     \code{postprocessed=TRUE}).  It is neither translated to R source
-     code nor evaluated or postprocessed and files are never created.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 

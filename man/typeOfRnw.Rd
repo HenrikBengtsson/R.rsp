@@ -17,14 +17,13 @@
 }
 
 \usage{
-\method{typeOfRnw}{default}(filename, path=NULL, default=c("sweave", "knitr"), ..., fake=FALSE)
+\method{typeOfRnw}{default}(filename, path=NULL, default=c("sweave", "knitr"), ...)
 }
 
 \arguments{
   \item{filename, path}{The filename and (optional) path of the Rnw file.}
   \item{default}{A \code{\link[base]{character}} string specifying the default result.}
   \item{...}{Not used.}
-  \item{fake}{If \code{\link[base:logical]{TRUE}}, \code{default} is returned.}
 }
 
 \value{

@@ -34,10 +34,6 @@
 #   \item{postprocess}{If @TRUE, and a postprocessing method exists for
 #      the generated RSP product, it is postprocessed as well.}
 #   \item{...}{Additional arguments passed to the RSP engine.}
-#   \item{fake}{If @TRUE, the pathname of the output file is returned as
-#      soon as the RSP file is parsed (and fakely postprocessed if
-#      \code{postprocessed=TRUE}).  It is neither translated to R source
-#      code nor evaluated or postprocessed and files are never created.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
@@ -67,7 +63,7 @@
 # @keyword file
 # @keyword IO
 #*/###########################################################################
-setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), args="*", postprocess=TRUE, fake=FALSE, ..., verbose=FALSE) {
+setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), args="*", postprocess=TRUE, ..., verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -160,19 +156,6 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   # Argument 'args':
   args <- cmdArgs(args=args);
 
-  # Argument 'fake':
-  fake <- Arguments$getLogical(fake);
-  if (fake) {
-    # Output must be a file
-    if (!is.character(output)) {
-      throw("Argument 'fake' can only be TRUE if 'output' specifies a local file: ", class(output)[1L]);
-    }
-
-    # Output must not be postprocessed, because that requires we know
-    # the document 'type' which can be set within the document itself
-    # via RSP preprocessing directives.
-  }
-
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -201,28 +184,6 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
     }
 
     printf(verbose, "Default content type: %s\n", type);
-
-    if (fake) {
-      cat(verbose, "Processing mode: fake");
-    }
-  }
-
-
-  if (fake && isTRUE(attr(type, "fixed"))) {
-    verbose && enter(verbose, "Returning early due to \"fake\" RSP processing");
-    printf(verbose, "Default \"fixed\" content type: %s\n", type);
-
-    res <- RspFileProduct(output, type=type, mustExist=FALSE);
-
-    if (postprocess && hasProcessor(res)) {
-      res <- process(res, workdir=workdir, ..., fake=TRUE, verbose=verbose);
-    }
-
-    verbose && print(verbose, res);
-    verbose && exit(verbose);
-
-    verbose && exit(verbose);
-    return(res);
   }
 
 
@@ -250,22 +211,6 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   verbose && print(verbose, doc);
   rm(rstr, str);
   verbose && exit(verbose);
-
-  if (fake) {
-    verbose && enter(verbose, "Returning early due to \"fake\" RSP processing");
-    res <- RspFileProduct(output, type=type, mustExist=FALSE);
-
-    if (postprocess && hasProcessor(res)) {
-      res <- process(res, workdir=workdir, ..., fake=TRUE, verbose=verbose);
-    }
-
-    verbose && print(verbose, res);
-    verbose && exit(verbose);
-
-    verbose && exit(verbose);
-    return(res);
-  }
-
 
   verbose && enter(verbose, "Translating RSP document (to R)");
   rcode <- toR(doc, ...);

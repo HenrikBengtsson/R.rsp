@@ -19,7 +19,7 @@
 }
 
 \usage{
-\method{compileSweave}{default}(filename, path=NULL, ..., outPath=".", fake=FALSE, verbose=FALSE)
+\method{compileSweave}{default}(filename, path=NULL, ..., outPath=".", verbose=FALSE)
 }
 
 \arguments{
@@ -27,8 +27,6 @@
      Sweave document to be compiled.}
   \item{...}{Additional arguments passed to \code{\link{compileLaTeX}}().}
   \item{outPath}{The output and working directory.}
-  \item{fake}{If \code{\link[base:logical]{TRUE}}, nothing is done, but the pathname of the
-     output file that would have been created is still returned.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 

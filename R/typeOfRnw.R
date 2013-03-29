@@ -13,7 +13,6 @@
 #   \item{filename, path}{The filename and (optional) path of the Rnw file.}
 #   \item{default}{A @character string specifying the default result.}
 #   \item{...}{Not used.}
-#   \item{fake}{If @TRUE, \code{default} is returned.}
 # }
 #
 # \value{
@@ -29,25 +28,17 @@
 # @keyword file
 # @keyword IO
 # @keyword internal
-#*/########################################################################### 
-setMethodS3("typeOfRnw", "default", function(filename, path=NULL, default=c("sweave", "knitr"), ..., fake=FALSE) {
+#*/###########################################################################
+setMethodS3("typeOfRnw", "default", function(filename, path=NULL, default=c("sweave", "knitr"), ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'fake':
-  fake <- Arguments$getLogical(fake);
-
   # Arguments 'filename' & 'path':
-  pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=!fake);
+  pathname <- Arguments$getReadablePathname(filename, path=path);
 
   # Argument 'default':
   default <- match.arg(default);
 
-
-  if (fake) {
-    warning("Assuming default result for typeOfRnw(..., fake=TRUE): ", default);
-    return(default);
-  }
 
   # Read content
   bfr <- readLines(pathname, warn=FALSE);

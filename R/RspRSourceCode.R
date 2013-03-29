@@ -132,7 +132,7 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(),
 
 
 setMethodS3("findProcessor", "RspRSourceCode", function(object, ...) {
-  function(..., fake=FALSE) {
+  function(...) {
     evaluate(...);
   }
 }) # findProcess()

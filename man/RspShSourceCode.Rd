@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspShSourceCode}
+\name{RspShSourceCode}
 \docType{class}
 \alias{RspShSourceCode}
 
 
- \title{The RspShSourceCode class}
+\title{The RspShSourceCode class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspShSourceCode}\cr
 
 \code{character}\cr
@@ -35,19 +35,19 @@ extends \emph{\link[R.rsp]{RspSourceCode}}\cr
 
 
 
-  An RspShSourceCode object is an \code{\link{RspSourceCode}} holding R source code.
- }
+ An RspShSourceCode object is an \code{\link{RspSourceCode}} holding R source code.
+}
 
- \usage{
+\usage{
 RspShSourceCode(...)
 }
 
- \arguments{
-   \item{...}{\code{\link[base]{character}} strings.}
- }
+\arguments{
+  \item{...}{\code{\link[base]{character}} strings.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RspShSourceCode]{evaluate}} \tab Evaluates the shell (sh) code.\cr
  \tab \code{findProcessor} \tab  -\cr
@@ -67,9 +67,9 @@ getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes
 all.equal, as.data.frame, as.Date, as.POSIXlt, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses, wrap
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

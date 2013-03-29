@@ -187,7 +187,7 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     processor <- function(...) {
        do.call(fcnT, args=c(list(...), metadata));
     }
-    fcn <- function(pathname, ..., fake=FALSE) {
+    fcn <- function(pathname, ...) {
       # Arguments 'pathname':
       pathname <- Arguments$getReadablePathname(pathname);
       pathnameR <- processor(pathname, ...);

@@ -8,7 +8,7 @@
 #
 #  An RspShSourceCode object is an @see "RspSourceCode" holding R source code.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -18,7 +18,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -44,7 +44,7 @@ setConstructorS3("RspShSourceCode", function(...) {
 # \arguments{
 #   \item{envir}{The @environment in which the RSP string is evaluated.}
 #   \item{args}{A named @list of arguments assigned to the environment
-#     in which the RSP string is parsed and evaluated. 
+#     in which the RSP string is parsed and evaluated.
 #     See @see "R.utils::cmdArgs".}
 #   \item{...}{Optional arguments passed to @see "base::eval".}
 # }
@@ -58,7 +58,7 @@ setConstructorS3("RspShSourceCode", function(...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("evaluate", "RspShSourceCode", function(object, envir=parent.frame(), args="*", ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
@@ -95,7 +95,7 @@ setMethodS3("evaluate", "RspShSourceCode", function(object, envir=parent.frame()
 
 
 setMethodS3("findProcessor", "RspShSourceCode", function(object, ...) {
-  function(..., fake=FALSE) {
+  function(...) {
     evaluate(...);
   }
 }) # findProcess()

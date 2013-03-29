@@ -12,12 +12,10 @@
 # @synopsis
 #
 # \arguments{
-#   \item{filename, path}{The filename and (optional) path of the 
+#   \item{filename, path}{The filename and (optional) path of the
 #      Knitr document to be compiled.}
 #   \item{...}{Additional arguments passed to @see "compileLaTeX".}
 #   \item{outPath}{The output and working directory.}
-#   \item{fake}{If @TRUE, nothing is done, but the pathname of the 
-#      output file that would have been created is still returned.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
@@ -34,8 +32,8 @@
 # @keyword file
 # @keyword IO
 # @keyword internal
-#*/########################################################################### 
-setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPath=".", fake=FALSE, verbose=FALSE) {
+#*/###########################################################################
+setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPath=".", verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -44,11 +42,8 @@ setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPat
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'fake':
-  fake <- Arguments$getLogical(fake);
-
   # Arguments 'filename' & 'path':
-  pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=!fake);
+  pathname <- Arguments$getReadablePathname(filename, path=path);
 
   # Arguments 'outPath':
   outPath <- Arguments$getWritablePath(outPath);
@@ -73,20 +68,7 @@ setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPat
     opwd <- setwd(outPath);
   }
 
-  if (fake) {
-    pathname2 <- NULL;
-    patterns <- c(tex="(.*)[.][rRsS](nw|tex)$", html="(.*)[.]Rmd$");
-    for (ext in names(patterns)) {
-      if (regexpr(patterns[ext], pathname) != -1L) {
-        pathname2 <- gsub(patterns[ext], sprintf("\\1.%s", ext), pathname);
-      }
-    }
-    if (is.null(pathname2)) {
-      throw("Unrecognized knitr filename extension: ", pathname);
-    }
-  } else {
-    pathname2 <- knit(pathname);
-  }
+  pathname2 <- knit(pathname);
 
   pathname2 <- getAbsolutePath(pathname2);
   verbose && cat(verbose, "Knitr output pathname: ", pathname2);
@@ -99,7 +81,7 @@ setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPat
   isLaTeX <- (tolower(ext) == "tex");
   if (isLaTeX) {
     verbose && enter(verbose, "Compiling Knitr-generated LaTeX document");
-    pathname3 <- compileLaTeX(pathname2, ..., outPath=outPath, fake=fake, verbose=less(verbose, 10));
+    pathname3 <- compileLaTeX(pathname2, ..., outPath=outPath, verbose=less(verbose, 10));
     verbose && cat(verbose, "Output pathname: ", pathname3);
     verbose && exit(verbose);
   } else {
