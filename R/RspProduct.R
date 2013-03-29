@@ -194,6 +194,13 @@ setMethodS3("findProcessor", "RspProduct", function(object, ...) {
 #   \item{workdir}{A temporary working directory to use during processing.
 #      If @NULL, the working directory is not changed.}
 #   \item{...}{Optional arguments passed to the processor @function.}
+#   \item{recursive}{
+#      If a postive number (or +@Inf), then processed output that can be
+#      processed will be processed recursively (with this argument being
+#      decreased by one).
+#      A value @TRUE corresponds to +@Inf (infinite processing if possible).
+#      A value @FALSE corresponds to 0 (no further processing).
+#   }
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
@@ -207,7 +214,7 @@ setMethodS3("findProcessor", "RspProduct", function(object, ...) {
 # @keyword file
 # @keyword IO
 #*/###########################################################################
-setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.frame(), workdir=NULL, ..., verbose=FALSE) {
+setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.frame(), workdir=NULL, ..., recursive=TRUE, verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::rsp() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -231,6 +238,18 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
     workdir <- getAbsolutePath(workdir);
   }
 
+  # Argument 'recursive':
+  if (is.numeric(recursive)) {
+    recursive <- Arguments$getNumeric(recursive);
+  } else {
+    recursive <- Arguments$getLogical(recursive);
+    if (recursive) {
+      recursive <- Inf;
+    } else {
+      recursive <- 0;
+    }
+  }
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
@@ -247,7 +266,6 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
   # Nothing to do?
   if (is.null(processor)) {
     verbose && cat(verbose, "There is no known processor for this content type: ", type);
-    verbose && exit(verbose);
     verbose && exit(verbose);
     return(object);
   }
@@ -276,6 +294,14 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
     }
   }
 
+  if (recursive > 0L && hasProcessor(res)) {
+    verbose && enter(verbose, "Recursive processing");
+    verbose && cat(verbose, "Recursive depth: ", recursive);
+    object <- res;
+    res <- process(object, type=type, envir=envir, workdir=workdir, ..., recursive=(recursive - 1), verbose=verbose);
+    verbose && exit(verbose);
+  }
+
   verbose && exit(verbose);
 
   verbose && exit(verbose);
@@ -286,6 +312,8 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
 
 ############################################################################
 # HISTORY:
+# 2013-03-29
+# o Added argument 'recursive' to process().
 # 2013-03-12
 # o Renamed annotations to metadata.
 # 2013-02-18

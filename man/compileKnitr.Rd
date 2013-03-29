@@ -19,7 +19,7 @@
 }
 
 \usage{
-\method{compileKnitr}{default}(filename, path=NULL, ..., outPath=".", verbose=FALSE)
+\method{compileKnitr}{default}(filename, path=NULL, ..., outPath=".", postprocess=TRUE, verbose=FALSE)
 }
 
 \arguments{
@@ -27,6 +27,8 @@
      Knitr document to be compiled.}
   \item{...}{Additional arguments passed to \code{\link{compileLaTeX}}().}
   \item{outPath}{The output and working directory.}
+  \item{postprocess}{If \code{\link[base:logical]{TRUE}}, and a postprocessing method exists for
+     the generated product, it is postprocessed as well.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
@@ -37,7 +39,7 @@
 \author{Henrik Bengtsson}
 
 \seealso{
-  Internally, \code{\link[knitr]{knit}} and \code{\link{compileLaTeX}}() are used.
+  Internally, \code{\link[knitr]{knit}} is used.
 }
 
 

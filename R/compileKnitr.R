@@ -16,6 +16,8 @@
 #      Knitr document to be compiled.}
 #   \item{...}{Additional arguments passed to @see "compileLaTeX".}
 #   \item{outPath}{The output and working directory.}
+#   \item{postprocess}{If @TRUE, and a postprocessing method exists for
+#      the generated product, it is postprocessed as well.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
@@ -26,14 +28,14 @@
 # @author
 #
 # \seealso{
-#   Internally, @see "knitr::knit" and @see "compileLaTeX" are used.
+#   Internally, @see "knitr::knit" is used.
 # }
 #
 # @keyword file
 # @keyword IO
 # @keyword internal
 #*/###########################################################################
-setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPath=".", verbose=FALSE) {
+setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPath=".", postprocess=TRUE, verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -69,28 +71,20 @@ setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPat
   }
 
   pathname2 <- knit(pathname);
-
   pathname2 <- getAbsolutePath(pathname2);
-  verbose && cat(verbose, "Knitr output pathname: ", pathname2);
-
   setwd(opwd); opwd <- ".";
-  verbose && printf(verbose, "Output file size: %g bytes\n", file.info(pathname2)$size);
 
-  # Compile LaTeX?
-  ext <- gsub(".*[.]([^.]*)$", "\\1", pathname2);
-  isLaTeX <- (tolower(ext) == "tex");
-  if (isLaTeX) {
-    verbose && enter(verbose, "Compiling Knitr-generated LaTeX document");
-    pathname3 <- compileLaTeX(pathname2, ..., outPath=outPath, verbose=less(verbose, 10));
-    verbose && cat(verbose, "Output pathname: ", pathname3);
-    verbose && exit(verbose);
-  } else {
-    pathname3 <- pathname2;
+  res <- RspFileProduct(pathname2);
+  verbose && print(verbose, res);
+
+  # Postprocess?
+  if (postprocess) {
+    res <- process(res, outPath=outPath, recursive=TRUE, verbose=verbose);
   }
 
   verbose && exit(verbose);
 
-  invisible(pathname3);
+  invisible(res);
 }) # compileKnitr()
 
 

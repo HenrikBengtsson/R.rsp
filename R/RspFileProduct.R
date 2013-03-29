@@ -149,7 +149,6 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     verbose && exit(verbose);
     return(NULL);
   }
-
   type <- parseInternetMediaType(type)$contentType;
 
   # Find another RSP compiler
@@ -169,11 +168,11 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
     # Knitr Rnw documents:
     # *.Rnw => *.tex => *.pdf
-    "application/x-knitr" = compileKnitr,
+    "application/x-knitr" = function(...) { compileKnitr(..., postprocess=FALSE) },
 
     # Sweave or Knitr Rnw documents:
     # *.Rnw => *.tex => *.pdf
-    "application/x-rnw" = compileRnw
+    "application/x-rnw" = function(...) { compileRnw(..., postprocess=FALSE) }
   );
 
   if (is.null(fcn)) {
@@ -192,7 +191,7 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
       pathname <- Arguments$getReadablePathname(pathname);
       pathnameR <- processor(pathname, ...);
       pathnameR <- getAbsolutePath(pathnameR);
-      pathnameR <- RspFileProduct(pathnameR, attrs=list(metadata=metadata), mustExist=FALSE);
+      RspFileProduct(pathnameR, attrs=list(metadata=metadata), mustExist=FALSE);
     } # fcn()
     verbose && cat(verbose, "Processor found: ", type);
   }

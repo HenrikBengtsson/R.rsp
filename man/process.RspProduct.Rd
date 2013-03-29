@@ -18,7 +18,7 @@
 }
 
 \usage{
-\method{process}{RspProduct}(object, type=NULL, envir=parent.frame(), workdir=NULL, ..., verbose=FALSE)
+\method{process}{RspProduct}(object, type=NULL, envir=parent.frame(), workdir=NULL, ..., recursive=TRUE, verbose=FALSE)
 }
 
 \arguments{
@@ -26,6 +26,13 @@
   \item{workdir}{A temporary working directory to use during processing.
      If \code{\link[base]{NULL}}, the working directory is not changed.}
   \item{...}{Optional arguments passed to the processor \code{\link[base]{function}}.}
+  \item{recursive}{
+     If a postive number (or +\code{\link[base:is.finite]{Inf}}), then processed output that can be
+     processed will be processed recursively (with this argument being
+     decreased by one).
+     A value \code{\link[base:logical]{TRUE}} corresponds to +\code{\link[base:is.finite]{Inf}} (infinite processing if possible).
+     A value \code{\link[base:logical]{FALSE}} corresponds to 0 (no further processing).
+  }
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
