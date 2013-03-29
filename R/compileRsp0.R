@@ -1,4 +1,4 @@
-setMethodS3("compileRsp", "default", function(..., envir=parent.frame(), force=FALSE, verbose=FALSE) {
+setMethodS3("compileRsp0", "default", function(..., envir=parent.frame(), force=FALSE, verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -55,11 +55,13 @@ setMethodS3("compileRsp", "default", function(..., envir=parent.frame(), force=F
   }
 
   invisible(pathname3);
-}) # compileRsp()
+}) # compileRsp0()
 
 
 ###########################################################################
 # HISTORY:
+# 2013-03-29
+# o Renamed to compileRsp0(). May be dropped rather soon.
 # 2009-02-23
 # o Updated to use parseRsp().
 # 2009-02-22

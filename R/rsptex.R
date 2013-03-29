@@ -10,7 +10,7 @@
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to @see "compileRsp".}
+#   \item{...}{Arguments passed to @see "compileRsp0".}
 #   \item{pdf}{If @TRUE, a PDF is generated, otherwise a DVI file.}
 #   \item{force}{If @TRUE, file timestamps are ignored.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
@@ -58,7 +58,7 @@ setMethodS3("rsptex", "default", function(..., pdf=TRUE, force=FALSE, verbose=FA
 
   verbose && enter(verbose, "Compiling RSP LaTeX file");
 
-  pathname2 <- compileRsp(..., trimRsp=TRUE, force=force, verbose=verbose);
+  pathname2 <- compileRsp0(..., trimRsp=TRUE, force=force, verbose=verbose);
   verbose && cat(verbose, "LaTeX pathname: ", pathname2);
 
   ext <- ifelse(pdf, ".pdf", ".dvi");
@@ -92,6 +92,8 @@ setMethodS3("rsptex", "default", function(..., pdf=TRUE, force=FALSE, verbose=FA
 
 ############################################################################
 # HISTORY:
+# 2013-03-29
+# o Renamed to compileRsp0().
 # 2011-03-08
 # o Now rsptex() trims white space of RSP blocks so that RSP blocks will
 #   not add additional newlines.  This is done via the new 'trimRsp'

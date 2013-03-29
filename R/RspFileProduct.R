@@ -154,24 +154,28 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
   # Find another RSP compiler
   fcn <- switch(type,
     # Markdown documents:
-    # *.md => *.html
-    "application/x-markdown" = compileMarkdown,
+    # *<ext>.rsp => *.<ext>
+    "application/x-rsp" = compileRsp,
 
     # LaTeX documents:
     # *.tex => ... => *.pdf
     "application/x-tex" = compileLaTeX,
     "application/x-latex" = compileLaTeX,
 
+    # Markdown documents:
+    # *.md => *.html
+    "application/x-markdown" = compileMarkdown,
+
     # Sweave Rnw documents:
-    # *.Rnw => *.tex => *.pdf
-    "application/x-sweave" = compileSweave,
+    # *.Rnw => *.tex
+    "application/x-sweave" = function(...) { compileSweave(..., postprocess=FALSE) },
 
     # Knitr Rnw documents:
-    # *.Rnw => *.tex => *.pdf
+    # *.Rnw => *.tex
     "application/x-knitr" = function(...) { compileKnitr(..., postprocess=FALSE) },
 
     # Sweave or Knitr Rnw documents:
-    # *.Rnw => *.tex => *.pdf
+    # *.Rnw => *.tex
     "application/x-rnw" = function(...) { compileRnw(..., postprocess=FALSE) }
   );
 
