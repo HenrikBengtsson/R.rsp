@@ -1,0 +1,17 @@
+library("R.rsp")
+
+path <- system.file(package="R.rsp")
+path <- file.path(path, "rsp,LoremIpsum")
+pathname <- file.path(path, "LoremIpsum.asciidoc.txt")
+print(pathname)
+
+if (Sys.getenv("_R_CHECK_FULL_") != "") {
+  if (!is.null(findAsciiDoc(mustExist=FALSE))) {
+    outPath <- file.path("LoremIpsum", "asciidoc.txt");
+    copyDirectory(file.path(path, "figures"), file.path(outPath, "figures"))
+    pathnameR <- compileAsciiDocNoweb(pathname, outPath=outPath, verbose=-10)
+    print(pathnameR)
+    pathnameR <- Arguments$getReadablePathname(pathnameR)
+  }
+}
+

@@ -92,7 +92,6 @@
 \alias{stop.default}
 \alias{write.default}
 \alias{urlDecode}
-\alias{compileRsp}
 \alias{compileRsp0}
 \alias{compileRsp0.default}
 \alias{epsDev}
@@ -150,7 +149,6 @@
 \alias{getNameContentDefaultAttributes.RspDirective}
 \alias{getInclude}
 \alias{tidy}
-\alias{compileAsciiDocNoweb}
 
 
 \description{

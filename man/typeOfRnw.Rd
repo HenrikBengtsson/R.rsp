@@ -17,7 +17,7 @@
 }
 
 \usage{
-\method{typeOfRnw}{default}(filename, path=NULL, default=c("sweave", "knitr"), ...)
+\method{typeOfRnw}{default}(filename, path=NULL, default="application/x-sweave", ...)
 }
 
 \arguments{

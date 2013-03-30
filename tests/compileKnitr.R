@@ -5,7 +5,8 @@ pathname <- file.path(path, "LoremIpsum.knitr.Rnw")
 print(pathname)
 
 if (Sys.getenv("_R_CHECK_FULL_") != "") {
-  pathnameR <- compileKnitr(pathname, outPath="knitr.Rnw/", verbose=-10)
+  outPath <- file.path("LoremIpsum", "knitr.Rnw");
+  pathnameR <- compileKnitr(pathname, outPath=outPath, verbose=-10)
   print(pathnameR)
   pathnameR <- Arguments$getReadablePathname(pathnameR)
 }

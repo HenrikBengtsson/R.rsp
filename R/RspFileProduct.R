@@ -166,6 +166,10 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     # *.md => *.html
     "application/x-markdown" = compileMarkdown,
 
+    # Markdown documents:
+    # *.txt => *.html, ...
+    "application/x-asciidoc" = compileAsciiDoc,
+
     # Sweave Rnw documents:
     # *.Rnw => *.tex
     "application/x-sweave" = function(...) { compileSweave(..., postprocess=FALSE) },

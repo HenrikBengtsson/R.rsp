@@ -6,7 +6,8 @@ pathname <- file.path(path, "LoremIpsum.knitr.Rnw")
 print(pathname)
 
 if (Sys.getenv("_R_CHECK_FULL_") != "") {
-  pathnameR <- compileRnw(pathname, outPath="knitr.Rnw-auto/", verbose=-10)
+  outPath <- file.path("LoremIpsum", "knitr.Rnw-auto");
+  pathnameR <- compileRnw(pathname, outPath=outPath, verbose=-10)
   print(pathnameR)
   pathnameR <- Arguments$getReadablePathname(pathnameR)
 }
@@ -18,7 +19,8 @@ pathname <- file.path(path, "LoremIpsum.Rnw")
 print(pathname)
 
 if (Sys.getenv("_R_CHECK_FULL_") != "") {
-  pathnameR <- compileRnw(pathname, outPath="Rnw-auto/", verbose=-10)
+  outPath <- file.path("LoremIpsum", "Rnw-auto");
+  pathnameR <- compileRnw(pathname, outPath=outPath, verbose=-10)
   print(pathnameR)
   pathnameR <- Arguments$getReadablePathname(pathnameR)
 }

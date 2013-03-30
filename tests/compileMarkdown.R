@@ -5,7 +5,8 @@ pathname <- file.path(path, "LoremIpsum.md")
 print(pathname)
 
 if (Sys.getenv("_R_CHECK_FULL_") != "") {
-  pathnameR <- compileMarkdown(pathname, outPath="md/", verbose=-10)
+  outPath <- file.path("LoremIpsum", "md");
+  pathnameR <- compileMarkdown(pathname, outPath=outPath, verbose=-10)
   print(pathnameR)
   pathnameR <- Arguments$getReadablePathname(pathnameR)
 }
