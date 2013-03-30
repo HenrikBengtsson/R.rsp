@@ -23,13 +23,13 @@
 \code{~~~~~~~|}\cr
 \code{~~~~~~~+--}\code{\link[R.rsp]{RspProduct}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\code{RspStringProduct}\cr
+\code{~~~~~~~~~~~~+--}\emph{\code{RspStringProduct}}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public class \bold{RspStringProduct}\cr
-extends \link[R.rsp]{RspProduct}\cr
+public abstract class \bold{RspStringProduct}\cr
+extends \emph{\link[R.rsp]{RspProduct}}\cr
 
 
 
@@ -54,7 +54,7 @@ RspStringProduct(...)
 
 
  \bold{Methods inherited from RspProduct}:\cr
-findProcessor, getMetadata, getType, hasProcessor, print, process
+findProcessor, getMetadata, getType, hasProcessor, print, process, view
 
  \bold{Methods inherited from RspObject}:\cr
 getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes

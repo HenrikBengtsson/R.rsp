@@ -10,6 +10,7 @@
 \alias{getType.RspProduct}
 \alias{RspProduct.getType}
 \alias{getType,RspProduct-method}
+\alias{getType.RspFileProduct}
 
 \title{Gets the type of an RSP product}
 

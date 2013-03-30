@@ -139,6 +139,7 @@
 # @alias getNameContentDefaultAttributes.RspDirective
 # @alias getInclude
 # @alias tidy
+# @alias view
 #
 #
 # \description{

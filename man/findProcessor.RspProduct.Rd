@@ -10,6 +10,7 @@
 \alias{findProcessor.RspProduct}
 \alias{RspProduct.findProcessor}
 \alias{findProcessor,RspProduct-method}
+\alias{findProcessor.RspFileProduct}
 
 \title{Locates a processor for an RSP product}
 

@@ -25,12 +25,12 @@
 \code{~~~~~~~~~~~~|}\cr
 \code{~~~~~~~~~~~~+--}\code{\link[R.rsp]{RspSourceCode}}\cr
 \code{~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~+--}\code{RspRSourceCode}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\emph{\code{RspRSourceCode}}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public class \bold{RspRSourceCode}\cr
+public abstract class \bold{RspRSourceCode}\cr
 extends \emph{\link[R.rsp]{RspSourceCode}}\cr
 
 
@@ -62,7 +62,7 @@ RspRSourceCode(...)
 evaluate, print, rstring, tangle, tidy
 
  \bold{Methods inherited from RspProduct}:\cr
-findProcessor, getMetadata, getType, hasProcessor, print, process
+findProcessor, getMetadata, getType, hasProcessor, print, process, view
 
  \bold{Methods inherited from RspObject}:\cr
 getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes

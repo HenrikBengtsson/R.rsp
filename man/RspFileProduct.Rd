@@ -29,7 +29,7 @@
 \cr
 
 public class \bold{RspFileProduct}\cr
-extends \link[R.rsp]{RspProduct}\cr
+extends \emph{\link[R.rsp]{RspProduct}}\cr
 
 
 
@@ -50,14 +50,15 @@ RspFileProduct(pathname=NA, ..., mustExist=TRUE)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:findProcessor.RspFileProduct]{findProcessor}} \tab Locates a processor for an RSP file product.\cr
- \tab \code{\link[R.rsp:getType.RspFileProduct]{getType}} \tab Gets the type of an RSP file product.\cr
+ \tab \code{findProcessor} \tab  -\cr
+ \tab \code{getType} \tab  -\cr
  \tab \code{print} \tab  -\cr
+ \tab \code{view} \tab  -\cr
 }
 
 
  \bold{Methods inherited from RspProduct}:\cr
-findProcessor, getMetadata, getType, hasProcessor, print, process
+findProcessor, getMetadata, getType, hasProcessor, print, process, view
 
  \bold{Methods inherited from RspObject}:\cr
 getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes

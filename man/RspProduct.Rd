@@ -21,12 +21,12 @@
 \code{~~|}\cr
 \code{~~+--}\code{\link[R.rsp]{RspObject}}\cr
 \code{~~~~~~~|}\cr
-\code{~~~~~~~+--}\code{RspProduct}\cr
+\code{~~~~~~~+--}\emph{\code{RspProduct}}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.rsp]{RspFileProduct}, \link[R.rsp]{RspRSourceCode}, \emph{\link[R.rsp]{RspShSourceCode}}, \emph{\link[R.rsp]{RspSourceCode}}, \link[R.rsp]{RspStringProduct}\cr
+\link[R.rsp]{RspFileProduct}, \emph{\link[R.rsp]{RspRSourceCode}}, \emph{\link[R.rsp]{RspShSourceCode}}, \emph{\link[R.rsp]{RspSourceCode}}, \emph{\link[R.rsp]{RspStringProduct}}\cr
 
-public class \bold{RspProduct}\cr
+public abstract class \bold{RspProduct}\cr
 extends \link[R.rsp]{RspObject}\cr
 
 
@@ -53,6 +53,7 @@ RspProduct(object=NA, ...)
  \tab \code{\link[R.rsp:hasProcessor.RspProduct]{hasProcessor}} \tab Checks whether a processor exist or not for an RSP product.\cr
  \tab \code{print} \tab  -\cr
  \tab \code{\link[R.rsp:process.RspProduct]{process}} \tab Processes an RSP file product.\cr
+ \tab \code{view} \tab  -\cr
 }
 
 
