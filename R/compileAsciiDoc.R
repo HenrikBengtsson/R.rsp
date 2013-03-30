@@ -56,7 +56,7 @@ setMethodS3("compileAsciiDoc", "default", function(filename, path=NULL, ..., out
   verbose && printf(verbose, "Input file size: %g bytes\n", file.info(pathname)$size);
   verbose && cat(verbose, "Output and working directory: ", outPath);
 
-  asciidoc <- findAsciiDoc(mustExist=TRUE, verbose=less(verbose, 10));
+  bin <- findAsciiDoc(mustExist=TRUE, verbose=less(verbose, 10));
 
   opwd <- ".";
   on.exit(setwd(opwd), add=TRUE);
@@ -64,11 +64,40 @@ setMethodS3("compileAsciiDoc", "default", function(filename, path=NULL, ..., out
     opwd <- setwd(outPath);
   }
 
-  pathname <- getRelativePath(pathname);
   args <- c("-v");
 ##  args <- c(args, "-a data-uri");
+
+  pathname <- normalizePath(pathname);
   args <- c(args, pathname);
-  res <- system2(asciidoc, args=args, stderr=TRUE);
+
+  if (verbose && isVisible(less(verbose, 5))) {
+     verbose && cat(verbose, "AsciiDoc executable:");
+     verbose && print(verbose, bin);
+     verbose && cat(verbose, "Command-line arguments:");
+     verbose && print(verbose, args);
+  }
+
+  res <- system2(bin, args=args, stderr=TRUE);
+  res <- trim(res);
+  if (length(res) == 0L) {
+    throw("Failed to run external 'asciidoc'. No output is available.");
+  }
+
+  if (verbose && isVisible(less(verbose, 10))) {
+     verbose && cat(verbose, res, collapse="\n");
+  }
+
+  # Locate asciidoc warnings
+  pattern <- "^asciidoc: WARNING: ";
+  warns <- grep(pattern, res, value=TRUE);
+  if (length(warns) > 0L) {
+    warns <- gsub(pattern, "", warns);
+    warns <- trim(warns);
+    verbose && enter(verbose, sprintf("Detected %d AsciiDoc warnings", length(warns)));
+    verbose && cat(verbose, warns, collapse="\n");
+    for (warn in warns) warning("AsciiDoc WARNING: ", warn);
+    verbose && exit(verbose);
+  }
 
   # Locate output filename
   pattern <- "^asciidoc: writing: ";

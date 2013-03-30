@@ -16,6 +16,10 @@
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
+# \value{
+#   Returns the pathname to the executable, or @NULL if not found.
+# }
+#
 # \details{
 #  The 'asciidoc' executable is searched for as follows:
 #  \enumerate{
@@ -48,19 +52,25 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
   command <- "asciidoc";
   verbose && cat(verbose, "Command: ", command);
 
-  pathname <- Sys.which(command);
-  if (identical(pathname, "")) pathname <- NULL;
-  if (!isFile(pathname)) pathname <- NULL;
+  bin <- Sys.which(command);
+  if (identical(bin, "")) bin <- NULL;
+  if (!isFile(bin)) bin <- NULL;
 
-  verbose && cat(verbose, "Located pathname: ", pathname);
+  verbose && cat(verbose, "Located pathname: ", bin);
 
-  if (mustExist && !isFile(pathname)) {
+  if (mustExist && !isFile(bin)) {
     throw(sprintf("Failed to located Perl (executable '%s').", command));
   }
 
+  # Validate by retrieving version information
+  res <- system2(bin, args="--version", stdout=TRUE);
+  ver <- trim(gsub("asciidoc", "", res));
+  ver <- numeric_version(ver);
+  attr(bin, "version") <- ver;
+
   verbose && exit(verbose);
 
-  pathname;
+  bin;
 }) # findAsciiDoc()
 
 
