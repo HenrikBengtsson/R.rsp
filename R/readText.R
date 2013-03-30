@@ -1,6 +1,17 @@
 .readText <- function(con, ...) {
   if (is.character(con)) {
-    con <- file(con, open="rb");
+    # (a) Try to open file connection
+    con <- tryCatch({
+      file(con, open="rb");
+    }, error = function(ex) {
+      # (b) If failed, try to download file first
+      if (regexpr("^https://", con, ignore.case=TRUE) == -1L) {
+        throw(ex);
+      }
+      url <- con;
+      pathname <- downloadFile(url, path=tempdir(), username="", password="");
+      file(pathname, open="rb");
+    });
     on.exit(close(con));
   }
 
@@ -22,6 +33,9 @@
 
 ##############################################################################
 # HISTORY:
+# 2013-03-29
+# o Now .readText() can also read https://, which is done by downloading
+#   the file via R.utils::downloadFile().
 # 2013-03-27
 # o Added .readText() because with readLines() it is not possible to
 #   know whether the last line had a newline or not.

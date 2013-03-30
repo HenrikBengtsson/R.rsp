@@ -52,31 +52,13 @@ setMethodS3("print", "RspFileProduct", function(x, ...) {
 
 
 
-#########################################################################/**
-# @RdocMethod getType
-#
-# @title "Gets the type of an RSP file product"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
+setMethodS3("view", "RspFileProduct", function(object, ...) {
+  browseURL(object, ...);
+  invisible(object);
+}, proctected=TRUE)
+
+
+
 setMethodS3("getType", "RspFileProduct", function(object, as=c("text", "IMT"), ...) {
   as <- match.arg(as);
   res <- NextMethod("getType");
@@ -97,32 +79,6 @@ setMethodS3("getType", "RspFileProduct", function(object, as=c("text", "IMT"), .
 
 
 
-###########################################################################/**
-# @RdocMethod findProcessor
-#
-# @title "Locates a processor for an RSP file product"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-#   \item{verbose}{See @see "R.utils::Verbose".}
-# }
-#
-# \value{
-#   Returns a @function that takes an @see "RspFileProduct" as input,
-#   or @NULL if no processor was found.
-# }
-#
-# @author
-#
-# @keyword file
-# @keyword IO
-#*/###########################################################################
 setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::rsp() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
@@ -178,6 +134,21 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     # *.Rnw => *.tex
     "application/x-knitr" = function(...) { compileKnitr(..., postprocess=FALSE) },
 
+    # Knitr Rmd documents:
+    # *.Rmd => *.html
+    "application/x-rmd" = function(...) { compileKnitr(..., postprocess=FALSE) },
+    # Knitr Rhtml documents:
+    # *.Rhtml => *.html
+    "application/x-rhtml" = function(...) { compileKnitr(..., postprocess=FALSE) },
+
+    # Knitr Rtex documents:
+    # *.Rtex => *.tex
+    "application/x-rtex" = function(...) { compileKnitr(..., postprocess=FALSE) },
+
+    # Knitr Rrst documents:
+    # *.Rrst => *.rst
+    "application/x-rrst" = function(...) { compileKnitr(..., postprocess=FALSE) },
+
     # AsciiDoc Rnw documents:
     # *.Rnw => *.txt
     "application/x-asciidoc-noweb" = function(...) { compileAsciiDocNoweb(..., postprocess=FALSE) },
@@ -217,6 +188,8 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
 ############################################################################
 # HISTORY:
+# 2013-03-29
+# o Added view().
 # 2013-03-25
 # o Added Markdown processor.
 # 2013-02-18

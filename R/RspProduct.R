@@ -45,7 +45,38 @@ setMethodS3("print", "RspProduct", function(x, ...) {
 
 
 #########################################################################/**
+# @RdocMethod view
+# @alias view.RspFileProduct
+#
+# @title "Views the RSP product"
+#
+# \description{
+#  @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns the RSP product (invisibly).
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/#########################################################################
+setMethodS3("view", "RspProduct", abstract=TRUE)
+
+
+
+#########################################################################/**
 # @RdocMethod getType
+# @alias getType.RspFileProduct
 #
 # @title "Gets the type of an RSP product"
 #
@@ -148,6 +179,7 @@ setMethodS3("hasProcessor", "RspProduct", function(object, ...) {
 
 ###########################################################################/**
 # @RdocMethod findProcessor
+# @alias findProcessor.RspFileProduct
 #
 # @title "Locates a processor for an RSP product"
 #
@@ -313,6 +345,7 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
 ############################################################################
 # HISTORY:
 # 2013-03-29
+# o Added view().
 # o Added argument 'recursive' to process().
 # 2013-03-12
 # o Renamed annotations to metadata.
