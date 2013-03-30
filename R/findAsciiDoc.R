@@ -24,6 +24,10 @@
 # }
 #
 # @author
+#
+# @keyword file
+# @keyword IO
+# @keyword internal
 #*/###########################################################################
 setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
