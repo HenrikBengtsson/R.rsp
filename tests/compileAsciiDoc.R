@@ -9,7 +9,7 @@ if (Sys.getenv("_R_CHECK_FULL_") != "") {
   if (!is.null(findAsciiDoc(mustExist=FALSE))) {
     outPath <- file.path("LoremIpsum", "asciidoc.txt");
     copyDirectory(file.path(path, "figures"), file.path(outPath, "figures"))
-    pathnameR <- compileAsciiDocNoweb(pathname, outPath=outPath, verbose=-10)
+    pathnameR <- compileAsciiDoc(pathname, outPath=outPath, verbose=-10)
     print(pathnameR)
     pathnameR <- Arguments$getReadablePathname(pathnameR)
   }
