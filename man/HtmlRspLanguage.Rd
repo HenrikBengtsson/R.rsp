@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{HtmlRspLanguage}
+\name{HtmlRspLanguage}
 \docType{class}
 \alias{HtmlRspLanguage}
 
 
- \title{The HtmlRspLanguage class}
+\title{The HtmlRspLanguage class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class HtmlRspLanguage}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -30,18 +30,18 @@ public static class \bold{HtmlRspLanguage}\cr
 extends \link[R.rsp]{RspLanguage}\cr
 
 
- }
+}
 
- \usage{
+\usage{
 HtmlRspLanguage(...)
 }
 
- \arguments{
-   \item{...}{Arguments passed to the constructor of the \code{\link{RspLanguage}}.}
- }
+\arguments{
+  \item{...}{Arguments passed to the constructor of the \code{\link{RspLanguage}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:escape.HtmlRspLanguage]{escape}} \tab Escapes a string specifically for the HTML language.\cr
  \tab \code{\link[R.rsp:getComment.HtmlRspLanguage]{getComment}} \tab Gets a comment string specifically for the HTML language.\cr
@@ -56,9 +56,9 @@ escape, getComment, getLanguage, getNewline, getVerbatim
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

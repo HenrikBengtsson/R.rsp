@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{FileRspResponse}
+\name{FileRspResponse}
 \docType{class}
 \alias{FileRspResponse}
 
 
- \title{The FileRspResponse class}
+\title{The FileRspResponse class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class FileRspResponse}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -30,22 +30,22 @@ public static class \bold{FileRspResponse}\cr
 extends \emph{\link[R.rsp]{RspResponse}}\cr
 
 
- }
+}
 
- \usage{
+\usage{
 FileRspResponse(file=stdout(), path=NULL, overwrite=FALSE, ...)
 }
 
- \arguments{
-   \item{file}{A filename or a \code{\link[base:connections]{connection}} to write responses to.}
-   \item{path}{An optional path to the file.}
-   \item{overwrite}{If \code{\link[base:logical]{FALSE}}, an error is thrown if the output file already
-     exists, otherwise not.}
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{file}{A filename or a \code{\link[base:connections]{connection}} to write responses to.}
+  \item{path}{An optional path to the file.}
+  \item{overwrite}{If \code{\link[base:logical]{FALSE}}, an error is thrown if the output file already
+    exists, otherwise not.}
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:flush.FileRspResponse]{flush}} \tab Flushes the response buffer.\cr
  \tab \code{\link[R.rsp:getAbsolutePath.FileRspResponse]{getAbsolutePath}} \tab Gets the absolute pathname to the current RSP file.\cr
@@ -63,9 +63,9 @@ flush, import, write
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

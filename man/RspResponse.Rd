@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspResponse}
+\name{RspResponse}
 \docType{class}
 \alias{RspResponse}
 
 
- \title{The RspResponse class}
+\title{The RspResponse class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspResponse}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -29,20 +29,20 @@ extends \link[R.oo]{Object}\cr
 
 
 
-  An abstract class that provides basic methods to write and flush output to
-  the generated document.
- }
+ An abstract class that provides basic methods to write and flush output to
+ the generated document.
+}
 
- \usage{
+\usage{
 RspResponse(...)
 }
 
- \arguments{
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:flush.RspResponse]{flush}} \tab Flushes the response buffer.\cr
  \tab \code{\link[R.rsp:import.RspResponse]{import}} \tab Imports the output from another RSP file.\cr
@@ -54,9 +54,9 @@ RspResponse(...)
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 \keyword{classes}
 \keyword{internal}

@@ -9,7 +9,7 @@
 #  An abstract class that provides basic methods to write and flush output to
 #  the generated document.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -19,12 +19,12 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspResponse", function(...) {
-  extend(Object(), "RspResponse", 
+  extend(Object(), "RspResponse",
     ...
   )
 })
@@ -34,8 +34,10 @@ setConstructorS3("RspResponse", function(...) {
 
 #########################################################################/**
 # @RdocMethod write
+# @alias write.FileRspResponse
+# @alias write.HttpDaemonRspResponse
 #
-# @title "Writes an RSP response to the predefined output file"
+# @title "Writes an RSP response to the predefined output"
 #
 # \description{
 #  @get "title".
@@ -68,6 +70,8 @@ setMethodS3("write", "RspResponse", abstract=TRUE);
 
 #########################################################################/**
 # @RdocMethod flush
+# @alias flush.FileRspResponse
+# @alias flush.HttpDaemonRspResponse
 #
 # @title "Flushes the response buffer"
 #
@@ -115,7 +119,7 @@ setMethodS3("flush", "RspResponse", abstract=TRUE);
 # }
 #
 # \value{
-#   Writes the output from @see "sourceRsp" to the RSP response output file. 
+#   Writes the output from @see "sourceRsp" to the RSP response output file.
 #   If an error occurs, the error message is written too.
 # }
 #
@@ -128,7 +132,7 @@ setMethodS3("flush", "RspResponse", abstract=TRUE);
 #
 # @keyword file
 # @keyword IO
-#*/########################################################################### 
+#*/###########################################################################
 setMethodS3("import", "RspResponse", function(response, ...) {
   tryCatch({
     sourceRsp(..., response=response);

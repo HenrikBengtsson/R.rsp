@@ -1,19 +1,20 @@
 ###########################################################################/**
 # @RdocClass RspLanguage
+# @alias escape.HtmlRspLanguage
 #
 # @title "The RspLanguage class"
 #
 # \description{
 #  @classhierarchy
 #
-#  An RspLanguage object specifies what the markup language of the 
-#  response/output document is, e.g. plain text and HTML.  
+#  An RspLanguage object specifies what the markup language of the
+#  response/output document is, e.g. plain text and HTML.
 #  The RspLanguage class provides methods to obtain language specific
 #  strings/output such as how newlines and comments are written.
 #  The RspLanguage class describes a plain text languages.  For HTML
 #  see the @see "HtmlRspLanguage" subclass.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -24,7 +25,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 # @keyword internal
 #*/###########################################################################
@@ -105,6 +106,7 @@ setMethodS3("getNewline", "RspLanguage", function(this, ...) {
 
 #########################################################################/**
 # @RdocMethod getComment
+# @alias getComment.HtmlRspLanguage
 #
 # @title "Gets a comment string specific for a given RSP response language"
 #
@@ -171,6 +173,7 @@ setMethodS3("escape", "RspLanguage", function(this, ...) {
 
 #########################################################################/**
 # @RdocMethod getVerbatim
+# @alias getVerbatim.HtmlRspLanguage
 #
 # @title "Gets a verbatim string specific for a given RSP response language"
 #

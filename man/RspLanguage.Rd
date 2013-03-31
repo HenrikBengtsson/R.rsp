@@ -6,15 +6,16 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspLanguage}
+\name{RspLanguage}
 \docType{class}
 \alias{RspLanguage}
 
+\alias{escape.HtmlRspLanguage}
 
- \title{The RspLanguage class}
+\title{The RspLanguage class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspLanguage}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -29,25 +30,25 @@ extends \link[R.oo]{Object}\cr
 
 
 
-  An RspLanguage object specifies what the markup language of the
-  response/output document is, e.g. plain text and HTML.
-  The RspLanguage class provides methods to obtain language specific
-  strings/output such as how newlines and comments are written.
-  The RspLanguage class describes a plain text languages.  For HTML
-  see the \code{\link{HtmlRspLanguage}} subclass.
- }
+ An RspLanguage object specifies what the markup language of the
+ response/output document is, e.g. plain text and HTML.
+ The RspLanguage class provides methods to obtain language specific
+ strings/output such as how newlines and comments are written.
+ The RspLanguage class describes a plain text languages.  For HTML
+ see the \code{\link{HtmlRspLanguage}} subclass.
+}
 
- \usage{
+\usage{
 RspLanguage(language="plain", ...)
 }
 
- \arguments{
-   \item{language}{A \code{\link[base]{character}} string.}
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{language}{A \code{\link[base]{character}} string.}
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:escape.RspLanguage]{escape}} \tab Escapes a string specifically for a given RSP response language.\cr
  \tab \code{\link[R.rsp:getComment.RspLanguage]{getComment}} \tab Gets a comment string specific for a given RSP response language.\cr
@@ -61,9 +62,9 @@ RspLanguage(language="plain", ...)
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 \keyword{classes}
 \keyword{internal}

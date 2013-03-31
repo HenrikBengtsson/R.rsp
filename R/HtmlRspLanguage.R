@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -16,43 +16,16 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
-#*/########################################################################### 
+#*/###########################################################################
 setConstructorS3("HtmlRspLanguage", function(...) {
   extend(RspLanguage(language="html", ...), "HtmlRspLanguage")
 })
 
 
-#########################################################################/**
-# @RdocMethod getComment
-#
-# @title "Gets a comment string specifically for the HTML language"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{R objects to be pasted together.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#
-# @keyword IO
-#*/#########################################################################
 setMethodS3("getComment", "HtmlRspLanguage", function(object, ...) {
   s <- paste(..., collapse="\n", sep="");
   s <- paste("<!-- ", s, " -->", sep="");
@@ -60,33 +33,6 @@ setMethodS3("getComment", "HtmlRspLanguage", function(object, ...) {
 })
 
 
-#########################################################################/**
-# @RdocMethod escape
-#
-# @title "Escapes a string specifically for the HTML language"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{R objects to be pasted together.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#
-# @keyword IO
-#*/#########################################################################
 setMethodS3("escape", "HtmlRspLanguage", function(object, ...) {
   s <- paste(..., collapse="\n", sep="");
   s <- gsub("<", "&lt;", s);
@@ -95,33 +41,6 @@ setMethodS3("escape", "HtmlRspLanguage", function(object, ...) {
 })
 
 
-#########################################################################/**
-# @RdocMethod getVerbatim
-#
-# @title "Gets a verbatim string specifically for the HTML language"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{R objects to be pasted together.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#
-# @keyword IO
-#*/#########################################################################
 setMethodS3("getVerbatim", "HtmlRspLanguage", function(object, ..., newline=NULL) {
   s <- NextMethod("getVerbatim", newline="");
   if (is.null(newline))

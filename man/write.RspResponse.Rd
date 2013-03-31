@@ -10,11 +10,13 @@
 \alias{write.RspResponse}
 \alias{RspResponse.write}
 \alias{write,RspResponse-method}
+\alias{write.FileRspResponse}
+\alias{write.HttpDaemonRspResponse}
 
-\title{Writes an RSP response to the predefined output file}
+\title{Writes an RSP response to the predefined output}
 
 \description{
- Writes an RSP response to the predefined output file.
+ Writes an RSP response to the predefined output.
 }
 
 \usage{

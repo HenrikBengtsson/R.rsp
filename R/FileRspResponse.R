@@ -2,7 +2,7 @@
 # @RdocClass FileRspResponse
 #
 # @title "The FileRspResponse class"
-# 
+#
 # \description{
 #  @classhierarchy
 # }
@@ -32,11 +32,11 @@ setConstructorS3("FileRspResponse", function(file=stdout(), path=NULL, overwrite
     # Empty the file
     cat(file=file, "");
   } else if (!inherits(file, "connection")) {
-    throw("Argument 'file' must be a filename or a connection: ", 
+    throw("Argument 'file' must be a filename or a connection: ",
                                                           class(file)[1]);
   }
 
-  extend(RspResponse(), "FileRspResponse", 
+  extend(RspResponse(), "FileRspResponse",
     file = file
   )
 })
@@ -75,39 +75,8 @@ setMethodS3("getOutput", "FileRspResponse", function(this, ...) {
 })
 
 
-
-
-#########################################################################/**
-# @RdocMethod write
-#
-# @title "Writes an RSP response to the predefined output file"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Objects to be pasted together and outputted.}
-#   \item{collapse}{A @character string to be used to collapse the objects.}
-#   \item{sep}{A @character string to separate the objects.}
-# }
-#
-# \value{
-#  Returns nothing.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#
-# @keyword IO
-#*/#########################################################################
 setMethodS3("write", "FileRspResponse", function(this, ..., collapse="", sep="") {
-  msg <- paste(..., collapse=collapse, sep=sep);  
+  msg <- paste(..., collapse=collapse, sep=sep);
   msg <- as.character(GString(msg));
   out <- getOutput(this);
   cat(file=out, append=TRUE, msg);
@@ -115,33 +84,6 @@ setMethodS3("write", "FileRspResponse", function(this, ..., collapse="", sep="")
 
 
 
-#########################################################################/**
-# @RdocMethod flush
-#
-# @title "Flushes the response buffer"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns nothing.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#
-# @keyword IO
-#*/#########################################################################
 setMethodS3("flush", "FileRspResponse", function(con, ...) {
   # To please R CMD check.
   this <- con;
@@ -255,7 +197,7 @@ setMethodS3("getAbsolutePath", "FileRspResponse", function(this, ...) {
 # HISTORY:
 # 2006-07-04
 # o Added argument 'path'.
-# o Rename class RspResponse to FileRspResponse.  New superclass in 
+# o Rename class RspResponse to FileRspResponse.  New superclass in
 #   RspResponse and not Response.
 # 2005-10-31
 # o Added argument 'overwrite' to constructor of RspResponse.

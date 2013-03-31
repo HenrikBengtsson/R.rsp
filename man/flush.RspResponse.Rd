@@ -10,6 +10,8 @@
 \alias{flush.RspResponse}
 \alias{RspResponse.flush}
 \alias{flush,RspResponse-method}
+\alias{flush.FileRspResponse}
+\alias{flush.HttpDaemonRspResponse}
 
 \title{Flushes the response buffer}
 

@@ -27,6 +27,10 @@
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
+\value{
+  Returns the pathname to the executable, or \code{\link[base]{NULL}} if not found.
+}
+
 \details{
  The 'asciidoc' executable is searched for as follows:
  \enumerate{
