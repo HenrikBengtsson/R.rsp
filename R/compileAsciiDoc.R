@@ -67,6 +67,15 @@ setMethodS3("compileAsciiDoc", "default", function(filename, path=NULL, ..., out
   args <- c("-v");
 ##  args <- c(args, "-a data-uri");
 
+  # Output file
+  fullnameR <- gsub("[.][^.]*$", "", basename(pathname));
+  extR <- "html";
+  filenameR <- sprintf("%s.%s", fullnameR, extR);
+  pathnameR <- filenameR;
+  arg <- sprintf("-o %s", pathnameR);
+  args <- c(args, arg);
+
+  # Source file
   pathname <- normalizePath(pathname);
   args <- c(args, pathname);
 
