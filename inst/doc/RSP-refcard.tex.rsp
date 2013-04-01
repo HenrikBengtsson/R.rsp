@@ -30,7 +30,6 @@
   pdfkeywords={<%@meta name="keywords"%>},
   pdfproducer={R.rsp v<%=R.rsp$version%> by <%=R.rsp$author%>}
 }
-}
 
 \usepackage{xspace}
 \usepackage{xcolor}
