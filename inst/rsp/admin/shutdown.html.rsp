@@ -6,7 +6,7 @@
 <%title="admin/shutdown"%>
 
 <html>
-<%@include file="../src/simpleHead.rsp"%>
+<%@include file="../src/simpleHead.html.rsp"%>
 
 <body>
 
@@ -16,7 +16,7 @@
 R minimalistic HTTP daemon has been shutdown! In order to start it up again, you have to call <code>browseRsp()</code> from a local R session.
 </p>
 
-<%@include file="../src/simpleFooter.rsp"%>
+<%@include file="../src/simpleFooter.html.rsp"%>
 </body>
 </html>
 

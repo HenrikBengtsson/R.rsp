@@ -8,10 +8,10 @@
 <% domainPath=".."; %>
 
 <html>
-<%@include file="../src/simpleHead.rsp"%>
+<%@include file="../src/simpleHead.html.rsp"%>
 
 <body>
-<%@include file="../src/simpleHeader.rsp"%>
+<%@include file="../src/simpleHeader.html.rsp"%>
 
 <h2>Table of Contents</h2>
 
@@ -21,6 +21,6 @@
  <li><a href="help/">R/Help/</a></li>
 </ul>
 
-<%@include file="../src/simpleFooter.rsp"%>
+<%@include file="../src/simpleFooter.html.rsp"%>
 </body>
 </html>

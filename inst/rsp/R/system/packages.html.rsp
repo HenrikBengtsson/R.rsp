@@ -9,10 +9,10 @@
 <%title="R/System/Installed Packages"%>
 
 <html>
-<%@include file="../../src/simpleHead.rsp"%>
+<%@include file="../../src/simpleHead.html.rsp"%>
 
 <body>
-<%@include file="../../src/simpleHeader.rsp"%>
+<%@include file="../../src/simpleHeader.html.rsp"%>
 
 <h2>Packages</h2>
 <form id="options">
@@ -25,8 +25,8 @@ if (!refresh && exists(".installedPackages", envir=.GlobalEnv)) {
 }
 footnotes <- toupper(base::letters);
 packages <- cbind("#"=seq(length=nrow(packages)), packages);
-packages[,"#"] <- paste("<a href=\"packageDetails.rsp?package=", packages[,"Package"], "\">", packages[,"#"], "</a>", sep="");
-packages[,"Package"] <- paste("<a href=\"packageDetails.rsp?package=", packages[,"Package"], "\">", packages[,"Package"], "</a>", sep="");
+packages[,"#"] <- paste("<a href=\"packageDetails.html.rsp?package=", packages[,"Package"], "\">", packages[,"#"], "</a>", sep="");
+packages[,"Package"] <- paste("<a href=\"packageDetails.html.rsp?package=", packages[,"Package"], "\">", packages[,"Package"], "</a>", sep="");
 libPaths <- unique(packages[,"LibPath"]);
 packages[,"LibPath"] <- footnotes[match(packages[,"LibPath"], libPaths)];
 packages[,"LibPath"] <- paste("<a href=\"#LibPath", packages[,"LibPath"], "\">", packages[,"LibPath"], "</a>", sep="");
@@ -41,7 +41,7 @@ packages <- packages[,cols];
 %>
 
 <p>
-<small><a href="packages.rsp?refresh=TRUE">Refresh table</a></small>
+<small><a href="packages.html.rsp?refresh=TRUE">Refresh table</a></small>
 </p>
 <table cellpadding="1" cellspacing="0" style="width: 100%; border: #000000 1px solid; padding: 0px; font-size: smaller;">
 <%
@@ -74,6 +74,6 @@ package <- paste("<tr valign=\"top\" style=\"", bgColor, "margin: 0px; padding: 
 <% } %>
 </small>
 
-<%@include file="../../src/simpleFooter.rsp"%>
+<%@include file="../../src/simpleFooter.html.rsp"%>
 </body>
 </html>

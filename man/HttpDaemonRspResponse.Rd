@@ -52,8 +52,8 @@ HttpDaemonRspResponse(httpDaemon=NULL, ...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:flush.HttpDaemonRspResponse]{flush}} \tab Flushes the buffer of an HttpDaemonRspResponse to the HttpDaemon.\cr
- \tab \code{\link[R.rsp:write.HttpDaemonRspResponse]{write}} \tab Writes strings to an HttpDaemonRspResponse buffer.\cr
+ \tab \code{flush} \tab  -\cr
+ \tab \code{write} \tab  -\cr
 }
 
 

@@ -7,10 +7,10 @@
 
 <%domainPath="../../../";%>
 <html>
-<%@include file="../../../src/simpleHead.rsp"%>
+<%@include file="../../../src/simpleHead.html.rsp"%>
 
 <body>
-<%@include file="../../../src/simpleHeader.rsp"%>
+<%@include file="../../../src/simpleHeader.html.rsp"%>
 
 <% if (hasParameter(request, "rCode")) { %>
 <h2>Result</h2>
@@ -32,13 +32,13 @@ rCode <- "1:10";
 } %>
 
 <h2>R Code</h2>
-<form name="rCalculator" action="index.rsp" method="post">
+<form name="rCalculator" action="index.html.rsp" method="post">
 <textarea name="rCode" rows="20" cols="60">
 <%=rCode%>
 </textarea><br>
 <input type="submit" value="Evaluate">
 </form>
 
-<%@include file="../../../src/simpleFooter.rsp"%>
+<%@include file="../../../src/simpleFooter.html.rsp"%>
 </body>
 </html>

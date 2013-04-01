@@ -13,7 +13,7 @@
 # @synopsis
 #
 # \arguments{
-#   \item{url}{A @character string for the URL to be viewed.  
+#   \item{url}{A @character string for the URL to be viewed.
 #     By default the URL is constructed from the \code{host}, \code{port},
 #     and the \code{path} parameters.
 #   }
@@ -71,7 +71,7 @@ setMethodS3("browseRsp", "default", function(url=sprintf("http://%s:%d/%s", host
 
     if (!isStarted(httpDaemon)) {
       # Start the web server
-      start(httpDaemon, port=port, default="index.rsp")
+      start(httpDaemon, port=port, default="^index[.](html|.*)$")
     }
   }
 

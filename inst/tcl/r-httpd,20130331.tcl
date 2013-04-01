@@ -286,12 +286,11 @@ proc push { sock } {
     # b. If pathname is a directory, scan for default filename.
     if {[file isdirectory $mypath]} { 
       append mypath "/"
-      regsub {(//$)} $mypath "/" pathT
-      set mypath ""
+      regsub {(//$)} $mypath "/" mypath 
 
       # Scan for filename matching the default filename pattern
       set pattern $config(default)
-      foreach {pathnameT} [glob -nocomplain -type f -directory $pathT *] {
+      foreach {pathnameT} [glob -nocomplain -type f -directory $mypath *] {
    	if {[file exists $pathnameT]} {
 	  set filenameT [file tail $pathnameT]
           if {[regexp -nocase $pattern $filenameT dummy]} then {
@@ -303,12 +302,9 @@ proc push { sock } {
     }
 
     # c. If pathname refers to an existing file, we are done.
-    if {[file exists $mypath]} {
-      ## puts "Found page file: $mypath\n"
-      break
+   	if {[file exists $mypath]} {
+			break
     }
-
-    set mypath ""
   }
 
   # Ignore all ../

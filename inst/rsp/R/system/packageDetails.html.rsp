@@ -22,19 +22,19 @@ if (is.null(package)) {
 <%title="R/System/Package Details"%>
 
 <html>
-<%@include file="../../src/simpleHead.rsp"%>
+<%@include file="../../src/simpleHead.html.rsp"%>
 
 <body>
-<%@include file="../../src/simpleHeader.rsp"%>
+<%@include file="../../src/simpleHeader.html.rsp"%>
 
 <p>
-<a href="packages.rsp">All installed packages</a>.
+<a href="packages.html.rsp">All installed packages</a>.
 </p>
 <p>
 <% if (is.na(details) && nchar(package) > 0) { %>
   <em>Package not found/installed: <%=package%></em>
 <% } %>
-<form name="packageDetails" method="post" action="packageDetails.rsp">
+<form name="packageDetails" method="post" action="packageDetails.html.rsp">
 Package: 
 <input type="text" name="package" value="<%=package%>"> 
 <input type="submit" value="Show package details">
@@ -59,7 +59,7 @@ Package:
       pkgs <- trim(unlist(strsplit(details[[field]], split=split)));
       pkgNames <- gsub("^([^ (]*).*", "\\1", pkgs);
       linkify <- !is.na(lapply(pkgNames, FUN=packageDescription));
-      pkgs[linkify] <- paste("<a href=\"packageDetails.rsp?package=", pkgNames[linkify], "\">", pkgs[linkify], "</a>", sep="");
+      pkgs[linkify] <- paste("<a href=\"packageDetails.html.rsp?package=", pkgNames[linkify], "\">", pkgs[linkify], "</a>", sep="");
       pkgs <- paste(pkgs, collapse=", ");
       details[[field]] <- pkgs;
     }
@@ -102,6 +102,6 @@ Package:
 <% } # if (nchar(package) > 0) %>
 </p>
 
-<%@include file="../../src/simpleFooter.rsp"%>
+<%@include file="../../src/simpleFooter.html.rsp"%>
 </body>
 </html>

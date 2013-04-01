@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{HttpDaemon}
+\name{HttpDaemon}
 \docType{class}
 \alias{HttpDaemon}
 
 
- \title{The HttpDaemon class}
+\title{The HttpDaemon class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class HttpDaemon}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -29,26 +29,26 @@ extends \link[R.oo]{Object}\cr
 
 
 
-  A minimalistic HTTP daemon (web server) that also preprocesses RSP.
- }
+ A minimalistic HTTP daemon (web server) that also preprocesses RSP.
+}
 
- \usage{
+\usage{
 HttpDaemon(...)
 }
 
- \arguments{
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:appendRootPaths.HttpDaemon]{appendRootPaths}} \tab Appends and inserts new paths to the list of known root directories.\cr
  \tab \code{\link[R.rsp:as.character.HttpDaemon]{as.character}} \tab Returns a short string describing the HTTP daemon.\cr
  \tab \code{finalize} \tab  -\cr
  \tab \code{\link[R.rsp:getConfig.HttpDaemon]{getConfig}} \tab Retrieves the server's 'config' structure from Tcl.\cr
  \tab \code{getCount} \tab  -\cr
- \tab \code{\link[R.rsp:getDefaultFilename.HttpDaemon]{getDefaultFilename}} \tab Gets the default filename to be loaded by the HTTP daemon.\cr
+ \tab \code{\link[R.rsp:getDefaultFilenamePattern.HttpDaemon]{getDefaultFilenamePattern}} \tab Gets the default filename to be loaded by the HTTP daemon.\cr
  \tab \code{\link[R.rsp:getHttpRequest.HttpDaemon]{getHttpRequest}} \tab Gets the HTTP request.\cr
  \tab \code{\link[R.rsp:getPort.HttpDaemon]{getPort}} \tab Gets the socket port of the HTTP daemon.\cr
  \tab \code{\link[R.rsp:getRootPaths.HttpDaemon]{getRootPaths}} \tab Gets the root directories of the HTTP daemon.\cr
@@ -71,26 +71,26 @@ HttpDaemon(...)
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
- }
+}
 
- \details{
-  The actual server is written in Tcl such that it runs in a non-blocking
-  mode, which means that the R prompt will be available for other things.
-  This class is tightly coupled with the source code of the Tcl script.
+\details{
+ The actual server is written in Tcl such that it runs in a non-blocking
+ mode, which means that the R prompt will be available for other things.
+ This class is tightly coupled with the source code of the Tcl script.
 
-  For security reasons, the server only accept connections from the
-  local host (127.0.0.1).  This lowers the risk for external computers
-  to gain access to the R session.
-  This is asserted by the \code{accept_connect} Tcl procedure in
-  r-httpd.tcl (located in \code{system("tcl/", package="R.rsp")}).
-  If access from other hosts are wanted, then this procedure needs to
-  be modified.
+ For security reasons, the server only accept connections from the
+ local host (127.0.0.1).  This lowers the risk for external computers
+ to gain access to the R session.
+ This is asserted by the \code{accept_connect} Tcl procedure in
+ r-httpd.tcl (located in \code{system("tcl/", package="R.rsp")}).
+ If access from other hosts are wanted, then this procedure needs to
+ be modified.
 
-  The Tcl server was written by Steve Uhlers, and later adopted for R by
-  Philippe Grosjean and Tom Short (Rpad package author) [1].
- }
+ The Tcl server was written by Steve Uhlers, and later adopted for R by
+ Philippe Grosjean and Tom Short (Rpad package author) [1].
+}
 
- \examples{
+\examples{
 if (interactive()) {
   if (!HttpDaemon$isStarted()) {
     # Start the web server
@@ -102,11 +102,11 @@ if (interactive()) {
 }
 }
 
- \references{
-   [1] Rpad package, Tom Short, 2005.\cr
- }
+\references{
+  [1] Rpad package, Tom Short, 2005.\cr
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 

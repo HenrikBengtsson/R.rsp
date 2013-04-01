@@ -43,9 +43,9 @@ HtmlRspLanguage(...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:escape.HtmlRspLanguage]{escape}} \tab Escapes a string specifically for the HTML language.\cr
- \tab \code{\link[R.rsp:getComment.HtmlRspLanguage]{getComment}} \tab Gets a comment string specifically for the HTML language.\cr
- \tab \code{\link[R.rsp:getVerbatim.HtmlRspLanguage]{getVerbatim}} \tab Gets a verbatim string specifically for the HTML language.\cr
+ \tab \code{escape} \tab  -\cr
+ \tab \code{getComment} \tab  -\cr
+ \tab \code{getVerbatim} \tab  -\cr
 }
 
 

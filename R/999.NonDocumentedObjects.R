@@ -9,7 +9,7 @@
 # @alias getCount.HttpDaemon
 # @alias setCount
 # @alias setCount.HttpDaemon
-# @alias getDefaultFilename
+# @alias getDefaultFilenamePattern
 # @alias getHttpRequest
 # @alias getPort
 # @alias getRootPath

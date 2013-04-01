@@ -21,10 +21,10 @@
 
 \usage{
 ## Static method (use this):
-## HttpDaemon$start(rootPaths=NULL, port=8080, default="index.rsp", ...)
+## HttpDaemon$start(rootPaths=NULL, port=8080, default="^index[.](html|.*)$", ...)
 
 ## Don't use the below:
-\method{start}{HttpDaemon}(x, rootPaths=NULL, port=8080, default="index.rsp", ...)
+\method{start}{HttpDaemon}(x, rootPaths=NULL, port=8080, default="^index[.](html|.*)$", ...)
 }
 
 \arguments{
@@ -33,7 +33,7 @@
       accessable.  If \code{\link[base]{NULL}}, the preset paths will be used,
       cf. \code{\link[R.rsp:setRootPaths.HttpDaemon]{*setRootPaths}()}.}
   \item{port}{The socket port the server listens to.}
-  \item{default}{The default filename (basename) to be retrieved if
+  \item{default}{The default filename pattern to be retrieved if
       not specified.}
   \item{...}{Not used.}
 }

@@ -4,26 +4,46 @@
         "http://www.w3.org/TR/REC-html40/loose.dtd">
 
 <% domainPath="../.."; %>
-<%title="R/System/Environment Variables"%>
+<% source("ROptions.R"); %>
+
+<%
+toEdit <- getParameter(request, "toEdit"); 
+action <- getParameter(request, "action"); 
+if (identical(action, "Save")) {
+  params <- request$parameters;
+  keys <- setdiff(names(params), "action");
+  # Update only valid keys
+  keys <- intersect(names(options()), keys);
+  params <- params[keys];
+  for (kk in seq(length=length(params))) { 
+    key <- names(params)[kk];
+    value <- params[[kk]]; 
+    oldValue <- getOption(key);
+    if (!is.null(oldValue))
+      storage.mode(value) <- storage.mode(oldValue);
+    args <- list(value); names(args) <- key;
+    oldValue <- do.call("options", args=args);%>
+  Updated option <strong><%=key%></strong>.<br>
+<%}%>
+<%
+}
+%>
+
+<%title="R/Settings/Options"%>
 
 <html>
-<%@include file="../../src/simpleHead.rsp"%>
+<%@include file="../../src/simpleHead.html.rsp"%>
 
 <body>
-<%@include file="../../src/simpleHeader.rsp"%>
+<%@include file="../../src/simpleHeader.html.rsp"%>
 
-<h2>R commands</h2>
-<p>
-<code>Sys.getenv()</code>, <code>Sys.putenv()</code>
-</p>
-
-<h2>Details</h2>
+<h2>Options</h2>
+<form id="options">
 <% 
-opts <- Sys.getenv(); 
+
+opts <- options(); 
 for (kk in seq(length=length(opts))) { 
   name <- names(opts)[kk];
-  if (nchar(name) == 0)
-    name <- "&lt;no name&gt;";
   value <- opts[[kk]];
   valueStr <- value;
   keys <- names(value); 
@@ -36,7 +56,7 @@ for (kk in seq(length=length(opts))) {
     # Quote names
     names <- paste("\"", names(value), "\"", sep="");
   }
-  size <- 60;
+  size <- 20;
   if (isVector) {
     if (is.character(value)) {
       # Quote values
@@ -54,13 +74,17 @@ for (kk in seq(length=length(opts))) {
     size <- 80;
   }
 
+  dataTypes <- ROptions$getDataTypes(name);
+  isSimpleDataType <- (length(dataTypes) == 1);
+  canEdit <- TRUE;
   type <- "text";
 %>
 
 <div style="width: 100%; <%=ifelse(kk == 1, "border-top: 1px solid;", "")%> border-bottom: 1px solid; padding-bottom: 0.5ex; background: <%=ifelse(kk %% 2 == 0, "#cccccc", "#ffffff")%>;">
+<% if (name %in% toEdit) { %>
 <strong><%=name%></strong><br>
-
-<% if (is.logical(valueStr)) { %>
+<% if (isSimpleDataType) { %>
+<% if (identical(dataTypes, "logical")) { %>
   <input name="<%=name%>" type="checkbox" <%=ifelse(valueStr, "checked", "")%> value="TRUE">
 <% } else if (is.numeric(valueStr)) { %>
 <% size <- 10; %>
@@ -90,10 +114,29 @@ for (kk in seq(length=length(opts))) {
 <input type="<%=type%>"><%=valueStr%></input>
 [<%=mode%><%=ifelse(isVector,"*","")%>]
 <% } %>
+<% } # if (isSimpleDataType) %>
+<input type="submit" name="action" value="Save">
+<input type="submit" name="action" value="Cancel">
+<% } else { %>
+<strong><%=name%></strong>
+<% if (is.function(valueStr)) { %>
+<%
+valueStr <- capture.output(args(valueStr)); 
+valueStr <- valueStr[-length(valueStr)];
+canEdit <- FALSE;
+%>
+<% } %>
+<% if (canEdit) { %>(<a href="options.html.rsp?toEdit=<%=name%>">edit</a>)<% } %><br>
+<code><%=valueStr%></code>
+<% } # if (name %in% toEdit) %>
 <br>
+<em>
+<%=ROptions$getDescription(name)%>
+</em>
 </div>
 <% } %>
+</form>
 
-<%@include file="../src/simpleFooter.rsp"%>
+<%@include file="../../src/simpleFooter.html.rsp"%>
 </body>
 </html>

@@ -31,10 +31,10 @@ rHome <- paste("file://", rHome, sep="");
 %>
 
 <html>
-<%@include file="../../src/simpleHead.rsp"%>
+<%@include file="../../src/simpleHead.html.rsp"%>
 
 <body>
-<%@include file="../../src/simpleHeader.rsp"%>
+<%@include file="../../src/simpleHeader.html.rsp"%>
 
 <h2>Help for <%=R.version.string%></h2>
 <center><small>R.home() = <%=R.home()%></small></center>
@@ -57,7 +57,7 @@ if (length(pathname) == 0)
 
 <%
 # Read and output the body of the main help file
-lines <- readLines(pathname);
+lines <- readLines(pathname, warn=FALSE);
 lines <- paste(lines, collapse="\n");
 lines <- gsub("^(.*)(<h2>Manuals</h2>.*)", "\\2", lines);
 lines <- gsub("<a href=\"", paste("<a href=\"", htmlPath, sep=""), lines);
@@ -74,7 +74,7 @@ if (identical(cmd, "help.start")) {
   help.start(FALSE);
 }
 %>
-In order to instead access these pages via <code>file://</code>, call <code><a href="index.rsp?cmd=help.start">help.start()</a></code> (or click the link).
+In order to instead access these pages via <code>file://</code>, call <code><a href="index.html.rsp?cmd=help.start">help.start()</a></code> (or click the link).
 <%--
 To Mozilla users: The below links are linking to your locally installed R help pages. Since Mozilla browsers refuse to follow <code>file://</code> links on a page that it has fetched with the HTTP protocol, which this page has, nothing will happen when you click on the links below. 
 --%>
@@ -85,7 +85,7 @@ To Mozilla users: The below links are linking to your locally installed R help p
 
 
 <h2>Help search</h2>
-<form name="help.search" method="post" action="index.rsp">
+<form name="help.search" method="post" action="index.html.rsp">
 Search pattern: <input type="text" name="query" value="<%=query%>">
 <input type="submit" name="action" value="Search">
 <input type="submit" name="action" value="Reset"><br>
@@ -123,7 +123,7 @@ highlight <- function(s) {
 }
 %>
 
-<strong>Package</strong>: <a href="../system/packageDetails.rsp?package=<%=package%>"><%=highlight(package)%></a><br>
+<strong>Package</strong>: <a href="../system/packageDetails.html.rsp?package=<%=package%>"><%=highlight(package)%></a><br>
 <strong>Package description</strong>: <%=highlight(description$Description)%><br>
 <strong>Topic</strong>: <%=highlight(topic)%><br>
 <strong>Title</strong>: <%=highlight(res[kk,"title"])%><br>
@@ -132,6 +132,6 @@ highlight <- function(s) {
   <% } %>
 <% } %>
 
-<%@include file="../../src/simpleFooter.rsp"%>
+<%@include file="../../src/simpleFooter.html.rsp"%>
 </body>
 </html>

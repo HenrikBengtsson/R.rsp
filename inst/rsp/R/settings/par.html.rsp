@@ -4,16 +4,17 @@
         "http://www.w3.org/TR/REC-html40/loose.dtd">
 
 <% domainPath="../.."; %>
-<% source("ROptions.R"); %>
+<% source("RPar.R"); %>
 
 <%
+device <- getParameter(request, "device", NULL);
 toEdit <- getParameter(request, "toEdit"); 
 action <- getParameter(request, "action"); 
 if (identical(action, "Save")) {
   params <- request$parameters;
   keys <- setdiff(names(params), "action");
   # Update only valid keys
-  keys <- intersect(names(options()), keys);
+  keys <- intersect(names(par()), keys);
   params <- params[keys];
   for (kk in seq(length=length(params))) { 
     key <- names(params)[kk];
@@ -22,29 +23,55 @@ if (identical(action, "Save")) {
     if (!is.null(oldValue))
       storage.mode(value) <- storage.mode(oldValue);
     args <- list(value); names(args) <- key;
-    oldValue <- do.call("options", args=args);%>
-  Updated option <strong><%=key%></strong>.<br>
+    oldValue <- do.call("par", args=args);%>
+  Updated graphical parameter <strong><%=key%></strong>.<br>
 <%}%>
 <%
 }
 %>
 
-<%title="R/Settings/Options"%>
+<%title="R/Settings/Graphical Parameters"%>
 
 <html>
-<%@include file="../../src/simpleHead.rsp"%>
+<%@include file="../../src/simpleHead.html.rsp"%>
 
 <body>
-<%@include file="../../src/simpleHeader.rsp"%>
+<%@include file="../../src/simpleHeader.html.rsp"%>
 
-<h2>Options</h2>
-<form id="options">
+<h2>Graphical Parameters</h2>
+<p>
+This page display the graphical parameters for the <em>current</em> device, only.  
+<% if (length(dev.list()) == 0) { %> Since no device was opened, a default one was just opened. <% } %>
+</p>
+<p>
+Select (another open) device:
+<% if (!is.null(device))
+     dev.set(device);
+   dev <- dev.cur();
+   pars <- par(); 
+   dev <- dev.cur();
+   devs <- dev.list();
+   for (kk in seq(length=length(devs))) { %>
+    <%=ifelse(kk > 1, ",", "")%> 
+    <a href="par.html.rsp?device=<%=devs[kk]%>">
+     <% if (identical(dev, devs[kk])) { %><strong><% } %>
+     <%=devs[kk]%>&nbsp;(<%=names(devs)[kk]%>)
+     <% if (identical(dev, devs[kk])) { %></strong><% } %>
+    </a>
+<% } %>
+</p>
+
+<h3>Details on current device</h3>
+Device number: <code><%=dev%></code><br>
+Device type: <code><%=names(dev)%></code><br>
+
+<h3>Parameters</h3>
+<form id="par">
 <% 
 
-opts <- options(); 
-for (kk in seq(length=length(opts))) { 
-  name <- names(opts)[kk];
-  value <- opts[[kk]];
+for (kk in seq(length=length(pars))) { 
+  name <- names(pars)[kk];
+  value <- pars[[kk]];
   valueStr <- value;
   keys <- names(value); 
   nvalue <- length(value);
@@ -74,9 +101,8 @@ for (kk in seq(length=length(opts))) {
     size <- 80;
   }
 
-  dataTypes <- ROptions$getDataTypes(name);
+  dataTypes <- RPar$getDataTypes(name);
   isSimpleDataType <- (length(dataTypes) == 1);
-  canEdit <- TRUE;
   type <- "text";
 %>
 
@@ -118,25 +144,24 @@ for (kk in seq(length=length(opts))) {
 <input type="submit" name="action" value="Save">
 <input type="submit" name="action" value="Cancel">
 <% } else { %>
-<strong><%=name%></strong>
-<% if (is.function(valueStr)) { %>
 <%
-valueStr <- capture.output(args(valueStr)); 
-valueStr <- valueStr[-length(valueStr)];
-canEdit <- FALSE;
+description <- RPar$getDescription(name);
+isReadOnly <- length(grep("_\\*R[.]O[.]\\*_", description) > 0);
+# Replace _*R.O.*_ with (read only)
+description <- gsub("_\\*R[.]O[.]\\*_", "(read only)", description);
+description <- gsub("\\(read only\\);[ ]*", "", description);
 %>
-<% } %>
-<% if (canEdit) { %>(<a href="options.rsp?toEdit=<%=name%>">edit</a>)<% } %><br>
+<strong><%=name%></strong> (<% if (isReadOnly) { %>read only<% } else { %><a href="par.html.rsp?toEdit=<%=name%>">edit</a><% } %>)<br>
 <code><%=valueStr%></code>
 <% } # if (name %in% toEdit) %>
 <br>
 <em>
-<%=ROptions$getDescription(name)%>
+<%=description%>
 </em>
 </div>
 <% } %>
 </form>
 
-<%@include file="../../src/simpleFooter.rsp"%>
+<%@include file="../../src/simpleFooter.html.rsp"%>
 </body>
 </html>

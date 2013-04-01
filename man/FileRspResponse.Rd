@@ -47,12 +47,12 @@ FileRspResponse(file=stdout(), path=NULL, overwrite=FALSE, ...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:flush.FileRspResponse]{flush}} \tab Flushes the response buffer.\cr
+ \tab \code{flush} \tab  -\cr
  \tab \code{\link[R.rsp:getAbsolutePath.FileRspResponse]{getAbsolutePath}} \tab Gets the absolute pathname to the current RSP file.\cr
  \tab \code{\link[R.rsp:getName.FileRspResponse]{getName}} \tab Gets the (base)name of the current RSP file.\cr
  \tab \code{\link[R.rsp:getOutput.FileRspResponse]{getOutput}} \tab Gets the output for an RSP response.\cr
  \tab \code{\link[R.rsp:getPath.FileRspResponse]{getPath}} \tab Gets the path of the directory of the current RSP file.\cr
- \tab \code{\link[R.rsp:write.FileRspResponse]{write}} \tab Writes an RSP response to the predefined output file.\cr
+ \tab \code{write} \tab  -\cr
 }
 
 

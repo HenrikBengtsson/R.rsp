@@ -10,11 +10,11 @@
 # @synopsis
 #
 # \arguments{
-#   \item{file}{A filename, a URL, or a @connection to be read. 
+#   \item{file}{A filename, a URL, or a @connection to be read.
 #               Ignored if \code{text} is not @NULL.}
 #   \item{text}{If specified, a @character @vector of RSP code to be
 #               translated.}
-#   \item{path}{A pathname setting the current include path. 
+#   \item{path}{A pathname setting the current include path.
 #               If \code{file} is a filename and its parent directory
 #               is different from this one, \code{path} is added
 #               to the beginning of \code{file} before the file is read.}
@@ -24,7 +24,7 @@
 #     object specifying how much verbose/debug information is written to
 #     standard output. If a Verbose object, how detailed the information is
 #     is specified by the threshold level of the object. If a numeric, the
-#     value is used to set the threshold of a new Verbose object. If @TRUE, 
+#     value is used to set the threshold of a new Verbose object. If @TRUE,
 #     the threshold is set to -1 (minimal). If @FALSE, no output is written.
 #     [Currently not used.]
 #   }
@@ -99,7 +99,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
 
   splitRspTags <- function(..., trimRsp=FALSE) {
     bfr <- paste(..., collapse="\n", sep="");
-  
+
     START <- 0;
     STOP <- 1;
 
@@ -134,7 +134,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
     if (trimRsp) {
       parts <- trimTextParts(parts);
     }
-  
+
     parts;
   } # splitRspTags()
 
@@ -142,15 +142,15 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
 
   parseAttributes <- function(rspCode, known=mandatory, mandatory=NULL, ...) {
     bfr <- rspCode;
-    
+
     # Argument 'known':
     known <- unique(union(known, mandatory));
-  
+
     # Remove all leading white spaces
     pos <- regexpr("^[ \t]+", bfr);
     len <- attr(pos, "match.length");
     bfr <- substring(bfr, len+1);
-  
+
     attrs <- list();
     if (nchar(bfr) >= 0) {
       # Add a white space
@@ -169,14 +169,14 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
         len <- attr(pos, "match.length");
         name <- substring(bfr, 1, len);
         bfr <- substring(bfr, len+1);
-    
+
         # Read the '=' with optional white spaces around it
         pos <- regexpr("^[ ]*=[ ]*", bfr);
         if (pos == -1)
           throw(Exception("Error when parsing attributes. Expected an equal sign.", code=rspCode));
         len <- attr(pos, "match.length");
         bfr <- substring(bfr, len+1);
-    
+
         # Read the value with mandatory quotation marks around it
         pos <- regexpr("^\"[^\"]*\"", bfr);
         if (pos == -1)
@@ -188,11 +188,11 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
         attrs <- c(attrs, value);
       }
     } # if (nchar(bfr) > 0)
-  
-    # Check for duplicated attributes  
+
+    # Check for duplicated attributes
     if (length(names(attrs)) != length(unique(names(attrs))))
         throw(Exception("Duplicated attributes.", code=rspCode));
-  
+
     # Check for unknown attributes
     if (!is.null(known)) {
       nok <- which(is.na(match(names(attrs), known)));
@@ -201,7 +201,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
         throw(Exception("Unknown attribute(s): ", nok, code=rspCode));
       }
     }
-  
+
     # Check for missing mandatory attributes
     if (!is.null(mandatory)) {
       nok <- which(is.na(match(mandatory, names(attrs))));
@@ -210,19 +210,19 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
         throw(Exception("Missing attribute(s): ", nok, code=rspCode));
       }
     }
-  
+
     # Return parsed attributes.
     attrs;
   } # parseAttributes()
 
   # 2005-08-12, Ana-Catarina 2.8kg, kl. 17.17 lokal tid, 48.5cm
- 
+
   # Function to escape characters so that they can be included within an
   # R character string, e.g. to put 'size="-1"' becomes "size=\"-1\"".
   ASCII.ESCAPED <- ASCII;
   ASCII.ESCAPED[0] <- "\\\\x";
   ASCII.ESCAPED[1:31] <- sprintf("\\\\%03d", as.integer(intToOct(1:31)));
-  ASCII.ESCAPED[1+7:13] <- c("\\\\a", "\\\\b", "\\\\t", "\\\\n", 
+  ASCII.ESCAPED[1+7:13] <- c("\\\\a", "\\\\b", "\\\\t", "\\\\n",
                                               "\\\\v", "\\\\f", "\\\\r");
   # Using non-standard character turns out to be non-supported in
   # some locales. See HISTORY.
@@ -281,7 +281,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
       throw("No such 'rspLanguage' (\"", rspLanguage, "\"): ", clazz);
     })
   } else if (!inherits(rspLanguage, "RspLanguage")) {
-    throw("Argument 'rspLanguage' is not a RspLanguage object: ", 
+    throw("Argument 'rspLanguage' is not a RspLanguage object: ",
                                                      class(rspLanguage)[1]);
   }
 
@@ -296,7 +296,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
   pathname <- "";
   if (is.null(text) && is.character(file)) {
     if (file == "") {
-      text <- readLines();
+      text <- readLines(warn=FALSE);
     } else {
       if (isUrl(file)) {
         pathname <- file;
@@ -328,7 +328,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
 
   error <- NULL;
 
-  # Translate RSP document to R code 
+  # Translate RSP document to R code
   rCode <- paste(
   "#######################################################################\n",
   "# DO NOT EDIT!  DO NOT EDIT!  DO NOT EDIT!  DO NOT EDIT!  DO NOT EDIT! \n",
@@ -370,7 +370,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
           rCode <- c(rCode, code);
           part <- substring(part, 1025);
         }
-      } else { 
+      } else {
         code <- part;
       }
       next;
@@ -459,7 +459,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
               }))
             }
             value <- getVerbatim(rspLanguage, lines, newline=newline);
-            value <- paste("write(response, \"", 
+            value <- paste("write(response, \"",
                                   escapeRspText(value), "\");\n", sep="");
           } else {
             # Process and include file.
@@ -481,7 +481,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
           if (is.null(file))
             throw("Attribute 'file' is missing: ", rspTag);
 
-          code <- c(codeComment, 
+          code <- c(codeComment,
                     "import(response, \"", file, "\", path=\"", path, "\");\n");
 
           rCode <- c(rCode, code);
@@ -529,7 +529,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
           next;
         }
 
-        # <%@directive attr1="foo" attr2="bar"%> 
+        # <%@directive attr1="foo" attr2="bar"%>
         #     => write(response, directive(attr1="foo", attr2="bar"))
         # TODO: Try to parse here to catch invalid code as soon as possible?
         rspDirective <- directive;
@@ -552,9 +552,9 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
         expressions <- gsub(pattern, "\\1", part);
 
         expressions <- paste(trim(expressions), "\n", sep="");
-        code <- c("write(response, \"", escapeRspText(expressions), "\");\n", 
+        code <- c("write(response, \"", escapeRspText(expressions), "\");\n",
                                                     trim(expressions), "\n");
- 
+
         rCode <- c(rCode, code);
         next;
       }

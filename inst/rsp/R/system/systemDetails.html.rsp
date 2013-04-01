@@ -7,10 +7,10 @@
 <%title="R/System/System Details"%>
 
 <html>
-<%@include file="../../src/simpleHead.rsp"%>
+<%@include file="../../src/simpleHead.html.rsp"%>
 
 <body>
-<%@include file="../../src/simpleHeader.rsp"%>
+<%@include file="../../src/simpleHeader.html.rsp"%>
 
 <%
 # Retrive values 
@@ -176,6 +176,6 @@ names[nchar(names)==0] <- "&lt;no name&gt;";
 <% } %>
 
 
-<%@include file="../../src/simpleFooter.rsp"%>
+<%@include file="../../src/simpleFooter.html.rsp"%>
 </body>
 </html>

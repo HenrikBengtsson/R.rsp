@@ -6,10 +6,10 @@
 <%title="R Script Pages"%>
 
 <html>
-<%@include file="src/simpleHead.rsp"%>
+<%@include file="src/simpleHead.html.rsp"%>
 
 <body>
-<%@include file="src/simpleHeader.rsp"%>
+<%@include file="src/simpleHeader.html.rsp"%>
 
 <p>
 by Henrik Bengtsson 2002-<%=format(Sys.Date(), "%Y")%>.
@@ -73,7 +73,7 @@ rm(paths);
 <% 
 filename <- file.path(path, "rsp", "README"); 
 if (file.exists(filename)) {
-  readme <- paste(trim(readLines(filename)), collapse="<br>\n");
+  readme <- paste(trim(readLines(filename, warn=FALSE)), collapse="<br>\n");
 %><%=readme%><%
 } 
 %>
@@ -143,6 +143,6 @@ TIPS: To add a plugin, put a <code>.rspPlugins</code> file containing one URL pe
 </small>
 
 
-<%@include file="src/simpleFooter.rsp"%>
+<%@include file="src/simpleFooter.html.rsp"%>
 </body>
 </html>

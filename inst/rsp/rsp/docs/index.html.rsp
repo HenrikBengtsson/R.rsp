@@ -2,7 +2,7 @@
 
 <%
 # Copy the Webcuts.js javascript to the response output directory
-file.copy(filePath(getPath(page), "helloWorld.rsp"), 
+file.copy(filePath(getPath(page), "helloWorld.html.rsp"), 
           filePath(getwd(), "helloWorld.rsp.txt"));
 %>
 
@@ -22,10 +22,10 @@ escapeHtml <- function(text) {
 <%title="RSP Documentation"%>
 
 <html>
-<%@include file="../../src/simpleHead.rsp"%>
+<%@include file="../../src/simpleHead.html.rsp"%>
 
 <body>
-<%@include file="../../src/simpleHeader.rsp"%>
+<%@include file="../../src/simpleHeader.html.rsp"%>
 
 <p>
 by Henrik Bengtsson 2002-<%=format(Sys.Date(), "%Y")%>.
@@ -67,7 +67,7 @@ An example of an RSP is:
 which when translated becomes a script with R source code:
 <%
 pathname <- translateRsp("incl/simpleExample.html.rsp", path=getPath(page));
-rCode <- readLines(pathname);
+rCode <- readLines(pathname, warn=FALSE);
 # Drop header
 drop <- 1:grep("^#=", rCode)[1];
 rCode <- rCode[-drop];
@@ -139,8 +139,8 @@ To be implemented!
 <h2>More Help</h2>
 <ul>
  <li><a href="helloWorld.rsp">Hello world example</a> (<a href="helloWorld.rsp.txt">rsp</a>)</li>
- <li><a href="includes.rsp">Includes &amp; Imports</a></li>
- <li><a href="figures.rsp">Figures</a></li>
+ <li><a href="includes.html.rsp">Includes &amp; Imports</a></li>
+ <li><a href="figures.html.rsp">Figures</a></li>
 </ul>
 
 <h2>References</h2>
@@ -149,6 +149,6 @@ To be implemented!
     <small><a href="http://en.wikipedia.org/wiki/JavaServer_Pages">http://en.wikipedia.org/wiki/JavaServer_Pages</a></small><br>
 </p>
 
-<%@include file="../../src/simpleFooter.rsp"%>
+<%@include file="../../src/simpleFooter.html.rsp"%>
 </body>
 </html>

@@ -6,10 +6,10 @@
 <%title="RSP - Includes &amp; Imports"%>
 
 <html>
-<%@include file="../../src/simpleHead.rsp"%>
+<%@include file="../../src/simpleHead.html.rsp"%>
 
 <body>
-<%@include file="../../src/simpleHeader.rsp"%>
+<%@include file="../../src/simpleHeader.html.rsp"%>
 
 <p>
 An <em>include</em> and <em>import</em> inserts another file or URL at <em>translation</em> time and <em>process</em> time ("run-time"), respectively.
@@ -28,17 +28,17 @@ The include command translates the contents of a file (or a URL) and adds it to 
 <h3>Example</h3>
 <p>
  <strong>RSP tag:</strong><br>
- <code>&lt;%@include file="incl/example.include.rsp"%&gt;</code>
+ <code>&lt;%@include file="incl/example.include.html.rsp"%&gt;</code>
 </p>
-<div class="HtmlCode"><%@include file="incl/example.include.rsp"%></div>
+<div class="HtmlCode"><%@include file="incl/example.include.html.rsp"%></div>
 
 
 <h3>Example</h3>
 <p>
  <strong>RSP tag:</strong><br>
- <code>&lt;%@include file="incl/example.include.rsp" verbatim="TRUE" wrap="80"%&gt;</code>
+ <code>&lt;%@include file="incl/example.include.html.rsp" verbatim="TRUE" wrap="80"%&gt;</code>
 </p>
-<pre class="RspScriptlet"><%@include file="incl/example.include.rsp" verbatim="TRUE" wrap="80"%></pre>
+<pre class="RspScriptlet"><%@include file="incl/example.include.html.rsp" verbatim="TRUE" wrap="80"%></pre>
 
 
 <% rspVer <- getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0"); %>
@@ -56,16 +56,16 @@ The <code>import()</code> function imports, translates and processes a file (or 
 <h3>Example</h3>
 <p>
  <strong>RSP call:</strong><br>
- <code>&lt;%import(response, file="incl/example.include.rsp")%&gt;</code>
+ <code>&lt;%import(response, file="incl/example.include.html.rsp")%&gt;</code>
 </p>
-<div class="HtmlCode"><%import(response, file="incl/example.import.rsp")%></div>
+<div class="HtmlCode"><%import(response, file="incl/example.import.html.rsp")%></div>
 <% } # if (rspVer ...) %>
 
 <p>
-<small><a href="index.rsp">Back...</a></small>
+<small><a href="index.html.rsp">Back...</a></small>
 </p>
 
-<%@include file="../../src/simpleFooter.rsp"%>
+<%@include file="../../src/simpleFooter.html.rsp"%>
 </body>
 </html>
 

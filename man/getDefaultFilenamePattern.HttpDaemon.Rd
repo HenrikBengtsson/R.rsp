@@ -6,24 +6,24 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{HttpDaemon$getDefaultFilename}
-\alias{HttpDaemon$getDefaultFilename}
-\alias{getDefaultFilename.HttpDaemon}
-\alias{HttpDaemon.getDefaultFilename}
-\alias{getDefaultFilename,HttpDaemon-method}
+\name{HttpDaemon$getDefaultFilenamePattern}
+\alias{HttpDaemon$getDefaultFilenamePattern}
+\alias{getDefaultFilenamePattern.HttpDaemon}
+\alias{HttpDaemon.getDefaultFilenamePattern}
+\alias{getDefaultFilenamePattern,HttpDaemon-method}
 
-\title{Gets the default filename to be loaded by the HTTP daemon}
+\title{Gets the default filename pattern to be loaded by the HTTP daemon}
 
 \description{
- Gets the default filename to be loaded by the HTTP daemon, if started.
+ Gets the default filename pattern to be loaded by the HTTP daemon, if started.
 }
 
 \usage{
 ## Static method (use this):
-## HttpDaemon$getDefaultFilename(...)
+## HttpDaemon$getDefaultFilenamePattern(...)
 
 ## Don't use the below:
-\method{getDefaultFilename}{HttpDaemon}(static, ...)
+\method{getDefaultFilenamePattern}{HttpDaemon}(static, ...)
 }
 
 \arguments{

@@ -25,7 +25,7 @@ if (identical(action, "Update")) {
   }
 
   # Read the .Renviron file
-  envirs <- readLines(con=envirFile);
+  envirs <- readLines(con=envirFile, warn=FALSE);
 
   language <- getParameter(request, "LANGUAGE"); 
   if (!is.null(language)) {
@@ -50,10 +50,10 @@ if (identical(action, "Update")) {
 <%title="R/Settings/Language"%>
 
 <html>
-<%@include file="../../src/simpleHead.rsp"%>
+<%@include file="../../src/simpleHead.html.rsp"%>
 
 <body>
-<%@include file="../../src/simpleHeader.rsp"%>
+<%@include file="../../src/simpleHeader.html.rsp"%>
 
 <p>
 Changes made here will update either .Renviron or ~/.Renviron (if the former is missing).  Changes to language settings will also be effective immediately.  However, note that not all messages have been translated, which is why you still may see English messages.  Note also that these pages are only available in English and will not be affected by any language changes.
@@ -73,7 +73,7 @@ Example of an error message after language update (some languages such as Japane
 </pre>
 <% } %>
 
-<form name="language" method="post" action="language.rsp">
+<form name="language" method="post" action="language.html.rsp">
 <strong>LANGUAGE</strong>:<br>
 <input type="text" name="LANGUAGE" value="<%=Sys.getenv("LANGUAGE")%>">
 <input type="submit" name="action" value="Update">
@@ -83,6 +83,6 @@ Set the prefered language(s) using <a href="http://www.w3.org/WAI/ER/IG/ert/iso6
 </em>
 </form>
 
-<%@include file="../../src/simpleFooter.rsp"%>
+<%@include file="../../src/simpleFooter.html.rsp"%>
 </body>
 </html>
