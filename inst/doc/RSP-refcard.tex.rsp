@@ -20,13 +20,16 @@
   Assign PDF metadata
   -------------------------------------------------------------------%>
 % PDF metadata
-\usepackage[hidelinks]{hyperref}
+\usepackage{hyperref}
+% Ideally \hypersetup{hidelinks}, but for backward compatibility:
+\hypersetup{pdfborder={0 0 0}}
 \hypersetup{
   pdfauthor={<%@meta name="author"%>},
   pdftitle={<%@meta name="title"%>},
   pdfsubject={},
   pdfkeywords={<%@meta name="keywords"%>},
   pdfproducer={R.rsp v<%=R.rsp$version%> by <%=R.rsp$author%>}
+}
 }
 
 \usepackage{xspace}
