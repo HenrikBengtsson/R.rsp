@@ -1,6 +1,6 @@
 # The RSP file
 rspPath <- system.file("rsp/rsp/docs", package="R.rsp")
-rspFile <- file.path(rspPath, "helloWorld.rsp")
+rspFile <- file.path(rspPath, "helloWorld.html.rsp")
 file.show(rspFile)
 
 # The HTML (output) file

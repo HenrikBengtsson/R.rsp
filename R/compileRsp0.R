@@ -18,10 +18,13 @@ setMethodS3("compileRsp0", "default", function(..., envir=parent.frame(), force=
   }
 
 
+  verbose && enter(verbose, "compileRsp0()");
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Translate an RSP file to an R RSP source file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   pathname2 <- translateRsp(..., force=force, verbose=less(verbose,5));
+  verbose && cat(verbose, "Translated RSP source code: ", pathname2);
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -54,12 +57,19 @@ setMethodS3("compileRsp0", "default", function(..., envir=parent.frame(), force=
     sourceTo(pathname2, envir=envir);
   }
 
+  verbose && cat(verbose, "Output RSP document: ", pathname3);
+  verbose && exit(verbose);
+
+
   invisible(pathname3);
 }) # compileRsp0()
 
 
 ###########################################################################
 # HISTORY:
+# 2013-03-31
+# o One issue with translateRsp() and compileRsp0() is that they create
+#   files in the source directory, which may be read-only.
 # 2013-03-29
 # o Renamed to compileRsp0(). May be dropped rather soon.
 # 2009-02-23

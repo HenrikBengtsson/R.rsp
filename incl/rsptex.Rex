@@ -1,3 +1,4 @@
 library("R.rsp")
-path <- system.file("doc", package="R.rsp")
-rsptex("report.tex.rsp", path=path)
+path <- system.file(package="R.rsp")
+path <- file.path(path, "rsp,LoremIpsum")
+rsptex("LoremIpsum.tex.rsp", path=path)

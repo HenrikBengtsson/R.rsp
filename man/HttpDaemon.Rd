@@ -48,7 +48,7 @@ HttpDaemon(...)
  \tab \code{finalize} \tab  -\cr
  \tab \code{\link[R.rsp:getConfig.HttpDaemon]{getConfig}} \tab Retrieves the server's 'config' structure from Tcl.\cr
  \tab \code{getCount} \tab  -\cr
- \tab \code{\link[R.rsp:getDefaultFilenamePattern.HttpDaemon]{getDefaultFilenamePattern}} \tab Gets the default filename to be loaded by the HTTP daemon.\cr
+ \tab \code{\link[R.rsp:getDefaultFilenamePattern.HttpDaemon]{getDefaultFilenamePattern}} \tab Gets the default filename pattern to be loaded by the HTTP daemon.\cr
  \tab \code{\link[R.rsp:getHttpRequest.HttpDaemon]{getHttpRequest}} \tab Gets the HTTP request.\cr
  \tab \code{\link[R.rsp:getPort.HttpDaemon]{getPort}} \tab Gets the socket port of the HTTP daemon.\cr
  \tab \code{\link[R.rsp:getRootPaths.HttpDaemon]{getRootPaths}} \tab Gets the root directories of the HTTP daemon.\cr
@@ -95,7 +95,7 @@ if (interactive()) {
   if (!HttpDaemon$isStarted()) {
     # Start the web server
     rootPath <- system.file("rsp", package="R.rsp")
-    HttpDaemon$start(rootPath=rootPath, port=8074, default="index.rsp")
+    HttpDaemon$start(rootPath=rootPath, port=8074, default="^index[.](html|.*)$")
   }
  
   browseURL("http://127.0.0.1:8074/")
