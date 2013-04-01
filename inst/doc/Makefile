@@ -11,7 +11,7 @@ vignettes:
 
 # Compile any TeX files for which a PDF is missing
 tex:
-	"$(R)" -e "R.rsp::buildNonSweaveTexToPdf()"
+	"$(R)" -e "if (packageVersion('R.rsp') >= '0.9.1') R.rsp::buildNonSweaveTexToPdf()"
 
 # Create an HTML vignette index page
 index.html:
@@ -29,6 +29,8 @@ clean:
 
 #########################################################################
 # HISTORY:
+# 2013-04-01
+# o Now Makefile works with both R.rsp (< 0.9.1) and R.rsp (>= 0.9.1).
 # 2013-03-05
 # o Now using $(R_HOME)/bin/Rscript to avoid the --vanilla argument.
 # 2012-06-22

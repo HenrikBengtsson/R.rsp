@@ -11,13 +11,14 @@ vignettes:
 
 # Compile any TeX files for which a PDF is missing
 tex:
-	"$(R)" -e "R.rsp::buildNonSweaveTexToPdf()"
+	"$(R)" -e "if (packageVersion('R.rsp') >= '0.9.1') R.rsp::buildNonSweaveTexToPdf()"
 
 # Create an HTML vignette index page
 index.html:
 	"$(R)" -e "if (getRversion() < 3) R.rsp::buildPkgIndexHtml()"
 
 clean:
+	$(RM) enginesMap.R
 	$(RM) dummy.Rnw
 	$(RM) index.html.rsp
 	$(RM) *.aux *.bbl *.blg *.bst *.log *.out *.sty *.toc
