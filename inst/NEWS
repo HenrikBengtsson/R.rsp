@@ -1,7 +1,7 @@
 Package: R.rsp
 ==============
 
-Version: 0.9.1 [2013-03-31]
+Version: 0.9.1 [2013-04-01]
 o The internal RSP engine is undergoning a major redesign.
   UNTIL THIS COMPLETED, use R.rsp v0.8.2 available on CRAN.
 o Whenever only a URL directory is requested, the built-in HTTP daemon
