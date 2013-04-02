@@ -1,7 +1,7 @@
 ###########################################################################/**
-# @RdocDefault findAsciiDoc
+# @RdocDefault findPandoc
 #
-# @title "Locates the asciidoc executable"
+# @title "Locates the pandoc executable"
 #
 # \description{
 #  @get "title" on the current system.
@@ -21,9 +21,9 @@
 # }
 #
 # \details{
-#  The 'asciidoc' executable is searched for as follows:
+#  The executable is searched for as follows:
 #  \enumerate{
-#   \item \code{Sys.which("asciidoc")}
+#   \item \code{Sys.which("pandoc")}
 #  }
 # }
 #
@@ -33,7 +33,7 @@
 # @keyword IO
 # @keyword internal
 #*/###########################################################################
-setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FALSE) {
+setMethodS3("findPandoc", "default", function(mustExist=TRUE, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -47,7 +47,7 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
     on.exit(popState(verbose));
   }
 
-  command <- "asciidoc";
+  command <- "pandoc";
 
   verbose && enter(verbose, "Locating external software");
   verbose && cat(verbose, "Command: ", command);
@@ -65,7 +65,9 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
   # Validate by retrieving version information
   if (isFile(bin)) {
     res <- system2(bin, args="--version", stdout=TRUE);
-    ver <- trim(gsub("asciidoc", "", res));
+    pattern <- "pandoc.* ([0-9.-]+).*";
+    ver <- grep(pattern, res, value=TRUE);
+    ver <- gsub(pattern, "\\1", ver);
     ver <- numeric_version(ver);
     attr(bin, "version") <- ver;
   }
@@ -73,13 +75,11 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
   verbose && exit(verbose);
 
   bin;
-}) # findAsciiDoc()
+}) # findPandoc()
 
 
 ############################################################################
 # HISTORY:
 # 2013-04-01
-# o Now findAsciiDoc() only sets 'version' attribute if executable exists.
-# 2013-03-29
-# o Created.
+# o Created from findAsciiDoc.R.
 ############################################################################
