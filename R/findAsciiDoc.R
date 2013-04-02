@@ -63,10 +63,12 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
   }
 
   # Validate by retrieving version information
-  res <- system2(bin, args="--version", stdout=TRUE);
-  ver <- trim(gsub("asciidoc", "", res));
-  ver <- numeric_version(ver);
-  attr(bin, "version") <- ver;
+  if (isFile(bin)) {
+    res <- system2(bin, args="--version", stdout=TRUE);
+    ver <- trim(gsub("asciidoc", "", res));
+    ver <- numeric_version(ver);
+    attr(bin, "version") <- ver;
+  }
 
   verbose && exit(verbose);
 
@@ -76,6 +78,8 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
 
 ############################################################################
 # HISTORY:
+# 2013-04-01
+# o Now findAsciiDoc() only sets 'version' attribute if executable exists.
 # 2013-03-29
 # o Created.
 ############################################################################
