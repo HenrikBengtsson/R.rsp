@@ -28,7 +28,7 @@
   Returns a \code{\link[base]{data.frame}} of class 'RspArguments'.
 }
 
-\description{
+\details{
   Any RSP preprocessing variable with an 'description' attribute
   is considered to be an RSP argument.
 }
