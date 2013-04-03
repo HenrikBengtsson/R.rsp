@@ -10,7 +10,7 @@
 \documentclass[a4paper,10pt]{article}
 \usepackage[landscape]{geometry}
 
-<%@logical twocolumn="${TWOCOLUMN}" default="TRUE" description="Specifies whether a two- or one-column layout should be used."%>
+<%@logical twocolumn="${twocolumn}" default="TRUE" description="Specifies whether a two- or one-column layout should be used."%>
 <%@if twocolumn="TRUE"%>
 \usepackage{multicol}
 \setlength{\columnsep}{20pt}
