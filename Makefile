@@ -105,7 +105,7 @@ check: ../$(R_CHECK_OUTDIR)/00check.log
 
 # Install and build binaries
 binary: ../$(R_OUTDIR)/$(PKG_TARBALL)
-	$(CD) ..;\
+	$(CD) ../$(R_OUTDIR);\
 	$(R_CMD) INSTALL --build --merge-multiarch $(PKG_TARBALL)
 
 
@@ -132,6 +132,6 @@ vignettes: ../$(R_OUTDIR)/vigns
 
 test_files: ../$(R_OUTDIR)/tests/*.R
 
-test:
+test: ../$(R_OUTDIR)/tests/%.R
 	$(CD) ../$(R_OUTDIR)/tests;\
 	$(R_SCRIPT) -e "for (f in list.files(pattern='[.]R$$')) { source(f, echo=TRUE) }"
