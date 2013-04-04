@@ -1,5 +1,9 @@
 # CORE MACROS
+ifeq ($(OS), Windows_NT)
+CD=cd
+else
 CD=cd -P "$(CURDIR)"; cd   # This handles the case when CURDIR is a softlink
+endif
 CP=cp
 MV=mv
 RM=rm -f
@@ -15,11 +19,15 @@ PKG_TARBALL := $(PKG_NAME)_$(PKG_VERSION).tar.gz
 FILES_R := $(wildcard R/*.R)
 FILES_MAN := $(wildcard man/*.Rd)
 FILES_INCL := $(wildcard incl/*)
-FILES_INST := $(wildcard inst/*)
-FILES_SRC := $(wildcard src/*)
+FILES_INST := $(wildcard inst/* inst/*/* inst/*/*/* inst/*/*/*/*)
+FILES_VIGNETTES := $(wildcard vignettes/*)
+FILES_SRC := $(wildcard src/* src/*/* src/*/*/* src/*/*/*/* src/*/*/*/*/* src/*/*/*/*/*/* src/*/*/*/*/*/*/* src/*/*/*/*/*/*/*/*)
 FILES_TESTS := $(wildcard tests/*.R)
-FILES_ROOT := DESCRIPTION NAMESPACE .Rbuildignore $(wildcard *.R*)
-PKG_FILES := $(FILES_ROOT) $(FILES_R) $(FILES_MAN) $(FILES_INST) $(FILES_SRC) $(FILES_TESTS)
+FILES_ROOT := DESCRIPTION NAMESPACE .Rbuildignore
+PKG_FILES := $(FILES_ROOT) $(FILES_R) $(FILES_MAN) $(FILES_INST) $(FILES_VIGNETTES) $(FILES_SRC) $(FILES_TESTS)
+
+# Has vignettes in 'vignettes/' or 'inst/doc/'?
+DIR_VIGNS := $(wildcard vignettes inst/doc)
 
 # R MACROS
 R_HOME := $(shell echo "$(R_HOME)" | tr "\\\\" "/")
@@ -28,9 +36,9 @@ R_CMD = $(R) CMD
 R_SCRIPT = Rscript
 R_VERSION := $(shell $(R_SCRIPT) -e "cat(as.character(getRversion()))")
 R_LIBS_USER_X := $(shell $(R_SCRIPT) -e "cat(.libPaths()[1])")
-R_OUTDIR := $(R_VERSION)
+R_OUTDIR := _R-$(R_VERSION)
 R_CHECK_OUTDIR := $(R_OUTDIR)/$(PKG_NAME).Rcheck
-R_CHECK_OPTS = --outdir=$(R_CHECK_OUTDIR) --as-cran --timings
+R_CHECK_OPTS = --as-cran --timings
 
 
 all: build install check
@@ -55,6 +63,20 @@ debug:
 	@echo R_CHECK_OUTDIR=\'$(R_CHECK_OUTDIR)\'
 	@echo R_CHECK_OPTS=\'$(R_CHECK_OPTS)\'
 
+debug_full: debug
+	@echo
+	@echo FILES_ROOT=\'$(FILES_ROOT)\'
+	@echo FILES_R=\'$(FILES_R)\'
+	@echo FILES_MAN=\'$(FILES_MAN)\'
+	@echo FILES_INST=\'$(FILES_INST)\'
+	@echo FILES_VIGNETTES=\'$(FILES_VIGNETTES)\'
+	@echo FILES_SRC=\'$(FILES_SRC)\'
+	@echo FILES_TESTS=\'$(FILES_TESTS)\'
+	@echo FILES_INCL=\'$(FILES_INCL)\'
+	@echo
+	@echo DIR_VIGNS=\'$(DIR_VIGNS)\'
+	@echo dirname\(DIR_VIGNS\)=\'$(shell dirname $(DIR_VIGNS))\'
+
 
 # Build source tarball
 ../$(R_OUTDIR)/$(PKG_TARBALL): $(PKG_FILES)
@@ -66,7 +88,7 @@ build: ../$(R_OUTDIR)/$(PKG_TARBALL)
 
 
 # Install on current system
-$(R_LIBS_USER_X)/$(PKG_NAME)/DESCRIPTION:
+$(R_LIBS_USER_X)/$(PKG_NAME)/DESCRIPTION: ../$(R_OUTDIR)/$(PKG_TARBALL)
 	$(CD) ../$(R_OUTDIR);\
 	$(R_CMD) INSTALL $(PKG_TARBALL)
 
@@ -94,8 +116,11 @@ Rd: install
 
 # Build package vignettes
 ../$(R_OUTDIR)/vigns: install
-	$(MKDIR) ../$(R_OUTDIR)/vigns
-	$(R_SCRIPT) -e "r <- '../$(R_OUTDIR)/vigns'; d <- c('vignettes', 'inst/doc'); d <- d[file_test('-d', d)]; if (!length(d)) quit('no'); d <- d[1]; file.copy('DESCRIPTION', r); t <- file.path(r, dirname(d)); dir.create(t, showWarnings=FALSE); file.copy(d, t, recursive=TRUE); setwd(r); v <- tools::buildVignettes(dir='.'); file.path(r, d, v[['outputs']])"
+	$(MKDIR) ../$(R_OUTDIR)/vigns/$(shell dirname $(DIR_VIGNS))
+	$(CP) DESCRIPTION ../$(R_OUTDIR)/vigns/
+	$(CP) -r $(DIR_VIGNS) ../$(R_OUTDIR)/vigns/$(shell dirname $(DIR_VIGNS))
+	$(CD) ../$(R_OUTDIR)/vigns;\
+	$(R_SCRIPT) -e "v <- tools::buildVignettes(dir='.'); file.path(getwd(), v[['outputs']])"
 
 vignettes: ../$(R_OUTDIR)/vigns
 
@@ -110,5 +135,3 @@ test_files: ../$(R_OUTDIR)/tests/*.R
 test:
 	$(CD) ../$(R_OUTDIR)/tests;\
 	$(R_SCRIPT) -e "for (f in list.files(pattern='[.]R$$')) { source(f, echo=TRUE) }"
-
-
