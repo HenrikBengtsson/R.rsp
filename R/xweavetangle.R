@@ -114,6 +114,19 @@ rspTangle <- function(file, ..., envir=new.env()) {
 } # rspTangle()
 
 
+## asisWeave <- function(file, ...) {
+##   fileR <- gsub("[.]asis$", "", file);
+##   fileR;
+## } # asisWeave()
+##
+##
+## texWeave <- function(file, ...) {
+##   file <- RspFileProduct(file);
+##   process(file);
+## } # texWeave()
+
+
+
 ###############################################################################
 # HISTORY:
 # 2013-03-27
