@@ -34,11 +34,12 @@
 #   If \code{latex = FALSE}, it may be a TeX file.
 # }
 #
-# @author
+# @author "HB"
 #
 # @keyword documentation
 # @keyword file
 # @keyword IO
+# @keyword internal
 #*/###########################################################################
 buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = TRUE, clean = TRUE, engine=NULL, buildPkg=NULL, ...) {
     ### BEGIN: Workaround until buildVignette() is in the 'tools' package.

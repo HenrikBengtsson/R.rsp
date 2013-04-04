@@ -50,6 +50,8 @@ buildVignette(file, dir=".", latex=TRUE, tangle=TRUE, quiet=TRUE, clean=TRUE, en
 
 
 
+
 \keyword{documentation}
 \keyword{file}
 \keyword{IO}
+\keyword{internal}

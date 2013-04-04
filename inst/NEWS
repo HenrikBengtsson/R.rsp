@@ -1,14 +1,13 @@
 Package: R.rsp
 ==============
 
-Version: 0.9.2 [2013-04-02]
+Version: 0.9.2 [2013-04-03]
 o The internal RSP engine is undergoning a major redesign.
   UNTIL THIS COMPLETED, use R.rsp v0.8.2 available on CRAN.
 
 
 Version: 0.9.1 [2013-04-01]
 o The internal RSP engine is undergoning a major redesign.
-  UNTIL THIS COMPLETED, use R.rsp v0.8.2 available on CRAN.
 o Whenever only a URL directory is requested, the built-in HTTP daemon
   now loads the first file matching "^index[.](html|.*)$".  It used
   to only look for 'index.rsp'.

@@ -51,16 +51,16 @@
 \value{
   Returns an \code{\link{RspProduct}}.
   If argument \code{output} specifies a file, then this is
-  a \code{\link{RspFileProduct}}.
+  an \code{\link{RspFileProduct}}.
 }
 
 \section{Processing RSP files from the command line}{
   Using \code{\link{Rscript}} and \code{rfile()}, it is possible to process
   an RSP file from the command line.  For example,
 
-  \code{Rscript -e "R.rsp::rfile('random-args.txt.rsp', path=system.file('exData', package='R.rsp'))" --args --K=50}
+  \code{Rscript -e "R.rsp::rfile(file='RSP-refcard.tex.rsp', path=system.file('doc', package='R.rsp'))"}
 
-  silently parses and evaluates the 'random-args.txt.rsp' example file and output a file 'random-args.txt' in the current directory.
+  parses and evaluates \file{RSP-refcard.tex.rsp} and output \file{RSP-refcard.pdf} in the current directory.
 }
 
 \examples{
