@@ -11,9 +11,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 
 Graphics
 --------
-```r
+```{r}
 # From the 'graphics' package
 pairs(iris)
 ```
-
-![Pairs plot of the iris data.](figures/iris,pairs.png)

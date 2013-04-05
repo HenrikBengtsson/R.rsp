@@ -6,12 +6,23 @@ Lorem Ipsum
 
 Author: R.rsp
 
+
+Text
+----
+
 <%
 sentences <- c("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
 %>
 <% for (sentence in sentences) { %><%=sentence%> <% } %>
 
+
+Graphics
+--------
+
+--------------------------------------------------------
+<%@include file="includes/pairs.R"%>
+--------------------------------------------------------
+
 image:<%=toPNG("iris", tags="pairs", {
-  library(graphics)
-  pairs(iris)
+  <%@include file="includes/pairs.R"%>
 })%>[Pairs plot of the iris data.]

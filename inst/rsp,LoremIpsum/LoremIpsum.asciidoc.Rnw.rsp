@@ -1,3 +1,4 @@
+<%@page type="application/x-asciidoc-noweb"%>
 Lorem Ipsum
 ===========
 
@@ -13,10 +14,6 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 Graphics
 --------
 
---------------------------------------------------------
-# From the 'graphics' package
-pairs(iris)
---------------------------------------------------------
-
-image::figures/iris,pairs.png[Pairs plot of the iris data.]
-
+<<echo=TRUE, fig=TRUE>>=
+<%@include file="includes/pairs.R"%>
+@

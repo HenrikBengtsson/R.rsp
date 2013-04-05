@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage[margin=1.0in]{geometry}
 
 <<global, echo=<%=FALSE%>>>=
 opts_chunk$set(echo=FALSE)
@@ -14,14 +15,19 @@ opts_chunk$set(out.width="3.8in")
 \begin{document}
 \maketitle
 
+
+\section{Text}
+
 <%
 sentences <- c("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
 %>
 <% for (sentence in sentences) { %>\Sexpr{"<%=sentence%>"} <% } %>
 
-<<fig=TRUE, fig.cap="Pairs plot of the iris data.">>=
-library(graphics)
-pairs(iris)
+
+\section{Graphics}
+
+<<echo=TRUE, fig=TRUE, fig.cap="Pairs plot of the iris data.">>=
+<%@include file="includes/pairs.R"%>
 @
 
 \end{document}
