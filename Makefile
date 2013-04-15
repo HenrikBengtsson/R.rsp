@@ -5,6 +5,7 @@ else
 CD=cd -P "$(CURDIR)"; cd   # This handles the case when CURDIR is a softlink
 endif
 CP=cp
+MAKE=make
 MV=mv
 RM=rm -f
 MKDIR=mkdir -p
@@ -17,14 +18,16 @@ PKG_TARBALL := $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 # FILE MACROS
 FILES_R := $(wildcard R/*.R)
+FILES_DATA := $(wildcard data/*)
 FILES_MAN := $(wildcard man/*.Rd)
 FILES_INCL := $(wildcard incl/*)
 FILES_INST := $(wildcard inst/* inst/*/* inst/*/*/* inst/*/*/*/*)
 FILES_VIGNETTES := $(wildcard vignettes/*)
 FILES_SRC := $(wildcard src/* src/*/* src/*/*/* src/*/*/*/* src/*/*/*/*/* src/*/*/*/*/*/* src/*/*/*/*/*/*/* src/*/*/*/*/*/*/*/*)
 FILES_TESTS := $(wildcard tests/*.R)
+FILES_NEWS := $(wildcard NEWS inst/NEWS)
 FILES_ROOT := DESCRIPTION NAMESPACE .Rbuildignore
-PKG_FILES := $(FILES_ROOT) $(FILES_R) $(FILES_MAN) $(FILES_INST) $(FILES_VIGNETTES) $(FILES_SRC) $(FILES_TESTS)
+PKG_FILES := $(FILES_ROOT) $(FILES_NEWS) $(FILES_R) $(FILES_DATA) $(FILES_MAN) $(FILES_INST) $(FILES_VIGNETTES) $(FILES_SRC) $(FILES_TESTS)
 
 # Has vignettes in 'vignettes/' or 'inst/doc/'?
 DIR_VIGNS := $(wildcard vignettes inst/doc)
@@ -67,6 +70,7 @@ debug_full: debug
 	@echo
 	@echo FILES_ROOT=\'$(FILES_ROOT)\'
 	@echo FILES_R=\'$(FILES_R)\'
+	@echo FILES_DATA=\'$(FILES_DATA)\'
 	@echo FILES_MAN=\'$(FILES_MAN)\'
 	@echo FILES_INST=\'$(FILES_INST)\'
 	@echo FILES_VIGNETTES=\'$(FILES_VIGNETTES)\'
@@ -86,6 +90,10 @@ debug_full: debug
 
 build: ../$(R_OUTDIR)/$(PKG_TARBALL)
 
+build_force:
+	$(RM) ../$(R_OUTDIR)/$(PKG_TARBALL)
+	$(MAKE) install
+
 
 # Install on current system
 $(R_LIBS_USER_X)/$(PKG_NAME)/DESCRIPTION: ../$(R_OUTDIR)/$(PKG_TARBALL)
@@ -94,13 +102,29 @@ $(R_LIBS_USER_X)/$(PKG_NAME)/DESCRIPTION: ../$(R_OUTDIR)/$(PKG_TARBALL)
 
 install: $(R_LIBS_USER_X)/$(PKG_NAME)/DESCRIPTION
 
+install_force:
+	$(RM) $(R_LIBS_USER_X)/$(PKG_NAME)/DESCRIPTION
+	$(MAKE) install
+
 
 # Check source tarball
-../$(R_CHECK_OUTDIR)/00check.log: ../$(R_OUTDIR)/$(PKG_TARBALL)
+../$(R_CHECK_OUTDIR)/.check.complete: ../$(R_OUTDIR)/$(PKG_TARBALL)
 	$(CD) ../$(R_OUTDIR);\
-	$(R_CMD) check $(R_CHECK_OPTS) $(PKG_TARBALL)
+	$(RM) -r $(PKG_NAME).Rcheck;\
+        export _R_CHECK_CRAN_INCOMING_=0;\
+	export _R_CHECK_DOT_INTERNAL_=1;\
+	export _R_CHECK_USE_CODETOOLS_=1;\
+	export _R_CHECK_CRAN_INCOMING_USE_ASPELL_=1;\
+	export _R_CHECK_FULL_=1;\
+	$(R_CMD) check $(R_CHECK_OPTS) $(PKG_TARBALL);\
+	echo done > $(PKG_NAME).Rcheck/.check.complete
 
-check: ../$(R_CHECK_OUTDIR)/00check.log
+check: ../$(R_CHECK_OUTDIR)/.check.complete
+
+
+check_force:
+	$(RM) -r ../$(R_CHECK_OUTDIR)
+	$(MAKE) check
 
 
 # Install and build binaries
@@ -112,6 +136,17 @@ binary: ../$(R_OUTDIR)/$(PKG_TARBALL)
 # Build Rd help files from Rdoc comments
 Rd:
 	$(R_SCRIPT) -e "setwd('..'); Sys.setlocale(locale='C'); R.oo::compileRdoc('$(PKG_NAME)')"
+
+
+spell_Rd:
+	$(R_SCRIPT) -e "f <- list.files('man', pattern='[.]Rd$$', full.names=TRUE); utils::aspell(f, filter='Rd')"
+
+
+spell_NEWS:
+	$(R_SCRIPT) -e "utils::aspell('$(FILES_NEWS)')"
+
+spell:
+	$(R_SCRIPT) -e "utils::aspell('DESCRIPTION', filter='dcf')"
 
 
 # Build package vignettes
