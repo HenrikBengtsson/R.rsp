@@ -20,21 +20,25 @@
 }
 
 \usage{
-\method{rcat}{default}(..., output="", append=FALSE, envir=parent.frame(), args="*")
+\method{rcat}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", output="", append=FALSE, verbose=FALSE)
 }
 
 \arguments{
-  \item{...}{\code{\link[base]{character}} strings with RSP markup.}
-  \item{output}{A \code{\link[base:connections]{connection}}, or a pathname where to direct the output.
-              If \code{""}, the output is sent to the standard output.}
-  \item{append}{Only applied if \code{output} specifies a pathname;
-    If \code{\link[base:logical]{TRUE}}, then the output is appended to the file, otherwise
-    the files content is overwritten.}
+  \item{...}{A \code{\link[base]{character}} string with RSP markup.}
+  \item{file, path}{Alternatively, a file, a URL or a \code{\link[base:connections]{connection}} from
+     with the strings are read.
+     If a file, the \code{path} is prepended to the file, iff given.}
   \item{envir}{The \code{\link[base]{environment}} in which the RSP string is
     preprocessed and evaluated.}
   \item{args}{A named \code{\link[base]{list}} of arguments assigned to the environment
     in which the RSP string is parsed and evaluated.
     See \code{\link[R.utils]{cmdArgs}}.}
+  \item{output}{A \code{\link[base:connections]{connection}}, or a pathname where to direct the output.
+              If \code{""}, the output is sent to the standard output.}
+  \item{append}{Only applied if \code{output} specifies a pathname;
+    If \code{\link[base:logical]{TRUE}}, then the output is appended to the file, otherwise
+    the files content is overwritten.}
+  \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
 \value{
@@ -63,7 +67,10 @@ rcat("A random integer in [1,<\%=K\%>]: <\%=sample(1:K, size=1)\%>\n", args=list
 \author{Henrik Bengtsson}
 
 \seealso{
- \code{\link{rstring}}() and \code{\link{rfile}}().
+ To store the output in a string (instead of displaying it), see
+ \code{\link{rstring}}().
+ For processing an RSP file document and writing the output to a
+ file, see \code{\link{rfile}}().
 }
 
 

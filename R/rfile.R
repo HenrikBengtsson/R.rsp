@@ -1,7 +1,7 @@
 ###########################################################################/**
 # @RdocDefault rfile
 #
-# @title "Evaluates an RSP file and outputs the generated string"
+# @title "Evaluates an RSP file and outputs the final RSP document file"
 #
 # \description{
 #  @get "title".

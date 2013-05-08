@@ -13,7 +13,7 @@
 # @synopsis
 #
 # \arguments{
-#   \item{...}{@character strings with RSP markup.}
+#   \item{...}{A @character string with RSP markup.}
 #   \item{file, path}{Alternatively, a file, a URL or a @connection from
 #      with the strings are read.
 #      If a file, the \code{path} is prepended to the file, iff given.}
@@ -34,7 +34,10 @@
 # @author
 #
 # \seealso{
-#  @see "rcat" and @see "rfile".
+#  To display the output (instead of returning a string), see
+#  @see "rcat".
+#  For processing an RSP file document and writing the output to a
+#  file, see @see "rfile".
 # }
 #
 # @keyword file

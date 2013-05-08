@@ -82,6 +82,17 @@ debug_full: debug
 	@echo dirname\(DIR_VIGNS\)=\'$(shell dirname $(DIR_VIGNS))\'
 
 
+
+# Update existing packages
+update:
+	$(R_SCRIPT) -e "update.packages(ask=FALSE)"
+
+# Install missing dependencies
+deps: DESCRIPTION
+	$(MAKE) update
+	$(R_SCRIPT) -e "x <- unlist(strsplit(read.dcf('DESCRIPTION',fields=c('Depends', 'Imports', 'Suggests')),',')); x <- gsub('([[:space:]]*|[(].*[)])', '', x); x <- unique(setdiff(x, c('R', rownames(installed.packages())))); if (length(x) > 0) { install.packages(x); x <- unique(setdiff(x, c('R', rownames(installed.packages())))); source('http://bioconductor.org/biocLite.R'); biocLite(x); }"
+
+
 # Build source tarball
 ../$(R_OUTDIR)/$(PKG_TARBALL): $(PKG_FILES)
 	$(MKDIR) ../$(R_OUTDIR)
@@ -170,3 +181,16 @@ test_files: ../$(R_OUTDIR)/tests/*.R
 test: ../$(R_OUTDIR)/tests/%.R
 	$(CD) ../$(R_OUTDIR)/tests;\
 	$(R_SCRIPT) -e "for (f in list.files(pattern='[.]R$$')) { source(f, echo=TRUE) }"
+
+
+
+# Run extensive CRAN submission checks
+../$(R_OUTDIR)/submit_to_cran/$(PKG_TARBALL): ../$(R_OUTDIR)/$(PKG_TARBALL)
+	$(MKDIR) ../$(R_OUTDIR)/submit_to_cran
+	$(CP) ../$(R_OUTDIR)/$(PKG_TARBALL) ../$(R_OUTDIR)/submit_to_cran
+
+../$(R_OUTDIR)/submit_to_cran/$(PKG_NAME),EmailToCRAN.txt: ../$(R_OUTDIR)/submit_to_cran/$(PKG_TARBALL)
+	$(CD) ../$(R_OUTDIR)/submit_to_cran;\
+	$(R_SCRIPT) -e "RCmdCheckTools::testPkgsToSubmit()"
+
+submit: ../$(R_OUTDIR)/submit_to_cran/$(PKG_NAME),EmailToCRAN.txt

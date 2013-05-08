@@ -10,10 +10,10 @@
 \alias{rfile.default}
 \alias{rfile}
 
-\title{Evaluates an RSP file and outputs the generated string}
+\title{Evaluates an RSP file and outputs the final RSP document file}
 
 \description{
- Evaluates an RSP file and outputs the generated string.
+ Evaluates an RSP file and outputs the final RSP document file.
 }
 
 \usage{

@@ -24,7 +24,7 @@
 }
 
 \arguments{
-  \item{...}{\code{\link[base]{character}} strings with RSP markup.}
+  \item{...}{A \code{\link[base]{character}} string with RSP markup.}
   \item{file, path}{Alternatively, a file, a URL or a \code{\link[base:connections]{connection}} from
      with the strings are read.
      If a file, the \code{path} is prepended to the file, iff given.}
@@ -52,7 +52,10 @@ cat(x)
 \author{Henrik Bengtsson}
 
 \seealso{
- \code{\link{rcat}}() and \code{\link{rfile}}().
+ To display the output (instead of returning a string), see
+ \code{\link{rcat}}().
+ For processing an RSP file document and writing the output to a
+ file, see \code{\link{rfile}}().
 }
 
 

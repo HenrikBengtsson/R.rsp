@@ -14,7 +14,8 @@
 #   \enumerate{
 #     \item Vignette '\href{../doc/index.html}{RSP Markup Language - Reference Card}'
 #     \item Vignette '\href{../doc/index.html}{Dynamic LaTeX reports with RSP}'
-#     \item @see "rstring", @see "rcat" and @see "rfile".
+#     \item To compile a RSP-embedded text document to a final document, use @see "rfile", e.g. \code{rfile("report.tex.rsp")} outputs file 'report.pdf' and \code{rfile("report.md.rsp")} outputs file 'report.html'.
+#     \item To compile a RSP document (file or string) and output the result to standard output or a string, use @see "rcat" an @see "rstring", respectively.
 #   }
 # }
 #

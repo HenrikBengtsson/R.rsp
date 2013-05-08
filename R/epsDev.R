@@ -1,4 +1,9 @@
 epsDev <- function(label, width=6, height=aspect*width, aspect=1, ..., path="figures", safe=TRUE, force=FALSE) {
+  .Deprecated("R.devices::toEPS");
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'path':
   path <- Arguments$getWritablePath(path);
 
@@ -26,3 +31,10 @@ epsDev <- function(label, width=6, height=aspect*width, aspect=1, ..., path="fig
 
   invisible(res);
 } # epsDev()
+
+
+##############################################################################
+# HISTORY:
+# 2013-05-06
+# o CLEANUP: Formally deprecated epsDev().
+##############################################################################
