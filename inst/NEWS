@@ -8,12 +8,15 @@ o DOCUMENTATION: Explicitly added arguments 'file' & 'path' to
 
 
 Version: 0.9.2 [2013-04-04]
-o The internal RSP engine is undergoning a major redesign.
-  UNTIL THIS COMPLETED, use R.rsp v0.8.2 available on CRAN.
+o The internal RSP engine has undergone a major redesign.
+o BACKWARD COMPATIBILITY: The RSP processor of the built-in HTTP
+  daemon is by default still using the previous RSP engine.
+  Note, the built-in HTTP daemon is only there as a proof of
+  concept and is not recommended for other than toy examples.
 
 
 Version: 0.9.1 [2013-04-01]
-o The internal RSP engine is undergoning a major redesign.
+o The internal RSP engine is undergoing a major redesign.
 o Whenever only a URL directory is requested, the built-in HTTP daemon
   now loads the first file matching "^index[.](html|.*)$".  It used
   to only look for 'index.rsp'.
