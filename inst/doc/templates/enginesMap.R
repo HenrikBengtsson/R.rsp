@@ -3,5 +3,3 @@
   R.rsp::rspWeave(file, ...);
   R.rsp::rspTangle(file, ...);
 }
-
-

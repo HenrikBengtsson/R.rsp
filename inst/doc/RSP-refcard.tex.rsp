@@ -126,7 +126,7 @@ Comments can be used to exclude text, code expressions and preprocessing directi
  \code{<\%--\%>},
  $\ldots$
 &
-"Empty" comments. Like above comments, these ones force following white space and line break to be dropped.\\
+``Empty'' comments. Like above comments, these ones force following white space and line break to be dropped.\\
 \hline
 %%
  \code{<\%} $\ldots$ \code{-\%>},
@@ -166,7 +166,7 @@ It is not possible to tell from the translated code script whether preprocessing
 \hline
  \code{<\%@\content{type} \content{name}="\content{content}"\%>} &
  Assigns \content{content} to preprocessing variable \content{name} of type \content{type}. 
- Supported types are 'string', 'numeric', 'integer' and 'logical'.\\
+ Supported types are `string', `numeric', `integer' and `logical'.\\
 %%
  \code{<\%@\content{type} name="\content{name}"\%>} &
  Inserts the content of preprocessing variable \content{name}. \\
@@ -241,7 +241,7 @@ Output written to standard output is inserted into the final document.
 \begin{verbatim}
 <%@string name="doc" file="${file}"%>
 <%@eval language="R" content="
-## This utilizes the RSP 'eval' preprocessing directive to
+## This utilizes the RSP `eval' preprocessing directive to
 ## translate the example into R code.
 code <- rscript('${doc}');
 code <- tidy(code, format='unsafedemo');

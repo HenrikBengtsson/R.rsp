@@ -169,7 +169,7 @@ Using the \pkg{R.rsp} package\footnote{To install the \pkg{R.rsp} package, call 
 > rcat("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
 A random integer in [1,100]: 77
 \end{escapeRspVerbatim}
-As explained further in Section~\ref{RspMarkupLanguage}, the RSP construct \code{<\%=\content{code chunk}\%>} causes the R expression '\code{\content{code chunk}}' to be evaulated and its value to be inserted into the text (replacing the RSP construct).
+As explained further in Section~\ref{RspMarkupLanguage}, the RSP construct \code{<\%=\content{code chunk}\%>} causes the R expression `\code{\content{code chunk}}' to be evaulated and its value to be inserted into the text (replacing the RSP construct).
 %
 To process the RSP string without outputting the result, but instead returning it in a character string, do
 \begin{escapeRspVerbatim}
@@ -214,7 +214,7 @@ The latter example illustrates how \code{rstring()} also can load strings from e
 
 \subsection{Automatic postprocessing}
 For RSP documents that outputs certain file formats such as LaTeX, Sweave, and knitr, further processing of the RSP file output is often necessary before obtaining the final RSP product, e.g. a PDF file.
-The \code{rfile()} function will, based on the content type of the generated RSP output, detect if further processing ("postprocessing") is possible.  If so, it is postprocessed to arrive at the final product.
+The \code{rfile()} function will, based on the content type of the generated RSP output, detect if further processing (``postprocessing'') is possible.  If so, it is postprocessed to arrive at the final product.
 For instance, consider an RSP-embedded LaTeX document \code{report.tex.rsp}.  When compiling it by
 \begin{verbatim}
 > rfile("report.tex.rsp")
@@ -257,9 +257,9 @@ There are three main types of RSP constructs:
  \item \emph{RSP preprocessing directives} (\code{<\%@...\%>}).
  \item \emph{RSP code expressions} (\code{<\%...\%>}), and
 \end{enumerate}
-Everything outside of RSP constructs is referred to as \emph{RSP text}, or short just as '\emph{text}'.
+Everything outside of RSP constructs is referred to as \emph{RSP text}, or short just as `\emph{text}'.
 %
-When an RSP document is \emph{processed} ("compiled"), it is first (i) \emph{parsed} where comments are dropped and preprocessing directives are processed (and replaced by either text or RSP code expressions), then (ii) \emph{translated} into plain R code, which when (iii) evaluated generates an \emph{RSP product} (as a string or an output file).
+When an RSP document is \emph{processed} (``compiled''), it is first (i) \emph{parsed} where comments are dropped and preprocessing directives are processed (and replaced by either text or RSP code expressions), then (ii) \emph{translated} into plain R code, which when (iii) evaluated generates an \emph{RSP product} (as a string or an output file).
 
 \begin{remark}
 An RSP comment may contain anything, including other RSP constructs.
@@ -268,17 +268,17 @@ An RSP code expression may contain RSP comments (dropped) and RSP preprocessing 
 \end{remark}
 
 
-The simplest RSP document possible is a string that contains none of the above RSP constructs, just a single RSP text, which will be outputted "as is"\footnote{Except for escaped RSP start and end tags as explained in Section~\ref{RspEscape}.} in the outputted RSP product.
+The simplest RSP document possible is a string that contains none of the above RSP constructs, just a single RSP text, which will be outputted ``as is''\footnote{Except for escaped RSP start and end tags as explained in Section~\ref{RspEscape}.} in the outputted RSP product.
 %
 A slightly more elaborate example is the RSP string
 \begin{rspVerbatim}
 "A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n"
 \end{rspVerbatim}
 which is parsed into the following sequence of RSP constructs:
-(i) text '\code{A random integer in [1,100]: }', 
-(ii) RSP code expression '\code{<\%=sample(1:100, size=1)\%>}', and
-(iii) text '\code{{\bs}n}'.
-When this sequence is later evaluated, the two text components are inserted into the RSP product "as is", whereas for the RSP code expression its contained R code is evaluated and the return value is inserted into the RSP product as text.
+(i) text `\code{A random integer in [1,100]: }', 
+(ii) RSP code expression `\code{<\%=sample(1:100, size=1)\%>}', and
+(iii) text `\code{{\bs}n}'.
+When this sequence is later evaluated, the two text components are inserted into the RSP product ``as is'', whereas for the RSP code expression its contained R code is evaluated and the return value is inserted into the RSP product as text.
 %
 
 
@@ -327,10 +327,10 @@ For convenience, one can also use \code{<\%-\%>}, which is a short form for \cod
 
 \subsection{Escaping RSP start and end tags (\code{<\%\%} and \code{\%\%>})}
 \label{RspEscape}
-To include '\code{<\%}' and '\code{\%>}' in the text of the RSP product
+To include `\code{<\%}' and `\code{\%>}' in the text of the RSP product
 they need to be escaped so that the RSP parser does not recognize them as
-being part of an RSP construct.  This can be done as '\code{<\%\%}' and
-'\code{\%\%>}', respectively.  For instance,
+being part of an RSP construct.  This can be done as `\code{<\%\%}' and
+`\code{\%\%>}', respectively.  For instance,
 \begin{escapeRspVerbatim}
 > rcat("A random integer in [1,100]: <\%\%=sample(1:100, size=1)\%\%>{\bs}n")
 A random integer in [1,100]: <\%=sample(1:100, size=1)\%>
@@ -344,7 +344,7 @@ A random integer in [1,100]: 8
 \end{escapeRspVerbatim}
 
 \begin{remark}
-The string '\code{<\%\%>}' is interpreted as an escaped '\code{<\%}' followed by a '\code{>}' and \emph{not} as an empty RSP code expression.
+The string `\code{<\%\%>}' is interpreted as an escaped `\code{<\%}' followed by a `\code{>}' and \emph{not} as an empty RSP code expression.
 \end{remark}
 
 
@@ -383,13 +383,13 @@ The RSP markup \code{<\%=\content{code chunk}\%>} evaluates the code chunk (with
 \begin{rspVerbatim}
 Today's date is <\%=Sys.Date()\%>
 \end{rspVerbatim}
-would produce the string 'Today's date is <%=Sys.Date()%>'.
+would produce the string `Today's date is <%=Sys.Date()%>'.
 If inlining a vector of values, they are all pasted together without a separator.  For example,
 \begin{rspVerbatim}
 The letters of the alphabet are '<\%=LETTERS\%>'
 \end{rspVerbatim}
-produces 'The letters the alphabet are '<%=LETTERS%>'.
-To separate the elements with commas, use \code{<\%=paste(LETTERS, collapse=", ")\%>}.  Alternatively, use \code{<\%=hpaste(LETTERS)\%>} to output '<%=hpaste(LETTERS)%>'\footnote{The \code{hpaste()} function of \pkg{R.utils} provides "human-readable" pasting of vectors.}.
+produces ``The letters the alphabet are '<%=LETTERS%>'{}''.
+To separate the elements with commas, use \code{<\%=paste(LETTERS, collapse=", ")\%>}.  Alternatively, use \code{<\%=hpaste(LETTERS)\%>} to output `<%=hpaste(LETTERS)%>'\footnote{The \code{hpaste()} function of \pkg{R.utils} provides ``human-readable'' pasting of vectors.}.
 
 \begin{remark}
 When inlining results, the \code{\content{code chunk}} must be a complete and valid R expression, otherwise it would not be able to evaluate it and return the result.
@@ -407,7 +407,7 @@ The <\%=n <- length(letters)%> letters in the English alphabet are:
   <\%=letters[i]\%>/<\%=LETTERS[i]\%><\%=if(i < n) ", "\%>
 <\% \} \%>.
 \end{rspVerbatim}
-which generates\footnote{Of course, in this particular case, the above for-loop can be replaced by \code{<\%=paste(letters, LETTERS, sep="/", collapse=", ")\%>}.}: 'The <%=n <- length(letters)%> letters in the English alphabet are: 
+which generates\footnote{Of course, in this particular case, the above for-loop can be replaced by \code{<\%=paste(letters, LETTERS, sep="/", collapse=", ")\%>}.}: `The <%=n <- length(letters)%> letters in the English alphabet are: 
 <% for (i in 1:n) { %>
   <%=letters[i]%>/<%=LETTERS[i]%><%=if(i < n) ", "%>
 <% } %>.'\\
@@ -450,7 +450,7 @@ The above template function can now be used by calling it within an RSP code blo
 \begin{rspVerbatim}
 <\% myTemplate(n=3) \%>
 \end{rspVerbatim}
-which produces '<% myTemplate(n=3) %>'.
+which produces `<% myTemplate(n=3) %>'.
 %
 Naturally, a template function can be reused any number of times.  For example, the following RSP-embedded LaTeX block
 \begin{rspVerbatim}
@@ -478,7 +478,7 @@ Because of readability of the RSP source document, RSP constructors are often pl
 
 
 \subsubsection{Trimming of lines with only non-text RSP constructs}
-The whitespace before and after RSP constructs that are on their own lines without no other non-whitespace text will \emph{always} have their surround whitespace trimmed off.  They will also have the first following line break removed, unless it is manually controlled as describe in the next subsection.  This automatic trimming of "stand-alone" RSP constructs enhanced readability of RSP source documents without introducing unnecessary whitespace and line breaks.  Consider the following example and think about how whitespace and line breaks are removed or kept:
+The whitespace before and after RSP constructs that are on their own lines without no other non-whitespace text will \emph{always} have their surround whitespace trimmed off.  They will also have the first following line break removed, unless it is manually controlled as describe in the next subsection.  This automatic trimming of ``stand-alone'' RSP constructs enhanced readability of RSP source documents without introducing unnecessary whitespace and line breaks.  Consider the following example and think about how whitespace and line breaks are removed or kept:
 \begin{rspVerbatim}
 You don't have to worry too much about whitespace, e.g. the
   <\%
@@ -501,7 +501,7 @@ trimmed off as well as its trailing line break.
 \subsubsection{Manually controlling trailing whitespace and line breaks (\code{-\%>} and \code{+\%>})}
 Also for RSP constructs that are not surrounded by only whitespace, it is possible to control how whitespace and line breaks following RSP constructs are trimmed.  This is done via so called \emph{RSP end tag specifications}.   Those apply to all types of RSP constructs.
 %
-By adding an \emph{end tag hyphen} at the end of an RSP construct (i.e. \code{-\%>}), all following whitespace (space and tabs) including the first line break (the newline) is dropped ("trimmed"), if and only if there are no other characters following the RSP construct.  How this works is illustrated in the following example:
+By adding an \emph{end tag hyphen} at the end of an RSP construct (i.e. \code{-\%>}), all following whitespace (space and tabs) including the first line break (the newline) is dropped (``trimmed''), if and only if there are no other characters following the RSP construct.  How this works is illustrated in the following example:
 \begin{escapeRspVerbatim}
 > rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
 [1] "A random integer in [1,100]: 48{\bs}n"
@@ -510,7 +510,7 @@ By adding an \emph{end tag hyphen} at the end of an RSP construct (i.e. \code{-\
 > rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)-\%> {\bs}t {\bs}n{\bs}n{\bs}n")
 [1] "A random integer in [1,100]: 48{\bs}n{\bs}n"
 \end{escapeRspVerbatim}
-To disable the trimming of trailing whitespace and line breaks, add an \emph{end tag plus sign}, i.e. '\code{+\%>}'.  For instance,
+To disable the trimming of trailing whitespace and line breaks, add an \emph{end tag plus sign}, i.e. `\code{+\%>}'.  For instance,
 \begin{escapeRspVerbatim}
 > rstring("abc{\bs}n<\%='DEF'\%>{\bs}nGHI")
 [1] "abc{\bs}nDEFGHI"
@@ -534,7 +534,7 @@ To disable the trimming of trailing whitespace and line breaks, add an \emph{end
   -------------------------------------------------------------------%>
 \subsection{Preprocessing directives (\code{<\%@...\%>})}
 \label{PreprocessingDirectives}
-An \emph{RSP preprocessing directive}, or short an \emph{RSP directive}, is an RSP construct that starts with an '\code{@}' followed by a \emph{directive} and zero or more \emph{named arguments}, e.g. \code{<\%@include file="random.tex.rsp"\%>}.    RSP directives can for instance be used to include the content of another file or conditionally include/exclude parts of the existing document.  RSP preprocessing directives facilitate modularization of RSP documents such that the same RSP module can be reused in many places, which in turn minimizes and often eliminates the manual and often error-prone process of cut-and-pasting content between documents.
+An \emph{RSP preprocessing directive}, or short an \emph{RSP directive}, is an RSP construct that starts with an `\code{@}' followed by a \emph{directive} and zero or more \emph{named arguments}, e.g. \code{<\%@include file="random.tex.rsp"\%>}.    RSP directives can for instance be used to include the content of another file or conditionally include/exclude parts of the existing document.  RSP preprocessing directives facilitate modularization of RSP documents such that the same RSP module can be reused in many places, which in turn minimizes and often eliminates the manual and often error-prone process of cut-and-pasting content between documents.
 %
 RSP preprocessing directives are processed during the parsing of the RSP document.  This is done \emph{after} RSP comments have been dropped and \emph{before} RSP code expressions are parsed.  This means that:
 \begin{itemize}
@@ -553,15 +553,15 @@ After preprocessing, there are no remaining RSP preprocessing directives left in
 ----%>
 
 %
-The value of an RSP directive argument is parsed as a \emph{GString}\footnote{GStrings can be processed in R by the \code{gstring()} function in the \pkg{R.utils} package.}.  A GString is a regular string that optionally may contain bash-like syntax for inserting values of system environment variables.  For instance, if the environment variable '\code{R\_HOME}' is set to the home directory of the R installation, then \code{<\%@include file=\lb"\$\{R\_HOME\}/doc/AUTHORS"\%>} is parsed as \code{<\%@include file=\lb"/path/to/R/doc/AUTHORS"\%>} (resulting in the content of that 'AUTHORS' file to be included "as is").  Note how this substitution is indepent of the R language.
-For convenience, when processing an RSP document using the RSP parser of the \pkg{R.rsp} package, GString also looks for a matching variables elsewhere.  Notably, it searches (i) among the variables in the R workspace, (ii) among the R options, and then (iii) among the system environment variable.\footnote{Although the RSP parser of the \pkg{R.rsp} package also looks for GString variable in the R environment and its options, it does not mean that these variables are dependent on the R language.  The substituted value will always be interpreted as a character string.  An RSP parser implemented in Python could take a similar approach}
+The value of an RSP directive argument is parsed as a \emph{GString}\footnote{GStrings can be processed in R by the \code{gstring()} function in the \pkg{R.utils} package.}.  A GString is a regular string that optionally may contain bash-like syntax for inserting values of system environment variables.  For instance, if the environment variable `\code{R\_HOME}' is set to the home directory of the R installation, then \code{<\%@include file=\lb"\$\{R\_HOME\}/doc/AUTHORS"\%>} is parsed as \code{<\%@include file=\lb"/path/to/R/doc/AUTHORS"\%>} (resulting in the content of that `AUTHORS' file to be included ``as is'').  Note how this substitution is indepent of the R language.
+For convenience, when processing an RSP document using the RSP parser of the \pkg{R.rsp} package, GString also looks for a matching variables elsewhere.  Notably, it searches (i) among the variables in the R workspace, (ii) among the R options, and then (iii) among the system environment variable.\footnote{Although the RSP parser of the \pkg{R.rsp} package also looks for GString variable in the R environment and its options, it does not mean that these variables are dependent on the R language.  The substituted value will always be interpreted as a character string.  An RSP parser implemented in Python could take a similar approach.}
 
 \begin{remark}
 Variables set in RSP code expressions \emph{cannot} be used in RSP directives, because they are only assigned after the RSP preprocessing directives have been processed.
 \end{remark}
 
 \begin{remark}
-All RSP directive arguments (also known as "attributes") must be named with names having the correct case and not being abbreviated.  For instance, \code{<\%@include file=\lb"random.tex.rsp"\%>} is correct whereas \code{<\%@include "random.tex.rsp"\%>}, \code{<\%@include File=\lb"random.tex.rsp"\%>} and \code{<\%@include f=\lb"random.tex.rsp"\%>} are not.
+All RSP directive arguments (also known as ``attributes'') must be named with names having the correct case and not being abbreviated.  For instance, \code{<\%@include file=\lb"random.tex.rsp"\%>} is correct whereas \code{<\%@include "random.tex.rsp"\%>}, \code{<\%@include File=\lb"random.tex.rsp"\%>} and \code{<\%@include f=\lb"random.tex.rsp"\%>} are not.
 \end{remark}
 
 \begin{remark}
@@ -575,7 +575,7 @@ Just like RSP comments, RSP directives are designed to be independent of the pro
 
 
 \subsubsection{Including text and file contents}
-It is possible to include the contents of other text and RSP documents.  These can be either specified as text strings (argument '\code{content}') or as files (argument '\code{file}'), which may be either a file on the file system or URL/document online.  
+It is possible to include the contents of other text and RSP documents.  These can be either specified as text strings (argument `\code{content}') or as files (argument `\code{file}'), which may be either a file on the file system or URL/document online.  
 <%---
 For example,
 \begin{rspVerbatim}
@@ -585,22 +585,22 @@ will include the RSP document \code{CurrentTime.tex.rsp} into the main (host) RS
 ---%>
 
 \paragraph{Including file contents (\code{<\%@include file="\content{pathname|URL}"\%>})}
-To include the content of a text file "as is" during preprocessing, use the '\code{file}' argument.  This may be used to include a local file or a file online (specified as a URL).  For instance, to include the content of text file '\code{randoms.txt}' as is into the RSP document, use
+To include the content of a text file ``as is'' during preprocessing, use the `\code{file}' argument.  This may be used to include a local file or a file online (specified as a URL).  For instance, to include the content of text file `\code{randoms.txt}' as is into the RSP document, use
 \begin{rspVerbatim}
-'<\%@include file="randoms.txt"\%>'
+<\%@include file="randoms.txt"\%>
 \end{rspVerbatim}
-To include the \emph{RSP preprocessed} content of RSP file '\code{random.txt.rsp}', use
+To include the \emph{RSP preprocessed} content of RSP file `\code{random.txt.rsp}', use
 \begin{rspVerbatim}
-'<\%@include file="randoms.txt.rsp"\%>'
+<\%@include file="randoms.txt.rsp"\%>
 \end{rspVerbatim}
 Any file pathname is \emph{relative to the directory} of the (host) RSP document that contains the include directive.
-For instance, consider an RSP file '\code{rsp/overview.txt.rsp}' and a text file '\code{inst/NEWS}'.  Next, if an RSP document includes the RSP file as
+For instance, consider an RSP file `\code{rsp/overview.txt.rsp}' and a text file `\code{inst/NEWS}'.  Next, if an RSP document includes the RSP file as
 \begin{rspVerbatim}
-'<\%@include file="rsp/overview.txt.rsp"\%>'
+<\%@include file="rsp/overview.txt.rsp"\%>
 \end{rspVerbatim}
 then that RSP file can in turn include the text file as
 \begin{rspVerbatim}
-'<\%@include file="../inst/NEWS"\%>'
+<\%@include file="../inst/NEWS"\%>
 \end{rspVerbatim}
 
 
@@ -620,7 +620,7 @@ Be careful not to include the same file recursively over and over\footnote{The R
 ----%>
 
 <%--
-File content that is included as '\code{text/plain}' are included "as is" in the output RSP product.  For instance, consider the difference between the following two include statements:
+File content that is included as `\code{text/plain}' are included ``as is'' in the output RSP product.  For instance, consider the difference between the following two include statements:
 \begin{escapeRspVerbatim}
 > cat("<\%=Sys.time()\%>", file="time.txt.rsp")
 > rcat("The current time is <\%@include file='time.txt.rsp'\%>.{\bs}n")
@@ -634,14 +634,14 @@ The current time is <\%=Sys.time()\%>.
 \paragraph{Including plain text (\code{<\%@include content="\content{content}"\%>})}
 Although not commonly needed, it is, as an alternative to contents of files, possible to include contents of strings.  For example, the template RSP document
 \begin{rspVerbatim}
-The \code{R_HOME} environment variable was '<\%@include content="$\{R_HOME\}"\%>'
+The \code{R_HOME} environment variable was `<\%@include content="$\{R_HOME\}"\%>'
 at the time when this document was preprocessed.
 \end{rspVerbatim}
 results in an preprocessed RSP document consisting of
-\begin{rspVerbatim}
-The \code{R_HOME} environment variable was '<%@include content="${R_HOME}"%>'
+\begin{escapeRspVerbatim}
+The \code{R_HOME} environment variable was `<%@include content="${R_HOME}"%>'
 at the time when this document was preprocessed.
-\end{rspVerbatim}
+\end{escapeRspVerbatim}
 
 
 \subsubsection{Document metadata (\code{<\%@meta ...\%>})}
@@ -650,7 +650,7 @@ It is possible to assign non-visible metadata to RSP documents.  This metadata c
 To set an RSP metadata variable, use directive \code{<\%@meta name="\content{name}" content="\content{content}"\%>}.
 To insert RSP metadata into the RSP output, use directive \code{<\%@meta name="\content{name}"\%>}.
 For example, in LaTeX you can do
-\begin{escapeRspVerbatim}
+\begin{rspVerbatim}
 <\%@meta name="title" content="My Report"\%>
 <\%@meta name="author" content="John Doe"\%>
 <\%@meta name="keywords" content="statistics, report"\%>
@@ -666,7 +666,7 @@ For example, in LaTeX you can do
 {\bs}title\{<\%@meta name="title"\%>\}
 {\bs}author\{<\%@meta name="author"\%>\}
 {\bs}keywords\{<\%@meta name="keywords"\%>\}
-\end{escapeRspVerbatim}
+\end{rspVerbatim}
 Note how this sets both the displayed metadata as well as the non-visible PDF metadata.
 
 For convenience, there is a short format for setting metadata, which is \code{<\%@meta \content{name}="\content{content}"\%>}.
@@ -676,39 +676,39 @@ For convenience, there is a short format for setting metadata, which is \code{<\
 The R framework uses a LaTeX-flavored markup for specifying metadata in vignettes, e.g. \code{{\bs}VignetteIndexEntry\{My Report\}} and\linebreak \code{{\bs}VignetteKeyword\{statistics, report\}}.
 %
 It is possible to "import" this metadata information via \code{<\%@meta content="\content{R vignette metadata markup}" language="R-vignettes"\%>}.  For instance,
-\begin{escapeRspVerbatim}
+\begin{rspVerbatim}
 <\%@meta content="
   DIRECTIVES FOR R:
   %{\bs}VignetteIndexEntry\{My Report\}
   %{\bs}VignetteKeyword\{statistics, report\}
   %{\bs}VignetteAuthor\{John Doe\}
 " language="R-vignette"\%>
-\end{escapeRspVerbatim}
-will import the three R \code{{\bs}Vignette\content{Name}\{\}} "commands" into RSP metadata variables 'title', 'keywords' and 'author'.  As illustrated, any content that is not recognizes as R vignette metadata, or is of unknown markup, is ignored, which means that it is possible to include "anything" part of the '\code{content}' attribute.
+\end{rspVerbatim}
+will import the three R \code{{\bs}Vignette\content{Name}\{\}} "commands" into RSP metadata variables `title', `keywords' and `author'.  As illustrated, any content that is not recognizes as R vignette metadata, or is of unknown markup, is ignored, which means that it is possible to include "anything" part of the `\code{content}' attribute.
 Note that this construct will (i) import the metadata into the RSP document at the same time as (ii) the R vignette mechanism can utilize it.
 This eliminates the need for reproducing the same information in the RSP source document.
 
 
 \subsubsection{Preprocessing variables (\code{<\%\@string ...\%>})}
 In addition to metadata, it is possible to define, set and get custom variables available during the preprocessing of the RSP document.
-To set an RSP preprocessing \emph{string} variable, use directive \code{<\%@string name="\content{name}" content="\content{content}" default="\content{default}"\%>}, where '\code{default}' is optional and the value used if '\code{content}' is empty.
+To set an RSP preprocessing \emph{string} variable, use directive \code{<\%@string name="\content{name}" content="\content{content}" default="\content{default}"\%>}, where `\code{default}' is optional and the value used if `\code{content}' is empty.
 To insert a preprocessing variable into the RSP output, use directive \code{<\%@string name="\content{name}"\%>}.
 There exist analogue directives for \emph{numeric}, \emph{integer} and \emph{logical} variables.
 
-\begin{escapeRspVerbatim}
+\begin{rspVerbatim}
 <\%@string name="page\_format" content="article"\%>
 <\%@string name="page_size" content="a4paper"\%>
 
 {\bs}documentclass[<\%@string name="page_size"%>]\{<\%@string name="page_format"%>\}
-\end{escapeRspVerbatim}
+\end{rspVerbatim}
 %
 For convenience, there is a short format for setting a variable, which is \code{<\%@string \content{name}="\content{content}"\%>}.
 
 
 \subsubsection{Conditional inclusion/exclusion (\code{<\%@if ...\%>})}
-Using so called RSP 'if-then-else' preprocessing directives, it is possible to include (exclude) parts of an RSP source document such that they appear (do not appear) in the output RSP product. 
-The full syntax of an RSP 'if-then-else' variable is \code{<\%@if test="\content{test}" name="\content{variable}" content="\content{value}" negate="\content{logical}"\%>} \content{include} \code{<\%@else\%>} \content{exclude} \code{<\%@endif\%>}, where the \code{<\%@else\%>} statement is optional.  The argument '\code{test}' specifies the type of test to conduct, '\code{name}' the variable name to be tested, and '\code{content}' the value to compare the variable to.
-The '\code{negate}' argument is optional and specifies whether the result of the test should be negated or not.
+Using so called RSP `if-then-else' preprocessing directives, it is possible to include (exclude) parts of an RSP source document such that they appear (do not appear) in the output RSP product. 
+The full syntax of an RSP `if-then-else' variable is \code{<\%@if test="\content{test}" name="\content{variable}" content="\content{value}" negate="\content{logical}"\%>} \content{include} \code{<\%@else\%>} \content{exclude} \code{<\%@endif\%>}, where the \code{<\%@else\%>} statement is optional.  The argument `\code{test}' specifies the type of test to conduct, `\code{name}' the variable name to be tested, and `\code{content}' the value to compare the variable to.
+The `\code{negate}' argument is optional and specifies whether the result of the test should be negated or not.
 The following tests are available (aliases in parentheses):
 \begin{itemize}
  \item \code{test="exists"}: check if a variable exists.
@@ -721,7 +721,7 @@ The following tests are available (aliases in parentheses):
 \end{itemize}
 %
 For example,
-\begin{escapeRspVerbatim}
+\begin{rspVerbatim}
 <\%@string name="version" content="devel"\%>
 <\%@if test="exists" name="version"\%>
  <\%@if test="equal-to" name="version" content="devel"\%>
@@ -730,16 +730,16 @@ This document presents methods that are under development.
 This document presents methods that are well tested and stable.
  <\%@endif\%>
 <\%@else\%>
-Preprocessing variable 'version' was not set.
+Preprocessing variable `version' was not set.
 <\%@endif\%>
-\end{escapeRspVerbatim}
+\end{rspVerbatim}
 produces
 \begin{escapeRspVerbatim}
 This document presents methods that are under development.
 \end{escapeRspVerbatim}
 If one removes the first line, then the output is
 \begin{escapeRspVerbatim}
-Preprocessing variable 'version' was not set.
+Preprocessing variable `version' was not set.
 \end{escapeRspVerbatim}
 
 For convenience, it is also possible to use a short format for testing a variable, which is \code{<\%@if test="equal-to" \content{name}="\content{value}"\%>}.
@@ -788,17 +788,17 @@ Documents compiled this way will contain neither RSP comments nor RSP preprocess
 <%----
 \subsubsection{Setting the host content types (\code{<\%@page type="\content{type}"\%>}}
 \label{RspPageTypeDirective}
-As introduced in Section~\ref{}, the content type of the document (RSP product) generated from the source RSP document is referred to as the \emph{host content type}.  Among other things, this information is used to automatically escaping of inserted text.  The host content type by default inferred from the filename extension of the RSP document (after dropping the '\code{rsp}' extension), e.g. the host content type of an RSP document named \code{report.tex.rsp} defaults to '\code{application/x-tex}', \code{report.html.rsp} default to '\code{text/html}' and so on.
+As introduced in Section~\ref{}, the content type of the document (RSP product) generated from the source RSP document is referred to as the \emph{host content type}.  Among other things, this information is used to automatically escaping of inserted text.  The host content type by default inferred from the filename extension of the RSP document (after dropping the `\code{rsp}' extension), e.g. the host content type of an RSP document named \code{report.tex.rsp} defaults to `\code{application/x-tex}', \code{report.html.rsp} default to `\code{text/html}' and so on.
 %
-The default host content type can be set/overridden using the RSP 'page' preprocessing directive.  For example
+The default host content type can be set/overridden using the RSP `page' preprocessing directive.  For example
 \begin{rspVerbatim}
 <\%@page type="application/x-tex"\%>
 \end{rspVerbatim}
-will set the content type to '\code{application/x-tex}' regardess of the filename extension.
-Documents with unknown or non-recognized content types will be treated as '\code{text/plain}' documents.
+will set the content type to `\code{application/x-tex}' regardess of the filename extension.
+Documents with unknown or non-recognized content types will be treated as `\code{text/plain}' documents.
 
 
-Whenever using the '\code{content}' argument, the content type is assumed to be '\code{text/plain}'.
+Whenever using the `\code{content}' argument, the content type is assumed to be `\code{text/plain}'.
 ----%>
 
 
@@ -807,12 +807,12 @@ Whenever using the '\code{content}' argument, the content type is assumed to be 
 
 \subsection{Document content types}
 <%--
-The RSP source document is always written in plain text.  To be more specific, the \emph{content type} of the source RSP document is '\code{text/plain}'.
+The RSP source document is always written in plain text.  To be more specific, the \emph{content type} of the source RSP document is `\code{text/plain}'.
 --%>
-Any RSP product, that is, any document generated from an RSP document, have what is called a \emph{content type}\footnote{The content type is specified using the 'Internet media type' as defined by W3C, which has format '\code{\content{type}/\content{subtype}; \content{arg1}=\content{value1} \content{arg2}=\content{value2} ...}'.}.  We sometimes refer to the content type of the generated RSP product as the \emph{host content type} (of the RSP source document).  For instance, an RSP-embedded LaTeX document has host content type '\code{application/x-tex}', an RSP-embedded text document has host content type '\code{text/plain}', and an RSP-embedded HTML document has host content type '\code{text/html}'.
+Any RSP product, that is, any document generated from an RSP document, have what is called a \emph{content type}\footnote{The content type is specified using the `Internet media type' as defined by W3C, which has format `\code{\content{type}/\content{subtype}; \content{arg1}=\content{value1} \content{arg2}=\content{value2} ...}'.}.  We sometimes refer to the content type of the generated RSP product as the \emph{host content type} (of the RSP source document).  For instance, an RSP-embedded LaTeX document has host content type `\code{application/x-tex}', an RSP-embedded text document has host content type `\code{text/plain}', and an RSP-embedded HTML document has host content type `\code{text/html}'.
 As explained later (Sections~\ref{}), information about documents' content types is used for automatic escaping of text (e.g. generated from RSP code expressions or from including a file via an RSP preprocessing directive) before inserting it into the RSP product.
 
-In what follows, we will for simplicitly assume that the host content type is '\code{text/plain}' unless it obvious from the context that it is '\code{application/x-tex}'.  In many of the examples given, the content type is irrelevant.  We will return to content types, how they can be set, and how they are used from automatic text escaping in Section~\ref{RspIncludeDirective}.
+In what follows, we will for simplicitly assume that the host content type is `\code{text/plain}' unless it obvious from the context that it is `\code{application/x-tex}'.  In many of the examples given, the content type is irrelevant.  We will return to content types, how they can be set, and how they are used from automatic text escaping in Section~\ref{RspIncludeDirective}.
 
 
 \subsection{How inserted text is escaped}
@@ -820,12 +820,12 @@ The content type of an included document (text string or file) is referred to as
 Together with the host content type, this one specifies how the included text is escaped, if at all.
 
 \begin{itemize}
-\item If the host content types is '\code{text/plain}' and one includes a '\code{text/plain}' document, then the imported text will be included "as is"\footnote{Internally, while processing the RSP document, RSP start and end tags in plain text are escaped before being included.  How to escape in RSP, see Section~\ref{RspEscape}.} in the generated RSP product.
+\item If the host content types is `\code{text/plain}' and one includes a `\code{text/plain}' document, then the imported text will be included "as is"\footnote{Internally, while processing the RSP document, RSP start and end tags in plain text are escaped before being included.  How to escape in RSP, see Section~\ref{RspEscape}.} in the generated RSP product.
 
-\item If the host content types is '\code{text/plain}' and one includes an '\code{application/x-rsp}' document, then the imported RSP document will be included as a parsed RSP document.
+\item If the host content types is `\code{text/plain}' and one includes an `\code{application/x-rsp}' document, then the imported RSP document will be included as a parsed RSP document.
 \end{itemize}
 
-For example, in order to include the text string '\code{<\%=Sys.time()\%>}' into a text document using an RSP preprocessing directive we can do
+For example, in order to include the text string `\code{<\%=Sys.time()\%>}' into a text document using an RSP preprocessing directive we can do
 \begin{rspVerbatim}
 Current time is '<\%@include content="<\%\%=Sys.time()\%\%>'.
 \end{rspVerbatim}
@@ -846,13 +846,13 @@ which generates the output
 \end{rspVerbatim}
 
 
-The include content type can always be specified (i) via an RSP 'page' directives within the RSP document included, or (ii) via the '\code{type}' argument to the RSP include directive, e.g.
+The include content type can always be specified (i) via an RSP `page' directives within the RSP document included, or (ii) via the `\code{type}' argument to the RSP include directive, e.g.
 \begin{rspVerbatim}
 <\%@include file="CurrentTime.tex.rsp" type="application/x-rsp"\%>
 \end{rspVerbatim}
 
 
-Just like for the host content type, the default include content type is inferred from the filename extension of the included document.  For instance, in the above example where the extension is '\code{rsp}', the default content type would be '\code{application/x-rsp}', so it would be sufficient to use
+Just like for the host content type, the default include content type is inferred from the filename extension of the included document.  For instance, in the above example where the extension is `\code{rsp}', the default content type would be `\code{application/x-rsp}', so it would be sufficient to use
 \begin{rspVerbatim}
 <\%@include file="CurrentTime.tex.rsp" type="application/x-rsp"\%>
 \end{rspVerbatim}
@@ -860,11 +860,11 @@ Note that it is possible to include the escaped content of the same RSP document
 \begin{rspVerbatim}
 <\%@include file="CurrentTime.tex.rsp" type="text/plain"\%>
 \end{rspVerbatim}
-This will override the default content type, which results in all RSP constructs of '\code{CurrentTime.tex.rsp}' being escaped such that they are displayed in the generated RSP product.  Note that the LaTeX markup is not escaped.
+This will override the default content type, which results in all RSP constructs of `\code{CurrentTime.tex.rsp}' being escaped such that they are displayed in the generated RSP product.  Note that the LaTeX markup is not escaped.
 
-when including the content of a \code{random.txt} its content is assumed to be '\code{text/plain}'.  For \code{random.tex} it is assumed to be assumed to be '\code{application/x-tex}' and so on.  In the special case of including an RSP-embedded document (e.g. \code{random.tex.rsp}), the include content type is assumed to be '\code{application/x-rsp}'.  
+when including the content of a \code{random.txt} its content is assumed to be `\code{text/plain}'.  For \code{random.tex} it is assumed to be assumed to be `\code{application/x-tex}' and so on.  In the special case of including an RSP-embedded document (e.g. \code{random.tex.rsp}), the include content type is assumed to be `\code{application/x-rsp}'.  
 
-For unknown extensions, the content type is always assumed to be '\code{text/plain}'.  This is also the case when the text to be included is specified by argument \code{content} (and not \code{file}).
+For unknown extensions, the content type is always assumed to be `\code{text/plain}'.  This is also the case when the text to be included is specified by argument \code{content} (and not \code{file}).
 
 
 -----%>
@@ -1042,7 +1042,7 @@ We advocate using RSP over Sweave, because of its richness and generality to the
 
 \subsubsection{Programmatically setting Sweave code chunk options}
 
-In the R-help thread 'sweave options with variable' on 2011-04-17, it was asked if it is possible to use a variable to control the 'eval' option of a code chunk, e.g. \code{<<eval=needRun>>=} instead of \code{<<eval=TRUE>>=} or \code{<<eval=FALSE>>=}.  As explained in the thread, this is not possible to do in plain Sweave, but using RSP it is straightforward:
+In the R-help thread `sweave options with variable' on 2011-04-17, it was asked if it is possible to use a variable to control the `eval' option of a code chunk, e.g. \code{<<eval=needRun>>=} instead of \code{<<eval=TRUE>>=} or \code{<<eval=FALSE>>=}.  As explained in the thread, this is not possible to do in plain Sweave, but using RSP it is straightforward:
 \begin{rspVerbatim}
 <\% needRun <- TRUE \%>
 <<eval=<\%=needRun\%>>>=

@@ -38,7 +38,7 @@
 
 \maketitle
 \begin{abstract}
-This document describes how to include static PDFs and non-Sweave vignettes in an R package such that they appear in the R help system.   Generic support for vignettes of any format (not only Sweave) was added in R~v3.0.0 (see 'Writing R Extensions' for more details).   The instructions given here are intendend for packages that are to be built and installed on R systems prior to R v3.0.0.  However, the instructions have been adjusted such that they are forward compatible with the new R~v3.0.0 system.
+This document describes how to include static PDFs and non-Sweave vignettes in an R package such that they appear in the R help system.   Generic support for vignettes of any format (not only Sweave) was added in R~v3.0.0 (see `Writing R Extensions' for more details).   The instructions given here are intendend for packages that are to be built and installed on R systems prior to R v3.0.0.  However, the instructions have been adjusted such that they are forward compatible with the new R~v3.0.0 system.
 \end{abstract}
 
 \keywords{<%@meta name="keywords"%>}
@@ -75,7 +75,7 @@ Assume you have a static PDF named \file{manual.pdf} that you wish to include in
 {\bs}end\{document\}
 \end{alltt}
 The above is a minimal valid Sweave document that is recognized by the R build system.
-This small addition will make the vignette appear when calling \code{browseVignettes()} as well as in the 'Overview of user guides and package vignettes' section of the package HTML help page (via \code{help.start()}).
+This small addition will make the vignette appear when calling \code{browseVignettes()} as well as in the `Overview of user guides and package vignettes' section of the package HTML help page (via \code{help.start()}).
 
 
 <%-------------------------------------------------------------------
@@ -89,12 +89,12 @@ pathname <- system.file("<%=pathMk%>/Makefile", package="R.rsp")
 file.copy(pathname, to=".")
 \end{verbatim}
 This Makefile, which does not have to be edited, utilizes a few utility functions that are available in the \pkg{R.rsp} package.  Note that the Makefile and the utility functions are independent of the RSP markup language\footnote{In the future, we may move the customized Makefile and its utility functions to the \pkg{R.utils} package.}.
-The use of a custom \file{inst/doc/Makefile} is described in Section 'Writing package vignettes' of 'Writing R Extensions' (via for instance \code{help.start()}).
+The use of a custom \file{inst/doc/Makefile} is described in Section `Writing package vignettes' of `Writing R Extensions' (via for instance \code{help.start()}).
 
 
 \subsection{Improved HTML overview of vignettes}
 By default, the R HTML help system will list links to the PDF and the Sweave source of the vignettes.  This means that above approach for including static PDFs in a package will also list the Rnw stub in this listing.
-As explained in 'Writing R Extensions', it is possible to override this by providing a custom \file{inst/doc/index.html} file.
+As explained in `Writing R Extensions', it is possible to override this by providing a custom \file{inst/doc/index.html} file.
 It can be tedious the manually edit the \file{index.html} file.  For this reason, if the \file{index.html} file is missing, then the above \file{Makefile} automatically builds one and populates it with the PDF and source files available according to what the vignette files specify (see also below).
 
 

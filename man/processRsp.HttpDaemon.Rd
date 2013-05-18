@@ -37,6 +37,16 @@
  Returns nothing.
 }
 
+\section{Settings}{
+  The \pkg{R.rsp} package implements different RSP engines.
+  It is possible to specify which version the Tcl HTTP daemon
+  should use via the option \code{R.rsp/HttpDaemon/RspVersion}.
+  The default is still to use the old RSP engine, which corresponds
+  to \code{options("R.rsp/HttpDaemon/RspVersion"="0.1.0")}.
+  To use the new RSP engine, which is still under development, use
+  \code{options("R.rsp/HttpDaemon/RspVersion"="1.0.0")}.
+}
+
 \author{Henrik Bengtsson}
 
 \seealso{

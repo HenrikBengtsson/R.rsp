@@ -1,6 +1,12 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.4 [2013-05-18]
+o DOCUMENTATION: Now vignettes are properly using opened and closed
+  quotation marks.  Thanks Saunak Sen at UCSF for reporting on this.
+o Now empty lines in .rspPlugins are ignored.
+
+
 Version: 0.9.3 [2013-05-08]
 o DOCUMENTATION: Explicitly added arguments 'file' & 'path' to 
   rcat() to make the help page more user friendly [although 

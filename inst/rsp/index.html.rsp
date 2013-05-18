@@ -107,6 +107,8 @@ In addition to the above, the following root paths were found to contain RSP plu
    pathname <- file.path(path, ".rspPlugins");
    if (isFile(pathname)) {
      urls <- readLines(pathname);
+     urls <- trim(urls);
+     urls <- urls[nchar(urls) > 0];
      urls <- strsplit(urls, split="\t");
      urls <- lapply(urls, FUN=function(url) {
        if (length(url) == 1)

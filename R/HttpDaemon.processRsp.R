@@ -20,6 +20,16 @@
 #  Returns nothing.
 # }
 #
+# \section{Settings}{
+#   The \pkg{R.rsp} package implements different RSP engines.
+#   It is possible to specify which version the Tcl HTTP daemon
+#   should use via the option \code{R.rsp/HttpDaemon/RspVersion}.
+#   The default is still to use the old RSP engine, which corresponds
+#   to \code{options("R.rsp/HttpDaemon/RspVersion"="0.1.0")}.
+#   To use the new RSP engine, which is still under development, use
+#   \code{options("R.rsp/HttpDaemon/RspVersion"="1.0.0")}.
+# }
+#
 # @author
 #
 # \seealso{
@@ -27,7 +37,7 @@
 # }
 #
 # @keyword IO
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDaemon), pathname=tcltk::tclvalue("mypath"), version=getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0"), ...) {
   # If processRsp() was called from Tcl, then it is called without
   # arguments, which is why we need this rather ad hoc solution to
@@ -43,7 +53,7 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'pathname':
   pathname <- as.character(pathname);
-  
+
   # Validate pathname
   pathname <- Arguments$getReadablePathname(pathname);
 
@@ -90,7 +100,7 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
       # print("Flushing buffered response.");
       flush(response);
     }, add=TRUE);
-  
+
     # Process the RSP
     tryCatch({
       sourceRsp(file=filename, path=getwd(), request=request, response=response);
@@ -120,6 +130,8 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
 
 ###############################################################################
 # HISTORY:
+# 2013-05-18
+# o Added Rd help on how to specify which RSP engine version to use.
 # 2013-02-18
 # o Added argument 'version' to processRsp() for HttpDaemon.
 # 2011-03-12
