@@ -17,7 +17,8 @@
 }
 
 \usage{
-buildVignette(file, dir=".", latex=TRUE, tangle=TRUE, quiet=TRUE, clean=TRUE, engine=NULL, buildPkg=NULL, ...)
+buildVignette(file, dir=".", latex=TRUE, tangle=TRUE, quiet=TRUE, clean=TRUE,
+  engine=NULL, buildPkg=NULL, ...)
 }
 
 \arguments{

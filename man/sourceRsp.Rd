@@ -17,7 +17,8 @@
 }
 
 \usage{
-\method{sourceRsp}{default}(..., response=FileRspResponse(file = stdout()), request=NULL, envir=parent.frame(), verbose=FALSE)
+\method{sourceRsp}{default}(..., response=FileRspResponse(file = stdout()), request=NULL,
+  envir=parent.frame(), verbose=FALSE)
 }
 
 \arguments{

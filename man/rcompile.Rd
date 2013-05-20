@@ -19,7 +19,8 @@
 }
 
 \usage{
-\method{rcompile}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", until="*", as=c("RspString", "RspDocument"), verbose=FALSE)
+\method{rcompile}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", until="*",
+  as=c("RspString", "RspDocument"), verbose=FALSE)
 }
 
 \arguments{

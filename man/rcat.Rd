@@ -20,7 +20,8 @@
 }
 
 \usage{
-\method{rcat}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", output="", append=FALSE, verbose=FALSE)
+\method{rcat}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", output="", append=FALSE,
+  verbose=FALSE)
 }
 
 \arguments{

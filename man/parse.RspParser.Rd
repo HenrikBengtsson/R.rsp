@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{parse}{RspParser}(parser, object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), as=c("RspDocument", "RspString"), verbose=FALSE)
+\method{parse}{RspParser}(parser, object, envir=parent.frame(), ..., until=c("*", "end", "expressions",
+  "directives", "comments"), as=c("RspDocument", "RspString"), verbose=FALSE)
 }
 
 \arguments{

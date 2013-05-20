@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{parseRaw}{RspParser}(parser, object, what=c("comment", "directive", "expression"), commentLength=-1, ..., verbose=FALSE)
+\method{parseRaw}{RspParser}(parser, object, what=c("comment", "directive", "expression"), commentLength=-1L,
+  ..., verbose=FALSE)
 }
 
 \arguments{

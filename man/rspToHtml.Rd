@@ -17,7 +17,8 @@
 }
 
 \usage{
-\method{rspToHtml}{default}(file=NULL, path=NULL, outFile=NULL, outPath=NULL, extension="html", overwrite=TRUE, ...)
+\method{rspToHtml}{default}(file=NULL, path=NULL, outFile=NULL, outPath=NULL, extension="html",
+  overwrite=TRUE, ...)
 }
 
 \arguments{

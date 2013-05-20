@@ -17,7 +17,8 @@
 }
 
 \usage{
-\method{parseRsp}{default}(rspCode, rspLanguage=getOption("rspLanguage"), trimRsp=TRUE, validate=TRUE, verbose=FALSE, ...)
+\method{parseRsp}{default}(rspCode, rspLanguage=getOption("rspLanguage"), trimRsp=TRUE, validate=TRUE,
+  verbose=FALSE, ...)
 }
 
 \arguments{

@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{process}{RspProduct}(object, type=NULL, envir=parent.frame(), workdir=NULL, ..., recursive=TRUE, verbose=FALSE)
+\method{process}{RspProduct}(object, type=NULL, envir=parent.frame(), workdir=NULL, ..., recursive=TRUE,
+  verbose=FALSE)
 }
 
 \arguments{

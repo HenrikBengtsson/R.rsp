@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{openUrl}{HttpDaemon}(static, url=sprintf("http://\%s:\%d/\%s", host, port, path), host="127.0.0.1", port=8074, path="", ...)
+\method{openUrl}{HttpDaemon}(static, url=sprintf("http://\%s:\%d/\%s", host, port, path), host="127.0.0.1",
+  port=8074, path="", ...)
 }
 
 \arguments{

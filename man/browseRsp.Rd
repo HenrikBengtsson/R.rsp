@@ -20,7 +20,8 @@
 }
 
 \usage{
-\method{browseRsp}{default}(url=sprintf("http://\%s:\%d/\%s", host, port, path), host="127.0.0.1", port=8074, path="", start=TRUE, stop=FALSE, ...)
+\method{browseRsp}{default}(url=sprintf("http://\%s:\%d/\%s", host, port, path), host="127.0.0.1",
+  port=8074, path="", start=TRUE, stop=FALSE, ...)
 }
 
 \arguments{

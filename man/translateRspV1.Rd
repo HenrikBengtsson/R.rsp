@@ -17,7 +17,8 @@
 }
 
 \usage{
-\method{translateRspV1}{default}(file="", text=NULL, path=getParent(file), rspLanguage=getOption("rspLanguage"), trimRsp=TRUE, verbose=FALSE, ...)
+\method{translateRspV1}{default}(file="", text=NULL, path=getParent(file),
+  rspLanguage=getOption("rspLanguage"), trimRsp=TRUE, verbose=FALSE, ...)
 }
 
 \arguments{

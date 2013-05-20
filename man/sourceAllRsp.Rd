@@ -17,7 +17,8 @@
 }
 
 \usage{
-\method{sourceAllRsp}{default}(pattern="[.]rsp$", path=".", extension="html", outputPath=extension, overwrite=FALSE, ..., envir=parent.frame())
+\method{sourceAllRsp}{default}(pattern="[.]rsp$", path=".", extension="html", outputPath=extension,
+  overwrite=FALSE, ..., envir=parent.frame())
 }
 
 \arguments{

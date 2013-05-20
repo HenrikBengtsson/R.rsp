@@ -18,7 +18,8 @@
 }
 
 \usage{
-\method{compileRnw}{default}(filename, path=NULL, ..., type=typeOfRnw(filename, path = path), verbose=FALSE)
+\method{compileRnw}{default}(filename, path=NULL, ..., type=typeOfRnw(filename, path = path),
+  verbose=FALSE)
 }
 
 \arguments{

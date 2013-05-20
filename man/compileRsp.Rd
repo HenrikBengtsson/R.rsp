@@ -17,7 +17,8 @@
 }
 
 \usage{
-\method{compileRsp}{default}(filename, path=NULL, ..., outPath=".", postprocess=TRUE, envir=parent.frame(), verbose=FALSE)
+\method{compileRsp}{default}(filename, path=NULL, ..., outPath=".", postprocess=TRUE, envir=parent.frame(),
+  verbose=FALSE)
 }
 
 \arguments{

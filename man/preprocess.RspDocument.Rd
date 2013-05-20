@@ -23,7 +23,8 @@
 }
 
 \usage{
-\method{preprocess}{RspDocument}(object, recursive=TRUE, flatten=TRUE, envir=parent.frame(), ..., verbose=FALSE)
+\method{preprocess}{RspDocument}(object, recursive=TRUE, flatten=TRUE, envir=parent.frame(), ...,
+  verbose=FALSE)
 }
 
 \arguments{

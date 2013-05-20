@@ -19,8 +19,7 @@
 }
 
 \usage{
-\method{tidy}{RspSourceCode}(object, format=c("asis"), collapse="
-", ...)
+\method{tidy}{RspSourceCode}(object, format=c("asis"), collapse="\n", ...)
 }
 
 \arguments{

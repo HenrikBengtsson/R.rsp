@@ -17,7 +17,8 @@
 }
 
 \usage{
-parseVignette(pathname, commentPrefix="^[ 	]*\%[ 	]*", final=FALSE, source=FALSE, maxLines=-1, ...)
+parseVignette(pathname, commentPrefix="^[ \t]*\%[ \t]*", final=FALSE, source=FALSE,
+  maxLines=-1L, ...)
 }
 
 \arguments{

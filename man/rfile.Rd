@@ -17,7 +17,8 @@
 }
 
 \usage{
-\method{rfile}{default}(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), args="*", postprocess=TRUE, ..., verbose=FALSE)
+\method{rfile}{default}(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(),
+  args="*", postprocess=TRUE, ..., verbose=FALSE)
 }
 
 \arguments{

@@ -17,7 +17,8 @@
 }
 
 \usage{
-\method{compileLaTeX}{default}(filename, path=NULL, format=c("pdf", "dvi"), clean=FALSE, quiet=TRUE, ..., outPath=".", verbose=FALSE)
+\method{compileLaTeX}{default}(filename, path=NULL, format=c("pdf", "dvi"), clean=FALSE, quiet=TRUE, ...,
+  outPath=".", verbose=FALSE)
 }
 
 \arguments{

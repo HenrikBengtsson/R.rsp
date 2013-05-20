@@ -17,7 +17,8 @@
 }
 
 \usage{
-\method{compileAsciiDocNoweb}{default}(filename, path=NULL, ..., outPath=".", postprocess=TRUE, verbose=FALSE)
+\method{compileAsciiDocNoweb}{default}(filename, path=NULL, ..., outPath=".", postprocess=TRUE,
+  verbose=FALSE)
 }
 
 \arguments{
