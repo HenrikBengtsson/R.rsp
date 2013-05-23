@@ -28,3 +28,5 @@ S3method("rfile", "default")
 S3method("rscript", "default")
 S3method("rstring", "default")
 S3method("rsp", "default")
+
+S3method("browseRsp", "default")

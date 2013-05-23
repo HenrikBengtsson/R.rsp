@@ -144,8 +144,13 @@ binary: ../$(R_OUTDIR)/$(PKG_TARBALL)
 	$(R_CMD) INSTALL --build --merge-multiarch $(PKG_TARBALL)
 
 
+# Check the line width of incl/*.(R|Rex) files
+check_Rex:
+	$(R_SCRIPT) -e "setwd('incl/'); fs <- dir(pattern='[.](R|Rex)$$'); ns <- sapply(fs, function(f) max(nchar(readLines(f)))); ns <- ns[ns > 100]; print(ns); if (length(ns) > 0L) quit(status=1)"
+
+
 # Build Rd help files from Rdoc comments
-Rd:
+Rd: check_Rex
 	$(R_SCRIPT) -e "setwd('..'); Sys.setlocale(locale='C'); R.oo::compileRdoc('$(PKG_NAME)')"
 
 

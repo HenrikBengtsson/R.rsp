@@ -1,6 +1,20 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.6 [2013-05-22]
+o Now its possible to open a file via browseRsp() by specifying it's
+  (absolute or relative) pathname.
+o Now it is possible to call R.rsp::browseRsp() without loading R.rsp.
+o Now browseRsp("foo.html") is interpreted as browseRsp(path="foo.html")
+  whenever then requested file is not in an URL format.
+o Now browseRsp() automatically adds the current directory as well
+  an rsp/ subdirectory of it to the list of known root paths.
+o Added argument 'urlRoot' to browseRsp().
+o Added argument 'trim=FALSE' to getParameter() and getParameters()
+  for HttpRequest.
+
+
+
 Version: 0.9.5 [2013-05-20]
 o CRAN POLICY: Now all Rd \usage{} lines are at most 90 characters long.
 o CRAN POLICY: Now all Rd example lines are at most 100 characters long.
@@ -13,8 +27,8 @@ o Now empty lines in .rspPlugins are ignored.
 
 
 Version: 0.9.3 [2013-05-08]
-o DOCUMENTATION: Explicitly added arguments 'file' & 'path' to 
-  rcat() to make the help page more user friendly [although 
+o DOCUMENTATION: Explicitly added arguments 'file' & 'path' to
+  rcat() to make the help page more user friendly [although
   they're just passed as is to rstring()].
 
 

@@ -26,7 +26,7 @@
   \item{default}{Value to be returned if parameter is missing.}
   \item{drop}{If \code{\link[base:logical]{TRUE}} and the number of returned values is one, then
    this single value is returned, otherwise a named \code{\link[base]{vector}}.}
-  \item{...}{Not used.}
+  \item{...}{Additional arguments passed to \code{\link[R.rsp:getParameters.HttpRequest]{*getParameters}()}.}
 }
 
 \value{

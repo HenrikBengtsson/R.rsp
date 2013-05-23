@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -18,7 +18,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 # @keyword internal
 #*/###########################################################################
@@ -39,7 +39,7 @@ setConstructorS3("HttpRequest", function(requestUri=NULL, parameters=list(), ...
   if (!is.list(parameters))
     stop("Argument 'parameters' must be a list: ", mode(parameters));
 
-  extend(Object(), "HttpRequest", 
+  extend(Object(), "HttpRequest",
     serverPort = NA,
     serverName = NA,
     contextRoot = ".",
@@ -104,7 +104,7 @@ setMethodS3("as.character", "HttpRequest", function(x, ...) {
   } else {
     s <- paste(s, " Parameters: <none>.", sep="");
   }
-  s; 
+  s;
 })
 
 
@@ -158,6 +158,7 @@ setMethodS3("nbrOfParameters", "HttpRequest", function(this, ...) {
 # @synopsis
 #
 # \arguments{
+#   \item{trim}{If @TRUE, each parameter value is trimmed of whitespace.}
 #   \item{...}{Not used.}
 # }
 #
@@ -174,8 +175,12 @@ setMethodS3("nbrOfParameters", "HttpRequest", function(this, ...) {
 #
 # @keyword IO
 #*/#########################################################################
-setMethodS3("getParameters", "HttpRequest", function(this, ...) {
-  as.list(this$parameters);
+setMethodS3("getParameters", "HttpRequest", function(this, trim=FALSE, ...) {
+  params <- as.list(this$parameters);
+  if (trim) {
+    params <- lapply(params, FUN=trim);
+  }
+  params;
 })
 
 
@@ -194,9 +199,9 @@ setMethodS3("getParameters", "HttpRequest", function(this, ...) {
 # \arguments{
 #   \item{name}{Name of parameter to be retrieved.}
 #   \item{default}{Value to be returned if parameter is missing.}
-#   \item{drop}{If @TRUE and the number of returned values is one, then 
+#   \item{drop}{If @TRUE and the number of returned values is one, then
 #    this single value is returned, otherwise a named @vector.}
-#   \item{...}{Not used.}
+#   \item{...}{Additional arguments passed to @seemethod "getParameters".}
 # }
 #
 # \value{
@@ -217,12 +222,12 @@ setMethodS3("getParameters", "HttpRequest", function(this, ...) {
 #*/#########################################################################
 setMethodS3("getParameter", "HttpRequest", function(this, name, default=NULL, drop=TRUE, ...) {
   if (hasParameter(this, name)) {
-    params <- getParameters(this);
+    params <- getParameters(this, ...);
     idxs <- which(names(params) == name);
     params <- params[idxs];
 
-    if (drop && length(params) == 1) {
-      params <- params[[1]];
+    if (drop && length(params) == 1L) {
+      params <- params[[1L]];
     }
   } else {
     params <- default;
@@ -313,7 +318,7 @@ setMethodS3("getRemoteAddress", "HttpRequest", function(this, ...) {
 # @title "Gets the fully qualified name of the client that sent the request"
 #
 # \description{
-#  @get "title".   
+#  @get "title".
 #  If it cannot resolve the hostname, this method returns the dotted-string
 #  form of the IP address.
 # }
@@ -350,7 +355,7 @@ setMethodS3("getRemoteHost", "HttpRequest", function(this, ...) {
 # @title "Gets the host name of the server that revieved the request"
 #
 # \description{
-#  @get "title".   
+#  @get "title".
 # }
 #
 # @synopsis
@@ -385,7 +390,7 @@ setMethodS3("getServerName", "HttpRequest", function(this, ...) {
 # @title "Gets the port number on which this request was received"
 #
 # \description{
-#  @get "title".   
+#  @get "title".
 # }
 #
 # @synopsis
@@ -613,6 +618,9 @@ setMethodS3("getRealPath", "HttpRequest", function(this, uri, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-05-22
+# o Added argument 'trim=FALSE' to getParameter() and getParameters()
+#   for HttpRequest.
 # 2011-03-08
 # o Updated getParameter() of HttpRequest to returning the value of a
 #   query parameters with multiple entries.  Added argument 'drop'.

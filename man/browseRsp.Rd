@@ -20,15 +20,17 @@
 }
 
 \usage{
-\method{browseRsp}{default}(url=sprintf("http://\%s:\%d/\%s", host, port, path), host="127.0.0.1",
-  port=8074, path="", start=TRUE, stop=FALSE, ...)
+\method{browseRsp}{default}(url=paste(urlRoot, path, sep = "/"), urlRoot=sprintf("http://\%s:\%d",
+  host, port), host="127.0.0.1", port=8074L, path="", start=TRUE, stop=FALSE, ...)
 }
 
 \arguments{
   \item{url}{A \code{\link[base]{character}} string for the URL to be viewed.
-    By default the URL is constructed from the \code{host}, \code{port},
-    and the \code{path} parameters.
+    By default the URL is constructed from the \code{urlRoot} and
+    the \code{path} parameters.
   }
+  \item{urlRoot}{A \code{\link[base]{character}} string specifying the URL root.  By default
+    the URL is constructed from the \code{host} and the \code{port}.}
   \item{host}{An optional \code{\link[base]{character}} string for the host of the URL.}
   \item{port}{An optional \code{\link[base]{integer}} for the port of the URL.}
   \item{path}{An optional \code{\link[base]{character}} string for the context path of the URL.}
@@ -39,7 +41,7 @@
 }
 
 \value{
-  Returns nothing.
+  Returns (invisibly) the URL.
 }
 
 \author{Henrik Bengtsson}

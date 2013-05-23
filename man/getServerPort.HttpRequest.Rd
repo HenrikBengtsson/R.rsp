@@ -14,7 +14,7 @@
 \title{Gets the port number on which this request was received}
 
 \description{
- Gets the port number on which this request was received. 
+ Gets the port number on which this request was received.
 }
 
 \usage{

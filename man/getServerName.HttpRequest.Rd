@@ -14,7 +14,7 @@
 \title{Gets the host name of the server that revieved the request}
 
 \description{
- Gets the host name of the server that revieved the request. 
+ Gets the host name of the server that revieved the request.
 }
 
 \usage{

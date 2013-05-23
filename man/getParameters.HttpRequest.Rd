@@ -18,10 +18,11 @@
 }
 
 \usage{
-\method{getParameters}{HttpRequest}(this, ...)
+\method{getParameters}{HttpRequest}(this, trim=FALSE, ...)
 }
 
 \arguments{
+  \item{trim}{If \code{\link[base:logical]{TRUE}}, each parameter value is trimmed of whitespace.}
   \item{...}{Not used.}
 }
 

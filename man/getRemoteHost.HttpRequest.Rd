@@ -14,7 +14,7 @@
 \title{Gets the fully qualified name of the client that sent the request}
 
 \description{
- Gets the fully qualified name of the client that sent the request. 
+ Gets the fully qualified name of the client that sent the request.
  If it cannot resolve the hostname, this method returns the dotted-string
  form of the IP address.
 }

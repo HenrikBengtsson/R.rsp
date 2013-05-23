@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{HttpRequest}
+\name{HttpRequest}
 \docType{class}
 \alias{HttpRequest}
 
 
- \title{The HttpRequest class}
+\title{The HttpRequest class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class HttpRequest}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -28,20 +28,20 @@ public static class \bold{HttpRequest}\cr
 extends \link[R.oo]{Object}\cr
 
 
- }
+}
 
- \usage{
+\usage{
 HttpRequest(requestUri=NULL, parameters=list(), ...)
 }
 
- \arguments{
-   \item{requestUri}{A \code{\link[base]{character}} string of the requested URI.}
-   \item{parameters}{A named \code{\link[base]{list}} of parameter values.}
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{requestUri}{A \code{\link[base]{character}} string of the requested URI.}
+  \item{parameters}{A named \code{\link[base]{list}} of parameter values.}
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:as.character.HttpRequest]{as.character}} \tab Returns a short string describing the HTTP request.\cr
  \tab \code{\link[R.rsp:getContentLength.HttpRequest]{getContentLength}} \tab Gets the length of contents.\cr
@@ -72,9 +72,9 @@ HttpRequest(requestUri=NULL, parameters=list(), ...)
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 \keyword{classes}
 \keyword{internal}
