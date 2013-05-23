@@ -108,7 +108,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
         filename <- gsub(pattern, "\\1", filename);
       }
     }
-    pattern <- "((.*)[.]([^.]+))[.]([^.]+)$";
+    pattern <- "((.*)[.]([^.]+)|([^.]+))[.]([^.]+)$";
     outputF <- gsub(pattern, "\\1", filename);
     output <- Arguments$getWritablePathname(outputF, path=workdir);
     output <- getAbsolutePath(output);
@@ -261,6 +261,8 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
 
 ############################################################################
 # HISTORY:
+# 2013-05-22
+# o ROBUSTNESS: Now rfile() handles files with only one filename extension.
 # 2013-02-23
 # o Now rfile() can also infer default filenames from URLs with parameters.
 # 2013-02-18

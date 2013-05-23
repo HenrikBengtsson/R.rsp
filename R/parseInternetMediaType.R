@@ -156,6 +156,11 @@ escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
 #       \url{http://www.wikipedia.org/wiki/Internet_media_type}
 # }
 parseInternetMediaType <- function(s, ...) {
+  # Nothing to do?
+  if (is.na(s)) {
+    return(s);
+  }
+
   # Example e.g. "text/html; charset=UTF-8"
   s <- trim(s);
   pattern <- "^([^/]*)/([^;]*)(|;[ ]*(.*))$";
@@ -193,6 +198,8 @@ parseInternetMediaType <- function(s, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-05-22
+# o Now parseInternetMediaType() returns NA if input is NA.
 # 2013-03-11
 # o Added escapeRspContent().
 # o Added extentionToIMT().

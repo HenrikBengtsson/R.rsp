@@ -2,6 +2,7 @@ Package: R.rsp
 ==============
 
 Version: 0.9.6 [2013-05-22]
+o ROBUSTNESS: Now rfile() handles files with only one filename extension.
 o Now its possible to open a file via browseRsp() by specifying it's
   (absolute or relative) pathname.
 o Now it is possible to call R.rsp::browseRsp() without loading R.rsp.
