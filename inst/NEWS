@@ -12,7 +12,11 @@ o Now browseRsp() automatically adds the current directory as well
 o Added argument 'urlRoot' to browseRsp().
 o Added argument 'trim=FALSE' to getParameter() and getParameters()
   for HttpRequest.
-
+o Now processRsp() for HttpDaemon with version="1.0.0" utilizes
+  rfile() rather than rstring() so that postprocessors are also
+  applied.  Also, the rfile() working directory is set to the
+  current directory (and not the directory of the source file
+  as with version="0.1.0").
 
 
 Version: 0.9.5 [2013-05-20]

@@ -111,7 +111,9 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
     })
   } else if (version == "1.0.0") {
     page <- RspPage(pathname);
-    s <- rstring(file=filename, args=list(page=page, request=request));
+    pathnameR <- rfile(file=filename, workdir=opwd, args=list(page=page, request=request));
+    s <- readLines(pathnameR, warn=FALSE);
+    s <- paste(s, collapse="\n");
     if (nchar(s) > 0L) writeResponse(daemon, s);
   }
 
@@ -130,6 +132,10 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
 
 ###############################################################################
 # HISTORY:
+# 2013-05-22
+# o Now processRsp() for HttpDaemon with version="1.0.0" utilizes
+#   rfile() rather than rstring() so that postprocessors are also
+#   applied.
 # 2013-05-18
 # o Added Rd help on how to specify which RSP engine version to use.
 # 2013-02-18
