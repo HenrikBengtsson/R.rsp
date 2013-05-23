@@ -63,9 +63,21 @@ setConstructorS3("HttpDaemonRspResponse", function(httpDaemon=NULL, ...) {
 
 
 setMethodS3("write", "HttpDaemonRspResponse", function(this, ..., collapse="", sep="") {
+  version <- getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0");
+  # Argment 'version':
+  if (!is.element(version, c("0.1.0", "1.0.0"))) {
+    throw("Unknown HttpDaemon RSP version: ", version);
+  }
+
+  # String to output
   msg <- paste(..., collapse=collapse, sep=sep);
   msg <- as.character(GString(msg));
-  this$.bfr <- c(this$.bfr, msg);
+
+  if (version == "0.1.0") {
+    this$.bfr <- c(this$.bfr, msg);
+  } else if (version == "1.0.0") {
+    cat(msg);
+  }
 })
 
 
@@ -93,6 +105,8 @@ setMethodS3("flush", "HttpDaemonRspResponse", function(con, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-05-23
+# o Now write() for HttpDaemonRspResponse supports the new RSP engine too.
 # 2011-03-15
 # o BUG FIX: write() for RspResponse classes would ignore arguments
 #   'collapse' and 'sep'.

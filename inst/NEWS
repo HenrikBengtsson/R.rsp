@@ -1,23 +1,24 @@
 Package: R.rsp
 ==============
 
-Version: 0.9.6 [2013-05-22]
+Version: 0.9.6 [2013-05-23]
 o ROBUSTNESS: Now rfile() handles files with only one filename extension.
-o Now its possible to open a file via browseRsp() by specifying it's
-  (absolute or relative) pathname.
-o Now it is possible to call R.rsp::browseRsp() without loading R.rsp.
-o Now browseRsp("foo.html") is interpreted as browseRsp(path="foo.html")
-  whenever then requested file is not in an URL format.
-o Now browseRsp() automatically adds the current directory as well
-  an rsp/ subdirectory of it to the list of known root paths.
-o Added argument 'urlRoot' to browseRsp().
+o Several updates to browseRsp():
+  - It automatically adds the current directory ('.') as well as a
+    './rsp' subdirectory to the list of known root paths.
+  - R.rsp::browseRsp() works without loading the package first.
+  - It can be used to open any RSP file by specifying it's (absolute or
+    relative) pathname, e.g. browseRsp("foo/bar.html.rsp") and
+    browseRsp("foo/bar.md.rsp").
 o Added argument 'trim=FALSE' to getParameter() and getParameters()
   for HttpRequest.
 o Now processRsp() for HttpDaemon with version="1.0.0" utilizes
   rfile() rather than rstring() so that postprocessors are also
   applied.  Also, the rfile() working directory is set to the
   current directory (and not the directory of the source file
-  as with version="0.1.0").
+  as with version="0.1.0").  For backward compatibility with old
+  RSP pages, write() for HttpDaemonRspResponse now supports the
+  new RSP engine as well.  This will simplify the transition.
 
 
 Version: 0.9.5 [2013-05-20]

@@ -110,8 +110,9 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
       throw(ex);
     })
   } else if (version == "1.0.0") {
+    response <- HttpDaemonRspResponse(httpDaemon=daemon);
     page <- RspPage(pathname);
-    pathnameR <- rfile(file=filename, workdir=opwd, args=list(page=page, request=request));
+    pathnameR <- rfile(file=filename, workdir=opwd, args=list(page=page, request=request, response=response));
     s <- readLines(pathnameR, warn=FALSE);
     s <- paste(s, collapse="\n");
     if (nchar(s) > 0L) writeResponse(daemon, s);
@@ -132,6 +133,10 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
 
 ###############################################################################
 # HISTORY:
+# 2013-05-23
+# o Now processRsp() for HttpDaemon with version="1.0.0" also sets
+#   HttpDaemonRspResponse 'response' variable, which works just as
+#   cat(...) when calling write(response, ...).
 # 2013-05-22
 # o Now processRsp() for HttpDaemon with version="1.0.0" utilizes
 #   rfile() rather than rstring() so that postprocessors are also
