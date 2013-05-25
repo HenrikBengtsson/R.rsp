@@ -114,7 +114,7 @@ setMethodS3("rclean", "RspString", function(object, envir=parent.frame(), args="
     names <- attachLocally(args, envir=envir);
     if (length(names) > 0L) {
       verbose && printf(verbose, "Variables assigned: [%d] %s\n", length(names), hpaste(names));
-      member <- NULL; rm("member"); # To please R CMD check
+      member <- NULL; rm(list="member"); # To please R CMD check
       ll <- subset(ll(envir=envir), member %in% names);
       verbose && print(verbose, ll);
     }

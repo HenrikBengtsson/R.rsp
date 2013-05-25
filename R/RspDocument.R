@@ -415,7 +415,7 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
   } else {
     verbose && cat(verbose, "No inbetween RSP text. Skipping.");
   }
-  rm(idxsInbetweenText);
+  idxsInbetweenText <- NULL; # Not needed anymore
 
   verbose && exit(verbose);
 
@@ -1769,7 +1769,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
           content <- escapeRspTags(content);
           item <- RspText(content, escape=FALSE, type=hostContentType, source=file);
         }
-        rm(rstr, doc);
+        rstr <- doc <- NULL; # Not needed anymore
       } else {
         item <- RspText(content, escape=FALSE, type=hostContentType, source=file);
       }
@@ -1777,8 +1777,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       # Replace RSP directive with imported RSP document
       object[[idx]] <- item;
 
-      # Not needed anymore
-      rm(content, item);
+      content <- item <- NULL; # Not needed anymore
 
       verbose && exit(verbose);
       next;

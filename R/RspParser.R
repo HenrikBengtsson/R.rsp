@@ -187,8 +187,6 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
       bfrExtra <- gsub(patternL, "\\4", tag);
       nExtra <- nchar(bfrExtra);
       nL <- nL - nExtra;
-      rm(bfrExtra);
-
 
       # (ii) Extract the preceeding text
       text <- substring(bfr, first=1L, last=posL-1L);
@@ -274,7 +272,6 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
       nExtra <- nchar(bodyExtra);
       posR <- posR + nExtra;
       nR <- nR - nExtra;
-      rm(bodyExtra);
 
       # Extract body of RSP construct (without RSP end tag)
       body <- substring(bfr, first=1L, last=posR-1L);
@@ -496,7 +493,6 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
     object <- asRspString(doc);
 
     posL <- pos;
-##    rm(doc);
   }
 
   if (count > 0L) {
@@ -551,8 +547,7 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
   } else {
     verbose && cat(verbose, "No RSP preprocessing directives found.");
   }
-  rm(idxs);
-##  rm(doc, idxs);
+  idxs <- NULL; # Not needed anymore
 
   verbose && exit(verbose);
 

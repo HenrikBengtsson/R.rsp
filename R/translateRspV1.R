@@ -324,7 +324,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
 
   # Split in non-RSP and RSP parts, e.g splitting by '<%...%>'.
   parts <- splitRspTags(text, trimRsp=trimRsp);
-  rm(text);
+  text <- NULL; # Not needed anymore
 
   error <- NULL;
 

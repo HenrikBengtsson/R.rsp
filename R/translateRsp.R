@@ -31,11 +31,11 @@
 # @keyword file
 # @keyword IO
 # @keyword internal
-#*/########################################################################### 
+#*/###########################################################################
 setMethodS3("translateRsp", "default", function(filename, path=NULL, ..., force=FALSE, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ruler <- function(char="#", width=70, ...) {
     ruler <- rep(char, length=width);
     ruler <- paste(ruler, collapse="");
@@ -62,7 +62,7 @@ setMethodS3("translateRsp", "default", function(filename, path=NULL, ..., force=
       "",
       " This R code was parsed from RSP by the R.rsp package."
     );
-  
+
     code <- "# Assert that write() of R.rsp is used below\n";
     rCode <- c(rCode, code);
     code <- "write <- R.rsp::write;\n";
@@ -78,38 +78,38 @@ setMethodS3("translateRsp", "default", function(filename, path=NULL, ..., force=
       code <- sprintf(fmtstr, pathname);
     }
     rCode <- c(rCode, code);
-  
+
     code <- "# Gets the output connection (or filename) for the response [OBSOLETE]\n";
     rCode <- c(rCode, code);
     code <- "out <- getOutput(response);\n";
     rCode <- c(rCode, code);
 
-    code <- banner(char="=", 
+    code <- banner(char="=",
       " BEGIN RSP CODE"
     );
     rCode <- c(rCode, code);
     rCodeHeader <- rCode;
 
-    code <- banner(char="=", 
+    code <- banner(char="=",
       " END RSP CODE"
     );
     rCodeFooter <- code;
-   
+
     rCode <- c(rCodeHeader, rCodeOrg, rCodeFooter);
 
     rCode <- paste(rCode, collapse=collapse);
-  
+
     attr(rCode, "pathname") <- pathname;
-  
+
     rCode;
   } # packageRCode()
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'filename' & 'path':
-  pathname <- Arguments$getReadablePathname(filename, path=path, 
+  pathname <- Arguments$getReadablePathname(filename, path=path,
                                                          mustExist=TRUE);
 
   # Argument 'force':
@@ -120,8 +120,8 @@ setMethodS3("translateRsp", "default", function(filename, path=NULL, ..., force=
   if (verbose) {
     pushState(verbose);
     on.exit(popState(verbose));
-  } 
-  
+  }
+
 
   verbose && enter(verbose, "Translates an RSP document in to an R RSP source file");
 
@@ -176,7 +176,7 @@ setMethodS3("translateRsp", "default", function(filename, path=NULL, ..., force=
 
     rCode <- packageRCode(rCode, pathname=pathname);
     cat(file=outPathname, rCode);
-    rm(rCode);
+    rCode <- NULL; # Not needed anymore
 
     verbose && cat(verbose, "R RSP file generated: ", outPathname);
     verbose && exit(verbose);

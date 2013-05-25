@@ -209,13 +209,13 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   rstr <- RspString(str, type=type, source=file);
   doc <- parse(rstr, envir=envir, ...);
   verbose && print(verbose, doc);
-  rm(rstr, str);
+  rstr <- str <- NULL; # Not needed anymore
   verbose && exit(verbose);
 
   verbose && enter(verbose, "Translating RSP document (to R)");
   rcode <- toR(doc, ...);
   verbose && printf(verbose, "Number of R source code lines: %d\n", length(rcode));
-  rm(doc);
+  doc <- NULL; # Not needed anymore
   verbose && exit(verbose);
 
 
@@ -238,7 +238,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
     res <- RspProduct(output, attrs=getAttributes(res));
   }
   verbose && print(verbose, res);
-  rm(rcode, output, type);
+  rcode <- output <- type <- NULL; # Not needed anymore
 
   # Reset the working directory?
   if (!is.null(opwd)) {

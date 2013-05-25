@@ -19,7 +19,7 @@
 #     object specifying how much verbose/debug information is written to
 #     standard output. If a Verbose object, how detailed the information is
 #     is specified by the threshold level of the object. If a numeric, the
-#     value is used to set the threshold of a new Verbose object. If @TRUE, 
+#     value is used to set the threshold of a new Verbose object. If @TRUE,
 #     the threshold is set to -1 (minimal). If @FALSE, no output is written.
 #     [Currently not used.]
 #   }
@@ -186,7 +186,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
   splitRspTags <- function(..., trimRsp=FALSE) {
     bfr <- paste(..., collapse="\n", sep="");
-  
+
     START <- 0;
     STOP <- 1;
 
@@ -222,11 +222,11 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
     # Add the rest of the buffer as text
     parts <- c(parts, list(text=bfr));
-  
+
     if (trimRsp) {
       parts <- trimTextParts(parts);
     }
-  
+
     parts;
   } # splitRspTags()
 
@@ -234,15 +234,15 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
   parseAttributes <- function(rspCode, known=mandatory, mandatory=NULL, ...) {
     bfr <- rspCode;
-    
+
     # Argument 'known':
     known <- unique(union(known, mandatory));
-  
+
     # Remove all leading white spaces
     pos <- regexpr("^[ \t]+", bfr);
     len <- attr(pos, "match.length");
     bfr <- substring(bfr, len+1);
-  
+
     attrs <- list();
     if (nchar(bfr) >= 0) {
       # Add a white space
@@ -261,14 +261,14 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         len <- attr(pos, "match.length");
         name <- substring(bfr, 1, len);
         bfr <- substring(bfr, len+1);
-    
+
         # Read the '=' with optional white spaces around it
         pos <- regexpr("^[ ]*=[ ]*", bfr);
         if (pos == -1)
           throw(Exception("Error when parsing attributes for RSP preprocessing directive. Expected an equal sign.", code=rspCode));
         len <- attr(pos, "match.length");
         bfr <- substring(bfr, len+1);
-    
+
         # Read the value with mandatory quotation marks around it
         pos <- regexpr("^\"[^\"]*\"", bfr);
         if (pos == -1)
@@ -280,11 +280,11 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         attrs <- c(attrs, value);
       }
     } # if (nchar(bfr) > 0)
-  
-    # Check for duplicated attributes  
+
+    # Check for duplicated attributes
     if (length(names(attrs)) != length(unique(names(attrs))))
         throw(Exception("Duplicated attributes in RSP preprocessing directive.", code=rspCode));
-  
+
     # Check for unknown attributes
     if (!is.null(known)) {
       nok <- which(is.na(match(names(attrs), known)));
@@ -293,7 +293,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         throw(Exception("Unknown attribute(s) in RSP preprocessing directive: ", nok, code=rspCode));
       }
     }
-  
+
     # Check for missing mandatory attributes
     if (!is.null(mandatory)) {
       nok <- which(is.na(match(mandatory, names(attrs))));
@@ -302,19 +302,19 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         throw(Exception("Missing attribute(s) in RSP preprocessing directive: ", nok, code=rspCode));
       }
     }
-  
+
     # Return parsed attributes.
     attrs;
   } # parseAttributes()
 
   # 2005-08-12, Ana-Catarina 2.8kg, kl. 17.17 lokal tid, 48.5cm
- 
+
   # Function to escape characters so that they can be included within an
   # R character string, e.g. to put 'size="-1"' becomes "size=\"-1\"".
   ASCII.ESCAPED <- ASCII;
   ASCII.ESCAPED[0] <- "\\\\x";
   ASCII.ESCAPED[1:31] <- sprintf("\\\\%03d", as.integer(intToOct(1:31)));
-  ASCII.ESCAPED[1+7:13] <- c("\\\\a", "\\\\b", "\\\\t", "\\\\n", 
+  ASCII.ESCAPED[1+7:13] <- c("\\\\a", "\\\\b", "\\\\t", "\\\\n",
                                               "\\\\v", "\\\\f", "\\\\r");
   # Using non-standard character turns out to be non-supported in
   # some locales. See HISTORY.
@@ -373,7 +373,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
       throw("No such 'rspLanguage' (\"", rspLanguage, "\"): ", clazz);
     })
   } else if (!inherits(rspLanguage, "RspLanguage")) {
-    throw("Argument 'rspLanguage' is not a RspLanguage object: ", 
+    throw("Argument 'rspLanguage' is not a RspLanguage object: ",
                                                      class(rspLanguage)[1]);
   }
 
@@ -400,11 +400,11 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
     lastRspCode <- rspCode;
 
     # Drop RSP comments
-    # [1] Example Depot, Greedy and Nongreedy Matching in a Regular 
+    # [1] Example Depot, Greedy and Nongreedy Matching in a Regular
     #     Expression, 2009.
     #     http://www.exampledepot.com/egs/java.util.regex/Greedy.html
     rspCode <- dropRspComments(rspCode, trimRsp=trimRsp);
-  
+
     # Preprocessing RSP directives should go here, e.g. @insert.
     rspCode <- preprocessRspDirectives(rspCode);
   } # while (...)
@@ -415,7 +415,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Split in non-RSP and RSP parts, e.g splitting by '<%...%>'.
   parts <- splitRspTags(rspCode, trimRsp=trimRsp);
-  rm(rspCode);
+  rspCode <- NULL; # Not needed anymore
 
 
 
@@ -440,7 +440,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
           rCode <- c(rCode, code);
           part <- substring(part, 1025);
         }
-      } else { 
+      } else {
         code <- part;
       }
       next;
@@ -548,7 +548,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
               }))
             }
             value <- getVerbatim(rspLanguage, lines, newline=newline);
-            value <- paste("write(response, \"", 
+            value <- paste("write(response, \"",
                                   escapeRspText(value), "\");\n", sep="");
           } else {
             # Process and include file.
@@ -570,7 +570,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
           if (is.null(file))
             throw("Attribute 'file' is missing: ", rspTag);
 
-          code <- c(codeComment, 
+          code <- c(codeComment,
                     "import(response, \"", file, "\", path=\"", path, "\");\n");
 
           rCode <- c(rCode, code);
@@ -618,7 +618,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
           next;
         } # if (directive == ...)
 
-        # <%@directive attr1="foo" attr2="bar"%> 
+        # <%@directive attr1="foo" attr2="bar"%>
         #     => write(response, directive(attr1="foo", attr2="bar"))
         # TODO: Try to parse here to catch invalid code as soon as possible?
         rspDirective <- directive;
@@ -678,9 +678,9 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         expressions <- gsub(pattern, "\\1", part);
 
         expressions <- paste(trim(expressions), "\n", sep="");
-        code <- c("write(response, \"", escapeRspText(expressions), "\");\n", 
+        code <- c("write(response, \"", escapeRspText(expressions), "\");\n",
                                                     trim(expressions), "\n");
- 
+
         rCode <- c(rCode, code);
         next;
       }
@@ -707,7 +707,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
     # Parse the R RSP code so that error messages contains line numbers.
     con <- textConnection(rCode);
     on.exit(close(con));
-  
+
     tryCatch({
       # Parse parsed R code
       rExpr <- parse(con);
@@ -731,7 +731,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 # 2011-11-14
 # o ROBUSTNESS: Now <%=[expr]%> is translated with curly brackets around
 #   the expression, i.e. write(response, {[expr]}).  This allows for
-#   writing <%= x <- 1; x^2 %> instead of <%={ x <- 1; x^2 }%>.   
+#   writing <%= x <- 1; x^2 %> instead of <%={ x <- 1; x^2 }%>.
 # 2011-11-07
 # o BUG FIX: <@fcn foo="bar"> for "fallback" directives would try to call
 #   fcn(foo=bar) instead of fcn(foo="bar").

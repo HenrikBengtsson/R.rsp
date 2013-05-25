@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.7 [2013-05-25]
+o Minor speedup by replacing rm() calls with NULL assignments.
+
+
 Version: 0.9.6 [2013-05-23]
 o ROBUSTNESS: Now rfile() handles files with only one filename extension.
 o Several updates to browseRsp():
