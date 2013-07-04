@@ -224,8 +224,6 @@ setMethodS3("tangle", "RspRSourceCode", function(code, format=c("safetangle", "t
 # o Now tangle() drops the top of the code that sets up output functions etc.
 # 2013-03-14
 # o Moved getCompleteCode() from RspRSourceCode to RspRSourceCodeFactory.
-# 2013-03-12
-# o Renamed annotations to metadata.
 # 2013-02-23
 # o Added support for getCompleteCode(..., output="stdout")
 # o Added debug option() for have parse() write R code to file.
