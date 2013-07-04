@@ -36,9 +36,9 @@ setMethodS3("print", "RspString", function(x, ...) {
   s <- sprintf("%s:", class(x)[1L]);
   s <- c(s, sprintf("Content type: %s", getAttribute(x, "type", NA)));
   s <- c(s, sprintf("Language: %s", getAttribute(x, "language", NA)));
-  metadata <- getAttribute(x, "metadata", list());
-  metadata <- unlist(metadata, use.names=TRUE);
+  metadata <- getMetadata(x);
   if (length(metadata) > 0L) {
+    metadata <- unlist(metadata, use.names=TRUE);
     s <- c(s, sprintf("Metadata '%s': %s", names(metadata), metadata));
   } else {
     s <- c(s, "Metadata to available.");
