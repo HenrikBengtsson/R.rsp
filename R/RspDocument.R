@@ -98,6 +98,7 @@ setMethodS3("getType", "RspDocument", function(object, default=NA, as=c("text", 
 
 #########################################################################/**
 # @RdocMethod getMetadata
+# @aliasmethod setMetadata
 #
 # @title "Gets the metadata of the RspDocument"
 #
@@ -108,6 +109,8 @@ setMethodS3("getType", "RspDocument", function(object, default=NA, as=c("text", 
 # @synopsis
 #
 # \arguments{
+#   \item{name}{(optional) A @character string specifying a specific
+#      metadata variable to retrieve.}
 #   \item{...}{Not used.}
 # }
 #
@@ -127,6 +130,21 @@ setMethodS3("getMetadata", "RspDocument", function(object, name=NULL, ...) {
     res <- res[[name]];
   }
   res;
+}, protected=TRUE)
+
+
+setMethodS3("setMetadata", "RspDocument", function(object, metadata=NULL, name, value, ...) {
+  data <- getMetadata(object);
+
+  if (length(metadata) > 0L) {
+    for (name in names(metadata)) {
+      data[[name]] <- metadata[[name]];
+    }
+  } else {
+    data[[name]] <- value;
+  }
+
+  setAttribute(object, "metadata", data);
 }, protected=TRUE)
 
 
@@ -1471,43 +1489,42 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # RspMetaDirective => ...
+    # Setters:
+    # <@meta name="<name>" content="<content>"%>
+    # <@meta <name>="<content>"%>
+    # <@meta content="<expr>" lang="<language>"%>
+    # Getters:
+    # <@meta name="<name>"%>
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(item, "RspMetaDirective")) {
       attrs <- getNameContentDefaultAttributes(item, doc=object);
       name <- attrs$name;
       content <- attrs$content;
 
-      metadata <- getMetadata(object);
-      metadataT <- NULL;
       res <- NA;
 
       if (!is.null(name) && !is.null(content)) {
-        metadataT <- content;
-        names(metadataT) <- name;
+        # <@meta name="<name>" content="<content>"%>
+        object <- setMetadata(object, name=name, value=content);
       } else if (is.null(name) && !is.null(content)) {
+        # <@meta content="<expr>" lang="<language>"%>
         lang <- getAttribute(item, "language");
         if (is.null(lang)) {
           throw(RspPreprocessingException("Attribute 'language' must be specified when parsing metadata from 'content'", item=item));
         }
         if (lang == "R-vignette") {
-          metadataT <- parseRVignetteMetadata(content);
+          metadata <- parseRVignetteMetadata(content);
         } else {
           throw(RspPreprocessingException(sprintf("Unknown 'language' ('%s')", lang), item=item));
         }
+        object <- setMetadata(object, metadata);
       } else if (!is.null(name) && is.null(content)) {
-        content <- metadata[[name]];
+        # <@meta name="<name>"%>
+        content <- getMetadata(object, name=name);
         if (is.null(content)) {
           throw(RspPreprocessingException(sprintf("No such metadata variable ('%s')", name), item=item));
         }
         res <- RspText(content, attrs=getAttributes(object));
-      }
-
-      # Any metadata to import?
-      if (length(metadataT) > 0L) {
-        for (name in names(metadataT)) {
-          metadata[[name]] <- metadataT[[name]];
-        }
-        object <- setAttribute(object, "metadata", metadata);
       }
 
       # Drop/insert RSP result
@@ -1520,10 +1537,13 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # RspVariableDirective => ...
+    # Setters:
     # <@string name="<name>" content="<content>"%>
     # <@string name="<name>" content="<content>" default="<default>"%>
     # <@string <name>="<content>"%>
     # <@string <name>="<content>" default="<default>"%>
+    # Getters:
+    # <@string name="<name>"%>
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(item, "RspVariableDirective")) {
       attrs <- getNameContentDefaultAttributes(item, doc=object);
@@ -1548,8 +1568,10 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       }
       res <- NA;
       if (!is.null(name) && !is.null(value)) {
+        # <@string name="<name>" content="<content>"%>
         assign(name, value, envir=envir);
       } else if (!is.null(name) && is.null(value)) {
+        # <@string name="<name>"%>
         if (!exists(name, envir=envir, inherits=FALSE)) {
           throw(RspPreprocessingException(sprintf("No such variable ('%s')", name), item=item));
         }
@@ -1794,14 +1816,11 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         object <- setAttribute(object, name, value);
       }
 
-      metadata <- getMetadata(object);
       for (name in c("title", "author", "keywords")) {
-        value <- getAttribute(item, name);
-        if (!is.null(value)) {
-          metadata[[name]] <- value;
-        }
+        if (!hasAttribute(item, name)) next;
+        object <- setMetadata(object, name=name,
+                              value=getAttribute(item, name));
       }
-      object <- setAttribute(object, "metadata", metadata);
 
       # Drop RSP construct
       object[[idx]] <- NA;
@@ -1963,6 +1982,8 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 ##############################################################################
 # HISTORY:
+# 2013-06-30
+# o Harmonized get- and setMetadata().
 # 2013-03-26
 # o Now trimNonText() for RspDocument only drops following "empty" text
 #   of an RSP construct iff it does not include content itself.
