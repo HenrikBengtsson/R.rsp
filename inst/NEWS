@@ -1,6 +1,12 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.8 [2013-07-04]
+o ROBUSTNESS: Added more tests on preprocessing.
+o Internal code cleanup.
+o Bumped up package dependencies.
+
+
 Version: 0.9.7 [2013-05-25]
 o Minor speedup by replacing rm() calls with NULL assignments.
 

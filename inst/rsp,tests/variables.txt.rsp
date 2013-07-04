@@ -1,0 +1,9 @@
+<%@meta title="Example"%>
+<%@string author="Henrik"%>
+<%@integer counter="2"%>
+<%@logical ask="TRUE"%>
+
+Title: <%@meta name="title"%>
+Author: <%@string name="author"%>
+Counter: <%@string name="counter"%>
+Ask: <%@logical name="ask"%>

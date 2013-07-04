@@ -10,6 +10,10 @@
 \alias{getMetadata.RspDocument}
 \alias{RspDocument.getMetadata}
 \alias{getMetadata,RspDocument-method}
+\alias{RspDocument.setMetadata}
+\alias{setMetadata.RspDocument}
+\alias{setMetadata,RspDocument-method}
+
 
 \title{Gets the metadata of the RspDocument}
 
@@ -22,6 +26,8 @@
 }
 
 \arguments{
+  \item{name}{(optional) A \code{\link[base]{character}} string specifying a specific
+     metadata variable to retrieve.}
   \item{...}{Not used.}
 }
 

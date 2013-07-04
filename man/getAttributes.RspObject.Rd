@@ -27,10 +27,10 @@
 \alias{setAttribute,RspObject-method}
 
 
-\title{Gets the attributes of an RSP document}
+\title{Gets the attributes of an RSP object}
 
 \description{
- Gets the attributes of an RSP document.
+ Gets the attributes of an RSP object.
 }
 
 \usage{

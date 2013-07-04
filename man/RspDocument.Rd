@@ -66,6 +66,7 @@ RspDocument(expressions=list(), ...)
  \tab \code{rcompile} \tab  -\cr
  \tab \code{rscript} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
+ \tab \code{setMetadata} \tab  -\cr
  \tab \code{\link[R.rsp:subset.RspDocument]{subset}} \tab Subsets an RspDocument.\cr
  \tab \code{\link[R.rsp:toR.RspDocument]{toR}} \tab Translates the RSP document into R source code.\cr
  \tab \code{\link[R.rsp:trim.RspDocument]{trim}} \tab Trims each of the RSP constructs.\cr

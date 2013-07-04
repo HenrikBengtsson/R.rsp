@@ -134,6 +134,7 @@
 \alias{dropEmptyText}
 \alias{trimNonText}
 \alias{getMetadata}
+\alias{setMetadata}
 \alias{escapeRspContent}
 \alias{escapeRspTags}
 \alias{extentionToIMT}
