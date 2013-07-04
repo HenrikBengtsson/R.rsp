@@ -91,7 +91,7 @@ setMethodS3("print", "RspObject", function(x, ...) {
 # @aliasmethod setAttributes
 # @aliasmethod setAttribute
 #
-# @title "Gets the attributes of an RSP document"
+# @title "Gets the attributes of an RSP object"
 #
 # \description{
 #  @get "title".
