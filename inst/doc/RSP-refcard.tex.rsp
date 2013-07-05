@@ -132,7 +132,7 @@ Comments can be used to exclude text, code expressions and preprocessing directi
  \code{<\%} $\ldots$ \code{-\%>},
  \code{<\%} $\ldots$ \code{+\%>}
 &
-A hyphen (plus) attached to the end tag, forces (prevents) following white space (including the line break) to be dropped.\\
+A hyphen (plus) attached to the end tag, forces following white space (including the line break) to be dropped (kept).\\
 \hline
 %%
  \code{<\%\%} and \code{\%\%>}
