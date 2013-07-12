@@ -15,7 +15,7 @@
 
 
 \description{
-  An RSP document is a text-based document containing an R-embedded template of the final document, e.g. "Today's date is <\%=Sys.Date()\%>".  An RSP document is preprocessed, parsed and translated into R code, which when evaluated generates the final document.  This way it is possible to dynamically generate reports in plain text, HTML, TeX etc, e.g. "\\includegraphics{<\%=toPDF('Normal', { curve(dnorm, from=-5, to=+5) })\%>}". It can also be used to enhance other literate programming languages such as Sweave and knitr, e.g. "<<eval=<\%=doEval\%>>>= [...] @".  As explained in the vignettes, RSP-embedded LaTeX vignettes can easily be included in any R package.
+  An RSP document is a text-based document containing an R-embedded template of the final document, e.g. "Today's date is <\%=Sys.Date()\%>".  An RSP document is preprocessed, parsed and translated into R code, which when evaluated generates the final document.  This way it is possible to dynamically generate reports by embedding RSP in plain text, TeX, HTML, Markdown, AsciiDoc and so on, e.g. "\\includegraphics{<\%=toPDF('Normal', { curve(dnorm, from=-5, to=+5) })\%>}". It can also be used to enhance any other literate programming languages such as Sweave and knitr, e.g. "<<eval=<\%=doEval\%>>>= [...] @".  RSP-embedded vignettes can easily be included in any R package.
 }
 
 \section{Installation}{

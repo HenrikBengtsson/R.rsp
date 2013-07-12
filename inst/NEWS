@@ -1,6 +1,14 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.9 [2013-07-12]
+o DOCUMENTATION: Updated the vignettes.
+o Updated the template vignette Makefile that is needed prior
+  to R v3.0.0 to no remove LaTeX files needed by R CMD check.
+  These should instead be handled by .Rinstignore (a template
+  for this is also available).
+
+
 Version: 0.9.8 [2013-07-04]
 o ROBUSTNESS: Added more tests on preprocessing.
 o Internal code cleanup.

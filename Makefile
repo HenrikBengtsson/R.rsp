@@ -28,7 +28,7 @@ FILES_VIGNETTES := $(wildcard vignettes/*)
 FILES_SRC := $(wildcard src/* src/*/* src/*/*/* src/*/*/*/* src/*/*/*/*/* src/*/*/*/*/*/* src/*/*/*/*/*/*/* src/*/*/*/*/*/*/*/*)
 FILES_TESTS := $(wildcard tests/*.R)
 FILES_NEWS := $(wildcard NEWS inst/NEWS)
-FILES_ROOT := DESCRIPTION NAMESPACE .Rbuildignore
+FILES_ROOT := DESCRIPTION NAMESPACE .Rbuildignore .Rinstignore
 PKG_FILES := $(FILES_ROOT) $(FILES_NEWS) $(FILES_R) $(FILES_DATA) $(FILES_MAN) $(FILES_INST) $(FILES_VIGNETTES) $(FILES_SRC) $(FILES_TESTS)
 FILES_MAKEFILE := $(wildcard ../../Makefile)
 
@@ -88,12 +88,12 @@ debug_full: debug
 
 # Update existing packages
 update:
-	$(R_SCRIPT) -e "update.packages(ask=FALSE)"
+	$(R_SCRIPT) -e "update.packages(ask=FALSE); source('http://bioconductor.org/biocLite.R'); biocLite(ask=FALSE);"
 
 # Install missing dependencies
 deps: DESCRIPTION
 	$(MAKE) update
-	$(R_SCRIPT) -e "x <- unlist(strsplit(read.dcf('DESCRIPTION',fields=c('Depends', 'Imports', 'Suggests')),',')); x <- gsub('([[:space:]]*|[(].*[)])', '', x); x <- unique(setdiff(x, c('R', rownames(installed.packages())))); if (length(x) > 0) { install.packages(x); x <- unique(setdiff(x, c('R', rownames(installed.packages())))); source('http://bioconductor.org/biocLite.R'); biocLite(x); }"
+	$(R_SCRIPT) -e "x <- unlist(strsplit(read.dcf('DESCRIPTION',fields=c('Depends', 'Imports', 'Suggests')),',')); x <- gsub('([[:space:]]*|[(].*[)])', '', x); libs <- .libPaths()[file.access(.libPaths(), mode=2) == 0]; x <- unique(setdiff(x, c('R', rownames(installed.packages(lib.loc=libs))))); if (length(x) > 0) { install.packages(x); x <- unique(setdiff(x, c('R', rownames(installed.packages(lib.loc=libs))))); source('http://bioconductor.org/biocLite.R'); biocLite(x); }"
 
 setup:	update deps
 	$(R_SCRIPT) -e "source('http://aroma-project.org/hbLite.R'); hbLite('R.oo')"
@@ -150,9 +150,9 @@ binary: ../$(R_OUTDIR)/$(PKG_TARBALL)
 	$(R_CMD) INSTALL --build --merge-multiarch $(PKG_TARBALL)
 
 
-# Check the line width of incl/*.(R|Rex) files
+# Check the line width of incl/*.(R|Rex) files [max 100 chars in R devel]
 check_Rex:
-	$(R_SCRIPT) -e "if (!file.exists('incl/')) quit(status=0); setwd('incl/'); fs <- dir(pattern='[.](R|Rex)$$'); ns <- sapply(fs, function(f) max(nchar(readLines(f)))); ns <- ns[ns > 100]; print(ns); if (length(ns) > 0L) quit(status=1)"
+	$(R_SCRIPT) -e "if (!file.exists('incl')) quit(status=0); setwd('incl/'); fs <- dir(pattern='[.](R|Rex)$$'); ns <- sapply(fs, function(f) max(nchar(readLines(f)))); ns <- ns[ns > 100]; print(ns); if (length(ns) > 0L) quit(status=1)"
 
 
 # Build Rd help files from Rdoc comments

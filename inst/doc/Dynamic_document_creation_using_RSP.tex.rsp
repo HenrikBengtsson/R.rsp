@@ -2,7 +2,7 @@
   DIRECTIVES FOR R:
 
   %\VignetteIndexEntry{Dynamic document creation using RSP}
-  %\VignetteKeyword{RSP markup language, literate programming, reproducible research, report generator, Sweave, knitr, TeX, LaTeX, Markdown, HTML, AsciiDoc, reStructuredText, Org-Mode, PDF}
+  %\VignetteKeyword{RSP markup language, literate programming, reproducible research, report generator, Sweave, knitr, brew, noweb, TeX, LaTeX, Markdown, AsciiDoc, reStructuredText, Org-Mode, HTML, PDF}
   %\VignetteAuthor{Henrik Bengtsson}
   %\VignetteEngine{R.rsp::rsp}
 --------------------------------------------------------------------"%>
@@ -136,11 +136,11 @@ devOptions("png", width=840)
 \begin{abstract}
 An important part of a statistical analysis is to document the analysis and its results.  A common approach is to build up an R script as the the analysis progresses.  This script may generate image files and tables that are later inserted manually into, say, a LaTeX report.  This strategy works alright for small one-off analyzes, whereas for larger and partly repetitive analyzes an automatic report generator is more suitable.
 
-In this document we introduce the RSP markup language and explain how it can be embedded in virtually any text-based source document which then may be compile into a final document.  We will describe all of the RSP constructs available and illustrate how they can be used for plain text as well as for LaTeX documents.
+In this document we describe the RSP markup language and explain how it can be embedded in virtually any text-based source document which then may be compile into a final document.  We will describe all of the RSP constructs available and illustrate how they can be used for plain text as well as for LaTeX documents.
 
-RSP provides an easy, yet powerful and flexible way for generating reports and other documents in R.  With a single R command it is possible to compile an RSP-embedded LaTeX, Sweave or knitr document into a read-to-view PDF file to name a few examples.  As an example, we show how to produce this very document from an RSP-embedded LaTeX file.
+RSP provides an easy, yet powerful and flexible way for generating reports and other documents in R.  With a single R command it is possible to compile an RSP-embedded LaTeX, Sweave or knitr document into a read-to-view PDF file to name a few examples.  As an example, we show how to produce this very document from an RSP-embedded LaTeX file.  RSP can also be used for R package vignettes, which has become particularly simple since R~v3.0.0.
 
-Furthermore, because RSP is a so called content-independent markup language, it can be used to produce documents of any kind, e.g. plain text, LaTeX, Sweave, knitr, AsciiDoc, Markdown, HTML, XML, SVG, and even Javascript, R scripts and so on.  More over, with RSP it is possible to use literate programming constructs that are not possible in Sweave, e.g. looping over a mix of R source code and LaTeX text blocks.
+Furthermore, because RSP is a so called content-independent markup language, it can be used to produce documents of any kind, e.g. plain text, LaTeX, Sweave, knitr, AsciiDoc, Markdown, HTML, XML, SVG, and even Javascript, R scripts, tab-delimited data files and so on.  More over, with RSP it is possible to use literate programming constructs that are not possible in Sweave, e.g. looping over a mix of R source code and LaTeX text blocks.
 \end{abstract}
 
 \keywords{<%@meta name="keywords"%>}
@@ -169,7 +169,7 @@ Using the \pkg{R.rsp} package\footnote{To install the \pkg{R.rsp} package, call 
 > rcat("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
 A random integer in [1,100]: 77
 \end{escapeRspVerbatim}
-As explained further in Section~\ref{RspMarkupLanguage}, the RSP construct \code{<\%=\content{code chunk}\%>} causes the R expression `\code{\content{code chunk}}' to be evaulated and its value to be inserted into the text (replacing the RSP construct).
+As explained further in Section~\ref{RspMarkupLanguage}, the RSP construct \code{<\%=\content{code chunk}\%>} causes the R expression `\code{\content{code chunk}}' to be evaluated and its value to be inserted into the text (replacing the RSP construct).
 %
 To process the RSP string without outputting the result, but instead returning it in a character string, do
 \begin{escapeRspVerbatim}
@@ -215,6 +215,7 @@ The latter example illustrates how \code{rstring()} also can load strings from e
 \subsection{Automatic postprocessing}
 For RSP documents that outputs certain file formats such as LaTeX, Sweave, and knitr, further processing of the RSP file output is often necessary before obtaining the final RSP product, e.g. a PDF file.
 The \code{rfile()} function will, based on the content type of the generated RSP output, detect if further processing (``postprocessing'') is possible.  If so, it is postprocessed to arrive at the final product.
+Currently, postprocessing to generate PDF and HTML output is supported for LaTeX, Markdown, AsciiDoc, Sweave and knitr documents.
 For instance, consider an RSP-embedded LaTeX document \code{report.tex.rsp}.  When compiling it by
 \begin{verbatim}
 > rfile("report.tex.rsp")
@@ -254,8 +255,8 @@ RSP start (\code{<\%}) and end (\code{\%>}) tags.
 There are three main types of RSP constructs:
 \begin{enumerate}
  \item \emph{RSP comments} (\code{<\%--...--\%>}), 
- \item \emph{RSP preprocessing directives} (\code{<\%@...\%>}).
- \item \emph{RSP code expressions} (\code{<\%...\%>}), and
+ \item \emph{RSP preprocessing directives} (\code{<\%@...\%>}), and
+ \item \emph{RSP code expressions} (\code{<\%...\%>}).
 \end{enumerate}
 Everything outside of RSP constructs is referred to as \emph{RSP text}, or short just as `\emph{text}'.
 %
@@ -540,7 +541,7 @@ RSP preprocessing directives are processed during the parsing of the RSP documen
 \begin{itemize}
  \item RSP comments can be used to commenting out and hence exclude RSP preprocessing directives, e.g. \code{<\%--- <\%@include file=\lb"random.tex.rsp"\%> ---\%>}.
  \item RSP preprocessing directives may insert new RSP code expressions as if they where part of the original RSP document, e.g. \code{<\%@include file="random.tex.rsp"\%>}.  Any RSP comments inserted will be dropped as expected.  If other RSP directives are inserted, they are processed immediately.
- \item After being processed, only RSP text and RSP code expressions remains (no RSP preprocessing directives).   Notably, RSP code expression \emph{does not see or have access} to RSP preprocessing directives or any of their assigned variables.
+ \item After being processed, only RSP text and RSP code expressions remains (no RSP preprocessing directives).   Notably, RSP code expressions \emph{do not see or have access} to RSP preprocessing directives or any of their assigned variables.
 \end{itemize}
 
 <%----
@@ -548,7 +549,7 @@ When an RSP-embedded document in processed, it is (i) \emph{parsed}, (ii) \emph{
 During the initial parsing, RSP comments and their contents are dropped.
 During preprocessing, RSP \emph{preprocessing directives}, which are RSP constructors of format \code{<\%@...\%>}, are processed.
 Such directives can be used to for instance programmatically control how parts of an RSP document are included or excluded based on some conditions or they can be used to include an external RSP source into the main RSP document.
-Although the afformentioned maybe achieved with by plain R \code{<\%~...~\%>} constructs, these tasks are much bettered handled by RSP preprocessing directives.  It is also useful to understand that preprocessing directives are RSP constructs that are \emph{independent of the R language} per se and are processed before the RSP document is interpreted as R source code\footnote{Conceptually, there is nothing preventing an RSP document to be parsed and preprocessed by another implementation in a different programming language than R.  It is only the succeeding steps that are specific to the R language.}.
+Although the aforementioned maybe achieved with by plain R \code{<\%~...~\%>} constructs, these tasks are much bettered handled by RSP preprocessing directives.  It is also useful to understand that preprocessing directives are RSP constructs that are \emph{independent of the R language} per se and are processed before the RSP document is interpreted as R source code\footnote{Conceptually, there is nothing preventing an RSP document to be parsed and preprocessed by another implementation in a different programming language than R.  It is only the succeeding steps that are specific to the R language.}.
 After preprocessing, there are no remaining RSP preprocessing directives left in the RSP document, which then only contains text and basic RSP constructs (Sections~\ref{RspCodeChunkInlining}-\ref{RspCodeEmbed}).
 ----%>
 
@@ -683,6 +684,10 @@ It is possible to "import" this metadata information via \code{<\%@meta content=
   %{\bs}VignetteKeyword\{statistics, report\}
   %{\bs}VignetteAuthor\{John Doe\}
 " language="R-vignette"\%>
+
+{\bs}title\{<\%@meta name="title"\%>\}
+{\bs}author\{<\%@meta name="author"\%>\}
+{\bs}keywords\{<\%@meta name="keywords"\%>\}
 \end{rspVerbatim}
 will import the three R \code{{\bs}Vignette\content{Name}\{\}} "commands" into RSP metadata variables `title', `keywords' and `author'.  As illustrated, any content that is not recognizes as R vignette metadata, or is of unknown markup, is ignored, which means that it is possible to include "anything" part of the `\code{content}' attribute.
 Note that this construct will (i) import the metadata into the RSP document at the same time as (ii) the R vignette mechanism can utilize it.
@@ -794,7 +799,7 @@ The default host content type can be set/overridden using the RSP `page' preproc
 \begin{rspVerbatim}
 <\%@page type="application/x-tex"\%>
 \end{rspVerbatim}
-will set the content type to `\code{application/x-tex}' regardess of the filename extension.
+will set the content type to `\code{application/x-tex}' regardless of the filename extension.
 Documents with unknown or non-recognized content types will be treated as `\code{text/plain}' documents.
 
 
@@ -812,7 +817,7 @@ The RSP source document is always written in plain text.  To be more specific, t
 Any RSP product, that is, any document generated from an RSP document, have what is called a \emph{content type}\footnote{The content type is specified using the `Internet media type' as defined by W3C, which has format `\code{\content{type}/\content{subtype}; \content{arg1}=\content{value1} \content{arg2}=\content{value2} ...}'.}.  We sometimes refer to the content type of the generated RSP product as the \emph{host content type} (of the RSP source document).  For instance, an RSP-embedded LaTeX document has host content type `\code{application/x-tex}', an RSP-embedded text document has host content type `\code{text/plain}', and an RSP-embedded HTML document has host content type `\code{text/html}'.
 As explained later (Sections~\ref{}), information about documents' content types is used for automatic escaping of text (e.g. generated from RSP code expressions or from including a file via an RSP preprocessing directive) before inserting it into the RSP product.
 
-In what follows, we will for simplicitly assume that the host content type is `\code{text/plain}' unless it obvious from the context that it is `\code{application/x-tex}'.  In many of the examples given, the content type is irrelevant.  We will return to content types, how they can be set, and how they are used from automatic text escaping in Section~\ref{RspIncludeDirective}.
+In what follows, we will for simplicity assume that the host content type is `\code{text/plain}' unless it obvious from the context that it is `\code{application/x-tex}'.  In many of the examples given, the content type is irrelevant.  We will return to content types, how they can be set, and how they are used from automatic text escaping in Section~\ref{RspIncludeDirective}.
 
 
 \subsection{How inserted text is escaped}
@@ -898,7 +903,7 @@ toPDF("myFigure,yeah,cool", aspectRatio=0.6, {
 })
 \end{verbatim}
 creates a PDF image file named \code{myFigure,yeah,cool.png} whose height is 60\% of its width and displays the Guassian density distribution.
-By default, the \code{toPDF()} and \code{toPNG()} functions write image files to the \code{figures/} directory.  For more information, see \code{help("toPDF")}.
+By default, the \code{toPDF()} and \code{toPNG()} functions write image files to the \code{figures/} directory.  For more information, see \code{help("toPDF", package="R.devices")} and the vignettes of the \pkg{R.devices} package.
 
 
 \subsubsection{Including image files in LaTeX}
@@ -970,6 +975,7 @@ which results in
 
 
 %% \clearpage
+\subsection{Including R code}
 \subsubsection{Evaluating and capturing expression and output (\code{<\%=}\code{evalCapture}\code{(\content{code chunk})\%>})}
 \label{RspCodeChunkCapture}
 The \code{evalCapture()} function allows us to evaluate, embed and echo the text output of an R code chunk<%--\footnote{\code{\content{code chunk}} must be a complete and valid code expression, because the expression is parsed and evaluated in place.}--%>.  Note that it is only standard output that is echoed, i.e. plots are \emph{not} automatically embedded as figures.  To include figures, see Section~\ref{WorkingWithFigures}.  
@@ -1031,13 +1037,17 @@ With this construct it is \emph{not} possible the capture the \emph{output}, onl
 ----%>
 
 
+\subsubsection{Future directions for including code}
+The \code{evalCapture()} construct is rather rudimentary and has limitations on how the source code and echoed outputs are formatted.  A much more powerful solution is then to utilize CRAN packages such as \pkg{formatR}, \pkg{evaluate} and \pkg{highlight}.  The goal is to incorporate neat support for these in a future version of the \pkg{R.rsp} package.
+
+
 
 <%@ifeq docVersion = "devel"%>
 <%-------------------------------------------------------------------
   RSP-EMBEDDED SWEAVE DOCUMENTS
   -------------------------------------------------------------------%>
 \subsection{RSP-embedded Sweave documents}
-We advocate using RSP over Sweave, because of its richness and generality to the underlying document format.  However, for Sweave users, we will in this section show how to enhance Sweave with RSP-embedded markup to circumvent a few of Sweave's shortcomes.
+We advocate using RSP over Sweave, because of its richness and generality to the underlying document format.  However, for Sweave users, we will in this section show how to enhance Sweave with RSP-embedded markup to circumvent a few of Sweave's shortcomings.
 
 
 \subsubsection{Programmatically setting Sweave code chunk options}
@@ -1142,6 +1152,18 @@ Nested multiline markup comments               & yes &   ? &  - \\
 <%@endif%> <%-- docVersion --%>
 
 
+
+
+
+\section{History}
+The RSP markup language was first developed in May 2002.  It was inspired by the JavaServer Pages (JSP) markup languare available for the Java programming language which is used to create dynamic web content via for instance the Apache Tomcat web server.  A related solution is the Active Server Pages (ASP) markup language for the VBScript language.
+
+Initially the RSP engine was implemented as part of the \pkg{R.io} package (deprecated) but was moved to the \pkg{R.rsp} package in July 2005.  In early 2013, the RSP engine of \pkg{R.rsp} underwent a major redesign (compared to \pkg{R.rsp} v0.8.2 and before).  This somewhat also affected the RSP language, but great efforts have been taken to keep it backward compatible.
+
+The RSP language and the \pkg{R.rsp} engine has been in particularly heavy use by thousands of users of the Aroma Project (\url{http://aroma-project.org/}) as part of the generation of interactive Javascript and HTML reports.
+Several R packages are using RSP for their HTML and PDF vignettes, which has become particularly simple since R~v3.0.0.
+
+In June 2007, the \pkg{brew} package (on CRAN) was introduced independently of the \pkg{R.rsp} package.  Although a different engine is used, the brew syntax is similar to the one in the RSP markup language.
 
 
 

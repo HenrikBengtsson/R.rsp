@@ -38,7 +38,7 @@
 
 \maketitle
 \begin{abstract}
-This document describes how to include static PDFs and non-Sweave vignettes in an R package such that they appear in the R help system.   Generic support for vignettes of any format (not only Sweave) was added in R~v3.0.0 (see `Writing R Extensions' for more details).   The instructions given here are intendend for packages that are to be built and installed on R systems prior to R v3.0.0.  However, the instructions have been adjusted such that they are forward compatible with the new R~v3.0.0 system.
+This document describes how to include static PDFs and non-Sweave vignettes in an R package such that they appear in the R help system.   Generic support for vignettes of any format (not only Sweave) was added in R~v3.0.0 (see `Writing R Extensions' for more details).   The instructions given here are intended for packages that are to be built and installed on R systems prior to R v3.0.0.  However, the instructions have been adjusted such that they are forward compatible with the new R~v3.0.0 system.
 \end{abstract}
 
 \keywords{<%@meta name="keywords"%>}
@@ -110,7 +110,7 @@ Assume you have an RSP-embedded LaTeX vignette named \file{manual.tex.rsp} that 
 \end{alltt}
 Make sure these statements are given within comments in your vignette source document.
 The \code{{\bs}VignetteIndexEntry\{\}} markup sets the title of the vignette as it will appear in the R vignette index.
-The \code{{\bs}VignetteEngine\{\}} markup specifies which vignette engine to use for compiling this vignette source file.  This markup is actually only available in R~v3.0.0, but we use it here too and somewhat immitates its behavior such that it works in any version of R.  In order for this to work in R prior to R~v3.0.0, you also have to specify add a \code{enginesMap.R} file to \code{inst/doc/} that looks like:
+The \code{{\bs}VignetteEngine\{\}} markup specifies which vignette engine to use for compiling this vignette source file.  This markup is actually only available in R~v3.0.0, but we use it here too and somewhat imitates its behavior such that it works in any version of R.  In order for this to work in R prior to R~v3.0.0, you also have to specify add a \code{enginesMap.R} file to \code{inst/doc/} that looks like:
 {\scriptsize\begin{verbatim}
 <%=
 pathname <- system.file(pathMk, "enginesMap.R", package="R.rsp");
@@ -143,6 +143,22 @@ paste(bfr, collapse="\n");
 %>
 \end{verbatim}}
 
+\subsection*{Example of .Rinstignore}
+\label{appMakefile}
+To exclude certain vignette-related files from the R \emph{installation} (but not the build), one can add a \file{.Rinstignore} to the top-level directory of the package specifying which files to be excluded.  An example of such a file is available in \pkg{R.rsp} package directory \file{<%=pathMk%>/} (it needs to be renamed to start with a period).  Its content is:
+{\scriptsize\begin{verbatim}
+<%=
+pathname <- system.file(pathMk, "Rinstignore", package="R.rsp");
+bfr <- readLines(pathname, warn=FALSE);
+rr <- grep("^# HISTORY", bfr);
+if (length(rr) > 0) {
+  bfr <- bfr[1:(rr-2L)];
+}
+bfr <- gsub("\t", "    ", bfr, fixed=TRUE);
+paste(bfr, collapse="\n");
+%>
+\end{verbatim}}
+
 \subsection*{The files used for creating this document}
 \label{appThisRnw}
 This document was created the RSP-embedded LaTeX vignette \file{NonSweaveVignettes.tex.rsp} located in the \file{doc/} package directory of \pkg{R.rsp}.  It can manually be compiled into a PDF as:
@@ -151,7 +167,7 @@ pathname <- system.file("doc/NonSweaveVignettes.tex.rsp", package="R.rsp");
 R.rsp::file(pathname);
 \end{verbatim}
 The generated PDF can then be included into the package as a static PDF (as explained in Section~\ref{secStaticPDF}).
-However, in this package we have choosen to build it dynamically during package build, by adding it to \file{inst/doc/} as explained in Section~\ref{secRSPVignette}.
+However, in this package we have chosen to build it dynamically during package build, by adding it to \file{inst/doc/} as explained in Section~\ref{secRSPVignette}.
 
 \subsection*{Session information}
 <%=toLatex(sessionInfo())%>
