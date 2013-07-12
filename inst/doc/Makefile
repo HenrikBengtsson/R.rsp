@@ -17,18 +17,23 @@ tex:
 index.html:
 	"$(R)" -e "if (getRversion() < 3) R.rsp::buildPkgIndexHtml()"
 
+# Certain LaTeX files (e.g. bib, bst, sty) must be part of the build 
+# such that they are available for R CMD check.  These are excluded
+# from the install using .Rinstignore in the top-level directory.
 clean:
 	$(RM) enginesMap.R
 	$(RM) dummy.Rnw
 	$(RM) index.html.rsp
-	$(RM) *.aux *.bbl *.blg *.bst *.log *.out *.sty *.toc
-	$(RM) *.tex
 	$(RM) *.rsp.R
+	$(RM) *.tex *.aux *.bbl *.blg *.log *.out *.sty *.toc
 	$(RM) -r figures/
 	$(RM) Makefile
 
 #########################################################################
 # HISTORY:
+# 2013-07-12
+# o Now the Makefile no longer deletes LaTeX files needed by 
+#   R CMD check.  These should instead be handled by .Rinstignore.
 # 2013-04-01
 # o Now Makefile works with both R.rsp (< 0.9.1) and R.rsp (>= 0.9.1).
 # 2013-03-05
