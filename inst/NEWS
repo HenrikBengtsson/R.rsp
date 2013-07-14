@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.10 [2013-07-14]
+o BUG FIX: evaluate() for RspRSourceCode failed to evaluate in to
+  proper environment if the default (parent) environment was used.
+
+
 Version: 0.9.9 [2013-07-12]
 o DOCUMENTATION: Updated the vignettes.
 o Updated the template vignette Makefile that is needed prior

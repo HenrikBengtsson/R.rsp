@@ -112,6 +112,9 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(),
   # Argument 'args':
   args <- cmdArgs(args);
 
+  # Argument 'envir':
+  envir <- as.environment(envir);
+
 
   # Parse R RSP source code
   expr <- parse(object);
@@ -217,6 +220,11 @@ setMethodS3("tangle", "RspRSourceCode", function(code, format=c("safetangle", "t
 
 ##############################################################################
 # HISTORY:
+# 2013-07-14
+# o BUG FIX: evaluate() for RspRSourceCode failed to evaluate in to proper
+#   environment if the default (parent) environment was used.  By adding an
+#   explicit envir <- as.argument(envir) the 'envir' argument is forced to
+#   be evaluated there and not later inside a capture.output() call.
 # 2013-03-26
 # o Added tidy() with support for formats 'asis', 'demo' and 'tangle'.
 # o CLEANUP: tangle() is now a wrapper for tidy(..., format="tangle").

@@ -25,7 +25,7 @@
 # }
 #
 # \value{
-#   Returns an @see "RspStringProduct".
+#   Returns an @see "RspSourceCode".
 # }
 #
 # @examples "../incl/rscript.Rex"

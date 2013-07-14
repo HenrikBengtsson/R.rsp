@@ -36,7 +36,7 @@
 }
 
 \value{
-  Returns an \code{\link{RspStringProduct}}.
+  Returns an \code{\link{RspSourceCode}}.
 }
 
 \examples{
