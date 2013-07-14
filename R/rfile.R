@@ -220,7 +220,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   verbose && exit(verbose);
 
   res;
-}, protected=TRUE) # rfile()
+}) # rfile()
 
 
 

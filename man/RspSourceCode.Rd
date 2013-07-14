@@ -52,7 +52,6 @@ RspSourceCode(code=character(), ...)
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RspSourceCode]{evaluate}} \tab Evaluates the source code.\cr
  \tab \code{print} \tab  -\cr
- \tab \code{rfile} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
  \tab \code{\link[R.rsp:tangle.RspSourceCode]{tangle}} \tab Drops all text-outputting calls from the source code.\cr
  \tab \code{\link[R.rsp:tidy.RspSourceCode]{tidy}} \tab Tidy up the RSP source code.\cr
