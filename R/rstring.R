@@ -36,8 +36,8 @@
 # \seealso{
 #  To display the output (instead of returning a string), see
 #  @see "rcat".
-#  For processing an RSP file document and writing the output to a
-#  file, see @see "rfile".
+#  For evaluating and postprocessing an RSP document and
+#  writing the output to a file, see @see "rfile".
 # }
 #
 # @keyword file

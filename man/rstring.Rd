@@ -54,8 +54,8 @@ cat(x)
 \seealso{
  To display the output (instead of returning a string), see
  \code{\link{rcat}}().
- For processing an RSP file document and writing the output to a
- file, see \code{\link{rfile}}().
+ For evaluating and postprocessing an RSP document and
+ writing the output to a file, see \code{\link{rfile}}().
 }
 
 

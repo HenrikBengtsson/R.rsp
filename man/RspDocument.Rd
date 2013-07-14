@@ -64,6 +64,7 @@ RspDocument(expressions=list(), ...)
  \tab \code{rcat} \tab  -\cr
  \tab \code{rclean} \tab  -\cr
  \tab \code{rcompile} \tab  -\cr
+ \tab \code{rfile} \tab  -\cr
  \tab \code{rscript} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
  \tab \code{setMetadata} \tab  -\cr

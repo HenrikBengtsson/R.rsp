@@ -51,8 +51,8 @@
 # \seealso{
 #  To store the output in a string (instead of displaying it), see
 #  @see "rstring".
-#  For processing an RSP file document and writing the output to a
-#  file, see @see "rfile".
+#  For evaluating and postprocessing an RSP document and
+#  writing the output to a file, see @see "rfile".
 # }
 #
 # @keyword print

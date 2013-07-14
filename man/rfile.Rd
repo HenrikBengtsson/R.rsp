@@ -9,11 +9,14 @@
 \name{rfile}
 \alias{rfile.default}
 \alias{rfile}
+\alias{rfile.RspString}
+\alias{rfile.RspDocument}
+\alias{rfile.RspRSourceCode}
 
-\title{Evaluates an RSP file and outputs the final RSP document file}
+\title{Evaluates and postprocesses an RSP document and outputs the final RSP document file}
 
 \description{
- Evaluates an RSP file and outputs the final RSP document file.
+ Evaluates and postprocesses an RSP document and outputs the final RSP document file.
 }
 
 \usage{

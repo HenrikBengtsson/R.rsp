@@ -70,8 +70,8 @@ rcat("A random integer in [1,<\%=K\%>]: <\%=sample(1:K, size=1)\%>\n", args=list
 \seealso{
  To store the output in a string (instead of displaying it), see
  \code{\link{rstring}}().
- For processing an RSP file document and writing the output to a
- file, see \code{\link{rfile}}().
+ For evaluating and postprocessing an RSP document and
+ writing the output to a file, see \code{\link{rfile}}().
 }
 
 
