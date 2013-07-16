@@ -1,6 +1,6 @@
 library("R.rsp")
 
-path <- system.file("rsp,LoremIpsum", package="R.rsp")
+path <- system.file("rsp_LoremIpsum", package="R.rsp")
 pathname <- file.path(path, "LoremIpsum.tex")
 print(pathname)
 

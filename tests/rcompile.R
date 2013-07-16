@@ -2,7 +2,7 @@ library("R.rsp")
 verbose <- Arguments$getVerbose(TRUE)
 
 path <- system.file(package="R.rsp")
-path <- file.path(path, "rsp,tests")
+path <- file.path(path, "rsp_tests")
 
 pathname <- file.path(path, "trimming-1.txt.rsp")
 

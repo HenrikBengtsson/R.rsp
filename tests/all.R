@@ -5,7 +5,7 @@ verbose <- Arguments$getVerbose(TRUE)
 oopts <- options(papersize="letter")
 
 path <- system.file(package="R.rsp")
-path <- file.path(path, "rsp,tests")
+path <- file.path(path, "rsp_tests")
 
 # Find all RSP files with matching "truth" files
 pathnames <- list.files(path=path, pattern="[.]rsp$", full.names=TRUE)

@@ -1,7 +1,7 @@
 library("R.rsp")
 
 path <- system.file(package="R.rsp")
-path <- file.path(path, "rsp,LoremIpsum")
+path <- file.path(path, "rsp_LoremIpsum")
 pathname <- file.path(path, "LoremIpsum.asciidoc.Rnw")
 print(pathname)
 

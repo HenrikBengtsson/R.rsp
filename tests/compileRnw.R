@@ -1,7 +1,7 @@
 library("R.rsp")
 
 # A knitr Rnw file
-path <- system.file("rsp,LoremIpsum", package="R.rsp")
+path <- system.file("rsp_LoremIpsum", package="R.rsp")
 pathname <- file.path(path, "LoremIpsum.knitr.Rnw")
 print(pathname)
 
@@ -14,7 +14,7 @@ if (Sys.getenv("_R_CHECK_FULL_") != "") {
 
 
 # A Sweave Rnw file
-path <- system.file("rsp,LoremIpsum", package="R.rsp")
+path <- system.file("rsp_LoremIpsum", package="R.rsp")
 pathname <- file.path(path, "LoremIpsum.Rnw")
 print(pathname)
 
