@@ -3,6 +3,7 @@
 # @alias rstring.RspString
 # @alias rstring.RspDocument
 # @alias rstring.RspSourceCode
+# @alias rstring.function
 #
 # @title "Evaluates an RSP string and returns the generated string"
 #
@@ -211,9 +212,40 @@ setMethodS3("rstring", "RspSourceCode", function(object, envir=parent.frame(), .
 
 
 
+setMethodS3("rstring", "function", function(object, envir=parent.frame(), ..., verbose=FALSE) {
+  # Load the package (super quietly), in case R.rsp::nnn() was called.
+  suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'object':
+
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+  verbose && enter(verbose, "rstring() for ", class(object)[1L]);
+  verbose && cat(verbose, "Environment: ", getName(envir));
+
+  fcn <- object;
+  rcode <- RspRSourceCode("fcn()")
+  res <- rstring(rcode, envir=envir, ..., verbose=less(verbose,10));
+
+  verbose && exit(verbose);
+
+  res;
+}) # rstring()
+
+
 
 ##############################################################################
 # HISTORY:
+# 2013-07-16
+# o Added rstring(), rcat() and rfile() for function:s.
 # 2013-02-23
 # o Now rstring() captures standard output such that all user output to
 #   stdout will be part of the output document in the order they occur.

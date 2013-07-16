@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.11 [2013-07-16]
+o Added rstring(), rcat() and rfile() for function:s.
+
+
 Version: 0.9.10 [2013-07-14]
 o Added rfile() also for RspString, RspDocument and RspRSourceCode.
 o BUG FIX: evaluate() for RspRSourceCode failed to evaluate in to

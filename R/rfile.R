@@ -3,6 +3,7 @@
 # @alias rfile.RspString
 # @alias rfile.RspDocument
 # @alias rfile.RspRSourceCode
+# @alias rfile.function
 #
 # @title "Evaluates and postprocesses an RSP document and outputs the final RSP document file"
 #
@@ -393,8 +394,36 @@ setMethodS3("rfile", "RspRSourceCode", function(rcode, output, workdir=NULL, env
 }, protected=TRUE) # rfile()
 
 
+setMethodS3("rfile", "function", function(object, ..., verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'object':
+
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+  verbose && enter(verbose, "rfile() for ", class(object)[1L]);
+
+  fcn <- object;
+  rcode <- RspRSourceCode("fcn()")
+
+  res <- rfile(rcode, ..., verbose=verbose);
+
+  verbose && exit(verbose);
+
+  res;
+}, protected=TRUE) # rfile()
+
+
 ############################################################################
 # HISTORY:
+# 2013-07-16
+# o Added rstring(), rcat() and rfile() for function:s.
 # 2013-07-14
 # o Added rfile() for RspSourceCode, which now is utilized by the default
 #   rfile().

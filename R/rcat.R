@@ -3,6 +3,7 @@
 # @alias rcat.RspString
 # @alias rcat.RspDocument
 # @alias rcat.RspRSourceCode
+# @alias rcat.function
 #
 # @title "Evaluates an RSP string and outputs the generated string"
 #
@@ -86,9 +87,17 @@ setMethodS3("rcat", "RspRSourceCode", function(..., output="", append=FALSE, env
   invisible(s);
 }) # rcat()
 
+setMethodS3("rcat", "function", function(..., output="", append=FALSE, envir=parent.frame(), args="*") {
+  s <- rstring(..., envir=envir, args=args);
+  cat(s, file=output, append=append);
+  invisible(s);
+}) # rcat()
+
 
 ##############################################################################
 # HISTORY:
+# 2013-07-16
+# o Added rstring(), rcat() and rfile() for function:s.
 # 2013-05-08
 # o Explicitly added arguments 'file' & 'path' to rcat() [although they're
 #   just passed as is to rstring()].
