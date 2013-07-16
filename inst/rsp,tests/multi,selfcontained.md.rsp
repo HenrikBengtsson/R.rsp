@@ -1,0 +1,58 @@
+<%------------------------------------------------------------------
+  Report template in LaTeX
+  ------------------------------------------------------------------%>
+<% report <- function() { %>
+\documentclass{article}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{graphicx}
+<%
+library("R.devices")
+%>
+\graphicspath{{<%=getOption("devEval/args/path", "figures/")%>}}
+
+\title{Report <%=i%>: Lorem Ipsum}
+\author{R.rsp}
+
+\begin{document}
+\maketitle
+
+
+\section{Text}
+
+<%
+sentences <- c("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+%>
+<% for (sentence in sentences) { %><%=sentence%> <% } %>
+
+
+\section{Graphics}
+
+\begin{verbatim}
+\end{verbatim}
+\begin{figure}[htbp]
+ \begin{center}
+  \resizebox{0.6\textwidth}{!}{
+   \includegraphics{<%=toPDF("iris", tags=c("pairs", sprintf("sample=%d", i)), {
+     subset <- sample(nrow(iris), size=50)
+     pairs(iris[subset,])
+   })%>}
+  }
+  \caption{Pairs plot of random subset \#<%=i%> of the iris data.}
+ \end{center}
+\end{figure}
+
+\end{document}
+<% } # report() %>
+
+<%------------------------------------------------------------------
+  Index page in Markdown
+  ------------------------------------------------------------------%>
+# Lorem Ipsum reports
+<% for (i in 1:4) { %>
+  * [Report <%=i%>](<%=basename(
+    # Generate LaTeX report for the i:th report
+    rfile(report, output=sprintf("report_%02d.tex", i))
+  )%>)
+<% } %>
+
+Generated on <%=Sys.time()%>.
