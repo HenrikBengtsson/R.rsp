@@ -13,7 +13,8 @@
 #   \item{filename, path}{The filename and (optional) path of the
 #      LaTeX document to be compiled.}
 #   \item{format}{A @character string specifying the output format.}
-#   \item{clean, quiet}{Additional arguments passed to @see "tools::texi2dvi".}
+#   \item{clean, quiet, texinputs}{Additional arguments passed to
+#      @see "tools::texi2dvi".}
 #   \item{...}{Not used.}
 #   \item{outPath}{The output and working directory.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
@@ -34,7 +35,7 @@
 # @keyword IO
 # @keyword internal
 #*/###########################################################################
-setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("pdf", "dvi"), clean=FALSE, quiet=TRUE, ..., outPath=".", verbose=FALSE) {
+setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("pdf", "dvi"), clean=FALSE, quiet=TRUE, texinputs=NULL, ..., outPath=".", verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
   suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
@@ -47,6 +48,9 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
   # Arguments 'outPath':
   outPath <- Arguments$getWritablePath(outPath);
   if (is.null(outPath)) outPath <- ".";
+
+  # Arguments 'texinputs':
+  texinputs <- Arguments$getCharacters(texinputs);
 
   # Arguments 'format':
   format <- match.arg(format);
@@ -80,7 +84,17 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
   verbose && enter(verbose, "Calling tools::texidvi()");
   pdf <- (format == "pdf");
   pathnameR <- getRelativePath(pathname);
-  tools::texi2dvi(pathnameR, pdf=pdf, clean=clean, quiet=quiet);
+
+  # Append the directory of the TeX file to TEXINPUTS search path?
+  pathR <- dirname(pathnameR);
+  if (pathR != ".") {
+    if (!is.null(texinputs)) {
+      texinputs <- unlist(strsplit(texinputs, split="[:;]", fixed=FALSE));
+    }
+    texinputs <- c(pathR, texinputs);
+  }
+
+  tools::texi2dvi(pathnameR, pdf=pdf, clean=clean, quiet=quiet, texinputs=texinputs);
   verbose && exit(verbose);
 
   setwd(opwd); opwd <- ".";
@@ -94,6 +108,10 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
 
 ############################################################################
 # HISTORY:
+# 2013-07-16
+# o Now compileLaTeX() adds the directory of the LaTeX file to the
+#   TEXINPUTS search path, iff it's different than the working
+#   directory.
 # 2013-02-18
 # o Added argument 'fake' to compileLaTeX().
 # 2012-12-06

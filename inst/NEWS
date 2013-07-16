@@ -5,6 +5,12 @@ Version: 0.9.11 [2013-07-16]
 o Added rstring(), rcat() and rfile() for function:s.
 o ROBUSTNESS: Updated system tests to not use commas in LaTeX file
   paths, because such are not supported on all file systems.
+o ROBUSTNESS: If compileLaTeX() was called on a LaTeX file in a
+  directory different than the working directory, it could fail to
+  located files to be included (e.g. image files).  In order to make
+  this less likely to happen, compileLaTeX() now adds the the directory
+  of the compiled LaTeX file to the TEXINPUTS search path, iff it is
+  different than the working directory.
 
 
 Version: 0.9.10 [2013-07-14]
