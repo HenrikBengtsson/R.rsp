@@ -3,6 +3,8 @@ Package: R.rsp
 
 Version: 0.9.13 [2013-07-17]
 o CLEANUP: Internal code cleanup.
+o BUG FIX: The automatic adding of a TEXINPUTS directory done by
+  compileLaTeX() needed to add its absolute (not relative) path.
 
 
 Version: 0.9.12 [2013-07-17]

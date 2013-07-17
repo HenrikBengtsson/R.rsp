@@ -84,15 +84,28 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
   verbose && enter(verbose, "Calling tools::texidvi()");
   pdf <- (format == "pdf");
   pathnameR <- getRelativePath(pathname);
+  # Sanity check
+  pathnameRx <- Arguments$getReadablePathname(pathname);
 
   # Append the directory of the TeX file to TEXINPUTS search path?
   pathR <- dirname(pathnameR);
   if (pathR != ".") {
+    verbose && enter(verbose, "Appending directory of TeX file to 'texinputs'");
     if (!is.null(texinputs)) {
       texinputs <- unlist(strsplit(texinputs, split="[:;]", fixed=FALSE));
     }
-    texinputs <- c(pathR, texinputs);
+    verbose && cat(verbose, "'texinputs' before:");
+    verbose && print(verbose, texinputs);
+    texinputs <- c(getAbsolutePath(pathR), texinputs);
+    verbose && exit(verbose);
   }
+
+  verbose && cat(verbose, "texinputs:");
+  verbose && print(verbose, texinputs);
+  verbose && cat(verbose, "TEXINPUTS: ", Sys.getenv("TEXINPUTS"));
+  verbose && cat(verbose, "BIBINPUTS: ", Sys.getenv("BIBINPUTS"));
+  verbose && cat(verbose, "BSTINPUTS: ", Sys.getenv("BSTINPUTS"));
+  verbose && cat(verbose, "TEXINDY: ", Sys.getenv("TEXINDY"));
 
   tools::texi2dvi(pathnameR, pdf=pdf, clean=clean, quiet=quiet, texinputs=texinputs);
   verbose && exit(verbose);
