@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.12 [2013-07-17]
+o Now it possible to pass argument 'clean' all the way down to
+  compileLaTeX() via rfile(), e.g. rfile("foo.tex.rsp", clean=TRUE).
+
+
 Version: 0.9.11 [2013-07-16]
 o Added rstring(), rcat() and rfile() for function:s.
 o ROBUSTNESS: Updated system tests to not use commas in LaTeX file

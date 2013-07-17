@@ -95,7 +95,7 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
 #   \item{args}{A named @list of arguments assigned to the environment
 #     in which the RSP string is parsed and evaluated.
 #     See @see "R.utils::cmdArgs".}
-#   \item{...}{Optional arguments passed to @see "base::eval".}
+#   \item{...}{Not used.}
 # }
 #
 # \value{
@@ -124,7 +124,7 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(),
 
   # Evaluate R source code and capture output
   res <- capture.output({
-    eval(expr, envir=envir, ...);
+    eval(expr, envir=envir);
     # Force a last complete line
     cat("\n");
   });
@@ -220,6 +220,10 @@ setMethodS3("tangle", "RspRSourceCode", function(code, format=c("safetangle", "t
 
 ##############################################################################
 # HISTORY:
+# 2013-07-17
+# o Now evaluate() for RspRSourceCode no longer passes '...' to eval().
+#   This make it possible to pass argument 'clean' all the way down to
+#   compileLaTeX() as rfile("foo.tex.rsp", clean=TRUE).
 # 2013-07-14
 # o BUG FIX: evaluate() for RspRSourceCode failed to evaluate in to proper
 #   environment if the default (parent) environment was used.  By adding an
