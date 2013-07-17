@@ -213,7 +213,10 @@ test: ../$(R_OUTDIR)/tests/%.R
 	$(CD) ../$(R_CRAN_OUTDIR);\
 	$(R_SCRIPT) -e "RCmdCheckTools::testPkgsToSubmit()"
 
-submit: ../$(R_CRAN_OUTDIR)/$(PKG_NAME),EmailToCRAN.txt
+setup_RCmdCheckTools:
+	$(R_SCRIPT) -e "source('http://aroma-project.org/hbLite.R'); hbLite('RCmdCheckTools', devel=TRUE)"
+
+submit: setup_RCmdCheckTools ../$(R_CRAN_OUTDIR)/$(PKG_NAME),EmailToCRAN.txt
 
 
 Makefile: $(FILES_MAKEFILE)
