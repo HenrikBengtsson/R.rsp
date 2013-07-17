@@ -2,14 +2,16 @@
   if (is.character(con)) {
     # (a) Try to open file connection
     con <- tryCatch({
-      file(con, open="rb");
+      suppressWarnings({
+        file(con, open="rb");
+      });
     }, error = function(ex) {
       # (b) If failed, try to download file first
       if (regexpr("^https://", con, ignore.case=TRUE) == -1L) {
         throw(ex);
       }
       url <- con;
-      pathname <- downloadFile(url, path=tempdir(), username="", password="");
+      pathname <- downloadFile(url, path=tempdir());
       file(pathname, open="rb");
     });
     on.exit(close(con));
@@ -31,8 +33,13 @@
   bfr;
 } # .readText()
 
+
 ##############################################################################
 # HISTORY:
+# 2013-07-17
+# o CLEANUP: The downloadUrl(..., username="", password="") workaround
+#   is no longer needed.
+# o CLEANUP: .readText() no longer gives a warnings for http:// URLs.
 # 2013-03-29
 # o Now .readText() can also read https://, which is done by downloading
 #   the file via R.utils::downloadFile().
