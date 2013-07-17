@@ -1,5 +1,5 @@
 Package: R.rsp
-Version: 0.9.12
+Version: 0.9.13
 Depends: R (>= 2.5.0), R.utils (>= 1.25.2)
 Imports: R.methodsS3 (>= 1.4.4), R.oo (>= 1.13.9), R.utils (>= 1.25.2)
 Suggests: tcltk, tools, digest (>= 0.6.3), R.devices (>= 2.2.2), ascii, markdown, knitr

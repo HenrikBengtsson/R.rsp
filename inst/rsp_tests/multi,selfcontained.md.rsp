@@ -51,7 +51,7 @@ sentences <- c("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
 <% for (i in 1:4) { %>
   * [Report <%=i%>](<%=basename(
     # Generate LaTeX report for the i:th report
-    rfile(report, output=sprintf("report_%02d.tex", i))
+    rfile(report, output=sprintf("report_%02d.tex", i), clean=TRUE)
   )%>)
 <% } %>
 

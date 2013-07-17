@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.13 [2013-07-17]
+o CLEANUP: Internal code cleanup.
+
+
 Version: 0.9.12 [2013-07-17]
 o Now it possible to pass argument 'clean' all the way down to
   compileLaTeX() via rfile(), e.g. rfile("foo.tex.rsp", clean=TRUE).

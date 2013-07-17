@@ -104,18 +104,15 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
     }
     filename <- basename(file);
     if (isUrl(file)) {
-      # Drop any URL-style parameters
-      pattern <- "(.*)[?](.*)$";
-      if (regexpr(pattern, filename) != -1L) {
-##        params <- gsub(pattern, "\\2", filename);
-##        params <- strsplit(params, split="&", fixed=TRUE);
-        filename <- gsub(pattern, "\\1", filename);
-      }
+      # Extract the filename of the URL
+      url <- splitUrl(file);
+      filename <- basename(url$path);
     }
     pattern <- "((.*)[.]([^.]+)|([^.]+))[.]([^.]+)$";
-    outputF <- gsub(pattern, "\\1", filename);
+    outputF <- gsub(pattern, "\\1", filename, ignore.case=TRUE);
     output <- Arguments$getWritablePathname(outputF, path=workdir);
     output <- getAbsolutePath(output);
+    # Don't overwrite the input file
     if (output == file) {
       throw("Cannot process RSP file. The inferred argument 'output' is the same as argument 'file' & 'path': ", output, " == ", file);
     }

@@ -30,7 +30,7 @@
   \item{args}{A named \code{\link[base]{list}} of arguments assigned to the environment
     in which the RSP string is parsed and evaluated.
     See \code{\link[R.utils]{cmdArgs}}.}
-  \item{...}{Optional arguments passed to \code{\link[base]{eval}}().}
+  \item{...}{Not used.}
 }
 
 \value{
