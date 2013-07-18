@@ -231,8 +231,16 @@ setMethodS3("rstring", "function", function(object, envir=parent.frame(), ..., v
   verbose && enter(verbose, "rstring() for ", class(object)[1L]);
   verbose && cat(verbose, "Environment: ", getName(envir));
 
+  ## Temporarily assign the function to the evaluation environment
+  ## and set its own environment also to the evaluation environment
   fcn <- object;
-  rcode <- RspRSourceCode("fcn()")
+  environment(fcn) <- envir;
+  fcnName <- tempvar(".rfcn", value=fcn, envir=envir);
+  on.exit({
+    rm(list=fcnName, envir=envir, inherits=FALSE);
+  }, add=TRUE);
+
+  rcode <- RspRSourceCode(sprintf("%s()", fcnName));
   res <- rstring(rcode, envir=envir, ..., verbose=less(verbose,10));
 
   verbose && exit(verbose);
@@ -244,6 +252,9 @@ setMethodS3("rstring", "function", function(object, envir=parent.frame(), ..., v
 
 ##############################################################################
 # HISTORY:
+# 2013-07-18
+# o BUG FIX: rstring(), rcat(), and rfile() for function:s would only work
+#   if the evaluation was done in the default environment.
 # 2013-07-16
 # o Added rstring(), rcat() and rfile() for function:s.
 # 2013-02-23

@@ -391,7 +391,7 @@ setMethodS3("rfile", "RspRSourceCode", function(rcode, output, workdir=NULL, env
 }, protected=TRUE) # rfile()
 
 
-setMethodS3("rfile", "function", function(object, ..., verbose=FALSE) {
+setMethodS3("rfile", "function", function(object, ..., envir=parent.frame(), verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -406,10 +406,17 @@ setMethodS3("rfile", "function", function(object, ..., verbose=FALSE) {
 
   verbose && enter(verbose, "rfile() for ", class(object)[1L]);
 
+  ## Temporarily assign the function to the evaluation environment
+  ## and set its own environment also to the evaluation environment
   fcn <- object;
-  rcode <- RspRSourceCode("fcn()")
+  environment(fcn) <- envir;
+  fcnName <- tempvar(".rfcn", value=fcn, envir=envir);
+  on.exit({
+    rm(list=fcnName, envir=envir, inherits=FALSE);
+  }, add=TRUE);
 
-  res <- rfile(rcode, ..., verbose=verbose);
+  rcode <- RspRSourceCode(sprintf("%s()", fcnName));
+  res <- rfile(rcode, ..., envir=envir, verbose=verbose);
 
   verbose && exit(verbose);
 

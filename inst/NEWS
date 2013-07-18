@@ -1,6 +1,12 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.14 [2013-07-18]
+o BUG FIX: rstring(), rcat(), and rfile() for template function:s 
+  would only work if the evaluation was done in the default 
+  environment.  Added system tests for this.
+
+
 Version: 0.9.13 [2013-07-17]
 o CLEANUP: Internal code cleanup.
 o BUG FIX: The automatic adding of a TEXINPUTS directory done by
@@ -13,7 +19,7 @@ o Now it possible to pass argument 'clean' all the way down to
 
 
 Version: 0.9.11 [2013-07-16]
-o Added rstring(), rcat() and rfile() for function:s.
+o Added rstring(), rcat() and rfile() for (template) function:s.
 o ROBUSTNESS: Updated system tests to not use commas in LaTeX file
   paths, because such are not supported on all file systems.
 o ROBUSTNESS: If compileLaTeX() was called on a LaTeX file in a
