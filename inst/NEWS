@@ -2,7 +2,7 @@ Package: R.rsp
 ==============
 
 Version: 0.9.14 [2013-07-18]
-o BUG FIX: rstring(), rcat(), and rfile() for template function:s 
+o BUG FIX: rstring(), rcat(), and rfile() on template function:s 
   would only work if the evaluation was done in the default 
   environment.  Added system tests for this.
 
