@@ -6,6 +6,7 @@ o Added capabilitiesOf(R.rsp) for easy summary of what tools are
   supported on the current system.  It is also possible to check
   support for a particular tool, e.g. isCapableOf(R.rsp, "latex").
 o CLEANUP: Removed internal archive of old Tcl HTTP daemons.
+o CLEANUP: Rewrote the package description.
 
 
 Version: 0.9.14 [2013-07-18]

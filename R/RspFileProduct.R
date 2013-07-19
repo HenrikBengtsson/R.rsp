@@ -107,9 +107,9 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
   }
   type <- parseInternetMediaType(type)$contentType;
 
-  # Find another RSP compiler
+  # Find a down-stream compiler/processor:
   fcn <- switch(type,
-    # Markdown documents:
+    # RSP documents:
     # *<ext>.rsp => *.<ext>
     "application/x-rsp" = compileRsp,
 
