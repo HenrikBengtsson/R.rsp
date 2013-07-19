@@ -6,7 +6,7 @@ pathname <- file.path(path, "LoremIpsum.asciidoc.Rnw")
 print(pathname)
 
 if (Sys.getenv("_R_CHECK_FULL_") != "") {
-  postprocess <- !is.null(findAsciiDoc(mustExist=FALSE));
+  postprocess <- isCapableOf(R.rsp, "asciidoc");
   outPath <- file.path("LoremIpsum", "asciidoc.Rnw");
   pathnameR <- compileAsciiDocNoweb(pathname, outPath=outPath, postprocess=postprocess, verbose=-10)
   print(pathnameR)

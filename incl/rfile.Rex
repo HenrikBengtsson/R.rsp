@@ -15,8 +15,10 @@ lines <- readLines(pathname, warn=FALSE)
 cat(lines, collapse="\n")
 
 
-# Compile and display the main vignette
-path <- system.file("doc", package="R.rsp")
-pathname <- rfile("Dynamic_document_creation_using_RSP.tex.rsp", path=path)
-printf("Created document: %s\n", pathname)
-if (interactive()) browseURL(pathname)
+# Compile and display the main vignette (requires LaTeX)
+if (isCapableOf(R.rsp, "latex")) {
+  path <- system.file("doc", package="R.rsp")
+  pdf <- rfile("Dynamic_document_creation_using_RSP.tex.rsp", path=path)
+  printf("Created document: %s\n", pdf)
+  if (interactive()) browseURL(pdf)
+}

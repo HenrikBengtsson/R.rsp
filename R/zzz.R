@@ -30,7 +30,7 @@
 
 
 .onAttach <- function(libname, pkgname) {
-  pkg <- Package(pkgname);
+  pkg <- RRspPackage(pkgname);
   assign(pkgname, pkg, pos=getPosition(pkg));
   startupMessage(pkg);
 }

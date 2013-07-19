@@ -86,6 +86,10 @@
 
 % The RspPage class
 
+% RRspPackage class
+\alias{capabilitiesOf}
+\alias{isCapableOf}
+
 % Miscellanoues stuff
 \alias{hexToInt}
 \alias{includeRsp.default}

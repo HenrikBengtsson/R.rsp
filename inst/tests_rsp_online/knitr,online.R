@@ -1,6 +1,6 @@
 library("R.rsp")
 
-if (Sys.getenv("_R_CHECK_FULL_") != "") {
+if (Sys.getenv("_R_CHECK_FULL_") != "" && isCapableOf(R.rsp, "knitr")) {
   urlPath <- "https://raw.github.com/yihui"
   filenames <- c(
     Rnw="knitr/master/inst/examples/knitr-minimal.Rnw",

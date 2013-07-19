@@ -1,6 +1,6 @@
 library("R.rsp")
 
-if (Sys.getenv("_R_CHECK_FULL_") != "") {
+if (Sys.getenv("_R_CHECK_FULL_") != "" && isCapableOf(R.rsp, "asciidoc")) {
   type <- "application/x-asciidoc";
   urlPath <- "http://www.methods.co.nz/asciidoc"
   filenames <- c(
