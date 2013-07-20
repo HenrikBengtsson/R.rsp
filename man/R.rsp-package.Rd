@@ -15,7 +15,7 @@
 
 
 \description{
-  The RSP markup language makes any text-based document come alive.  RSP provides a powerful markup for controlling the content and output of LaTeX, HTML, Markdown, AsciiDoc, Sweave, and knitr documents (and more), e.g. 'Today's date is <\%=Sys.Date()\%>'.  Contrary to many other literate-programming languages, with RSP it is straightforward to loop over mixtures of code and text sections, e.g. month-by-month summaries.  RSP has also several preprocessing directives for incorporating static and dynamic contents of external files (local or online) among other things.  Functions rstring() and rcat() makes it easy to process simple RSP strings, while rfile() compiles RSP-embedded files (also online) into their final outputs, e.g. rfile('report.tex.rsp') generates 'report.pdf'.  RSP is ideal for self-contained scientific reports and R package vignettes.
+  The RSP markup language makes any text-based document come alive.  RSP provides a powerful markup for controlling the content and output of LaTeX, HTML, Markdown, AsciiDoc, Sweave, and knitr documents (and more), e.g. 'Today's date is <\%=Sys.Date()\%>'.  Contrary to many other literate-programming languages, with RSP it is straightforward to loop over mixtures of code and text sections, e.g. month-by-month summaries.  RSP has also several preprocessing directives for incorporating static and dynamic contents of external files (local or online) among other things.  Functions rstring() and rcat() make it easy to process RSP strings, while rfile() compiles RSP files (also online) into their final outputs, e.g. rfile('report.tex.rsp') generates 'report.pdf'.  RSP is ideal for self-contained scientific reports and R package vignettes.
 }
 
 \section{Installation}{
