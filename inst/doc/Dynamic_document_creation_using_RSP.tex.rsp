@@ -213,7 +213,7 @@ The latter example illustrates how \code{rstring()} also can load strings from e
 
 
 \subsection{Automatic postprocessing}
-For RSP documents that outputs certain file formats such as LaTeX, Sweave, and knitr, further processing of the RSP file output is often necessary before obtaining the final RSP product, e.g. a PDF file.
+For RSP documents that output certain file formats such as LaTeX, Sweave, and knitr, further processing of the RSP file output is often necessary before obtaining the final RSP product, e.g. a PDF file.
 The \code{rfile()} function will, based on the content type of the generated RSP output, detect if further processing (``postprocessing'') is possible.  If so, it is postprocessed to arrive at the final product.
 Currently, postprocessing to generate PDF and HTML output is supported for LaTeX, Markdown, AsciiDoc, Sweave and knitr documents.
 For instance, consider an RSP-embedded LaTeX document \code{report.tex.rsp}.  When compiling it by
@@ -316,7 +316,7 @@ The number of prefix and suffix hyphens in an RSP comment must match, i.e. \code
 \end{remark}
 
 \begin{remark}
-As explained in Section~\ref{TrimmingWhitespace}, \emph{all} RSP constructs with a suffix hyphen causes any following whitespace including the first following line break to be trimmed, if and only if no other characters appear after the construct.  This means that all RSP comments automatically trims such empty text.
+As explained in Section~\ref{TrimmingWhitespace}, \emph{all} RSP constructs with a suffix hyphen causes any following whitespace including the first following line break to be trimmed, if and only if no other characters appear after the construct.  This means that all RSP comments automatically trim such empty text.
 This explains why there are no empty lines after dropping the RSP comments in the above example.
 \end{remark}
 
