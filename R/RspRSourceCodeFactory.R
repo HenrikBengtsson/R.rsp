@@ -239,17 +239,41 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
 
   # Build R source code
   res$header <- minIndent(header0, '
-    # Look up \'base\' function once (faster)
+    ## = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    ## This is a self-contained R script generated from an RSP document.
+    ## It may be evaluated using source() as is.
+    ## = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    ## Local RSP utility functions
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    ## Look up \'base\' function once (faster)
     .base_paste0 <- base::paste0
     .base_cat <- base::cat
 
     ## RSP output function
-    .rout <- function(x) .base_cat(.base_paste0(x, collapse=""))
+    .rout <- function(x) .base_cat(.base_paste0(x))
 
     ## RSP output function for inline RSP constructs
-    .rout0 <- .rout
+    .rout0 <- function(x) .base_cat(rpaste(x))
 
+    ## The output of inline RSP constructs is controlled by
+    ## generic function rpaste().
+    rpaste <- function(...) UseMethod("rpaste")
+
+    setInlineRsp <- function(class, fun, envir=parent.frame()) {
+      name <- sprintf("rpaste.%s", class)
+      assign(name, fun, envir=envir)
+    }
+
+    ## The default is to coerce to character and collapse without
+    ## a separator.  It is possible to override the default in an
+    ## RSP code expression.
+    setInlineRsp("default", function(x, ...) .base_paste0(x, collapse=""))
+
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ## RSP source code script
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ');
 
   res;
@@ -260,6 +284,9 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
 
 ##############################################################################
 # HISTORY:
+# 2013-07-26
+# o GENERALIZATION: Now all return values are processed via generic
+#   function rpaste() before being outputted via cat().
 # 2013-03-27
 # o Renamed .ro() to .rout().
 # o .ro() need to use cat(as.character(...)) in order to assert that

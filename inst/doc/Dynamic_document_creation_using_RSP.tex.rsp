@@ -380,7 +380,7 @@ The source code specified in an RSP code expression must have at least one chara
 \subsubsection{Inlining values of variables and expressions (\code{<\%=\content{code chunk}\%>})}
 \label{RspCodeChunkInlining}
 
-The RSP markup \code{<\%=\content{code chunk}\%>} evaluates the code chunk (without inserting the code itself into the document) and inserts the character representation\footnote{The \emph{character representation} of an object \code{x} is what \code{as.character(x)} gives.} of the returned object.  For instance,
+The RSP markup \code{<\%=\content{code chunk}\%>} evaluates the code chunk (without inserting the code itself into the document) and inserts the character representation\footnote{In R, the \emph{character representation} of an object \code{x} is what generic function \code{rpaste(x)} gives.  The default returns \code{paste0(as.character(x), collapse="")}, but may be refined and customized for particular classes in the RSP document.} of the returned object.  For instance,
 \begin{rspVerbatim}
 Today's date is <\%=Sys.Date()\%>
 \end{rspVerbatim}
@@ -464,7 +464,7 @@ Naturally, a template function can be reused any number of times.  For example, 
 produces
 \begin{itemize}
 <% for (ii in c(3,5,10,100)) { %>
- \item <%= myTemplate(ii) %>
+ \item <% myTemplate(ii) %>
 <% } # for (ii ...) %>
 \end{itemize}
 
@@ -910,9 +910,10 @@ By default, the \code{toPDF()} and \code{toPNG()} functions write image files to
 When inserting a figure in LaTeX, it is recommended to do so without specifying neither the path nor the filename extension of the image file when including the image, e.g. \code{{\textbackslash}includegraphics\{MyFigure\}}.
 In order for this to work, one must specify the "image search path" in LaTeX, e.g.
 \begin{verbatim}
+\usepackage{graphicx}
 \graphicspath{{figures/}{figures/external/}}
 \end{verbatim}
-which is preferably added to the beginning of the LaTeX document.  This tells LaTeX to search for image files in directory \code{figures/} as well as directory \code{figures/external/}.   Moreover, by leaving out the filename extension, LaTeX will automatically search\footnote{In order for \code{{\bs}includegraphics\{\}} to locate a proper image files when leaving out the filename extension, the image file must not have other periods in the filename other than the one used for the extension.} for image files with different filename extensions, e.g. \code{*.png} and \code{*.pdf}.
+which is preferably added to the beginning of the LaTeX document.  This tells LaTeX to search for image files in directory \code{figures/} as well as directory \code{figures/external/}.   Moreover, by leaving out the filename extension, LaTeX will automatically search\footnote{In order for \code{{\bs}includegraphics\{\}} to locate the proper image file when leaving out the filename extension, the image file must not have other periods in the filename other than the one used for the extension.} for image files with different filename extensions, e.g. \code{*.png} and \code{*.pdf}.
 %
 \begin{figure}[htp]
  \begin{center}
