@@ -155,7 +155,7 @@ setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "tangle"
     # Drop header
     idx <- grep('## RSP source code script', code)[1L];
     if (!is.na(idx)) {
-      code <- code[-(1:idx)];
+      code <- code[-seq(length=idx+1L)];
     }
   }
 
@@ -220,6 +220,9 @@ setMethodS3("tangle", "RspRSourceCode", function(code, format=c("safetangle", "t
 
 ##############################################################################
 # HISTORY:
+# 2013-07-29
+# o BUG FIX: tidy() for RspRSourceCode would not drop the last line
+#   of the header leaving a long '## - - - - ...' comment line at top.
 # 2013-07-17
 # o Now evaluate() for RspRSourceCode no longer passes '...' to eval().
 #   This make it possible to pass argument 'clean' all the way down to
