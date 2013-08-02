@@ -3,7 +3,7 @@ Package: R.rsp
 
 Version: 0.9.18 [2013-07-29]
 o DOCUMENTATION: The 'RSP Markup Language - Reference Card' vignette
-  was slightly to long causing it to have a second pages.
+  was slightly too long causing it to have a second pages.
 o BUG FIX: tidy() for RspRSourceCode would not drop the last line
   of the header leaving a long '## - - - - ...' comment line at top.
 
