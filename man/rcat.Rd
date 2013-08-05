@@ -21,8 +21,8 @@
 }
 
 \usage{
-\method{rcat}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", output="", append=FALSE,
-  verbose=FALSE)
+\method{rcat}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", output="", buffered=TRUE,
+  append=FALSE, verbose=FALSE)
 }
 
 \arguments{
@@ -37,6 +37,8 @@
     See \code{\link[R.utils]{cmdArgs}}.}
   \item{output}{A \code{\link[base:connections]{connection}}, or a pathname where to direct the output.
               If \code{""}, the output is sent to the standard output.}
+  \item{buffered}{If \code{\link[base:logical]{TRUE}}, and \code{output=""}, then the RSP output is
+    outputted as soon as possible, if possible.}
   \item{append}{Only applied if \code{output} specifies a pathname;
     If \code{\link[base:logical]{TRUE}}, then the output is appended to the file, otherwise
     the files content is overwritten.}

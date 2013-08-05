@@ -22,7 +22,8 @@
 }
 
 \usage{
-\method{evaluate}{RspShSourceCode}(object, envir=parent.frame(), args="*", ..., verbose=FALSE)
+\method{evaluate}{RspShSourceCode}(object, envir=parent.frame(), args="*", output=c("RspStringProduct", "stdout"),
+  ..., verbose=FALSE)
 }
 
 \arguments{
@@ -30,11 +31,18 @@
   \item{args}{A named \code{\link[base]{list}} of arguments assigned to the environment
     in which the RSP string is parsed and evaluated.
     See \code{\link[R.utils]{cmdArgs}}.}
+  \item{output}{A \code{\link[base]{character}} string specifying how the RSP output
+    should be handled/returned.}
   \item{...}{Optional arguments passed to \code{\link[base]{eval}}().}
 }
 
 \value{
- Returns the outputted \code{\link[base]{character}} string, iff any.
+ If \code{output="stdout"}, then \code{\link[base]{NULL}} is returned and the RSP output
+ is sent to the standard output.
+ Note that this is output is "buffered", meaning it will be sent to
+ standard output upon completion.  This is a limitation of R.
+ If \code{output="RspStringProduct"}, then the output is captured
+ and returned as an \code{\link{RspStringProduct}} with attributes set.
 }
 
 \author{Henrik Bengtsson}

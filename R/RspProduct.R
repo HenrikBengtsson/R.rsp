@@ -326,7 +326,7 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
     }
   }
 
-  if (recursive > 0L && hasProcessor(res)) {
+  if (!is.null(res) && recursive > 0L && hasProcessor(res)) {
     verbose && enter(verbose, "Recursive processing");
     verbose && cat(verbose, "Recursive depth: ", recursive);
     object <- res;
@@ -344,6 +344,10 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
 
 ############################################################################
 # HISTORY:
+# 2013-08-04
+# o Now process() for RspProduct handles when the processor returns NULL,
+#   e.g. when output are directed directly to standard output without
+#   being captured.
 # 2013-03-29
 # o Added view().
 # o Added argument 'recursive' to process().

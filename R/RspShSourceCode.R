@@ -46,11 +46,18 @@ setConstructorS3("RspShSourceCode", function(...) {
 #   \item{args}{A named @list of arguments assigned to the environment
 #     in which the RSP string is parsed and evaluated.
 #     See @see "R.utils::cmdArgs".}
+#   \item{output}{A @character string specifying how the RSP output
+#     should be handled/returned.}
 #   \item{...}{Optional arguments passed to @see "base::eval".}
 # }
 #
 # \value{
-#  Returns the outputted @character string, iff any.
+#  If \code{output="stdout"}, then @NULL is returned and the RSP output
+#  is sent to the standard output.
+#  Note that this is output is "buffered", meaning it will be sent to
+#  standard output upon completion.  This is a limitation of R.
+#  If \code{output="RspStringProduct"}, then the output is captured
+#  and returned as an @see "RspStringProduct" with attributes set.
 # }
 #
 # @author
@@ -59,7 +66,7 @@ setConstructorS3("RspShSourceCode", function(...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("evaluate", "RspShSourceCode", function(object, envir=parent.frame(), args="*", ..., verbose=FALSE) {
+setMethodS3("evaluate", "RspShSourceCode", function(object, envir=parent.frame(), args="*", output=c("RspStringProduct", "stdout"), ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -81,6 +88,9 @@ setMethodS3("evaluate", "RspShSourceCode", function(object, envir=parent.frame()
   # Argument 'args':
   args <- cmdArgs(args=args);
 
+  # Argument 'output':
+  output <- match.arg(output);
+
 
   code <- object;
 
@@ -90,7 +100,14 @@ setMethodS3("evaluate", "RspShSourceCode", function(object, envir=parent.frame()
   # Evaluate R source code and capture output
   res <- evalSh(code);
 
-  RspStringProduct(res, type=getType(object));
+  if (output == "RspStringProduct") {
+    res <- RspStringProduct(res, type=getType(object));
+  } else {
+    cat(res);
+    res <- NULL;
+  }
+
+  res;
 }) # evaluate()
 
 
@@ -104,6 +121,8 @@ setMethodS3("findProcessor", "RspShSourceCode", function(object, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-08-04
+# o Added argument 'output' to evaluate() for RspShSourceCode.
 # 2013-03-14
 # o Created from RspRSourceCode.
 ##############################################################################

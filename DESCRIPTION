@@ -1,10 +1,10 @@
 Package: R.rsp
-Version: 0.9.18
-Depends: R (>= 2.5.0), R.utils (>= 1.26.1)
-Imports: R.methodsS3 (>= 1.4.4), R.oo (>= 1.13.9), R.utils (>= 1.26.1)
-Suggests: tcltk, tools, digest (>= 0.6.3), R.devices (>= 2.2.2), ascii, markdown, knitr
+Version: 0.9.19
+Depends: R (>= 2.5.0), R.utils (>= 1.26.2)
+Imports: R.methodsS3 (>= 1.4.4), R.oo (>= 1.13.9), R.utils (>= 1.26.2)
+Suggests: tcltk, tools, digest (>= 0.6.3), R.devices (>= 2.5.0), ascii, markdown, knitr
 VignetteBuilder: R.rsp
-Date: 2013-07-29
+Date: 2013-08-04
 Title: Dynamic generation of scientific reports
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))

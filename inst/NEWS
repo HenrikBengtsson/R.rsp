@@ -1,6 +1,13 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.19 [2013-08-04]
+o Added argument 'buffered' to rcat().  If FALSE and output is sent
+  to standard output, then RSP output is forwared to standard output
+  as they appear (and the underlying engine allow for it).
+o Bumped up package dependencies.
+
+
 Version: 0.9.18 [2013-07-29]
 o DOCUMENTATION: The 'RSP Markup Language - Reference Card' vignette
   was slightly too long causing it to have a second pages.

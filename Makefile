@@ -134,10 +134,11 @@ install_force:
 ../$(R_CHECK_OUTDIR)/.check.complete: ../$(R_OUTDIR)/$(PKG_TARBALL)
 	$(CD) ../$(R_OUTDIR);\
 	$(RM) -r $(PKG_NAME).Rcheck;\
-        export _R_CHECK_CRAN_INCOMING_=0;\
+	export _R_CHECK_CRAN_INCOMING_=0;\
 	export _R_CHECK_DOT_INTERNAL_=1;\
 	export _R_CHECK_USE_CODETOOLS_=1;\
 	export _R_CHECK_CRAN_INCOMING_USE_ASPELL_=1;\
+	export _R_CHECK_FORCE_SUGGESTS_=0;\
 	export _R_CHECK_FULL_=1;\
 	$(R_CMD) check $(R_CHECK_OPTS) $(PKG_TARBALL);\
 	echo done > $(PKG_NAME).Rcheck/.check.complete
@@ -213,10 +214,28 @@ test: ../$(R_OUTDIR)/tests/%.R
 	$(CD) ../$(R_CRAN_OUTDIR);\
 	$(R_SCRIPT) -e "RCmdCheckTools::testPkgsToSubmit()"
 
+winbuilder: ../$(R_OUTDIR)/$(PKG_TARBALL)
+	@echo "binary" > ftp_script
+	@echo "cd incoming/" >> ftp_script
+	@echo "cd R-release/" >> ftp_script
+	@echo "put ../$(R_OUTDIR)/$(PKG_TARBALL)" >> ftp_script
+	@echo "ls -l" >> ftp_script
+	@echo "cd .." >> ftp_script
+	@echo "cd R-devel/" >> ftp_script
+	@echo "put ../$(R_OUTDIR)/$(PKG_TARBALL)" >> ftp_script
+	@echo "ls -l" >> ftp_script
+	@echo "bye" >> ftp_script
+	$(MV) ftp_script ../$(R_OUTDIR)
+	@echo "RUN: ftp -s:../$(R_OUTDIR)/ftp_script -A win-builder.r-project.org"
+#	$(shell ftp -s:ftp_script -A win-builder.r-project.org)
+
 setup_RCmdCheckTools:
 	$(R_SCRIPT) -e "source('http://aroma-project.org/hbLite.R'); hbLite('RCmdCheckTools', devel=TRUE)"
 
-submit: setup_RCmdCheckTools ../$(R_CRAN_OUTDIR)/$(PKG_NAME),EmailToCRAN.txt
+cran: setup_RCmdCheckTools ../$(R_CRAN_OUTDIR)/$(PKG_NAME),EmailToCRAN.txt
+
+# Backward compatibilities
+submit: cran
 
 
 Makefile: $(FILES_MAKEFILE)
