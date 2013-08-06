@@ -26,6 +26,7 @@ S3method("rclean", "default")
 S3method("rcompile", "default")
 S3method("rfile", "default")
 S3method("rscript", "default")
+S3method("rsource", "default")
 S3method("rstring", "default")
 S3method("rsp", "default")
 

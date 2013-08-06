@@ -66,6 +66,7 @@ RspDocument(expressions=list(), ...)
  \tab \code{rcompile} \tab  -\cr
  \tab \code{rfile} \tab  -\cr
  \tab \code{rscript} \tab  -\cr
+ \tab \code{rsource} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
  \tab \code{setMetadata} \tab  -\cr
  \tab \code{\link[R.rsp:subset.RspDocument]{subset}} \tab Subsets an RspDocument.\cr

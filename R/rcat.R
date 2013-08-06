@@ -4,6 +4,12 @@
 # @alias rcat.RspDocument
 # @alias rcat.RspRSourceCode
 # @alias rcat.function
+# @alias rsource
+# @alias rsource.default
+# @alias rsource.RspString
+# @alias rsource.RspDocument
+# @alias rsource.RspRSourceCode
+# @alias rsource.function
 #
 # @title "Evaluates an RSP string and outputs the generated string"
 #
@@ -11,7 +17,10 @@
 #  @get "title".
 # }
 #
-# @synopsis
+# \usage{
+#  @usage rcat,default
+#  @usage rsource,default
+# }
 #
 # \arguments{
 #   \item{...}{A @character string with RSP markup.}
@@ -45,6 +54,13 @@
 #
 #   parses and evaluates the RSP string and outputs the result to
 #   standard output.
+# }
+#
+# \section{rsource()}{
+#   The \code{rsource(file, ...)} is a convenient wrapper
+#   for \code{rcat(file=file, ..., output="", buffered=FALSE)}.
+#   As an analogue, \code{rsource()} is to an RSP file what
+#   \code{source()} is to an R script file.
 # }
 #
 # @examples "../incl/rcat.Rex"

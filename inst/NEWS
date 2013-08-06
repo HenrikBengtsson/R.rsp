@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.20 [2013-08-05]
+o Added rsource() which is for RSP files what source() is for R files.
+
+
 Version: 0.9.19 [2013-08-04]
 o Added argument 'buffered' to rcat().  If FALSE and output is sent
   to standard output, then RSP output is forwared to standard output

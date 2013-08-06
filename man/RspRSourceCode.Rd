@@ -54,6 +54,7 @@ RspRSourceCode(...)
  \tab \code{\link[R.rsp:parse.RspRSourceCode]{parse}} \tab Parses the R code.\cr
  \tab \code{rcat} \tab  -\cr
  \tab \code{rfile} \tab  -\cr
+ \tab \code{rsource} \tab  -\cr
  \tab \code{tangle} \tab  -\cr
  \tab \code{tidy} \tab  -\cr
 }

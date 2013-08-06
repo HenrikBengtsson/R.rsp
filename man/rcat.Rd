@@ -13,6 +13,12 @@
 \alias{rcat.RspDocument}
 \alias{rcat.RspRSourceCode}
 \alias{rcat.function}
+\alias{rsource}
+\alias{rsource.default}
+\alias{rsource.RspString}
+\alias{rsource.RspDocument}
+\alias{rsource.RspRSourceCode}
+\alias{rsource.function}
 
 \title{Evaluates an RSP string and outputs the generated string}
 
@@ -21,8 +27,9 @@
 }
 
 \usage{
-\method{rcat}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", output="", buffered=TRUE,
+ \method{rcat}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", output="", buffered=TRUE,
   append=FALSE, verbose=FALSE)
+ \method{rsource}{default}(file, path=NULL, output="", buffered=FALSE, ...)
 }
 
 \arguments{
@@ -57,6 +64,13 @@
 
   parses and evaluates the RSP string and outputs the result to
   standard output.
+}
+
+\section{rsource()}{
+  The \code{rsource(file, ...)} is a convenient wrapper
+  for \code{rcat(file=file, ..., output="", buffered=FALSE)}.
+  As an analogue, \code{rsource()} is to an RSP file what
+  \code{source()} is to an R script file.
 }
 
 \examples{
