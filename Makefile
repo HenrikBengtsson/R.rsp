@@ -214,21 +214,6 @@ test: ../$(R_OUTDIR)/tests/%.R
 	$(CD) ../$(R_CRAN_OUTDIR);\
 	$(R_SCRIPT) -e "RCmdCheckTools::testPkgsToSubmit()"
 
-winbuilder: ../$(R_OUTDIR)/$(PKG_TARBALL)
-	@echo "binary" > ftp_script
-	@echo "cd incoming/" >> ftp_script
-	@echo "cd R-release/" >> ftp_script
-	@echo "put ../$(R_OUTDIR)/$(PKG_TARBALL)" >> ftp_script
-	@echo "ls -l" >> ftp_script
-	@echo "cd .." >> ftp_script
-	@echo "cd R-devel/" >> ftp_script
-	@echo "put ../$(R_OUTDIR)/$(PKG_TARBALL)" >> ftp_script
-	@echo "ls -l" >> ftp_script
-	@echo "bye" >> ftp_script
-	$(MV) ftp_script ../$(R_OUTDIR)
-	@echo "RUN: ftp -s:../$(R_OUTDIR)/ftp_script -A win-builder.r-project.org"
-#	$(shell ftp -s:ftp_script -A win-builder.r-project.org)
-
 setup_RCmdCheckTools:
 	$(R_SCRIPT) -e "source('http://aroma-project.org/hbLite.R'); hbLite('RCmdCheckTools', devel=TRUE)"
 
