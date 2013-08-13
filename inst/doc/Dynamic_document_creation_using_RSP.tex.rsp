@@ -201,7 +201,7 @@ A random integer in [1,100]: 14
 \end{escapeRspVerbatim}
 
 
-\subsection{rfile() - from start-to-end processing of RSP documents}
+\subsection{rfile() - start-to-end processing of RSP documents}
 As an alternative to \code{rsource()}, an RSP file can be processed using \code{rfile()}, which instead of outputting to standard output ("displaying on screen") writes the output to file.  For instance,
 \begin{verbatim}
 > rfile("random.txt.rsp")
@@ -936,6 +936,7 @@ In order for this to work, one must specify the "image search path" in LaTeX, e.
 which is preferably added to the beginning of the LaTeX document.  This tells LaTeX to search for image files in directory \code{figures/} as well as directory \code{figures/external/}.   Moreover, by leaving out the filename extension, LaTeX will automatically search\footnote{In order for \code{{\bs}includegraphics\{\}} to locate the proper image file when leaving out the filename extension, the image file must not have other periods in the filename other than the one used for the extension.} for image files with different filename extensions, e.g. \code{*.png} and \code{*.pdf}.
 %
 \begin{figure}[htp]
+ \footnotesize
  \begin{center}
  \resizebox{0.70\textwidth}{!}{%
   \includegraphics{<%=toPDF("MyFigure,yeah,cool", aspectRatio=0.6, {
@@ -1152,19 +1153,32 @@ This latter approach is error prone, especially because of how the LaTeX code ha
 <%-------------------------------------------------------------------
   COMPARISON TO OTHER METHODS
   -------------------------------------------------------------------%>
-\section{Brief comparison to other markup languages}
+\section{Related work}
+Several other literate programming methods exists for R, notibly \emph{Sweave}, \emph{knitr} and \emph{brew}.  The brew markup is similar to the RSP markup, with some differences, e.g. it does not provide mechanisms for preprocessing or handling of metadata.   The Sweave markup originates from the noweb markup and focuses on the concept of code chunks and is designed for TeX, although alternative output formats are also support.  The knitr markup extends Sweave with more powerful code formatting, image generation and it supports additional type of formats, e.g. Markdown and HTML.
 
 \begin{table}[htb]
+\footnotesize
 \begin{center}
-\begin{tabular}{lccc}
-Feature & RSP & brew & Sweave \\
+\begin{tabular}{lcccc}
+Feature & RSP & brew & Sweave & knitr \\
 \hline
-Context-independent processing                 & yes & yes &  - \\
-Interweaving incomplete code and text snippets & yes & yes &  - \\
-Preprocessing markup                           & yes &   - &  - \\
-Markup comments                                & yes &   - &  - \\
-Nested multiline markup comments               & yes &   ? &  - \\
-"As-is" insertion of other files               & yes &   ? &  - \\
+\hline
+Markup independent of output format            &  yes  &  yes  &   - &    -  \\
+Interweaving incomplete code and text snippets &  yes  &  yes  &   - &    -  \\
+Markup comments (independent of output format) &  yes  &  yes  &   - &    -  \\
+Markup comments - nested \& multiline          &  yes  &    -  &   - &    -  \\
+Metadata                                       &  yes  &    -  &   - & (yes) \\
+Preprocessing directives                       &  yes  &    -  &   - &    -  \\
+Inclusion of files and URLs                    &  yes  & (yes) &   - & (yes) \\
+Inclusion of source code                       &  yes  & (yes) &   - &  yes  \\
+Generation of markup document from master template  &  yes  &  (yes) &   - &  - \\
+Single-command start-to-end processing (e.g. RSP-to-PDF)         &  yes  &    -  &   - &    -  \\
+Direct processing of online documents          &  yes  &    -  &   - &    -  \\
+R package vignette engine support              &  yes  &    -  & yes &  yes  \\
+Code snippets in other languages than R        &  yes  &    -  &   - &  yes  \\
+Rich formatting of code and evaluations        &(soon) &    -  &   - &  yes  \\
+Figures - automatic inclusion of plots         &  N/A  &    -  & yes &  yes  \\
+Extensive support by editors and GUIs          &(planned) &    -  & yes &  yes  \\
 \hline
 \end{tabular}
 \end{center}
