@@ -42,20 +42,26 @@
 # @keyword internal
 #*/###########################################################################
 buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = TRUE, clean = TRUE, engine=NULL, buildPkg=NULL, ...) {
+    ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ### BEGIN: Workaround until buildVignette() is in the 'tools' package.
-    require("tools") || throw("Package not loaded: tools")
-    .get_vignette_metadata <- tools:::.get_vignette_metadata
-    vignette_is_tex <- tools:::vignette_is_tex
-    find_vignette_product <- tools:::find_vignette_product
-    vignetteEngine <- tools:::vignetteEngine
-    file_path_as_absolute <- tools::file_path_as_absolute
+    ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    require("tools") || throw("Package not loaded: tools");
+    ns <- getNamespace("tools");
+    .get_vignette_metadata <- get(".get_vignette_metadata", mode="function", envir=ns);
+    vignette_is_tex <- get("vignette_is_tex", mode="function", envir=ns);
+    find_vignette_product <- get("find_vignette_product", mode="function", envir=ns);
+    vignetteEngine <- get("vignetteEngine", mode="function", envir=ns);
+    file_path_as_absolute <- tools::file_path_as_absolute;
+
     texi2pdf <- tools::texi2pdf
     list.files <- function(..., no..=FALSE) {
       res <- base::list.files(...);
       if (no..) res <- setdiff(res, c(".", ".."));
       res;
     }
+    ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ### END: Workaround until buildVignette() is in the 'tools' package.
+    ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     if (!file_test("-f", file))
         stop("No such file: ", file)
