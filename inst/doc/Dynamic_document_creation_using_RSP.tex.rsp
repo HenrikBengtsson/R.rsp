@@ -1154,35 +1154,43 @@ This latter approach is error prone, especially because of how the LaTeX code ha
   COMPARISON TO OTHER METHODS
   -------------------------------------------------------------------%>
 \section{Related work}
-Several other literate programming methods exists for R, notibly \emph{Sweave}, \emph{knitr} and \emph{brew}.  The brew markup is similar to the RSP markup, with some differences, e.g. it does not provide mechanisms for preprocessing or handling of metadata.   The Sweave markup originates from the noweb markup and focuses on the concept of code chunks and is designed for TeX, although alternative output formats are also support.  The knitr markup extends Sweave with more powerful code formatting, image generation and it supports additional type of formats, e.g. Markdown and HTML.
+Several other literate programming methods exists for R, notibly \emph{Sweave}, \emph{knitr} and \emph{brew}.  The brew markup is similar to the RSP markup, with some differences, e.g. it does not provide mechanisms for preprocessing or handling of metadata.   The Sweave markup originates from noweb~\cite{RamseyN_1994,JohnsonJohnson_2000} and focuses on the concept of code chunks and is designed for TeX, although alternative output formats are also support.  The knitr markup extends Sweave with more powerful code formatting, image generation and it supports additional type of formats, e.g. Markdown and HTML.
 
 \begin{table}[htb]
 \footnotesize
 \begin{center}
-\begin{tabular}{lcccc}
+\begin{tabular}{p{43ex}||p{13ex}|p{10ex}|p{13.5ex}|p{14ex}}
 Feature & RSP & brew & Sweave & knitr \\
 \hline
 \hline
-Markup independent of output format            &  yes  &  yes  &   - &    -  \\
-Interweaving incomplete code and text snippets &  yes  &  yes  &   - &    -  \\
-Markup comments (independent of output format) &  yes  &  yes  &   - &    -  \\
+Input formats (embedded)                       &  all,\hspace{7ex}(custom)  &  all  & LaTeX\hspace{7ex}(addons\,for HTML,\,ODF, AsciiDoc) & LaTeX,\,HTML, Markdown, AsciiDoc, ..., (custom)  \\
+Output formats (targetted)                     &  all,\hspace{7ex}(custom)  &  all  & PDF\hspace{7ex}(addons\,for HTML,\,ODF, AsciiDoc) & PDF,\,HTML, Markdown, AsciiDoc, (custom) \\
+Single-command end-to-end processing (e.g.~RSP-to-PDF and RSP-to-HTML)         &  yes  &    -  &   - &    -  \\
+Direct processing of online documents          &  yes  &    -  &   - &    -  \\
+R package vignette engine support              &  yes  & (not yet) & yes &  yes  \\
+Alternative to R scripts and \code{source()}   &  yes  &  yes  &   - &    -  \\
+\hline
+Markup independent of format                   &  yes  &  yes  &   - &    -  \\
+Looping over code and text snippets            &  yes  &  yes  &   - &    -  \\
+Markup comments (format independent)           &  yes  &  yes  &   - &    -  \\
 Markup comments - nested \& multiline          &  yes  &    -  &   - &    -  \\
 Metadata                                       &  yes  &    -  &   - & (yes) \\
 Preprocessing directives                       &  yes  &    -  &   - &    -  \\
-Inclusion of files and URLs                    &  yes  & (yes) &   - & (yes) \\
-Inclusion of source code                       &  yes  & (yes) &   - &  yes  \\
-Generation of markup document from master template  &  yes  &  (yes) &   - &  - \\
-Single-command start-to-end processing (e.g. RSP-to-PDF)         &  yes  &    -  &   - &    -  \\
-Direct processing of online documents          &  yes  &    -  &   - &    -  \\
-R package vignette engine support              &  yes  &    -  & yes &  yes  \\
+Inclusion of markup files                      &  yes  & (yes) &   - & (yes) \\
+Inclusion of source code from file             &  yes  & (yes) &   - &  yes  \\
+Inclusion of online files by URLs              &  yes  & (possible) &   - &    -  \\
 Code snippets in other languages than R        &  yes  &    -  &   - &  yes  \\
-Rich formatting of code and evaluations        &(soon) &    -  &   - &  yes  \\
-Figures - automatic inclusion of plots         &  N/A  &    -  & yes &  yes  \\
+Code snippet memoization ("caching")           &  (addon)  & (addon) & (addon) &  yes  \\
+Rich formatting of code and evaluations        &(possible; soon builtin) &    -  & (addon) &  yes  \\
+Figures - automatic inclusion of plots         &  N/A \hspace{7em}(simple)  &  N/A \hspace{7em}(simple)  & yes &  yes  \\
+Figures - full control                         &  yes  &  yes  & (tedious) &  yes  \\
+\hline
+Generation of markup document from master template (e.g.~dropping private parts) &  yes  &  (tedious) &   - &  - \\
 Extensive support by editors and GUIs          &(planned) &    -  & yes &  yes  \\
 \hline
 \end{tabular}
 \end{center}
-\caption{Comparison of features in different R-related markup languages.}
+\caption{Comparison of features in selected alternative markup languages (RSP, brew, Sweave and knitr) and engines available for R.}
 \end{table}
 <%@endif%> <%-- docVersion --%>
 
@@ -1190,16 +1198,15 @@ Extensive support by editors and GUIs          &(planned) &    -  & yes &  yes  
 
 
 
-\section{History}
+\section{History of RSP}
 The RSP markup language was first developed in May 2002.  It was first inspired by the JavaServer Pages (JSP) markup languare available for the Java programming language which is used to create dynamic web content via for instance the Apache Tomcat web server.  A related solution is the Active Server Pages (ASP) markup language for the VBScript language.
 
-Initially the RSP engine was implemented as part of the \pkg{R.io} package (deprecated) but was moved to the \pkg{R.rsp} package in July 2005.  In early 2013, the RSP engine of \pkg{R.rsp} underwent a major redesign (compared to \pkg{R.rsp} v0.8.2 and before).  This somewhat also affected the RSP language, but great efforts have been taken to keep it backward compatible.
+Initially the RSP engine was implemented as part of the \pkg{R.io} package (deprecated) but was moved to the \pkg{R.rsp} package in July 2005 and released on CRAN in July 2006.  In early 2013, the RSP engine of \pkg{R.rsp} underwent a major redesign (compared to \pkg{R.rsp} v0.8.2 and before).  This somewhat also affected the RSP language, but great efforts have been taken to keep it backward compatible.
 
 The RSP language and the \pkg{R.rsp} engine has been in particularly heavy use by thousands of users of the Aroma Project (\url{http://aroma-project.org/}) as part of the generation of interactive Javascript and HTML reports.
 Several R packages are using RSP for their HTML and PDF vignettes, which has become straightforward since R~v3.0.0.
 
-In June 2007, the \pkg{brew} package (on CRAN) was introduced independently of the \pkg{R.rsp} package.  Although a different engine is used, the brew syntax is similar to the one in the RSP markup language.
-
+In June 2007, the \pkg{brew} package (on CRAN) was introduced independently [private communication] of the \pkg{R.rsp} package.  Although a different engine is used, the brew syntax is similar to the one in the RSP markup language.
 
 
 
