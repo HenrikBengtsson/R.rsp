@@ -39,8 +39,8 @@ rspWeave <- function(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env())
   ## If not, the generated RSP-to-R script becomes corrupt and contains
   ## invalid symbols, at least for '<%= ... %>' RSP constructs.
   ## /HB 2013-09-17
-#  pkg <- "R.oo";
-#  require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg);
+  pkg <- "R.oo";
+  require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg);
 
   res <- rfile(file, ..., workdir=".", postprocess=postprocess, envir=envir, verbose=!quiet);
 
@@ -88,14 +88,6 @@ rspWeave <- function(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env())
 # @keyword internal
 #*/###########################################################################
 rspTangle <- function(file, ..., envir=new.env()) {
-  ## WORKAROUND: For unknown reasons, the R.oo package needs to be
-  ## attached in order for 'R CMD build' to build the R.rsp package.
-  ## If not, the generated RSP-to-R script becomes corrupt and contains
-  ## invalid symbols, at least for '<%= ... %>' RSP constructs.
-  ## /HB 2013-09-17
-#  pkg <- "R.oo";
-#  require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg);
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
