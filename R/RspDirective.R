@@ -334,11 +334,12 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
   comment <- attr(attrs, "comment");
 
   # Infer the class name
-  class <- sprintf("Rsp%sDirective", capitalize(directive));
+  className <- sprintf("Rsp%sDirective", capitalize(directive));
 
   # Get constructor
   clazz <- tryCatch({
-    Class$forName(class);
+    ns <- getNamespace("R.rsp");
+    .Class_forName(className, envir=ns);
   }, error = function(ex) {
     NULL;
   })
@@ -354,7 +355,7 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
   attr(res, "suffixSpecs") <- attr(expr, "suffixSpecs");
 
   res;
-}) # parse()
+}, createGeneric=FALSE) # parse()
 
 
 setMethodS3("asRspString", "RspUnparsedDirective", function(object, ...) {

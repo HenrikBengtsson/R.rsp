@@ -40,9 +40,6 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("rclean", "default", function(..., file=NULL, path=NULL, envir=parent.frame(), args="*", verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::nnn() was called.
-  suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -85,9 +82,6 @@ setMethodS3("rclean", "default", function(..., file=NULL, path=NULL, envir=paren
 
 
 setMethodS3("rclean", "RspString", function(object, envir=parent.frame(), args="*", ..., verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::nnn() was called.
-  suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -142,9 +136,6 @@ setMethodS3("rclean", "RspString", function(object, envir=parent.frame(), args="
 
 
 setMethodS3("rclean", "RspDocument", function(object, envir=parent.frame(), ..., verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::nnn() was called.
-  suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

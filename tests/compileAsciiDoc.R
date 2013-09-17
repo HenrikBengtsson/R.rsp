@@ -1,4 +1,5 @@
 library("R.rsp")
+library("R.utils") # copyDirectory() and Arguments
 
 path <- system.file(package="R.rsp")
 path <- file.path(path, "rsp_LoremIpsum")

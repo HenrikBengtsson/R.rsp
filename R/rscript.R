@@ -41,9 +41,6 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("rscript", "default", function(..., file=NULL, path=NULL, envir=parent.frame(), args="*", verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::nnn() was called.
-  suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -86,9 +83,6 @@ setMethodS3("rscript", "default", function(..., file=NULL, path=NULL, envir=pare
 
 
 setMethodS3("rscript", "RspString", function(object, envir=parent.frame(), args="*", ..., verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::nnn() was called.
-  suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -143,9 +137,6 @@ setMethodS3("rscript", "RspString", function(object, envir=parent.frame(), args=
 
 
 setMethodS3("rscript", "RspDocument", function(object, envir=parent.frame(), ..., verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::nnn() was called.
-  suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -162,7 +153,8 @@ setMethodS3("rscript", "RspDocument", function(object, envir=parent.frame(), ...
   language <- getAttribute(object, "language", default="R");
   language <- capitalize(tolower(language));
   className <- sprintf("Rsp%sSourceCodeFactory", language);
-  clazz <- Class$forName(className);
+  ns <- getNamespace("R.rsp");
+  clazz <- .Class_forName(className, envir=ns);
   factory <- newInstance(clazz);
   verbose && cat(verbose, "Language: ", getLanguage(factory));
   code <- toSourceCode(factory, object, ..., verbose=verbose);

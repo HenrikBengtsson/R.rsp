@@ -6,17 +6,17 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspException}
+\name{RspException}
 \docType{class}
 \alias{RspException}
 
- \alias{RspParseException}
- \alias{RspPreprocessingException}
+\alias{RspParseException}
+\alias{RspPreprocessingException}
 
- \title{The RspException class}
+\title{The RspException class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspException}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -41,20 +41,20 @@ extends \link[R.oo]{Exception}\cr
 
 
 
-  An RspException is an \code{\link[R.oo]{Exception}} that is thrown during
-  the processing of an RSP document.
- }
+ An RspException is an \code{\link[R.oo]{Exception}} that is thrown during
+ the processing of an RSP document.
+}
 
- \usage{
+\usage{
 RspException(...)
 }
 
- \arguments{
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{as.character} \tab  -\cr
 }
@@ -73,9 +73,9 @@ abort, as.character, conditionCall, conditionMessage, print
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

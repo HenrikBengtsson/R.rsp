@@ -1,4 +1,6 @@
 library("R.rsp")
+library("R.utils") # Arguments
+
 verbose <- Arguments$getVerbose(TRUE)
 
 path <- system.file(package="R.rsp")

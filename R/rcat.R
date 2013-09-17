@@ -79,9 +79,6 @@
 # @keyword file
 #*/###########################################################################
 setMethodS3("rcat", "default", function(..., file=NULL, path=NULL, envir=parent.frame(), args="*", output="", buffered=TRUE, append=FALSE, verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::nnn() was called.
-  suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -123,7 +123,7 @@ setMethodS3("flush", "FileRspResponse", function(con, ...) {
 #*/#########################################################################
 setMethodS3("getPath", "FileRspResponse", function(this, ...) {
   getParent(this$file);
-})
+}, createGeneric=FALSE)
 
 
 
@@ -156,7 +156,7 @@ setMethodS3("getPath", "FileRspResponse", function(this, ...) {
 #*/#########################################################################
 setMethodS3("getName", "FileRspResponse", function(this, ...) {
   basename(this$file);
-})
+}, createGeneric=FALSE)
 
 
 
@@ -189,7 +189,7 @@ setMethodS3("getName", "FileRspResponse", function(this, ...) {
 #*/#########################################################################
 setMethodS3("getAbsolutePath", "FileRspResponse", function(this, ...) {
   getAbsolutePath(this$file);
-})
+}, createGeneric=FALSE)
 
 
 

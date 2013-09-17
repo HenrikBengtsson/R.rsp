@@ -1,4 +1,5 @@
 library("R.rsp")
+library("R.utils") # Arguments
 
 path <- system.file("rsp_LoremIpsum", package="R.rsp")
 pathname <- file.path(path, "LoremIpsum.md")

@@ -68,7 +68,7 @@ setMethodS3("finalize", "HttpDaemon", function(this, ...) {
   if (isStarted(this))
     stop(this);
   this$count <- this$count - 1L;
-}, protected=TRUE)
+}, protected=TRUE, createGeneric=FALSE)
 
 
 setMethodS3("getCount", "HttpDaemon", function(static, ...) {
@@ -722,7 +722,7 @@ setMethodS3("start", "HttpDaemon", function(x, rootPaths=NULL, port=8080, defaul
   port <- Arguments$getInteger(tcltk::tclvalue(res), range=c(0L,65535L));
 
   invisible(port);
-}, static=TRUE)
+}, static=TRUE, createGeneric=FALSE)
 
 
 

@@ -1,4 +1,5 @@
 library("R.rsp")
+library("R.utils") # Arguments
 
 # A knitr Rnw file
 path <- system.file("rsp_LoremIpsum", package="R.rsp")

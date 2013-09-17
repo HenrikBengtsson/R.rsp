@@ -11,7 +11,7 @@
 #  An RspException is an @see "R.oo::Exception" that is thrown during
 #  the processing of an RSP document.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -21,7 +21,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -59,7 +59,7 @@ setMethodS3("getMessage", "RspPreprocessingException", function(this, ...) {
     itemStr <- "";
   }
   sprintf("An error occured while preprocessing RSP directive%s: %s", itemStr, msg);
-})
+}, createGeneric=FALSE)
 
 setMethodS3("getItem", "RspPreprocessingException", function(this, ...) {
   this$item;

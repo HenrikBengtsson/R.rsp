@@ -146,6 +146,9 @@
 # @alias tidy
 # @alias view
 #
+# @alias parse
+# @alias parse.default
+#
 #
 # \description{
 # This page contains aliases for all "non-documented" objects that

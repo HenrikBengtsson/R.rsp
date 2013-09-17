@@ -11,6 +11,8 @@
 # Required R packages
 library("R.rsp")
 library("R.devices")
+library("R.utils") # hpaste()
+hpaste <- R.utils::hpaste
 %>
 
 <% t0 <- Sys.time() %>
@@ -119,7 +121,7 @@ library("R.devices")
 # Set default graphics options
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Use greater objects by default
-setOption("devNew/args/par", list(lwd=2));
+options("devNew/args/par"=list(lwd=2));
 
 # Change the default dimensions for PNGs
 devOptions("png", width=840)
@@ -128,7 +130,7 @@ devOptions("png", width=840)
 
 \title{<%@meta name="title"%><%@ifeq docVersion = "devel"%>*<%@endif%>}
 \author{<%@meta name="author"%>}
-\date{<%=format(as.Date(getDate(R.rsp)), format="%B %d, %Y")%>}
+\date{<%=format(as.Date(R.rsp$date), format="%B %d, %Y")%>}
 
 \begin{document}
 
@@ -916,7 +918,7 @@ The \code{toPDF()} and \code{toPNG()} functions of the \pkg{R.devices} package a
 library("R.devices")
 
 # Use greater objects by default
-setOption("devNew/args/par", list(lwd=2));
+options("devNew/args/par"=list(lwd=2));
 
 toPDF("myFigure,yeah,cool", aspectRatio=0.6, { 
   curve(dnorm, from=-5, to=+5)
@@ -966,7 +968,7 @@ As a final remark, note that by replacing \code{toPDF()} with \code{toPNG()}, a 
 An image file is included in an HTML document via its pathname.  To have \code{toPNG()}, \code{toSVG()} and so on, return the (relative) pathname of files created, add the following to the top of your RSP document:
 \begin{rspVerbatim}
 <\%
-setOption("devEval/args/field", "pathname")
+options("devEval/args/field"="pathname")
 \%>
 \end{rspVerbatim}
 With this setting, one can then include PNG image files in the HTML document as
@@ -1006,7 +1008,7 @@ Continuing, any formatting of the capture has to be done in the format of the ou
 {\textbackslash}begin\{verbatim\}
 <\%=evalCapture(\{
 for (kk in 1:3) \{
-  printf("Iteration #%d{\bs}n", kk)
+  cat("Iteration #", kk, "{\bs}n", sep="")
 \}
 
 print(Sys.time())
@@ -1019,7 +1021,7 @@ produces
 \begin{verbatim}
 <%=evalCapture({
 for (kk in 1:3) {
-  printf("Iteration #%d\n", kk)
+  cat("Iteration #", kk, "\n", sep="")
 }
 
 print(Sys.time())

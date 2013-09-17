@@ -177,7 +177,7 @@ setMethodS3("setMetadata", "RspDocument", function(object, metadata=NULL, name, 
 #*/#########################################################################
 setMethodS3("getSource", "RspDocument", function(object, ...) {
   getAttribute(object, "source", default=as.character(NA));
-}, protected=TRUE)
+}, protected=TRUE, createGeneric=FALSE)
 
 
 
@@ -214,7 +214,7 @@ setMethodS3("getPath", "RspDocument", function(object, ...) {
     path <- getParent(pathname);
   }
   path;
-}, protected=TRUE)
+}, protected=TRUE, createGeneric=FALSE)
 
 
 
@@ -688,7 +688,7 @@ setMethodS3("trim", "RspDocument", function(object, ..., verbose=FALSE) {
   verbose && exit(verbose);
 
   doc;
-}, protected=TRUE) # trim()
+}, protected=TRUE, createGeneric=FALSE) # trim()
 
 
 

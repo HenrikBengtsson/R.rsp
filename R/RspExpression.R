@@ -8,7 +8,7 @@
 #
 #  An RspExpression is an @see RspConstruct of format \code{<\% ... \%>}.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -19,7 +19,7 @@
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -38,10 +38,10 @@ setConstructorS3("RspExpression", function(...) {
 #  @classhierarchy
 #
 #  An RspUnparsedExpression is an @see RspExpression that still has not
-#  been parsed for its class and content.  After @see "parse":ing such 
+#  been parsed for its class and content.  After @see "parse":ing such
 #  an object, the class of this RSP expression will be known.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -51,7 +51,7 @@ setConstructorS3("RspExpression", function(...) {
 # \section{Fields and Methods}{
 #  @allmethods
 # }
-# 
+#
 # @author
 #
 # @keyword internal
@@ -85,7 +85,7 @@ setConstructorS3("RspUnparsedExpression", function(...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("parse", "RspUnparsedExpression", function(expr, ...) {
   suffixSpecs <- attr(expr, "suffixSpecs");
   body <- expr;
@@ -115,7 +115,7 @@ setMethodS3("parse", "RspUnparsedExpression", function(expr, ...) {
     res <- RspCode(code, echo=TRUE);
     attr(res, "suffixSpecs") <- suffixSpecs;
     return(res);
-  } 
+  }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # RSP Scripting Elements and Variables
@@ -127,7 +127,7 @@ setMethodS3("parse", "RspUnparsedExpression", function(expr, ...) {
   res <- RspCode(trim(body));
   attr(res, "suffixSpecs") <- suffixSpecs;
   res;
-}) # parse()
+}, createGeneric=FALSE) # parse()
 
 
 

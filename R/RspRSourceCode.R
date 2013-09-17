@@ -74,7 +74,7 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
   expr <- base::parse(text=code);
 
   expr;
-}, protected=TRUE) # parse()
+}, createGeneric=FALSE, protected=TRUE) # parse()
 
 
 
@@ -148,7 +148,7 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(),
   }
 
   res;
-}) # evaluate()
+}, createGeneric=FALSE) # evaluate()
 
 
 setMethodS3("findProcessor", "RspRSourceCode", function(object, ...) {

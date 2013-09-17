@@ -42,9 +42,6 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("rcompile", "default", function(..., file=NULL, path=NULL, envir=parent.frame(), args="*", until="*", as=c("RspString", "RspDocument"), verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::nnn() was called.
-  suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -95,9 +92,6 @@ setMethodS3("rcompile", "default", function(..., file=NULL, path=NULL, envir=par
 
 
 setMethodS3("rcompile", "RspString", function(object, envir=parent.frame(), args="*", ..., until="*", as=c("RspString", "RspDocument"), verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::nnn() was called.
-  suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -160,9 +154,6 @@ setMethodS3("rcompile", "RspString", function(object, envir=parent.frame(), args
 
 
 setMethodS3("rcompile", "RspDocument", function(object, envir=parent.frame(), ..., verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::nnn() was called.
-  suppressPackageStartupMessages(require("R.utils", quietly=TRUE)) || throw("Package not loaded: R.utils");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

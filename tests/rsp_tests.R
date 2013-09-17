@@ -1,4 +1,6 @@
 library("R.rsp")
+library("R.utils") # Arguments
+
 verbose <- Arguments$getVerbose(TRUE)
 
 # Change option (used in one or more of the tests)

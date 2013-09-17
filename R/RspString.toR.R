@@ -24,7 +24,7 @@
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("toR", "RspString", function(object, envir=parent.frame(), ...) {
   expr <- parse(object, preprocess=TRUE, envir=envir, ...);
   toR(expr, ...);
@@ -57,11 +57,11 @@ setMethodS3("toR", "RspString", function(object, envir=parent.frame(), ...) {
 # \seealso{
 #   @seeclass
 # }
-#*/######################################################################### 
+#*/#########################################################################
 setMethodS3("evaluate", "RspString", function(object, envir=parent.frame(), ...) {
   rCode <- toR(object, ...);
   process(rCode, envir=envir, ...);
-})
+}, createGeneric=FALSE)
 
 
 

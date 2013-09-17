@@ -3,7 +3,7 @@ library("R.rsp")
 ## Report template
 report <- function() {
   cat("Report:\n")
-  printf("a=%g\n", a)
+  cat(sprintf("a=%g\n", a))
   cat("------\n")
 } # report()
 

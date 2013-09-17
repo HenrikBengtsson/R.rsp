@@ -65,7 +65,7 @@ setMethodS3("print", "RspSourceCode", function(x, ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("evaluate", "RspSourceCode", abstract=TRUE);
+setMethodS3("evaluate", "RspSourceCode", abstract=TRUE, createGeneric=FALSE);
 
 
 

@@ -32,7 +32,7 @@
 
 \title{<%@meta name="title"%>}
 \author{<%@meta name="author"%>}
-\date{<%=format(as.Date(getDate(R.rsp)), format="%B %d, %Y")%>}
+\date{<%=format(as.Date(R.rsp$date), format="%B %d, %Y")%>}
 
 \begin{document}
 

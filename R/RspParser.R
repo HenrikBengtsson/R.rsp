@@ -367,7 +367,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 #*/#########################################################################
 setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), as=c("RspDocument", "RspString"), verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
-  suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
+  ##suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
@@ -604,7 +604,7 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
   verbose && exit(verbose);
 
   returnAs(doc, as=as);
-}, protected=TRUE) # parse()
+}, createGeneric=FALSE, protected=TRUE) # parse()
 
 
 

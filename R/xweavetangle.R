@@ -72,8 +72,9 @@ rspWeave <- function(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env())
 # @keyword internal
 #*/###########################################################################
 rspTangle <- function(file, ..., envir=new.env()) {
-  require("R.utils") || throw("Package not loaded: R.utils");
-
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'file':
   file <- Arguments$getReadablePathname(file);
 

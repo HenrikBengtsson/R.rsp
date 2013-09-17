@@ -62,7 +62,7 @@ setConstructorS3("RspPage", function(pathname=NULL, ...) {
 #*/#########################################################################
 setMethodS3("getPath", "RspPage", function(this, ...) {
   getParent(this$pathname);
-})
+}, createGeneric=FALSE)
 
 
 
@@ -95,7 +95,7 @@ setMethodS3("getPath", "RspPage", function(this, ...) {
 #*/#########################################################################
 setMethodS3("getName", "RspPage", function(this, ...) {
   basename(this$pathname);
-})
+}, createGeneric=FALSE)
 
 
 
@@ -128,7 +128,7 @@ setMethodS3("getName", "RspPage", function(this, ...) {
 #*/#########################################################################
 setMethodS3("getAbsolutePath", "RspPage", function(this, ...) {
   getAbsolutePath(this$pathname);
-})
+}, createGeneric=FALSE)
 
 
 

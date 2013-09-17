@@ -248,7 +248,7 @@ setMethodS3("findProcessor", "RspProduct", function(object, ...) {
 #*/###########################################################################
 setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.frame(), workdir=NULL, ..., recursive=TRUE, verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::rsp() was called.
-  suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
+  ##suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

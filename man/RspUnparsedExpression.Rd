@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspUnparsedExpression}
+\name{RspUnparsedExpression}
 \docType{class}
 \alias{RspUnparsedExpression}
 
 
- \title{The RspUnparsedExpression class}
+\title{The RspUnparsedExpression class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspUnparsedExpression}\cr
 
 \code{character}\cr
@@ -35,21 +35,21 @@ extends \link[R.rsp]{RspExpression}\cr
 
 
 
-  An RspUnparsedExpression is an \code{\link{RspExpression}} that still has not
-  been parsed for its class and content.  After \code{\link{parse}}():ing such
-  an object, the class of this RSP expression will be known.
- }
+ An RspUnparsedExpression is an \code{\link{RspExpression}} that still has not
+ been parsed for its class and content.  After \code{\link{parse}}():ing such
+ an object, the class of this RSP expression will be known.
+}
 
- \usage{
+\usage{
 RspUnparsedExpression(...)
 }
 
- \arguments{
-   \item{...}{Arguments passed to \code{\link{RspExpression}}.}
- }
+\arguments{
+  \item{...}{Arguments passed to \code{\link{RspExpression}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:parse.RspUnparsedExpression]{parse}} \tab Parses the unknown RSP expression for its class.\cr
 }
@@ -65,9 +65,9 @@ getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes
 all.equal, as.Date, as.POSIXlt, as.data.frame, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

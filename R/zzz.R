@@ -1,5 +1,16 @@
 .conflicts.OK <- TRUE
 
+# Temporary workaround until R.oo::Class$forName() supports
+# searching namespaces as well. /HB 2013-09-16
+.Class_forName <- function(name, envir=NULL) {
+  if (is.environment(envir) && exists(name, mode="function", envir=envir)) {
+    clazz <- get(name, mode="function", envir=envir);
+    if (inherits(clazz, "Class")) return(clazz);
+  }
+  Class$forName(name);
+} # .Class_forName()
+
+
 .onLoad <- function(libname, pkgname) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Register vignette engines

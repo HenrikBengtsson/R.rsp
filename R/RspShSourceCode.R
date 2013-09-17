@@ -108,7 +108,7 @@ setMethodS3("evaluate", "RspShSourceCode", function(object, envir=parent.frame()
   }
 
   res;
-}) # evaluate()
+}, createGeneric=FALSE) # evaluate()
 
 
 setMethodS3("findProcessor", "RspShSourceCode", function(object, ...) {

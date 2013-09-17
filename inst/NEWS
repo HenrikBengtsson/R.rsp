@@ -1,6 +1,13 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.23 [2013-09-16]
+o ROBUSTNESS: Package no longer assumes that R.utils is attached.
+o ROBUSTNESS: Now the package also works when only loaded.
+o ROBUSTNESS: Now all S3 methods areformally declared in NAMESPACE.
+o Bumped up package dependencies.
+
+
 Version: 0.9.22 [2013-09-10]
 o CLEANUP: Package no longer utilizes ':::'.
 

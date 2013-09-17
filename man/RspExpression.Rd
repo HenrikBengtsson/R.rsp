@@ -6,15 +6,15 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspExpression}
+\name{RspExpression}
 \docType{class}
 \alias{RspExpression}
 
 
- \title{The RspExpression class}
+\title{The RspExpression class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspExpression}\cr
 
 \code{character}\cr
@@ -33,20 +33,20 @@ extends \link[R.rsp]{RspConstruct}\cr
 
 
 
-  An RspExpression is an \code{\link{RspConstruct}} of format \code{<\% ... \%>}.
- }
+ An RspExpression is an \code{\link{RspConstruct}} of format \code{<\% ... \%>}.
+}
 
- \usage{
+\usage{
 RspExpression(...)
 }
 
- \arguments{
-   \item{object}{A R object.}
-   \item{...}{Not used.}
- }
+\arguments{
+  \item{object}{A R object.}
+  \item{...}{Not used.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \emph{No methods defined}.
 
 
@@ -60,9 +60,9 @@ getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes
 all.equal, as.Date, as.POSIXlt, as.data.frame, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}
