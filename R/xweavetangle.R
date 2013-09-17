@@ -34,7 +34,23 @@
 # @keyword internal
 #*/###########################################################################
 rspWeave <- function(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env()) {
-  rfile(file, ..., workdir=".", postprocess=postprocess, envir=envir, verbose=!quiet);
+  ## WORKAROUND: For unknown reasons, the R.oo package needs to be
+  ## attached in order for 'R CMD build' to build the R.rsp package.
+  ## If not, the generated RSP-to-R script becomes corrupt and contains
+  ## invalid symbols, at least for '<%= ... %>' RSP constructs.
+  ## /HB 2013-09-17
+#  pkg <- "R.oo";
+#  require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg);
+
+  res <- rfile(file, ..., workdir=".", postprocess=postprocess, envir=envir, verbose=!quiet);
+
+  # DEBUG: Store generated file? /HB 2013-09-17
+  path <- Sys.getenv("RSP_DEBUG_PATH");
+  if (nchar(path) > 0L) {
+    R.utils::copyFile(res, file.path(path, basename(res)), overwrite=TRUE);
+  }
+
+  invisible(res);
 } # rspWeave()
 
 
@@ -72,6 +88,14 @@ rspWeave <- function(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env())
 # @keyword internal
 #*/###########################################################################
 rspTangle <- function(file, ..., envir=new.env()) {
+  ## WORKAROUND: For unknown reasons, the R.oo package needs to be
+  ## attached in order for 'R CMD build' to build the R.rsp package.
+  ## If not, the generated RSP-to-R script becomes corrupt and contains
+  ## invalid symbols, at least for '<%= ... %>' RSP constructs.
+  ## /HB 2013-09-17
+#  pkg <- "R.oo";
+#  require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg);
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
