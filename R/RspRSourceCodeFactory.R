@@ -272,7 +272,13 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
     setInlineRsp("default", function(x, ...) .base_paste0(x, collapse=""))
 
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    ## RSP source code script
+    ## RSP source code script [BEGIN]
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ');
+
+  res$footer <- minIndent('
+    ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    ## RSP source code script [END]
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ');
 
@@ -284,6 +290,10 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
 
 ##############################################################################
 # HISTORY:
+# 2013-09-17
+# o Added a footer comment to the generated RSP source code script.
+#   This was done to ease troubleshooting when incomplete scripts are
+#   generated.
 # 2013-07-26
 # o GENERALIZATION: Now all return values are processed via generic
 #   function rpaste() before being outputted via cat().
