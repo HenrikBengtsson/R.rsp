@@ -66,6 +66,7 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
       textT <- escapeRspText(textT);
       codeT <- sprintf(".rout(\"%s\")", textT);
       code <- c(code, codeT);
+      textT <- codeT <- NULL; # Not needed anymore
       text <- substring(text, first=1025L);
     }
     if (is.null(code)) {
@@ -84,21 +85,23 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
 
     # Parse and validate code chunk
     # (i) Try without { ... }
+    codeT <- sprintf("(%s)", code);
     rexpr <- tryCatch({
-      codeT <- sprintf("(%s)", code);
       base::parse(text=codeT);
     }, error = function(ex) NULL);
 
     # (ii) Otherwise retry with { ... }
     if (is.null(rexpr)) {
       code <- sprintf("{%s}", code);
+      codeT <- sprintf("(%s)", code);
       rexpr <- tryCatch({
-        codeT <- sprintf("(%s)", code);
         base::parse(text=codeT);
       }, error = function(ex) {
         throw(sprintf("RSP code chunk (#%d) does not contain a complete R expression: %s", index, ex));
       });
     }
+
+    rexpr <- NULL; # Not needed anymore
 
     echo <- getEcho(expr);
     ret <- getInclude(expr);
