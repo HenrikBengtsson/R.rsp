@@ -170,10 +170,11 @@ setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "tangle"
 
   if (is.element(format, c("tangle", "safetangle", "demo", "unsafedemo"))) {
     # Drop header
-    idx <- grep('## RSP source code script', code)[1L];
-    if (!is.na(idx)) {
-      code <- code[-seq(length=idx+1L)];
-    }
+    idx <- grep('## RSP source code script [BEGIN]', code, fixed=TRUE)[1L];
+    if (!is.na(idx)) code <- code[-seq(length=idx+1L)];
+    # Drop footer
+    idx <- grep('## RSP source code script [END]', code, fixed=TRUE)[1L];
+    if (!is.na(idx)) code <- code[seq(length=idx-2L)];
   }
 
   if (format == "demo") {
@@ -237,6 +238,8 @@ setMethodS3("tangle", "RspRSourceCode", function(code, format=c("safetangle", "t
 
 ##############################################################################
 # HISTORY:
+# 2013-09-18
+# o Now tidy() handles the new RSP R source code footer comments.
 # 2013-08-04
 # o Added argument 'output' to evaluate() for RspRSourceCode.
 # 2013-07-29

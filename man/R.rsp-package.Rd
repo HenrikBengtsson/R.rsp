@@ -25,8 +25,9 @@
 \section{To get started}{
   To get started, see:
   \enumerate{
-    \item For a one-page overview of RSP, see vignette '\href{../doc/index.html}{RSP Markup Language - Reference Card}'.
     \item For a detailed description of RSP, see vignette '\href{../doc/index.html}{Dynamic document creation using RSP}'.
+    \item For a quick overview of RSP, see vignette '\href{../doc/index.html}{Introductory slides on RSP}'.
+    \item For a one-page overview of RSP, see vignette '\href{../doc/index.html}{RSP Markup Language - Reference Card}'.
     \item To included RSP vignettes in a package, see '\href{../doc/index.html}{Include RSP and other non-Sweave vignettes in R packages}'.
     \item To compile a RSP-embedded text document to a final document, use \code{\link{rfile}}(), e.g. \code{rfile("report.tex.rsp")} outputs file 'report.pdf' and \code{rfile("report.md.rsp")} outputs file 'report.html'.
     \item To compile a RSP document (file or string) and output the result to standard output or a string, use \code{\link{rcat}}() an \code{\link{rstring}}(), respectively.

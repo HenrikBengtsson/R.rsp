@@ -26,6 +26,26 @@
   invisible(res);
 } # .requirePkg()
 
+# The weave function of vignette engine 'md.rsp+knitr:pandoc'
+`.weave_md.rsp+knitr:pandoc` <- function(..., envir=new.env()) {
+  # Assert that knitr and pandoc are installed
+  .requirePkg("knitr");
+  findPandoc(mustExist=TRUE);
+
+  # Process *.md.rsp to *.md
+  md <- rspWeave(..., preprocess=FALSE, envir=envir);
+
+  # Pandoc *.md to *.html
+  format <- Sys.getenv("R.rsp/pandoc/args/format", "html");
+  html <- knitr::pandoc(md, format=format);
+  html <- RspFileProduct(html);
+
+  # Remove *.md
+  file.remove(md);
+
+  invisible(html);
+} # `.weave_md.rsp+knitr:pandoc`()
+
 
 .onLoad <- function(libname, pkgname) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -44,24 +64,8 @@
     # Markdown RSP + knitr::pandoc engine (non-offical trial version)
     vignetteEngine("md.rsp+knitr:pandoc", package=pkgname,
                     pattern="[.]md[.]rsp$",
-                    weave=function(..., envir=new.env()) {
-                      # Assert that knitr and pandoc are installed
-                      .requirePkg("knitr");
-                      findPandoc(mustExist=TRUE);
-
-                      # Process *.md.rsp to *.md
-                      md <- rspWeave(..., preprocess=FALSE, envir=envir);
-
-                      # Pandoc *.md to *.html
-                      format <- Sys.getenv("R.rsp/pandoc/args/format", "html");
-                      html <- knitr::pandoc(md, format=format);
-                      html <- RspFileProduct(html);
-
-                      # Remove *.md
-                      file.remove(md);
-
-                      invisible(html);
-                    }, tangle=rspTangle);
+                    weave=`.weave_md.rsp+knitr:pandoc`,
+                    tangle=rspTangle);
 
 ##    # "as-is" engine
 ##    vignetteEngine("asis", package=pkgname, pattern="[.](pdf|html)[.]asis$",
