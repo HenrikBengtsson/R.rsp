@@ -18,7 +18,7 @@
 }
 
 \usage{
-rspWeave(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env())
+rspWeave(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env(), .engineName="rsp")
 }
 
 \arguments{
@@ -27,6 +27,7 @@ rspWeave(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env())
   \item{quiet}{If \code{\link[base:logical]{TRUE}}, no verbose output is generated.}
   \item{envir}{The \code{\link[base]{environment}} where the RSP document is
         parsed and evaluated.}
+  \item{.engineName}{Internal only.}
 }
 
 \value{

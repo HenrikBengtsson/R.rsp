@@ -16,6 +16,7 @@
 #   \item{quiet}{If @TRUE, no verbose output is generated.}
 #   \item{envir}{The @environment where the RSP document is
 #         parsed and evaluated.}
+#   \item{.engineName}{Internal only.}
 # }
 #
 # \value{
@@ -33,8 +34,42 @@
 # @keyword IO
 # @keyword internal
 #*/###########################################################################
-rspWeave <- function(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env()) {
+rspWeave <- function(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env(), .engineName="rsp") {
   res <- rfile(file, ..., workdir=".", postprocess=postprocess, envir=envir, verbose=!quiet);
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # WORKAROUND: 'R CMD build' seems to ignore the %\VignetteEngine{<engine>}
+  # markup for early 3.0.x versions.  If this is the case, then make sure
+  # we used the correct engine ('R.rsp::rsp') here.
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (.engineName == "rsp") {
+    engineName <- getMetadata(res, "engine");
+    if (!is.null(engineName)) {
+      rver <- getRversion();
+      rrev <- paste(R.version[["svn rev"]], "", sep="");
+      isBuggy <- ("3.0.0" <= rver && rver < "3.0.2" && rrev < "63932");
+      if (isBuggy) {
+        # Find the vignette engine
+        engine <- tryCatch({
+          vignetteEngine <- get("vignetteEngine", envir=asNamespace("tools"));
+          vignetteEngine(engineName, package="R.rsp");
+        }, error = function(engine) NULL);
+        if (is.null(engine)) {
+          throw(sprintf("No such vignette engine: %%\\VignetteEngine{%s}", engineName));
+        }
+
+        # Was another vignette engine than 'rsp' intended?
+        if (engine$name != "rsp") {
+          # Assert that the filename pattern is correct
+          if (regexpr(engine$pattern, basename(file)) == -1L) {
+            throw(sprintf("The filename pattern ('%s') of the intended vignette engine ('%s::%s') does not match the file ('%s') to be processed.", engine$pattern, engine$package, engine$name, basename(file)));
+          }
+          # Use the proper vignette engine
+          res <- engine$weave(file, ..., envir=envir);
+        } # if (engine$name != "rsp")
+      } # if (isBuggy)
+    } # if (!is.null(engineName))
+  } # if (.engineName == "rsp")
 
   # DEBUG: Store generated file? /HB 2013-09-17
   path <- Sys.getenv("RSP_DEBUG_PATH");
@@ -80,9 +115,9 @@ rspWeave <- function(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env())
 # @keyword internal
 #*/###########################################################################
 rspTangle <- function(file, ..., envir=new.env()) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'file':
   file <- Arguments$getReadablePathname(file);
 

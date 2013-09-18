@@ -1250,10 +1250,12 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       # Official R vignette markup
       "IndexEntry"="title",
       "Keyword"="keywords", "Keywords"="keywords",
+      "Engine"="engine",
       # Custom
       "Subject"="subject",
       "Author"="author",
-      "Date"="date"
+      "Date"="date",
+      "Tangle"="tangle"
     );
 
     metadata <- grep(pattern, bfr, value=TRUE);
@@ -1982,6 +1984,10 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 ##############################################################################
 # HISTORY:
+# 2013-09-18
+# o Now preprocess() of RspDocument also records R vignette meta data
+#   'engine' (from %\VignetteEngine{}) and RSP custom 'tangle' (from
+#   %\VignetteTangle{}).
 # 2013-06-30
 # o Harmonized get- and setMetadata().
 # 2013-03-26

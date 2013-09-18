@@ -33,7 +33,8 @@
   findPandoc(mustExist=TRUE);
 
   # Process *.md.rsp to *.md
-  md <- rspWeave(..., preprocess=FALSE, envir=envir);
+  md <- rspWeave(..., preprocess=FALSE, envir=envir,
+                      .engineName="R.rsp::md.rsp+knitr:pandoc");
 
   # Pandoc *.md to *.html
   format <- Sys.getenv("R.rsp/pandoc/args/format", "html");

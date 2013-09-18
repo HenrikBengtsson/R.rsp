@@ -2,6 +2,9 @@ Package: R.rsp
 ==============
 
 Version: 0.9.24 [2013-09-18]
+o Now preprocess() of RspDocument also records R vignette meta data
+  'engine' (from %\VignetteEngine{}) and RSP custom 'tangle' (from
+  %\VignetteTangle{}).
 o DOCUMENTATION: Updated the 'Dynamic document creation using RSP'
   vignette with information on how to embedded image files as
   data URI into HTML and Markdown.
