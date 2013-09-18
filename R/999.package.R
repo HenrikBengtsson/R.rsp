@@ -20,6 +20,14 @@
 #   }
 # }
 #
+# \section{Acknowledgments}{
+#   Several of the post-processing features of this package utilize
+#   packages such as \pkg{base64enc}, \pkg{ascii}, \pkg{knitr}, and
+#   \pkg{markdown}.
+#   Not enough credit can be given to the authors and contributors
+#   of those packages.  Thank you for your great work.
+# }
+#
 # \section{License}{
 #   The releases of this package is licensed under
 #   LGPL version 2.1 or newer.
