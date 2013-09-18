@@ -10,8 +10,7 @@
 <% t0 <- Sys.time() %>
 
 <%
-# Required R packages
-library("R.rsp") # For 'R.rsp' object
+R.rsp <- R.oo::Package("R.rsp");
 %>
 
 \documentclass[letter,12pt]{article}

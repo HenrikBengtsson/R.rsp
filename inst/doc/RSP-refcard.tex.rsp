@@ -11,8 +11,7 @@
 \usepackage[landscape]{geometry}
 
 <%
-# Required R packages
-library("R.rsp") # For 'R.rsp' object
+R.rsp <- R.oo::Package("R.rsp");
 %>
 
 <%@logical twocolumn="${twocolumn}" default="FALSE" description="Specifies whether a two- or one-column layout should be used."%>
