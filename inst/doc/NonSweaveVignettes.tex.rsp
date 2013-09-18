@@ -9,6 +9,11 @@
 
 <% t0 <- Sys.time() %>
 
+<%
+# Required R packages
+library("R.rsp") # For 'R.rsp' object
+%>
+
 \documentclass[letter,12pt]{article}
 \usepackage{xspace}
 \usepackage{alltt}
