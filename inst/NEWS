@@ -2,13 +2,16 @@ Package: R.rsp
 ==============
 
 Version: 0.9.24 [2013-09-17]
-o BUG FIX/WORKAROUND: For unknown reasons the R.rsp package fails
-  to build due to corrupt RSP vignette parsing, iff the R.oo package
-  is not attached.  From troubleshooting it appears to be due to
-  invalid strings (containing NULs) being generated somewhere in
-  one or more of the gsub()/substring() calls.  Until solved, 
-  the R.oo package is attached by the vignette "Sweave" engine
-  as a workaround.
+o BUG FIX/WORKAROUND: For unknown reasons the R.rsp package and
+  some of its test vignettes fail to build due to corrupt RSP 
+  parsing, iff the R.oo package is not attached.  From troubleshooting
+  it appears to be due to invalid strings (containing NULs) being 
+  generated somewhere in one or more of the gsub()/substring() calls,
+  but this is still not be narrowed down.  Until solved, the R.oo
+  package is now silently attached whenever the internal raw RSP
+  parser is used.
+o BUG FIX: Two of the package vignettes assumed that the 'R.rsp'
+  package would be attached.
 
 
 Version: 0.9.23 [2013-09-16]

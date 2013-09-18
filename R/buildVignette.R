@@ -45,8 +45,7 @@ buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = 
     ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ### BEGIN: Workaround until buildVignette() is in the 'tools' package.
     ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    pkg <- "tools";
-    require(pkg, character.only=TRUE) || throw("Package not loaded: ", pkg);
+    .requirePkg("tools");
     ns <- getNamespace("tools");
     .get_vignette_metadata <- get(".get_vignette_metadata", mode="function", envir=ns);
     vignette_is_tex <- get("vignette_is_tex", mode="function", envir=ns);

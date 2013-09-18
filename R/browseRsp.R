@@ -43,9 +43,6 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("browseRsp", "default", function(url=paste(urlRoot, path, sep="/"), urlRoot=sprintf("http://%s:%d", host, port), host="127.0.0.1", port=8074L, path="", start=TRUE, stop=FALSE, ...) {
-  # Support R.rsp::browseRsp().
-  require("R.rsp") || throw("Package not loaded: R.rsp");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

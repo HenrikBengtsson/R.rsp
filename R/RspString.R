@@ -215,9 +215,6 @@ setMethodS3("getSource", "RspString", function(object, ...) {
 # }
 #*/#########################################################################
 setMethodS3("parse", "RspString", function(object, ..., envir=parent.frame(), parser=RspParser()) {
-  # Load the package (super quietly), in case R.rsp::nnn() was called.
-  ##suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
-
   # Argument 'parser':
   parser <- Arguments$getInstanceOf(parser, "RspParser");
 

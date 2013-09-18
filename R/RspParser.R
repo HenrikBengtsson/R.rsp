@@ -60,6 +60,14 @@ setConstructorS3("RspParser", function(...) {
 # }
 #*/#########################################################################
 setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", "directive", "expression"), commentLength=-1L, ..., verbose=FALSE) {
+  ## WORKAROUND: For unknown reasons, the R.oo package needs to be
+  ## attached in order for 'R CMD build' to build the R.rsp package.
+  ## If not, the generated RSP-to-R script becomes corrupt and contains
+  ## invalid symbols, at least for '<%= ... %>' RSP constructs.
+  ## /HB 2013-09-17
+##  .requirePkg("R.methodsS3", quietly=TRUE);
+  .requirePkg("R.oo", quietly=TRUE);
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -391,9 +399,6 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 # }
 #*/#########################################################################
 setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), as=c("RspDocument", "RspString"), verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::nnn() was called.
-  ##suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

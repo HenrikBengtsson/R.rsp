@@ -10,9 +10,9 @@
 # @synopsis
 #
 # \arguments{
-#   \item{filename, path}{The filename and (optional) path of the 
+#   \item{filename, path}{The filename and (optional) path of the
 #      RSP document to be compiled.}
-#   \item{text}{A @character @vector of RSP code to be processed, 
+#   \item{text}{A @character @vector of RSP code to be processed,
 #      iff argument \code{filename} is not given.}
 #   \item{response}{Specifies where the final output should be sent.
 #      If argument \code{text} is given, then @see "base::stdout" is used.
@@ -44,11 +44,8 @@
 # @keyword file
 # @keyword IO
 # @keyword internal
-#*/########################################################################### 
+#*/###########################################################################
 setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, response=NULL, ..., envir=parent.frame(), outPath=".", postprocess=TRUE, verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::rsp() was called.
-  suppressPackageStartupMessages(require("R.rsp", quietly=TRUE)) || throw("Package not loaded: R.rsp");
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -60,7 +57,7 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   if (!is.null(text)) {
     text <- Arguments$getCharacter(text);
   }
-  
+
   # Arguments 'filename' & 'path':
   if (!is.null(filename)) {
     pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);

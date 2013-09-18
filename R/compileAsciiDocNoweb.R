@@ -28,7 +28,7 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("compileAsciiDocNoweb", "default", function(filename, path=NULL, ..., outPath=".", postprocess=TRUE, verbose=FALSE) {
-  suppressPackageStartupMessages(require("ascii", quietly=TRUE)) || throw("Package not loaded: ascii");
+  .requirePkg("ascii", quietly=TRUE);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
