@@ -1,7 +1,7 @@
 Package: R.rsp
 Version: 0.9.24
 Depends: R (>= 2.5.0)
-Imports: stats, tools, R.methodsS3 (>= 1.5.1), R.oo (>= 1.15.1), R.utils (>= 1.27.1)
+Imports: stats, utils, tools, R.methodsS3 (>= 1.5.1), R.oo (>= 1.15.1), R.utils (>= 1.27.1)
 Suggests: tcltk, digest (>= 0.6.3), R.devices (>= 2.5.0), ascii, markdown, knitr
 VignetteBuilder: R.rsp
 Date: 2013-09-17
