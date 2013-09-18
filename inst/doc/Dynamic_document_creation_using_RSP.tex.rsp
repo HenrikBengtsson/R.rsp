@@ -555,7 +555,7 @@ To disable the trimming of trailing whitespace and line breaks, add an \emph{end
 \label{PreprocessingDirectives}
 An \emph{RSP preprocessing directive}, or short an \emph{RSP directive}, is an RSP construct that starts with an `\code{@}' followed by a \emph{directive} and zero or more \emph{named arguments}, e.g. \code{<\%@include file="random.tex.rsp"\%>}.    RSP directives can for instance be used to include the content of another file or conditionally include/exclude parts of the existing document.  RSP preprocessing directives facilitate modularization of RSP documents such that the same RSP module can be reused in many places, which in turn minimizes and often eliminates the manual and often error-prone process of cut-and-pasting content between documents.
 %
-RSP preprocessing directives are processed during the parsing of the RSP document.  This is done \emph{after} RSP comments have been dropped and \emph{before} RSP code expressions are parsed.  This means that:
+RSP preprocessing directives are processed during the parsing of the RSP document.  This is done \emph{after} RSP comments have been dropped and \emph{before} RSP code expressions are parsed.  This means that
 \begin{itemize}
  \item RSP comments can be used to commenting out and hence exclude RSP preprocessing directives, e.g. \code{<\%--- <\%@include file=\lb"random.tex.rsp"\%> ---\%>}.
  \item RSP preprocessing directives may insert new RSP code expressions as if they where part of the original RSP document, e.g. \code{<\%@include file="random.tex.rsp"\%>}.  Any RSP comments inserted will be dropped as expected.  If other RSP directives are inserted, they are processed immediately.
@@ -804,7 +804,7 @@ Note that by combining the above aliases with the short format, one can write \c
 \subsubsection{Compiling a standalone RSP document from a preprocessed but not evaluated RSP document template}
 However convenient it is to use a modularized RSP document that reuses many different RSP subdocuments, it may be tedious to share such as document with others.  In order for someone else to compile the same RSP document, it is necessary to make sure all files being used are also shared with the receiver together with instructions where to put them.  Some of these files may only be included under certain conditions, making the just add to the overall clutter at the receiver's end.
  In such cases, it may be useful to produce \emph{a preprocessed but not yet evaluated RSP document} from the main RSP document.  Such an RSP document will not contain any preprocessing directives and in that sense be self-contained and easier to share.  It is also likely be easier for the receiver to follow.
-To compile such a stand-alone RSP document, do:
+To compile such a stand-alone RSP document, do
 \begin{escapeRspVerbatim}
 > s <- rclean(file="random.txt.rsp")
 \end{escapeRspVerbatim}
@@ -964,11 +964,11 @@ As a final remark, note that by replacing \code{toPDF()} with \code{toPNG()}, a 
 
 
 \subsubsection{Including image files in HTML}
-An image file is included in an HTML document via its pathname.  To have \code{toPNG()}, \code{toSVG()} and so on, return the (relative) pathname of files created, add the following to the top of your RSP document:
+Image files can be included in HTML documents either by linking to it via the images pathname or by embedding the content of the image files as a data URI.  
+
+In order to use the first approach, add the following \pkg{R.devices} options to the top of your RSP document in order to have \code{toPNG()}, \code{toSVG()} etc. to return the (relative) pathname of image files created:
 \begin{rspVerbatim}
-<\%
-options("devEval/args/field"="pathname")
-\%>
+<\% options("devEval/args/field"="pathname") \%>
 \end{rspVerbatim}
 With this setting, one can then include PNG image files in the HTML document as
 \begin{rspVerbatim}
@@ -982,19 +982,35 @@ which results in
 \end{verbatim}
 
 
+To instead embedded the image as an Base64 encoded data URI, which has the advantage of making HTML document "self contained", use
+\begin{rspVerbatim}
+<\% options("devEval/args/field"="dataURI") \%>
+\end{rspVerbatim}
+which will embedded the above 'MyFigure,yeah,cool.png' image files as
+\begin{verbatim}
+<img src=""data:image/png;base64,iVBORw0KGgo ... <truncated> ... K5CYII=">
+\end{verbatim}
+
+
+
 \subsubsection{Including image files in Markdown}
-Just as for HTML documents, on need to set the option that images created by \code{toPNG()} etc are returned by their (relative) pathnames by specifying option \code{devEval/args/field} (see above subsection).  With this setting, one can then include PNG image files in the Markdown document as
+For RSP-embedded Markdown documents it is recommended to have image files being linked to via their pathnames using
+\begin{rspVerbatim}
+<\% options("devEval/args/field"="pathname") \%>
+\end{rspVerbatim}
+With this, PNG image files can be generated and included as
 \begin{rspVerbatim}
 ![This figure was generated and inserted into the Markdown document using RSP.]
 (<\%=toPNG("MyFigure,yeah,cool", aspectRatio=0.6, \{
   curve(dnorm, from=-5, to=+5);
 \})\%>)
 \end{rspVerbatim}
-which results in
+which outputs Markdown
 \begin{verbatim}
 ![This figure was generated and inserted into the Markdown document using RSP.]
 (figures/MyFigure,yeah,cool.png)
 \end{verbatim}
+When this Markdown document is post-processed into a HTML document (internally done using the \pkg{markdown} package), any image files will automatically be embedded as data URIs in the HTML.
 
 
 %% \clearpage

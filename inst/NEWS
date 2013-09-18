@@ -1,7 +1,10 @@
 Package: R.rsp
 ==============
 
-Version: 0.9.24 [2013-09-17]
+Version: 0.9.24 [2013-09-18]
+o DOCUMENTATION: Updated the 'Dynamic document creation using RSP'
+  vignette with information on how to embedded image files as
+  data URI into HTML and Markdown.
 o BUG FIX/WORKAROUND: For now, package attaches the 'R.oo' package.
   This is needed due to what appears to be a bug in how R.oo 
   finalizes Object:s assuming R.oo is/can be attached.  Until that
