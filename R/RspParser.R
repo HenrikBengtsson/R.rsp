@@ -84,29 +84,6 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
     s;
   } # unescapeP()
 
-  # DEBUG: Write to log? /HB 2013-09-17
-  path <- Sys.getenv("RSP_DEBUG_PATH");
-  if (nchar(path) > 0L) {
-    validateText <- function(text, ...) {
-      # Sanity check
-      raw <- charToRaw(text);
-      if (any(raw == 0)) {
-        sink(file.path(path, "RspParser.validateText.log"), append=TRUE);
-        on.exit(sink());
-        print(text);
-        cat("---------------------\n");
-        print(sys.calls());
-        throw("INTERNAL ERROR: Detected NUL symbol in 'text' of parseRaw(): ", paste(raw, collapse=", "));
-      }
-    } # validateText()
-  } else {
-    validateText <- function(text, ...) {
-      # Sanity check
-      raw <- charToRaw(text);
-      any(raw == 0);
-    } # validateText()
-  }
-
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -219,9 +196,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
         # Update flag whether the RSP construct being parsed is
         # on the same output line as RSP text or not.  It is not
         # if the text ends with a line break.
-##        validateText(text, "1.1");
         if (escapedP) text <- unescapeP(text);
-##        validateText(text, "1.2");
         part <- list(text=RspText(text));
       } else {
         part <- NULL;
