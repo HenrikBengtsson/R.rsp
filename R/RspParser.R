@@ -60,14 +60,6 @@ setConstructorS3("RspParser", function(...) {
 # }
 #*/#########################################################################
 setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", "directive", "expression"), commentLength=-1L, ..., verbose=FALSE) {
-  ## WORKAROUND: For unknown reasons, the R.oo package needs to be
-  ## attached in order for 'R CMD build' to build the R.rsp package.
-  ## If not, the generated RSP-to-R script becomes corrupt and contains
-  ## invalid symbols, at least for '<%= ... %>' RSP constructs.
-  ## /HB 2013-09-17
-##  .requirePkg("R.methodsS3", quietly=TRUE);
-  .requirePkg("R.oo", quietly=TRUE);
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -227,9 +219,9 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
         # Update flag whether the RSP construct being parsed is
         # on the same output line as RSP text or not.  It is not
         # if the text ends with a line break.
-        validateText(text, "1.1");
+##        validateText(text, "1.1");
         if (escapedP) text <- unescapeP(text);
-        validateText(text, "1.2");
+##        validateText(text, "1.2");
         part <- list(text=RspText(text));
       } else {
         part <- NULL;
@@ -340,10 +332,13 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 
     parts <- c(parts, part);
 
-    verbose && cat(verbose, "RSP construct(s) parsed:");
-    verbose && print(verbose, part);
-    verbose && cat(verbose, "Number of RSP constructs parsed this far: ", length(parts));
-  } # while(TRUE);
+    if (verbose) {
+      cat(verbose, "RSP construct(s) parsed:");
+      print(verbose, part);
+      cat(verbose, "Number of RSP constructs parsed this far: ", length(parts));
+    }
+  } # while(TRUE)
+
 
   # Add the rest of the buffer as text, unless empty.
   if (nchar(bfr) > 0L) {
@@ -399,6 +394,19 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 # }
 #*/#########################################################################
 setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), as=c("RspDocument", "RspString"), verbose=FALSE) {
+  ## WORKAROUND: For unknown reasons, the R.oo package needs to be
+  ## attached in order for 'R CMD build' to build the R.rsp package.
+  ## If not, the generated RSP-to-R script becomes corrupt and contains
+  ## invalid symbols, at least for '<%= ... %>' RSP constructs.
+  ## Below .requirePkg("R.oo", quietly=TRUE) is used to attach 'R.oo',
+  ## but we do it as late as possible, in order narrow down the cause.
+  ## It appears to be related to garbage collection and finalizers of
+  ## Object, which will try to attach 'R.oo' temporarily before running
+  ## finalize() on the object.  If so, it's a bug in R.oo.
+  ## /HB 2013-09-17
+  .requirePkg("R.oo", quietly=TRUE);
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -541,7 +549,6 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
     return(returnAs(docP, as=as));
   }
 
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # (2a) Parse RSP preprocessing directive
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -568,7 +575,6 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
     doc <- trimNonText(doc, verbose=less(verbose, 10));
 
     # Process all RSP preprocessing directives, i.e. <%@...%>
-
     doc <- preprocess(doc, envir=envir, ..., verbose=less(verbose, 10));
 
     # Coerce to RspString
@@ -640,6 +646,9 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
 ##############################################################################
 # HISTORY:
+# 2013-09-17
+# o BUG FIX/WORKAROUND: parse() attaches 'R.oo' due to what appears to be
+#   a bug in how Object:s are finalize():ed when 'R.oo' is not attached.
 # 2013-03-10
 # o FIX: Now parse() trims non-text RSP constructs both before and after
 #   parsing each of them.  This fixed the problem of extraneous line breaks
