@@ -1,3 +1,7 @@
+library("R.methodsS3")
+library("R.oo")
+library("R.utils")
+
 setConstructorS3("RPar", function(...) {
   extend(Options(), "RPar",
     .helpText = NULL,
@@ -103,3 +107,11 @@ setMethodS3("getDataTypes", "RPar", function(this, par, default="", force=FALSE,
 
 
 rPar <- RPar();
+
+
+###########################################################################
+# HISTORY:
+# 2013-09-18
+# o Code no longer assumes that packages R.methodsS3, R.oo and R.utils
+#   are attached.
+###########################################################################

@@ -3,7 +3,7 @@
 <%
 # Copy the Webcuts.js javascript to the response output directory
 file.copy(filePath(getPath(page), "helloWorld.html.rsp"), 
-          filePath(getwd(), "helloWorld.rsp.txt"));
+          filePath(getwd(), "helloWorld.html.rsp.txt"));
 %>
 
 <%
@@ -138,7 +138,7 @@ To be implemented!
 
 <h2>More Help</h2>
 <ul>
- <li><a href="helloWorld.rsp">Hello world example</a> (<a href="helloWorld.rsp.txt">rsp</a>)</li>
+ <li><a href="helloWorld.html.rsp">Hello world example</a> (<a href="helloWorld.html.rsp.txt">rsp</a>)</li>
  <li><a href="includes.html.rsp">Includes &amp; Imports</a></li>
  <li><a href="figures.html.rsp">Figures</a></li>
 </ul>

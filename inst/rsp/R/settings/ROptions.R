@@ -1,3 +1,7 @@
+library("R.methodsS3")
+library("R.oo")
+library("R.utils")
+
 setConstructorS3("ROptions", function(...) {
   extend(Options(), "ROptions",
     .helpText = NULL,
@@ -59,7 +63,7 @@ setMethodS3("getDescription", "ROptions", function(this, option, default="", for
   value <- paste(value, collapse=" ");
   value <- sub(match, "", value);
   value <- trim(value);
-  
+
   # Store value
   ROptions$.descriptions[[option]] <- value;
 
@@ -101,3 +105,10 @@ setMethodS3("getDataTypes", "ROptions", function(this, option, default="", force
 
 
 rOptions <- ROptions();
+
+###########################################################################
+# HISTORY:
+# 2013-09-18
+# o Code no longer assumes that packages R.methodsS3, R.oo and R.utils
+#   are attached.
+###########################################################################
