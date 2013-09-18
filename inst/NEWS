@@ -5,6 +5,9 @@ Version: 0.9.24 [2013-09-18]
 o DOCUMENTATION: Updated the 'Dynamic document creation using RSP'
   vignette with information on how to embedded image files as
   data URI into HTML and Markdown.
+o DOCUMENTATION: Added HTML vignette 'Introductory slides on RSP'.
+  This requires that the package suggests the 'R.devices', 'base64enc'
+  and 'knitr' packages.
 o ROBUSTNESS: Now start() for HttpDaemon makes sure that the R.rsp package
   is attached so that the Tcl HTTP daemon have access to its methods.
 o BUG FIX/WORKAROUND: For now, package attaches the 'R.oo' package.

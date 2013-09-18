@@ -41,6 +41,28 @@
     vignetteEngine("rsp", package=pkgname, pattern="[.][^.]*[.]rsp$",
                     weave=rspWeave, tangle=rspTangle);
 
+    # Markdown RSP + knitr::pandoc engine (non-offical trial version)
+    vignetteEngine("md.rsp+knitr:pandoc", package=pkgname,
+                    pattern="[.]md[.]rsp$",
+                    weave=function(..., envir=new.env()) {
+                      # Assert that knitr and pandoc are installed
+                      .requirePkg("knitr");
+                      findPandoc(mustExist=TRUE);
+
+                      # Process *.md.rsp to *.md
+                      md <- rspWeave(..., preprocess=FALSE, envir=envir);
+
+                      # Pandoc *.md to *.html
+                      format <- Sys.getenv("R.rsp/pandoc/args/format", "html");
+                      html <- knitr::pandoc(md, format=format);
+                      html <- RspFileProduct(html);
+
+                      # Remove *.md
+                      file.remove(md);
+
+                      invisible(html);
+                    }, tangle=rspTangle);
+
 ##    # "as-is" engine
 ##    vignetteEngine("asis", package=pkgname, pattern="[.](pdf|html)[.]asis$",
 ##                    weave=asisWeave, tangle=function(...) NULL);
@@ -65,6 +87,8 @@
 
 ############################################################################
 # HISTORY:
+# 2013-09-18
+# o Added the 'md.rsp+knitr:pandoc' engine.
 # 2013-03-07
 # o Added the 'R.rsp::skip_Rnw' engine.
 # 2013-02-08

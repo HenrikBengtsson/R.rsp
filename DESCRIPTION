@@ -2,7 +2,8 @@ Package: R.rsp
 Version: 0.9.24
 Depends: R (>= 2.5.0), R.oo (>= 1.15.1)
 Imports: stats, utils, tools, R.methodsS3 (>= 1.5.1), R.utils (>= 1.27.1)
-Suggests: tcltk, digest (>= 0.6.3), R.devices (>= 2.6.1), ascii, markdown, knitr
+Suggests: tcltk, digest (>= 0.6.3), ascii, markdown, knitr, 
+          R.devices (>= 2.6.1), base64enc (>= 0.1-1)
 VignetteBuilder: R.rsp
 Date: 2013-09-18
 Title: Dynamic generation of scientific reports
