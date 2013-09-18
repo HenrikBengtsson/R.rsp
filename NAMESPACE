@@ -20,10 +20,11 @@ import("R.utils")
 # importFrom("R.utils", "getRelativePath")
 # importFrom("R.utils", "isAbsolutePath")
 # importFrom("R.utils", "isUrl")
-# importFrom("R.utils", "")
+# importFrom("R.utils", "gstring")
 
 importFrom("stats", "start")
 
+importFrom("utils", "capture.output")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # EXPORTS
