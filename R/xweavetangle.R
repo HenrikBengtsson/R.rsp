@@ -35,41 +35,29 @@
 # @keyword internal
 #*/###########################################################################
 rspWeave <- function(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env(), .engineName="rsp") {
-  res <- rfile(file, ..., workdir=".", postprocess=postprocess, envir=envir, verbose=!quiet);
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # WORKAROUND: 'R CMD build' seems to ignore the %\VignetteEngine{<engine>}
-  # markup for early 3.0.x versions.  If this is the case, then make sure
-  # we used the correct engine ('R.rsp::rsp') here.
+  # markup for R (>= 3.0.0 && <= 3.0.1 patched r63905) and only go by the
+  # filename pattern.  If this is the case, then the correct engine may have
+  # been called.  Below we check for this and call the proper one if that is
+  # the case.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (.engineName == "rsp") {
-    engineName <- getMetadata(res, "engine");
-    if (!is.null(engineName)) {
-      rver <- getRversion();
-      rrev <- paste(R.version[["svn rev"]], "", sep="");
-      isBuggy <- ("3.0.0" <= rver && rver < "3.0.2" && rrev < "63932");
-      if (isBuggy) {
-        # Find the vignette engine
-        engine <- tryCatch({
-          vignetteEngine <- get("vignetteEngine", envir=asNamespace("tools"));
-          vignetteEngine(engineName, package="R.rsp");
-        }, error = function(engine) NULL);
-        if (is.null(engine)) {
-          throw(sprintf("No such vignette engine: %%\\VignetteEngine{%s}", engineName));
-        }
+    weave <- .getRspWeaveTangle(file=file, what="weave");
+  } else {
+    weave <- NULL;
+  }
 
-        # Was another vignette engine than 'rsp' intended?
-        if (engine$name != "rsp") {
-          # Assert that the filename pattern is correct
-          if (regexpr(engine$pattern, basename(file)) == -1L) {
-            throw(sprintf("The filename pattern ('%s') of the intended vignette engine ('%s::%s') does not match the file ('%s') to be processed.", engine$pattern, engine$package, engine$name, basename(file)));
-          }
-          # Use the proper vignette engine
-          res <- engine$weave(file, ..., envir=envir);
-        } # if (engine$name != "rsp")
-      } # if (isBuggy)
-    } # if (!is.null(engineName))
-  } # if (.engineName == "rsp")
+  # If no problems, use the default rfile() weaver.
+  if (is.null(weave)) {
+    weave <- function(..., quiet=FALSE) {
+      rfile(..., workdir=".", postprocess=postprocess, verbose=!quiet);
+    }
+  }
+
+  # Weave!
+  res <- weave(file, ..., quiet=quiet, envir=envir);
+
 
   # DEBUG: Store generated file? /HB 2013-09-17
   path <- Sys.getenv("RSP_DEBUG_PATH");
@@ -79,7 +67,6 @@ rspWeave <- function(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env(),
 
   invisible(res);
 } # rspWeave()
-
 
 
 ###########################################################################/**
@@ -171,8 +158,75 @@ rspTangle <- function(file, ..., envir=new.env()) {
 
 
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# WORKAROUND: 'R CMD build' seems to ignore the %\VignetteEngine{<engine>}
+# markup for R (>= 3.0.0 && <= 3.0.1 patched r63905) and only go by the
+# filename pattern.  If this is the case, then the correct engine may have
+# been called.  Below we check for this and call the proper one if that is
+# the case.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+.getRspWeaveTangle <- function(file, ..., what=c("weave", "tangle")) {
+  # Are we using an R version that does not acknowledge the
+  # %\VignetteEngine{<engine>} markup?
+  rver <- getRversion();
+  if (rver < "3.0.0" || rver >= "3.0.2") {
+    return(NULL); # Nope
+  }
+
+  # Fixed in R 3.0.1 patched (2013-09-11 r63906)
+  rrev <- paste(R.version[["svn rev"]], "", sep="");
+  if (rrev >= "63906") {
+    return(NULL); # Nope
+  }
+
+  # If SVN revision is not recorded, then do one last check...
+  ns <- getNamespace("tools");
+  if (exists("engineMatches", envir=ns, mode="function")) {
+    return(NULL); # Nope
+  }
+
+  # Does the vignette specify a particular vignette engine?
+  content <- readLines(file, warn=FALSE);
+  meta <- .parseRVignetteMetadata(content);
+  engineName <- meta$engine;
+  if (is.null(engineName)) {
+    return(NULL); # Nope
+  }
+
+  # Yes, it's possible that we have ran the incorrect vignette engine...
+  # Find the intended vignette engine
+  engine <- tryCatch({
+    vignetteEngine <- get("vignetteEngine", envir=ns);
+    vignetteEngine(engineName, package="R.rsp");
+  }, error = function(engine) NULL);
+
+  if (is.null(engine)) {
+    throw(sprintf("No such vignette engine: %%\\VignetteEngine{%s}", engineName));
+  }
+
+  # Was the wrong vignette engine used?
+  if (engine$name == "rsp") {
+    return(NULL); # Nope
+  }
+
+  # Assert that the filename pattern is correct
+  patterns <- engine$pattern;
+  if (length(patterns > 0L)) {
+    ok <- any(sapply(patterns, FUN=regexpr, basename(file)) != -1L);
+    if (!ok) {
+      throw(sprintf("The filename pattern (%s) of the intended vignette engine ('%s::%s') does not match the file ('%s') to be processed.", paste(sQuote(patterns), collapse=", "), engine$package, engine$name, basename(file)));
+    }
+  }
+
+  # Process the vignette using the intended vignette engine
+  engine[[what]];
+} # .getRspWeaveTangle()
+
+
 ###############################################################################
 # HISTORY:
+# 2013-09-18
+# o WORKAROUND: Added internal .getRspWeaveTangle().
 # 2013-03-27
 # o Now rspTangle() uses rscript().
 # 2013-03-26
