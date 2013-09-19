@@ -236,15 +236,16 @@ rspTangle <- function(file, ..., envir=new.env()) {
     html <- knitr::pandoc(md, format=format);
     html <- RspFileProduct(html);
   } else {
-    # Is 'R CMD check' "re-building of vignette outputs"?
-    pathname <- getAbsolutePath(file);
-    path <- dirname(pathname);
-    parts <- strsplit(path, split=c("/", "\\"), fixed=TRUE);
-    parts <- unlist(parts, use.names=TRUE);
-    vignetteTests <- any(parts == "vign_test");
-
-    if (!vignetteTests || isTRUE(Sys.getenv("RSP_REQ_PANDOC")) {
-      throw("External 'pandoc' executable is not available on this system: ", pathname);
+    if (isTRUE(Sys.getenv("RSP_REQ_PANDOC"))) {
+      # Silently ignore if 'R CMD check' is "re-building of vignette outputs"
+      pathname <- getAbsolutePath(md);
+      path <- dirname(pathname);
+      parts <- strsplit(path, split=c("/", "\\"), fixed=TRUE);
+      parts <- unlist(parts, use.names=TRUE);
+      vignetteTests <- any(parts == "vign_test");
+      if (vignetteTests) {
+        throw("External 'pandoc' executable is not available on this system: ", pathname);
+      }
     }
 
     warning("Could not find external executable 'pandoc' on this system while running 'R CMD check' on the vignettes. Will run the default post-processor instead: ", basename(md));
