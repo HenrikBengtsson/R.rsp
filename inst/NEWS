@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.25 [2013-09-19]
+o ROBUSTNESS: Changed how vignette engines are registered so that
+  if an error occurs, it is no longer silently ignored.
+
+
 Version: 0.9.24 [2013-09-18]
 o Now preprocess() of RspDocument also records R vignette meta data
   'engine' (from %\VignetteEngine{}) and RSP custom 'tangle' (from
