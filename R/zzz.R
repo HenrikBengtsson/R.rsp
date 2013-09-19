@@ -27,19 +27,35 @@
 } # .requirePkg()
 
 # The weave function of vignette engine 'md.rsp+knitr:pandoc'
-`.weave_md.rsp+knitr:pandoc` <- function(..., envir=new.env()) {
-  # Assert that knitr and pandoc are installed
-  .requirePkg("knitr");
-  findPandoc(mustExist=TRUE);
-
+`.weave_md.rsp+knitr:pandoc` <- function(file, ..., envir=new.env()) {
   # Process *.md.rsp to *.md
-  md <- rspWeave(..., preprocess=FALSE, envir=envir,
+  md <- rspWeave(file, ..., preprocess=FALSE, envir=envir,
                       .engineName="R.rsp::md.rsp+knitr:pandoc");
 
-  # Pandoc *.md to *.html
-  format <- Sys.getenv("R.rsp/pandoc/args/format", "html");
-  html <- knitr::pandoc(md, format=format);
-  html <- RspFileProduct(html);
+  hasPandoc <- isCapableOf(R.rsp, "pandoc");
+  if (hasPandoc) {
+    # Pandoc *.md to *.html
+    format <- Sys.getenv("R.rsp/pandoc/args/format", "html");
+    html <- knitr::pandoc(md, format=format);
+    html <- RspFileProduct(html);
+  } else {
+    # Is 'R CMD check' "re-building of vignette outputs"?
+    pathname <- getAbsolutePath(file);
+    path <- dirname(pathname);
+    parts <- strsplit(path, split=c("/", "\\"), fixed=TRUE);
+    parts <- unlist(parts, use.names=TRUE);
+    vignetteTests <- any(parts == "vign_test");
+    if (!vignetteTests) {
+      throw("External 'pandoc' executable is not available on this system: ", pathname);
+    }
+
+    warning("Could not find external executable 'pandoc' on this system while running 'R CMD check' on the vignettes. Will run the default post-processor instead: ", basename(md));
+
+    # If running R CMD check, silently accept that Pandoc is not
+    # available.  Instead, just run it through the regular
+    # Markdown to HTML postprocessor.
+    html <- process(md);
+  }
 
   # Remove *.md
   file.remove(md);
@@ -93,6 +109,8 @@
 ############################################################################
 # HISTORY:
 # 2013-09-18
+# o Now the 'md.rsp+knitr:pandoc' weaver will not give a NOTE in
+#   'R CMD check' if 'pandoc' executable is not available.
 # o Added the 'md.rsp+knitr:pandoc' engine.
 # 2013-03-07
 # o Added the 'R.rsp::skip_Rnw' engine.

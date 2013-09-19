@@ -21,6 +21,7 @@ import("R.utils")
 # importFrom("R.utils", "isAbsolutePath")
 # importFrom("R.utils", "isUrl")
 # importFrom("R.utils", "gstring")
+# importFrom("R.utils", "queryRCmdCheck")
 
 importFrom("stats", "start")
 
