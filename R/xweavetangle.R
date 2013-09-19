@@ -223,10 +223,51 @@ rspTangle <- function(file, ..., envir=new.env()) {
 } # .getRspWeaveTangle()
 
 
+# The weave function of vignette engine 'md.rsp+knitr:pandoc'
+`.weave_md.rsp+knitr:pandoc` <- function(file, ..., envir=new.env()) {
+  # Process *.md.rsp to *.md
+  md <- rspWeave(file, ..., preprocess=FALSE, envir=envir,
+                      .engineName="R.rsp::md.rsp+knitr:pandoc");
+
+  hasPandoc <- isCapableOf(R.rsp, "pandoc");
+  if (hasPandoc) {
+    # Pandoc *.md to *.html
+    format <- Sys.getenv("R.rsp/pandoc/args/format", "html");
+    html <- knitr::pandoc(md, format=format);
+    html <- RspFileProduct(html);
+  } else {
+    # Is 'R CMD check' "re-building of vignette outputs"?
+    pathname <- getAbsolutePath(file);
+    path <- dirname(pathname);
+    parts <- strsplit(path, split=c("/", "\\"), fixed=TRUE);
+    parts <- unlist(parts, use.names=TRUE);
+    vignetteTests <- any(parts == "vign_test");
+
+    if (!vignetteTests || isTRUE(Sys.getenv("RSP_REQ_PANDOC")) {
+      throw("External 'pandoc' executable is not available on this system: ", pathname);
+    }
+
+    warning("Could not find external executable 'pandoc' on this system while running 'R CMD check' on the vignettes. Will run the default post-processor instead: ", basename(md));
+
+    # If running R CMD check, silently accept that Pandoc is not
+    # available.  Instead, just run it through the regular
+    # Markdown to HTML postprocessor.
+    html <- process(md);
+  }
+
+  # Remove *.md
+  file.remove(md);
+
+  invisible(html);
+} # `.weave_md.rsp+knitr:pandoc`()
+
+
 ###############################################################################
 # HISTORY:
 # 2013-09-18
 # o WORKAROUND: Added internal .getRspWeaveTangle().
+# o Now the 'md.rsp+knitr:pandoc' weaver will not give a NOTE in
+#   'R CMD check' if 'pandoc' executable is not available.
 # 2013-03-27
 # o Now rspTangle() uses rscript().
 # 2013-03-26
