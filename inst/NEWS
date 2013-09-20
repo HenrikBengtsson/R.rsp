@@ -4,6 +4,7 @@ Package: R.rsp
 Version: 0.9.25 [2013-09-19]
 o ROBUSTNESS: Changed how vignette engines are registered so that
   if an error occurs, it is no longer silently ignored.
+o POSSIBLE BUG FIX: Forgot to import R.methodsS3::appendVarArgs().
 
 
 Version: 0.9.24 [2013-09-18]
