@@ -36,6 +36,11 @@
 #
 # @author "HB"
 #
+# \seealso{
+#   Since R devel (to become 3.1.0) r63076 (2013-06-27), there is
+#   \code{buildVignette()} in the \pkg{tools} package.
+# }
+#
 # @keyword documentation
 # @keyword file
 # @keyword IO
