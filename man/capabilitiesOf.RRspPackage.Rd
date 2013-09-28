@@ -46,6 +46,9 @@
 
   # Check whether AsciiDoc is supported
   print(isCapableOf(R.rsp, "asciidoc"))
+
+  # Check whether pandoc v1.12 or newer is supported
+  print(isCapableOf(R.rsp, "pandoc (>= 1.12)"))
 }
 
 \author{Henrik Bengtsson}

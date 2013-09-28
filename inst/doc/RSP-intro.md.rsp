@@ -19,6 +19,9 @@
   [3] http://paulrouget.com/dzslides/
   ---------------------------------------------------------------------%>
 <%@string version="${version}"%>
+<% library("R.rsp"); %>
+<% dzslides <- isCapableOf(R.rsp, "pandoc (>= 1.9.2)"); %>
+<% if (dzslides) { %>
 <%---------------------------------------------------------------------
   Pandoc post-processing configuration
   ---------------------------------------------------------------------%>
@@ -29,8 +32,10 @@ Sys.setenv("R.rsp/pandoc/args/format"="dzslides");
 standalone:
 smart:
 title-prefix: "<%@meta name="title"%>"
+<% if (isCapableOf(R.rsp, "pandoc (>= 1.12)")) { %>
 M: TITLE:"<%@meta name="author"%>"
 M: AUTHOR:"<%@meta name="title"%>"
+<% } # if (...) %>
 -->
 <!--
 Override default pandoc/dzslides settings
@@ -62,11 +67,11 @@ div.footer {
 li { padding-bottom: 0.8ex; }
 pre { font-weight: bold; }
 </style>
+<% } # if (dzslides) %>
 <%---------------------------------------------------------------------
   SETUP
   ---------------------------------------------------------------------%>
 <%
-R.rsp <- R.oo::Package("R.rsp")
 library("R.devices")
 options("devEval/args/field"="dataURI")
 devOptions("png", width=840)
@@ -99,6 +104,10 @@ Slide <%=page%> <% if (!is.null(maxSlide)) { %> of <%=maxSlide%><% } %>
 Availability: `install.packages("R.rsp")` from <a href="http://cran.r-project.org/package=R.rsp">CRAN</a>
 
 Since: 2002
+
+<% if (!dzslides) { %>
+_(The version of this document does not display as [DZSlides](http://paulrouget.com/dzslides/), because [Pandoc](http://johnmacfarlane.net/pandoc/) was not available when it was compiled.)_
+<% } # if (!dzslides) %>
 
 <br>
 

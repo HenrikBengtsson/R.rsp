@@ -55,6 +55,9 @@ setConstructorS3("RRspPackage", function(...) {
 #
 #   # Check whether AsciiDoc is supported
 #   print(isCapableOf(R.rsp, "asciidoc"))
+#
+#   # Check whether pandoc v1.12 or newer is supported
+#   print(isCapableOf(R.rsp, "pandoc (>= 1.12)"))
 # }
 #
 # @author "HB"
@@ -100,12 +103,60 @@ setMethodS3("capabilitiesOf", "RRspPackage", function(static, what=NULL, force=F
 
 
 setMethodS3("isCapableOf", "RRspPackage", function(static, what, ...) {
-  capabilitiesOf(static, what=what, ...);
+  # Argument 'what':
+  what <- Arguments$getCharacter(what);
+  pattern <- "^([^ ]+)[ ]*(|[(](<|<=|==|>=|>)[ ]*([^)]+)[)])$";
+  if (regexpr(pattern, what) == -1L) {
+    throw("Unknown syntax of argument 'what': ", what);
+  }
+
+  name <- gsub(pattern, "\\1", what);
+  op <- gsub(pattern, "\\3", what);
+  ver <- gsub(pattern, "\\4", what);
+  if (nzchar(op)) {
+    op <- get(op, mode="function", envir=baseenv());
+  } else if (nzchar(ver)) {
+    throw("Missing version operator in argument 'what': ", what);
+  }
+
+  res <- capabilitiesOf(static, what=name, ...);
+
+  # Nothing more to do?
+  if (!res[[name]]) {
+    return(FALSE);
+  }
+
+  # Nothing more to do?
+  if (!nzchar(ver)) {
+    return(res);
+  }
+
+  # Get available version
+  if (name == "asciidoc") {
+    v <- attr(findAsciiDoc(), "version");
+  } else if (name == "pandoc") {
+    v <- attr(findPandoc(), "version");
+  } else if (is.element(name, c("knitr", "markdown"))) {
+    v <- packageVersion(name);
+  } else if (name == "sweave") {
+    v <- packageVersion("utils");
+  } else {
+    v <- NA;
+  }
+
+  # Compare to requested version
+  res <- isTRUE(op(v, ver));
+
+  res;
 })
 
 
 ############################################################################
 # HISTORY:
+# 2013-09-28
+# o No isCapableOf() also supports version specifications.
+#   Ideally capabilitiesOf() and isCapableOf() should be moved to
+#   the Package class of the 'R.oo' package.
 # 2013-07-19
 # o Created from AromaSeq.R in aroma.seq.
 ############################################################################

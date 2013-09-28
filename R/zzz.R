@@ -30,18 +30,23 @@
 
 .onLoad <- function(libname, pkgname) {
   .registerVignetteEngines(pkgname);
+
+  ns <- getNamespace(pkgname);
+  pkg <- RRspPackage(pkgname);
+  assign(pkgname, pkg, envir=ns);
 }
 
 
 .onAttach <- function(libname, pkgname) {
-  pkg <- RRspPackage(pkgname);
-  assign(pkgname, pkg, pos=getPosition(pkg));
-  startupMessage(pkg);
+  startupMessage(get(pkgname, envir=getNamespace(pkgname)));
 }
 
 
 ############################################################################
 # HISTORY:
+# 2013-09-28
+# o Now assigning Package object already when loading the package,
+#   and not just when attaching it.
 # 2013-09-19
 # o Simplified .onLoad() so it's now calling .registerVignetteEngines().
 # 2013-09-18

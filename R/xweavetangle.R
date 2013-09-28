@@ -229,8 +229,9 @@ rspTangle <- function(file, ..., envir=new.env()) {
   md <- rspWeave(file, ..., preprocess=FALSE, envir=envir,
                       .engineName="R.rsp::md.rsp+knitr:pandoc");
 
-  hasPandoc <- isCapableOf(R.rsp, "pandoc");
-  if (hasPandoc) {
+  # Is Pandoc and DZSlides fully supported?
+  dzslides <- isCapableOf(R.rsp, "pandoc (>= 1.9.2)");
+  if (dzslides) {
     # Pandoc *.md to *.html
     format <- Sys.getenv("R.rsp/pandoc/args/format", "html");
     html <- knitr::pandoc(md, format=format);
@@ -248,13 +249,13 @@ rspTangle <- function(file, ..., envir=new.env()) {
       }
     }
 
-    warning("Could not find external executable 'pandoc' on this system while running 'R CMD check' on the vignettes. Will run the default post-processor instead: ", basename(md));
+    warning("Could not find external executable 'pandoc' v1.9.2 or newer on this system while running 'R CMD check' on the vignettes. Will run the default post-processor instead: ", basename(md));
 
     # If running R CMD check, silently accept that Pandoc is not
     # available.  Instead, just run it through the regular
     # Markdown to HTML postprocessor.
     html <- process(md);
-  }
+  } # if (dzslides)
 
   # Remove *.md
   file.remove(md);

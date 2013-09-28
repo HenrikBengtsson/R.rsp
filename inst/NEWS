@@ -1,6 +1,17 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.26 [2013-09-28]
+o No isCapableOf() also supports version specifications.
+o Now assigning the 'R.rsp' Package object already when loading
+  the package, and not just when attaching it.
+o ROBUSTNESS/BUG FIX: Now the 'Introductory slides on RSP' vignette
+  better detects what version of 'pandoc' is available and adapts
+  accordingly.  If not available, the fallback Markdown version
+  will display a note about this.  Thanks to Brian Ripley for 
+  reporting on 'pandoc' version incompatibilities.
+
+
 Version: 0.9.25 [2013-09-19]
 o ROBUSTNESS: Changed how vignette engines are registered so that
   if an error occurs, it is no longer silently ignored.
