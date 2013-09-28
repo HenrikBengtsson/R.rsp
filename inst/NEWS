@@ -12,6 +12,7 @@ o ROBUSTNESS/BUG FIX: Now the 'Introductory slides on RSP' vignette
   accordingly.  If not available, the fallback Markdown version
   will display a note about this.  Thanks to Brian Ripley for 
   reporting on 'pandoc' version incompatibilities.
+o Bumped up package dependencies.
 
 
 Version: 0.9.25 [2013-09-19]
