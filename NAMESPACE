@@ -24,6 +24,7 @@ import("R.utils")
 # importFrom("R.utils", "isUrl")
 # importFrom("R.utils", "gstring")
 # importFrom("R.utils", "queryRCmdCheck")
+# importFrom("R.utils", "evalCapture")
 
 importFrom("stats", "start")
 

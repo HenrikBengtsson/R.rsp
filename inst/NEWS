@@ -3,8 +3,10 @@ Package: R.rsp
 
 Version: 0.9.26 [2013-09-28]
 o No isCapableOf() also supports version specifications.
-o Now assigning the 'R.rsp' Package object already when loading
-  the package, and not just when attaching it.
+o Now the 'R.rsp' Package object is also available when the
+  package is only loaded (but not attached).
+o BUG FIX: The 'Dynamic document creation using RSP' vignette
+  assumed that evalCapture() of 'R.utils' was on the search path. 
 o ROBUSTNESS/BUG FIX: Now the 'Introductory slides on RSP' vignette
   better detects what version of 'pandoc' is available and adapts
   accordingly.  If not available, the fallback Markdown version

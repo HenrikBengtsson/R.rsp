@@ -646,7 +646,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         if (flavor == "echo") {
           expressions <- strsplit(expressions, split="\n", fixed=TRUE);
           expressions <- unlist(expressions);
-          code <- sprintf("write(response, evalCapture({%s}), collapse='\\n');\n", expressions);
+          code <- sprintf("write(response, R.utils::evalCapture({%s}), collapse='\\n');\n", expressions);
         }
 
         if (flavor == "chunk") {

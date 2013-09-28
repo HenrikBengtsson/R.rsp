@@ -12,6 +12,7 @@
 library("R.rsp")
 library("R.devices")
 hpaste <- R.utils::hpaste
+evalCapture <- R.utils::evalCapture
 %>
 
 <% t0 <- Sys.time() %>
@@ -1017,7 +1018,7 @@ When this Markdown document is post-processed into a HTML document (internally d
 \subsection{Including R code}
 \subsubsection{Evaluating and capturing expression and output (\code{<\%=}\code{evalCapture}\code{(\content{code chunk})\%>})}
 \label{RspCodeChunkCapture}
-The \code{evalCapture()} function allows us to evaluate, embed and echo the text output of an R code chunk<%--\footnote{\code{\content{code chunk}} must be a complete and valid code expression, because the expression is parsed and evaluated in place.}--%>.  Note that it is only standard output that is echoed, i.e. plots are \emph{not} automatically embedded as figures.  To include figures, see Section~\ref{WorkingWithFigures}.  
+The \code{evalCapture()} function of the \pkg{R.utils} package allows us to evaluate, embed and echo the text output of an R code chunk<%--\footnote{\code{\content{code chunk}} must be a complete and valid code expression, because the expression is parsed and evaluated in place.}--%>.  Note that it is only standard output that is echoed, i.e. plots are \emph{not} automatically embedded as figures.  To include figures, see Section~\ref{WorkingWithFigures}.  
 Continuing, any formatting of the capture has to be done in the format of the output document.  For instance, the following RSP-embedded LaTeX text
 \begin{rspVerbatim}
 {\textbackslash}begin\{verbatim\}
@@ -1045,6 +1046,10 @@ type
 })%>
 \end{verbatim}
 By adding arguments \code{code=FALSE} and/or \code{output=FALSE} to \code{evalCapture()} one can control whether the deparsed R source code and/or the output of each subexpression is captured or not.
+
+\begin{remark}
+The \pkg{R.utils} package has to be attached for \code{evalCapture()} to be available, e.g. via \code{<\% library("R.utils") \%>}.
+\end{remark}
 
 \begin{remark}
 The code is parsed and formatted by the R parser, meaning that indentation, empty lines, spacing and so on are \emph{not} preserved when echoing this way.  This is also why comments, semicolons and other R code constructs are dropped from the displayed code.
