@@ -8,8 +8,7 @@ file_type <- function(file) {
 }
 
 # Find all vignettes
-vigns <- parseVignettes(final=TRUE, source=TRUE, dropDummy=TRUE);
-
+vigns <- parseVignettes(final=TRUE, source=TRUE, drop="^dummy[.].*$");
 
 # Identify package name
 descFile <- file.path("..", "DESCRIPTION");
