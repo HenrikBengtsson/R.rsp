@@ -1,0 +1,5 @@
+[.](Rnw|pdf|PDF|html|HTML)$
+[.](r|R)$
+[.]rsp$
+incl
+incl/.*
