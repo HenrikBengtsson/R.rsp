@@ -5,8 +5,8 @@ Version: 0.9.28 [2013-10-14]
 o DOCUMENTATION: Updates to vignettes: Added rsource() command to
  'RSP Markup Language - Reference Card' vignette'.  Adjusted
  'Dynamic document creation using RSP' to reflect new vignettes/.
-o Now the package vignettes are in vignettes/ and no in inst/doc/,
-  which will not be supported by R (>= 3.1.0).
+o Now the package vignettes are in vignettes/ and no longer in
+  inst/doc/, which will not be supported by R (>= 3.1.0).
 o ROBUSTNESS: Now package only imports explicitly what is needed
   from dependent packages.
 
