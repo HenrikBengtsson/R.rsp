@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.28 [2013-10-14]
+o Now the package vignettes are in vignettes/ and no in inst/doc/,
+  which will not be supported by R (>= 3.1.0).
+
+
 Version: 0.9.27 [2013-10-13]
 o GENERALIZATION: Updated the framework for building non-Sweave
   vignettes also under R (< 3.0.0) to support the vignettes/ 
