@@ -1269,6 +1269,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       items <- c(items, list(item));
       idx <- idx + 1L;
     } # for (idx ...)
+    item <- NULL; # Not needed anymore
 
     # Assert that all ELSE and ENDIF directives are gone
     isElse <- sapply(items, FUN=inherits, "RspElseDirective");
@@ -1414,6 +1415,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
             item2 <- content;
             class(item2) <- class(item);
             object[[idx]] <- item2;
+            item2 <- NULL; # Not needed anymore
           } else {
             # ...or drop it if empty
             object[[idx]] <- NA;
@@ -1570,16 +1572,16 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       if (language == "R") {
         # Parse
         tryCatch({
-          item <- base::parse(text=content);
+          expr <- base::parse(text=content);
         }, error = function(ex) {
           throw(sprintf("Failed to parse RSP '%s' directive (%s): %s", item[1L], asRspString(item), ex$message));
         })
 
         # Evaluate
         tryCatch({
-          value <- eval(item, envir=envir);
+          value <- eval(expr, envir=envir);
         }, error = function(ex) {
-          throw(sprintf("Failed to processes RSP '%s' directive (%s): %s", item[1L], asRspString(item), ex$message));
+          throw(sprintf("Failed to process RSP '%s' directive (%s): %s", item[1L], asRspString(item), ex$message));
         })
 
         # Drop RSP construct
@@ -1594,7 +1596,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         tryCatch({
           value <- system(content, intern=TRUE);
         }, error = function(ex) {
-          throw(sprintf("Failed to processes RSP '%s' directive (%s): %s", item[1L], asRspString(item), ex$message));
+          throw(sprintf("Failed to process RSP '%s' directive (%s): %s", item[1L], asRspString(item), ex$message));
         })
 
         # Drop RSP construct
@@ -1610,7 +1612,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         tryCatch({
           value <- shell(content, intern=TRUE);
         }, error = function(ex) {
-          throw(sprintf("Failed to processes RSP '%s' directive (%s): %s", item[1L], asRspString(item), ex$message));
+          throw(sprintf("Failed to process RSP '%s' directive (%s): %s", item[1L], asRspString(item), ex$message));
         })
 
         # Drop RSP construct
@@ -1934,6 +1936,11 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 ##############################################################################
 # HISTORY:
+# 2013-10-14
+# o BUG FIX: If an RspEvalDirective for language="R" had a parse or an
+#   evaluation error, the intended error message was not generated because
+#   it in turn would give another error.
+# o Grammar correction of a few error messages.
 # 2013-06-30
 # o Harmonized get- and setMetadata().
 # 2013-03-26

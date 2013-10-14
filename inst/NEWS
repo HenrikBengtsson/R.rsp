@@ -3,12 +3,17 @@ Package: R.rsp
 
 Version: 0.9.28 [2013-10-14]
 o DOCUMENTATION: Updates to vignettes: Added rsource() command to
- 'RSP Markup Language - Reference Card' vignette'.  Adjusted
- 'Dynamic document creation using RSP' to reflect new vignettes/.
+  'RSP Markup Language - Reference Card' vignette'.  Adjusted
+  the other two vignettes to reflect usage of vignettes/.
 o Now the package vignettes are in vignettes/ and no longer in
   inst/doc/, which will not be supported by R (>= 3.1.0).
 o ROBUSTNESS: Now package only imports explicitly what is needed
   from dependent packages.
+o ROBUSTNESS: Vignette 'RSP-refcard.tex.rsp' assumed that the
+  'R.rsp' package was attached.
+o BUG FIX: If an RspEvalDirective for language="R" had a parse or
+  an evaluation error, the intended error message was not generated
+  because it in turn would give another error.
 
 
 Version: 0.9.27 [2013-10-13]
