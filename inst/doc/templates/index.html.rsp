@@ -8,10 +8,14 @@ file_type <- function(file) {
 }
 
 # Find all vignettes
-vigns <- parseVignettes(final=TRUE, source=TRUE);
+vigns <- parseVignettes(final=TRUE, source=TRUE, dropDummy=TRUE);
+
 
 # Identify package name
-pkgName <- grep("Package:", readLines("../../DESCRIPTION"), value=TRUE);
+descFile <- file.path("..", "DESCRIPTION");
+if (!file.exists(descFile))
+  descFile <- file.path("..", descFile);
+pkgName <- grep("Package:", readLines(descFile), value=TRUE);
 pkgName <- gsub("Package:", "", pkgName);
 pkgName <- gsub("[ \t]*", "", pkgName);
 pkg <- Package(pkgName);

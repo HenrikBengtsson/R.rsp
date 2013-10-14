@@ -9,6 +9,15 @@
   R.rsp::rspTangle(file, ...);
 }
 
+# "Dummy" Rnw vignettes
+`R.rsp::dummy_Rnw` <- function(file, ...) {
+  output <- gsub("[.]Rnw$", ".pdf", file);
+  cat(file=output);
+}
+
+# Skip Rnw vignettes
+`R.rsp::skip_Rnw` <- function(file, ...) { }
+
 # *.md.rsp -> *.md -> *.html vignettes (non-offical)
 `R.rsp::md.rsp+knitr:pandoc` <- `md.rsp+knitr:pandoc` <- function(file, ...) {
   ns <- getNamespace("R.rsp");

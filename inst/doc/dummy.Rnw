@@ -5,7 +5,7 @@
 % files will not be part of the package installation.
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 %\VignetteIndexEntry{Dummy vignette to trigger the use of the Makefile}
-%\VignetteEngine{R.rsp::skip_Rnw}
+%\VignetteEngine{R.rsp::dummy_Rnw}
 \documentclass{article}
 \begin{document}
 \end{document}

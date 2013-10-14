@@ -1,6 +1,13 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.27 [2013-10-13]
+o GENERALIZATION: Updated the framework for building non-Sweave
+  vignettes also under R (< 3.0.0) to support the vignettes/ 
+  directory in addition to inst/doc/.  Thanks to Jari Oksanen,
+  University of Oulu, Finland, for the pointers on how to do this.
+
+
 Version: 0.9.26 [2013-09-28]
 o No isCapableOf() also supports version specifications.
 o Now the 'R.rsp' Package object is also available when the

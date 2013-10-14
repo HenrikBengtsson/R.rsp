@@ -8,6 +8,7 @@ all: vignettes tex index.html
 # Build all vignettes that has a %\VignetteBuild{} markup
 vignettes:
 	"$(R)" -e "if (getRversion() < 3) R.rsp::buildNonSweaveVignettes()"
+	"$(R)" -e "if (getRversion() >= 3) unlink('dummy.Rnw')"
 
 # Compile any TeX files for which a PDF is missing
 tex:
@@ -22,7 +23,6 @@ index.html:
 # from the install using .Rinstignore in the top-level directory.
 clean:
 	$(RM) enginesMap.R
-	$(RM) dummy.Rnw
 	$(RM) index.html.rsp
 	$(RM) *.rsp.R
 	$(RM) *.tex *.aux *.bbl *.blg *.log *.out *.sty *.toc

@@ -17,13 +17,14 @@
 }
 
 \usage{
-parseVignettes(path=".", pattern="[.][^.~]*$", ...)
+parseVignettes(path=".", pattern="[.][^.~]*$", ..., dropDummy=FALSE)
 }
 
 \arguments{
   \item{path}{The directory where to search for vignettes.}
   \item{pattern}{Filename pattern to locate vignettes.}
   \item{...}{Additional arguments passed to \code{\link{parseVignette}}().}
+  \item{dropDummy}{If \code{\link[base:logical]{TRUE}}, {dummy.*} vignettes are excluded.}
 }
 
 \value{

@@ -118,6 +118,7 @@ parseVignette <- function(pathname, commentPrefix="^[ \t]*%[ \t]*", final=FALSE,
 #   \item{path}{The directory where to search for vignettes.}
 #   \item{pattern}{Filename pattern to locate vignettes.}
 #   \item{...}{Additional arguments passed to @see "parseVignette".}
+#   \item{dropDummy}{If @TRUE, {dummy.*} vignettes are excluded.}
 # }
 #
 # \value{
@@ -135,12 +136,16 @@ parseVignette <- function(pathname, commentPrefix="^[ \t]*%[ \t]*", final=FALSE,
 # @keyword IO
 # @keyword internal
 #*/###########################################################################
-parseVignettes <- function(path=".", pattern="[.][^.~]*$", ...) {
+parseVignettes <- function(path=".", pattern="[.][^.~]*$", ..., dropDummy=FALSE) {
   pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE);
 
-  # Ignore dummy.Rnw (and dummy.tex which is created by R just before make)
-  keep <- !is.element(basename(pathnames), c("dummy.Rnw", "dummy.tex"));
-  pathnames <- pathnames[keep];
+  if (dropDummy) {
+    # Ignore all dummy.* files
+    filenames <- basename(pathnames);
+    fullnames <- gsub("[.][^.]+$", "", filenames);
+    isDummy <- (fullnames == "dummy");
+    pathnames <- pathnames[!isDummy];
+  }
 
   vigns <- list();
   for (kk in seq_along(pathnames)) {
@@ -394,6 +399,8 @@ buildPkgIndexHtml <- function(...) {
 
 ############################################################################
 # HISTORY:
+# 2013-10-13
+# o Added argument 'dropDummy' to parseVignettes().
 # 2013-03-28
 # o Now buildNonSweaveTexToPdf() ignores 'dummy.tex'.
 # 2013-03-07
