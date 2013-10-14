@@ -2,34 +2,90 @@
 # IMPORTS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 importFrom("R.methodsS3", "setMethodS3")
-importFrom("R.methodsS3", "throw")
-importFrom("R.methodsS3", "appendVarArgs")
+importFrom("R.oo", "setConstructorS3")
+importFrom("R.oo", "extend")
+importFrom("R.oo", "uses")
 
-import("R.oo")
-## importFrom("R.oo", "Object")
-## importFrom("R.oo", "trim")
-## importFrom("R.oo", "getStaticInstance")
 
-import("R.utils")
-# importFrom("R.utils", "Arguments")
-# importFrom("R.utils", "popState")
-# importFrom("R.utils", "pushState")
-# importFrom("R.utils", "printf")
-# importFrom("R.utils", "isVisible")
-# importFrom("R.utils", "enter")
-# importFrom("R.utils", "exit")
-# importFrom("R.utils", "getAbsolutePath")
-# importFrom("R.utils", "getRelativePath")
-# importFrom("R.utils", "isAbsolutePath")
-# importFrom("R.utils", "isUrl")
-# importFrom("R.utils", "gstring")
-# importFrom("R.utils", "queryRCmdCheck")
-# importFrom("R.utils", "evalCapture")
+## Importing Class:es
+importFrom("R.oo", "Object")
+importFrom("R.oo", "Package")
+importFrom("R.oo", "Exception")
+ importFrom("R.utils", "Arguments")
+ importFrom("R.utils", "GString")
+ importFrom("R.utils", "Verbose")
 
+
+## Importing generics
+importFrom("R.oo", "finalize")
+importFrom("R.oo", "getMessage")
+importFrom("R.oo", "getName")
+importFrom("R.oo", "getPath")
+importFrom("R.oo", "getSource")
+importFrom("R.oo", "trim")
+ importFrom("R.utils", "evaluate")
+ importFrom("R.utils", "getAbsolutePath")
 importFrom("stats", "start")
-
 importFrom("utils", "toLatex")
+
+
+## Importing functions
+importFrom("R.methodsS3", "throw")
+importFrom("R.oo", "attachLocally")
+importFrom("R.oo", "getStaticInstance")
+importFrom("R.oo", "intToChar")
+importFrom("R.oo", "isVisible")
+importFrom("R.oo", "newInstance")
+importFrom("R.oo", "startupMessage")
+
+## import("R.utils")
+importFrom("R.utils", "capitalize")
+importFrom("R.utils", "capture")
+importFrom("R.utils", "cat") ## Multi-sources: R.utils, base
+importFrom("R.utils", "cmdArgs")
+importFrom("R.utils", "displayCode")
+importFrom("R.utils", "downloadFile")
+importFrom("R.utils", "enter")
+importFrom("R.utils", "evalCapture")
+importFrom("R.utils", "exit")
+importFrom("R.utils", "filePath")
+importFrom("R.utils", "getOption") ## Multi-sources: R.utils, base
+importFrom("R.utils", "getParent")
+importFrom("R.utils", "getRelativePath")
+importFrom("R.utils", "gstring")
+importFrom("R.utils", "hasUrlProtocol")
+importFrom("R.utils", "hpaste")
+importFrom("R.utils", "inherits") ## Multi-sources: R.utils, base
+importFrom("R.utils", "intToOct")
+importFrom("R.utils", "isAbsolutePath")
+importFrom("R.utils", "isFile")
+importFrom("R.utils", "isPackageInstalled")
+importFrom("R.utils", "isUrl")
+importFrom("R.utils", "less")
+importFrom("R.utils", "popState")
+importFrom("R.utils", "printf")
+importFrom("R.utils", "pushState")
+importFrom("R.utils", "sourceTo")
+importFrom("R.utils", "tempvar")
+
+importFrom("utils", "browseURL")
 importFrom("utils", "capture.output")
+importFrom("utils", "file_test")
+importFrom("utils", "head")
+importFrom("utils", "packageVersion")
+importFrom("utils", "str")
+importFrom("utils", "Sweave")
+importFrom("utils", "tail")
+
+
+## Manually added
+importFrom("R.oo", "ll")
+if (packageVersion("R.utils") < "1.27.5") {
+  importFrom("R.utils", "getOption.default")
+  importFrom("R.utils", "cat.default")
+  importFrom("R.utils", "inherits.default")
+}
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # EXPORTS

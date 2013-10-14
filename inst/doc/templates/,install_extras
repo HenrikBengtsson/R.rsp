@@ -1,0 +1,8 @@
+[.](Rnw)$
+[.](rsp)$
+[.](Rasciidoc|Rhtml|Rmd|Rrst|Rtex)$
+[.](brew)$
+[.](asciidoc|md|str|tex)$
+[.](r|R)$
+[.](pdf|PDF|html|HTML)$
+dummy[.](Rnw|pdf)$

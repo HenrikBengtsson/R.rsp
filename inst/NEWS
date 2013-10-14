@@ -2,13 +2,18 @@ Package: R.rsp
 ==============
 
 Version: 0.9.28 [2013-10-14]
+o DOCUMENTATION: Updates to vignettes: Added rsource() command to
+ 'RSP Markup Language - Reference Card' vignette'.  Adjusted
+ 'Dynamic document creation using RSP' to reflect new vignettes/.
 o Now the package vignettes are in vignettes/ and no in inst/doc/,
   which will not be supported by R (>= 3.1.0).
+o ROBUSTNESS: Now package only imports explicitly what is needed
+  from dependent packages.
 
 
 Version: 0.9.27 [2013-10-13]
 o GENERALIZATION: Updated the framework for building non-Sweave
-  vignettes also under R (< 3.0.0) to support the vignettes/ 
+  vignettes also under R (< 3.0.0) to support the vignettes/
   directory in addition to inst/doc/.  Thanks to Jari Oksanen,
   University of Oulu, Finland, for the pointers on how to do this.
 
@@ -18,11 +23,11 @@ o No isCapableOf() also supports version specifications.
 o Now the 'R.rsp' Package object is also available when the
   package is only loaded (but not attached).
 o BUG FIX: The 'Dynamic document creation using RSP' vignette
-  assumed that evalCapture() of 'R.utils' was on the search path. 
+  assumed that evalCapture() of 'R.utils' was on the search path.
 o ROBUSTNESS/BUG FIX: Now the 'Introductory slides on RSP' vignette
   better detects what version of 'pandoc' is available and adapts
   accordingly.  If not available, the fallback Markdown version
-  will display a note about this.  Thanks to Brian Ripley for 
+  will display a note about this.  Thanks to Brian Ripley for
   reporting on 'pandoc' version incompatibilities.
 o Bumped up package dependencies.
 

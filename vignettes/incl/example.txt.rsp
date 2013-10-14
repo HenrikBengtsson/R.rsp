@@ -1,0 +1,5 @@
+<%@meta title="Example"%>
+Title: <%@meta name="title"%>
+Counting:<% for (i in 1:3) { %><%-%>
+ <%=i-%>
+<% } %>
