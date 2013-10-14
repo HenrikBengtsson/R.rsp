@@ -16,6 +16,9 @@ tex:
 
 # Create an HTML vignette index page
 index.html:
+# To avoid having this file being listed as a non-Sweave vignette
+# because it contains a %\VignetteIndexEntry{} line in the instructions
+	"$(R)" -e "if (getRversion() < 3) unlink('NonSweaveVignettes.tex')"
 	"$(R)" -e "if (getRversion() < 3) R.rsp::buildPkgIndexHtml()"
 
 # Certain LaTeX files (e.g. bib, bst, sty) must be part of the build 
