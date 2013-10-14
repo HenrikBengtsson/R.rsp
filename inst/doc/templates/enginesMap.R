@@ -9,6 +9,15 @@
   R.rsp::rspTangle(file, ...);
 }
 
+# "Dummy" Rnw vignettes
+`R.rsp::dummy_Rnw` <- function(file, ...) {
+  output <- gsub("[.]Rnw$", ".pdf", file);
+  cat(file=output);
+}
+
+# Skip Rnw vignettes
+`R.rsp::skip_Rnw` <- function(file, ...) { }
+
 # Sweave vignettes
 `utils::Sweave` <- `Sweave` <- function(file, ...) {
   utils::Sweave(file, ...);

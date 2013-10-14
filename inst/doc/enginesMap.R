@@ -18,14 +18,6 @@
 # Skip Rnw vignettes
 `R.rsp::skip_Rnw` <- function(file, ...) { }
 
-# *.md.rsp -> *.md -> *.html vignettes (non-offical)
-`R.rsp::md.rsp+knitr:pandoc` <- `md.rsp+knitr:pandoc` <- function(file, ...) {
-  ns <- getNamespace("R.rsp");
-  weave <- get(".weave_md.rsp+knitr:pandoc", mode="function", envir=ns);
-  weave(file, ...);
-  R.rsp::rspTangle(file, ...);
-}
-
 # Sweave vignettes
 `utils::Sweave` <- `Sweave` <- function(file, ...) {
   utils::Sweave(file, ...);
@@ -44,3 +36,10 @@
   noweb::notangle(file, ...);
 }
 
+# *.md.rsp -> *.md -> *.html vignettes (non-offical)
+`R.rsp::md.rsp+knitr:pandoc` <- `md.rsp+knitr:pandoc` <- function(file, ...) {
+  ns <- getNamespace("R.rsp");
+  weave <- get(".weave_md.rsp+knitr:pandoc", mode="function", envir=ns);
+  weave(file, ...);
+  R.rsp::rspTangle(file, ...);
+}
