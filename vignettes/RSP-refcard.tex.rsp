@@ -278,10 +278,14 @@ code <- tidy(code, format='unsafedemo');
 \code{s <- rstring(file='\content{file|URL}')}\linebreak
 \end{minipage}
 <%@if twocolumn="FALSE"%>%%<%@endif%>
-\begin{minipage}[t]{54ex}
+\begin{minipage}[t]{56ex}
 \footnotesize%
 \code{output <- rfile('\content{file|URL}')}\linebreak
 \code{output <- rfile('\content{file|URL}', postprocess=FALSE)}\linebreak
+\end{minipage}
+\begin{minipage}[t]{30ex}
+\footnotesize%
+\code{rsource('\content{file|URL}')}\linebreak
 \end{minipage}
 
 <%@if twocolumn="TRUE"%>
