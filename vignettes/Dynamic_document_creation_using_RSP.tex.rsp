@@ -253,7 +253,7 @@ The generated PDF (\code{Dynamic\_LaTeX\_reports\_with\_RSP.pdf}) will be availa
 %
 It is also possible to compile online RSP documents, e.g.
 \begin{verbatim}
-> url <- "http://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/R.rsp/inst/doc/
+> url <- "http://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/R.rsp/vignettes/
           Dynamic_document_creation_using_RSP.tex.rsp?root=r-dots"
 > rfile(url)
 \end{verbatim}
