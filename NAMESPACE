@@ -11,9 +11,9 @@ importFrom("R.oo", "uses")
 importFrom("R.oo", "Object")
 importFrom("R.oo", "Package")
 importFrom("R.oo", "Exception")
- importFrom("R.utils", "Arguments")
- importFrom("R.utils", "GString")
- importFrom("R.utils", "Verbose")
+importFrom("R.utils", "Arguments")
+importFrom("R.utils", "GString")
+importFrom("R.utils", "Verbose")
 
 
 ## Importing generics
@@ -23,8 +23,8 @@ importFrom("R.oo", "getName")
 importFrom("R.oo", "getPath")
 importFrom("R.oo", "getSource")
 importFrom("R.oo", "trim")
- importFrom("R.utils", "evaluate")
- importFrom("R.utils", "getAbsolutePath")
+importFrom("R.utils", "evaluate")
+importFrom("R.utils", "getAbsolutePath")
 importFrom("stats", "start")
 importFrom("utils", "toLatex")
 
