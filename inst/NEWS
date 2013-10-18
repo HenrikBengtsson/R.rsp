@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.9.29 [2013-10-17]
+o BUG FIX: The browseRsp() demo page assumed that 'R.utils' was
+  attached.
+
+
 Version: 0.9.28 [2013-10-14]
 o DOCUMENTATION: Updates to vignettes: Added rsource() command to
   'RSP Markup Language - Reference Card' vignette'.  Adjusted

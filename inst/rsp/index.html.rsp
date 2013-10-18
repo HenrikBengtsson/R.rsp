@@ -47,7 +47,7 @@ pkgs <- installed.packages()[,c("Package", "LibPath")];
 paths <- file.path(pkgs[,"LibPath"], pkgs[,"Package"], "rsp");
 names(paths) <- pkgs[,"Package"];
 paths <- paths[file.exists(paths)];
-paths <- paths[unlist(sapply(paths, FUN=isDirectory))];
+paths <- paths[unlist(sapply(paths, FUN=R.utils::isDirectory))];
 
 # Get ordered unique package names
 pkgs <- names(paths);
