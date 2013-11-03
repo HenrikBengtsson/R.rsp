@@ -1725,7 +1725,10 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       # (e) Parse into an RspText or and RspDocument
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       if (inclCT$contentType == "application/x-rsp") {
-        rstr <- RspString(content, type=hostContentType, source=file);
+        # "Child" RspObject:s should "inherit" attributes (e.g. meta data)
+        # from the "parent" RspObject. /HB 2013-11-03
+        attrs <- getAttributes(object)
+        rstr <- RspString(content, type=hostContentType, attrs=attrs, source=file);
         until <- inclCT$args["until"];
         if (is.null(until)) until <- "*";
         verbose && printf(verbose, "Parsing RSP document until '%s'\n", until);

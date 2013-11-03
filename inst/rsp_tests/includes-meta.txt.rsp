@@ -1,0 +1,5 @@
+<%@meta title="Passing meta data to child RSP documents"%>
+Title: <%@meta name="title"%>
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+<%@include file="incl/include-meta.txt.rsp"%>
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
