@@ -6,6 +6,7 @@ o Now "child" RSP documents imported into a "parent" RSP document
   via <%@import ...%>, sees all meta data of the parent, and any 
   meta data set by the child document are also set in the parent 
   one.  Added a system test for this.
+o BUG FIX: setMetadata(..., metadata=list()) would give an error.
 
 
 Version: 0.9.30 [2013-11-03]

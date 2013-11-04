@@ -150,7 +150,7 @@ setMethodS3("getMetadata", "RspProduct", function(object, name=NULL, ...) {
 setMethodS3("setMetadata", "RspProduct", function(object, metadata=NULL, name, value, ...) {
   data <- getMetadata(object);
 
-  if (length(metadata) > 0L) {
+  if (!is.null(metadata)) {
     for (name in names(metadata)) {
       data[[name]] <- metadata[[name]];
     }
