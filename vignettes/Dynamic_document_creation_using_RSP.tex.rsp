@@ -692,7 +692,13 @@ For example, in LaTeX you can do
 \end{rspVerbatim}
 Note how this sets both the displayed metadata as well as the non-visible PDF metadata.
 
-For convenience, there is a short format for setting metadata, which is \code{<\%@meta \content{name}="\content{content}"\%>}.
+\begin{remark}
+Metadata set in the main document is visible also to "child" RSP documents included via \code{<\%@include \content{file}="\content{pathname|URL}"\%>}.  Vice verse, metadata set in a child document are visible (assigned) to the "parent" document.
+\end{remark}
+
+\begin{remark}
+For convenience, \code{<\%@meta \content{name}="\content{content}"\%>} is short syntax for setting metadata.
+\end{remark}
 
 
 \paragraph{Setting metadata via R vignette metadata}
@@ -730,6 +736,10 @@ There exist analogue directives for \emph{numeric}, \emph{integer} and \emph{log
 \end{rspVerbatim}
 %
 For convenience, there is a short format for setting a variable, which is \code{<\%@string \content{name}="\content{content}"\%>}.
+
+\begin{remark}
+Just as for metadata, preprocessing variables transfer transparently between included child and parent documents when using \code{<\%@include \content{file}="\content{pathname|URL}"\%>}.
+\end{remark}
 
 
 \subsubsection{Conditional inclusion/exclusion (\code{<\%@if ...\%>})}
