@@ -114,6 +114,7 @@ setMethodS3("getType", "RspProduct", function(object, default=NA, as=c("text", "
 
 #########################################################################/**
 # @RdocMethod getMetadata
+# @aliasmethod setMetadata
 #
 # @title "Gets the metadata an RSP product"
 #

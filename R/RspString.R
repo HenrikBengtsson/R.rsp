@@ -122,6 +122,7 @@ setMethodS3("getType", "RspString", function(object, default=NA, as=c("text", "I
 
 #########################################################################/**
 # @RdocMethod getMetadata
+# @aliasmethod setMetadata
 #
 # @title "Gets the metadata of the RspDocument"
 #

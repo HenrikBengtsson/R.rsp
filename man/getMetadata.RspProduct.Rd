@@ -10,6 +10,10 @@
 \alias{getMetadata.RspProduct}
 \alias{RspProduct.getMetadata}
 \alias{getMetadata,RspProduct-method}
+\alias{RspProduct.setMetadata}
+\alias{setMetadata.RspProduct}
+\alias{setMetadata,RspProduct-method}
+
 
 \title{Gets the metadata an RSP product}
 

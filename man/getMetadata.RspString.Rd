@@ -10,6 +10,10 @@
 \alias{getMetadata.RspString}
 \alias{RspString.getMetadata}
 \alias{getMetadata,RspString-method}
+\alias{RspString.setMetadata}
+\alias{setMetadata.RspString}
+\alias{setMetadata,RspString-method}
+
 
 \title{Gets the metadata of the RspDocument}
 
