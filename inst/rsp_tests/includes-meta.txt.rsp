@@ -3,3 +3,5 @@ Title: <%@meta name="title"%>
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 <%@include file="incl/include-meta.txt.rsp"%>
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Meta data set by "child" document are available here
+as well, e.g. 'subtitle' is '<%@meta name="subtitle"%>'.

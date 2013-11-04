@@ -60,6 +60,7 @@ RspString(s=character(), ...)
  \tab \code{rscript} \tab  -\cr
  \tab \code{rsource} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
+ \tab \code{setMetadata} \tab  -\cr
  \tab \code{\link[R.rsp:toR.RspString]{toR}} \tab Parses and translates the RSP string into R code.\cr
 }
 

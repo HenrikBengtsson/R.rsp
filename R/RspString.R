@@ -154,6 +154,22 @@ setMethodS3("getMetadata", "RspString", function(object, name=NULL, ...) {
 }, protected=TRUE)
 
 
+setMethodS3("setMetadata", "RspString", function(object, metadata=NULL, name, value, ...) {
+  data <- getMetadata(object);
+
+  if (length(metadata) > 0L) {
+    for (name in names(metadata)) {
+      data[[name]] <- metadata[[name]];
+    }
+  } else {
+    data[[name]] <- value;
+  }
+
+  setAttribute(object, "metadata", data);
+}, protected=TRUE)
+
+
+
 #########################################################################/**
 # @RdocMethod getSource
 #

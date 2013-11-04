@@ -1725,10 +1725,13 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       # (e) Parse into an RspText or and RspDocument
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       if (inclCT$contentType == "application/x-rsp") {
-        # "Child" RspObject:s should "inherit" attributes (e.g. meta data)
-        # from the "parent" RspObject. /HB 2013-11-03
-        attrs <- getAttributes(object)
-        rstr <- RspString(content, type=hostContentType, attrs=attrs, source=file);
+        # "Child" RspDocument:s should "inherit" meta data
+        # from the "parent" RspDocument. /HB 2013-11-03
+        meta <- getMetadata(object);
+        rstr <- RspString(content, type=hostContentType, source=file);
+        rstr <- setMetadata(rstr, meta);
+        meta <- NULL; # Not needed anymore
+
         until <- inclCT$args["until"];
         if (is.null(until)) until <- "*";
         verbose && printf(verbose, "Parsing RSP document until '%s'\n", until);
@@ -1738,9 +1741,21 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         verbose && cat(verbose, "Included RSP document:");
         verbose && print(verbose, doc);
 
+        # Update meta data (child to parent)
+        metaChild <- getMetadata(doc);
+        if (length(metaChild) > 0L) {
+          object <- setMetadata(object, metaChild);
+        }
+        metaChild <- NULL;
+
         if (recursive && until == "*") {
           verbose && enter(verbose, "Recursively preprocessing included RSP document");
           doc <- preprocess(doc, recursive=TRUE, flatten=flatten, envir=envir, ..., verbose=verbose);
+          metaChild <- getMetadata(doc);
+          if (length(metaChild) > 0L) {
+            object <- setMetadata(object, metaChild);
+          }
+          metaChild <- NULL;
           verbose && exit(verbose);
           item <- doc;
         } else {
@@ -1939,6 +1954,11 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 ##############################################################################
 # HISTORY:
+# 2013-11-03
+# o Now "child" RSP documents imported into a "parent" RSP document,
+#   sees all meta data of the parent, and any meta data set by the
+#   child document are also set in the parent one.  Added a system
+#   test for this.
 # 2013-10-14
 # o BUG FIX: If an RspEvalDirective for language="R" had a parse or an
 #   evaluation error, the intended error message was not generated because

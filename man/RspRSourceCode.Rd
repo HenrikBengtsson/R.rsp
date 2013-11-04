@@ -64,7 +64,7 @@ RspRSourceCode(...)
 evaluate, print, rstring, tangle, tidy
 
  \bold{Methods inherited from RspProduct}:\cr
-findProcessor, getMetadata, getType, hasProcessor, print, process, view
+findProcessor, getMetadata, getType, hasProcessor, print, process, setMetadata, view
 
  \bold{Methods inherited from RspObject}:\cr
 getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes
