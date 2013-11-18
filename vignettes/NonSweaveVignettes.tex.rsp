@@ -73,7 +73,7 @@ When building an R package, Sweave/LaTeX vignettes are recognized by R, compiled
 Starting with R~v3.0.0, it is possible to include vignettes of any vignette format in R packages (not only Sweave).  This is handled via a so called \emph{vignette engine} mechanism that utilizes so called \emph{vignette builder} packages such as \pkg{R.rsp}, \pkg{knitr} and \pkg{noweb}.  
 For instance, a package that wish to include RSP vignettes using the \pkg{R.rsp} package, should add the following to its \file{DESCRIPTION} file
 {\begin{verbatim}
-Suggests: R.rsp (>= 0.9.9)
+Suggests: R.rsp
 VignetteBuilder: R.rsp
 \end{verbatim}}
 and the following to each of the RSP vignettes (typically as part of an RSP comment)
