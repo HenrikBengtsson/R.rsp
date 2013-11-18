@@ -521,7 +521,7 @@ trimmed off as well as its trailing line break.
 \subsubsection{Manually controlling trailing whitespace and line breaks (\code{-\%>} and \code{+\%>})}
 Also for RSP constructs that are not surrounded by only whitespace, it is possible to control how whitespace and line breaks following RSP constructs are trimmed.  This is done via so called \emph{RSP end tag specifications}.   Those apply to all types of RSP constructs.
 %
-By adding an \emph{end tag hyphen} at the end of an RSP construct (i.e. \code{-\%>}), all following whitespace (space and tabs) including the first line break (the newline) is dropped (``trimmed''), if and only if there are no other characters following the RSP construct.  How this works is illustrated in the following example:
+By adding an \emph{end tag hyphen} at the end of an RSP construct (i.e. \code{-\%>}), all following whitespace (space and tabs) including the \emph{first} line break (the newline) is dropped (``trimmed''), if and only if there are no other characters following the RSP construct.  How this works is illustrated in the following example:
 \begin{escapeRspVerbatim}
 > rstring("A random integer in [1,100]: <\%=sample(1:100, size=1)\%>{\bs}n")
 [1] "A random integer in [1,100]: 48{\bs}n"
@@ -533,7 +533,7 @@ By adding an \emph{end tag hyphen} at the end of an RSP construct (i.e. \code{-\
 To disable the trimming of trailing whitespace and line breaks, add an \emph{end tag plus sign}, i.e. `\code{+\%>}'.  For instance,
 \begin{escapeRspVerbatim}
 > rstring("abc{\bs}n<\%='DEF'\%>{\bs}nGHI")
-[1] "abc{\bs}nDEFGHI"
+[1] "abc{\bs}nDEF{\bs}nGHI"
 > rstring("abc{\bs}n<\%='DEF'-\%>{\bs}nGHI")
 [1] "abc{\bs}nDEFGHI"
 > rstring("abc{\bs}n<\%='DEF'+\%>{\bs}nGHI")
