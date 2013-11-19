@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.10.1 [2013-11-18]
+o Added a small LoremIpsum.tex.rsp example vignette that is also
+  useful as a stub for others to build upon.
+
+
 Version: 0.10.0 [2013-11-03]
 o Now "child" RSP documents imported into a "parent" RSP document
   via <%@import ...%>, sees all meta data of the parent, and any 
