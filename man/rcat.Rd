@@ -29,7 +29,7 @@
 \usage{
  \method{rcat}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", output="", buffered=TRUE,
   append=FALSE, verbose=FALSE)
- \method{rsource}{default}(file, path=NULL, output="", buffered=FALSE, ...)
+ \method{rsource}{default}(file, path=NULL, envir=parent.frame(), output="", buffered=FALSE, ...)
 }
 
 \arguments{
