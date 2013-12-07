@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.10.3 [2013-12-06]
+o CLEANUP: Dropped obsolete autoload():s. 
+
+
 Version: 0.10.2 [2013-11-23]
 o BUG FIX: rsource() would not evaluate in the current environment.
   Added a package system test for this.

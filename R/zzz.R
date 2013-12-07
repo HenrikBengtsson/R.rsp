@@ -1,5 +1,3 @@
-.conflicts.OK <- TRUE
-
 # Temporary workaround until R.oo::Class$forName() supports
 # searching namespaces as well. /HB 2013-09-16
 .Class_forName <- function(name, envir=NULL) {
