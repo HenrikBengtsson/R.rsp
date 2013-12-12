@@ -18,7 +18,7 @@
 }
 
 \usage{
-rspWeave(file, ..., postprocess=FALSE, quiet=FALSE, envir=new.env(), .engineName="rsp")
+rspWeave(file, ..., postprocess=TRUE, quiet=FALSE, envir=new.env(), .engineName="rsp")
 }
 
 \arguments{

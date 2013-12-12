@@ -1,8 +1,17 @@
 Package: R.rsp
 ==============
 
+Version: 0.11.0 [2013-12-12]
+o SIMPLIFICATION: Now the registered 'rsp::rsp' engine postprocesses
+  the RSP document by default.  This means that RSP-embedded Markdown
+  vignettes will be turned into HTML documents just as RSP-embedded
+  LaTeX vignettes will become PDF documents.  It also means that such
+  engines will no longer rely on the R 'tools' package to compile
+  TeX output into PDFs.
+
+
 Version: 0.10.3 [2013-12-06]
-o CLEANUP: Dropped obsolete autoload():s. 
+o CLEANUP: Dropped obsolete autoload():s.
 
 
 Version: 0.10.2 [2013-11-23]
