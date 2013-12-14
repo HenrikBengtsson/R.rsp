@@ -8,6 +8,9 @@ o Now rfile() tries to rename the generated output file, iff its
   to 'SampleA.txt', if variable 'foo' is set to say 'SampleA' (either
   globally or by the RSP document).  If the variable is not set, the
   output file will remain '${foo}.txt'.  Requires R.utils (>= 1.28.6).
+o BUG FIX: compileRsp(..., postprocess=TRUE) would throw 'Error in
+  UseMethod("process"): no applicable method for 'process' applied to
+  an object of class "character"'.  Added system test for compileRsp().
 
 
 Version: 0.11.0 [2013-12-12]

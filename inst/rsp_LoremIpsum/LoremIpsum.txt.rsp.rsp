@@ -1,0 +1,15 @@
+<%------------------------------------------------------------
+This is an RSP document that outputs another RSP document
+------------------------------------------------------------%>
+Lorem Ipsum
+===========
+
+Author: R.rsp
+
+Text
+----
+
+<%%
+sentences <- c("<%@include file='includes/LoremIpsum.txt'%>")
+%%>
+<%% for (sentence in sentences) { %%><%%=sentence%%> <%% } %%>

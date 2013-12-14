@@ -59,7 +59,6 @@ setMethodS3("compileRsp", "default", function(filename, path=NULL, ..., outPath=
   }
 
   pathname2 <- rfile(pathname, ..., envir=envir);
-  pathname2 <- getAbsolutePath(pathname2);
   setwd(opwd); opwd <- ".";
 
   res <- pathname2;
@@ -78,6 +77,10 @@ setMethodS3("compileRsp", "default", function(filename, path=NULL, ..., outPath=
 
 ###########################################################################
 # HISTORY:
+# 2013-12-13
+# o BUG FIX: compileRsp(..., postprocess=TRUE) would throw 'Error in
+#   UseMethod("process"): no applicable method for 'process' applied to
+#   an object of class "character"'.
 # 2013-03-29
 # o Created.
 ###########################################################################
