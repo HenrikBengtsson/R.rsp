@@ -27,6 +27,11 @@
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspFileProduct", function(pathname=NA, ..., mustExist=TRUE) {
+  # WORKAROUND: Arguments$getReadablePathname() interprets the
+  # filename as a GString by default.
+  oopts <- options("Arguments$getCharacters/args/asGString"=FALSE);
+  on.exit(options(oopts));
+
   # Argument 'pathname':
   if (!is.null(pathname) && !is.na(pathname)) {
     Arguments$getReadablePathname(pathname, mustExist=mustExist);
@@ -166,8 +171,15 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
        do.call(fcnT, args=c(list(...), metadata));
     }
     fcn <- function(pathname, ...) {
+      # WORKAROUND: Arguments$getReadablePathname() interprets the
+      # filename as a GString by default.
+      oopts <- options("Arguments$getCharacters/args/asGString"=FALSE);
+      on.exit(options(oopts));
+
       # Arguments 'pathname':
       pathname <- Arguments$getReadablePathname(pathname);
+      options(oopts); # Undo
+
       pathnameR <- processor(pathname, ...);
       pathnameR <- getAbsolutePath(pathnameR);
       RspFileProduct(pathnameR, attrs=list(metadata=metadata), mustExist=FALSE);

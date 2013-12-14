@@ -65,6 +65,7 @@ importFrom("R.utils", "less")
 importFrom("R.utils", "popState")
 importFrom("R.utils", "printf")
 importFrom("R.utils", "pushState")
+importFrom("R.utils", "renameFile")
 importFrom("R.utils", "sourceTo")
 importFrom("R.utils", "tempvar")
 
@@ -80,11 +81,6 @@ importFrom("utils", "tail")
 
 ## Manually added
 importFrom("R.oo", "ll")
-if (packageVersion("R.utils") < "1.27.5") {
-  importFrom("R.utils", "getOption.default")
-  importFrom("R.utils", "cat.default")
-  importFrom("R.utils", "inherits.default")
-}
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

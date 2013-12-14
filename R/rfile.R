@@ -68,6 +68,10 @@
 # @keyword IO
 #*/###########################################################################
 setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), args="*", postprocess=TRUE, ..., verbose=FALSE) {
+  # Make sure below option is unset, in case this function exits abruptly
+  oopts <- options("Arguments$getCharacters/args/asGString"=FALSE);
+  on.exit(options(oopts));
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -78,7 +82,11 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
       file <- file.path(path, file);
     }
     if (!isUrl(file)) {
+      # WORKAROUND: Arguments$getReadablePathname() interprets the
+      # filename via GString by default.
+      options("Arguments$getCharacters/args/asGString"=FALSE);
       file <- Arguments$getReadablePathname(file, absolute=TRUE);
+      options(oopts); # Undo
     }
   }
 
@@ -98,15 +106,23 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
     if (inherits(file, "connection")) {
       throw("When argument 'file' is a connection, then 'output' must be specified.");
     }
-    filename <- basename(file);
+
+    # Is the input a filename or an URI?
     if (isUrl(file)) {
-      # Extract the filename of the URL
+      # If URI, drop any URI arguments
       url <- splitUrl(file);
       filename <- basename(url$path);
+    } else {
+      filename <- basename(file);
     }
+
     pattern <- "((.*)[.]([^.]+)|([^.]+))[.]([^.]+)$";
     outputF <- gsub(pattern, "\\1", filename, ignore.case=TRUE);
+    # WORKAROUND: Arguments$getWritablePathname() interprets the
+    # filename via GString by default.
+    options("Arguments$getCharacters/args/asGString"=FALSE);
     output <- Arguments$getWritablePathname(outputF, path=workdir);
+    options(oopts); # Undo
     output <- getAbsolutePath(output);
     # Don't overwrite the input file
     if (output == file) {
@@ -116,12 +132,16 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   } else if (identical(output, "")) {
     output <- stdout();
   } else if (is.character(output)) {
+    # WORKAROUND: Arguments$getWritablePathname() interprets the
+    # filename via GString by default.
+    options("Arguments$getCharacters/args/asGString"=FALSE);
     if (isAbsolutePath(output)) {
       output <- Arguments$getWritablePathname(output);
     } else {
       output <- Arguments$getWritablePathname(output, path=workdir);
       output <- getAbsolutePath(output);
     }
+    options(oopts); # Undo
     if (is.character(file) && (output == file)) {
       throw("Cannot process RSP file. Argument 'output' specifies the same file as argument 'file' & 'path': ", output, " == ", file);
     }
@@ -157,7 +177,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
     pushState(verbose);
-    on.exit(popState(verbose));
+    on.exit(popState(verbose), add=TRUE);
   }
 
 
@@ -280,6 +300,17 @@ setMethodS3("rfile", "RspDocument", function(doc, ..., verbose=FALSE) {
 
 
 setMethodS3("rfile", "RspRSourceCode", function(rcode, output, workdir=NULL, envir=parent.frame(), args="*", postprocess=TRUE, ..., verbose=FALSE) {
+  # Make sure below option is unset, in case this function exits abruptly
+  oopts <- options("Arguments$getCharacters/args/asGString"=FALSE);
+  on.exit(options(oopts));
+
+  # In-string variable substitute
+  vsub <- function(pathname, ...) {
+    gstr <- GString(pathname);
+    gstring(gstr, envir=envir, where=c("envir"), inherits=FALSE)[1L];
+  } # vsub()
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -299,12 +330,16 @@ setMethodS3("rfile", "RspRSourceCode", function(rcode, output, workdir=NULL, env
   } else if (identical(output, "")) {
     output <- stdout();
   } else if (is.character(output)) {
+    # WORKAROUND: Arguments$getWritablePathname() interprets the
+    # filename via GString by default.
+    options("Arguments$getCharacters/args/asGString"=FALSE);
     if (isAbsolutePath(output)) {
       output <- Arguments$getWritablePathname(output);
     } else {
       output <- Arguments$getWritablePathname(output, path=workdir);
       output <- getAbsolutePath(output);
     }
+    options(oopts); # Undo
   } else {
     throw("Argument 'output' of unknown type: ", class(output)[1L]);
   }
@@ -319,7 +354,7 @@ setMethodS3("rfile", "RspRSourceCode", function(rcode, output, workdir=NULL, env
   verbose <- Arguments$getVerbose(verbose);
   if (verbose) {
     pushState(verbose);
-    on.exit(popState(verbose));
+    on.exit(popState(verbose), add=TRUE);
   }
 
 
@@ -361,11 +396,30 @@ setMethodS3("rfile", "RspRSourceCode", function(rcode, output, workdir=NULL, env
 
   res <- rcat(rcode, output=output, envir=envir, args=NULL, ..., verbose=less(verbose, 10));
 
+  # WORKAROUND: Arguments$getReablePathname() interprets the
+  # filename via GString by default.
+  options("Arguments$getCharacters/args/asGString"=FALSE);
+
   if (isFile(output)) {
     res <- RspFileProduct(output, attrs=getAttributes(res));
+
+    # Rename output file via GString substitution of the filename?
+    resG <- vsub(res);
+    if (resG != res) {
+      if (renameFile(res, resG, overwrite=TRUE)) {
+        # FIXME: res <- newInstance(res, resG);
+        res <- RspFileProduct(resG, attrs=getAttributes(res));
+      } else {
+        warning(sprintf("Failed to rename output file containing variable substitutions in its name (keeping the current one): ", sQuote(res), " -> ", sQuote(resG)));
+      }
+    }
+    resG <- NULL; # Not needed anymore
   } else {
     res <- RspProduct(output, attrs=getAttributes(res));
   }
+
+  options(oopts); # Undo
+
   verbose && print(verbose, res);
   rcode <- output <- NULL; # Not needed anymore
 
@@ -422,6 +476,10 @@ setMethodS3("rfile", "function", function(object, ..., envir=parent.frame(), ver
 
 ############################################################################
 # HISTORY:
+# 2013-12-13
+# o Now rfile() does string variable substitution of the output pathname,
+#   if possible.
+# o Now rfile() no longer interprets input pathnames as GString:s.
 # 2013-07-16
 # o Added rstring(), rcat() and rfile() for function:s.
 # 2013-07-14

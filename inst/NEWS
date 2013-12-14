@@ -1,6 +1,15 @@
 Package: R.rsp
 ==============
 
+Version: 0.11.1 [2013-12-13]
+o Now rfile() tries to rename the generated output file, iff its
+  filename can be renamed using variable substitutions.  For instance,
+  rfile('${foo}.txt.rsp') will try to rename output file '${foo}.txt'
+  to 'SampleA.txt', if variable 'foo' is set to say 'SampleA' (either
+  globally or by the RSP document).  If the variable is not set, the
+  output file will remain '${foo}.txt'.  Requires R.utils (>= 1.28.6).
+
+
 Version: 0.11.0 [2013-12-12]
 o SIMPLIFICATION: Now the registered 'rsp::rsp' engine postprocesses
   the RSP document by default.  This means that RSP-embedded Markdown
