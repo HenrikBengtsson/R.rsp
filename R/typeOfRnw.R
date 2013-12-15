@@ -32,13 +32,14 @@
 setMethodS3("typeOfRnw", "default", function(filename, path=NULL, default="application/x-sweave", ...) {
   # WORKAROUND: Arguments$getReadablePathname() interprets the
   # filename as a GString by default.
-  oopts <- options("Arguments$getCharacters/args/asGString"=FALSE);
+  oopts <- options("Arguments$getCharacters/args/asGString");
   on.exit(options(oopts));
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'filename' & 'path':
+  options("Arguments$getCharacters/args/asGString"=FALSE);
   pathname <- Arguments$getReadablePathname(filename, path=path);
   options(oopts); # Undo
 

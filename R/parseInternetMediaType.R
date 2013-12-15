@@ -1,5 +1,9 @@
-extentionToIMT <- function(filename, ext=NULL, default=NA) {
+extensionToIMT <- function(filename, ext=NULL, default=NA) {
   if (is.null(ext)) {
+    # If URI, drop any URI arguments
+    if (isUrl(filename)) {
+      filename <- splitUrl(filename)$path;
+    }
     ext <- gsub(".*[.]([^.]+)$", "\\1", filename);
   }
   ext <- tolower(ext);
@@ -39,7 +43,7 @@ extentionToIMT <- function(filename, ext=NULL, default=NA) {
     default
   );
   type;
-} # extentionToIMT()
+} # extensionToIMT()
 
 
 escapeRspTags <- function(s) {
@@ -198,11 +202,13 @@ parseInternetMediaType <- function(s, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2013-12-14
+# o Now extensionToIMT() also handles URLs with parameters.
 # 2013-05-22
 # o Now parseInternetMediaType() returns NA if input is NA.
 # 2013-03-11
 # o Added escapeRspContent().
-# o Added extentionToIMT().
+# o Added extensionToIMT().
 # o Added parseInternetMediaType().
 # o Created.
 ##############################################################################

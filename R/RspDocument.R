@@ -1678,7 +1678,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
           if (is.null(ext)) {
             throw(RspPreprocessingException(sprintf("Attribute 'type' must be given because it can not be inferred from the 'file' attribute ('%s') which has no filename extension.", file), item=item));
           }
-          contentType <- extentionToIMT(ext=ext, default="text/plain");
+          contentType <- extensionToIMT(ext=ext, default="text/plain");
         }
       }
       content <- paste(content, collapse="\n");

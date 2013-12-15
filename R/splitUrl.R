@@ -30,7 +30,7 @@
 #*/###########################################################################
 setMethodS3("splitUrl", "default", function(url, ...) {
   # Argument 'url':
-  url <- Arguments$getCharacter(url);
+  url <- Arguments$getCharacter(url, asGString=FALSE);
   if (length(url) == 0L) {
     return(NULL);
   }

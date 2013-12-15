@@ -30,6 +30,7 @@ importFrom("utils", "toLatex")
 
 
 ## Importing functions
+importFrom("R.cache", "getChecksum")
 importFrom("R.methodsS3", "throw")
 importFrom("R.oo", "attachLocally")
 importFrom("R.oo", "getStaticInstance")

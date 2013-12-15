@@ -29,12 +29,14 @@
 setConstructorS3("RspFileProduct", function(pathname=NA, ..., mustExist=TRUE) {
   # WORKAROUND: Arguments$getReadablePathname() interprets the
   # filename as a GString by default.
-  oopts <- options("Arguments$getCharacters/args/asGString"=FALSE);
+  oopts <- options("Arguments$getCharacters/args/asGString");
   on.exit(options(oopts));
 
   # Argument 'pathname':
   if (!is.null(pathname) && !is.na(pathname)) {
+    options("Arguments$getCharacters/args/asGString"=FALSE);
     Arguments$getReadablePathname(pathname, mustExist=mustExist);
+    options(oopts); # Undo
   }
 
   extend(RspProduct(pathname, ...), "RspFileProduct");
@@ -71,7 +73,7 @@ setMethodS3("getType", "RspFileProduct", function(object, as=c("text", "IMT"), .
   if (is.na(res)) {
     # Infer type from the filename extension?
     if (isFile(object) || isUrl(object)) {
-      res <- extentionToIMT(object);
+      res <- extensionToIMT(object);
     }
   }
 

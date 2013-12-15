@@ -69,7 +69,7 @@
 #*/###########################################################################
 setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), args="*", postprocess=TRUE, ..., verbose=FALSE) {
   # Make sure below option is unset, in case this function exits abruptly
-  oopts <- options("Arguments$getCharacters/args/asGString"=FALSE);
+  oopts <- options("Arguments$getCharacters/args/asGString");
   on.exit(options(oopts));
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -153,7 +153,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   # Argument 'type':
   if (is.null(type)) {
     if (is.character(output)) {
-      type <- extentionToIMT(output);
+      type <- extensionToIMT(output);
       attr(type, "fixed") <- TRUE;
     } else {
       type <- NA;
@@ -161,7 +161,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   }
   if (is.na(type)) {
     if (is.character(output)) {
-      type <- extentionToIMT(output);
+      type <- extensionToIMT(output);
     }
   }
   fixed <- attr(type, "fixed");
@@ -315,7 +315,7 @@ setMethodS3("rfile", "RspDocument", function(doc, ..., verbose=FALSE) {
 
 setMethodS3("rfile", "RspRSourceCode", function(rcode, output, workdir=NULL, envir=parent.frame(), args="*", postprocess=TRUE, ..., verbose=FALSE) {
   # Make sure below option is unset, in case this function exits abruptly
-  oopts <- options("Arguments$getCharacters/args/asGString"=FALSE);
+  oopts <- options("Arguments$getCharacters/args/asGString");
   on.exit(options(oopts));
 
   # In-string variable substitute

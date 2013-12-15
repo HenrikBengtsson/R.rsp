@@ -141,7 +141,7 @@
 \alias{setMetadata}
 \alias{escapeRspContent}
 \alias{escapeRspTags}
-\alias{extentionToIMT}
+\alias{extensionToIMT}
 \alias{parseInternetMediaType}
 \alias{unescapeRspTags}
 \alias{nbrOfLines}
