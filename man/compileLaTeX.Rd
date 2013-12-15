@@ -33,7 +33,7 @@
 }
 
 \value{
-  Returns (invisibly) the pathname of the generated (PDF or DVI) document.
+  Returns the pathname of the generated (PDF or DVI) document.
 }
 
 \author{Henrik Bengtsson}

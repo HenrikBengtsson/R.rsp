@@ -17,8 +17,7 @@
 }
 
 \usage{
-\method{compileRsp}{default}(filename, path=NULL, ..., outPath=".", postprocess=TRUE, envir=parent.frame(),
-  verbose=FALSE)
+\method{compileRsp}{default}(filename, path=NULL, ..., outPath=".", envir=parent.frame(), verbose=FALSE)
 }
 
 \arguments{
@@ -30,7 +29,7 @@
 }
 
 \value{
-  Returns (invisibly) the pathname of the generated document.
+  Returns the pathname of the generated document.
 }
 
 \author{Henrik Bengtsson}

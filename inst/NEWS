@@ -2,6 +2,12 @@ Package: R.rsp
 ==============
 
 Version: 0.12.1 [2013-12-14]
+o Now rfile() accepts also non-RSP documents, e.g. rfile("report.md"),
+  rfile("report.Rnw"), and rfile("report.tex").  This also means that
+  all RSP documents must use the *.rsp filename extension in order for
+  rfile() to automatically recognize it as RSP.  To process files with
+  custom extensions as RSP, do rfile(RspFileProduct("report.custom",
+  type="application/x-rsp")).
 o BUG FIX: compileRsp() did not acknowledge argument 'postprocess'.
 
 

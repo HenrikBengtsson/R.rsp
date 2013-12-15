@@ -77,6 +77,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'file' & 'path':
   if (inherits(file, "connection")) {
+  } else if (inherits(file, "RspFileProduct")) {
   } else if (is.character(file)) {
     if (!is.null(path)) {
       file <- file.path(path, file);
@@ -184,7 +185,10 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   verbose && enter(verbose, "Processing RSP file");
 
   if (verbose) {
-    if (is.character(file)) {
+    if (inherits(file, "RspFileProduct")) {
+      cat(verbose, "Input file:");
+      print(verbose, file);
+    } else if (is.character(file)) {
       cat(verbose, "Input pathname: ", file);
     } else if (inherits(file, "connection")) {
       ci <- summary(file);
@@ -215,21 +219,31 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   }
   verbose && exit(verbose);
 
-  verbose && enter(verbose, "Reading RSP document");
-  str <- .readText(file);
-  verbose && printf(verbose, "Number of characters: %d\n", nchar(str));
-  verbose && str(verbose, str);
-  verbose && exit(verbose);
+
+  # Coerce to an RspFileProduct
+  if (!inherits(file, "RspFileProduct")) {
+    file <- RspFileProduct(file);
+  }
+
+  if (getType(file) == "application/x-rsp") {
+    verbose && enter(verbose, "Reading RSP document");
+    str <- .readText(file);
+    verbose && printf(verbose, "Number of characters: %d\n", nchar(str));
+    verbose && str(verbose, str);
+    verbose && exit(verbose);
 
 
-  verbose && enter(verbose, "Parsing RSP document");
-  rstr <- RspString(str, type=type, source=file);
-  doc <- parse(rstr, envir=envir, ...);
-  verbose && print(verbose, doc);
-  rstr <- str <- NULL; # Not needed anymore
-  verbose && exit(verbose);
+    verbose && enter(verbose, "Parsing RSP document");
+    rstr <- RspString(str, type=type, source=file);
+    doc <- parse(rstr, envir=envir, ...);
+    verbose && print(verbose, doc);
+    rstr <- str <- NULL; # Not needed anymore
+    verbose && exit(verbose);
 
-  res <- rfile(doc, output=output, workdir=workdir, envir=envir, args=NULL, postprocess=postprocess, ..., verbose=verbose);
+    res <- rfile(doc, output=output, workdir=workdir, envir=envir, args=NULL, postprocess=postprocess, ..., verbose=verbose);
+  } else {
+    res <- process(srcfile, workdir=workdir, envir=envir, args=NULL, postprocess=postprocess, ..., verbose=verbose);
+  }
 
   verbose && exit(verbose);
 
@@ -478,6 +492,9 @@ setMethodS3("rfile", "function", function(object, ..., envir=parent.frame(), ver
 
 ############################################################################
 # HISTORY:
+# 2013-12-14
+# o Now rfile() accepts also non-RSP documents, e.g. rfile("report.md"),
+#   rfile("report.Rnw"), and rfile("report.tex").
 # 2013-12-13
 # o Now rfile() does string variable substitution of the output pathname,
 #   if possible.

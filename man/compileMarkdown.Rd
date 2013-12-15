@@ -29,7 +29,7 @@
 }
 
 \value{
-  Returns (invisibly) the pathname of the generated HTML document.
+  Returns the pathname of the generated HTML document.
 }
 
 \author{Henrik Bengtsson}
