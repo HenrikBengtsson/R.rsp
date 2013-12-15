@@ -70,7 +70,7 @@ setMethodS3("getType", "RspFileProduct", function(object, as=c("text", "IMT"), .
 
   if (is.na(res)) {
     # Infer type from the filename extension?
-    if (isFile(object)) {
+    if (isFile(object) || isUrl(object)) {
       res <- extentionToIMT(object);
     }
   }
@@ -196,6 +196,8 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
 ############################################################################
 # HISTORY:
+# 2013-12-14
+# o Now getType() for RspFileProduct works also for URLs.
 # 2013-03-29
 # o Added view().
 # 2013-03-25

@@ -8,6 +8,7 @@ o Now rfile() accepts also non-RSP documents, e.g. rfile("report.md"),
   rfile() to automatically recognize it as RSP.  To process files with
   custom extensions as RSP, do rfile(RspFileProduct("report.custom",
   type="application/x-rsp")).
+o Now getType() for RspFileProduct works also for URLs.
 o BUG FIX: compileRsp() did not acknowledge argument 'postprocess'.
 
 

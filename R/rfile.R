@@ -222,7 +222,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
 
   # Coerce to an RspFileProduct
   if (!inherits(file, "RspFileProduct")) {
-    file <- RspFileProduct(file);
+    file <- RspFileProduct(file, mustExist=FALSE);
   }
 
   if (getType(file) == "application/x-rsp") {
