@@ -159,6 +159,8 @@
 \alias{parse}
 \alias{parse.default}
 
+\alias{withoutGString}
+
 
 \description{
 This page contains aliases for all "non-documented" objects that

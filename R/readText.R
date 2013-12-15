@@ -45,11 +45,6 @@
 # @keyword internal
 #*/###########################################################################
 .readText <- function(con, ..., maxAge=getOption("R.rsp::downloadIfOlderThan", -Inf)) {
-  # Make sure below option is unset, in case this function exits abruptly
-  oopts <- options("Arguments$getCharacters/args/asGString");
-  on.exit(options(oopts));
-
-
   if (is.character(con)) {
     file <- con;
 
@@ -82,9 +77,9 @@
       }
 
       if (download) {
-        options("Arguments$getCharacters/args/asGString"=FALSE);
-        pathname <- downloadFile(url, filename=pathname, skip=FALSE);
-        options(oopts); # Undo
+        withoutGString({
+          pathname <- downloadFile(url, filename=pathname, skip=FALSE);
+        })
       }
 
       if (isFile(pathname)) file <- pathname;
@@ -102,9 +97,9 @@
         throw(ex);
       }
       url <- file;
-      options("Arguments$getCharacters/args/asGString"=FALSE);
-      pathname <- downloadFile(url, path=tempdir());
-      options(oopts); # Undo
+      withoutGString({
+        pathname <- downloadFile(url, path=tempdir());
+      })
       file(pathname, open="rb");
     });
     on.exit(close(con));

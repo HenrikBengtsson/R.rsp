@@ -9,6 +9,18 @@
 } # .Class_forName()
 
 
+# BACKWARD compatibility until package depends on R.utils (>= 1.28.5)
+withoutGString <- function(..., envir=parent.frame()) {
+  if (packageVersion("R.utils") < "1.28.5") {
+    fcn <- function(..., envir) { eval(..., envir=envir) }
+  } else {
+    ns <- asNamespace("R.utils");
+    fcn <- get("withoutGString", envir=ns);
+  }
+  invisible(fcn(..., envir=envir));
+} # withoutGString()
+
+
 .requirePkg <- function(name, quietly=FALSE) {
   # Nothing to do?
   if (is.element(sprintf("package:%s", name), search())) {
