@@ -242,7 +242,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
 
     res <- rfile(doc, output=output, workdir=workdir, envir=envir, args=NULL, postprocess=postprocess, ..., verbose=verbose);
   } else {
-    res <- process(srcfile, workdir=workdir, envir=envir, args=NULL, postprocess=postprocess, ..., verbose=verbose);
+    res <- process(file, workdir=workdir, envir=envir, args=NULL, postprocess=postprocess, ..., verbose=verbose);
   }
 
   verbose && exit(verbose);
