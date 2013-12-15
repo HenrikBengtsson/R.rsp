@@ -18,7 +18,7 @@
 # }
 #
 # \value{
-#   Returns (invisibly) the pathname of the generated document.
+#   Returns the pathname of the generated document.
 # }
 #
 # @author
@@ -74,7 +74,7 @@ setMethodS3("compileAsciiDocNoweb", "default", function(filename, path=NULL, ...
 
   verbose && exit(verbose);
 
-  invisible(res);
+  res;
 }) # compileAsciiDocNoweb()
 
 

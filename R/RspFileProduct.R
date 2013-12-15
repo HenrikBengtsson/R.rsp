@@ -112,7 +112,7 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
   fcn <- switch(type,
     # RSP documents:
     # *<ext>.rsp => *.<ext>
-    "application/x-rsp" = compileRsp,
+    "application/x-rsp" = function(...) { compileRsp(..., postprocess=FALSE) },
 
     # LaTeX documents:
     # *.tex => ... => *.pdf
@@ -125,7 +125,7 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
     # Markdown documents:
     # *.txt => *.html, ...
-    "application/x-asciidoc" = compileAsciiDoc,
+    "application/x-asciidoc" = function(...) { compileAsciiDoc(..., postprocess=FALSE) },
 
     # Sweave Rnw documents:
     # *.Rnw => *.tex

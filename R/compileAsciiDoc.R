@@ -20,7 +20,7 @@
 # }
 #
 # \value{
-#   Returns (invisibly) the pathname of the generated document.
+#   Returns the pathname of the generated document.
 # }
 #
 # @author

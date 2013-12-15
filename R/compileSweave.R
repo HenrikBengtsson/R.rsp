@@ -20,7 +20,7 @@
 # }
 #
 # \value{
-#   Returns (invisibly) the pathname of the generated document.
+#   Returns the pathname of the generated document.
 # }
 #
 # @author
@@ -77,7 +77,7 @@ setMethodS3("compileSweave", "default", function(filename, path=NULL, ..., outPa
 
   verbose && exit(verbose);
 
-  invisible(res);
+  res;
 }) # compileSweave()
 
 

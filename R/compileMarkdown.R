@@ -18,7 +18,7 @@
 # }
 #
 # \value{
-#   Returns (invisibly) the pathname of the generated HTML document.
+#   Returns the pathname of the generated HTML document.
 # }
 #
 # @author
@@ -104,7 +104,7 @@ setMethodS3("compileMarkdown", "default", function(filename, path=NULL, ..., out
 
   verbose && exit(verbose);
 
-  invisible(pathnameOut);
+  pathnameOut;
 }) # compileMarkdown()
 
 

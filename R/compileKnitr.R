@@ -20,7 +20,7 @@
 # }
 #
 # \value{
-#   Returns (invisibly) the pathname of the generated document.
+#   Returns the pathname of the generated document.
 # }
 #
 # @author
@@ -79,7 +79,7 @@ setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPat
 
   verbose && exit(verbose);
 
-  invisible(res);
+  res;
 }) # compileKnitr()
 
 

@@ -21,7 +21,7 @@
 # }
 #
 # \value{
-#   Returns (invisibly) the pathname of the generated (PDF or DVI) document.
+#   Returns the pathname of the generated (PDF or DVI) document.
 # }
 #
 # @author
@@ -112,7 +112,7 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
 
   verbose && exit(verbose);
 
-  invisible(pathnameOut);
+  pathnameOut;
 }) # compileLaTeX()
 
 

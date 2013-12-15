@@ -22,7 +22,7 @@
 # }
 #
 # \value{
-#   Returns (invisibly) the pathname of the generated document.
+#   Returns the pathname of the generated document.
 # }
 #
 # @author
@@ -61,7 +61,7 @@ setMethodS3("compileRnw", "default", function(filename, path=NULL, ..., type=typ
 
   verbose && exit(verbose);
 
-  invisible(pathnameR);
+  pathnameR;
 }) # compileRnw()
 
 

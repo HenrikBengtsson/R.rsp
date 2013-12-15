@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.12.1 [2013-12-14]
+o BUG FIX: compileRsp() did not acknowledge argument 'postprocess'.
+
+
 Version: 0.12.0 [2013-12-13]
 o Now rfile() tries to rename the generated output file, iff its
   filename can be renamed using variable substitutions.  For instance,

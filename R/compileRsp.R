@@ -18,7 +18,7 @@
 # }
 #
 # \value{
-#   Returns (invisibly) the pathname of the generated document.
+#   Returns the pathname of the generated document.
 # }
 #
 # @author
@@ -27,7 +27,7 @@
 # @keyword IO
 # @keyword internal
 #*/###########################################################################
-setMethodS3("compileRsp", "default", function(filename, path=NULL, ..., outPath=".", postprocess=TRUE, envir=parent.frame(), verbose=FALSE) {
+setMethodS3("compileRsp", "default", function(filename, path=NULL, ..., outPath=".", envir=parent.frame(), verbose=FALSE) {
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -64,19 +64,16 @@ setMethodS3("compileRsp", "default", function(filename, path=NULL, ..., outPath=
   res <- pathname2;
   verbose && print(verbose, res);
 
-  # Postprocess?
-  if (postprocess) {
-    res <- process(res, outPath=outPath, recursive=TRUE, verbose=verbose);
-  }
-
   verbose && exit(verbose);
 
-  invisible(res);
+  res;
 }) # compileRsp()
 
 
 ###########################################################################
 # HISTORY:
+# 2013-12-14
+# o BUG FIX: compileRsp() did not acknowledge argument 'postprocess'.
 # 2013-12-13
 # o BUG FIX: compileRsp(..., postprocess=TRUE) would throw 'Error in
 #   UseMethod("process"): no applicable method for 'process' applied to
