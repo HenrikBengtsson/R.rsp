@@ -47,7 +47,7 @@ setMethodS3("print", "RspProduct", function(x, ...) {
 #########################################################################/**
 # @RdocMethod view
 # @alias view.RspFileProduct
-# @alias !.RspFileProduct
+# @alias !.RspProduct
 #
 # @title "Views the RSP product"
 #
