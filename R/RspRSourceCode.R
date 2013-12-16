@@ -139,7 +139,12 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(),
       cat("\n");
     });
     res <- paste(res, collapse="\n");
+
+    # Get metadata
+    rmeta <- NULL; rm(list="rmeta"); # To please R CMD check
+    rmeta <- get("rmeta", mode="function", envir=envir)
     res <- RspStringProduct(res, attrs=getAttributes(object));
+    res <- setMetadata(res, rmeta())
   } else if (output == "stdout") {
     eval(expr, envir=envir);
     # Force a last complete line
