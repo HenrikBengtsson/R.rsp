@@ -283,6 +283,7 @@ S3method("getType", "RspFileProduct")
 S3method("print", "RspFileProduct")
 S3method("view", "RspFileProduct")
 
+
 # RspIncludeDirective
 S3method("getContent", "RspIncludeDirective")
 S3method("getFile", "RspIncludeDirective")
@@ -328,6 +329,7 @@ S3method("hasProcessor", "RspProduct")
 S3method("print", "RspProduct")
 S3method("process", "RspProduct")
 S3method("view", "RspProduct")
+S3method("!", "RspProduct")
 
 # RspResponse
 S3method("flush", "RspResponse")

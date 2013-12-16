@@ -11,6 +11,7 @@
 \alias{RspProduct.view}
 \alias{view,RspProduct-method}
 \alias{view.RspFileProduct}
+\alias{!.RspFileProduct}
 
 \title{Views the RSP product}
 

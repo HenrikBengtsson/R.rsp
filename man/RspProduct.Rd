@@ -47,6 +47,7 @@ RspProduct(object=NA, ...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
+ \tab \code{!} \tab  -\cr
  \tab \code{\link[R.rsp:findProcessor.RspProduct]{findProcessor}} \tab Locates a processor for an RSP product.\cr
  \tab \code{\link[R.rsp:getMetadata.RspProduct]{getMetadata}} \tab Gets the metadata an RSP product.\cr
  \tab \code{\link[R.rsp:getType.RspProduct]{getType}} \tab Gets the type of an RSP product.\cr
