@@ -309,6 +309,7 @@ setMethodS3("rfile", "RspRSourceCode", function(rcode, output, workdir=NULL, env
     gstr <- GString(pathname);
     str <- gstring(gstr, where=c("envir", "Sys.getenv", "getOption"),
                          envir=envir, inherits=FALSE)[1L];
+    str <- wstring(str, envir=envir);
     str;
   } # vsub()
 

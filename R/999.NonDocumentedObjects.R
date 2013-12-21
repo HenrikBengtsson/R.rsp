@@ -150,6 +150,8 @@
 # @alias parse.default
 #
 # @alias withoutGString
+# @alias wstring
+# @alias wstring.default
 #
 #
 # \description{
