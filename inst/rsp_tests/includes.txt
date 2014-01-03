@@ -6,6 +6,10 @@ not be that exciting, but you can also include values of variable,
 R options and system environment variables.  For instance, the
 paper size is set to 'letter' in R.
 
+An RSP expression can contain preprocessing directives (but not the
+other way around).  This can be used to assign R variables the value
+of preprocessing variables, e.g. papersize='letter'.
+
 It is also possible to include the contents of other files.
 For instance, the file 'incl/include.txt.rsp', contains:
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
