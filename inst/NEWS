@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.12.4 [2014-01-02]
+o Added rstring(), rcat(), rfile() and rsource() for expression:s too.
+
+
 Version: 0.12.3 [2013-12-21]
 o Now rfile() also supports filename substitution based on whisker/
   Mustache-like variable substitution, i.e. {{<variable>}}.

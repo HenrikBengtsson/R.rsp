@@ -4,6 +4,7 @@
 # @alias rfile.RspDocument
 # @alias rfile.RspRSourceCode
 # @alias rfile.function
+# @alias rfile.expression
 #
 # @title "Evaluates and postprocesses an RSP document and outputs the final RSP document file"
 #
@@ -461,8 +462,8 @@ setMethodS3("rfile", "function", function(object, ..., envir=parent.frame(), ver
   on.exit({
     rm(list=fcnName, envir=envir, inherits=FALSE);
   }, add=TRUE);
-
-  rcode <- RspRSourceCode(sprintf("%s()", fcnName));
+  code <- sprintf("%s()", fcnName);
+  rcode <- RspRSourceCode(code);
   res <- rfile(rcode, ..., envir=envir, verbose=verbose);
 
   verbose && exit(verbose);
@@ -471,8 +472,35 @@ setMethodS3("rfile", "function", function(object, ..., envir=parent.frame(), ver
 }, protected=TRUE) # rfile()
 
 
+setMethodS3("rfile", "expression", function(object, ..., envir=parent.frame(), verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'object':
+
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+  verbose && enter(verbose, "rfile() for ", class(object)[1L]);
+  # Deparsing 'object[[1L]]' instead of 'object' in order to drop
+  # the 'expression({ ... })' wrapper.
+  code <- deparse(object[[1L]]);
+  rcode <- RspRSourceCode(code);
+  res <- rfile(rcode, ..., envir=envir, verbose=verbose);
+  verbose && exit(verbose);
+
+  res;
+}, protected=TRUE) # rfile()
+
+
 ############################################################################
 # HISTORY:
+# 2014-01-02
+# o Added rstring(), rcat() and rfile() for expression:s too.
 # 2013-12-14
 # o Now rfile() accepts also non-RSP documents, e.g. rfile("report.md"),
 #   rfile("report.Rnw"), and rfile("report.tex").

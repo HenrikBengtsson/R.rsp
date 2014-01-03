@@ -13,6 +13,7 @@
 \alias{rfile.RspDocument}
 \alias{rfile.RspRSourceCode}
 \alias{rfile.function}
+\alias{rfile.expression}
 
 \title{Evaluates and postprocesses an RSP document and outputs the final RSP document file}
 

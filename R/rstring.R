@@ -4,6 +4,7 @@
 # @alias rstring.RspDocument
 # @alias rstring.RspSourceCode
 # @alias rstring.function
+# @alias rstring.expression
 #
 # @title "Evaluates an RSP string and returns the generated string"
 #
@@ -225,10 +226,36 @@ setMethodS3("rstring", "function", function(object, envir=parent.frame(), ..., v
   on.exit({
     rm(list=fcnName, envir=envir, inherits=FALSE);
   }, add=TRUE);
-
-  rcode <- RspRSourceCode(sprintf("%s()", fcnName));
+  code <- sprintf("%s()", fcnName);
+  rcode <- RspRSourceCode(code);
   res <- rstring(rcode, envir=envir, ..., verbose=less(verbose,10));
 
+  verbose && exit(verbose);
+
+  res;
+}) # rstring()
+
+
+setMethodS3("rstring", "expression", function(object, envir=parent.frame(), ..., verbose=FALSE) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'object':
+
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
+  }
+
+  verbose && enter(verbose, "rstring() for ", class(object)[1L]);
+  verbose && cat(verbose, "Environment: ", getName(envir));
+  # Deparsing 'object[[1L]]' instead of 'object' in order to drop
+  # the 'expression({ ... })' wrapper.
+  code <- deparse(object[[1L]]);
+  rcode <- RspRSourceCode(code);
+  res <- rstring(rcode, envir=envir, ..., verbose=less(verbose,10));
   verbose && exit(verbose);
 
   res;
@@ -238,6 +265,8 @@ setMethodS3("rstring", "function", function(object, envir=parent.frame(), ..., v
 
 ##############################################################################
 # HISTORY:
+# 2014-01-02
+# o Added rstring(), rcat() and rfile() for expression:s too.
 # 2013-07-18
 # o BUG FIX: rstring(), rcat(), and rfile() for function:s would only work
 #   if the evaluation was done in the default environment.

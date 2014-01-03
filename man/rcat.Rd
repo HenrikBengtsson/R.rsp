@@ -13,12 +13,14 @@
 \alias{rcat.RspDocument}
 \alias{rcat.RspRSourceCode}
 \alias{rcat.function}
+\alias{rcat.expression}
 \alias{rsource}
 \alias{rsource.default}
 \alias{rsource.RspString}
 \alias{rsource.RspDocument}
 \alias{rsource.RspRSourceCode}
 \alias{rsource.function}
+\alias{rsource.expression}
 
 \title{Evaluates an RSP string and outputs the generated string}
 

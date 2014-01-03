@@ -13,6 +13,7 @@
 \alias{rstring.RspDocument}
 \alias{rstring.RspSourceCode}
 \alias{rstring.function}
+\alias{rstring.expression}
 
 \title{Evaluates an RSP string and returns the generated string}
 
