@@ -24,7 +24,7 @@
 # }
 #
 # \value{
-#   Returns an @see "RspStringProduct".
+#   Returns an @see "RspString".
 # }
 #
 # @examples "../incl/rclean.Rex"
