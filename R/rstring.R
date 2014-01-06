@@ -159,7 +159,7 @@ setMethodS3("rstring", "RspDocument", function(object, envir=parent.frame(), ...
   language <- capitalize(tolower(language));
   className <- sprintf("Rsp%sSourceCodeFactory", language);
   ns <- getNamespace("R.rsp");
-  clazz <- .Class_forName(className, envir=ns);
+  clazz <- Class$forName(className, envir=ns);
   factory <- newInstance(clazz);
   verbose && cat(verbose, "Language: ", getLanguage(factory));
   code <- toSourceCode(factory, object, verbose=verbose);

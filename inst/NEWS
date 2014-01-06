@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.12.5 [2014-01-05]
+o CLEANUP: Removed code that is now in R.oo (>= 1.16.2).
+
+
 Version: 0.12.4 [2014-01-02]
 o Added rstring(), rcat(), rfile() and rsource() for expression:s too.
 

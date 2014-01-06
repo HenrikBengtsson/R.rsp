@@ -339,7 +339,7 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
   # Get constructor
   clazz <- tryCatch({
     ns <- getNamespace("R.rsp");
-    .Class_forName(className, envir=ns);
+    Class$forName(className, envir=ns);
   }, error = function(ex) {
     NULL;
   })

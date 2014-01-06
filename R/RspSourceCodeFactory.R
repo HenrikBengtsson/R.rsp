@@ -93,7 +93,7 @@ setMethodS3("makeSourceCode", "RspSourceCodeFactory", function(this, code, ...) 
   lang <- getLanguage(this);
   className <- sprintf("Rsp%sSourceCode", capitalize(lang));
   ns <- getNamespace("R.rsp");
-  clazz <- .Class_forName(className, envir=ns);
+  clazz <- Class$forName(className, envir=ns);
   code <- clazz(code, ...);
 
   # Get source code header, body, and footer.
