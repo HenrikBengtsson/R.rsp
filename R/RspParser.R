@@ -119,21 +119,27 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
   patternS <- "([+]|[-]+(\\[[^]]*\\])?)%>";
 
   # Setup the regular expressions for start and stop RSP constructs
+  hasPatternLTail <- FALSE;
   if (what == "comment") {
     if (commentLength == -1L) {
-      patternL <- "<%([-]+(\\[[^]]*\\])?%>)()";
+      # <%-%>, <%--%>, <%---%>, <%----%>, ...
+      # <%-[suffix]%>, <%--[suffix]%>, <%---[suffix]%>, ...
+      patternL <- "(<%([-]+(\\[[^]]*\\])?%>))";
       patternR <- NULL;
     } else {
-      patternL <- sprintf("<%%-{%d}()([^-])", commentLength);
+      # <%-- --%>, <%--\n--%>, <%-- text --%>, ...
+      # <%--- ---%>, <%--- text ---%>, ...
+      patternL <- sprintf("(<%%-{%d})([^-])", commentLength);
+      hasPatternLTail <- TRUE;
       patternR <- sprintf("(|[^-])(-{%d}(\\[[^]]*\\])?)%%>", commentLength);
     }
     bodyClass <- RspComment;
   } else if (what == "directive") {
-    patternL <- "<%@()()";
+    patternL <- "(<%@)()";
     patternR <- "()(|[+]|-(\\[[^]]*\\])?)%>";
     bodyClass <- RspUnparsedDirective;
   } else if (what == "expression") {
-    patternL <- "<%()()";
+    patternL <- "(<%)()";
     patternR <- "()(|[+]|-(\\[[^]]*\\])?)%>";
     bodyClass <- RspUnparsedExpression;
   }
@@ -173,11 +179,11 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
       stopifnot(is.integer(nL));
 
       # (i) Extract RSP construct, '<%...%>[extra]'
-      tag <- substring(bfr, first=posL, posL+nL-1L);
+      tag <- substring(bfr, first=posL, last=posL+nL-1L);
 
       # Was it an escaped RSP start tag, i.e. '<%%'?
       if (what == "expression") {
-        tagX <- substring(bfr, first=posL, posL+nL);
+        tagX <- substring(bfr, first=posL, last=posL+nL);
         if (tagX == "<%%")
           break;
       }
@@ -191,7 +197,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
       # (ii) Extract the preceeding text
       text <- substring(bfr, first=1L, last=posL-1L);
 
-      # Record RSP text, unless empty.
+      # Record as RSP text, unless empty.
       if (nchar(text) > 0L) {
         # Update flag whether the RSP construct being parsed is
         # on the same output line as RSP text or not.  It is not
@@ -213,8 +219,10 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
         } else {
           tail <- tag;
         }
+
         # Extract the '...%>' part
-        tail <- gsub(patternL, "\\1", tail);
+        # Currently only used for "empty" comments, e.g. <%---%>
+        tail <- gsub(patternL, "\\2", tail);
 
         # Get optional suffix specifications, i.e. '+%>' or '-[{specs}]%>'
         if (regexpr(patternS, tail) != -1L) {
@@ -241,8 +249,12 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
         part <- c(part, part2);
         state <- START;
       } else {
+        # Push-back something to buffer?
+        if (hasPatternLTail && nchar(gsub(patternL, "\\2", tag)) > 0L) {
+          nL <- nL - 1L;
+        }
         state <- STOP;
-      }
+      } # if (is.null(patternR))
 
       # (iv) Finally, consume the read buffer
       bfr <- substring(bfr, first=posL+nL);
@@ -430,6 +442,7 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
   verbose && enter(verbose, "Dropping 'empty' RSP comments");
   verbose && cat(verbose, "Length of RSP string before: ", nchar(object));
 
+  # This is only for comments such as <%-%>, <%--%>, <%---%>, ...
   doc <- parseRaw(parser, object, what="comment", commentLength=-1L, verbose=less(verbose, 50));
 
   # Nothing todo?
@@ -621,6 +634,9 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
 ##############################################################################
 # HISTORY:
+# 2014-01-11
+# o BUG FIX: RSP comments with only a single character commented out would
+#   generate an RSP parsing error, e.g. '<%-- --%>' and '<%--\n--%>'.
 # 2013-09-17
 # o BUG FIX/WORKAROUND: parse() attaches 'R.oo' due to what appears to be
 #   a bug in how Object:s are finalize():ed when 'R.oo' is not attached.

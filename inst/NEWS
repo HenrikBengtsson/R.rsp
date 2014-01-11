@@ -1,6 +1,12 @@
 Package: R.rsp
 ==============
 
+Version: 0.12.6 [2014-01-11]
+o BUG FIX: RSP comments with only a single character commented out would
+  generate an RSP parsing error, e.g. '<%-- --%>' and '<%--\n--%>'.
+  Added package system tests for more comment cases, including these.
+
+
 Version: 0.12.5 [2014-01-05]
 o CLEANUP: Removed code that is now in R.oo (>= 1.16.2).
 
