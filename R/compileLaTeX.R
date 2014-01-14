@@ -93,7 +93,7 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
     }
     verbose && cat(verbose, "'texinputs' before:");
     verbose && print(verbose, texinputs);
-    texinputs <- c(getAbsolutePath(pathR), texinputs);
+    texinputs <- c(getAbsolutePath(pathR), getRelativePath(pathR), texinputs);
     verbose && exit(verbose);
   }
 
@@ -118,6 +118,12 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
 
 ############################################################################
 # HISTORY:
+# 2014-01-13
+# o ROBUSTNESS: Now compileLaTeX() adds the directory of the LaTeX file
+#   to TEXINPUTS also by its relative path (in addition to its absolute
+#   path).  This provides a workaround for systems that does not handle
+#   TEXINPUTS paths that are too long.  How to know what "too long" is is
+#   not clear, but for the record a path with 138 characters is too long.
 # 2013-07-16
 # o Now compileLaTeX() adds the directory of the LaTeX file to the
 #   TEXINPUTS search path, iff it's different than the working

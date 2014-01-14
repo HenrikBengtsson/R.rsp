@@ -1,6 +1,13 @@
 Package: R.rsp
 ==============
 
+Version: 0.12.7 [2014-01-13]
+o ROBUSTNESS: Now compileLaTeX() adds the directory of the LaTeX file
+  to TEXINPUTS also by its relative path (in addition to its absolute
+  path).  This provides a workaround for systems that does not handle
+  TEXINPUTS paths that are too long.
+
+
 Version: 0.12.6 [2014-01-11]
 o BUG FIX: RSP comments with only a single character commented out would
   generate an RSP parsing error, e.g. '<%-- --%>' and '<%--\n--%>'.

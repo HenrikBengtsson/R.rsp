@@ -55,7 +55,7 @@
 \section{How to cite this package}{
  Bengtsson H (2014).
 \emph{R.rsp: Dynamic generation of scientific reports}.
-R package version 0.12.6.
+R package version 0.12.7.
 }
 
 \author{Henrik Bengtsson}
