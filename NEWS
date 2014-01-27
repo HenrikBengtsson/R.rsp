@@ -1,6 +1,15 @@
 Package: R.rsp
 ==============
 
+Version: 0.12.9 [2014-01-26]
+o CLEANUP: Internal calls to R.oo::ll() used really only by verbose
+  statements trigger the attachment of the R.oo package (as of
+  R.oo (>= 1.17.0)), which in turn outputs a few package startup
+  messages.  Thus calling, say, R.rsp::rcat() would output such
+  messages (which would be surprising to the user).  To lower this
+  impact, ll() is only called when verbose is enabled.
+
+
 Version: 0.12.8 [2014-01-17]
 o ROBUSTNESS: Added package system tests asserting that the output of
   the RSP parser can be deparsed and when reparsed the output will be

@@ -124,22 +124,26 @@ setMethodS3("rcompile", "RspString", function(object, envir=parent.frame(), args
 
     # Assign arguments to the parse/evaluation environment
     names <- attachLocally(args, envir=envir);
-    if (length(names) > 0L) {
-      verbose && printf(verbose, "Variables assigned: [%d] %s\n", length(names), hpaste(names));
-      member <- NULL; rm(list="member"); # To please R CMD check
-      ll <- subset(ll(envir=envir), member %in% names);
-      verbose && print(verbose, ll);
+    if (verbose) {
+      if (length(names) > 0L) {
+        printf(verbose, "Variables assigned: [%d] %s\n", length(names), hpaste(names));
+        member <- NULL; rm(list="member"); # To please R CMD check
+        ll <- subset(ll(envir=envir), member %in% names);
+        print(verbose, ll);
+      }
     }
     verbose && exit(verbose);
   } else {
     names <- NULL;
   }
 
-  verbose && enter(verbose, "Parsing RSP string");
-  verbose && cat(verbose, "Parse environment: ", getName(envir));
-  if (length(names) > 0L) {
-    ll <- subset(ll(envir=envir), member %in% names);
-    verbose && print(verbose, ll);
+  if (verbose) {
+    enter(verbose, "Parse RSP string");
+    cat(verbose, "Parse environment: ", getName(envir));
+    if (length(names) > 0L) {
+      ll <- subset(ll(envir=envir), member %in% names);
+      print(verbose, ll);
+    }
   }
   res <- parse(object, envir=envir, ..., until=until, as=as, verbose=verbose);
   verbose && print(verbose, res);
@@ -181,6 +185,9 @@ setMethodS3("rcompile", "RspDocument", function(object, envir=parent.frame(), ..
 
 ##############################################################################
 # HISTORY:
+# 2014-01-26
+# o CLEANUP: Now R.oo::ll() is only called if 'verbose' is enabled, because
+#   calling ll() still triggers attachment of R.oo as of R.oo (>= 1.17.0).
 # 2013-03-10
 # o Added rcompile().
 # 2013-02-23
