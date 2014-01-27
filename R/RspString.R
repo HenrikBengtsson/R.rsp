@@ -28,9 +28,13 @@ setConstructorS3("RspString", function(s=character(), ...) {
   # Argument 's':
   # (special case)
   if (missing(s) && !interactive() && packageVersion("R.utils") >= "1.29.4") {
-    # Use all command-line arguments without names
-    args <- cmdArgs();
-    args <- args[!nzchar(names(args))];
+    # Use all command-line arguments...
+    args <- cmdArgs(unique=FALSE);
+    # ...without names
+    keep <- !nzchar(names(args))
+    # ...or those named 'text'
+    keep <- keep | (names(args) == "text");
+    args <- args[keep];
     s <- args
     # ...will be pasted into one string using newlines ('\n') inbetween.
     # This is also neat because it is tricky to pass '\n'  via command line
@@ -252,6 +256,11 @@ setMethodS3("parse", "RspString", function(object, ..., envir=parent.frame(), pa
 
 ##############################################################################
 # HISTORY:
+# 2014-01-26
+# o Now RspString() defaults to using all command-line arguments without
+#   names as well as those with names 'text' as argument 's' iff 's' is
+#   missing and iff running in non-interactive mode.  This is useful
+#   for calling rcat() and rstring() from the command line.
 # 2013-03-14
 # o Added a print() method for RspStrings.
 # 2013-03-09
