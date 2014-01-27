@@ -26,6 +26,16 @@
 #*/###########################################################################
 setConstructorS3("RspString", function(s=character(), ...) {
   # Argument 's':
+  # (special case)
+  if (missing(s) && !interactive() && packageVersion("R.utils") >= "1.29.4") {
+    # Use all command-line arguments without names
+    args <- cmdArgs();
+    args <- args[!nzchar(names(args))];
+    s <- args
+    # ...will be pasted into one string using newlines ('\n') inbetween.
+    # This is also neat because it is tricky to pass '\n'  via command line
+    # arguments (at least on Windows) as they tend to be escaped to "\\n"
+  }
   s <- paste(s, collapse="\n");
 
   extend(RspObject(s, ...), "RspString");
