@@ -87,6 +87,9 @@ importFrom("R.oo", "ll")
 if (packageVersion("R.utils") >= "1.28.5") {
 ##  importFrom("R.utils", "withoutGString")
 }
+if (packageVersion("R.utils") >= "1.29.7") {
+  importFrom("R.utils", "CmdArgsFunction")
+}
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

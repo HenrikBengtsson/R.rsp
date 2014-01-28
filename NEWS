@@ -1,6 +1,14 @@
 Package: R.rsp
 ==============
 
+Version: 0.13.0 [2014-01-27]
+o It's possible to call rcat(), rfile() etc from the command line
+  with arguments, e.g. Rscript -e R.rsp::rfile LoremIpsum.md.rsp
+  and Rscript -e R.rsp::rcat "Random number: <%=sample(1)%>".
+  Also, by setting 'alias rcat=Rscript -e R.rsp::rcat' etc one
+  can then just call 'rcat "Random number: <%=sample(1)%>"'.
+
+
 Version: 0.12.9 [2014-01-26]
 o CLEANUP: Internal calls to R.oo::ll() used really only by verbose
   statements trigger the attachment of the R.oo package (as of
