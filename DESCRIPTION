@@ -4,7 +4,7 @@ Depends: R (>= 2.5.0), R.oo (>= 1.17.0)
 Imports: stats, utils, tools, R.methodsS3 (>= 1.6.1),
          R.utils (>= 1.28.4), R.cache (>= 0.9.0)
 Suggests: tcltk, digest (>= 0.6.4),
-          ascii (>= 2.1), markdown (>= 0.6.3), knitr (>= 1.5),
+          ascii (>= 2.1), markdown (>= 0.6.4), knitr (>= 1.5),
           R.devices (>= 2.8.2), base64enc (>= 0.1-1)
 VignetteBuilder: R.rsp
 Date: 2014-01-27
