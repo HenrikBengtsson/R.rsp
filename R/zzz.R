@@ -1,9 +1,6 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Make functions callable from the command line
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# FIXME: Remove when depending on R.utils (>= 1.29.7)
-CmdArgsFunction <- function(...) extend(..., "CmdArgsFunction");
-
 rcat <- CmdArgsFunction(rcat)
 rclean <- CmdArgsFunction(rclean)
 rcompile <- CmdArgsFunction(rcompile)
@@ -11,22 +8,6 @@ rfile <- CmdArgsFunction(rfile)
 rscript <- CmdArgsFunction(rscript)
 rsource <- CmdArgsFunction(rsource)
 rstring <- CmdArgsFunction(rstring)
-
-# FIXME: Remove when depending on R.utils (>= 1.29.7)
-if (exists("CmdArgsFunction", inherits=FALSE)) rm(list="CmdArgsFunction")
-
-
-
-# BACKWARD compatibility until package depends on R.utils (>= 1.28.5)
-withoutGString <- function(..., envir=parent.frame()) {
-  if (packageVersion("R.utils") < "1.28.5") {
-    fcn <- function(..., envir) { eval(..., envir=envir) }
-  } else {
-    ns <- asNamespace("R.utils");
-    fcn <- get("withoutGString", envir=ns);
-  }
-  invisible(fcn(..., envir=envir));
-} # withoutGString()
 
 
 .requirePkg <- function(name, quietly=FALSE) {

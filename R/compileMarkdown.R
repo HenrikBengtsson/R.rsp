@@ -81,8 +81,7 @@ setMethodS3("compileMarkdown", "default", function(filename, path=NULL, ..., out
   userArgs <- userArgs[keep];
 
   # Workaround for bug in markdown v0.5.4. /HB 2013-03-28
-  hasBug <- TRUE || (packageVersion("markdown") <= "0.5.4");
-  if (hasBug) {
+  if (packageVersion("markdown") <= "0.5.4") {
     args <- c(list(pathnameR, output=NULL), userArgs);
     verbose && cat(verbose, "Arguments to markdownToHTML():");
     verbose && str(verbose, args);

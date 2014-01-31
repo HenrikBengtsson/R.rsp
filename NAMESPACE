@@ -69,6 +69,8 @@ importFrom("R.utils", "pushState")
 importFrom("R.utils", "renameFile")
 importFrom("R.utils", "sourceTo")
 importFrom("R.utils", "tempvar")
+importFrom("R.utils", "withoutGString")
+importFrom("R.utils", "CmdArgsFunction")
 
 importFrom("utils", "browseURL")
 importFrom("utils", "capture.output")
@@ -82,14 +84,6 @@ importFrom("utils", "tail")
 
 ## Manually added
 importFrom("R.oo", "ll")
-
-## Remove when importing R.utils (>= 1.28.5)
-if (packageVersion("R.utils") >= "1.28.5") {
-##  importFrom("R.utils", "withoutGString")
-}
-if (packageVersion("R.utils") >= "1.29.7") {
-  importFrom("R.utils", "CmdArgsFunction")
-}
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
