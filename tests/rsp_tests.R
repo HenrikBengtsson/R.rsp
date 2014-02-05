@@ -29,6 +29,7 @@ for (kk in seq_along(pathnames)) {
   rs <- rstring(file=pathname)
   s <- as.character(rs)
   sR <- readChar(pathnameR, nchars=1e6)
+  if (length(sR) == 0L) sR <- ""
   sR <- gsub("\r\n", "\n", sR, fixed=TRUE)
   # If there is a '<EOF>' string, drop it and everything beyond
   sR <- sub("<EOF>.*", "", sR)
