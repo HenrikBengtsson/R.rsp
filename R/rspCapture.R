@@ -1,5 +1,12 @@
 rspCapture <- function(..., wrapAt=80, collapse="\n") {
-  x <- .captureViaRaw(print(...));
+  file <- rawConnection(raw(0L), open="w");
+  on.exit({
+    if (!is.null(file)) close(file);
+  })
+  capture.output(print(...), file=file);
+  x <- rawToChar(rawConnectionValue(file));
+  close(file); file <- NULL;
+  x <- unlist(strsplit(x, split="\n", fixed=TRUE), use.names=FALSE);
 
   # Wrap long lines?
   if (!is.null(wrapAt)) {

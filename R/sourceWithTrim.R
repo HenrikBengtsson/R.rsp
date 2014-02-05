@@ -4,8 +4,15 @@ setMethodS3("sourceWithTrim", "default", function(code, echo=TRUE, prompt=getOpt
     close(con);
   }, add=TRUE);
 
+  file <- rawConnection(raw(0L), open="w");
+  on.exit({
+    if (!is.null(file)) close(file);
+  }, add=TRUE)
   magicPrompt <- "<RSP-MAGIC-RSP>";
-  bfr <- .captureViaRaw(source(con, echo=echo, prompt.echo=magicPrompt));
+  capture.output(source(con, echo=echo, prompt.echo=magicPrompt), file=file);
+  bfr <- rawToChar(rawConnectionValue(file));
+  close(file); file <- NULL;
+  bfr <- unlist(strsplit(bfr, split="\n", fixed=TRUE), use.names=FALSE);
 
   if (trim) {
     pattern <- sprintf("^%s", magicPrompt);

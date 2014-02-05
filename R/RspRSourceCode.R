@@ -133,11 +133,17 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(),
 
   if (output == "RspStringProduct") {
     # Evaluate R source code and capture output
-    res <- .captureViaRaw({
+    file <- rawConnection(raw(0L), open="w");
+    on.exit({
+      if (!is.null(file)) close(file);
+    }, add=TRUE)
+    capture.output({
       eval(expr, envir=envir);
       # Force a last complete line
       cat("\n");
-    }, collapse="\n");
+    }, file=file);
+    res <- rawToChar(rawConnectionValue(file));
+    close(file); file <- NULL;
 
     res <- RspStringProduct(res, attrs=getAttributes(object));
 
