@@ -1,11 +1,14 @@
 Package: R.rsp
 ==============
 
-Version: 0.13.1 [2014-02-04]
-o SPEEDUP: Now evaluate() for RspRSourceCode and a few other legacy
-  functions capture output via a raw connection rather than a text
-  connection, because the processing time for the latter is exponential
-  in the number of captured lines whereas the former is linear.
+Version: 0.14.0 [2014-02-04]
+o SPEEDUP: Significant speed up of methods such as rstring() and
+  rfile() for RSP expression that outputted a large amount of text
+  to the output document.  Internally, this was achieved by replacing
+  the default capturing of output, which uses text connections, with
+  one that uses raw connections instead.  The processing time for the
+  former was exponential in the number of captured lines whereas for
+  the latter it is linear.
 
 
 Version: 0.13.0 [2014-01-27]
