@@ -1,6 +1,6 @@
 .parseRVignetteMetadata <- function(text, ...) {
   # Parse "\Vignette" directives into RSP metadata
-  bfr <- unlist(strsplit(text, split="\n", fixed=TRUE));
+  bfr <- unlist(strsplit(text, split="\n", fixed=TRUE), use.names=FALSE);
 
   pattern <- "[[:space:]]*%*[[:space:]]*\\\\Vignette(.*)\\{([^}]*)\\}";
   keep <- (regexpr(pattern, bfr) != -1L);

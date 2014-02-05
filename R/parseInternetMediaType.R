@@ -123,7 +123,7 @@ escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
     } else if (ct$target$contentType == "application/x-tex") {
       env <- ct$src$args["environment"];
       if (is.null(env) || is.na(env)) env <- "";
-      env <- unlist(strsplit(env, split=",", fixed=TRUE));
+      env <- unlist(strsplit(env, split=",", fixed=TRUE), use.names=FALSE);
       env <- trim(env);
       if (is.element("math", env)) {
       }

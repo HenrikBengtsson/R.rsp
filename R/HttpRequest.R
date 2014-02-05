@@ -97,7 +97,7 @@ setMethodS3("as.character", "HttpRequest", function(x, ...) {
   }
 
   if (nbrOfParameters(this) > 0) {
-    params <- unlist(this$parameters);
+    params <- unlist(this$parameters, use.names=TRUE);
     params <- paste(names(params), params, sep="=");
     params <- paste(params, collapse=", ");
     s <- paste(s, " Parameters: ", params, ".", sep="");

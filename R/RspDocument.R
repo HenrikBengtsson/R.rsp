@@ -1157,7 +1157,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     if (is.null(wrap)) return(text);
     text <- paste(text, collapse="\n");
     text <- gsub("(\r|\r\n)", "\n", text);
-    text <- unlist(strsplit(text, split="\n", fixed=TRUE));
+    text <- unlist(strsplit(text, split="\n", fixed=TRUE), use.names=FALSE);
     text <- lapply(text, FUN=function(line) {
       first <- seq(from=1L, to=nchar(line), by=wrap);
       last <- first + wrap - 1L;

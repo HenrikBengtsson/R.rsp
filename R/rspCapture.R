@@ -1,5 +1,5 @@
 rspCapture <- function(..., wrapAt=80, collapse="\n") {
-  x <- capture.output(print(...));
+  x <- .captureViaRaw(print(...));
 
   # Wrap long lines?
   if (!is.null(wrapAt)) {
@@ -8,16 +8,16 @@ rspCapture <- function(..., wrapAt=80, collapse="\n") {
       x <- as.list(x);
       x[nok] <- lapply(x[nok], FUN=function(s) {
         res <- NULL;
-        while(nchar(s) > 0) {
-          res <- c(res, substr(s, 1, wrapAt));
-          s <- substr(s, wrapAt+1, nchar(s));
+        while(nchar(s) > 0L) {
+          res <- c(res, substr(s, start=1L, stop=wrapAt));
+          s <- substr(s, start=wrapAt+1L, stop=nchar(s));
         }
         res;
       });
-      x <- unlist(x);
+      x <- unlist(x, use.names=FALSE);
     }
   }
-  
+
   # Concatenate rows?
   if (!is.null(collapse)) {
     x <- paste(x, collapse=collapse);
@@ -29,6 +29,8 @@ rspCapture <- function(..., wrapAt=80, collapse="\n") {
 
 ###############################################################################
 # HISTORY:
+# 2014-02-04
+# o SPEEDUP: Now rspCapture() captures output via a raw connection.
 # 2009-02-25
 # o Created.
 ###############################################################################

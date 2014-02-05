@@ -39,7 +39,7 @@ setMethodS3("rargs", "default", function(...) {
   doc <- rcompile(..., until="directives", as="RspDocument");
 
   # Extract RSP preprocessing directives
-  keep <- unlist(sapply(doc, FUN=inherits, "RspUnparsedDirective"));
+  keep <- unlist(sapply(doc, FUN=inherits, "RspUnparsedDirective"), use.names=FALSE);
   doc <- doc[keep];
 
   # Parse RSP directives
@@ -48,11 +48,11 @@ setMethodS3("rargs", "default", function(...) {
   }
 
   # Extract RSP preprocessing variables
-  keep <- unlist(sapply(doc, FUN=inherits, "RspVariableDirective"));
+  keep <- unlist(sapply(doc, FUN=inherits, "RspVariableDirective"), use.names=FALSE);
   doc <- doc[keep];
 
   # Subset by those with 'description' attributes.
-  keep <- unlist(sapply(doc, FUN=hasAttribute, "description"));
+  keep <- unlist(sapply(doc, FUN=hasAttribute, "description"), use.names=FALSE);
   doc <- doc[keep];
 
   args <- lapply(doc, FUN=function(d) {

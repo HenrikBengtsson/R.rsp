@@ -5,14 +5,14 @@ setMethodS3("sourceWithTrim", "default", function(code, echo=TRUE, prompt=getOpt
   }, add=TRUE);
 
   magicPrompt <- "<RSP-MAGIC-RSP>";
-  bfr <- capture.output(source(con, echo=echo, prompt.echo=magicPrompt));
+  bfr <- .captureViaRaw(source(con, echo=echo, prompt.echo=magicPrompt));
 
   if (trim) {
     pattern <- sprintf("^%s", magicPrompt);
     idxs <- grep(pattern, bfr);
-    if (length(idxs) > 0) {
-      drop <- (idxs-1L)[nchar(bfr[idxs-1L]) == 0];
-      if (length(drop) > 0) bfr <- bfr[-drop];
+    if (length(idxs) > 0L) {
+      drop <- (idxs-1L)[nchar(bfr[idxs-1L]) == 0L];
+      if (length(drop) > 0L) bfr <- bfr[-drop];
       bfr <- gsub(pattern, prompt, bfr);
     }
   }
@@ -27,6 +27,9 @@ setMethodS3("sourceWithTrim", "default", function(code, echo=TRUE, prompt=getOpt
 
 ##############################################################################
 # HISTORY:
+# 2014-02-04
+# o SPEEDUP: Now sourceWithTrim() for RspRSourceCode captures output via
+#   a raw connection.
 # 2011-05-05
 # o Now using full 'prompt.echo' argument name in call to base:source().
 # 2011-03-15

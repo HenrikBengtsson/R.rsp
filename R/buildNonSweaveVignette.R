@@ -42,7 +42,7 @@ parseVignette <- function(pathname, commentPrefix="^[ \t]*%[ \t]*", final=FALSE,
      filenames <- list.files(path=path, pattern=pattern);
      fullnames <- gsub("[.][^.]*$", "", filenames);
      patterns <- sprintf("^%s.*[.]%s$", fullnames, ext);
-     keep <- (unlist(lapply(patterns, FUN=regexpr, filename)) != -1L);
+     keep <- (unlist(lapply(patterns, FUN=regexpr, filename), use.names=FALSE) != -1L);
      filenames <- filenames[keep];
      if (length(filenames) == 0L) return(NULL);
 
@@ -214,7 +214,7 @@ buildNonSweaveVignette <- function(vign, envir=new.env(), ...) {
   # Load required packages
   if (!is.null(vign$Depends)) {
     pkgNames <- vign$Depends;
-    pkgNames <- unlist(strsplit(pkgNames, split=","));
+    pkgNames <- unlist(strsplit(pkgNames, split=",", fixed=TRUE), use.names=FALSE);
     pkgNames <- gsub("(^[ \t]*|[ \t]*$)", "", pkgNames);
     for (pkgName in pkgNames) {
       library(pkgName, character.only=TRUE);

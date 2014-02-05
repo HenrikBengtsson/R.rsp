@@ -1,6 +1,13 @@
 Package: R.rsp
 ==============
 
+Version: 0.13.1 [2014-02-04]
+o SPEEDUP: Now evaluate() for RspRSourceCode and a few other legacy
+  functions capture output via a raw connection rather than a text
+  connection, because the processing time for the latter is exponential
+  in the number of captured lines whereas the former is linear.
+
+
 Version: 0.13.0 [2014-01-27]
 o It's possible to call rcat(), rfile() etc from the command line
   with arguments, e.g. Rscript -e R.rsp::rfile LoremIpsum.md.rsp

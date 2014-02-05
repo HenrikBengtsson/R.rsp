@@ -133,12 +133,11 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(),
 
   if (output == "RspStringProduct") {
     # Evaluate R source code and capture output
-    res <- capture.output({
+    res <- .captureViaRaw({
       eval(expr, envir=envir);
       # Force a last complete line
       cat("\n");
-    });
-    res <- paste(res, collapse="\n");
+    }, collapse="\n");
 
     res <- RspStringProduct(res, attrs=getAttributes(object));
 
@@ -245,6 +244,11 @@ setMethodS3("tangle", "RspRSourceCode", function(code, format=c("safetangle", "t
 
 ##############################################################################
 # HISTORY:
+# 2014-02-04
+# o SPEEDUP: Now evaluate() for RspRSourceCode captures output via a raw
+#   connection rather than a text connection, because the processing
+#   time for the latter is exponential in the number of captured lines
+#   whereas the former is linear.
 # 2013-09-18
 # o Now tidy() handles the new RSP R source code footer comments.
 # 2013-08-04

@@ -244,7 +244,7 @@ rspTangle <- function(file, ..., envir=new.env()) {
       pathname <- getAbsolutePath(md);
       path <- dirname(pathname);
       parts <- strsplit(path, split=c("/", "\\"), fixed=TRUE);
-      parts <- unlist(parts, use.names=TRUE);
+      parts <- unlist(parts, use.names=FALSE);
       vignetteTests <- any(parts == "vign_test");
       if (vignetteTests) {
         throw("External 'pandoc' executable is not available on this system: ", pathname);

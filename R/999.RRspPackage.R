@@ -88,7 +88,7 @@ setMethodS3("capabilitiesOf", "RRspPackage", function(static, what=NULL, force=F
     res <- res[o];
 
     # Coerce into a named character vector
-    res <- unlist(res);
+    res <- unlist(res, use.names=TRUE);
 
     # Record
     static$.capabilities <- res;

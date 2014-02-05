@@ -78,7 +78,7 @@ setMethodS3("print", "RspString", function(x, ...) {
 # }
 #*/#########################################################################
 setMethodS3("nbrOfLines", "RspString", function(object, ...) {
-  length(unlist(strsplit(object, split="\n", fixed=TRUE)));
+  length(unlist(strsplit(object, split="\n", fixed=TRUE), use.names=FALSE));
 })
 
 

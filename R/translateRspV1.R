@@ -456,7 +456,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
                 first <- seq(from=1, to=nchar(line), by=wrap);
                 last <- first + wrap - 1;
                 substring(line, first, last);
-              }))
+              }), use.names=FALSE)
             }
             value <- getVerbatim(rspLanguage, lines, newline=newline);
             value <- paste("write(response, \"",
@@ -506,7 +506,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
 
           contentType <- attrs[["contentType"]];
           if (!is.null(contentType)) {
-            tmp <- strsplit(contentType, split=";")[[1]];
+            tmp <- strsplit(contentType, split=";", fixed=TRUE)[[1]];
             mime <- tmp[1];
             args <- tmp[-1];
             if (mime == "text/html") {

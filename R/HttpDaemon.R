@@ -458,7 +458,7 @@ setMethodS3("setRootPaths", "HttpDaemon", function(static, paths, ...) {
   oldPaths <- getRootPaths(static);
 
   # Keep only unique paths
-  paths <- unlist(strsplit(paths, split=";"));
+  paths <- unlist(strsplit(paths, split=";", fixed=TRUE), use.names=FALSE);
   paths <- unique(paths);
   static$.rootPaths <- paths;
 
@@ -701,10 +701,10 @@ setMethodS3("start", "HttpDaemon", function(x, rootPaths=NULL, port=8080, defaul
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'rootPaths':
   if (length(rootPaths) > 0L) {
-    rootPaths <- unlist(strsplit(rootPaths, split=";"));
+    rootPaths <- unlist(strsplit(rootPaths, split=";", fixed=TRUE), use.names=FALSE);
     rootPaths <- unlist(sapply(rootPaths, FUN=function(path) {
       Arguments$getReadablePathname(path, mustExist=TRUE);
-    }))
+    }), use.names=FALSE)
     setRootPaths(static, rootPaths);
   } else {
     rootPaths <- getRootPaths(static);

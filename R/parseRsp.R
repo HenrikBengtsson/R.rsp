@@ -448,7 +448,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
     if (type == "rsp") {
       rspTag <- paste("<%", part, "%>", sep="");
-      codeComment <- unlist(strsplit(rspTag, split="\n", fixed=TRUE));
+      codeComment <- unlist(strsplit(rspTag, split="\n", fixed=TRUE), use.names=FALSE);
       codeComment <- paste("# ", codeComment, sep="");
       codeComment <- c(codeComment, "");
       codeComment <- paste(codeComment, collapse="\n");
@@ -545,7 +545,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
                 first <- seq(from=1, to=nchar(line), by=wrap);
                 last <- first + wrap - 1;
                 substring(line, first, last);
-              }))
+              }), use.names=FALSE)
             }
             value <- getVerbatim(rspLanguage, lines, newline=newline);
             value <- paste("write(response, \"",
@@ -595,7 +595,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
           contentType <- attrs[["contentType"]];
           if (!is.null(contentType)) {
-            tmp <- strsplit(contentType, split=";")[[1]];
+            tmp <- strsplit(contentType, split=";", fixed=TRUE)[[1]];
             mime <- tmp[1];
             args <- tmp[-1];
             if (mime == "text/html") {
@@ -645,7 +645,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         flavor <- c("echo", "chunk")[2];
         if (flavor == "echo") {
           expressions <- strsplit(expressions, split="\n", fixed=TRUE);
-          expressions <- unlist(expressions);
+          expressions <- unlist(expressions, use.names=FALSE);
           code <- sprintf("write(response, R.utils::evalCapture({%s}), collapse='\\n');\n", expressions);
         }
 
@@ -716,7 +716,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
       msg <- ex$message;
       line <- gsub(".*line *([0-9]+).*", "\\1", msg);
       code <- displayCode(code=rCode, highlight=line, pager="none");
-      code <- unlist(strsplit(code, split="\n"));
+      code <- unlist(strsplit(code, split="\n", fixed=TRUE), use.names=FALSE);
       ex$code <- code;
       stop(ex);
     });

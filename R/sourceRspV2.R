@@ -9,7 +9,7 @@ setMethodS3("sourceRspV2", "default", function(..., response=FileRspResponse(fil
     pathname <- Arguments$getWritablePathname(response);
     response <- FileRspResponse(file=pathname);
   } else if (!inherits(response, "RspResponse")) {
-    throw("Argument 'response' is not an RspResponse object: ", 
+    throw("Argument 'response' is not an RspResponse object: ",
                                                          class(response)[1]);
   }
 
@@ -46,7 +46,7 @@ setMethodS3("sourceRspV2", "default", function(..., response=FileRspResponse(fil
   attr(rCode, "pathname") <- pathnameT;
 
   verbose && capture(verbose, paste("22", displayCode(code=rCode)));
-  	
+
   # Parse the servlet from file so that error messages contains line numbers.
   con <- textConnection(rCode);
   on.exit(close(con));
@@ -59,7 +59,7 @@ setMethodS3("sourceRspV2", "default", function(..., response=FileRspResponse(fil
     msg <- ex$message;
     line <- gsub(".*line *([0-9]+).*", "\\1", msg);
     code <- displayCode(code=rCode, highlight=line, pager="none");
-    code <- unlist(strsplit(code, split="\n"));
+    code <- unlist(strsplit(code, split="\n", fixed=TRUE), use.names=FALSE);
     ex$code <- code;
     stop(ex);
   })

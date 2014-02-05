@@ -159,7 +159,7 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
   minIndent <- function(...) {
     s <- c(...);
     s <- gsub('"\n"', '"\r"', s);
-    s <- unlist(strsplit(s, split="\n", fixed=TRUE));
+    s <- unlist(strsplit(s, split="\n", fixed=TRUE), use.names=FALSE);
     s <- sapply(s, FUN=function(s) gsub('"\r"', '"\n"', s));
     names(s) <- NULL;
 
@@ -233,7 +233,7 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
      value <- sprintf('  %s = "%s"', key, value);
      code <- c(code, value);
   }
-  code <- unlist(strsplit(paste(code, collapse=",\n"), split="\n", fixed=TRUE))
+  code <- unlist(strsplit(paste(code, collapse=",\n"), split="\n", fixed=TRUE), use.names=FALSE);
   code <- c('## RSP document metadata', '.rmeta <- list(', code, ');');
   header0 <- paste('    ', code, sep="");
 
@@ -255,7 +255,7 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
       if (length(names) > 0) {
         for (name in names) .rmeta[[name]] <<- args[[name]]
       } else {
-        names <- unlist(args)
+        names <- unlist(args, use.names=FALSE)
         if (length(names) == 1) .rmeta[[names]] else .rmeta[names]
       }
     }

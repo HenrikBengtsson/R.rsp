@@ -89,7 +89,7 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
   if (pathR != ".") {
     verbose && enter(verbose, "Appending directory of TeX file to 'texinputs'");
     if (!is.null(texinputs)) {
-      texinputs <- unlist(strsplit(texinputs, split="[:;]", fixed=FALSE));
+      texinputs <- unlist(strsplit(texinputs, split="[:;]", fixed=FALSE), use.names=FALSE);
     }
     verbose && cat(verbose, "'texinputs' before:");
     verbose && print(verbose, texinputs);

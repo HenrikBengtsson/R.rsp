@@ -41,7 +41,7 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
   } # escapeRspText()
 
   makeCode <- function(code, echo=FALSE, include=FALSE, ...) {
-    code <- unlist(strsplit(code, split="\n", fixed=TRUE));
+    code <- unlist(strsplit(code, split="\n", fixed=TRUE), use.names=FALSE);
     codeT <- trim(code);
 
     n <- length(code);

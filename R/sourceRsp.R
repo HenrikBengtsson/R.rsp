@@ -10,20 +10,20 @@
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to @see "translateRspV1", e.g. \code{file} 
+#   \item{...}{Arguments passed to @see "translateRspV1", e.g. \code{file}
 #     and \code{path}.}
 #   \item{response}{An @see "RspResponse" object to which output is passed.
 #     This object can be accessed by the RSP code.}
 #   \item{request}{An optional @see "HttpRequest" object describing the
 #     request.  If @NULL, one is created refering to the request RSP file.
 #     This object can be accessed by the RSP code.}
-#   \item{envir}{An @environment to be the working environment of the 
+#   \item{envir}{An @environment to be the working environment of the
 #     servlet, i.e. where RSP variables and objects are stored.}
 #   \item{verbose}{Either a @logical, a @numeric, or a @see "R.utils::Verbose"
 #     object specifying how much verbose/debug information is written to
 #     standard output. If a Verbose object, how detailed the information is
 #     is specified by the threshold level of the object. If a numeric, the
-#     value is used to set the threshold of a new Verbose object. If @TRUE, 
+#     value is used to set the threshold of a new Verbose object. If @TRUE,
 #     the threshold is set to -1 (minimal). If @FALSE, no output is written.
 #   }
 # }
@@ -62,7 +62,7 @@ setMethodS3("sourceRsp", "default", function(..., response=FileRspResponse(file=
     pathname <- Arguments$getWritablePathname(response);
     response <- FileRspResponse(file=pathname);
   } else if (!inherits(response, "RspResponse")) {
-    throw("Argument 'response' is not an RspResponse object: ", 
+    throw("Argument 'response' is not an RspResponse object: ",
                                                          class(response)[1]);
   }
 
@@ -97,7 +97,7 @@ setMethodS3("sourceRsp", "default", function(..., response=FileRspResponse(file=
   rCode <- translateRspV1(..., verbose=verbose);
 
   verbose && capture(verbose, paste("22", displayCode(code=rCode)));
-  	
+
   # Parse the servlet from file so that error messages contains line numbers.
   con <- textConnection(rCode);
   on.exit(close(con));
@@ -110,7 +110,7 @@ setMethodS3("sourceRsp", "default", function(..., response=FileRspResponse(file=
     msg <- ex$message;
     line <- gsub(".*line *([0-9]+).*", "\\1", msg);
     code <- displayCode(code=rCode, highlight=line, pager="none");
-    code <- unlist(strsplit(code, split="\n"));
+    code <- unlist(strsplit(code, split="\n", fixed=TRUE), use.names=FALSE);
     ex$code <- code;
     stop(ex);
   })
