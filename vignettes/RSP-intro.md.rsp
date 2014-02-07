@@ -149,7 +149,7 @@ A random number: 7
 > rfile("http://example.org/vignette.tex.rsp")
 RspFileProduct:
 Pathname: vignette.pdf
-File size: 264925 bytes
+File size: 258.71 kB (264925 bytes)
 Content type: application/pdf
 Metadata 'title': 'Dynamic document creation using RSP'
 Metadata 'keywords': 'Literate programming, HTML, PDF'
@@ -348,7 +348,7 @@ Counting: 1 2 3 4 5 6 7 8 9 10.
 > rfile("report.md.rsp", args=list(n=50, model="L1"))
 RspFileProduct:
 Pathname: report.html
-File size: 43564 bytes
+File size: 42.54 kB (43564 bytes)
 Content type: text/html
 ```
 
@@ -358,7 +358,7 @@ Content type: text/html
 > rfile("http://example.org/vignette.tex.rsp")
 RspFileProduct:
 Pathname: vignette.pdf
-File size: 264925 bytes
+File size: 258.71 kB (264925 bytes)
 Content type: application/pdf
 Metadata 'title': 'Dynamic document creation using RSP'
 Metadata 'keywords': 'Literate programming, HTML, PDF'
