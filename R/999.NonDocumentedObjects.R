@@ -153,6 +153,9 @@
 # @alias wstring
 # @alias wstring.default
 #
+# @alias getFileSize
+# @alias getFileSize.RspFileProduct
+#
 #
 # \description{
 # This page contains aliases for all "non-documented" objects that

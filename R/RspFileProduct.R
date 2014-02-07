@@ -40,14 +40,28 @@ setConstructorS3("RspFileProduct", function(pathname=NA, ..., mustExist=TRUE) {
 
 setMethodS3("print", "RspFileProduct", function(x, ...) {
   s <- sprintf("%s:", class(x)[1L]);
+
   s <- c(s, sprintf("Pathname: %s", x));
-  s <- c(s, sprintf("File size: %g bytes", file.info(x)$size));
+
+  # File size
+  fileSize <- getFileSize(x, "units");
+  if (!is.na(fileSize)) {
+    fileSizeB <- sprintf("%.0f bytes", getFileSize(x, "numeric"));
+    if (fileSizeB != fileSize) {
+      fileSize <- sprintf("%s (%s)", fileSize, fileSizeB);
+    }
+  }
+  s <- c(s, sprintf("File size: %s", fileSize));
+
   s <- c(s, sprintf("Content type: %s", getType(x)));
+
   md <- getMetadata(x);
   for (key in names(md)) {
     s <- c(s, sprintf("Metadata '%s': '%s'", key, md[[key]]));
   }
+
   s <- c(s, sprintf("Has processor: %s", hasProcessor(x)));
+
   s <- paste(s, collapse="\n");
   cat(s, "\n", sep="");
 }, protected=TRUE)
@@ -78,6 +92,38 @@ setMethodS3("getType", "RspFileProduct", function(object, as=c("text", "IMT"), .
 
   res;
 }, protected=TRUE)
+
+
+setMethodS3("getFileSize", "RspFileProduct", function(object, what=c("numeric", "units"), sep="", ...) {
+  # Argument 'what':
+  what <- match.arg(what);
+
+  pathname <- object
+  if (is.null(pathname)) {
+    fileSize <- NA_real_;
+  } else {
+    fileSize <- file.info2(pathname)$size;
+  }
+
+  if (what == "numeric")
+    return(fileSize);
+
+  if (is.na(fileSize))
+    return(fileSize);
+
+  units <- c("bytes", "kB", "MB", "GB", "TB");
+  scale <- 1;
+  for (kk in seq_along(units)) {
+    unit <- units[kk];
+    if (fileSize < 1000)
+      break;
+    fileSize <- fileSize/1024;
+  }
+  fileSize <- sprintf("%.2f %s%s", fileSize, sep, unit);
+  fileSize <- gsub(".00 bytes", " bytes", fileSize, fixed=TRUE);
+
+  fileSize;
+})
 
 
 
@@ -189,6 +235,10 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
 ############################################################################
 # HISTORY:
+# 2014-02-07
+# o Now print() for RspFileProduct reports the file size also in units
+#   of kB, MB, GB, etc.
+# o Added getFileSize() for RspFileProduct.  Taken from R.filesets.
 # 2013-12-14
 # o Now getType() for RspFileProduct works also for URLs.
 # 2013-03-29

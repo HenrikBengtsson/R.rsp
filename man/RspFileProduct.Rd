@@ -51,6 +51,7 @@ RspFileProduct(pathname=NA, ..., mustExist=TRUE)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{findProcessor} \tab  -\cr
+ \tab \code{getFileSize} \tab  -\cr
  \tab \code{getType} \tab  -\cr
  \tab \code{print} \tab  -\cr
  \tab \code{view} \tab  -\cr

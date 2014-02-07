@@ -49,6 +49,7 @@ importFrom("R.utils", "downloadFile")
 importFrom("R.utils", "enter")
 importFrom("R.utils", "evalCapture")
 importFrom("R.utils", "exit")
+importFrom("R.utils", "file.info2")
 importFrom("R.utils", "filePath")
 importFrom("R.utils", "getOption") ## Multi-sources: R.utils, base
 importFrom("R.utils", "getParent")
@@ -277,6 +278,7 @@ S3method("as.character", "RspException")
 
 # RspFileProduct
 S3method("findProcessor", "RspFileProduct")
+S3method("getFileSize", "RspFileProduct")
 S3method("getType", "RspFileProduct")
 S3method("print", "RspFileProduct")
 S3method("view", "RspFileProduct")

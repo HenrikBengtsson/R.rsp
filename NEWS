@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.14.1 [2014-02-07]
+o Now print() for RspFileProduct reports file sizes also in kB, MB, etc.
+
+
 Version: 0.14.0 [2014-02-04]
 o SPEEDUP: Significant speed up of methods such as rstring() and
   rfile() for RSP expression that outputted a large amount of text
