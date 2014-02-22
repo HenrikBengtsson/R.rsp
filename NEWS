@@ -1,6 +1,12 @@
 Package: R.rsp
 ==============
 
+Version: 0.14.2 [2014-02-21]
+o ROBUSTNESS: Now the package runs the garbage collector if unloaded
+  in order to make sure finalize() is called on any deleted HttpDaemon
+  objects.
+
+
 Version: 0.14.1 [2014-02-07]
 o Now print() for RspFileProduct reports file sizes also in kB, MB, etc.
 

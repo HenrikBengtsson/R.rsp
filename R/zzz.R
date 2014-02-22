@@ -26,6 +26,11 @@ rstring <- CmdArgsFunction(rstring)
 } # .requirePkg()
 
 
+.onUnload <- function(libpath) {
+  # Force finalize() on HttpDaemon objects
+  base::gc();
+} # .onUnload()
+
 
 .onLoad <- function(libname, pkgname) {
   .registerVignetteEngines(pkgname);
@@ -43,6 +48,8 @@ rstring <- CmdArgsFunction(rstring)
 
 ############################################################################
 # HISTORY:
+# 2014-02-21
+# o Added .onUnload() which calls the garbage collector.
 # 2013-09-28
 # o Now assigning Package object already when loading the package,
 #   and not just when attaching it.
