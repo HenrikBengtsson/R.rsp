@@ -1,10 +1,11 @@
 Package: R.rsp
 ==============
 
-Version: 0.14.2 [2014-02-21]
+Version: 0.15.0 [2014-02-25]
 o ROBUSTNESS: Now the package runs the garbage collector if unloaded
   in order to make sure finalize() is called on any deleted HttpDaemon
   objects.
+o Bumped up package dependencies.
 
 
 Version: 0.14.1 [2014-02-07]
