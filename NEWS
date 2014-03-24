@@ -2,6 +2,10 @@ Package: R.rsp
 ==============
 
 Version: 0.15.1 [2014-03-24]
+o ROBUSTNESS: Now compileLaTeX() tries to shorten any paths as far
+  as possible, e.g. ../foo/../foo/ to ../foo/ to workaround possible
+  length limits of the TeX compiler.  It now also adds a symbolic link
+  to TEXINPUTS that refers to the directory of the LaTeX file.
 o WORKAROUND: On Windows, due to limitations in browseURL(..., browser=NULL),
   which in turn utilizes shell.exec(), view() for RspFileProduct failed to
   open files in subdirectories, because they had forward slashes in their

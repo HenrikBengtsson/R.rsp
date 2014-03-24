@@ -61,6 +61,8 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
 
 
   verbose && enter(verbose, "Compiling LaTeX document");
+  # Shorten, e.g. ../foo/../foo/ to ../foo
+  pathname <- normalizePath(pathname);
   pathname <- getAbsolutePath(pathname);
   verbose && cat(verbose, "LaTeX pathname (absolute): ", pathname);
   verbose && printf(verbose, "Input file size: %g bytes\n", file.info(pathname)$size);
@@ -93,7 +95,37 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
     }
     verbose && cat(verbose, "'texinputs' before:");
     verbose && print(verbose, texinputs);
-    texinputs <- c(getAbsolutePath(pathR), getRelativePath(pathR), texinputs);
+    # Shorten, e.g. ../foo/../foo/ to ../foo
+    pathR <- normalizePath(pathR);
+    # Append as relative path
+    texinputs <- c(getRelativePath(pathR), texinputs);
+    # Append as absolute path
+    texinputs <- c(getAbsolutePath(pathR), texinputs);
+    # Append as temporary link, iff possible
+
+    verbose && enter(verbose, "Appending temporary link, iff possible");
+    link <- basename(tempdir());
+    verbose && cat(verbose, "Link: ", link);
+    if (!file.exists(link)) {
+      verbose && cat(verbose, "Trying to create link to target: ", pathR);
+      tryCatch({
+        linkT <- createLink(target=pathR, link=link);
+        verbose && cat(verbose, "Created link: ", linkT);
+      }, error = function(ex) {
+        verbose && print(verbose, ex)
+      })
+      if (file.exists(link)) {
+        linkA <- getAbsolutePath(link);
+        on.exit(removeDirectory(linkA, mustExist=FALSE), add=TRUE);
+        verbose && cat(verbose, "Link created: ", link);
+        texinputs <- c(link, texinputs);
+      }
+    }
+    verbose && exit(verbose);
+
+    # Keep unique
+    texinputs <- unique(texinputs);
+
     verbose && exit(verbose);
   }
 
@@ -118,6 +150,11 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
 
 ############################################################################
 # HISTORY:
+# 2014-03-24
+# o ROBUSTNESS: Now compileLaTeX() tries to shorten any paths as far
+#   as possible, e.g. ../foo/../foo/ to ../foo/ to workaround possible
+#   length limits of the TeX compiler.  It now also adds a symbolic link
+#   to TEXINPUTS that refers to the directory of the LaTeX file.
 # 2014-01-13
 # o ROBUSTNESS: Now compileLaTeX() adds the directory of the LaTeX file
 #   to TEXINPUTS also by its relative path (in addition to its absolute
