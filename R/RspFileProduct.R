@@ -69,7 +69,21 @@ setMethodS3("print", "RspFileProduct", function(x, ...) {
 
 
 setMethodS3("view", "RspFileProduct", function(object, ...) {
-  browseURL(object, ...);
+  # WORKAROUND: browseURL('foo/bar.html', browser=NULL), which in turn
+  # calls shell.exec('foo/bar.html'), does not work on Windows, because
+  # the OS expects backslashes.  [Should shell.exec() convert to
+  # backslashes?]  By temporarily setting the working directory to that
+  # of the file, view() for RspFileProduct works around this issue.
+  if (isFile(object)) {
+    path <- dirname(object);
+    pathname <- basename(object);
+    opwd <- getwd();
+    on.exit(setwd(opwd));
+    setwd(path);
+  } else {
+    pathname <- object;
+  }
+  browseURL(pathname, ...);
   invisible(object);
 }, proctected=TRUE)
 
@@ -235,6 +249,12 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
 ############################################################################
 # HISTORY:
+# 2014-03-24
+# o WORKAROUND: Due to limitations on browseURL(), view() for
+#   RspFileProduct failed to open files with commas in their filenames
+#   (e.g. path/foo,bar.html) on some file system (e.g. Windows).  As a
+#   workaround, view() now sets the working directory temporarily to that
+#   of the file to be displayed and then calls browseURL().
 # 2014-02-07
 # o Now print() for RspFileProduct reports the file size also in units
 #   of kB, MB, GB, etc.

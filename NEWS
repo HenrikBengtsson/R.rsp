@@ -1,6 +1,14 @@
 Package: R.rsp
 ==============
 
+Version: 0.15.1 [2014-03-24]
+o WORKAROUND: On Windows, due to limitations in browseURL(..., browser=NULL),
+  which in turn utilizes shell.exec(), view() for RspFileProduct failed to
+  open files in subdirectories, because they had forward slashes in their
+  pathname, e.g. reports/main.html.  By temporarily changing the working
+  directory to that of the file, view() now opens the file properly.
+
+
 Version: 0.15.0 [2014-02-25]
 o ROBUSTNESS: Now the package runs the garbage collector if unloaded
   in order to make sure finalize() is called on any deleted HttpDaemon
