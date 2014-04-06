@@ -1,6 +1,13 @@
 Package: R.rsp
 ==============
 
+Version: 0.15.2 [2014-04-06]
+o ROBUSTNESS: Now compileLaTeX() cleans up and shortens LaTeX
+  environment variables (e.g. TEXINPUTS) iff possible,
+  before compiling the document.  This lowers the risk for
+  compilation failures due to too long search paths.
+
+
 Version: 0.15.1 [2014-03-24]
 o ROBUSTNESS: Now compileLaTeX() tries to shorten any paths as far
   as possible, e.g. ../foo/../foo/ to ../foo/ to workaround possible
