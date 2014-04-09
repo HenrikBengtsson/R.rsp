@@ -94,7 +94,7 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
       rexpr <- tryCatch({
         base::parse(text=codeT);
       }, error = function(ex) {
-        throw(sprintf("RSP code chunk (#%d) does not contain a complete R expression: %s", index, ex));
+        throw(sprintf("RSP code chunk (#%d) does not contain a complete or valid R expression: %s", index, ex));
       });
     }
 
