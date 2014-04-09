@@ -1,6 +1,6 @@
 library("R.rsp")
 
-if (Sys.getenv("_R_CHECK_FULL_") != "" && isCapableOf(R.rsp, "markdown") {
+if (Sys.getenv("_R_CHECK_FULL_") != "" && isCapableOf(R.rsp, "markdown")) {
   type <- "application/x-markdown";
   urlPath <- "https://daringfireball.net/projects/markdown"
   filenames <- c(
