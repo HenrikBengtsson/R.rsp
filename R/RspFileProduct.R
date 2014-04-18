@@ -29,9 +29,11 @@
 setConstructorS3("RspFileProduct", function(pathname=NA, ..., mustExist=TRUE) {
   # Argument 'pathname':
   if (!is.null(pathname) && !is.na(pathname)) {
-    withoutGString({
-      pathname <- Arguments$getReadablePathname(pathname, mustExist=mustExist);
-    })
+    if (!isUrl(pathname)) {
+      withoutGString({
+        pathname <- Arguments$getReadablePathname(pathname, mustExist=mustExist);
+      })
+    }
   }
 
   extend(RspProduct(pathname, ...), "RspFileProduct");
@@ -113,7 +115,7 @@ setMethodS3("getFileSize", "RspFileProduct", function(object, what=c("numeric", 
   what <- match.arg(what);
 
   pathname <- object
-  if (is.null(pathname)) {
+  if (is.null(pathname) && isUrl(pathname)) {
     fileSize <- NA_real_;
   } else {
     fileSize <- file.info2(pathname)$size;
@@ -227,13 +229,19 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     processor <- function(...) {
        do.call(fcnT, args=c(list(...), metadata));
     }
+
     fcn <- function(pathname, ...) {
       # Arguments 'pathname':
-      withoutGString({
-        pathname <- Arguments$getReadablePathname(pathname);
-      })
+      if (!isUrl(pathname)) {
+        withoutGString({
+          pathname <- Arguments$getReadablePathname(pathname);
+        })
+      }
 
+      # NOTE: It is not sure that the processor supports URLs
       pathnameR <- processor(pathname, ...);
+
+      # Always return the relative path
       pathnameR <- getAbsolutePath(pathnameR);
       RspFileProduct(pathnameR, attrs=list(metadata=metadata), mustExist=FALSE);
     } # fcn()
@@ -249,6 +257,8 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
 ############################################################################
 # HISTORY:
+# 2014-04-18
+# o BUG FIX: RspFileProduct would corrupt URLs.
 # 2014-03-24
 # o WORKAROUND: Due to limitations on browseURL(), view() for
 #   RspFileProduct failed to open files with commas in their filenames
