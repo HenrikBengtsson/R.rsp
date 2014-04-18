@@ -36,7 +36,10 @@ setMethodS3("compileAsciiDoc", "default", function(filename, path=NULL, ..., out
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'filename' & 'path':
-  pathname <- Arguments$getReadablePathname(filename, path=path);
+  pathname <- if (is.null(path)) filename else file.path(path, filename);
+  if (!isUrl(pathname)) {
+    pathname <- Arguments$getReadablePathname(pathname);
+  }
 
   # Arguments 'outPath':
   outPath <- Arguments$getWritablePath(outPath);
@@ -51,6 +54,16 @@ setMethodS3("compileAsciiDoc", "default", function(filename, path=NULL, ..., out
 
 
   verbose && enter(verbose, "Compiling AsciiDoc noweb document");
+  # Download URL?
+  if (isUrl(pathname)) {
+    verbose && enter(verbose, "Downloading URL");
+    url <- pathname;
+    verbose && cat(verbose, "URL: ", url);
+    pathname <- downloadFile(url, verbose=less(verbose,50));
+    verbose && cat(verbose, "Local file: ", pathname);
+    verbose && exit(verbose);
+  }
+
   pathname <- getAbsolutePath(pathname);
   verbose && cat(verbose, "Pathname (absolute): ", pathname);
   verbose && printf(verbose, "Input file size: %g bytes\n", file.info(pathname)$size);

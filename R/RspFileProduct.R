@@ -91,15 +91,21 @@ setMethodS3("view", "RspFileProduct", function(object, ...) {
 
 
 
-setMethodS3("getType", "RspFileProduct", function(object, as=c("text", "IMT"), ...) {
+setMethodS3("getType", "RspFileProduct", function(object, default=NA_character_, as=c("text", "IMT"), ...) {
   as <- match.arg(as);
-  res <- NextMethod("getType");
+  res <- NextMethod("getType", default=NA_character_);
 
   if (is.na(res)) {
     # Infer type from the filename extension?
     if (isFile(object) || isUrl(object)) {
       res <- extensionToIMT(object);
     }
+  }
+
+  # Fall back to a default?
+  if (is.na(res)) {
+    default <- as.character(default);
+    res <- default;
   }
 
   if (as == "IMT" && !is.na(res)) {
@@ -258,6 +264,7 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 ############################################################################
 # HISTORY:
 # 2014-04-18
+# o Added argument 'default' to getType() for RspFileProduct.
 # o BUG FIX: RspFileProduct would corrupt URLs.
 # 2014-03-24
 # o WORKAROUND: Due to limitations on browseURL(), view() for

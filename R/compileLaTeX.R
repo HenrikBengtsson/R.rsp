@@ -40,7 +40,10 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'filename' & 'path':
-  pathname <- Arguments$getReadablePathname(filename, path=path);
+  pathname <- if (is.null(path)) filename else file.path(path, filename);
+  if (!isUrl(pathname)) {
+    pathname <- Arguments$getReadablePathname(pathname);
+  }
 
   # Arguments 'outPath':
   outPath <- Arguments$getWritablePath(outPath);
@@ -61,6 +64,17 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
 
 
   verbose && enter(verbose, "Compiling LaTeX document");
+
+  # Download URL?
+  if (isUrl(pathname)) {
+    verbose && enter(verbose, "Downloading URL");
+    url <- pathname;
+    verbose && cat(verbose, "URL: ", url);
+    pathname <- downloadFile(url, verbose=less(verbose,50));
+    verbose && cat(verbose, "Local file: ", pathname);
+    verbose && exit(verbose);
+  }
+
   # Shorten, e.g. ../foo/../foo/ to ../foo
   pathname <- normalizePath(pathname);
   pathname <- getAbsolutePath(pathname);

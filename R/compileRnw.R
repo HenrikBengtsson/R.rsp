@@ -16,8 +16,8 @@
 #   \item{...}{Additional arguments passed to the compiler function
 #      used.}
 #   \item{type}{A @character string specifying what content type of
-#      Rnw file to compile.  The default type is inferred from the
-#      content of the file using @see "typeOfRnw".}
+#      Rnw file to compile.  The default (@NULL) is to infer the type
+#      from the content of the file using @see "typeOfRnw".}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #
@@ -31,12 +31,20 @@
 # @keyword IO
 # @keyword internal
 #*/###########################################################################
-setMethodS3("compileRnw", "default", function(filename, path=NULL, ..., type=typeOfRnw(filename, path=path), verbose=FALSE) {
+setMethodS3("compileRnw", "default", function(filename, path=NULL, ..., type=NULL, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Arguments 'filename' & 'path':
+  pathname <- if (is.null(path)) filename else file.path(path, filename);
+  if (!isUrl(pathname)) {
+    pathname <- Arguments$getReadablePathname(pathname);
+  }
+
   # Argument 'type':
-  type <- Arguments$getCharacter(type);
+  if (!is.null(type)) {
+    type <- Arguments$getCharacter(type);
+  }
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -47,6 +55,20 @@ setMethodS3("compileRnw", "default", function(filename, path=NULL, ..., type=typ
 
   verbose && enter(verbose, "Compiling Rnw document");
 
+  # Download URL?
+  if (isUrl(pathname)) {
+    verbose && enter(verbose, "Downloading URL");
+    url <- pathname;
+    verbose && cat(verbose, "URL: ", url);
+    pathname <- downloadFile(url, verbose=less(verbose,50));
+    verbose && cat(verbose, "Local file: ", pathname);
+    verbose && exit(verbose);
+  }
+
+  # Now we can infer the type of Rnw, i.e. Sweave or knitr
+  if (is.null(type)) {
+    type <- typeOfRnw(pathname);
+  }
   verbose && cat(verbose, "Type of Rnw file: ", type);
 
   if (type == "application/x-sweave") {

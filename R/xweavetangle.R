@@ -118,7 +118,7 @@ rspTangle <- function(file, ..., envir=new.env()) {
   pathnameR <- getAbsolutePath(pathnameR);
 
   # Translate RSP document to RSP code script
-  rcode <- rscript(file=file);
+  rcode <- rscript(file=file, ...);
   rcode <- tangle(rcode);
 
   # Create header
@@ -310,6 +310,8 @@ rspTangle <- function(file, ..., envir=new.env()) {
 
 ###############################################################################
 # HISTORY:
+# 2014-04-18
+# o Now rspTangle() passes '...' to rsource().
 # 2013-12-12
 # o BUG FIX: The 'rsp::.weave_md.rsp+knitr:pandoc' vignette engine did not
 #   explicitly disable RSP postprocessing as intended due to a typo.

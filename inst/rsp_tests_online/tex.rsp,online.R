@@ -1,11 +1,10 @@
 library("R.rsp")
 
-if (Sys.getenv("_R_CHECK_FULL_") != "") {
-  urlPath <- "http://latex-project.org/guides/"
+if (Sys.getenv("_R_CHECK_FULL_") != "" && isCapableOf(R.rsp, "latex")) {
+  urls <- "http://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/R.rsp/vignettes/Dynamic_document_creation_using_RSP.tex.rsp?root=r-dots"
   filenames <- c(
-    usrguide="usrguide.tex"
+    usrguide="Dynamic_document_creation_using_RSP.tex.rsp"
   );
-  urls <- file.path(urlPath, filenames);
   names(urls) <- names(filenames);
 
   outPath <- file.path("demos", "tex");

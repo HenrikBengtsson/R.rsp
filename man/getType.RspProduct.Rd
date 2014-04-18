@@ -19,7 +19,7 @@
 }
 
 \usage{
-\method{getType}{RspProduct}(object, default=NA, as=c("text", "IMT"), ...)
+\method{getType}{RspProduct}(object, default=NA_character_, as=c("text", "IMT"), ...)
 }
 
 \arguments{

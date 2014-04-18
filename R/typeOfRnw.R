@@ -34,9 +34,12 @@ setMethodS3("typeOfRnw", "default", function(filename, path=NULL, default="appli
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'filename' & 'path':
-  withoutGString({
-    pathname <- Arguments$getReadablePathname(filename, path=path);
-  })
+  pathname <- if (is.null(path)) filename else file.path(path, filename);
+  if (!isUrl(pathname)) {
+    withoutGString({
+      pathname <- Arguments$getReadablePathname(pathname);
+    })
+  }
 
   # Argument 'default':
   default <- Arguments$getCharacter(default);
@@ -49,14 +52,14 @@ setMethodS3("typeOfRnw", "default", function(filename, path=NULL, default="appli
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check for knitr-specific commands
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (any(regexpr("opts_chunk$set(", bfr, fixed=TRUE) != -1)) {
+  if (any(regexpr("opts_chunk$set(", bfr, fixed=TRUE) != -1L)) {
     return("application/x-knitr");
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Check for Sweave-specific commands
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (any(regexpr("\\SweaveOpts(", bfr, fixed=TRUE) != -1)) {
+  if (any(regexpr("\\SweaveOpts(", bfr, fixed=TRUE) != -1L)) {
     return("application/x-sweave");
   }
 
@@ -66,6 +69,8 @@ setMethodS3("typeOfRnw", "default", function(filename, path=NULL, default="appli
 
 ############################################################################
 # HISTORY:
+# 2014-04-18
+# o Now typeOfRnw() supports URLs.
 # 2013-01-20
 # o Created.
 ############################################################################

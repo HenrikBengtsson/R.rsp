@@ -5,7 +5,9 @@ if (Sys.getenv("_R_CHECK_FULL_") != "" && isCapableOf(R.rsp, "knitr")) {
   filenames <- c(
     Rnw="knitr/master/inst/examples/knitr-minimal.Rnw",
     Rmd="knitr-examples/master/001-minimal.Rmd",
-    Rhtml="knitr-examples/master/003-minimal.Rhtml",
+## 003-minimal.Rhtml gives an error if 'rgl' is not intalled
+##    Rhtml="knitr-examples/master/003-minimal.Rhtml",
+    Rhtml="knitr-examples/master/034-chinese.Rhtml",
     Rtex="knitr-examples/master/005-latex.Rtex",
     Rrst="knitr-examples/master/006-minimal.Rrst"
   );

@@ -216,7 +216,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
     file <- RspFileProduct(file, mustExist=FALSE);
   }
 
-  if (getType(file) == "application/x-rsp") {
+  if (getType(file, default="text/plain") == "application/x-rsp") {
     verbose && enter(verbose, "Reading RSP document");
     str <- .readText(file);
     verbose && printf(verbose, "Number of characters: %d\n", nchar(str));

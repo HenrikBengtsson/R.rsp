@@ -18,8 +18,7 @@
 }
 
 \usage{
-\method{compileRnw}{default}(filename, path=NULL, ..., type=typeOfRnw(filename, path = path),
-  verbose=FALSE)
+\method{compileRnw}{default}(filename, path=NULL, ..., type=NULL, verbose=FALSE)
 }
 
 \arguments{
@@ -28,8 +27,8 @@
   \item{...}{Additional arguments passed to the compiler function
      used.}
   \item{type}{A \code{\link[base]{character}} string specifying what content type of
-     Rnw file to compile.  The default type is inferred from the
-     content of the file using \code{\link{typeOfRnw}}().}
+     Rnw file to compile.  The default (\code{\link[base]{NULL}}) is to infer the type
+     from the content of the file using \code{\link{typeOfRnw}}().}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 

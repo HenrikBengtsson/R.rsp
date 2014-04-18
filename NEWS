@@ -1,6 +1,15 @@
 Package: R.rsp
 ==============
 
+Version: 0.16.0 [2014-04-18]
+o Now all rfile() also works with URLs for all known processors, e.g.
+  rfile("http://latex-project.org/guides/usrguide.tex") and
+  rfile("https://raw.github.com/yihui/knitr-examples/master/001-minimal.Rmd").
+  Added package system tests for various types of "online" compilation.
+o Now rspTangle() passes '...' to rsource().
+o BUG FIX: RspFileProduct would corrupt URLs.
+
+
 Version: 0.15.2 [2014-04-06]
 o ROBUSTNESS: Now compileLaTeX() cleans up and shortens LaTeX
   environment variables (e.g. TEXINPUTS) iff possible,

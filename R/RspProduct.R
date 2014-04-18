@@ -107,7 +107,7 @@ setMethodS3("!", "RspProduct", function(x) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("getType", "RspProduct", function(object, default=NA, as=c("text", "IMT"), ...) {
+setMethodS3("getType", "RspProduct", function(object, default=NA_character_, as=c("text", "IMT"), ...) {
   as <- match.arg(as);
   res <- getAttribute(object, "type", default=as.character(default));
   res <- tolower(res);
