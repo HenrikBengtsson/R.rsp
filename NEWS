@@ -1,6 +1,12 @@
 Package: R.rsp
 ==============
 
+Version: 0.17.0 [2014-04-29]
+o Now suggested packages are installed automagically, iff needed.
+  This minimized the need for preinstalling packages whenever using
+  R.rsp to compile documents.
+
+
 Version: 0.16.0 [2014-04-18]
 o Now all rfile() also works with URLs for all known processors, e.g.
   rfile("http://latex-project.org/guides/usrguide.tex") and

@@ -30,7 +30,7 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("compileAsciiDoc", "default", function(filename, path=NULL, ..., outPath=".", postprocess=TRUE, verbose=FALSE) {
-  .requirePkg("ascii", quietly=TRUE);
+  use("ascii", quietly=TRUE);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

@@ -34,7 +34,7 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPath=".", postprocess=TRUE, verbose=FALSE) {
-  .requirePkg("knitr", quietly=TRUE);
+  use("knitr", quietly=TRUE);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

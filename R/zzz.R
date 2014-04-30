@@ -9,23 +9,6 @@ rscript <- CmdArgsFunction(rscript)
 rsource <- CmdArgsFunction(rsource)
 rstring <- CmdArgsFunction(rstring)
 
-
-.requirePkg <- function(name, quietly=FALSE) {
-  # Nothing to do?
-  if (is.element(sprintf("package:%s", name), search())) {
-    return(invisible(TRUE));
-  }
-  if (quietly) {
-    # Load the package (super quietly)
-    res <- suppressPackageStartupMessages(require(name, character.only=TRUE, quietly=TRUE));
-  } else {
-    res <- require(name, character.only=TRUE);
-  }
-  if (!res) throw("Package not loaded: ", name);
-  invisible(res);
-} # .requirePkg()
-
-
 .onUnload <- function(libpath) {
   # Force finalize() on HttpDaemon objects
   base::gc();

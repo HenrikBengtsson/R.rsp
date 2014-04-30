@@ -687,7 +687,7 @@ setMethodS3("sourceTcl", "HttpDaemon", function(static, ...) {
 setMethodS3("start", "HttpDaemon", function(x, rootPaths=NULL, port=8080, default="^index[.](html|.*)$", ...) {
   # The R.rsp package needs to be attached in order to make certain
   # R functions of R.rsp available to the Tcl HTTP daemon.
-  .requirePkg("R.rsp", quietly=TRUE)
+  use("R.rsp", quietly=TRUE)
 
   # To please R CMD check...
   static <- x;

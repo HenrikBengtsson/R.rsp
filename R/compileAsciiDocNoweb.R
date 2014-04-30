@@ -28,7 +28,7 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("compileAsciiDocNoweb", "default", function(filename, path=NULL, ..., outPath=".", postprocess=TRUE, verbose=FALSE) {
-  .requirePkg("ascii", quietly=TRUE);
+  use("ascii", quietly=TRUE);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

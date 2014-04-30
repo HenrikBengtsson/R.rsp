@@ -74,6 +74,7 @@ importFrom("R.utils", "sourceTo")
 importFrom("R.utils", "tempvar")
 importFrom("R.utils", "withoutGString")
 importFrom("R.utils", "CmdArgsFunction")
+importFrom("R.utils", "use")
 
 importFrom("utils", "browseURL")
 importFrom("utils", "capture.output")

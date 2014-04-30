@@ -62,7 +62,7 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
   pathname <- getOption("R.rsp/debug/writeCode", NULL);
   if (!is.null(pathname)) {
     if (regexpr("%s", pathname, fixed=TRUE) != -1) {
-      require("digest") || throw("Package not loaded: digest");
+      use("digest")
       pathname <- sprintf(pathname, digest(code));
     }
     pathname <- Arguments$getWritablePathname(pathname, mustNotExist=FALSE);

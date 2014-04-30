@@ -33,7 +33,7 @@
 #*/###########################################################################
 setMethodS3("compileMarkdown", "default", function(filename, path=NULL, ..., outPath=".", verbose=FALSE) {
   # Load the package (super quietly), in case R.rsp::nnn() was called.
-  .requirePkg("markdown", quietly=TRUE);
+  use("markdown", quietly=TRUE);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
