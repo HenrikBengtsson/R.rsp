@@ -43,3 +43,9 @@
   weave(file, ...);
   R.rsp::rspTangle(file, ...);
 }
+
+# RSP vignettes
+`R.rsp::asis` <- `asis` <- function(file, ...) {
+  R.rsp::asisWeave(file, ...);
+  R.rsp::asisTangle(file, ...);
+}

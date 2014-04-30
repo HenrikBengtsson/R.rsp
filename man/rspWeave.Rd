@@ -9,6 +9,7 @@
 \name{rspWeave}
 \alias{rspWeave}
 
+\alias{asisWeave}
 
 \title{A weave function for RSP documents}
 

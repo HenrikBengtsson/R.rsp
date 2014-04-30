@@ -85,7 +85,6 @@ importFrom("utils", "str")
 importFrom("utils", "Sweave")
 importFrom("utils", "tail")
 
-
 ## Manually added
 importFrom("R.oo", "ll")
 

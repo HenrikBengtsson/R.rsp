@@ -9,6 +9,7 @@
 \name{rspTangle}
 \alias{rspTangle}
 
+\alias{asisTangle}
 
 \title{A tangle function for RSP documents}
 

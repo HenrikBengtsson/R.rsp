@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.17.1 [2014-04-30]
+o Added vignette engine 'R.rsp::asis' to include static PDFs and HTMLs.
+
+
 Version: 0.17.0 [2014-04-29]
 o Now suggested packages are installed automagically, iff needed.
   This minimized the need for preinstalling packages whenever using

@@ -1,5 +1,6 @@
 ###########################################################################/**
 # @RdocFunction rspWeave
+# @alias asisWeave
 #
 # @title "A weave function for RSP documents"
 #
@@ -71,6 +72,7 @@ rspWeave <- function(file, ..., postprocess=TRUE, quiet=FALSE, envir=new.env(), 
 
 ###########################################################################/**
 # @RdocFunction rspTangle
+# @alias asisTangle
 #
 # @title "A tangle function for RSP documents"
 #
@@ -145,16 +147,49 @@ rspTangle <- function(file, ..., envir=new.env()) {
 } # rspTangle()
 
 
-## asisWeave <- function(file, ...) {
-##   fileR <- gsub("[.]asis$", "", file);
-##   fileR;
-## } # asisWeave()
-##
-##
-## texWeave <- function(file, ...) {
-##   file <- RspFileProduct(file);
-##   process(file);
-## } # texWeave()
+asisWeave <- function(file, ...) {
+  output <- tools::file_path_sans_ext(basename(file));
+
+  # Make sure the output vignette exists
+  if (!isFile(output)) {
+    # It could be that we're here because 'R CMD check' runs the
+    # 're-building of vignette outputs' step.  Then the output
+    # file has already been moved to inst/doc/.  If so, grab it
+    # from there instead.
+    outputS <- file.path("..", "inst", "doc", output);
+    if (isFile(outputS)) {
+      file.copy(outputS, output, overwrite=TRUE);
+      output <- outputS;
+    } else {
+      path <- Sys.getenv("RSP_DEBUG_PATH");
+      if (nchar(path) > 0L) {
+        msg <- list(file=file, output=output, pwd=getwd(), files=dir());
+        sink(file.path(path, "R.rsp.DEBUG")); print(msg); sink();
+      }
+      throw("No such output file: ", output);
+    }
+  }
+
+  # Update the timestamp of the output file
+  # (otherwise tools::buildVignettes() won't detect it)
+  R.utils::touchFile(output);
+
+  # DEBUG: Store generated file? /HB 2013-09-17
+  path <- Sys.getenv("RSP_DEBUG_PATH");
+  if (nchar(path) > 0L) {
+    R.utils::copyFile(output, file.path(path, basename(output)), overwrite=TRUE);
+  }
+
+  output;
+} # asisWeave()
+
+asisTangle <- function(file, ...) {
+  output <- tools::file_path_sans_ext(basename(file));
+  name <- tools::file_path_sans_ext(output);
+  res <- sprintf("%s.R", name);
+  cat("# The vignette source contains no R code\n", file=res)
+  res
+} # asisTangle()
 
 
 
@@ -293,10 +328,6 @@ rspTangle <- function(file, ..., envir=new.env()) {
     weave=`.weave_md.rsp+knitr:pandoc`,
     tangle=rspTangle
   );
-
-##    # "as-is" engine
-##    vignetteEngine("asis", package=pkgname, pattern="[.](pdf|html)[.]asis$",
-##                    weave=asisWeave, tangle=function(...) NULL);
 ##
 ##    # LaTeX engine
 ##    vignetteEngine("tex", package=pkgname, pattern="[.]tex$",
@@ -305,11 +336,20 @@ rspTangle <- function(file, ..., envir=new.env()) {
 ##    # Markdown engine
 ##    vignetteEngine("markdown", package=pkgname, pattern="[.]md$",
 ##                    weave=markdownWeave, tangle=function(...) NULL);
+
+  # "asis" engine
+  vignetteEngine("asis", package=pkgname,
+    pattern="[.](pdf|html)[.]asis$",
+    weave=asisWeave,
+    tangle=asisTangle
+  );
 } # .registerVignetteEngines()
 
 
 ###############################################################################
 # HISTORY:
+# 2014-04-30
+# o Added vignette engine 'R.rsp::asis'.
 # 2014-04-18
 # o Now rspTangle() passes '...' to rsource().
 # 2013-12-12
