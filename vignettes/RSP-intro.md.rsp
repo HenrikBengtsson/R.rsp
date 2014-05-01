@@ -133,7 +133,7 @@ A random number: 7
 * Supplement and/or complement Sweave, knitr, ...
 * Mix and match code and text however you want.
 * Simplify sharing of template and output documents.
-* Use for R package vignettes (since R 3.0.0).
+* Use for R package vignettes.
 
 ## Some usage
 * PSCBS: PDF reports of copy-number segmentation results

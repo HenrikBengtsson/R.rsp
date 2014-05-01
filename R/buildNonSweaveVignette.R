@@ -61,11 +61,18 @@ parseVignette <- function(pathname, commentPrefix="^[ \t]*%[ \t]*", final=FALSE,
 
   # Parse for "\Vignette" options
   pattern <- sprintf("%s\\\\Vignette(.*)\\{(.*)\\}", commentPrefix);
-  keep <- (regexpr(pattern, bfr) != -1L);
-  bfr <- bfr[keep];
+  rows <- which(regexpr(pattern, bfr) != -1L);
+  bfr <- bfr[rows];
 
   # Nothing found?
   if (length(bfr) == 0L) {
+    return(NULL);
+  }
+
+  # If the first entry is not among the first 20 rows, assume the ones
+  # founds are part of the text document such entries rather than entries
+  # used for the vignette itself.
+  if (rows[1L] > 20L) {
     return(NULL);
   }
 
@@ -74,6 +81,12 @@ parseVignette <- function(pathname, commentPrefix="^[ \t]*%[ \t]*", final=FALSE,
   values <- gsub(pattern, "\\2", opts);
   names(values) <- keys;
   opts <- as.list(values);
+
+  # Drop duplicated entries, assuming the first ones are the intended
+  # ones.  The extra ones may happen when a vignette documents how to
+  # use %\\VignetteNnn{} markup.
+  keep <- !duplicated(names(opts));
+  opts <- opts[keep];
 
   # No %\VignetteIndexEntry{}?
   if (!is.element("IndexEntry", names(values))) {
@@ -101,6 +114,13 @@ parseVignette <- function(pathname, commentPrefix="^[ \t]*%[ \t]*", final=FALSE,
        output <- output[1L];
      }
      vign$source <- output;
+  }
+
+  # Assert unique entries
+  names <- names(vign);
+  dups <- names[duplicated(names)];
+  if (length(dups) > 0L) {
+    throw("Duplicated entries detected: ", paste(dups, collapse=", "));
   }
 
   vign;
@@ -407,6 +427,10 @@ buildPkgIndexHtml <- function(...) {
 
 ############################################################################
 # HISTORY:
+# 2014-04-30
+# o ROBUSTNESS: Now parseVignette() drops duplicated %\VignetteNnn{}
+#   entries, extra entries that may appear because the vignette actually
+#   talks about such markup, like some of the vignette in this package.
 # 2013-10-13
 # o BUG FIX: parseVignette() ignores files that do not contain a
 #   '%\VignetteIndexEntry{}'.

@@ -35,3 +35,17 @@
   noweb::noweave(file, ...);
   noweb::notangle(file, ...);
 }
+
+# *.md.rsp -> *.md -> *.html vignettes (non-offical)
+`R.rsp::md.rsp+knitr:pandoc` <- `md.rsp+knitr:pandoc` <- function(file, ...) {
+  ns <- getNamespace("R.rsp");
+  weave <- get(".weave_md.rsp+knitr:pandoc", mode="function", envir=ns);
+  weave(file, ...);
+  R.rsp::rspTangle(file, ...);
+}
+
+# RSP vignettes
+`R.rsp::asis` <- `asis` <- function(file, ...) {
+  R.rsp::asisWeave(file, ...);
+  R.rsp::asisTangle(file, ...);
+}

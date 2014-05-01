@@ -1,0 +1,5 @@
+<%@meta title="R packages: Static PDF and HTML vignettes"%>
+<%@meta author="Henrik Bengtsson"%>
+<%@meta keywords="PDF, HTML, vignette, package"%>
+%\VignetteIndexEntry{<%@meta name="title"%>}
+%\VignetteEngine{R.rsp::asis}
