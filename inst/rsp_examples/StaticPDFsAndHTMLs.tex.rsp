@@ -1,0 +1,35 @@
+<%@meta title="How to include static PDF and HTML vignettes"%>
+<%@meta author="Henrik Bengtsson"%>
+<%@meta keywords="PDF, HTML, vignette, package"%>
+\documentclass[10pt]{article}
+\usepackage[top=0.8in, bottom=0.8in, left=1in, right=0.8in]{geometry}
+\usepackage{xspace}
+\newcommand{\code}[1]{\texttt{#1}\xspace}
+<%
+R.utils::use("R.utils")
+%>
+
+\title{<%@meta name="title"%>}
+\author{<%@meta name="author"%>}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+To include a static PDF vignette in package, all you need is the PDF file and companion \code{*.pdf.asis} file with directives to R on which title should be used in vignette indices and what vignette engine to use.  For instance, this document was included in this package by:
+\begin{enumerate}
+ \item \code{vignettes/StaticPDFsAndHTMLs.pdf}
+ \item \code{vignettes/StaticPDFsAndHTMLs.pdf.asis}
+\end{enumerate}
+where the "asis" file contains the two lines:
+\begin{verbatim} 
+<%@include file="StaticPDFsAndHTMLs.pdf.asis"%>
+\end{verbatim}
+As for any type of (non-Sweave) package vignette, don't forget to specify
+\begin{verbatim} 
+VignetteBuilder: R.rsp
+\end{verbatim}
+in your package's DESCRIPTION file.  That's all it takes to include a static PDF as a vignette in a package.
+This same approach can also be used to include static (self-contained) HTML vignettes.  In order for such an HTML document to display images correctly, the HTML images cannot be links to image files but instead need to be embedded inside the HTML document as 'dataURI' strings.
+
+\end{document}
