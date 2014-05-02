@@ -92,7 +92,6 @@
 # @alias dvips
 # @alias ps2pdf
 # @alias rspCapture
-# @alias evalWithEcho
 # @alias sourceWithTrim
 # @alias sourceWithTrim.default
 # @alias sourceRspV2
