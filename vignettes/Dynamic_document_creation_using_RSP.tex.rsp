@@ -9,8 +9,8 @@
 
 <%
 # Required R packages
-library("R.rsp")
-library("R.devices")
+R.utils::use("R.rsp")
+R.utils::use("R.devices")
 hpaste <- R.utils::hpaste
 evalCapture <- R.utils::evalCapture
 %>

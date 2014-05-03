@@ -2,7 +2,7 @@
 \usepackage[margin=1.0in]{geometry}
 \usepackage{graphicx}
 <%
-library("R.devices")
+R.utils::use("R.devices")
 %>
 \graphicspath{{<%=getOption("devEval/args/path", "figures/")%>}}
 

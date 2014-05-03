@@ -3,6 +3,7 @@ Package: R.rsp
 
 Version: 0.17.2 [2014-05-02]
 o CLEANUP: Removed evalWithEcho(), which has been deprecated since 2011.
+o Using R.utils::use() instead of library() in more RSP documents.
 
 
 Version: 0.17.1 [2014-04-30]
