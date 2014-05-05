@@ -69,9 +69,9 @@
 # @keyword IO
 #*/###########################################################################
 setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=NULL, type=NA, envir=parent.frame(), args="*", postprocess=TRUE, ..., verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'file' & 'path':
   if (inherits(file, "connection")) {
   } else if (inherits(file, "RspFileProduct")) {
@@ -108,6 +108,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
       # If URI, drop any URI arguments
       url <- splitUrl(file);
       filename <- basename(url$path);
+      filename <- Arguments$getReadablePathname(filename, adjust="url", mustExist=FALSE);
     } else {
       filename <- basename(file);
     }
@@ -175,18 +176,27 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
 
   verbose && enter(verbose, "Processing RSP file");
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Information on input and output
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (verbose) {
+    # Information on input
     if (inherits(file, "RspFileProduct")) {
       cat(verbose, "Input file:");
       print(verbose, file);
     } else if (is.character(file)) {
-      cat(verbose, "Input pathname: ", file);
+      if (isUrl(file)) {
+        cat(verbose, "Input URL: ", file);
+      } else {
+        cat(verbose, "Input pathname: ", file);
+      }
     } else if (inherits(file, "connection")) {
       ci <- summary(file);
       printf(verbose, "Input '%s' connection: %s\n",
           class(ci)[1L], ci$description);
     }
 
+    # Information on output
     if (is.character(output)) {
       cat(verbose, "Output pathname: ", output);
     } else if (inherits(output, "connection")) {
@@ -195,10 +205,14 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
           class(ci)[1L], ci$description);
     }
 
+    # Information on content *output* type
     printf(verbose, "Default content type: %s\n", type);
   }
 
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Assign RSP arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Assigning RSP arguments");
   verbose && cat(verbose, "Environment: ", getName(envir));
   if (length(args) > 0L) {
@@ -211,18 +225,29 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   verbose && exit(verbose);
 
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Processing
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Coerce to an RspFileProduct
+  # FIXME: Would be nice to be able to handle unknown file extensions,
+  # e.g. when an RSP file is downloaded from online wihtout a filename ext.
   if (!inherits(file, "RspFileProduct")) {
     file <- RspFileProduct(file, mustExist=FALSE);
+    processor <- findProcessor(file);
+    if (is.null(processor)) {
+      # Assume an RSP document if type cannot be inferred by filename etc.
+      file <- RspFileProduct(file, type="application/x-rsp", mustExist=FALSE);
+    }
   }
 
+  # Process...
   if (getType(file, default="text/plain") == "application/x-rsp") {
+    # (a) An RSP document, or...
     verbose && enter(verbose, "Reading RSP document");
     str <- .readText(file);
     verbose && printf(verbose, "Number of characters: %d\n", nchar(str));
     verbose && str(verbose, str);
     verbose && exit(verbose);
-
 
     verbose && enter(verbose, "Parsing RSP document");
     rstr <- RspString(str, type=type, source=file);
@@ -233,6 +258,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
 
     res <- rfile(doc, output=output, workdir=workdir, envir=envir, args=NULL, postprocess=postprocess, ..., verbose=verbose);
   } else {
+    # (b) ...other type of document.
     res <- process(file, workdir=workdir, envir=envir, args=NULL, recursive=postprocess, ..., verbose=verbose);
   }
 
