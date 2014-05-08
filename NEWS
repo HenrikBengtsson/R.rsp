@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.18.0 [2014-05-07]
+o CLEANUP: R.oo package is no longer attached when attaching this package.
+
+
 Version: 0.17.3 [2014-05-05]
 o rfile() now assumes an RSP document when it cannot infer the type from
   the filename etc.
