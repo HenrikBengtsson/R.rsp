@@ -1,6 +1,7 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # IMPORTS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+importFrom("R.methodsS3", "appendVarArgs")
 importFrom("R.methodsS3", "setMethodS3")
 importFrom("R.oo", "setConstructorS3")
 importFrom("R.oo", "extend")
@@ -11,6 +12,8 @@ importFrom("R.oo", "uses")
 importFrom("R.oo", "Object")
 importFrom("R.oo", "Package")
 importFrom("R.oo", "Exception")
+importFrom("R.oo", "Class")
+importFrom("R.oo", "ASCII")
 importFrom("R.utils", "Arguments")
 importFrom("R.utils", "GString")
 importFrom("R.utils", "Verbose")
