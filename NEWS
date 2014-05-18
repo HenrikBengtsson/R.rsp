@@ -22,7 +22,7 @@ o DOCUMENTATION: Restructured and updated the R.rsp vignettes.
 
 Version: 0.17.0 [2014-04-29]
 o Now suggested packages are installed automagically, iff needed.
-  This minimized the need for preinstalling packages whenever using
+  This minimizes the need for preinstalling packages whenever using
   R.rsp to compile documents.
 
 
