@@ -1,8 +1,11 @@
 Package: R.rsp
 ==============
 
-Version: 0.18.1 [2014-05-16]
+Version: 0.18.1 [2014-05-17]
 o Now using withCapture() in vignettes replacing alias evalCapture().
+o USABILITY: The error messages thrown on RSP code chunks with syntax
+  errors now also display the beginning and the end of the actual code
+  chunk making it easier to identify/locate it.
 o CLEANUP: Now rspWeave() and hence the 'rsp::rsp' vignette engine
   cleans up intermediate files (e.g. Markdown and TeX) produced while
   compiling the vignette into its final output (HTML or PDF).
