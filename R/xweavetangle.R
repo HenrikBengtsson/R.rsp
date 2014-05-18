@@ -59,10 +59,16 @@ rspWeave <- function(file, ..., postprocess=TRUE, clean=TRUE, quiet=FALSE, envir
     }
   }
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Weave!
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   res <- weave(file, ..., quiet=quiet, envir=envir);
 
-  # Remove intermediate RSP files, e.g. Markdown and TeX?
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Cleanup, i.e. remove intermediate RSP files, e.g. Markdown and TeX?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ext <- tolower(file_ext(file));
   if (postprocess && clean && (ext == "rsp")) {
     tmp <- file_path_sans_ext(basename(file));

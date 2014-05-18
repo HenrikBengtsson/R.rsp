@@ -203,9 +203,53 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Fake output PDF/DVI in case LaTeX is not available?
+  # This makes it possible to test the compilation of vignettes
+  # in 'R CMD check' up to the point of compiling a LaTeX file
+  # into a PDF.  This is useful on Travis CI where we then can
+  # avoid having to install a huge LaTeX system for each check.
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  fallback <- Sys.getenv("R_RSP_COMPILELATEX_FALLBACK");
+  if (nzchar(fallback)) {
+    verbose && enter(verbose, "Fallback");
+    # Disable fallback until done to avoid recursive calls when
+    # calling isCapableOf(..., "latex").
+    Sys.unsetenv("R_RSP_COMPILELATEX_FALLBACK");
+    on.exit(Sys.setenv("R_RSP_COMPILELATEX_FALLBACK"=fallback), add=TRUE);
+
+    verbose && cat(verbose, "R_RSP_COMPILELATEX_FALLBACK=", fallback);
+    forceFB <- (regexpr("-force", fallback) != -1L);
+    if (forceFB) {
+      fallback <- gsub("-force", "", fallback);
+      verbose && cat(verbose, "Forced fallback");
+      verbose && cat(verbose, "R_RSP_COMPILELATEX_FALLBACK=", fallback);
+    }
+
+    if (forceFB || !isCapableOf(R.rsp, "latex")) {
+      if (fallback == "copy") {
+        texi2dvi <- function(pathnameR, pdf=TRUE, ...) {
+          verbose && enter(verbose, "Faking texi2dvi() by copying source file.");
+          pathnameD <- file_path_sans_ext(basename(pathnameR));
+          pathnameD <- paste(pathnameD, if (pdf) "pdf" else "dvi", sep=".");
+          copyFile(pathnameR, pathnameD, overwrite=TRUE);
+          verbose && printf(verbose, "Copied: %s -> %s\n", pathnameR, pathnameD);
+          verbose && exit(verbose);
+        } # texi2dvi()
+        verbose && cat(verbose, "Faking texi2dvi() by copying source file.");
+      } else {
+        throw("Unknown value on _RSP_COMPILELATEX_FALLBACK_: ", fallback);
+      }
+    }
+    verbose && exit(verbose);
+  }
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Compile
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   texi2dvi(pathnameR, pdf=pdf, clean=clean, quiet=quiet, texinputs=texinputs);
+
+
   verbose && exit(verbose);
 
   setwd(opwd); opwd <- ".";
@@ -219,6 +263,11 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
 
 ############################################################################
 # HISTORY:
+# 2014-05-17
+# o If environment variable _RSP_COMPILELATEX_FALLBACK_=copy and LaTeX
+#   is not available, then compileLaTeX() will emulate the LaTeX compiler
+#   by copying the input TeX file "as is" to the output PDF/DVI file,
+#   e.g. foo.tex -> foo.pdf.
 # 2014-04-06
 # o ROBUSTNESS: Now compileLaTeX() cleans up and shortens LaTeX
 #   environment variable iff possible before compiling the document.
