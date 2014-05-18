@@ -3,6 +3,9 @@ Package: R.rsp
 
 Version: 0.18.1 [2014-05-16]
 o Now using withCapture() in vignettes replacing alias evalCapture().
+o CLEANUP: Now rspWeave() and hence the 'rsp::rsp' vignette engine
+  cleans up intermediate files (e.g. Markdown and TeX) produced while
+  compiling the vignette into its final output (HTML or PDF).
 o Bumped up package dependencies.
 
 

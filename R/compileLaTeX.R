@@ -205,7 +205,7 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Compile
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  tools::texi2dvi(pathnameR, pdf=pdf, clean=clean, quiet=quiet, texinputs=texinputs);
+  texi2dvi(pathnameR, pdf=pdf, clean=clean, quiet=quiet, texinputs=texinputs);
   verbose && exit(verbose);
 
   setwd(opwd); opwd <- ".";

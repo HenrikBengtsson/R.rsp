@@ -1223,7 +1223,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       });
     }
 
-    ext <- tolower(tools::file_ext(file));;
+    ext <- tolower(file_ext(file));;
     attr(file, "ext") <- ext;
 
     verbose && cat(verbose, "File: ", file);

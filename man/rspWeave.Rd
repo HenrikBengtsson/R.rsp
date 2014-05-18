@@ -19,12 +19,16 @@
 }
 
 \usage{
-rspWeave(file, ..., postprocess=TRUE, quiet=FALSE, envir=new.env(), .engineName="rsp")
+rspWeave(file, ..., postprocess=TRUE, clean=TRUE, quiet=FALSE, envir=new.env(),
+  .engineName="rsp")
 }
 
 \arguments{
   \item{file}{The file to be weaved.}
   \item{...}{Not used.}
+  \item{postprocess}{If \code{\link[base:logical]{TRUE}}, the compiled document is also post
+    processed, if possible.}
+  \item{clean}{If \code{\link[base:logical]{TRUE}}, intermediate files are removed, otherwise not.}
   \item{quiet}{If \code{\link[base:logical]{TRUE}}, no verbose output is generated.}
   \item{envir}{The \code{\link[base]{environment}} where the RSP document is
         parsed and evaluated.}
@@ -33,7 +37,7 @@ rspWeave(file, ..., postprocess=TRUE, quiet=FALSE, envir=new.env(), .engineName=
 
 \value{
   Returns the absolute pathname of the generated RSP product.
-  The generated RSP product is not postprocessed.
+  The generated RSP product is postprocessed, if possible.
 }
 
 \author{Henrik Bengtsson}

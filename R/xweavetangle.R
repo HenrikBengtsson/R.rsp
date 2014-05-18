@@ -25,7 +25,7 @@
 #
 # \value{
 #   Returns the absolute pathname of the generated RSP product.
-#   The generated RSP product is not postprocessed.
+#   The generated RSP product is postprocessed, if possible.
 # }
 #
 # @author
@@ -62,6 +62,12 @@ rspWeave <- function(file, ..., postprocess=TRUE, clean=TRUE, quiet=FALSE, envir
   # Weave!
   res <- weave(file, ..., quiet=quiet, envir=envir);
 
+  # Remove intermediate RSP files, e.g. Markdown and TeX?
+  ext <- tolower(file_ext(file));
+  if (postprocess && clean && (ext == "rsp")) {
+    tmp <- file_path_sans_ext(basename(file));
+    if (file_test("-f", tmp)) file.remove(tmp);
+  }
 
   # DEBUG: Store generated file? /HB 2013-09-17
   path <- Sys.getenv("RSP_DEBUG_PATH");
@@ -151,7 +157,7 @@ rspTangle <- function(file, ..., envir=new.env()) {
 
 
 asisWeave <- function(file, ...) {
-  output <- tools::file_path_sans_ext(basename(file));
+  output <- file_path_sans_ext(basename(file));
 
   # Make sure the output vignette exists
   if (!isFile(output)) {
@@ -175,20 +181,20 @@ asisWeave <- function(file, ...) {
 
   # Update the timestamp of the output file
   # (otherwise tools::buildVignettes() won't detect it)
-  R.utils::touchFile(output);
+  touchFile(output);
 
   # DEBUG: Store generated file? /HB 2013-09-17
   path <- Sys.getenv("RSP_DEBUG_PATH");
   if (nchar(path) > 0L) {
-    R.utils::copyFile(output, file.path(path, basename(output)), overwrite=TRUE);
+    copyFile(output, file.path(path, basename(output)), overwrite=TRUE);
   }
 
   output;
 } # asisWeave()
 
 asisTangle <- function(file, ...) {
-  output <- tools::file_path_sans_ext(basename(file));
-  name <- tools::file_path_sans_ext(output);
+  output <- file_path_sans_ext(basename(file));
+  name <- file_path_sans_ext(output);
   res <- sprintf("%s.R", name);
   cat("# The vignette source contains no R code\n", file=res)
   res

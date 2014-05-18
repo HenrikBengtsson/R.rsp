@@ -82,7 +82,7 @@ setMethodS3("rsptex", "default", function(..., pdf=TRUE, force=FALSE, verbose=FA
 
   if (force || !isUpToDate) {
     verbose && enter(verbose, "Compiling LaTeX file");
-    tools::texi2dvi(pathname2, pdf=pdf);
+    texi2dvi(pathname2, pdf=pdf);
     verbose && exit(verbose);
   }
 

@@ -364,7 +364,7 @@ buildNonSweaveTexToPdf <- function(path=".", pattern="[.]tex$", ...) {
   for (pathname in pathnames) {
     pathnamePDF <- sprintf("%s.pdf", gsub(pattern, "", pathname));
     if (!isFile(pathnamePDF)) {
-       res[[pathname]] <- tools::texi2pdf(file=pathname, ...);
+       res[[pathname]] <- texi2pdf(file=pathname, ...);
     }
   }
   invisible(res);
