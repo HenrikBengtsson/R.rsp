@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.18.1 [2014-05-16]
+o Now using withCapture() in vignettes replacing alias evalCapture().
+o Bumped up package dependencies.
+
+
 Version: 0.18.0 [2014-05-07]
 o CLEANUP: R.oo package is no longer attached when attaching this package.
 

@@ -30,7 +30,7 @@ In \texttt{help("iris")} of R~\cite{RCore_2013} the 'iris' data set is described
 This famous (Fisher's or Anderson's) iris data set gives the measurements in centimeters of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. The species are Iris setosa, versicolor, and virginica.
 \end{quote}
 This data set can be summarized by the follow R command:
-\begin{verbatim}<%=evalCapture({
+\begin{verbatim}<%=withCapture({
 summary(iris)
 })%>\end{verbatim}
 and visualized~\cite{BeckerR_etal_1998} as in Figure~\ref{fig:iris} using:

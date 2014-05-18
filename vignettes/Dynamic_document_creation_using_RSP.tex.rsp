@@ -12,7 +12,7 @@
 R.utils::use("R.rsp")
 R.utils::use("R.devices")
 hpaste <- R.utils::hpaste
-evalCapture <- R.utils::evalCapture
+withCapture <- R.utils::withCapture
 %>
 
 <% t0 <- Sys.time() %>
@@ -1026,13 +1026,13 @@ When this Markdown document is post-processed into a HTML document (internally d
 
 %% \clearpage
 \subsection{Including R code}
-\subsubsection{Evaluating and capturing expression and output (\code{<\%=}\code{evalCapture}\code{(\content{code chunk})\%>})}
+\subsubsection{Evaluating and capturing expression and output (\code{<\%=}\code{withCapture}\code{(\content{code chunk})\%>})}
 \label{RspCodeChunkCapture}
-The \code{evalCapture()} function of the \pkg{R.utils} package allows us to evaluate, embed and echo the text output of an R code chunk<%--\footnote{\code{\content{code chunk}} must be a complete and valid code expression, because the expression is parsed and evaluated in place.}--%>.  Note that it is only standard output that is echoed, i.e. plots are \emph{not} automatically embedded as figures.  To include figures, see Section~\ref{WorkingWithFigures}.  
+The \code{withCapture()} function of the \pkg{R.utils} package allows us to evaluate, embed and echo the text output of an R code chunk<%--\footnote{\code{\content{code chunk}} must be a complete and valid code expression, because the expression is parsed and evaluated in place.}--%>.  Note that it is only standard output that is echoed, i.e. plots are \emph{not} automatically embedded as figures.  To include figures, see Section~\ref{WorkingWithFigures}.  
 Continuing, any formatting of the capture has to be done in the format of the output document.  For instance, the following RSP-embedded LaTeX text
 \begin{rspVerbatim}
 {\textbackslash}begin\{verbatim\}
-<\%=evalCapture(\{
+<\%=withCapture(\{
 for (kk in 1:3) \{
   cat("Iteration #", kk, "{\bs}n", sep="")
 \}
@@ -1045,7 +1045,7 @@ type
 \end{rspVerbatim}
 produces
 \begin{verbatim}
-<%=evalCapture({
+<%=withCapture({
 for (kk in 1:3) {
   cat("Iteration #", kk, "\n", sep="")
 }
@@ -1055,10 +1055,10 @@ type <- "horse";  # Comments are dropped
 type
 })%>
 \end{verbatim}
-By adding arguments \code{code=FALSE} and/or \code{output=FALSE} to \code{evalCapture()} one can control whether the deparsed R source code and/or the output of each subexpression is captured or not.
+By adding arguments \code{code=FALSE} and/or \code{output=FALSE} to \code{withCapture()} one can control whether the deparsed R source code and/or the output of each subexpression is captured or not.
 
 \begin{remark}
-The \pkg{R.utils} package has to be attached for \code{evalCapture()} to be available, e.g. via \code{<\% library("R.utils") \%>}.
+The \pkg{R.utils} package has to be attached for \code{withCapture()} to be available, e.g. via \code{<\% library("R.utils") \%>}.
 \end{remark}
 
 \begin{remark}
@@ -1092,7 +1092,7 @@ With this construct it is \emph{not} possible the capture the \emph{output}, onl
 
 
 \subsubsection{Future directions for including code}
-The \code{evalCapture()} construct is rather rudimentary and has limitations on how the source code and echoed outputs are formatted.  A much more powerful solution is then to utilize CRAN packages such as \pkg{formatR}, \pkg{evaluate} and \pkg{highlight}.  The goal is to incorporate neat support for these in a future version of the \pkg{R.rsp} package.
+The \code{withCapture()} construct is rather rudimentary and has limitations on how the source code and echoed outputs are formatted.  A much more powerful solution is then to utilize CRAN packages such as \pkg{formatR}, \pkg{evaluate} and \pkg{highlight}.  The goal is to incorporate neat support for these in a future version of the \pkg{R.rsp} package.
 
 
 
