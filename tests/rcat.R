@@ -10,3 +10,11 @@ text <- 'The <%=n <- length(letters)%> letters in the English alphabet are:
 <%=letters[i]%>/<%=LETTERS[i]%><%=if(i < n) ", "-%>
 <% } %>.\n'
 rcat(text)
+
+
+# Informative syntax error messages
+text <- '<%={
+10 print "Hello world!"
+20 goto 10
+}%>\n'
+tryCatch({ rcat(text) }, error=function(ex) cat(ex$message))
