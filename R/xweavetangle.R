@@ -14,6 +14,9 @@
 # \arguments{
 #   \item{file}{The file to be weaved.}
 #   \item{...}{Not used.}
+#   \item{postprocess}{If @TRUE, the compiled document is also post
+#     processed, if possible.}
+#   \item{clean}{If @TRUE, intermediate files are removed, otherwise not.}
 #   \item{quiet}{If @TRUE, no verbose output is generated.}
 #   \item{envir}{The @environment where the RSP document is
 #         parsed and evaluated.}
@@ -35,7 +38,7 @@
 # @keyword IO
 # @keyword internal
 #*/###########################################################################
-rspWeave <- function(file, ..., postprocess=TRUE, quiet=FALSE, envir=new.env(), .engineName="rsp") {
+rspWeave <- function(file, ..., postprocess=TRUE, clean=TRUE, quiet=FALSE, envir=new.env(), .engineName="rsp") {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # WORKAROUND: 'R CMD build' seems to ignore the %\VignetteEngine{<engine>}
   # markup for R (>= 3.0.0 && <= 3.0.1 patched r63905) and only go by the
@@ -52,7 +55,7 @@ rspWeave <- function(file, ..., postprocess=TRUE, quiet=FALSE, envir=new.env(), 
   # If no problems, use the default rfile() weaver.
   if (is.null(weave)) {
     weave <- function(..., quiet=FALSE) {
-      rfile(..., workdir=".", postprocess=postprocess, verbose=!quiet);
+      rfile(..., workdir=".", postprocess=postprocess, clean=clean, verbose=!quiet);
     }
   }
 
@@ -348,6 +351,8 @@ asisTangle <- function(file, ...) {
 
 ###############################################################################
 # HISTORY:
+# 2014-05-17
+# o Now rspWeave() for RSP cleans up intermediate TeX files by default.
 # 2014-04-30
 # o Added vignette engine 'R.rsp::asis'.
 # 2014-04-18
