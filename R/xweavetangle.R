@@ -207,7 +207,6 @@ asisTangle <- function(file, ...) {
 } # asisTangle()
 
 
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # WORKAROUND: 'R CMD build' seems to ignore the %\VignetteEngine{<engine>}
 # markup for R (>= 3.0.0 && <= 3.0.1 patched r63905) and only go by the
@@ -284,8 +283,11 @@ asisTangle <- function(file, ...) {
   if (dzslides) {
     # Pandoc *.md to *.html
     format <- Sys.getenv("R.rsp/pandoc/args/format", "html");
+    use("knitr", quietly=TRUE)
+    # To please R CMD check
+    pandoc <- NULL; rm(list="pandoc");
     suppressMessages({
-      html <- knitr::pandoc(md, format=format);
+      html <- pandoc(md, format=format);
     })
     html <- RspFileProduct(html);
   } else {
@@ -317,6 +319,9 @@ asisTangle <- function(file, ...) {
 
 
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# REGISTER VIGNETTE ENGINES
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 .registerVignetteEngines <- function(pkgname) {
   # Are vignette engines supported?
   if (getRversion() < "3.0.0") return(); # Nope!
@@ -324,35 +329,21 @@ asisTangle <- function(file, ...) {
   # Register vignette engines
   vignetteEngine <- get("vignetteEngine", envir=asNamespace("tools"));
 
-  # (1) Skip engine
-  vignetteEngine("skip_Rnw", package=pkgname,
-    pattern="[.]Rnw$",
-    weave=NA
-  );
-
-  # (2) RSP engine
+  # (1) RSP engine
   vignetteEngine("rsp", package=pkgname,
     pattern="[.][^.]*[.]rsp$",
     weave=rspWeave,
     tangle=rspTangle
   );
 
-  # (3) Markdown RSP + knitr::pandoc engine (non-offical trial version)
+  # (2) Markdown RSP + knitr::pandoc engine (non-offical trial version)
   vignetteEngine("md.rsp+knitr:pandoc", package=pkgname,
     pattern="[.]md[.]rsp$",
     weave=`.weave_md.rsp+knitr:pandoc`,
     tangle=rspTangle
   );
-##
-##    # LaTeX engine
-##    vignetteEngine("tex", package=pkgname, pattern="[.]tex$",
-##                    weave=texWeave, tangle=function(...) NULL);
-##
-##    # Markdown engine
-##    vignetteEngine("markdown", package=pkgname, pattern="[.]md$",
-##                    weave=markdownWeave, tangle=function(...) NULL);
 
-  # "asis" engine
+  # (3) "asis" engine
   vignetteEngine("asis", package=pkgname,
     pattern="[.](pdf|html)[.]asis$",
     weave=asisWeave,
@@ -363,6 +354,11 @@ asisTangle <- function(file, ...) {
 
 ###############################################################################
 # HISTORY:
+# 2014-05-24
+# o Dropped vignette engine 'skip_Rnw'.
+# o Now engine '.weave_md.rsp+knitr:pandoc' tries to install knitr,
+#   iff missing.
+# o WORKAROUND: Now engine 'dummy_Rnw' "fakes" weave and tangle outputs.
 # 2014-05-17
 # o Now rspWeave() for RSP cleans up intermediate TeX files by default.
 # 2014-04-30

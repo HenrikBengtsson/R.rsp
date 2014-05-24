@@ -38,10 +38,6 @@ rstring <- CmdArgsFunction(rstring)
 #   and not just when attaching it.
 # 2013-09-19
 # o Simplified .onLoad() so it's now calling .registerVignetteEngines().
-# 2013-09-18
-# o Added the 'md.rsp+knitr:pandoc' engine.
-# 2013-03-07
-# o Added the 'R.rsp::skip_Rnw' engine.
 # 2013-02-08
 # o Added .onLoad() registering an R v3.0.0 vignette engine.
 # 2011-07-23

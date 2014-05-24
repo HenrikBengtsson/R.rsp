@@ -15,9 +15,6 @@
   cat(file=output);
 }
 
-# Skip Rnw vignettes
-`R.rsp::skip_Rnw` <- function(file, ...) { }
-
 # Sweave vignettes
 `utils::Sweave` <- `Sweave` <- function(file, ...) {
   utils::Sweave(file, ...);

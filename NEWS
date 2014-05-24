@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.18.2 [2014-05-24]
+o Using R.utils::use() instead of require() in more places.
+o CLEANUP: Dropped internal ununsed vignette engines.
+
+
 Version: 0.18.1 [2014-05-17]
 o Now using withCapture() in vignettes replacing alias evalCapture().
 o USABILITY: The error messages thrown on RSP code chunks with syntax
