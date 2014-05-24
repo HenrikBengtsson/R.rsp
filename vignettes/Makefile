@@ -28,7 +28,7 @@ clean:
 	$(RM) index.html.rsp
 	$(RM) dummy.Rnw dummy.R dummy.html dummy.pdf
 	$(RM) *.rsp.R
-	$(RM) *.tex *.aux *.bbl *.blg *.log *.out *.sty *.toc
+	$(RM) *.aux *.bbl *.blg *.log *.out *.sty *.toc
 	$(RM) -r figures/
 	$(RM) Makefile
 

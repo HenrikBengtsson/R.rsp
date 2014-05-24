@@ -102,6 +102,7 @@ rspWeave <- function(file, ..., postprocess=TRUE, clean=TRUE, quiet=FALSE, envir
 #   \item{file}{The file to be tangled.}
 #   \item{...}{Not used.}
 #   \item{envir}{The @environment where the RSP document is parsed.}
+#   \item{pattern}{A filename pattern used to identify the name.}
 # }
 #
 # \value{
@@ -118,7 +119,7 @@ rspWeave <- function(file, ..., postprocess=TRUE, clean=TRUE, quiet=FALSE, envir
 # @keyword IO
 # @keyword internal
 #*/###########################################################################
-rspTangle <- function(file, ..., envir=new.env()) {
+rspTangle <- function(file, ..., envir=new.env(), pattern="(|[.][^.]*)[.]rsp$") {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -128,7 +129,6 @@ rspTangle <- function(file, ..., envir=new.env()) {
   # Setup output R file
   workdir <- ".";
   filename <- basename(file);
-  pattern <- "(|[.][^.]*)[.]rsp$";
   fullname <- gsub(pattern, "", filename);
   filenameR <- sprintf("%s.R", fullname);
   pathnameR <- Arguments$getWritablePathname(filenameR, path=workdir);
@@ -329,25 +329,39 @@ asisTangle <- function(file, ...) {
   # Register vignette engines
   vignetteEngine <- get("vignetteEngine", envir=asNamespace("tools"));
 
-  # (1) RSP engine
+  # RSP engine
   vignetteEngine("rsp", package=pkgname,
     pattern="[.][^.]*[.]rsp$",
     weave=rspWeave,
     tangle=rspTangle
   );
 
-  # (2) Markdown RSP + knitr::pandoc engine (non-offical trial version)
-  vignetteEngine("md.rsp+knitr:pandoc", package=pkgname,
-    pattern="[.]md[.]rsp$",
-    weave=`.weave_md.rsp+knitr:pandoc`,
-    tangle=rspTangle
-  );
-
-  # (3) "asis" engine
+  # "asis" engine
   vignetteEngine("asis", package=pkgname,
     pattern="[.](pdf|html)[.]asis$",
     weave=asisWeave,
     tangle=asisTangle
+  );
+
+  # TeX engine
+  vignetteEngine("tex", package=pkgname,
+    pattern="[.]tex$",
+    weave=rspWeave,
+    tangle=function(...) rspTangle(..., pattern="[.]tex$")
+  );
+
+  # Markdown engine
+  vignetteEngine("md", package=pkgname,
+    pattern="[.]md$",
+    weave=rspWeave,
+    tangle=function(...) rspTangle(..., pattern="[.]md$")
+  );
+
+  # Markdown RSP + knitr::pandoc engine (non-offical trial version)
+  vignetteEngine("md.rsp+knitr:pandoc", package=pkgname,
+    pattern="[.]md[.]rsp$",
+    weave=`.weave_md.rsp+knitr:pandoc`,
+    tangle=rspTangle
   );
 } # .registerVignetteEngines()
 
@@ -355,6 +369,7 @@ asisTangle <- function(file, ...) {
 ###############################################################################
 # HISTORY:
 # 2014-05-24
+# o Added vignette engines 'tex' and 'md'.
 # o Dropped vignette engine 'skip_Rnw'.
 # o Now engine '.weave_md.rsp+knitr:pandoc' tries to install knitr,
 #   iff missing.

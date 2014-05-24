@@ -9,6 +9,18 @@
   R.rsp::rspTangle(file, ...);
 }
 
+# Markdown vignettes
+`R.rsp::md` <- `md` <- function(file, ...) {
+  R.rsp::rspWeave(file, ...);
+  R.rsp::rspTangle(file, ..., pattern="[.]md$");
+}
+
+# TeX vignettes
+`R.rsp::tex` <- `tex` <- function(file, ...) {
+  R.rsp::rspWeave(file, ...);
+  R.rsp::rspTangle(file, ..., pattern="[.]tex$");
+}
+
 # "Dummy" Rnw vignettes
 `R.rsp::dummy_Rnw` <- function(file, ...) {
   output <- gsub("[.]Rnw$", ".pdf", file);
