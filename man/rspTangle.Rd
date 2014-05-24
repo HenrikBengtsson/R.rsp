@@ -19,13 +19,14 @@
 }
 
 \usage{
-rspTangle(file, ..., envir=new.env())
+rspTangle(file, ..., envir=new.env(), pattern="(|[.][^.]*)[.]rsp$")
 }
 
 \arguments{
   \item{file}{The file to be tangled.}
   \item{...}{Not used.}
   \item{envir}{The \code{\link[base]{environment}} where the RSP document is parsed.}
+  \item{pattern}{A filename pattern used to identify the name.}
 }
 
 \value{
