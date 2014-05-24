@@ -90,7 +90,6 @@ By default, the R HTML help system will list links to the PDF and the Sweave sou
 \clearpage
 \section*{Appendix}
 \subsection*{The generic Makefile file}
-\label{appMakefile}
 The customized and generic \file{Makefile} that builds non-Sweave vignettes and any missing \file{index.html} file is available in \pkg{R.rsp} package directory \file{<%=pathMk%>/}.  This \file{Makefile} should be copied ``as is'' to \file{vignettes/} of your package.  Its content is:
 {\scriptsize\begin{verbatim}
 <%=
@@ -107,7 +106,6 @@ paste(bfr, collapse="\n");
 
 
 \subsection*{The generic .install\_extras file}
-\label{appInstallExtreas}
 The \file{vignettes/.install\_extras} file controls which source and output vignette files should be installed and therefore be copied to the \file{inst/doc/} directory of the built package.  The generic \file{.install\_extras} file available by in \pkg{R.rsp} package directory \file{<%=pathMk%>/} contains:
 {\scriptsize\begin{verbatim}
 <%=
@@ -124,7 +122,6 @@ paste(bfr, collapse="\n");
 
 
 \subsection*{The "trigger" dummy.Rnw file}
-\label{appInstallExtreas}
 The "dummy" Sweave source file \file{dummy.Rnw} file available by in \pkg{R.rsp} package directory \file{<%=pathMk%>/}, which triggers R's vignette installation mechanism to process the \file{vignettes/Makefile}, contains:
 {\scriptsize\begin{verbatim}
 <%=
