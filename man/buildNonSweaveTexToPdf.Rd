@@ -17,7 +17,7 @@
 }
 
 \usage{
-buildNonSweaveTexToPdf(path=".", pattern="[.]tex$", ...)
+buildNonSweaveTexToPdf(path=".", pattern="[.](tex|latex)$", ...)
 }
 
 \arguments{

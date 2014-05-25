@@ -345,9 +345,9 @@ asisTangle <- function(file, ...) {
 
   # TeX engine
   vignetteEngine("tex", package=pkgname,
-    pattern="[.]tex$",
+    pattern="[.](tex|latex)$",
     weave=rspWeave,
-    tangle=function(...) rspTangle(..., pattern="[.]tex$")
+    tangle=function(...) rspTangle(..., pattern="[.](tex|latex)$")
   );
 
   # Markdown engine
