@@ -26,7 +26,7 @@ index.html:
 clean:
 	$(RM) enginesMap.R
 	$(RM) index.html.rsp
-	$(RM) dummy.Rnw dummy.R dummy.html dummy.pdf
+	$(RM) dummy.Rnw dummy.tex dummy.R dummy.html dummy.pdf
 	$(RM) *.rsp.R
 	$(RM) *.aux *.bbl *.blg *.log *.out *.sty *.toc
 	$(RM) -r figures/
