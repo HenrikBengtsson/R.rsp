@@ -1,9 +1,14 @@
 Package: R.rsp
 ==============
 
+Version: 0.18.3 [2014-05-27]
+o Bumped up package dependencies.
+
+
 Version: 0.18.2 [2014-05-24]
 o Using R.utils::use() instead of require() in more places.
 o CLEANUP: Dropped internal ununsed vignette engines.
+o Bumped up package dependencies.
 
 
 Version: 0.18.1 [2014-05-17]
