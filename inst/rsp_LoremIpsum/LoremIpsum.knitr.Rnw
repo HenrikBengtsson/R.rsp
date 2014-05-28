@@ -22,7 +22,7 @@ opts_chunk$set(out.width="3.8in")
 
 \section{Graphics}
 
-<<echo=TRUE, fig=TRUE, fig.cap="Pairs plot of the iris data.">>=
+<<echo=TRUE, fig.cap="Pairs plot of the iris data.">>=
 library(graphics)
 pairs(iris)
 @
