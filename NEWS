@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.18.4 [2014-05-28]
+o Added 'Recommends' field to DESCRIPTION.
+
+
 Version: 0.18.3 [2014-05-27]
 o Now rscript() can write to file and if the input is a file, then
   it does so by default.
