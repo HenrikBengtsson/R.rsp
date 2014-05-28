@@ -22,7 +22,7 @@
 }
 
 \usage{
-\method{getMetadata}{RspString}(object, name=NULL, local=TRUE, ...)
+\method{getMetadata}{RspString}(object, name=NULL, local=FALSE, ...)
 }
 
 \arguments{

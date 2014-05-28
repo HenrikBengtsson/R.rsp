@@ -79,29 +79,32 @@ setMethodS3("rscript", "default", function(..., file=NULL, path=NULL, output=NUL
 
   # Argument 'output':
   if (is.null(output)) {
+    # Default is to return an RSP source code object
+    output <- RspSourceCode();
+
     if (inherits(file, "connection")) {
       throw("When argument 'file' is a connection, then 'output' must be specified.");
-    }
+    } else if (is.character(file)) {
+      # Is the input a filename or an URI?
+      if (isUrl(file)) {
+        # If URI, drop any URI arguments
+        url <- splitUrl(file);
+        filename <- basename(url$path);
+        filename <- Arguments$getReadablePathname(filename, adjust="url", mustExist=FALSE);
+      } else {
+        filename <- basename(file);
+      }
 
-    # Is the input a filename or an URI?
-    if (isUrl(file)) {
-      # If URI, drop any URI arguments
-      url <- splitUrl(file);
-      filename <- basename(url$path);
-      filename <- Arguments$getReadablePathname(filename, adjust="url", mustExist=FALSE);
-    } else {
-      filename <- basename(file);
-    }
-
-    pattern <- "((.*)[.]([^.]+)|([^.]+))[.]([^.]+)$";
-    outputF <- gsub(pattern, "\\1.R", filename, ignore.case=TRUE);
-    withoutGString({
-      output <- Arguments$getWritablePathname(outputF, path=workdir);
-    })
-    output <- getAbsolutePath(output);
-    # Don't overwrite the input file
-    if (output == file) {
-      throw("Cannot process RSP file. The inferred argument 'output' is the same as argument 'file' & 'path': ", output, " == ", file);
+      pattern <- "((.*)[.]([^.]+)|([^.]+))[.]([^.]+)$";
+      outputF <- gsub(pattern, "\\1.R", filename, ignore.case=TRUE);
+      withoutGString({
+        output <- Arguments$getWritablePathname(outputF, path=workdir);
+      })
+      output <- getAbsolutePath(output);
+      # Don't overwrite the input file
+      if (output == file) {
+        throw("Cannot process RSP file. The inferred argument 'output' is the same as argument 'file' & 'path': ", output, " == ", file);
+      }
     }
   } else if (inherits(output, "connection")) {
   } else if (identical(output, "")) {

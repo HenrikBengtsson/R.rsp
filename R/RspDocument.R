@@ -124,7 +124,7 @@ setMethodS3("getType", "RspDocument", function(object, default=NA, as=c("text", 
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("getMetadata", "RspDocument", function(object, name=NULL, local=TRUE, ...) {
+setMethodS3("getMetadata", "RspDocument", function(object, name=NULL, local=FALSE, ...) {
   res <- getAttribute(object, "metadata", default=list());
   if (!local) {
     isLocal <- is.element(names(res), "source");
