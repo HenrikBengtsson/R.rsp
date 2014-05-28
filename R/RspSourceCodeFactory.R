@@ -76,7 +76,8 @@ setMethodS3("getLanguage", "RspSourceCodeFactory", function(this, ...) {
 # \arguments{
 #   \item{code}{A @character @vector of code strings.}
 #   \item{...}{Arguments passed to the language-specific
-#      @see "RspSourceCode" constructor.}
+#      @see "RspSourceCode" constructor, e.g.
+#      \code{type} and \code{metadata}.}
 # }
 #
 # \value{
@@ -269,6 +270,7 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
   code <- unlist(code, use.names=FALSE);
 
   code <- makeSourceCode(object, code, ..., type=getType(doc), metadata=getMetadata(doc));
+
   code;
 }) # toSourceCode()
 

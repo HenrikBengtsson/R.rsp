@@ -24,7 +24,8 @@
 \arguments{
   \item{code}{A \code{\link[base]{character}} \code{\link[base]{vector}} of code strings.}
   \item{...}{Arguments passed to the language-specific
-     \code{\link{RspSourceCode}} constructor.}
+     \code{\link{RspSourceCode}} constructor, e.g.
+     \code{type} and \code{metadata}.}
 }
 
 \value{

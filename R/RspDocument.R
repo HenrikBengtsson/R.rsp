@@ -124,8 +124,12 @@ setMethodS3("getType", "RspDocument", function(object, default=NA, as=c("text", 
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("getMetadata", "RspDocument", function(object, name=NULL, ...) {
+setMethodS3("getMetadata", "RspDocument", function(object, name=NULL, local=TRUE, ...) {
   res <- getAttribute(object, "metadata", default=list());
+  if (!local) {
+    isLocal <- is.element(names(res), "source");
+    res <- res[!isLocal];
+  }
   if (!is.null(name)) {
     res <- res[[name]];
   }
@@ -1730,6 +1734,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         meta <- getMetadata(object);
         rstr <- RspString(content, type=hostContentType, source=file);
         rstr <- setMetadata(rstr, meta);
+        rstr <- setMetadata(rstr, name="source", value=file);
         meta <- NULL; # Not needed anymore
 
         until <- inclCT$args["until"];

@@ -70,6 +70,7 @@ setMethodS3("rclean", "default", function(..., file=NULL, path=NULL, envir=paren
     verbose && cat(verbose, "Input file: ", file);
     s <- .readText(file);
     s <- RspString(s, source=file, ...);
+    s <- setMetadata(s, name="source", value=file);
   }
   verbose && cat(verbose, "Length of RSP string: ", nchar(s));
 

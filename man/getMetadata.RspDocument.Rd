@@ -22,7 +22,7 @@
 }
 
 \usage{
-\method{getMetadata}{RspDocument}(object, name=NULL, ...)
+\method{getMetadata}{RspDocument}(object, name=NULL, local=TRUE, ...)
 }
 
 \arguments{

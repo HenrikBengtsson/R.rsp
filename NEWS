@@ -2,6 +2,12 @@ Package: R.rsp
 ==============
 
 Version: 0.18.3 [2014-05-27]
+o Now rscript() can write to file and does so by default.
+o Now metadata 'source', which is a reference to the source of the
+  RSP document, is set whenever possible/known.  It is considered
+  a "local" metadata attribute, meaning it will not be part of any
+  generated source code scripts, because those should be the same
+  regardless of where the source is located.
 o Bumped up package dependencies.
 
 

@@ -12,14 +12,15 @@
 \alias{rscript.RspString}
 \alias{rscript.RspDocument}
 
-\title{Compiles an RSP string and returns the generated source code script}
+\title{Compiles an RSP document and returns the generated source code script}
 
 \description{
- Compiles an RSP string and returns the generated source code script.
+ Compiles an RSP document and returns the generated source code script.
 }
 
 \usage{
-\method{rscript}{default}(..., file=NULL, path=NULL, envir=parent.frame(), args="*", verbose=FALSE)
+\method{rscript}{default}(..., file=NULL, path=NULL, output=NULL, workdir=NULL, envir=parent.frame(),
+  args="*", verbose=FALSE)
 }
 
 \arguments{
@@ -27,6 +28,16 @@
   \item{file, path}{Alternatively, a file, a URL or a \code{\link[base:connections]{connection}} from
      with the strings are read.
      If a file, the \code{path} is prepended to the file, iff given.}
+  \item{output}{A \code{\link[base]{character}} string or a \code{\link[base:connections]{connection}} specifying where
+     output should be directed.
+     The default is a file with a filename where the file extension(s)
+     (typically \code{".*.rsp"}) has been replaced by \code{".R"}
+     in the directory given by the \code{workdir} argument.}
+  \item{workdir}{The working directory to use after parsing and
+     preprocessing.
+     If argument \code{output} specifies an absolute pathname,
+     then the directory of \code{output} is used, otherwise the
+     current directory is used.}
   \item{envir}{The \code{\link[base]{environment}} in which the RSP string is
      preprocessed and evaluated.}
   \item{args}{A named \code{\link[base]{list}} of arguments assigned to the environment
@@ -36,7 +47,8 @@
 }
 
 \value{
-  Returns an \code{\link{RspSourceCode}}.
+  Returns an \code{\link{RspFileProduct}} if possible,
+  otherwise an \code{\link{RspSourceCode}}.
 }
 
 \examples{

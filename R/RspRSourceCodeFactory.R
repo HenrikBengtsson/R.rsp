@@ -230,28 +230,49 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
 ##  code <- 'library("R.rsp")';
 
   # Add metadata
-  metadata <- getMetadata(object);
+  metadata <- getMetadata(object, local=FALSE);
+  hdr <- NULL;
   for (key in names(metadata)) {
+     value <- metadata[[key]];
+
+     # Metadata assignments in source code
      value <- metadata[[key]];
      value <- gsub('"', '\\"', value, fixed=TRUE);
      value <- sprintf('  %s = "%s"', key, value);
      code <- c(code, value);
+
+     # Metadata presentation in header comment
+     value <- metadata[[key]];
+     value <- gsub("\n", "\\n", value, fixed=TRUE);
+     value <- gsub("\r", "\\r", value, fixed=TRUE);
+     hdr <- c(hdr, sprintf("  '%s': '%s'", key, value));
   }
+
+  # Metadata assignments in source code
   code <- unlist(strsplit(paste(code, collapse=",\n"), split="\n", fixed=TRUE), use.names=FALSE);
-  code <- c('## RSP document metadata', '.rmeta <- list(', code, ');');
+  code <- c('.rmeta <- list(', code, ')');
   header0 <- paste('    ', code, sep="");
 
+  # Metadata presentation in header comment
+  if (length(hdr) > 0L) {
+    hdr <- sprintf("    ## %s", hdr);
+    hdr <- c("    ##", "    ## Metadata:", hdr);
+  }
+
   # Build R source code
-  res$header <- minIndent(header0, '
+  res$header <- minIndent('
     ## = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
     ## This is a self-contained R script generated from an RSP document.
-    ## It may be evaluated using source() as is.
-    ## = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    ## It may be evaluated using source() as is.',
+    hdr,
+'    ## = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ## Local RSP utility functions
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    ## RSP output function
+    ## RSP metadata function',
+    header0,
+    '
     rmeta <- function(...) {
       args <- list(...)
       if (length(args) == 0) return(.rmeta)
@@ -307,6 +328,8 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
 
 ##############################################################################
 # HISTORY:
+# 2014-05-27
+# o CLEANUP: Now the generated code adds meta data after the main header.
 # 2014-05-17
 # o USABILITY: The error messages thrown on RSP code chunks with syntax
 #   errors now also displays the beginning and the end of the problematic

@@ -251,6 +251,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
 
     verbose && enter(verbose, "Parsing RSP document");
     rstr <- RspString(str, type=type, source=file);
+    rstr <- setMetadata(rstr, name="source", value=file);
     doc <- parse(rstr, envir=envir, ...);
     verbose && print(verbose, doc);
     rstr <- str <- NULL; # Not needed anymore

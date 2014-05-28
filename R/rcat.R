@@ -111,6 +111,7 @@ setMethodS3("rcat", "default", function(..., file=NULL, path=NULL, envir=parent.
     verbose && cat(verbose, "Input file: ", file);
     s <- .readText(file);
     s <- RspString(s, source=file, ...);
+    s <- setMetadata(s, name="source", value=file);
   }
   verbose && cat(verbose, "Length of RSP string: ", nchar(s));
 

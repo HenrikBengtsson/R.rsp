@@ -135,14 +135,14 @@ rspTangle <- function(file, ..., envir=new.env(), pattern="(|[.][^.]*)[.]rsp$") 
   pathnameR <- getAbsolutePath(pathnameR);
 
   # Translate RSP document to RSP code script
-  rcode <- rscript(file=file, ...);
+  rcode <- rscript(file=file, output=RspSourceCode(), ...);
   rcode <- tangle(rcode);
 
   # Create header
   hdr <- NULL;
   hdr <- c(hdr, "This 'tangle' R script was created from an RSP document.");
   hdr <- c(hdr, sprintf("RSP source document: '%s'", file));
-  md <- getMetadata(rcode);
+  md <- getMetadata(rcode, local=FALSE);
   for (key in names(md)) {
     value <- md[[key]];
     value <- gsub("\n", "\\n", value, fixed=TRUE);

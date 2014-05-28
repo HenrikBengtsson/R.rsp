@@ -144,8 +144,12 @@ setMethodS3("getType", "RspProduct", function(object, default=NA_character_, as=
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("getMetadata", "RspProduct", function(object, name=NULL, ...) {
+setMethodS3("getMetadata", "RspProduct", function(object, name=NULL, local=TRUE, ...) {
   res <- getAttribute(object, "metadata");
+  if (!local) {
+    isLocal <- is.element(names(res), "source");
+    res <- res[!isLocal];
+  }
   if (!is.null(name)) {
     res <- res[[name]];
   }
