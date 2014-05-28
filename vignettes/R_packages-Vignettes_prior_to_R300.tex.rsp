@@ -13,7 +13,7 @@
 R.rsp <- R.oo::Package("R.rsp");
 %>
 
-\documentclass[letter,12pt]{article}
+\documentclass[12pt]{article}
 \usepackage{xspace}
 \usepackage{alltt}
 

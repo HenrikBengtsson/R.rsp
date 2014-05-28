@@ -27,7 +27,7 @@ withCapture <- R.utils::withCapture
 <%@ifeq docMode = "slides"%>
 \documentclass[a5paper,12pt,landscape]{article}
 <%@else%>
-\documentclass[letter,12pt]{article}
+\documentclass[12pt]{article}
 <%@endif%>
 
 <%-------------------------------------------------------------------
