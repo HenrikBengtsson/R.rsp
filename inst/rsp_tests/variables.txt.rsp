@@ -3,9 +3,13 @@
 <%@integer counter="2"%>
 <%@logical ask="TRUE"%>
 
-Title: <%@meta name="title"%>
-Author: <%@string name="author"%>
-Counter: <%@string name="counter"%>
-Ask: <%@logical name="ask"%>
+Variables:
+- Author: <%@string name="author"%>
+- Counter: <%@string name="counter"%>
+- Ask: <%@logical name="ask"%>
+- Unknown with default value: <%@string name="unknown" default="<unknown string variable>"%>
 
-Source: <%@meta name="source"%>
+Metadata:
+- RSP title: <%@meta name="title"%>
+- RSP source: <%=basename('<%@meta name="source"%>')%>
+- Unknown with default value: <%@meta name="unknown" default="<unknown metadata>"%>

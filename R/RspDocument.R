@@ -124,14 +124,18 @@ setMethodS3("getType", "RspDocument", function(object, default=NA, as=c("text", 
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("getMetadata", "RspDocument", function(object, name=NULL, local=FALSE, ...) {
+setMethodS3("getMetadata", "RspDocument", function(object, name=NULL, default=NULL, local=FALSE, ...) {
   res <- getAttribute(object, "metadata", default=list());
   if (!local) {
     isLocal <- is.element(names(res), "source");
     res <- res[!isLocal];
   }
   if (!is.null(name)) {
-    res <- res[[name]];
+    if (is.element(name, names(res))) {
+      res <- res[[name]];
+    } else {
+      res <- default;
+    }
   }
   res;
 }, protected=TRUE)
@@ -1450,6 +1454,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # Setters:
     # <@meta name="<name>" content="<content>"%>
     # <@meta <name>="<content>"%>
+    # <@meta <name>="<content>" default="<content>"%>
     # <@meta content="<expr>" lang="<language>"%>
     # Getters:
     # <@meta name="<name>"%>
@@ -1478,7 +1483,8 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         object <- setMetadata(object, metadata);
       } else if (!is.null(name) && is.null(content)) {
         # <@meta name="<name>"%>
-        content <- getMetadata(object, name=name, local=TRUE);
+        default <- attrs$default;
+        content <- getMetadata(object, name=name, default=default, local=TRUE);
         if (is.null(content)) {
           throw(RspPreprocessingException(sprintf("No such metadata variable ('%s')", name), item=item));
         }
@@ -1502,6 +1508,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # <@string <name>="<content>" default="<default>"%>
     # Getters:
     # <@string name="<name>"%>
+    # <@string name="<name>" default="<content>"%>
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(item, "RspVariableDirective")) {
       attrs <- getNameContentDefaultAttributes(item, doc=object);
@@ -1530,10 +1537,15 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         assign(name, value, envir=envir);
       } else if (!is.null(name) && is.null(value)) {
         # <@string name="<name>"%>
-        if (!exists(name, envir=envir, inherits=FALSE)) {
-          throw(RspPreprocessingException(sprintf("No such variable ('%s')", name), item=item));
+        if (exists(name, envir=envir, inherits=FALSE)) {
+          value <- get(name, envir=envir);
+        } else {
+          value <- attrs$default;
+          # <@string name="<name>" default="<content>"%>?
+          if (is.null(value)) {
+            throw(RspPreprocessingException(sprintf("No such variable ('%s')", name), item=item));
+          }
         }
-        value <- get(name, envir=envir);
         # Coerce value
         if (inherits(item, "RspStringDirective")) {
           value <- as.character(value);
@@ -1959,6 +1971,9 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 ##############################################################################
 # HISTORY:
+# 2014-05-30
+# o RSP directives <%@meta ...%>, <%@string ...%>, ... <%@integer ...%> for
+#   getting values gained attribute 'default'.
 # 2013-11-03
 # o Now "child" RSP documents imported into a "parent" RSP document,
 #   sees all meta data of the parent, and any meta data set by the

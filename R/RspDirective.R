@@ -117,7 +117,7 @@ setMethodS3("getNameContentDefaultAttributes", "RspDirective", function(item, kn
   }
 
   # Use default?
-  if (is.null(content) || is.na(content) || nchar(content) == 0L || content == "NA") {
+  if (!is.null(content) && (is.na(content) || nchar(content) == 0L || content == "NA")) {
     value <- default;
   } else {
     value <- content;
@@ -776,6 +776,9 @@ setConstructorS3("RspErrorDirective", function(value="error", ...) {
 
 ##############################################################################
 # HISTORY:
+# 2014-05-30
+# o Now getNameContentDefaultAttributes() only sets the variable value
+#   by the 'default' attribute, iff 'content' is specified.
 # 2013-03-26
 # o Added getNameContentDefaultAttributes() - used to be a local function
 #   of preprocess() for RspDocument.

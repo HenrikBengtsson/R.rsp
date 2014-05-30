@@ -2,6 +2,8 @@ Package: R.rsp
 ==============
 
 Version: 0.18.5 [2014-05-30]
+o RSP directives <%@meta ...%>, <%@string ...%>, ..., <%@integer ...%>
+  gained attribute 'default' for getting their values.
 o Metadata field 'source' is now referring to the input RSP file
   by its absolute path, or URL, whenever known/possible.
 
