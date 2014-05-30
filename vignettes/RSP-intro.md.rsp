@@ -5,6 +5,7 @@
   %\VignetteKeyword{RSP markup language, literate programming, reproducible research, report generator, Sweave, knitr, brew, noweb, TeX, LaTeX, Markdown, AsciiDoc, reStructuredText, Org-Mode, HTML, PDF}
   %\VignetteAuthor{Henrik Bengtsson}
   %\VignetteEngine{R.rsp::md.rsp+knitr:pandoc}
+  %\VignetteTangle{FALSE}
 --------------------------------------------------------------------"%>
 <% t0 <- Sys.time() %>
 <%---------------------------------------------------------------------

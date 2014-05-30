@@ -5,6 +5,7 @@
   %\VignetteAuthor{Henrik Bengtsson}
   %\VignetteKeyword{R, package, vignette, RSP}
   %\VignetteEngine{R.rsp::rsp}
+  %\VignetteTangle{FALSE}
 --------------------------------------------------------------------"%>
 
 <% t0 <- Sys.time() %>

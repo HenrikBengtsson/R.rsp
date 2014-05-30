@@ -136,6 +136,15 @@ rspTangle <- function(file, ..., envir=new.env(), pattern="(|[.][^.]*)[.]rsp$") 
 
   # Translate RSP document to RSP code script
   rcode <- rscript(file=file, output=RspSourceCode(), ...);
+
+  # Check if tangle is disabled by the vignette
+  tangle <- getMetadata(rcode, "tangle");
+  tangle <- tolower(tangle);
+  tangle <- (length(tangle) == 0L) || !is.element(tangle, c("false", "no"));
+
+  # Skip tangling?
+  if (!tangle) return(NULL);
+
   rcode <- tangle(rcode);
 
   # Create header
@@ -198,13 +207,7 @@ asisWeave <- function(file, ...) {
   output;
 } # asisWeave()
 
-asisTangle <- function(file, ...) {
-  output <- file_path_sans_ext(basename(file));
-  name <- file_path_sans_ext(output);
-  res <- sprintf("%s.R", name);
-  cat("# The vignette source contains no R code\n", file=res)
-  res
-} # asisTangle()
+asisTangle <- function(file, ...) NULL
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -368,6 +371,9 @@ asisTangle <- function(file, ...) {
 
 ###############################################################################
 # HISTORY:
+# 2014-05-30
+# o asisTangle() no longer generates a tangle script and returns NULL.
+# o rspTangle() now respects %\VignetteEngine{FALSE} returning NULL.
 # 2014-05-24
 # o Added vignette engines 'tex' and 'md'.
 # o Dropped vignette engine 'skip_Rnw'.
