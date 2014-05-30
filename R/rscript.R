@@ -279,7 +279,7 @@ setMethodS3("rscript", "RspDocument", function(object, output=NULL, workdir=NULL
     writeLines(code, con=output);
     verbose && exit(verbose);
 
-    output <- RspFileProduct(output, type=getType(code), metadata=getMetadata(code), mustExist=FALSE);
+    output <- RspFileProduct(output, type=getType(code), metadata=getMetadata(code, local=TRUE), mustExist=FALSE);
   }
 
   verbose && exit(verbose);

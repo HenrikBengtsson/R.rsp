@@ -397,6 +397,8 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  metadata <- getMetadata(object, local=TRUE);
+
   returnAs <- function(doc, as=c("RspDocument", "RspString")) {
     as <- match.arg(as);
 
@@ -405,6 +407,8 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
       expr <- RspText("");
       doc[[1]] <- expr;
     }
+
+    if (length(metadata) > 0L) doc <- setMetadata(doc, metadata);
 
     if (as == "RspDocument") {
       return(doc);
@@ -634,6 +638,8 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
 ##############################################################################
 # HISTORY:
+# 2014-05-30
+# o Now parse() for RspParser preserves any metadata, iff already set.
 # 2014-01-11
 # o BUG FIX: RSP comments with only a single character commented out would
 #   generate an RSP parsing error, e.g. '<%-- --%>' and '<%--\n--%>'.

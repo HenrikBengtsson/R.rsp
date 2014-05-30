@@ -47,7 +47,7 @@ setMethodS3("print", "RspDocument", function(x, ...) {
     }
   }
   s <- c(s, sprintf("Content type: %s", getType(x)));
-  md <- getMetadata(x);
+  md <- getMetadata(x, local=FALSE);
   for (key in names(md)) {
     s <- c(s, sprintf("Metadata '%s': '%s'", key, md[[key]]));
   }
@@ -138,7 +138,7 @@ setMethodS3("getMetadata", "RspDocument", function(object, name=NULL, local=FALS
 
 
 setMethodS3("setMetadata", "RspDocument", function(object, metadata=NULL, name, value, ...) {
-  data <- getMetadata(object);
+  data <- getMetadata(object, local=TRUE);
 
   if (!is.null(metadata)) {
     for (name in names(metadata)) {
@@ -1478,7 +1478,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         object <- setMetadata(object, metadata);
       } else if (!is.null(name) && is.null(content)) {
         # <@meta name="<name>"%>
-        content <- getMetadata(object, name=name);
+        content <- getMetadata(object, name=name, local=TRUE);
         if (is.null(content)) {
           throw(RspPreprocessingException(sprintf("No such metadata variable ('%s')", name), item=item));
         }

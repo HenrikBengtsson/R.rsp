@@ -228,7 +228,7 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
   doc <- Arguments$getInstanceOf(doc, "RspDocument");
 
   if (length(doc) == 0L) {
-    code <- makeSourceCode(object, "", ..., type=getType(doc), metadata=getMetadata(doc));
+    code <- makeSourceCode(object, "", ..., type=getType(doc), metadata=getMetadata(doc, local=TRUE));
     return(code);
   }
 
@@ -269,7 +269,7 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
   }
   code <- unlist(code, use.names=FALSE);
 
-  code <- makeSourceCode(object, code, ..., type=getType(doc), metadata=getMetadata(doc));
+  code <- makeSourceCode(object, code, ..., type=getType(doc), metadata=getMetadata(doc, local=TRUE));
 
   code;
 }) # toSourceCode()

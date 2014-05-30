@@ -36,7 +36,7 @@ setMethodS3("print", "RspString", function(x, ...) {
   s <- sprintf("%s:", class(x)[1L]);
   s <- c(s, sprintf("Content type: %s", getAttribute(x, "type", NA)));
   s <- c(s, sprintf("Language: %s", getAttribute(x, "language", NA)));
-  metadata <- getMetadata(x);
+  metadata <- getMetadata(x, local=FALSE);
   if (length(metadata) > 0L) {
     metadata <- unlist(metadata, use.names=TRUE);
     s <- c(s, sprintf("Metadata '%s': %s", names(metadata), metadata));
@@ -160,7 +160,7 @@ setMethodS3("getMetadata", "RspString", function(object, name=NULL, local=FALSE,
 
 
 setMethodS3("setMetadata", "RspString", function(object, metadata=NULL, name, value, ...) {
-  data <- getMetadata(object);
+  data <- getMetadata(object, local=TRUE);
 
   if (!is.null(metadata)) {
     for (name in names(metadata)) {

@@ -261,6 +261,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   } else {
     # (b) ...other type of document.
     res <- process(file, workdir=workdir, envir=envir, args=NULL, recursive=postprocess, ..., verbose=verbose);
+    res <- setMetadata(res, name="source", value=file);
   }
 
   verbose && exit(verbose);
@@ -526,6 +527,10 @@ setMethodS3("rfile", "expression", function(object, ..., envir=parent.frame(), v
 
 ############################################################################
 # HISTORY:
+# 2014-05-30
+# o Now metadata 'source' is set by rfile(), iff possible.  It gives the
+#   absolute path to the input file, or the URL, of the source RSP file.
+#   It can be accessed via <%@meta name="source"%>.
 # 2014-01-02
 # o Added rstring(), rcat() and rfile() for expression:s too.
 # 2013-12-14

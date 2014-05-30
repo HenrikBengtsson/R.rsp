@@ -57,7 +57,7 @@ setMethodS3("print", "RspFileProduct", function(x, ...) {
 
   s <- c(s, sprintf("Content type: %s", getType(x)));
 
-  md <- getMetadata(x);
+  md <- getMetadata(x, local=FALSE);
   for (key in names(md)) {
     s <- c(s, sprintf("Metadata '%s': '%s'", key, md[[key]]));
   }
@@ -228,7 +228,7 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     verbose && cat(verbose, "Processor found: <none>");
   } else {
     # Get the metadata attributes
-    metadata <- getMetadata(object);
+    metadata <- getMetadata(object, local=TRUE);
 
     # Make sure the processor returns an RspFileProduct
     fcnT <- fcn

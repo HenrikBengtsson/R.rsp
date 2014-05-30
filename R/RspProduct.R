@@ -33,7 +33,7 @@ setConstructorS3("RspProduct", function(object=NA, ...) {
 setMethodS3("print", "RspProduct", function(x, ...) {
   s <- sprintf("%s:", class(x)[1L]);
   s <- c(s, sprintf("Content type: %s", getType(x)));
-  md <- getMetadata(x);
+  md <- getMetadata(x, local=FALSE);
   for (key in names(md)) {
     s <- c(s, sprintf("Metadata '%s': '%s'", key, md[[key]]));
   }
@@ -158,7 +158,7 @@ setMethodS3("getMetadata", "RspProduct", function(object, name=NULL, local=FALSE
 
 
 setMethodS3("setMetadata", "RspProduct", function(object, metadata=NULL, name, value, ...) {
-  data <- getMetadata(object);
+  data <- getMetadata(object, local=TRUE);
 
   if (!is.null(metadata)) {
     for (name in names(metadata)) {

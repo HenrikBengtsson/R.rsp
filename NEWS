@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.18.5 [2014-05-30]
+o Metadata field 'source' is now referring to the input RSP file
+  by its absolute path, or URL, whenever known/possible.
+
+
 Version: 0.18.4 [2014-05-30]
 o CLEANUP: The R.rsp vignettes no longer produce tangle script,
   because they were not useful to anyone.
