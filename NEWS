@@ -4,7 +4,7 @@ Package: R.rsp
 Version: 0.18.4 [2014-05-30]
 o CLEANUP: The R.rsp vignettes no longer produce tangle script,
   because they were not useful to anyone.
-o rspTangle() now respects %\VignetteEngine{FALSE}.
+o rspTangle() now respects %\VignetteTangle{FALSE}.
 o Added 'Recommends' field to DESCRIPTION.
 
 

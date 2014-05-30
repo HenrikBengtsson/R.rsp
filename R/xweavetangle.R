@@ -373,7 +373,7 @@ asisTangle <- function(file, ...) NULL
 # HISTORY:
 # 2014-05-30
 # o asisTangle() no longer generates a tangle script and returns NULL.
-# o rspTangle() now respects %\VignetteEngine{FALSE} returning NULL.
+# o rspTangle() now respects %\VignetteTangle{FALSE} returning NULL.
 # 2014-05-24
 # o Added vignette engines 'tex' and 'md'.
 # o Dropped vignette engine 'skip_Rnw'.
