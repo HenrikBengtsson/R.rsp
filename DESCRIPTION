@@ -1,5 +1,5 @@
 Package: R.rsp
-Version: 0.18.5
+Version: 0.18.6
 Depends: R (>= 2.5.0)
 Imports: stats, utils, tools, R.methodsS3 (>= 1.6.1), R.oo (>= 1.18.0),
          R.utils (>= 1.32.4), R.cache (>= 0.9.0)

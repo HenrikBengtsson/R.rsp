@@ -36,7 +36,7 @@
 #*/###########################################################################
 setMethodS3("rargs", "default", function(...) {
   # Parse RSP document
-  doc <- rcompile(..., until="directives", as="RspDocument");
+  doc <- rcompile(..., until="directives", output=RspDocument());
 
   # Extract RSP preprocessing directives
   keep <- unlist(sapply(doc, FUN=inherits, "RspUnparsedDirective"), use.names=FALSE);

@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.18.6 [2014-05-30]
+o Now rcompile() can write to file and if the input is a file, then
+  it does so by default.
+
+
 Version: 0.18.5 [2014-05-30]
 o RSP directives <%@meta ...%>, <%@string ...%>, ..., <%@integer ...%>
   gained attribute 'default' for getting their values.
