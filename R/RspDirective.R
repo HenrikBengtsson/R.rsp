@@ -104,7 +104,6 @@ setMethodS3("getNameContentDefaultAttributes", "RspDirective", function(item, kn
 
   # Was directive given with 'file' attribute?
   if (!is.null(file) && !is.null(doc)) {
-##        str(list(item=paste(asRspString(item)), name=name, content=content, file=file));
     path <- getPath(doc);
     if (!is.null(path)) {
       pathname <- file.path(getPath(doc), file);
@@ -116,8 +115,9 @@ setMethodS3("getNameContentDefaultAttributes", "RspDirective", function(item, kn
     content <- .readText(pathname);
   }
 
+
   # Use default?
-  if (!is.null(content) && (is.na(content) || nchar(content) == 0L || content == "NA")) {
+  if (!is.null(content) && (is.na(content) || content == "NA")) {
     value <- default;
   } else {
     value <- content;
@@ -776,6 +776,10 @@ setConstructorS3("RspErrorDirective", function(value="error", ...) {
 
 ##############################################################################
 # HISTORY:
+# 2014-06-02:
+# o BUG FIX: getNameContentDefaultAttributes() for RspDirective would
+#   return value=NULL if 'content' was an empty string, which was why
+#   <%@string empty=''%> would not set 'empty' but instead look it up.
 # 2014-05-30
 # o Now getNameContentDefaultAttributes() only sets the variable value
 #   by the 'default' attribute, iff 'content' is specified.

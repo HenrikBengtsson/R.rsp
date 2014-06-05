@@ -1,6 +1,13 @@
 Package: R.rsp
 ==============
 
+Version: 0.18.7 [2014-06-02]
+o BUG FIX: Trying to assign an empty string to an RSP preprocessing
+  variable would not set the variable but return its current value or
+  given an error if it did not exist, e.g.  <%@string empty=''%> could
+  throw "No such variable ('empty')".  Added system test for this.
+
+
 Version: 0.18.6 [2014-05-30]
 o Now rcompile() can write to file and if the input is a file, then
   it does so by default.

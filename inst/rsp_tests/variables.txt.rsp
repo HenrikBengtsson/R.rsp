@@ -2,12 +2,14 @@
 <%@string author="Henrik"%>
 <%@integer counter="2"%>
 <%@logical ask="TRUE"%>
+<%@string empty=""%>
 
 Variables:
 - Author: <%@string name="author"%>
 - Counter: <%@string name="counter"%>
 - Ask: <%@logical name="ask"%>
 - Unknown with default value: <%@string name="unknown" default="<unknown string variable>"%>
+- An empty string: '<%@string name="empty"%>'
 
 Metadata:
 - RSP title: <%@meta name="title"%>
