@@ -8,7 +8,7 @@
   %\VignetteTangle{FALSE}
 --------------------------------------------------------------------"%>
 <% t0 <- Sys.time() %>
-<% R.rsp <- R.oo::Package("R.rsp"); %>
+<% R.rsp <- R.oo::Package("R.rsp") %>
 
 # <%@meta name="title"%>
 
@@ -36,6 +36,7 @@ Second, make sure they both carry the required R vignette markup, which are `%\V
   %\VignetteIndexEntry{YAPackage: An Introduction}
   %\VignetteAuthor{Ann Statisticus}
   %\VignetteKeyword{R, package, introduction}
+  %\VignetteTangle{no}
   %\VignetteEngine{R.rsp::rsp}
 --------------------------------------------------------------------"%%>
 ```
@@ -50,6 +51,8 @@ and in `vignettes/YAPackage-ExampleReport.md.rsp` we use (somewhere at the top):
 --------------------------------------------------------------------"%%>
 ```
 The advantage of using RSP meta directive for this is that it will also populate corresponding meta variables, i.e. `title`, `author`, and `keyword`.  This information can be be reused in the vignette, without having to retype the same information.  For instance, in the TeX vignette we can use `\title{<%%@meta name="title"%%>}` and `\author{<%%@meta name="author"%%>}`.  For Markdown, these meta variables will also be passed along to any Markdown-to-HTML postprocessor such that they annotate the corresponding HTML `<head>` tags.
+
+Furthermore, in the above example additional custom vignette markup was used, which has special meaning to some vignette engines.  For instance, `%\VignetteTangle{no}` causes the vignette engine to skip the tangling of that vignette, i.e. the `YAPackage-Intro.R` script file will not be generated, which otherwise is the default.
 
 The last thing to do is to make sure `R.rsp` is added to the following two fields of the `DESCRIPTION` file:
 ```
