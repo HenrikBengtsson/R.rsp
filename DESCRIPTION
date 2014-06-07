@@ -6,7 +6,7 @@ Imports: stats, utils, tools, R.methodsS3 (>= 1.6.1), R.oo (>= 1.18.0),
 Suggests: tcltk, digest (>= 0.6.4),
           ascii (>= 2.1), markdown (>= 0.7), knitr (>= 1.6),
           R.devices (>= 2.9.2), base64enc (>= 0.1-1)
-Recommends: digest, R.devices, base64enc, markdown
+SuggestsNote: Recommended: digest, R.devices, base64enc, markdown
 VignetteBuilder: R.rsp
 Date: 2014-06-02
 Title: Dynamic generation of scientific reports
