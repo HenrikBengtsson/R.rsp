@@ -87,12 +87,14 @@ lines <- readLines(pathname, warn=FALSE)
 cat(lines, collapse="\n")
 
 
+\donttest{
 # Compile and display the main vignette (requires LaTeX)
 if (isCapableOf(R.rsp, "latex")) {
   path <- system.file("doc", package="R.rsp")
   pdf <- rfile("Dynamic_document_creation_using_RSP.tex.rsp", path=path)
   cat("Created document: ", pdf, "\n", sep="")
   if (interactive()) browseURL(pdf)
+}
 }
 }
 
