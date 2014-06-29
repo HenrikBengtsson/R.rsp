@@ -272,18 +272,98 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
         len <- attr(pos, "match.length");
         bfr <- substring(bfr, first=len+1L);
 
-        # Read the value with mandatory quotation marks around it
-        pos <- regexpr("^\"[^\"]*\"", bfr);
-        if (pos == -1L) {
-          pos <- regexpr("^'[^']*'", bfr);
-          if (pos == -1L) {
-            throw(Exception("Error when parsing attributes of RSP preprocessing directive. Expected a quoted attribute value string: ", code=sQuote(rspCode)));
+        # Work with a raw buffer
+        bfrR <- charToRaw(bfr)
+
+        # Read the value with mandatory brackets around it
+        # (a) Identify the bracket symbols
+        lbracketR <- bfrR[1L]
+        lbracket <- rawToChar(lbracketR)
+        rbracket <- c("{"="}", "("=")", "["="]", "<"=">")[lbracket];
+
+        # (b) Single brackets or paired ones?
+        if (is.na(rbracket)) {
+          # (i) Single, e.g. '...', "...", @...@ etc.
+          bfrR <- bfrR[-1L];
+          wbracket <- 1L;
+
+          # Find first non-escape symbol
+          pos <- which(bfrR == lbracketR)
+
+          # Failed to locate a string enclosed in quotation marks
+          if (length(pos) == 0L) {
+            throw(Exception("Error when parsing attributes of RSP preprocessing directive. Expected an attribute value within quotation marks: ", code=sQuote(rspCode)));
           }
-        }
-        len <- attr(pos, "match.length");
-        value <- substring(bfr, first=2L, last=len-1L);
-        bfr <- substring(bfr, first=len+1L);
+
+          # An empty value?
+          if (pos[1L] == 1L) {
+            value <- "";
+          } else {
+            # Drop escaped brackets
+            keep <- (bfrR[pos-1L] != charToRaw("\\"))
+            pos <- pos[keep]
+            # Failed to locate a string enclosed in quotation marks
+            if (length(pos) == 0L) {
+              throw(Exception("Error when parsing attributes of RSP preprocessing directive. Expected an attribute value within quotation marks: ", code=sQuote(rspCode)));
+            }
+            pos <- pos[1L];
+            bfrR <- bfrR[1:(pos-1)];
+            value <- rawToChar(bfrR);
+          }
+
+          # Record brackets
+          brackets <- c(lbracket, lbracket);
+
+          # Update buffer
+          bfr <- substring(bfr, first=pos+2L);
+        } else {
+          # (ii) Paired brackets, e.g. {...}, [...], <<...>>
+
+          # Width of left bracket, i.e. how many symbols?
+          for (wbracket in seq_len(nchar(bfr))) {
+            ch <- substring(bfr, first=wbracket, last=wbracket);
+            if (ch != lbracket) {
+              wbracket <- wbracket - 1L;
+              break;
+            }
+          }
+          bfr <- substring(bfr, first=wbracket+1L);
+
+          # (c) Identify right bracket symbol (escaped for regexpr)
+          rbracket <- c("{"="\\}", "("="\\)", "["="\\]", "<"=">",
+                        "+"="\\+", "."="\\.", "?"="\\?", "|"="\\|")[lbracket];
+          if (is.na(rbracket)) rbracket <- lbracket;
+
+          # Right bracket sequence
+          rbrackets <- paste(rep(rbracket, times=wbracket), collapse="");
+          # .*? is a non-greedy .* expression
+          pattern <- sprintf("^(.*?)([^\\]?)%s", rbrackets);
+          pos <- regexpr(pattern, bfr);
+
+          # Failed to locate a string enclosed in brackets
+          if (pos == -1L) {
+            throw(Exception("Error when parsing attributes of RSP preprocessing directive. Expected a attribute value within brackets: ", code=sQuote(rspCode)));
+          }
+
+          # Extract value
+          len <- attr(pos, "match.length");
+          value <- substring(bfr, first=1L, last=len-wbracket);
+
+          # Record brackets
+          lbrackets <- paste(rep(lbracket, times=wbracket), collapse="");
+          rbrackets <- gsub("\\\\", "\\", rbrackets);
+          brackets <- c(lbrackets, rbrackets);
+
+          # Consume buffer
+          bfr <- substring(bfr, first=len+wbracket);
+        } # if (is.na(rbracket))
+
+        # Set the name of the value
         names(value) <- name;
+
+        # TODO: Record brackets used
+        # ...
+
         attrs <- c(attrs, value);
       }
     } # if (nchar(bfr) > 0L)
@@ -776,7 +856,13 @@ setConstructorS3("RspErrorDirective", function(value="error", ...) {
 
 ##############################################################################
 # HISTORY:
-# 2014-06-02:
+# 2014-06-28
+# o GENERALIZATION: Now it is possible to use any symbol for enclosing
+#   attribute values in RSP directives in addition to the current x='y'
+#   and x="y" ones, e.g. x=.y., x=|y|, and so on.  Furthermore, paired
+#   brackets may also be used, e.g. x={y}, x=[y], x=<y> and x=(y), and
+#   then also in matched replicated, e.g. x={{{y}}}.
+# 2014-06-02
 # o BUG FIX: getNameContentDefaultAttributes() for RspDirective would
 #   return value=NULL if 'content' was an empty string, which was why
 #   <%@string empty=''%> would not set 'empty' but instead look it up.
