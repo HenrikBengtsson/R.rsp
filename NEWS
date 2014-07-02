@@ -1,6 +1,11 @@
 Package: R.rsp
 ==============
 
+Version: 0.19.2 [2014-07-02]
+o Added support for cut'n'paste and copy'n'paste preprocessing
+  directives.
+
+
 Version: 0.19.1 [2014-06-28]
 o GENERALIZATION: Now it is possible to use any symbol for enclosing
   attribute values in RSP directives in addition to the current x='y'

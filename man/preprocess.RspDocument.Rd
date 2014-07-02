@@ -15,6 +15,11 @@
 \alias{parseIfElseDirectives,RspDocument-method}
 
 \alias{parseIfElseDirectives}
+\alias{RspDocument.parseCutNPasteDirectives}
+\alias{parseCutNPasteDirectives.RspDocument}
+\alias{parseCutNPasteDirectives,RspDocument-method}
+
+\alias{parseCutNPasteDirectives}
 
 \title{Processes all RSP preprocessing directives}
 
@@ -23,8 +28,8 @@
 }
 
 \usage{
-\method{preprocess}{RspDocument}(object, recursive=TRUE, flatten=TRUE, envir=parent.frame(), ...,
-  verbose=FALSE)
+\method{preprocess}{RspDocument}(object, recursive=TRUE, flatten=TRUE, envir=parent.frame(),
+  clipboard=new.env(), ..., verbose=FALSE)
 }
 
 \arguments{
@@ -35,6 +40,8 @@
      replaced (inserted and expanded) by its \code{\link[base]{list}} of
      \code{\link{RspConstruct}}s.}
   \item{envir}{The \code{\link[base]{environment}} where the preprocessing is evaluated.}
+  \item{clipboard}{An \code{\link[base]{environment}} hold cut'n'paste directives during
+     preprocessing.}
   \item{...}{Not used.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }

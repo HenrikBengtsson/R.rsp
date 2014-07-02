@@ -58,6 +58,7 @@ RspDocument(expressions=list(), ...)
  \tab \code{\link[R.rsp:getSource.RspDocument]{getSource}} \tab Gets the source reference of an RSP document.\cr
  \tab \code{\link[R.rsp:getType.RspDocument]{getType}} \tab Gets the type of the RspDocument.\cr
  \tab \code{\link[R.rsp:mergeTexts.RspDocument]{mergeTexts}} \tab Merge neighboring 'text' elements.\cr
+ \tab \code{parseCutNPasteDirectives} \tab  -\cr
  \tab \code{parseIfElseDirectives} \tab  -\cr
  \tab \code{\link[R.rsp:preprocess.RspDocument]{preprocess}} \tab Processes all RSP preprocessing directives.\cr
  \tab \code{print} \tab  -\cr
