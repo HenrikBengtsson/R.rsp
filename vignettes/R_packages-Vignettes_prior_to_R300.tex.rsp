@@ -50,7 +50,7 @@ R.rsp <- R.oo::Package("R.rsp");
 
 When building an R package, Sweave/LaTeX vignettes are recognized by R, compiled into PDFs, which are listed along with their source in the R help system, e.g. \code{help.start()}.  These package vignettes are also being listed online on the CRAN and Bioconductor package pages.  As of R~v3.0.0, it is straighforward to also include vignettes of other type, include RSP-embedded vignettes.
 
-For legacy versions of R prior to R v3.0.0 (released April 2013), some efforts have to be made to build and incorporate non-Sweave vignettes.  This document describes how to include RSP and other non-Sweave vignettes in R packages in a way that is fully compatible with legacy and more recent versions of R.  By following these instructions, the exact same package setup can be regardless of R version and they work for any type of R vignettes, e.g. RSP, knitr and noweb.
+For legacy versions of R prior to R v3.0.0 (released April 2013), some efforts have to be made to build and incorporate non-Sweave vignettes.  This document describes how to include RSP and other non-Sweave vignettes in R packages in a way that is fully compatible with legacy and more recent versions of R.  By following these instructions, the exact same package setup can be used regardless of R version and they work for any type of R vignettes, e.g. RSP, knitr and noweb.
 
 
 <%-------------------------------------------------------------------
