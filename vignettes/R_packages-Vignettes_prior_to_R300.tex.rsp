@@ -107,7 +107,7 @@ paste(bfr, collapse="\n");
 
 
 \subsection*{The generic .install\_extras file}
-The \file{vignettes/.install\_extras} file controls which source and output vignette files should be installed and therefore be copied to the \file{inst/doc/} directory of the built package.  The generic \file{.install\_extras} file available by in \pkg{R.rsp} package directory \file{<%=pathMk%>/} contains:
+The \file{vignettes/.install\_extras} file controls which source and output vignette files should be installed and therefore be copied to the \file{inst/doc/} directory of the built package.  The generic \file{.install\_extras} file, available in \pkg{R.rsp} package directory \file{<%=pathMk%>/}, contains:
 {\scriptsize\begin{verbatim}
 <%=
 pathname <- system.file(pathMk, ",install_extras", package="R.rsp");
