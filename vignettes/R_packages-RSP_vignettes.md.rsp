@@ -16,14 +16,14 @@
 
 When building an R package, Sweave vignettes are automatically recognized, compiled into PDFs, which in turn are listed along with their source in the R help system, e.g. `help.start()`.  These package vignettes are also listed online on the CRAN and Bioconductor package pages, e.g. [RSP](http://cran.r-project.org/package=R.rsp).
 
-Other vignette formats than Sweave can also be included in R packages.  To include an RSP vignette in a package, three things need to be correct:
+Other vignette formats than Sweave can also be included in R packages.  To include such a vignette in a package, three things need to be correct:
 
  1. the location of the vignette source files,
  2. the vignettes must contain a special R vignette markup, and
  3. the `DESCRIPTION` file needs to be adjusted.
 
 
-For example, assume that you setup a new package called 'YAPackage' with two vignettes.  First, start by making sure they are placed in the package's `vignettes/' directory;
+For example, assume that you setup a new package called 'YAPackage' with two RSP vignettes.  First, start by making sure they are placed in the package's `vignettes/' directory;
 
  * `vignettes/YAPackage-Intro.tex.rsp` - an RSP-embedded TeX vignette 
  * `vignettes/YAPackage-ExampleReport.md.rsp` - an RSP-embedded Markdown vignette 
@@ -52,7 +52,7 @@ and in `vignettes/YAPackage-ExampleReport.md.rsp` we use (somewhere at the top):
 ```
 The advantage of using RSP meta directive for this is that it will also populate corresponding meta variables, i.e. `title`, `author`, and `keyword`.  This information can be be reused in the vignette, without having to retype the same information.  For instance, in the TeX vignette we can use `\title{<%%@meta name="title"%%>}` and `\author{<%%@meta name="author"%%>}`.  For Markdown, these meta variables will also be passed along to any Markdown-to-HTML postprocessor such that they annotate the corresponding HTML `<head>` tags.
 
-Furthermore, in the above example additional custom vignette markup was used, which has special meaning to some vignette engines.  For instance, `%\VignetteTangle{no}` causes the vignette engine to skip the tangling of that vignette, i.e. the `YAPackage-Intro.R` script file will not be generated, which otherwise is the default.
+Furthermore, in the above example additional custom vignette markup was used, which has special meaning to some vignette engines.  For instance, `%\VignetteTangle{no}` causes the RSP vignette engine to skip the tangling of that vignette, i.e. the `YAPackage-Intro.R` script file will not be generated, which otherwise is the default.
 
 The last thing to do is to make sure `R.rsp` is added to the following two fields of the `DESCRIPTION` file:
 ```
