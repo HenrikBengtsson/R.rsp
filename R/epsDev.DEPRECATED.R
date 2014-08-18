@@ -20,7 +20,10 @@ epsDev <- function(label, width=6, height=aspect*width, aspect=1, ..., path="fig
   pathname <- Arguments$getWritablePathname(filename, path=path);
   res <- FALSE;
   if (force || !isFile(pathname)) {
-    devNew(eps, pathname, width=width, height=height, ..., label=label);
+    use("R.devices");
+    # To please R CMD check
+    devNew <- NULL; rm(list="devNew");
+    devNew("eps", pathname, width=width, height=height, ..., label=label);
     res <- TRUE;
   }
 

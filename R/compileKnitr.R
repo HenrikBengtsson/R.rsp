@@ -35,6 +35,8 @@
 #*/###########################################################################
 setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPath=".", postprocess=TRUE, verbose=FALSE) {
   use("knitr", quietly=TRUE);
+  # To please R CMD check
+  knit <- NULL; rm(list="knit");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

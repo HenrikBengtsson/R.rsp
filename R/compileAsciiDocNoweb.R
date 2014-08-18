@@ -29,6 +29,8 @@
 #*/###########################################################################
 setMethodS3("compileAsciiDocNoweb", "default", function(filename, path=NULL, ..., outPath=".", postprocess=TRUE, verbose=FALSE) {
   use("ascii", quietly=TRUE);
+  # To please R CMD check
+  Asciidoc <- NULL; rm(list="Asciidoc");
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

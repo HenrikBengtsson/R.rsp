@@ -63,6 +63,8 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
   if (!is.null(pathname)) {
     if (regexpr("%s", pathname, fixed=TRUE) != -1) {
       use("digest")
+      # To please R CMD check
+      digest <- NULL; rm(list="digest");
       pathname <- sprintf(pathname, digest(code));
     }
     pathname <- Arguments$getWritablePathname(pathname, mustNotExist=FALSE);
