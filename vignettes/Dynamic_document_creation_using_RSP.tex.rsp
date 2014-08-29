@@ -12,6 +12,7 @@
 # Required R packages
 R.utils::use("R.rsp")
 R.utils::use("R.devices")
+options("devEval/args/field"="fullname") # Better for LaTeX
 hpaste <- R.utils::hpaste
 withCapture <- R.utils::withCapture
 %>
@@ -122,7 +123,7 @@ withCapture <- R.utils::withCapture
 # Set default graphics options
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Use greater objects by default
-options("devNew/args/par"=list(lwd=2));
+options("devNew/args/par"=list(lwd=2))
 
 # Change the default dimensions for PNGs
 devOptions("png", width=840)
@@ -137,7 +138,7 @@ devOptions("png", width=840)
 
 \maketitle
 \begin{abstract}
-An important part of a statistical analysis is to document the analysis and its results.  A common approach is to build up an R script as the the analysis progresses.  This script may generate image files and tables that are later inserted manually into, say, a LaTeX report.  This strategy works alright for small one-off analyzes, whereas for larger and partly repetitive analyzes an automatic report generator is more suitable.
+An important part of a statistical analysis is to document the analysis and its results.  A common approach is to build up an R script as the the analysis progresses.  This script may generate image files and tables that are later inserted manually into, say, a LaTeX report.  This strategy works alright for small one-off analyzes, whereas for larger and repetitive analyzes an automatic report generator is to prefer.
 
 In this document we describe the RSP markup language and explain how it can be embedded in virtually any text-based source document which then may be compile into a final document.  We will describe all of the RSP constructs available and illustrate how they can be used for plain text as well as for LaTeX documents.
 
@@ -920,7 +921,7 @@ For unknown extensions, the content type is always assumed to be `\code{text/pla
 \subsection{Working with figures}
 \label{WorkingWithFigures}
 Because the RSP language is context unaware, it does not have constructs for inserting content such as figures and tables.  However, as we will show in this section, it is still very easy to create and include figures in the output document.
-We will first explain how to create image files and then show how they can be included in LaTeX, Markdown and HTML documents in a standard and unified way.
+We will first explain how to create image files and then show how they can be included in Markdown, HTML and LaTeX documents in a standard and unified way.
 
 
 \subsubsection{Creating image files}
@@ -928,32 +929,78 @@ The \code{toPDF()} and \code{toPNG()} functions of the \pkg{R.devices} package a
 \begin{verbatim}
 library("R.devices")
 
-# Use greater objects by default
-options("devNew/args/par"=list(lwd=2));
+# Create objects with a bit thicker lines
+options("devNew/args/par"=list(lwd=2))
 
-toPDF("myFigure,yeah,cool", aspectRatio=0.6, { 
+toPNG("myFigure,yeah,cool", aspectRatio=0.6, { 
   curve(dnorm, from=-5, to=+5)
 })
 \end{verbatim}
-creates a PDF image file named \code{myFigure,yeah,cool.png} whose height is 60\% of its width and displays the Guassian density distribution.
+creates a PNG image file named \code{myFigure,yeah,cool.png} whose height is 60\% of its width and displays the Guassian density distribution.
 By default, the \code{toPDF()} and \code{toPNG()} functions write image files to the \code{figures/} directory.  For more information, see \code{help("toPDF", package="R.devices")} and the vignettes of the \pkg{R.devices} package.
 
 
-\subsubsection{Including image files in LaTeX}
-When inserting a figure in LaTeX, it is recommended to do so without specifying neither the path nor the filename extension of the image file when including the image, e.g. \code{{\textbackslash}includegraphics\{MyFigure\}}.
-In order for this to work, one must specify the "image search path" in LaTeX, e.g.
+
+
+
+\subsubsection{Including image files in Markdown}
+To dynamically create and include an image in a Markdown document, use the following RSP-embedded Markdown format:
+\begin{rspVerbatim}
+![The Gaussian density function.](<\%=toPNG("MyFigure,yeah,cool", aspectRatio=0.6, \{
+  curve(dnorm, from=-5, to=+5)
+\})\%>)
+\end{rspVerbatim}
+which becomes Markdown syntax
 \begin{verbatim}
-\usepackage{graphicx}
-\graphicspath{{figures/}{figures/external/}}
+![The Gaussian density function.](figures/MyFigure,yeah,cool.png)
 \end{verbatim}
-which is preferably added to the beginning of the LaTeX document.  This tells LaTeX to search for image files in directory \code{figures/} as well as directory \code{figures/external/}.   Moreover, by leaving out the filename extension, LaTeX will automatically search\footnote{In order for \code{{\bs}includegraphics\{\}} to locate the proper image file when leaving out the filename extension, the image file must not have other periods in the filename other than the one used for the extension.} for image files with different filename extensions, e.g. \code{*.png} and \code{*.pdf}.
+When this Markdown document is post-processed into a HTML document (internally done using the \pkg{markdown} package), any image files will automatically be embedded as data URI strings in the final HTML document.  Because such images are literally embedded inside the file, the HTML document becomes self-contained in the same was a a PDF document is self-contained.
+
+
+\subsubsection{Including image files in HTML}
+If you prefer to work with HTML directly, you can work with RSP-embedded HTML templates.  Image files can be included in HTML documents either by linking to it via the images pathname or by embedding the content of the image files as a data URI.  
+In order to use the first approach, do
+\begin{rspVerbatim}
+<img src="<\%=toPNG("MyFigure,yeah,cool", aspectRatio=0.6, \{
+  curve(dnorm, from=-5, to=+5)
+\})\%>">
+\end{rspVerbatim}
+which results in
+\begin{verbatim}
+<img src="figures/MyFigure,yeah,cool.png">
+\end{verbatim}
+To instead embedded the image as an Base64 encoded data URI, which has the advantage of making HTML document self-contained, set the following option
+\begin{rspVerbatim}
+<\% options("devEval/args/field"="dataURI") \%>
+\end{rspVerbatim}
+which will cause the above 'MyFigure,yeah,cool.png' image file to be encoded and embedded as
+\begin{verbatim}
+<img src="data:image/png;base64,iVBORw0KGgo ... <truncated> ... K5CYII=">
+\end{verbatim}
+
+To include, say, an SVG image file, just replace \code{toPNG()} with \code{toSVG()}.  For other image formats, see the \pkg{R.devices} package.
+
+
+
+\subsubsection{Including image files in LaTeX}
+For LaTeX documents, one can embed figures using the following tidy RSP and LaTeX markup\footnote{For readability, we have dropped the usual LaTeX commands for setting up the \code{figure} environment, centering and rescaling the image and creating the figure caption.}%
+\begin{rspVerbatim}
+{\bs}includegraphics\{<\%=toPDF("MyFigure,yeah,cool", aspectRatio=0.6, \{
+  curve(dnorm, from=-5, to=+5)
+\})\%>\}
+\end{rspVerbatim}
+Since \code{toPDF()} returns the (relative) image pathname by default, the above will become
+\begin{verbatim}
+\includegraphics{figures/MyFigure,yeah,cool.pdf}
+\end{verbatim}
+after the RSP document has been processed and the image file has been created.  When this LaTeX document is compiled the result is as in in Figure~\ref{fig:MyFigure}.
 %
 \begin{figure}[htp]
  \footnotesize
  \begin{center}
  \resizebox{0.70\textwidth}{!}{%
   \includegraphics{<%=toPDF("MyFigure,yeah,cool", aspectRatio=0.6, {
-   curve(dnorm, from=-5, to=+5);
+   curve(dnorm, from=-5, to=+5)
   })%>}
  }%
  \end{center}
@@ -961,68 +1008,23 @@ which is preferably added to the beginning of the LaTeX document.  This tells La
  \label{fig:MyFigure}
 \end{figure}
 %
-With this setup, it is possible to create and embed a figure as the one in Figure~\ref{fig:MyFigure} using the following tidy RSP and LaTeX markup\footnote{For readability, we have dropped the usual LaTeX commands for setting up the \code{figure} environment, centering and rescaling the image and creating the figure caption.}%
-\begin{rspVerbatim}
-{\bs}includegraphics\{<\%=toPDF("MyFigure,yeah,cool", aspectRatio=0.6, \{
-  curve(dnorm, from=-5, to=+5);
-\})\%>\}
-\end{rspVerbatim}
-After the RSP code has been processed, and the image file has been created, the above simply produces the following LaTeX block in the generated LaTeX document:
+
+However, when inserting a figure in LaTeX it is recommended (not required) to do so without specifying neither the path nor the filename extension of the image files.  Instead, one or more directories are specified at the beginning of the document telling LaTeX where to find images files, e.g.
+\begin{verbatim}
+\usepackage{graphicx}
+\graphicspath{{figures/}{figures/external/}}
+\end{verbatim}
+This tells LaTeX to search for image files in directory \code{figures/} and then in directory \code{figures/external/}.   
+Next, we can include images as
 \begin{verbatim}
 \includegraphics{MyFigure,yeah,cool}
 \end{verbatim}
-The reason for the latter is that by default \code{toPDF()} and \code{toPNG()} return the filename of the created image file without its directory and without its filename extension, i.e. \code{"myFigure,yeah,cool"}.
+By leaving out the filename extension, LaTeX will automatically search\footnote{In order for \code{{\bs}includegraphics\{\}} to locate the proper image file when leaving out the filename extension, the image file must not have other periods in the filename other than the one used for the extension.} for image files of proper formats (typically PDF, EPS or PNG) depending on compiler settings, e.g. \code{*.png} and \code{*.pdf}.  With this approach it is easy to switch to use other image formats without having to edit the LaTeX document.  On the other hand, this is already automatically take care of when using RSP.  Regardless, in order to achieve this in RSP, all we need to do is to let \pkg{R.devices} use the so called \emph{fullname} of the image file, that is the filename without extension, instead of the default (relative) \emph{pathname}.  This is achieved by setting
+\begin{rspVerbatim}
+<\% options("devEval/args/field"="fullname") \%>
+\end{rspVerbatim}
 As a final remark, note that by replacing \code{toPDF()} with \code{toPNG()}, a PNG image file is inserted instead, which can dramatically reduce the size of the final PDF document, especially when scatter plots with a large number of data points are generated.
 
-
-\subsubsection{Including image files in HTML}
-Image files can be included in HTML documents either by linking to it via the images pathname or by embedding the content of the image files as a data URI.  
-
-In order to use the first approach, add the following \pkg{R.devices} options to the top of your RSP document in order to have \code{toPNG()}, \code{toSVG()} etc. to return the (relative) pathname of image files created:
-\begin{rspVerbatim}
-<\% options("devEval/args/field"="pathname") \%>
-\end{rspVerbatim}
-With this setting, one can then include PNG image files in the HTML document as
-\begin{rspVerbatim}
-<img src="<\%=toPNG("MyFigure,yeah,cool", aspectRatio=0.6, \{
-  curve(dnorm, from=-5, to=+5);
-\})\%>">
-\end{rspVerbatim}
-which results in
-\begin{verbatim}
-<img src="figures/MyFigure,yeah,cool.png">
-\end{verbatim}
-
-
-To instead embedded the image as an Base64 encoded data URI, which has the advantage of making HTML document "self contained", use
-\begin{rspVerbatim}
-<\% options("devEval/args/field"="dataURI") \%>
-\end{rspVerbatim}
-which will embedded the above 'MyFigure,yeah,cool.png' image files as
-\begin{verbatim}
-<img src=""data:image/png;base64,iVBORw0KGgo ... <truncated> ... K5CYII=">
-\end{verbatim}
-
-
-
-\subsubsection{Including image files in Markdown}
-For RSP-embedded Markdown documents it is recommended to have image files being linked to via their pathnames using
-\begin{rspVerbatim}
-<\% options("devEval/args/field"="pathname") \%>
-\end{rspVerbatim}
-With this, PNG image files can be generated and included as
-\begin{rspVerbatim}
-![This figure was generated and inserted into the Markdown document using RSP.]
-(<\%=toPNG("MyFigure,yeah,cool", aspectRatio=0.6, \{
-  curve(dnorm, from=-5, to=+5);
-\})\%>)
-\end{rspVerbatim}
-which outputs Markdown
-\begin{verbatim}
-![This figure was generated and inserted into the Markdown document using RSP.]
-(figures/MyFigure,yeah,cool.png)
-\end{verbatim}
-When this Markdown document is post-processed into a HTML document (internally done using the \pkg{markdown} package), any image files will automatically be embedded as data URIs in the HTML.
 
 
 %% \clearpage

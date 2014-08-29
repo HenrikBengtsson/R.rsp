@@ -1,8 +1,11 @@
 Package: R.rsp
 ==============
 
-Version: 0.19.3 [2014-08-17]
+Version: 0.19.3 [2014-08-29]
+o DOCUMENTATION: Updated the 'Dynamic document creation using RSP'
+  package vignette.
 o CLEANUP: Removed false R CMD check NOTEs recently introduced.
+o Bumped package dependencies.
 
 
 Version: 0.19.2 [2014-07-02]
