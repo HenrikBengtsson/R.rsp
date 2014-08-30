@@ -4,9 +4,9 @@ Package: R.rsp
 Version: 0.19.3 [2014-08-29]
 o DOCUMENTATION: Updated the 'Dynamic document creation using RSP'
   package vignette.
-o Added Unix shell (and Windows batch) scripts 'rfile' and 'rcat'
-  to system.file("bin", package="R.rsp").  These scripts are
-  convenient wrappers that uses Rscript internally.
+o Added Unix shell (and Windows batch) scripts 'rsource', 'rfile'
+  and 'rcat' to system.file("bin", package="R.rsp").  These scripts 
+  are convenient wrappers that uses Rscript internally.
 o CLEANUP: Removed false R CMD check NOTEs recently introduced.
 o Bumped package dependencies.
 
