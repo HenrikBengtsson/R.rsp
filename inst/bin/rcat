@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
-Rscript -e "R.rsp::rcat" $*
+Rscript -e "R.rsp::rcat" "$*"
+echo
 
