@@ -1,2 +1,3 @@
 @echo off
-Rscript -e "R.rsp::rcat" %*
+Rscript -e "R.rsp::rcat" "%*"
+
