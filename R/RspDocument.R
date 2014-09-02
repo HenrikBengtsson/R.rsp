@@ -184,7 +184,7 @@ setMethodS3("setMetadata", "RspDocument", function(object, metadata=NULL, name, 
 # }
 #*/#########################################################################
 setMethodS3("getSource", "RspDocument", function(object, ...) {
-  getAttribute(object, "source", default=as.character(NA));
+  getAttribute(object, "source", default=NA_character_);
 }, protected=TRUE, createGeneric=FALSE)
 
 
@@ -378,9 +378,9 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
   idxsText <- unname(which(isText));
   idxsNonText <- unname(which(!isText));
   idxsSilentNonText <- idxsNonText[!sapply(object[idxsNonText], FUN=getInclude)];
-  verbose && cat(verbose, "Number text RSP constructs: ", length(idxsText));
-  verbose && cat(verbose, "Number non-text RSP constructs: ", length(idxsNonText));
-  verbose && cat(verbose, "Number \"silent\" non-text RSP constructs: ", length(idxsSilentNonText));
+  verbose && cat(verbose, "Number of text RSP constructs: ", length(idxsText));
+  verbose && cat(verbose, "Number of non-text RSP constructs: ", length(idxsNonText));
+  verbose && cat(verbose, "Number of \"silent\" non-text RSP constructs: ", length(idxsSilentNonText));
 
   # Nothing todo?
   if (length(idxsNonText) == 0L) {
@@ -432,9 +432,9 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
       idxsText <- unname(which(isText));
       idxsNonText <- unname(which(!isText));
       idxsSilentNonText <- idxsNonText[!sapply(object[idxsNonText], FUN=getInclude)];
-      verbose && cat(verbose, "Number text RSP constructs: ", length(idxsText));
-      verbose && cat(verbose, "Number non-text RSP constructs: ", length(idxsNonText));
-      verbose && cat(verbose, "Number \"silent\" non-text RSP constructs: ", length(idxsSilentNonText));
+      verbose && cat(verbose, "Number of text RSP constructs: ", length(idxsText));
+      verbose && cat(verbose, "Number of non-text RSP constructs: ", length(idxsNonText));
+      verbose && cat(verbose, "Number of \"silent\" non-text RSP constructs: ", length(idxsSilentNonText));
     } else {
       verbose && cat(verbose, "No 'empty' RSP text found.");
     }
@@ -475,6 +475,7 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
       idxTextL <- idxTextL[length(idxTextL)];
       exprL <- object[[idxTextL]];
       textL <- getContent(exprL);
+      verbose && printf(verbose, "The text to the left is: '%s'\n", textL);
       emptyL <- (regexpr("\n[ \t\v]*$", textL) != -1L);
     }
 
@@ -484,7 +485,7 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
       # so we don't need to consider it again.
       idxsText <- setdiff(idxsText, idxTextL);
 
-      verbose && printf(verbose, "The text to the left is non-empty: '%s'\n", tailString(textL));
+      verbose && printf(verbose, "The text to the left is non-empty: '[...]%s'\n", tailString(textL));
       verbose && exit(verbose);
       next;
     }
@@ -1478,11 +1479,11 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # RSP void
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(item, "RspVoid")) {
-      # Drop comment
+      # Drop void RSP items
       object[[idx]] <- NA;
       verbose && exit(verbose);
       next;
-    } # RspComment
+    } # RspVoid
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1490,6 +1491,8 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (inherits(item, "RspComment")) {
       # Drop comment
+      ## Should we keep this around for improved/better
+      ## trimming of newlines? /HB 2014-09-02
       object[[idx]] <- NA;
       verbose && exit(verbose);
       next;
@@ -1735,7 +1738,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     if (inherits(item, "RspEvalDirective")) {
       file <- getFile(item);
       content <- getContent(item);
-      language <- getAttribute(item, "language", default=as.character(NA));
+      language <- getAttribute(item, "language", default=NA_character_);
       if (is.null(content) && is.null(file)) {
         throw(RspPreprocessingException("Either attribute 'file' or 'content' must be given", item=item));
       }
@@ -1889,7 +1892,6 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       if (escape) {
         content <- escapeRspContent(content, srcCT=inclCT, targetCT=hostCT, verbose=verbose);
       }
-
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # (d) Escape any remaining RSP tags (hide from RSP parser)
@@ -2106,12 +2108,23 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
   verbose && exit(verbose);
 
-
-  # Cleanup
+  # Cleanup (remove NAs, e.g. former RSP comments)
   excl <- which(sapply(object, FUN=identical, NA));
   if (length(excl) > 0L) {
     object <- object[-excl];
   }
+
+##   # Sanity check:
+##   # Here all objects are expected to be all RSP text items
+##   isOk <- sapply(object, FUN=function(x) {
+##     inherits(x, "RspText") || inherits(x, "RspComment")
+##   });
+##   if (!all(isOk)) {
+##     classes <- sapply(object[!isOk], FUN=function(x) class(x)[1L]);
+##     tbl <- table(classes);
+##     msg <- sprintf("%s [n=%d]", names(tbl), tbl);
+##     warning("INTERNAL ERROR: Unexpected classes of RSP items after preprocessing: ", paste(msg, collapse=", "));
+##   }
 
   if (flatten) {
     verbose && enter(verbose, "Flatten RSP document");
@@ -2123,7 +2136,13 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   object <- dropEmptyText(object);
   object <- mergeTexts(object);
 
-  verbose && printf(verbose, "Returning RSP document with %d RSP constructs.\n", length(object));
+  if (verbose) {
+    classes <- sapply(object, FUN=function(x) class(x)[1L]);
+    tbl <- table(classes);
+    msg <- sprintf("%s [n=%d]", names(tbl), tbl);
+    printf(verbose, "Returning RSP document with %d RSP constructs: %s\n", length(object), paste(msg, collapse=", "));
+  }
+
 
   verbose && exit(verbose);
 
@@ -2133,6 +2152,8 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 ##############################################################################
 # HISTORY:
+# 2014-09-02
+# o Clarified some verbose output; useful for troubleshooting.
 # 2014-07-02
 # o Added support for copy directives.
 # o Now the cut'n'paste clipboard is available across files.

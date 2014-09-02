@@ -6,9 +6,9 @@ A random number: <%=rnorm(1)%>.<%-%>
 3. <%@paste name="abc"%>
 
 # Cut'n'paste directives
-<%@cut name="def"%><%-%>
+<%@cut name="def"%>
 Anoter random number: <%=rnorm(1)%>.<%-%>
-<%@endcut%><%-%>
+<%@endcut%>
 1. <%@paste name="def"%>
 2. <%@paste name="def"%>
 3. <%@paste name="def"%>
