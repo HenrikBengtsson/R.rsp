@@ -5,7 +5,7 @@ Imports: stats, utils, tools, R.methodsS3 (>= 1.6.1), R.oo (>= 1.18.0),
          R.utils (>= 1.33.0), R.cache (>= 0.10.0)
 Suggests: tcltk, digest (>= 0.6.4),
           ascii (>= 2.1), markdown (>= 0.7.4), knitr (>= 1.6),
-          R.devices (>= 2.9.2), base64enc (>= 0.1-1)
+          R.devices (>= 2.11.0), base64enc (>= 0.1-1)
 SuggestsNote: Recommended: digest, R.devices, base64enc, markdown
 VignetteBuilder: R.rsp
 Date: 2014-08-29
