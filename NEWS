@@ -1,11 +1,17 @@
 Package: R.rsp
 ==============
 
+Version: 0.19.4 [2014-09-03]
+o ROBUSTNESS: Now RSP preprocessing directive <%@if name="<name>" ...%>
+  does a better jobs of locating RSP variables with a smaller risk of
+  finding other R objects.
+
+
 Version: 0.19.3 [2014-08-29]
 o DOCUMENTATION: Updated the 'Dynamic document creation using RSP'
   package vignette.
 o Added Unix shell (and Windows batch) scripts 'rsource', 'rfile'
-  and 'rcat' to system.file("bin", package="R.rsp").  These scripts 
+  and 'rcat' to system.file("bin", package="R.rsp").  These scripts
   are convenient wrappers that uses Rscript internally.
 o CLEANUP: Removed false R CMD check NOTEs recently introduced.
 o Bumped package dependencies.

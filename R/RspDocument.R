@@ -2004,15 +2004,22 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         }
       }
 
-      result <- NA;
+      # Check for existance of variable
+      exist <- FALSE;
+      for (mode in c("character", "numeric", "integer", "logical")) {
+        exist <- exists(name, mode=mode, envir=envir);
+        if (exist) {
+          value <- get(name, mode=mode, envir=envir);
+          break;
+        }
+      } # for (mode ...)
+
       if (test == "exists") {
-        # Check for existance of variable
-        result <- exists(name, envir=envir);
+        result <- exist;
       } else {
-        if (!exists(name, envir=envir)) {
+        if (!exist) {
           throw(RspPreprocessingException(sprintf("Variable (%s) does not exist", name), item=item));
         }
-        value <- get(name, envir=envir);
 
         otherValue <- attrs$value;
         if (is.null(otherValue)) {
@@ -2152,6 +2159,10 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
 ##############################################################################
 # HISTORY:
+# 2014-09-03
+# o ROBUSTNESS: Now RspIfDirective is more conservative in how it
+#   locates RSP variables, i.e. it will only search for RSP variables
+#   of certain modes.
 # 2014-09-02
 # o Clarified some verbose output; useful for troubleshooting.
 # 2014-07-02
