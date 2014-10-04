@@ -10,7 +10,7 @@
 <% t0 <- Sys.time() %>
 <%---------------------------------------------------------------------
   Usage:
-  rsp <- "RSP-intro.md.rsp"
+  rsp <- "RSP_intro.md.rsp"
   md <- R.rsp::rfile(rsp, postprocess=FALSE)
   html <- R.rsp::RspFileProduct(knitr::pandoc(md, format="dzslides"))
 
