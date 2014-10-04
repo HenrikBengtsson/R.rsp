@@ -64,9 +64,9 @@
   Using \code{\link{Rscript}} and \code{rfile()}, it is possible to process
   an RSP file from the command line.  For example,
 
-  \code{Rscript -e "R.rsp::rfile(file='RSP-refcard.tex.rsp', path=system.file('doc', package='R.rsp'))"}
+  \code{Rscript -e "R.rsp::rfile(file='RSP_refcard.tex.rsp', path=system.file('doc', package='R.rsp'))"}
 
-  parses and evaluates \file{RSP-refcard.tex.rsp} and output \file{RSP-refcard.pdf} in the current directory.
+  parses and evaluates \file{RSP_refcard.tex.rsp} and output \file{RSP_refcard.pdf} in the current directory.
 }
 
 \examples{
