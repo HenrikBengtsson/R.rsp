@@ -2,7 +2,8 @@ Package: R.rsp
 ==============
 
 Version: 0.19.5 [2014-10-03]
-o CLEANUP: The vignette TeX engine no longer generates a tangle script.
+o CLEANUP: The 'tex' and 'md' vignette engines no longer generates
+  a tangle script.
 o DOCUMENTATION: Added vignette 'R packages: LaTeX vignettes'.
 
 
