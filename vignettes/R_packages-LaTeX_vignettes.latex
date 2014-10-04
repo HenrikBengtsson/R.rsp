@@ -36,7 +36,7 @@ all you need is the LaTeX file with LaTeX comments containing
 meta directives to R such that it will be listed as a vignette in the
 package.  For instance, this PDF document was compiled from LaTeX file:
 \begin{enumerate}
- \item \code{vignettes/R\_packages-LaTeX\_vignettes.tex}
+ \item \code{vignettes/R\_packages-LaTeX\_vignettes.latex}
 \end{enumerate}
 which contains the following meta directives at the top of the file:
 \begin{verbatim} 
@@ -44,6 +44,8 @@ which contains the following meta directives at the top of the file:
   %\VignetteKeyword{R package, vignette, LaTeX}
   %\VignetteEngine{R.rsp::tex}
 \end{verbatim}
+Here I choose filename extension \code{*.latex}, because if one uses \code{*.tex}, then \code{R CMD check} will give a NOTE complaining that the file is a stray file that should not be part of the built package.
+
 As for any type of (non-Sweave) package vignette, don't forget to specify:
 \begin{verbatim}
 Suggests: R.rsp
@@ -52,4 +54,5 @@ VignetteBuilder: R.rsp
 in your package's DESCRIPTION file.  That's all it takes to include a
 LaTeX file that will be compiled into a PDF vignette as part of the
 package installation.
+
 \end{document}
