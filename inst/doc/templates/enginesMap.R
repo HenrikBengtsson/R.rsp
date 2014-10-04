@@ -18,7 +18,7 @@
 # TeX vignettes
 `R.rsp::tex` <- `tex` <- function(file, ...) {
   R.rsp::rspWeave(file, ...);
-  R.rsp::rspTangle(file, ..., pattern="[.]tex$");
+  R.rsp::asisTangle(file, ...);
 }
 
 # "Dummy" Rnw vignettes

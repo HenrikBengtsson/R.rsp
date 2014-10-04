@@ -350,7 +350,7 @@ asisTangle <- function(file, ...) NULL
   vignetteEngine("tex", package=pkgname,
     pattern="[.](tex|latex)$",
     weave=rspWeave,
-    tangle=function(...) rspTangle(..., pattern="[.](tex|latex)$")
+    tangle=asisTangle
   );
 
   # Markdown engine
@@ -371,6 +371,8 @@ asisTangle <- function(file, ...) NULL
 
 ###############################################################################
 # HISTORY:
+# 2014-10-03
+# o CLEANUP: The vignette TeX engine no longer generates a tangle script.
 # 2014-05-30
 # o asisTangle() no longer generates a tangle script and returns NULL.
 # o rspTangle() now respects %\VignetteTangle{FALSE} returning NULL.
