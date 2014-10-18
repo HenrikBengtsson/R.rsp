@@ -16,6 +16,7 @@
 #     \item Detailed description of the RSP markup language.
 #     \item A one-page RSP reference card.
 #     \item How to use RSP for package vignettes.
+#     \item How to use plain LaTeX for package vignettes.
 #     \item How to use static PDF or HTML package vignettes.
 #   }
 #
