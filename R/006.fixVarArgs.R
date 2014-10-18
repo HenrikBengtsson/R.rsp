@@ -13,10 +13,10 @@ setMethodS3("stop", "default", function(...) {
   base::stop(...);
 })
 
-parse <- function(...) UseMethod("parse");
-parse.default <- function(...) {
-  base::parse(...);
-}
+## parse <- function(...) UseMethod("parse");
+## parse.default <- function(...) {
+##   base::parse(...);
+## }
 
 ############################################################################
 # HISTORY:

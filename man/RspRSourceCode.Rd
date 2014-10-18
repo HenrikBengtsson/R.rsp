@@ -49,9 +49,9 @@ RspRSourceCode(...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:evaluate.RspRSourceCode]{evaluate}} \tab Parses and evaluates the R code.\cr
+ \tab \code{evaluate} \tab  -\cr
  \tab \code{findProcessor} \tab  -\cr
- \tab \code{\link[R.rsp:parse.RspRSourceCode]{parse}} \tab Parses the R code.\cr
+ \tab \code{parse} \tab  -\cr
  \tab \code{rcat} \tab  -\cr
  \tab \code{rfile} \tab  -\cr
  \tab \code{rsource} \tab  -\cr

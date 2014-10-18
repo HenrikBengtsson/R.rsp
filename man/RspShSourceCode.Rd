@@ -49,7 +49,7 @@ RspShSourceCode(...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:evaluate.RspShSourceCode]{evaluate}} \tab Evaluates the shell (sh) code.\cr
+ \tab \code{evaluate} \tab  -\cr
  \tab \code{findProcessor} \tab  -\cr
 }
 

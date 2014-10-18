@@ -42,9 +42,9 @@ RspPage(pathname=NULL, ...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:getAbsolutePath.RspPage]{getAbsolutePath}} \tab Gets the absolute pathname to the current RSP file.\cr
- \tab \code{\link[R.rsp:getName.RspPage]{getName}} \tab Gets the (base)name of the current RSP file.\cr
- \tab \code{\link[R.rsp:getPath.RspPage]{getPath}} \tab Gets the path of the directory of the current RSP file.\cr
+ \tab \code{getAbsolutePath} \tab  -\cr
+ \tab \code{getName} \tab  -\cr
+ \tab \code{getPath} \tab  -\cr
 }
 
 

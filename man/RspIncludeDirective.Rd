@@ -54,10 +54,10 @@ RspIncludeDirective(value="include", ...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:getContent.RspIncludeDirective]{getContent}} \tab Gets the content of the RSP include directive.\cr
- \tab \code{\link[R.rsp:getFile.RspIncludeDirective]{getFile}} \tab Gets the file attribute.\cr
- \tab \code{\link[R.rsp:getVerbatim.RspIncludeDirective]{getVerbatim}} \tab Checks if verbatim include should be used or not.\cr
- \tab \code{\link[R.rsp:getWrap.RspIncludeDirective]{getWrap}} \tab Get the wrap length.\cr
+ \tab \code{getContent} \tab  -\cr
+ \tab \code{getFile} \tab  -\cr
+ \tab \code{getVerbatim} \tab  -\cr
+ \tab \code{getWrap} \tab  -\cr
 }
 
 

@@ -28,6 +28,7 @@ importFrom("R.oo", "getSource")
 importFrom("R.oo", "trim")
 importFrom("R.utils", "evaluate")
 importFrom("R.utils", "getAbsolutePath")
+importFrom("R.utils", "parse")
 importFrom("stats", "start")
 importFrom("utils", "toLatex")
 

@@ -47,9 +47,9 @@ RspObject(value=NA, attrs=list(), ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{getAttribute} \tab  -\cr
- \tab \code{\link[R.rsp:getAttributes.RspObject]{getAttributes}} \tab Gets the attributes of an RSP object.\cr
+ \tab \code{getAttributes} \tab  -\cr
  \tab \code{hasAttribute} \tab  -\cr
- \tab \code{\link[R.rsp:print.RspObject]{print}} \tab Prints a summary of an RSP object.\cr
+ \tab \code{print} \tab  -\cr
  \tab \code{setAttribute} \tab  -\cr
  \tab \code{setAttributes} \tab  -\cr
 }

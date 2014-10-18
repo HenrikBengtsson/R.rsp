@@ -43,28 +43,28 @@ HttpRequest(requestUri=NULL, parameters=list(), ...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:as.character.HttpRequest]{as.character}} \tab Returns a short string describing the HTTP request.\cr
- \tab \code{\link[R.rsp:getContentLength.HttpRequest]{getContentLength}} \tab Gets the length of contents.\cr
- \tab \code{\link[R.rsp:getContentType.HttpRequest]{getContentType}} \tab Gets the MIME type of the body of the request.\cr
+ \tab \code{as.character} \tab  -\cr
+ \tab \code{getContentLength} \tab  -\cr
+ \tab \code{getContentType} \tab  -\cr
  \tab \code{getContextPath} \tab  -\cr
  \tab \code{getDateHeader} \tab  -\cr
  \tab \code{getHeader} \tab  -\cr
- \tab \code{\link[R.rsp:getParameter.HttpRequest]{getParameter}} \tab Gets a parameter.\cr
- \tab \code{\link[R.rsp:getParameters.HttpRequest]{getParameters}} \tab Gets all parameters.\cr
- \tab \code{\link[R.rsp:getProtocol.HttpRequest]{getProtocol}} \tab Gets the name and version of the protocol used to make this request.\cr
+ \tab \code{getParameter} \tab  -\cr
+ \tab \code{getParameters} \tab  -\cr
+ \tab \code{getProtocol} \tab  -\cr
  \tab \code{getQueryString} \tab  -\cr
- \tab \code{\link[R.rsp:getRealPath.HttpRequest]{getRealPath}} \tab Gets the file system path for a given URI.\cr
- \tab \code{\link[R.rsp:getRemoteAddress.HttpRequest]{getRemoteAddress}} \tab Gets the IP address of the client that sent the request.\cr
- \tab \code{\link[R.rsp:getRemoteHost.HttpRequest]{getRemoteHost}} \tab Gets the fully qualified name of the client that sent the request.\cr
+ \tab \code{getRealPath} \tab  -\cr
+ \tab \code{getRemoteAddress} \tab  -\cr
+ \tab \code{getRemoteHost} \tab  -\cr
  \tab \code{getRemoteUser} \tab  -\cr
  \tab \code{getRequestUri} \tab  -\cr
  \tab \code{getRequestUrl} \tab  -\cr
- \tab \code{\link[R.rsp:getScheme.HttpRequest]{getScheme}} \tab Gets the scheme used to make this request.\cr
- \tab \code{\link[R.rsp:getServerName.HttpRequest]{getServerName}} \tab Gets the host name of the server that revieved the request.\cr
- \tab \code{\link[R.rsp:getServerPort.HttpRequest]{getServerPort}} \tab Gets the port number on which this request was received.\cr
+ \tab \code{getScheme} \tab  -\cr
+ \tab \code{getServerName} \tab  -\cr
+ \tab \code{getServerPort} \tab  -\cr
  \tab \code{getServletPath} \tab  -\cr
- \tab \code{\link[R.rsp:hasParameter.HttpRequest]{hasParameter}} \tab Checks if a parameter exists.\cr
- \tab \code{\link[R.rsp:nbrOfParameters.HttpRequest]{nbrOfParameters}} \tab Gets the number of parameters.\cr
+ \tab \code{hasParameter} \tab  -\cr
+ \tab \code{nbrOfParameters} \tab  -\cr
 }
 
 

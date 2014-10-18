@@ -52,7 +52,7 @@ RspDirective(value=character(), ...)
 \tabular{rll}{
  \tab \code{asRspString} \tab  -\cr
  \tab \code{getNameContentDefaultAttributes} \tab  -\cr
- \tab \code{\link[R.rsp:requireAttributes.RspDirective]{requireAttributes}} \tab Asserts that certain attributes exist.\cr
+ \tab \code{requireAttributes} \tab  -\cr
 }
 
 

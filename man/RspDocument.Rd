@@ -50,17 +50,17 @@ RspDocument(expressions=list(), ...)
  \tab \code{[} \tab  -\cr
  \tab \code{[<-} \tab  -\cr
  \tab \code{asRspString} \tab  -\cr
- \tab \code{\link[R.rsp:dropEmptyText.RspDocument]{dropEmptyText}} \tab Drops all empty RSP text constructs.\cr
- \tab \code{\link[R.rsp:evaluate.RspDocument]{evaluate}} \tab Parses, translates, and evaluates the RSP document.\cr
- \tab \code{\link[R.rsp:flatten.RspDocument]{flatten}} \tab Flattens an RspDocument.\cr
- \tab \code{\link[R.rsp:getMetadata.RspDocument]{getMetadata}} \tab Gets the metadata of the RspDocument.\cr
- \tab \code{\link[R.rsp:getPath.RspDocument]{getPath}} \tab Gets the path to the source reference of an RSP string.\cr
- \tab \code{\link[R.rsp:getSource.RspDocument]{getSource}} \tab Gets the source reference of an RSP document.\cr
- \tab \code{\link[R.rsp:getType.RspDocument]{getType}} \tab Gets the type of the RspDocument.\cr
- \tab \code{\link[R.rsp:mergeTexts.RspDocument]{mergeTexts}} \tab Merge neighboring 'text' elements.\cr
+ \tab \code{dropEmptyText} \tab  -\cr
+ \tab \code{evaluate} \tab  -\cr
+ \tab \code{flatten} \tab  -\cr
+ \tab \code{getMetadata} \tab  -\cr
+ \tab \code{getPath} \tab  -\cr
+ \tab \code{getSource} \tab  -\cr
+ \tab \code{getType} \tab  -\cr
+ \tab \code{mergeTexts} \tab  -\cr
  \tab \code{parseCutNPasteDirectives} \tab  -\cr
  \tab \code{parseIfElseDirectives} \tab  -\cr
- \tab \code{\link[R.rsp:preprocess.RspDocument]{preprocess}} \tab Processes all RSP preprocessing directives.\cr
+ \tab \code{preprocess} \tab  -\cr
  \tab \code{print} \tab  -\cr
  \tab \code{rcat} \tab  -\cr
  \tab \code{rclean} \tab  -\cr
@@ -70,10 +70,10 @@ RspDocument(expressions=list(), ...)
  \tab \code{rsource} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
  \tab \code{setMetadata} \tab  -\cr
- \tab \code{\link[R.rsp:subset.RspDocument]{subset}} \tab Subsets an RspDocument.\cr
- \tab \code{\link[R.rsp:toR.RspDocument]{toR}} \tab Translates the RSP document into R source code.\cr
- \tab \code{\link[R.rsp:trim.RspDocument]{trim}} \tab Trims each of the RSP constructs.\cr
- \tab \code{\link[R.rsp:trimNonText.RspDocument]{trimNonText}} \tab Trims all non-text RSP constructs.\cr
+ \tab \code{subset} \tab  -\cr
+ \tab \code{toR} \tab  -\cr
+ \tab \code{trim} \tab  -\cr
+ \tab \code{trimNonText} \tab  -\cr
 }
 
 

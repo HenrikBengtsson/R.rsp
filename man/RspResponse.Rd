@@ -44,9 +44,9 @@ RspResponse(...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:flush.RspResponse]{flush}} \tab Flushes the response buffer.\cr
- \tab \code{\link[R.rsp:import.RspResponse]{import}} \tab Imports the output from another RSP file.\cr
- \tab \code{\link[R.rsp:write.RspResponse]{write}} \tab Writes an RSP response to the predefined output.\cr
+ \tab \code{flush} \tab  -\cr
+ \tab \code{import} \tab  -\cr
+ \tab \code{write} \tab  -\cr
 }
 
 

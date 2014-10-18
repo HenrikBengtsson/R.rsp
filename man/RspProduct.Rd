@@ -48,14 +48,14 @@ RspProduct(object=NA, ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{!} \tab  -\cr
- \tab \code{\link[R.rsp:findProcessor.RspProduct]{findProcessor}} \tab Locates a processor for an RSP product.\cr
- \tab \code{\link[R.rsp:getMetadata.RspProduct]{getMetadata}} \tab Gets the metadata an RSP product.\cr
- \tab \code{\link[R.rsp:getType.RspProduct]{getType}} \tab Gets the type of an RSP product.\cr
- \tab \code{\link[R.rsp:hasProcessor.RspProduct]{hasProcessor}} \tab Checks whether a processor exist or not for an RSP product.\cr
+ \tab \code{findProcessor} \tab  -\cr
+ \tab \code{getMetadata} \tab  -\cr
+ \tab \code{getType} \tab  -\cr
+ \tab \code{hasProcessor} \tab  -\cr
  \tab \code{print} \tab  -\cr
- \tab \code{\link[R.rsp:process.RspProduct]{process}} \tab Processes an RSP file product.\cr
+ \tab \code{process} \tab  -\cr
  \tab \code{setMetadata} \tab  -\cr
- \tab \code{\link[R.rsp:view.RspProduct]{view}} \tab Views the RSP product.\cr
+ \tab \code{view} \tab  -\cr
 }
 
 

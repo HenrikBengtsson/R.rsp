@@ -54,7 +54,7 @@ RspText(text=character(), escape=FALSE, ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{asRspString} \tab  -\cr
- \tab \code{\link[R.rsp:getContent.RspText]{getContent}} \tab Gets the contents of the RSP text.\cr
+ \tab \code{getContent} \tab  -\cr
  \tab \code{getInclude} \tab  -\cr
 }
 

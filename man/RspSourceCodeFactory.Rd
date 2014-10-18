@@ -46,11 +46,11 @@ RspSourceCodeFactory(language=NA, ...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:exprToCode.RspSourceCodeFactory]{exprToCode}} \tab Translates an RspExpression into source code.\cr
- \tab \code{\link[R.rsp:getCompleteCode.RspSourceCodeFactory]{getCompleteCode}} \tab Gets the source code header, body, and footer.\cr
- \tab \code{\link[R.rsp:getLanguage.RspSourceCodeFactory]{getLanguage}} \tab Gets the language.\cr
- \tab \code{\link[R.rsp:makeSourceCode.RspSourceCodeFactory]{makeSourceCode}} \tab Makes a RspSourceCode object.\cr
- \tab \code{\link[R.rsp:toSourceCode.RspSourceCodeFactory]{toSourceCode}} \tab Translates an RSP document to source code.\cr
+ \tab \code{exprToCode} \tab  -\cr
+ \tab \code{getCompleteCode} \tab  -\cr
+ \tab \code{getLanguage} \tab  -\cr
+ \tab \code{makeSourceCode} \tab  -\cr
+ \tab \code{toSourceCode} \tab  -\cr
 }
 
 

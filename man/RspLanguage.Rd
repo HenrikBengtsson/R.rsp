@@ -50,11 +50,11 @@ RspLanguage(language="plain", ...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:escape.RspLanguage]{escape}} \tab Escapes a string specifically for a given RSP response language.\cr
- \tab \code{\link[R.rsp:getComment.RspLanguage]{getComment}} \tab Gets a comment string specific for a given RSP response language.\cr
- \tab \code{\link[R.rsp:getLanguage.RspLanguage]{getLanguage}} \tab Gets the language string.\cr
- \tab \code{\link[R.rsp:getNewline.RspLanguage]{getNewline}} \tab Gets the newline string specific for a given RSP response language.\cr
- \tab \code{\link[R.rsp:getVerbatim.RspLanguage]{getVerbatim}} \tab Gets a verbatim string specific for a given RSP response language.\cr
+ \tab \code{escape} \tab  -\cr
+ \tab \code{getComment} \tab  -\cr
+ \tab \code{getLanguage} \tab  -\cr
+ \tab \code{getNewline} \tab  -\cr
+ \tab \code{getVerbatim} \tab  -\cr
 }
 
 
