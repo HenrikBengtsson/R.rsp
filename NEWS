@@ -5,6 +5,7 @@ Version: 0.19.6 [2014-10-18]
 o Added RSP preprocessing directives <%@ifdef ...%> and <%@ifndef ...%>
   which are shorts for <@if test="exists" ...%> and it's negated form.
 o ROBUSTNESS: Added more tests for the RSP language.
+o CLEANUP: S3 methods are no longer exported. Only the generics.
 o CLEANUP: Method flush() part of the old RSP API no longer masks
   base::flush().
 
