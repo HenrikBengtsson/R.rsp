@@ -97,7 +97,7 @@ setMethodS3("write", "RspResponse", abstract=TRUE);
 #
 # @keyword IO
 #*/#########################################################################
-setMethodS3("flush", "RspResponse", abstract=TRUE);
+setMethodS3("flush", "RspResponse", appendVarArgs=FALSE, abstract=TRUE)
 
 
 

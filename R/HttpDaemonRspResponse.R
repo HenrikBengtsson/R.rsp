@@ -82,7 +82,7 @@ setMethodS3("write", "HttpDaemonRspResponse", function(this, ..., collapse="", s
 
 
 
-setMethodS3("flush", "HttpDaemonRspResponse", function(con, ...) {
+setMethodS3("flush", "HttpDaemonRspResponse", function(con) {
   # To please R CMD check.
   this <- con;
 
@@ -99,7 +99,7 @@ setMethodS3("flush", "HttpDaemonRspResponse", function(con, ...) {
   this$.bfr <- NULL;
 
   invisible(len);
-})
+}, appendVarArgs=FALSE)
 
 
 

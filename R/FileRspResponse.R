@@ -84,13 +84,13 @@ setMethodS3("write", "FileRspResponse", function(this, ..., collapse="", sep="")
 
 
 
-setMethodS3("flush", "FileRspResponse", function(con, ...) {
+setMethodS3("flush", "FileRspResponse", function(con) {
   # To please R CMD check.
   this <- con;
 
   out <- getOutput(this);
   flush(out);
-})
+}, appendVarArgs=FALSE)
 
 
 
