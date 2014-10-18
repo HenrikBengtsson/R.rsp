@@ -27,7 +27,7 @@ VignetteBuilder: R.rsp
 in your package's DESCRIPTION file.  That's all it takes to include a static PDF as a vignette in a package.
 This same approach can also be used to include static (self-contained) HTML vignettes.  In order for such an HTML document to display images correctly, the HTML images cannot be links to image files but instead need to be embedded inside the HTML document as 'dataURI' strings.
 
-Finally, a note of concern.  Several would argue that you break open-source ethicals if you include static PDF vignettes without providing the source of the PDF.  This is because a PDF is often a product of another artifact, e.g. a Microsoft Word document.  Because of this, you may consider to include such files as well in your package in order to maintain all the source files.
+Finally, a note of concern.  Several would argue that you break open-source ethics if you include static PDF vignettes without providing the source of the PDF.  This is because a PDF is often a product of another artifact, e.g. a Microsoft Word document.  Because of this, you may consider to include such files as well in your package in order to maintain all the source files.
 
-Also, if your PDF was created from a LaTeX file, it is better include the LaTeX file (and its figure files) as a package vignette and have R automatically compile it into PDF when the package is build.  See vignette \emph{R packages: LaTeX vignettes} for how to do this - it is very easy.
+Also, if your PDF was created from a LaTeX file, the you can include the LaTeX file (and its figure files) as a package vignette without a prebuild PDF and have R automatically compile it into PDF when the package is build.  See vignette \emph{R packages: LaTeX vignettes} for how to do this instead - it is very easy.
 \end{document}
