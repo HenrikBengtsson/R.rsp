@@ -1,6 +1,12 @@
 Package: R.rsp
 ==============
 
+Version: 0.19.6 [2014-10-18]
+o Added RSP preprocessing directives <%@ifdef ...%> and <%@ifndef ...%>
+  which are shorts for <@if test="exists" ...%> and it's negated form.
+o ROBUSTNESS: Added more tests for the RSP language.
+
+
 Version: 0.19.5 [2014-10-03]
 o CLEANUP: The 'tex' and 'md' vignette engines no longer generates
   a tangle script.

@@ -6,19 +6,21 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{RspIfDirective}
+\name{RspIfDirective}
 \docType{class}
 \alias{RspIfDirective}
 
- \alias{RspElseDirective}
- \alias{RspEndifDirective}
- \alias{RspIfeqDirective}
- \alias{RspIfneqDirective}
+\alias{RspElseDirective}
+\alias{RspEndifDirective}
+\alias{RspIfdefDirective}
+\alias{RspIfndefDirective}
+\alias{RspIfeqDirective}
+\alias{RspIfneqDirective}
 
- \title{The RspIfDirective class}
+\title{The RspIfDirective class}
 
- \description{
-  Package:  R.rsp \cr
+\description{
+ Package:  R.rsp \cr
 \bold{Class RspIfDirective}\cr
 
 \code{character}\cr
@@ -39,23 +41,23 @@ extends \link[R.rsp]{RspDirective}\cr
 
 
 
-  An RspIfDirective is an \code{\link{RspDirective}} that will include or
-  exclude all \code{\link{RspConstruct}}:s until the next \code{\link{RspEndifDirective}}
-  based on the preprocessing value of the particular if clause.
-  Inclusion/exclusion can be reversed via an \code{\link{RspElseDirective}}.
- }
+ An RspIfDirective is an \code{\link{RspDirective}} that will include or
+ exclude all \code{\link{RspConstruct}}:s until the next \code{\link{RspEndifDirective}}
+ based on the preprocessing value of the particular if clause.
+ Inclusion/exclusion can be reversed via an \code{\link{RspElseDirective}}.
+}
 
- \usage{
+\usage{
 RspIfDirective(value="if", ...)
 }
 
- \arguments{
-   \item{value}{A \code{\link[base]{character}} string.}
-   \item{...}{Arguments passed to the constructor of \code{\link{RspDirective}}.}
- }
+\arguments{
+  \item{value}{A \code{\link[base]{character}} string.}
+  \item{...}{Arguments passed to the constructor of \code{\link{RspDirective}}.}
+}
 
- \section{Fields and Methods}{
-  \bold{Methods:}\cr
+\section{Fields and Methods}{
+ \bold{Methods:}\cr
 \emph{No methods defined}.
 
 
@@ -72,9 +74,9 @@ getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes
 all.equal, as.Date, as.POSIXlt, as.data.frame, as.raster, formula, getDLLRegisteredRoutines, isOpen, toLatex, uses
 
 
- }
+}
 
- \author{Henrik Bengtsson}
+\author{Henrik Bengtsson}
 
 
 \keyword{classes}

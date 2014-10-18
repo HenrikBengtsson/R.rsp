@@ -9,6 +9,8 @@ R.rsp::rfile('ifdef.R.rsp', args=list(DEBUG=TRUE))
 Rscript -e "R.rsp::rfile('ifdef.R.rsp')" -DEBUG=TRUE
 -----------------------------------------------------------------%>
 <%@logical DEBUG="${DEBUG}" default="FALSE"%>
+# RSP preprocessing variable 'DEBUG' <%@ifdef name="DEBUG"%>exists.<%@else%>does not exists.<%@endif%>
+# RSP preprocessing variable 'UNKNOWN' <%@ifndef name="UNKNOWN"%>does not exists.<%@else%>exists.<%@endif%>
 
 <%@ifeq DEBUG="FALSE"%>
 make_addition = function(a, b) {
@@ -22,3 +24,4 @@ make_addition = function(a, b) {
   return(c)
 }
 <%@endif%>
+
