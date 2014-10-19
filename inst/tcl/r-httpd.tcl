@@ -339,7 +339,7 @@ proc push { sock } {
 
     # Process the RSP page.  The RSP engine should send response to 
     # the client using HttpDaemon$writeResponse().
-    R_eval "processRsp.HttpDaemon()"
+    R_eval "R.rsp:::processRsp.HttpDaemon()"
 
     # Always send a blank line at the end
     puts $sock ""
@@ -550,6 +550,8 @@ proc bgerror {msg} {
 
 ###############################################################################
 # HISTORY:
+# 2014-10-18
+# o The built-in Tcl httpd server no longer assumes that R.rsp is attached.
 # 2013-03-31
 # o Now push() uses $config(default) as a filename pattern, which makes
 #   it more flexible, e.g. default="^index[.](html|.*)$"

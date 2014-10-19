@@ -8,6 +8,8 @@ o ROBUSTNESS: Added more tests for the RSP language.
 o CLEANUP: S3 methods are no longer exported. Only the generics.
 o CLEANUP: Method flush() part of the old RSP API no longer masks
   base::flush().
+o CLEANUP: The built-in Tcl httpd server, which is deprecated, no 
+  longer assumes that R.rsp is attached.
 
 
 Version: 0.19.5 [2014-10-03]
