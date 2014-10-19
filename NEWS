@@ -15,6 +15,7 @@ o CLEANUP/ROBUSTNESS: As part of deprecating the old R.rsp (<= 0.8.2) API,
     prepared for not all methods being exported (which may happen in
     a future release).
 
+
 Version: 0.19.5 [2014-10-03]
 o CLEANUP: The 'tex' and 'md' vignette engines no longer generates
   a tangle script.
