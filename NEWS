@@ -2,6 +2,9 @@ Package: R.rsp
 ==============
 
 Version: 0.19.6 [2014-10-18]
+o Now the LaTeX processor returned by findProcess() for RspFileProduct
+  (with content type application/x-tex or application/x-latex) will add
+  the directory of the source file to the TEXINPUTS.
 o Added RSP preprocessing directives <%@ifdef ...%> and <%@ifndef ...%>
   which are shorts for <@if test="exists" ...%> and it's negated form.
 o ROBUSTNESS: Added more tests for the RSP language.

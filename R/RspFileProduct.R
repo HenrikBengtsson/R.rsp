@@ -150,6 +150,16 @@ setMethodS3("getFileSize", "RspFileProduct", function(object, what=c("numeric", 
 
 
 setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FALSE) {
+  localCompileLaTeX <- function(..., texinputs=NULL) {
+    if (!is.null(source)) {
+      path <- dirname(source)
+      pathA <- getAbsolutePath(path)
+      texinputs <- c(texinputs, pathA)
+    }
+    compileLaTeX(..., texinputs=texinputs)
+  } # localCompileLaTeX()
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -173,6 +183,14 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
   }
   type <- parseInternetMediaType(type)$contentType;
 
+  source <- getMetadata(object, "source", local=TRUE);
+  if (is.null(source)) {
+    verbose && cat(verbose, "Source document: <unknown>");
+  } else {
+    verbose && cat(verbose, "Source document: ", sQuote(source));
+  }
+
+
   # Find a down-stream compiler/processor:
   fcn <- switch(type,
     # RSP documents:
@@ -181,8 +199,8 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
     # LaTeX documents:
     # *.tex => ... => *.pdf
-    "application/x-tex" = compileLaTeX,
-    "application/x-latex" = compileLaTeX,
+    "application/x-tex" = localCompileLaTeX,
+    "application/x-latex" = localCompileLaTeX,
 
     # Markdown documents:
     # *.md => *.html
@@ -249,7 +267,9 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
       # Always return the relative path
       pathnameR <- getAbsolutePath(pathnameR);
-      RspFileProduct(pathnameR, attrs=list(metadata=metadata), mustExist=FALSE);
+      res <- RspFileProduct(pathnameR, attrs=list(metadata=metadata), mustExist=FALSE);
+      res <- setMetadata(res, name="source", value=pathname);
+      res;
     } # fcn()
     verbose && cat(verbose, "Processor found: ", type);
   }
@@ -263,6 +283,12 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
 ############################################################################
 # HISTORY:
+# 2014-10-18
+# o Now the LaTeX processor returned by findProcess() for RspFileProduct
+#   (with content type application/x-tex or application/x-latex) will add
+#   the directory of the RSP source file to the TEXINPUTS.
+# o Now the processor returned by findProcess() for RspFileProduct always
+#   set the 'source' metadata.
 # 2014-04-18
 # o Added argument 'default' to getType() for RspFileProduct.
 # o BUG FIX: RspFileProduct would corrupt URLs.
