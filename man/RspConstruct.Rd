@@ -49,10 +49,10 @@ RspConstruct(object=character(), ..., comment=NULL)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{asRspString} \tab  -\cr
- \tab \code{getComment} \tab  -\cr
- \tab \code{getInclude} \tab  -\cr
- \tab \code{getSuffixSpecs} \tab  -\cr
+ \tab \code{\link[R.rsp:asRspString.RspConstruct]{asRspString}} \tab Recreates an RSP string from an RspConstruct.\cr
+ \tab \code{\link[R.rsp:getComment.RspConstruct]{getComment}} \tab Gets the comment of an RSP construct.\cr
+ \tab \code{\link[R.rsp:getInclude.RspConstruct]{getInclude}} \tab Checks whether an RSP construct will include text to the output or not.\cr
+ \tab \code{\link[R.rsp:getSuffixSpecs.RspConstruct]{getSuffixSpecs}} \tab Gets the suffix specifications.\cr
 }
 
 

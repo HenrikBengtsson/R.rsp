@@ -52,7 +52,7 @@ RspComment(str=character(), ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{asRspString} \tab  -\cr
- \tab \code{getComment} \tab  -\cr
+ \tab \code{\link[R.rsp:getComment.RspComment]{getComment}} \tab Gets the comment.\cr
 }
 
 

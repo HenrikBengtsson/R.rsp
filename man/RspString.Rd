@@ -46,12 +46,12 @@ RspString(s=character(), ...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{evaluate} \tab  -\cr
- \tab \code{getMetadata} \tab  -\cr
- \tab \code{getSource} \tab  -\cr
- \tab \code{getType} \tab  -\cr
- \tab \code{nbrOfLines} \tab  -\cr
- \tab \code{parse} \tab  -\cr
+ \tab \code{\link[R.rsp:evaluate.RspString]{evaluate}} \tab Parses, translates, and evaluates the RSP string.\cr
+ \tab \code{\link[R.rsp:getMetadata.RspString]{getMetadata}} \tab Gets the metadata of the RspDocument.\cr
+ \tab \code{\link[R.rsp:getSource.RspString]{getSource}} \tab Gets the source reference of an RSP string.\cr
+ \tab \code{\link[R.rsp:getType.RspString]{getType}} \tab Gets the type of an RSP string.\cr
+ \tab \code{\link[R.rsp:nbrOfLines.RspString]{nbrOfLines}} \tab Gets the number of lines in an RSP string.\cr
+ \tab \code{\link[R.rsp:parse.RspString]{parse}} \tab Parses the RSP string.\cr
  \tab \code{print} \tab  -\cr
  \tab \code{rcat} \tab  -\cr
  \tab \code{rclean} \tab  -\cr
@@ -61,7 +61,7 @@ RspString(s=character(), ...)
  \tab \code{rsource} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
  \tab \code{setMetadata} \tab  -\cr
- \tab \code{toR} \tab  -\cr
+ \tab \code{\link[R.rsp:toR.RspString]{toR}} \tab Parses and translates the RSP string into R code.\cr
 }
 
 

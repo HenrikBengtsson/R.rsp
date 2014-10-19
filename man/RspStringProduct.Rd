@@ -48,7 +48,7 @@ RspStringProduct(...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{as.character} \tab  -\cr
+ \tab \code{\link[R.rsp:as.character.RspStringProduct]{as.character}} \tab Returns a plain character string representation of an RSP string product.\cr
  \tab \code{print} \tab  -\cr
 }
 

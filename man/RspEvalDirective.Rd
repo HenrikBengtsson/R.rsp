@@ -55,8 +55,8 @@ RspEvalDirective(value="eval", ...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{getContent} \tab  -\cr
- \tab \code{getFile} \tab  -\cr
+ \tab \code{\link[R.rsp:getContent.RspEvalDirective]{getContent}} \tab Gets the content of the RSP eval directive.\cr
+ \tab \code{\link[R.rsp:getFile.RspEvalDirective]{getFile}} \tab Gets the file attribute.\cr
 }
 
 

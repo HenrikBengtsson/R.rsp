@@ -43,8 +43,8 @@ RspParser(...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{parse} \tab  -\cr
- \tab \code{parseRaw} \tab  -\cr
+ \tab \code{\link[R.rsp:parse.RspParser]{parse}} \tab Parses the RSP string.\cr
+ \tab \code{\link[R.rsp:parseRaw.RspParser]{parseRaw}} \tab Parses the string into blocks of text and RSP.\cr
 }
 
 

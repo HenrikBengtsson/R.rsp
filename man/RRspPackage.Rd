@@ -43,7 +43,7 @@ RRspPackage(...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{capabilitiesOf} \tab  -\cr
+ \tab \code{\link[R.rsp:capabilitiesOf.RRspPackage]{capabilitiesOf}} \tab Checks which tools are supported.\cr
  \tab \code{isCapableOf} \tab  -\cr
 }
 

@@ -43,27 +43,27 @@ HttpDaemon(...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{appendRootPaths} \tab  -\cr
- \tab \code{as.character} \tab  -\cr
+ \tab \code{\link[R.rsp:appendRootPaths.HttpDaemon]{appendRootPaths}} \tab Appends and inserts new paths to the list of known root directories.\cr
+ \tab \code{\link[R.rsp:as.character.HttpDaemon]{as.character}} \tab Returns a short string describing the HTTP daemon.\cr
  \tab \code{finalize} \tab  -\cr
- \tab \code{getConfig} \tab  -\cr
+ \tab \code{\link[R.rsp:getConfig.HttpDaemon]{getConfig}} \tab Retrieves the server's 'config' structure from Tcl.\cr
  \tab \code{getCount} \tab  -\cr
- \tab \code{getDefaultFilenamePattern} \tab  -\cr
- \tab \code{getHttpRequest} \tab  -\cr
- \tab \code{getPort} \tab  -\cr
- \tab \code{getRootPaths} \tab  -\cr
+ \tab \code{\link[R.rsp:getDefaultFilenamePattern.HttpDaemon]{getDefaultFilenamePattern}} \tab Gets the default filename pattern to be loaded by the HTTP daemon.\cr
+ \tab \code{\link[R.rsp:getHttpRequest.HttpDaemon]{getHttpRequest}} \tab Gets the HTTP request.\cr
+ \tab \code{\link[R.rsp:getPort.HttpDaemon]{getPort}} \tab Gets the socket port of the HTTP daemon.\cr
+ \tab \code{\link[R.rsp:getRootPaths.HttpDaemon]{getRootPaths}} \tab Gets the root directories of the HTTP daemon.\cr
  \tab \code{insertRootPaths} \tab  -\cr
- \tab \code{isStarted} \tab  -\cr
- \tab \code{openUrl} \tab  -\cr
- \tab \code{processRsp} \tab  -\cr
- \tab \code{restart} \tab  -\cr
+ \tab \code{\link[R.rsp:isStarted.HttpDaemon]{isStarted}} \tab Checks if the HTTP daemon is started.\cr
+ \tab \code{\link[R.rsp:openUrl.HttpDaemon]{openUrl}} \tab Starts the HTTP daemon and launches the specified URL.\cr
+ \tab \code{\link[R.rsp:processRsp.HttpDaemon]{processRsp}} \tab Processes an RSP page.\cr
+ \tab \code{\link[R.rsp:restart.HttpDaemon]{restart}} \tab Restarts the HTTP daemon.\cr
  \tab \code{setCount} \tab  -\cr
- \tab \code{setRootPaths} \tab  -\cr
- \tab \code{sourceTcl} \tab  -\cr
- \tab \code{start} \tab  -\cr
- \tab \code{startHelp} \tab  -\cr
- \tab \code{stop} \tab  -\cr
- \tab \code{writeResponse} \tab  -\cr
+ \tab \code{\link[R.rsp:setRootPaths.HttpDaemon]{setRootPaths}} \tab Sets a new set of root directories for the HTTP daemon.\cr
+ \tab \code{\link[R.rsp:sourceTcl.HttpDaemon]{sourceTcl}} \tab Loads the Tcl source for the HTTP daemon into R.\cr
+ \tab \code{\link[R.rsp:start.HttpDaemon]{start}} \tab Starts the HTTP daemon.\cr
+ \tab \code{\link[R.rsp:startHelp.HttpDaemon]{startHelp}} \tab Starts the HTTP daemon and launches the help page.\cr
+ \tab \code{\link[R.rsp:stop.HttpDaemon]{stop}} \tab Stops the HTTP daemon.\cr
+ \tab \code{\link[R.rsp:writeResponse.HttpDaemon]{writeResponse}} \tab Writes a string to the HTTP output connection.\cr
 }
 
 

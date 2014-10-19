@@ -53,8 +53,8 @@ RspCode(code=character(), echo=FALSE, ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{asRspString} \tab  -\cr
- \tab \code{getCode} \tab  -\cr
- \tab \code{getEcho} \tab  -\cr
+ \tab \code{\link[R.rsp:getCode.RspCode]{getCode}} \tab Gets the source code.\cr
+ \tab \code{\link[R.rsp:getEcho.RspCode]{getEcho}} \tab Checks whether the source code should be echoed or not.\cr
 }
 
 
