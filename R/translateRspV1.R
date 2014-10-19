@@ -343,7 +343,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
 
   code <- "# Assert that write() of R.rsp is used below\n";
   rCode <- c(rCode, code);
-  code <- "write <- R.rsp::write;\n";
+  code <- "write <- R.rsp:::write;\n";
   rCode <- c(rCode, code);
 
   code <- "# Sets the public RspPage 'page' object\n";
@@ -579,6 +579,10 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
 
 ##############################################################################
 # HISTORY:
+# 2014-10-18
+# o CLEANUP/ROBUSTNESS: translateRsp() and translateRspV1(), which are
+#   both deprecated, no longer assume that write() is exported from R.rsp.
+# 2011-11-17
 # o Now the generated R script adds 'write <- R.rsp::write' at the
 #   beginning, to assure that it is used instead of base::write().
 # 2011-03-12

@@ -1,4 +1,5 @@
 library("R.rsp")
+parse <- R.utils::parse # S3 generic parse() is exported by R.rsp
 Arguments <- R.utils::Arguments
 enter <- R.utils::enter
 exit <- R.utils::exit

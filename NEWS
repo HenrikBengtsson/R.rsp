@@ -5,12 +5,15 @@ Version: 0.19.6 [2014-10-18]
 o Added RSP preprocessing directives <%@ifdef ...%> and <%@ifndef ...%>
   which are shorts for <@if test="exists" ...%> and it's negated form.
 o ROBUSTNESS: Added more tests for the RSP language.
-o CLEANUP: S3 methods are no longer exported. Only the generics.
-o CLEANUP: Method flush() part of the old RSP API no longer masks
-  base::flush().
-o CLEANUP: The built-in Tcl httpd server, which is deprecated, no 
-  longer assumes that R.rsp is attached.
-
+o CLEANUP/ROBUSTNESS: As part of deprecating the old R.rsp (<= 0.8.2) API,
+  the following steps have been take:
+  - S3 methods are no longer exported. Only the generics.
+  - Methods flush() and stop() part of the old RSP API no longer mask
+    corresponding functions of the 'base' package.
+  - Several methods including those in the built-in Tcl httpd server
+    no longer assumes that the R.rsp package is attached. They are also
+    prepared for not all methods being exported (which may happen in
+    a future release).
 
 Version: 0.19.5 [2014-10-03]
 o CLEANUP: The 'tex' and 'md' vignette engines no longer generates
