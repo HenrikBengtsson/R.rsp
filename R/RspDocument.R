@@ -1372,7 +1372,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
       # Drop
       for (ii in idxs) {
-        object[[ii]] <- RspComment();
+        object[[ii]] <- RspVoid();
       }
     }
     idx <- idx + 1L;
@@ -1703,7 +1703,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       } else if (!is.null(name) && is.null(value)) {
         # <@string name="<name>"%>
         if (exists(name, envir=envir, inherits=FALSE)) {
-          value <- get(name, envir=envir);
+          value <- get(name, envir=envir, inherits=FALSE);
         } else {
           value <- attrs$default;
           # <@string name="<name>" default="<content>"%>?
