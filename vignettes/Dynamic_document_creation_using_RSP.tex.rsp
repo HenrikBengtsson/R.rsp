@@ -12,7 +12,7 @@
 # Required R packages
 R.utils::use("R.rsp")
 R.utils::use("R.devices")
-options("devEval/args/field"="fullname") # Better for LaTeX
+devOptions("*", field="fullname") # Better for LaTeX
 hpaste <- R.utils::hpaste
 withCapture <- R.utils::withCapture
 %>
@@ -123,7 +123,7 @@ withCapture <- R.utils::withCapture
 # Set default graphics options
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Use greater objects by default
-options("devNew/args/par"=list(lwd=2))
+devOptions("*", par=list(lwd=2))
 
 # Change the default dimensions for PNGs
 devOptions("png", width=840)
@@ -255,8 +255,8 @@ The generated PDF (\code{Dynamic\_LaTeX\_reports\_with\_RSP.pdf}) will be availa
 %
 It is also possible to compile online RSP documents, e.g.
 \begin{verbatim}
-> url <- "http://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/R.rsp/vignettes/
-          Dynamic_document_creation_using_RSP.tex.rsp?root=r-dots"
+> url <- "https://raw.githubusercontent.com/HenrikBengtsson/R.rsp/
+          master/vignettes/Dynamic_document_creation_using_RSP.tex.rsp"
 > rfile(url)
 \end{verbatim}
 which produces a PDF of the current developer's version of this vignette.
@@ -930,7 +930,7 @@ The \code{toPDF()} and \code{toPNG()} functions of the \pkg{R.devices} package a
 library("R.devices")
 
 # Create objects with a bit thicker lines
-options("devNew/args/par"=list(lwd=2))
+devOptions("*", par=list(lwd=2))
 
 toPNG("myFigure,yeah,cool", aspectRatio=0.6, { 
   curve(dnorm, from=-5, to=+5)
@@ -971,7 +971,7 @@ which results in
 \end{verbatim}
 To instead embedded the image as an Base64 encoded data URI, which has the advantage of making HTML document self-contained, set the following option
 \begin{rspVerbatim}
-<\% options("devEval/args/field"="dataURI") \%>
+<\% devOptions("png", field="dataURI") \%>
 \end{rspVerbatim}
 which will cause the above 'MyFigure,yeah,cool.png' image file to be encoded and embedded as
 \begin{verbatim}
@@ -1021,7 +1021,7 @@ Next, we can include images as
 \end{verbatim}
 By leaving out the filename extension, LaTeX will automatically search\footnote{In order for \code{{\bs}includegraphics\{\}} to locate the proper image file when leaving out the filename extension, the image file must not have other periods in the filename other than the one used for the extension.} for image files of proper formats (typically PDF, EPS or PNG) depending on compiler settings, e.g. \code{*.png} and \code{*.pdf}.  With this approach it is easy to switch to use other image formats without having to edit the LaTeX document.  On the other hand, this is already automatically take care of when using RSP.  Regardless, in order to achieve this in RSP, all we need to do is to let \pkg{R.devices} use the so called \emph{fullname} of the image file, that is the filename without extension, instead of the default (relative) \emph{pathname}.  This is achieved by setting
 \begin{rspVerbatim}
-<\% options("devEval/args/field"="fullname") \%>
+<\% devOtions("*", field="fullname") \%>
 \end{rspVerbatim}
 As a final remark, note that by replacing \code{toPDF()} with \code{toPNG()}, a PNG image file is inserted instead, which can dramatically reduce the size of the final PDF document, especially when scatter plots with a large number of data points are generated.
 
