@@ -9,7 +9,7 @@ Suggests: tcltk, digest (>= 0.6.4),
 SuggestsNote: Recommended: digest, R.devices, base64enc, markdown
 VignetteBuilder: R.rsp
 Date: 2014-10-18
-Title: Dynamic generation of scientific reports
+Title: Dynamic Generation of Scientific Reports
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
 Author: Henrik Bengtsson [aut, cre, cph]
