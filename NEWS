@@ -9,7 +9,7 @@ o Added RSP preprocessing directives <%@ifdef ...%> and <%@ifndef ...%>
   which are shorts for <@if test="exists" ...%> and it's negated form.
 o ROBUSTNESS: Added more tests for the RSP language.
 o CLEANUP/ROBUSTNESS: As part of deprecating the old R.rsp (<= 0.8.2) API,
-  the following steps have been take:
+  the following steps have been taken:
   - S3 methods are no longer exported. Only the generics.
   - Methods flush() and stop() part of the old RSP API no longer mask
     corresponding functions of the 'base' package.
