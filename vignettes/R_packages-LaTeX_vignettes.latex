@@ -53,6 +53,6 @@ VignetteBuilder: R.rsp
 \end{verbatim}
 in your package's DESCRIPTION file.  That's all it takes to include a
 LaTeX file that will be compiled into a PDF vignette as part of the
-package installation.
+package build.
 
 \end{document}
