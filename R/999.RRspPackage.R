@@ -122,7 +122,7 @@ setMethodS3("isCapableOf", "RRspPackage", function(static, what, ...) {
   res <- capabilitiesOf(static, what=name, ...);
 
   # Nothing more to do?
-  if (!res[[name]]) {
+  if (!is.element(name, names(res))) {
     return(FALSE);
   }
 
