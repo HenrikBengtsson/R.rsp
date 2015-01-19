@@ -21,12 +21,12 @@ env:
     - R_CHECK_ARGS="--no-manual --as-cran"
     # Require also Suggested packages?
     - _R_CHECK_FORCE_SUGGESTS_=false 
+    - R_RSP_COMPILELATEX_FALLBACK="copy"
     # Need LaTeX?
     - BOOTSTRAP_LATEX=""  ## Very time consuming!
-    # Skip building vignettes, which iff LaTeX-based are very
-    # time consuming because LaTeX needs to be installed
-    - R_BUILD_ARGS="--no-build-vignettes ${R_BUILD_ARGS}"
-    - R_CHECK_ARGS="--no-build-vignettes ${R_CHECK_ARGS}"
+    # Skip building vignettes?
+#    - R_BUILD_ARGS="--no-build-vignettes ${R_BUILD_ARGS}"
+#    - R_CHECK_ARGS="--no-build-vignettes ${R_CHECK_ARGS}"
 
   # R versions r-builder should test on (ignored by r-travis)
   matrix:
