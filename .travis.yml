@@ -21,7 +21,7 @@ env:
     - R_CHECK_ARGS="--no-manual --as-cran"
     # Require also Suggested packages?
     - _R_CHECK_FORCE_SUGGESTS_=false 
-    - R_RSP_COMPILELATEX_FALLBACK="copy"
+    - R_RSP_COMPILELATEX_FALLBACK="copy-force"
     # Need LaTeX?
     - BOOTSTRAP_LATEX=""  ## Very time consuming!
     # Skip building vignettes?

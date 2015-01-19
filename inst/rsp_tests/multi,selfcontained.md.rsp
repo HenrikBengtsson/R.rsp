@@ -48,14 +48,10 @@ sentences <- c("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
   Index page in Markdown
   ------------------------------------------------------------------%>
 # Lorem Ipsum reports
-<%
-postprocess <- nzchar(Sys.getenv("R_RSP_COMPILELATEX_FALLBACK"))
-postprocess <- postprocess && isCapableOf(R.rsp, "latex")
-%>
 <% for (i in 1:4) { %>
   * [Report <%=i%>](<%=basename(
     # Generate LaTeX report for the i:th report
-    rfile(report, output=sprintf("report_%02d.tex", i), postprocess=postprocess, clean=TRUE)
+    rfile(report, output=sprintf("report_%02d.tex", i), postprocess=isCapableOf(R.rsp, "latex"), clean=TRUE)
   )%>)
 <% } %>
 
