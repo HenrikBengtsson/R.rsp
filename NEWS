@@ -1,7 +1,7 @@
 Package: R.rsp
 ==============
 
-Version: 0.19.6-1 [2015-01-18]
+Version: 0.19.7 [2015-01-18]
 o Added Unix shell (and Windows batch) scripts 'rsource', 'rfile'
   and 'rcat' moved to system.file("exec", package="R.rsp").  These
   scripts are convenient wrappers that uses Rscript internally.
