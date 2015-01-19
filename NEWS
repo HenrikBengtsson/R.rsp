@@ -5,6 +5,7 @@ Version: 0.19.6-1 [2015-01-18]
 o Added Unix shell (and Windows batch) scripts 'rsource', 'rfile'
   and 'rcat' moved to system.file("exec", package="R.rsp").  These
   scripts are convenient wrappers that uses Rscript internally.
+o CLEANUP: Defunct epsDev().
 o BUG FIX: isCapableOf() for "asciidoc" and "pandoc" would given an
   error (instead of FALSE) if the binary was not found.
 
