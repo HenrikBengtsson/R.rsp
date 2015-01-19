@@ -133,9 +133,9 @@ setMethodS3("isCapableOf", "RRspPackage", function(static, what, ...) {
 
   # Get available version
   if (name == "asciidoc") {
-    v <- attr(findAsciiDoc(), "version");
+    v <- attr(findAsciiDoc(mustExist=FALSE), "version");
   } else if (name == "pandoc") {
-    v <- attr(findPandoc(), "version");
+    v <- attr(findPandoc(mustExist=FALSE), "version");
   } else if (is.element(name, c("knitr", "markdown"))) {
     v <- packageVersion(name);
   } else if (name == "sweave") {
