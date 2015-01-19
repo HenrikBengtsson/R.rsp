@@ -215,7 +215,8 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
     # Disable fallback until done to avoid recursive calls when
     # calling isCapableOf(..., "latex").
     Sys.unsetenv("R_RSP_COMPILELATEX_FALLBACK");
-    on.exit(Sys.setenv("R_RSP_COMPILELATEX_FALLBACK"=fallback), add=TRUE);
+    fallback0 <- fallback;
+    on.exit(Sys.setenv("R_RSP_COMPILELATEX_FALLBACK"=fallback0), add=TRUE);
 
     verbose && cat(verbose, "R_RSP_COMPILELATEX_FALLBACK=", fallback);
     forceFB <- (regexpr("-force", fallback) != -1L);
