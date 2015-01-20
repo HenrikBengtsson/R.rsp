@@ -41,9 +41,11 @@ setMethodS3("print", "RspDocument", function(x, ...) {
   s <- c(s, sprintf("Total number of RSP constructs: %d", length(x)));
   if (length(x) > 0L) {
     types <- sapply(x, FUN=function(x) class(x)[1L]);
-    tbl <- table(types);
-    for (kk in seq_along(tbl)) {
-      s <- c(s, sprintf("Number of %s(s): %d", names(tbl)[kk], tbl[kk]));
+    if (length(types) > 0L) {
+      tbl <- table(types);
+      for (kk in seq_along(tbl)) {
+        s <- c(s, sprintf("Number of %s(s): %d", names(tbl)[kk], tbl[kk]));
+      }
     }
   }
   s <- c(s, sprintf("Content type: %s", getType(x)));
@@ -2144,10 +2146,14 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   object <- mergeTexts(object);
 
   if (verbose) {
-    classes <- sapply(object, FUN=function(x) class(x)[1L]);
-    tbl <- table(classes);
-    msg <- sprintf("%s [n=%d]", names(tbl), tbl);
-    printf(verbose, "Returning RSP document with %d RSP constructs: %s\n", length(object), paste(msg, collapse=", "));
+    if (length(object) > 0L) {
+      classes <- sapply(object, FUN=function(x) class(x)[1L]);
+      if (length(classes) > 0L) {
+        tbl <- table(classes);
+        msg <- sprintf("%s [n=%d]", names(tbl), tbl);
+        printf(verbose, "Returning RSP document with %d RSP constructs: %s\n", length(object), paste(msg, collapse=", "));
+      }
+    }
   }
 
 

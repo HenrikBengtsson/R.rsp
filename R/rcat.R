@@ -161,6 +161,14 @@ setMethodS3("rcat", "RspString", function(..., envir=parent.frame(), args="*", o
 
   if (!is.null(s)) {
     verbose && enter(verbose, "Outputting");
+    outputT <- output;
+    if (is.character(output)) {
+      if (output == "")
+        outputT <- "<stdout>"
+    } else {
+      outputT <- "<connection>"
+    }
+    verbose && printf(verbose, "Output: %s\n", outputT)
     cat(s, file=output, append=append);
     verbose && exit(verbose);
   }
