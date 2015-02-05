@@ -218,6 +218,7 @@ export("RspUnknownDirective")
 export("RspUnparsedDirective")
 export("RspUnparsedExpression")
 export("RspVariableDirective")
+export("RspVoid")
 export("setAttribute")
 export("setAttributes")
 export("setMetadata")
@@ -628,3 +629,6 @@ S3method("parse", "RspUnparsedExpression")
 
 # RspVariableDirective
 S3method("getInclude", "RspVariableDirective")
+
+# RspVoid
+S3method("asRspString", "RspVoid")
