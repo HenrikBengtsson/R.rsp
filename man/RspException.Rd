@@ -55,9 +55,7 @@ RspException(...)
 
 \section{Fields and Methods}{
  \bold{Methods:}\cr
-\tabular{rll}{
- \tab \code{as.character} \tab  -\cr
-}
+\emph{No methods defined}.
 
 
  \bold{Methods inherited from Exception}:\cr

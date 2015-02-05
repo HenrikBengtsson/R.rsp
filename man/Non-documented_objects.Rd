@@ -145,7 +145,6 @@
 \alias{unescapeRspTags}
 \alias{nbrOfLines}
 \alias{requireAttributes}
-\alias{as.character.RspException}
 \alias{getItem}
 \alias{getItem.RspPreprocessingException}
 \alias{getMessage.RspPreprocessingException}
