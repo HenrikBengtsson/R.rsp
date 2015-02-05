@@ -46,6 +46,8 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getParent(file), rspLanguage=getOption("rspLanguage"), trimRsp=TRUE, verbose=FALSE, ...) {
+  .Deprecated(new="rscript()")
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -575,7 +577,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
   attr(rCode, "pathname") <- pathname;
 
   rCode;
-})
+}, deprecated=TRUE)
 
 ##############################################################################
 # HISTORY:

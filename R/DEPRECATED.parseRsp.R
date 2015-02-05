@@ -41,6 +41,8 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspLanguage"), trimRsp=TRUE, validate=TRUE, verbose=FALSE, ...) {
+  .Deprecated(new="rcompile()")
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -724,7 +726,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
   attr(rCode, "validate") <- validate;
 
   rCode;
-})
+}, deprecated=TRUE)
 
 ##############################################################################
 # HISTORY:

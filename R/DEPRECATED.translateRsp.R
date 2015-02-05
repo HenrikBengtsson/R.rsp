@@ -33,6 +33,8 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("translateRsp", "default", function(filename, path=NULL, ..., force=FALSE, verbose=FALSE) {
+  .Deprecated(new="rscript()")
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -189,7 +191,7 @@ setMethodS3("translateRsp", "default", function(filename, path=NULL, ..., force=
   verbose && exit(verbose);
 
   invisible(outPathname);
-}) # translateRsp()
+}, deprecated=TRUE) # translateRsp()
 
 
 ###########################################################################
