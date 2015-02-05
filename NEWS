@@ -1,7 +1,7 @@
 Package: R.rsp
 ==============
 
-Version: 0.19.7-9000 [2015-02-04]
+Version: 0.19.8 [2015-02-04]
 o Now all \VignetteKeyword{} entries inside a meta directives with
   language 'R-vignette' are parsed into meta data field 'keywords'.
 o Added arguments 'header' and 'metadata' to compileMarkdown().
