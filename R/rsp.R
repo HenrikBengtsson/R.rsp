@@ -32,7 +32,9 @@
 #   is returned (invisibly).
 # }
 #
-# @examples "../incl/rsp.Rex"
+# \examples{\dontrun{
+#  @include"../incl/rsp.Rex"
+# }}
 #
 # @author
 #

@@ -38,7 +38,9 @@
 #   and it in turns outputs the final response, e.g. an HTML document.
 # }
 #
-# @examples "../incl/sourceRsp.Rex"
+# \examples{\dontrun{
+#  @include "../incl/sourceRsp.Rex"
+# }}
 #
 # @author
 #

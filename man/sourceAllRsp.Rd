@@ -44,8 +44,8 @@
   the next one and records the error.
 }
 
-\examples{
-# Copy the complete directory tree contain RSP files
+\examples{\dontrun{
+ # Copy the complete directory tree contain RSP files
 rspPath <- system.file("rsp", package="R.rsp")
 cat("RSP directory: ", rspPath, "\n")
 
@@ -66,7 +66,8 @@ if (interactive()) {
   cat("Trying to open '", indexFile, "' in default browser...\n", sep="")
   browseURL(getAbsolutePath(indexFile))
 }
-}
+
+}}
 
 \author{Henrik Bengtsson}
 

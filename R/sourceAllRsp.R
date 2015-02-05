@@ -32,7 +32,9 @@
 #   the next one and records the error.
 # }
 #
-# @examples "../incl/sourceAllRsp.Rex"
+# \examples{\dontrun{
+#  @include "../incl/sourceAllRsp.Rex"
+# }}
 #
 # @author
 #
