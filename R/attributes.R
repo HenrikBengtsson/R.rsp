@@ -28,6 +28,8 @@
 # }
 #
 # @author
+#
+# @keyword internal
 #*/#########################################################################
 setMethodS3("getAttributes", "default", function(object, private=FALSE, ...) {
   attrs <- attributes(object)
