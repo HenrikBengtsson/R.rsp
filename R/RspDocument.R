@@ -202,9 +202,7 @@ setMethodS3("dropEmptyText", "RspDocument", function(object, ..., verbose=FALSE)
   }
 
   # Nothing to do?
-  if (length(object) == 0L) {
-    return(object);
-  }
+  if (length(object) == 0L) return(object);
 
   verbose && enter(verbose, "Dropping empty RSP text constructs");
 
@@ -670,18 +668,14 @@ setMethodS3("mergeTexts", "RspDocument", function(object, trim=FALSE, ..., verbo
 
 
   # Nothing to do?
-  if (length(object) <= 1L) {
-    return(object);
-  }
+  if (length(object) <= 1L) return(object);
 
   # All RSP text constructs
   isText <- sapply(object, FUN=inherits, "RspText");
   idxs <- which(isText);
 
   # Nothing todo?
-  if (length(idxs) == 0L) {
-    return(object);
-  }
+  if (length(idxs) == 0L) return(object);
 
   verbose && enter(verbose, "Merging RSP texts");
 
@@ -747,15 +741,11 @@ setMethodS3("flatten", "RspDocument", function(object, ..., verbose=FALSE) {
   object <- mergeTexts(object);
 
   # Nothing to do?
-  if (length(object) == 0L) {
-    return(object);
-  }
+  if (length(object) == 0L) return(object);
 
   # Nothing todo?
   idxs <- which(sapply(object, FUN=inherits, "RspDocument"));
-  if (length(idxs) == 0L) {
-    return(object);
-  }
+  if (length(idxs) == 0L) return(object);
 
   res <- list();
 

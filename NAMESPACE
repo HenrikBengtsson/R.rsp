@@ -504,7 +504,7 @@ S3method("getContent", "RspEvalDirective")
 S3method("getFile", "RspEvalDirective")
 
 # RspException
-S3method("as.character", "RspException")
+
 
 # RspFileProduct
 S3method("findProcessor", "RspFileProduct")
