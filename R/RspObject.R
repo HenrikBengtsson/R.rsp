@@ -178,5 +178,8 @@ setMethodS3("setAttribute", "RspObject", function(object, name, value, ...) {
 
 ##############################################################################
 # HISTORY:
+# 2015-02-04
+# o Added getMetadata() for RspObject.
+# 2013-??-??
 # o Created from RspString.R.
 ##############################################################################

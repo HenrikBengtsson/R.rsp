@@ -97,68 +97,6 @@ setMethodS3("getType", "RspDocument", function(object, default=NA, as=c("text", 
 
 
 #########################################################################/**
-# @RdocMethod getMetadata
-# @aliasmethod setMetadata
-#
-# @title "Gets the metadata of the RspDocument"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{name}{(optional) A @character string specifying a specific
-#      metadata variable to retrieve.}
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
-setMethodS3("getMetadata", "RspDocument", function(object, name=NULL, default=NULL, local=FALSE, ...) {
-  res <- getAttribute(object, "metadata", default=list());
-  if (!local) {
-    isLocal <- is.element(names(res), "source");
-    res <- res[!isLocal];
-  }
-  if (!is.null(name)) {
-    if (is.element(name, names(res))) {
-      res <- res[[name]];
-    } else {
-      res <- default;
-    }
-  }
-  res;
-}, protected=TRUE)
-
-
-setMethodS3("setMetadata", "RspDocument", function(object, metadata=NULL, name, value, ...) {
-  data <- getMetadata(object, local=TRUE);
-
-  if (!is.null(metadata)) {
-    for (name in names(metadata)) {
-      data[[name]] <- metadata[[name]];
-    }
-  } else {
-    data[[name]] <- value;
-  }
-
-  setAttribute(object, "metadata", data);
-}, protected=TRUE)
-
-
-
-
-#########################################################################/**
 # @RdocMethod getSource
 #
 # @title "Gets the source reference of an RSP document"
