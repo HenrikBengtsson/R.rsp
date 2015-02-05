@@ -197,17 +197,13 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
     idxs <- which(nchar(s) > 0L);
 
     # Nothing to do?
-    if (length(idxs) == 0L) {
-      return(s);
-    }
+    if (length(idxs) == 0L) return(s);
 
     prefix <- gsub("^([ ]*).*", "\\1", s[idxs]);
     min <- min(nchar(prefix));
 
     # Nothing to do?
-    if (min == 0L) {
-      return(s);
-    }
+    if (min == 0L) return(s);
 
     pattern <- sprintf("^%s", paste(rep(" ", times=min), collapse=""));
     s <- gsub(pattern, "", s);

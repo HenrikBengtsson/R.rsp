@@ -7,9 +7,7 @@
   bfr <- bfr[keep];
 
   # Nothing todo?
-  if (length(bfr) == 0L) {
-    return(list());
-  }
+  if (length(bfr) == 0L) return(list());
 
   # Mapping from R vignette metadata to RSP metadata
   map <- c(
@@ -35,9 +33,7 @@
   names <- names[keep];
 
   # Nothing todo?
-  if (length(names) == 0L) {
-    return(list());
-  }
+  if (length(names) == 0L) return(list());
 
   # Rename
   names <- map[names];
