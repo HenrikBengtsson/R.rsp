@@ -7,5 +7,3 @@ Value: -2.71
 Value: 3.14
 
 Value: -Inf
-
-Value: NA

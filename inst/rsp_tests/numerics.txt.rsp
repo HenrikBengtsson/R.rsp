@@ -12,6 +12,3 @@ Value: <%@string name="value"%>
 
 <%@numeric name="value" content="-Inf"%>
 Value: <%@string name="value"%>
-
-<%@numeric name="value" content="a"%>
-Value: <%@string name="value"%>
