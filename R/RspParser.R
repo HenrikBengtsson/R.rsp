@@ -63,13 +63,6 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  countLineBreaks <- function(s, ...) {
-    s <- gsub("\r\n", "\n", s, fixed=TRUE);
-    s <- gsub("\r", "\n", s, fixed=TRUE);
-    s <- charToRaw(s);
-    sum(s == as.raw(0x0a));
-  } # countLineBreaks()
-
   # Escape '<%%' and '%%>'
   escapeP <- function(s) {
     s <- gsub("<%%", "---<<<---%%%---%%%---", s, fixed=TRUE);

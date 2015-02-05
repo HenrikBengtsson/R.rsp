@@ -40,17 +40,15 @@ setMethodS3("indexOfNonQuoted", "default", function(str, pattern, ...) {
   # Argument 'pattern':
   pattern <- as.character(pattern);
 
-  
+
   totalPos <- 0L;     # The position from the start of the string
   len <- 0L;          # The default match length
   qm <- NULL;         # The current qoutation mark of a string, if exists.
   ready <- FALSE;
   while(!ready) {
-    # Get the first occurance of pattern in buffer 
+    # Get the first occurance of pattern in buffer
     pos <- regexpr(pattern, str);
-    if (pos == -1L) {
-      return(as.integer(-1L));
-    }
+    if (pos == -1L) return(-1L);
 
     totalPos <- totalPos + pos;
 
@@ -64,7 +62,7 @@ setMethodS3("indexOfNonQuoted", "default", function(str, pattern, ...) {
 
     # b. Remove all espaced quotes, i.e. '\"'.
     tmp <- gsub("\\\\[\"\']", "", tmp);
-  
+
     # c. Remove all non quotes
     tmp <- gsub("[^'\"]", "", tmp);
 
@@ -113,7 +111,7 @@ setMethodS3("indexOfNonQuoted", "default", function(str, pattern, ...) {
 # o Made the method protected.
 # 2005-08-14
 # o BUG FIX: Forgot to deal with single quotation marks.
-# o BUG FIX: Internal countQoutationMarks() would incorrectly consider '\\"' 
+# o BUG FIX: Internal countQoutationMarks() would incorrectly consider '\\"'
 #   as an escaped quotation mark. Fix was to remove all '\\' first.
 # 2005-08-13
 # o Created. Made a seperate function because it most likely will be useful

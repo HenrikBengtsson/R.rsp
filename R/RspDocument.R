@@ -268,13 +268,6 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  countLineBreaks <- function(s, ...) {
-    s <- gsub("\r\n", "\n", s, fixed=TRUE);
-    s <- gsub("\r", "\n", s, fixed=TRUE);
-    s <- charToRaw(s);
-    sum(s == as.raw(0x0a));
-  } # countLineBreaks()
-
   tailString <- function(s, n=10L) {
     len <- nchar(s);
     s <- substring(s, first=max(1L, len-n+1, n));
