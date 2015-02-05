@@ -281,7 +281,7 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
     s <- gsub("\n", "\\n", s, fixed=TRUE);
     s <- gsub("\r", "\\r", s, fixed=TRUE);
     s;
-  } # tailString()
+  } # headString()
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments

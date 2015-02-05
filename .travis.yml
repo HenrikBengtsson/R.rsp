@@ -45,7 +45,7 @@ before_install:
 
 install:
   - $RENV install_r R.methodsS3 R.oo R.utils R.cache R.devices
-  - $PKGR install_r base64enc digest markdown knitr ascii
+  - $RENV install_r base64enc digest markdown knitr ascii
 #  - $RENV install_deps
 
 script:
