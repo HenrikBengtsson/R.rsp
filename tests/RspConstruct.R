@@ -10,6 +10,12 @@ for (class in classes) {
   clazz <- Class$forName(class)
   object <- newInstance(clazz)
   print(object)
+
+  ## FIXME: Should RspExpression:s support asRspString()?
+  if (! class %in% c("RspExpression", "RspUnparsedExpression")) {
+    str <- asRspString(object)
+    print(str)
+  }
 }
 
 d <- RspConstruct()
