@@ -58,10 +58,10 @@ RspShSourceCode(...)
 evaluate, print, rstring, tangle, tidy
 
  \bold{Methods inherited from RspProduct}:\cr
-!, findProcessor, getMetadata, getType, hasProcessor, print, process, setMetadata, view
+!, findProcessor, getType, hasProcessor, print, process, view
 
  \bold{Methods inherited from RspObject}:\cr
-getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes
+print
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.Date, as.POSIXlt, as.data.frame, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses

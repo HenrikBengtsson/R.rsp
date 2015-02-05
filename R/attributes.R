@@ -1,5 +1,5 @@
 #########################################################################/**
-# @set class="default"
+# @set class=default
 # @RdocMethod getAttributes
 # @aliasmethod getAttribute
 # @aliasmethod hasAttribute
@@ -17,18 +17,17 @@
 # @synopsis
 #
 # \arguments{
+#   \item{object}{An object.}
+#   \item{private}{If @TRUE, attributes starting with a period are
+#         also returned, otherwise not.}
 #   \item{...}{Not used.}
 # }
 #
 # \value{
-#  Returns a named @list or @NULL.
+#   Returns a named @list, @NULL or a modified object itself.
 # }
 #
 # @author
-#
-# \seealso{
-#   @seeclass
-# }
 #*/#########################################################################
 setMethodS3("getAttributes", "default", function(object, private=FALSE, ...) {
   attrs <- attributes(object)

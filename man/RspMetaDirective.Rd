@@ -66,7 +66,7 @@ asRspString, getNameContentDefaultAttributes, requireAttributes
 asRspString, getComment, getInclude, getSuffixSpecs
 
  \bold{Methods inherited from RspObject}:\cr
-getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes
+print
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.Date, as.POSIXlt, as.data.frame, as.raster, formula, getDLLRegisteredRoutines, isOpen, toLatex, uses
