@@ -2,8 +2,23 @@
   DIRECTIVES FOR R:
 
   %\VignetteIndexEntry{Dynamic document creation using RSP}
-  %\VignetteKeyword{RSP markup language, literate programming, reproducible research, report generator, Sweave, knitr, brew, noweb, TeX, LaTeX, Markdown, AsciiDoc, reStructuredText, Org-Mode, HTML, PDF}
   %\VignetteAuthor{Henrik Bengtsson}
+  %\VignetteKeyword{RSP markup language}
+  %\VignetteKeyword{literate programming}
+  %\VignetteKeyword{reproducible research}
+  %\VignetteKeyword{report generator}
+  %\VignetteKeyword{Sweave}
+  %\VignetteKeyword{knitr}
+  %\VignetteKeyword{brew}
+  %\VignetteKeyword{noweb}
+  %\VignetteKeyword{TeX}
+  %\VignetteKeyword{LaTeX}
+  %\VignetteKeyword{Markdown}
+  %\VignetteKeyword{AsciiDoc}
+  %\VignetteKeyword{reStructuredText}
+  %\VignetteKeyword{Org-Mode}
+  %\VignetteKeyword{HTML}
+  %\VignetteKeyword{PDF}
   %\VignetteEngine{R.rsp::rsp}
   %\VignetteTangle{FALSE}
 --------------------------------------------------------------------"%>

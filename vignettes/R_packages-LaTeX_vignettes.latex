@@ -1,5 +1,9 @@
 %\VignetteIndexEntry{R packages: LaTeX vignettes}
-%\VignetteKeyword{R, package, vignette, LaTeX}
+%\VignetteAuthor{Henrik Bengtsson}
+%\VignetteKeyword{R}
+%\VignetteKeyword{package}
+%\VignetteKeyword{vignette}
+%\VignetteKeyword{LaTeX}
 %\VignetteEngine{R.rsp::tex}
 
 \documentclass[12pt]{article}
