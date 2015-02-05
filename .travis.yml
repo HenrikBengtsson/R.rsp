@@ -30,6 +30,7 @@ env:
 #    - RVERSION=3.0.3
 #    - RVERSION=3.1.2
     - RVERSION=devel
+    - RVERSION=devel _R_CHECK_FULL_=TRUE
 
 
 before_install:
