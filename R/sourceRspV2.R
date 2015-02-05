@@ -1,4 +1,6 @@
 setMethodS3("sourceRspV2", "default", function(..., response=FileRspResponse(file=stdout()), request=NULL, envir=parent.frame(), verbose=FALSE) {
+  .Deprecated(new="rfile(), rcat(), or rstring()")
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -83,7 +85,7 @@ setMethodS3("sourceRspV2", "default", function(..., response=FileRspResponse(fil
 
   # Run servlet
   eval(rExpr, envir=envir);
-}, private=TRUE)
+}, deprecated=TRUE, private=TRUE)
 
 
 ##############################################################################

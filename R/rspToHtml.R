@@ -12,7 +12,7 @@
 # \arguments{
 #   \item{file}{The filename of the RSP file to be compiled.}
 #   \item{path}{An optional path to the RSP file.}
-#   \item{outFile}{The filename of the output file.  
+#   \item{outFile}{The filename of the output file.
 #     If @NULL, a default output file is used.}
 #   \item{outPath}{An optional path to the output file.}
 #   \item{extension}{The filename extension of the default output file.}
@@ -35,6 +35,8 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("rspToHtml", "default", function(file=NULL, path=NULL, outFile=NULL, outPath=NULL, extension="html", overwrite=TRUE, ...) {
+  .Deprecated(new="rfile()")
+
   # Argument 'file' and 'path':
   pathname <- Arguments$getReadablePathname(file, path=path, mustExist=FALSE);
 
@@ -59,7 +61,7 @@ setMethodS3("rspToHtml", "default", function(file=NULL, path=NULL, outFile=NULL,
   sourceRsp(file=pathname, response=response, ...);
 
   invisible(getAbsolutePath(response));
-}, private=TRUE) # rspToHtml()
+}, deprecated=TRUE, private=TRUE) # rspToHtml()
 
 
 ############################################################################

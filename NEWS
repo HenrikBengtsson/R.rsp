@@ -1,6 +1,19 @@
 Package: R.rsp
 ==============
 
+Version: 0.20.0 [2015-02-05]
+o This version is all about moving away and deprecating the old
+  RSP engine that was first developed in 2002.  In 2013, the RSP
+  engine was rewritten from scratch and the RSP language has
+  been formalized since.  Here are the updates that may affect
+  any scripts and RSP documents that relies on the legacy engine:
+  - rsp(), rsptex(), rspToHtml(), sourceRsp() are all deprecated:
+    use rfile() instead.
+  - processRsp() for the built-in HttpDaemon uses RSP engine v1.0.0.
+    Any RSP pages using <% importRsp() %> and <%@import file=...%>
+    will break. Use RSP construct <%@include ...%> instead.
+
+
 Version: 0.19.8 [2015-02-04]
 o Now all \VignetteKeyword{} entries inside a meta directives with
   language 'R-vignette' are parsed into meta data field 'keywords'.
