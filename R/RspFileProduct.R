@@ -251,14 +251,15 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     # Make sure the processor returns an RspFileProduct
     fcnT <- fcn
     processor <- function(...) {
-       do.call(fcnT, args=c(list(...), metadata));
+       do.call(fcnT, args=c(list(...), list(metadata=metadata)));
     }
 
     fcn <- function(pathname, ...) {
       # Arguments 'pathname':
       if (!isUrl(pathname)) {
         withoutGString({
-          pathname <- Arguments$getReadablePathname(pathname);
+          pathnameT <- Arguments$getReadablePathname(pathname);
+          pathname[1] <- pathnameT;  ## Preserve class and attributes etc.
         })
       }
 
@@ -283,6 +284,9 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
 ############################################################################
 # HISTORY:
+# 2015-02-04
+# o Now the processor function returned by findProcessor() passes
+#   meta data as a named list to the underlying compiler/processor.
 # 2014-10-18
 # o Now the LaTeX processor returned by findProcess() for RspFileProduct
 #   (with content type application/x-tex or application/x-latex) will add

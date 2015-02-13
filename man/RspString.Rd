@@ -47,7 +47,6 @@ RspString(s=character(), ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RspString]{evaluate}} \tab Parses, translates, and evaluates the RSP string.\cr
- \tab \code{\link[R.rsp:getMetadata.RspString]{getMetadata}} \tab Gets the metadata of the RspDocument.\cr
  \tab \code{\link[R.rsp:getSource.RspString]{getSource}} \tab Gets the source reference of an RSP string.\cr
  \tab \code{\link[R.rsp:getType.RspString]{getType}} \tab Gets the type of an RSP string.\cr
  \tab \code{\link[R.rsp:nbrOfLines.RspString]{nbrOfLines}} \tab Gets the number of lines in an RSP string.\cr
@@ -60,13 +59,12 @@ RspString(s=character(), ...)
  \tab \code{rscript} \tab  -\cr
  \tab \code{rsource} \tab  -\cr
  \tab \code{rstring} \tab  -\cr
- \tab \code{setMetadata} \tab  -\cr
  \tab \code{\link[R.rsp:toR.RspString]{toR}} \tab Parses and translates the RSP string into R code.\cr
 }
 
 
  \bold{Methods inherited from RspObject}:\cr
-getAttribute, getAttributes, hasAttribute, print, setAttribute, setAttributes
+print
 
  \bold{Methods inherited from character}:\cr
 all.equal, as.Date, as.POSIXlt, as.data.frame, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses

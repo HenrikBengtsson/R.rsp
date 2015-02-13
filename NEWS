@@ -1,6 +1,20 @@
 Package: R.rsp
 ==============
 
+Version: 0.20.0 [2015-02-13]
+o Submitted to CRAN.  No updates.
+
+
+Version: 0.19.8 [2015-02-04]
+o Now all \VignetteKeyword{} entries inside a meta directives with
+  language 'R-vignette' are parsed into meta data field 'keywords'.
+o Added arguments 'header' and 'metadata' to compileMarkdown().
+o Now the processor function returned by findProcessor() passes
+  meta data as a named list to the underlying compiler/processor.
+o Now the full RspFileProduct object is passed to postprocessors
+  rather than its barebone pathname.
+
+
 Version: 0.19.7 [2015-01-18]
 o Added Unix shell (and Windows batch) scripts 'rsource', 'rfile'
   and 'rcat' moved to system.file("exec", package="R.rsp").  These

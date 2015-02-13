@@ -30,10 +30,6 @@ setConstructorS3("RspException", function(...) {
   extend(Exception(...), "RspException");
 })
 
-setMethodS3("as.character", "RspException", function(x, ...) {
-  s <- NextMethod("as.character");
-  s;
-})
 
 setConstructorS3("RspParseException", function(...) {
   extend(RspException(...), "RspParseException");

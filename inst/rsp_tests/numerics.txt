@@ -1,0 +1,9 @@
+Count: 0
+
+Count: 1
+
+Value: -2.71
+
+Value: 3.14
+
+Value: -Inf

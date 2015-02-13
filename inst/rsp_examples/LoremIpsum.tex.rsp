@@ -2,8 +2,11 @@
   DIRECTIVES FOR R:
 
   %\VignetteIndexEntry{The lorem ipsum vignette}
-  %\VignetteKeyword{example, R, package, vignette}
   %\VignetteAuthor{Henrik Bengtsson}
+  %\VignetteKeyword{R}
+  %\VignetteKeyword{package}
+  %\VignetteKeyword{vignette}
+  %\VignetteKeyword{example}
   %\VignetteEngine{R.rsp::rsp}
 --------------------------------------------------------------------"%>
 \documentclass[10pt]{article}

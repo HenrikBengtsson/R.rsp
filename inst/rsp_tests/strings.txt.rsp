@@ -22,7 +22,6 @@ Page size: <%@string name="page_size"%>
 <%@string a='\'abc\''%>a=[<%@string name="a"%>]
 
 ## Paired symbols of any kind
-
 <%@string a=|abc|%>a=[<%@string name="a"%>]
 <%@string a=.abc.%>a=[<%@string name="a"%>]
 <%@string a=:abc:%>a=[<%@string name="a"%>]
@@ -54,4 +53,3 @@ Page size: <%@string name="page_size"%>
 <%@string a=[]%>a=[<%@string name="a"%>]
 <%@string a=<<>>%>a=[<%@string name="a"%>]
 <%@string a=(((())))%>a=[<%@string name="a"%>]
-

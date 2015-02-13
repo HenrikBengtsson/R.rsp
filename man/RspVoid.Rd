@@ -1,21 +1,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  RspComment.R
+%  RspVoid.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{RspComment}
+\name{RspVoid}
 \docType{class}
-\alias{RspComment}
+\alias{RspVoid}
 
 
-\title{The RspComment class}
+\title{The RspVoid class}
 
 \description{
  Package:  R.rsp \cr
-\bold{Class RspComment}\cr
+\bold{Class RspVoid}\cr
 
 \code{character}\cr
 \code{~~|}\cr
@@ -23,28 +23,25 @@
 \code{~~~~~~~|}\cr
 \code{~~~~~~~+--}\code{\link[R.rsp]{RspConstruct}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\code{RspComment}\cr
+\code{~~~~~~~~~~~~+--}\code{RspVoid}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
 
-public class \bold{RspComment}\cr
+public class \bold{RspVoid}\cr
 extends \link[R.rsp]{RspConstruct}\cr
 
 
 
- An RspComment is an \code{\link{RspConstruct}} that represents an RSP comment,
- which are of format \code{<\%-- ... --\%>}, \code{<\%--- ... ---\%>}
- and so on.  They can also be so called "empty" RSP comments of format
- \code{<\%-\%>}, \code{<\%--\%>}, \code{<\%---\%>} and so on.
+ An RspVoid is an \code{\link{RspConstruct}} that contains nothing and
+ outputs nothing.
 }
 
 \usage{
-RspComment(str=character(), ...)
+RspVoid(...)
 }
 
 \arguments{
-  \item{str}{A \code{\link[base]{character}} string.}
   \item{...}{Not used.}
 }
 
@@ -52,7 +49,6 @@ RspComment(str=character(), ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{asRspString} \tab  -\cr
- \tab \code{\link[R.rsp:getComment.RspComment]{getComment}} \tab Gets the comment.\cr
 }
 
 
@@ -63,7 +59,7 @@ asRspString, getComment, getInclude, getSuffixSpecs
 print
 
  \bold{Methods inherited from character}:\cr
-all.equal, as.Date, as.POSIXlt, as.data.frame, as.raster, formula, getDLLRegisteredRoutines, isOpen, toLatex, uses
+all.equal, as.Date, as.POSIXlt, as.data.frame, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses
 
 
 }

@@ -3,7 +3,10 @@
  DIRECTIVES FOR R:
 
  %\VignetteIndexEntry{Paired PSCBS}
- %\VignetteKeyword{copy numbers, allele specific, parent specific, genomic aberrations}
+ %\VignetteKeyword{copy numbers}
+ %\VignetteKeyword{allele specific}
+ %\VignetteKeyword{parent specific}
+ %\VignetteKeyword{genomic aberrations}
  %\VignetteEngine{R.rsp::rsp}
 -------------------------------------------------------------------"%>
 

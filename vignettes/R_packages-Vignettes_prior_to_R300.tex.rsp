@@ -3,7 +3,10 @@
 
   %\VignetteIndexEntry{R packages: Vignettes prior to R 3.0.0}
   %\VignetteAuthor{Henrik Bengtsson}
-  %\VignetteKeyword{R, package, vignette, RSP}
+  %\VignetteKeyword{R}
+  %\VignetteKeyword{package}
+  %\VignetteKeyword{vignette}
+  %\VignetteKeyword{RSP}
   %\VignetteEngine{R.rsp::rsp}
   %\VignetteTangle{FALSE}
 --------------------------------------------------------------------"%>

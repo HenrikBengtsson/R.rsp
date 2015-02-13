@@ -2,8 +2,9 @@
   DIRECTIVES FOR R:
 
   %\VignetteIndexEntry{RSP Markup Language - Reference Card}
-  %\VignetteKeyword{RSP markup language, Quick Reference Card}
   %\VignetteAuthor{Henrik Bengtsson}
+  %\VignetteKeyword{RSP markup language}
+  %\VignetteKeyword{Quick Reference Card}
   %\VignetteEngine{R.rsp::rsp}
   %\VignetteTangle{FALSE}
 --------------------------------------------------------------------"%>
