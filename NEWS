@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.20.0 [2015-02-13]
+o Submitted to CRAN.  No updates.
+
+
 Version: 0.19.8 [2015-02-04]
 o Now all \VignetteKeyword{} entries inside a meta directives with
   language 'R-vignette' are parsed into meta data field 'keywords'.
