@@ -60,7 +60,7 @@
 # \examples{
 # @include "../incl/rfile.Rex"
 #
-# \donttest{
+# \dontrun{
 # # Compile and display the main vignette (requires LaTeX)
 # if (isCapableOf(R.rsp, "latex")) {
 #   path <- system.file("doc", package="R.rsp")
@@ -539,6 +539,10 @@ setMethodS3("rfile", "expression", function(object, ..., envir=parent.frame(), v
 
 ############################################################################
 # HISTORY:
+# 2015-02-14
+# o CRAN: Used to have \donttest{} in example(rfile), which was there to
+#   avoid the test running longer than 5 seconds.  This was disapproved
+#   in resubmission.  Now using \dontrun{} instead.
 # 2014-05-30
 # o Now metadata 'source' is set by rfile(), iff possible.  It gives the
 #   absolute path to the input file, or the URL, of the source RSP file.

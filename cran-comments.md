@@ -8,3 +8,8 @@ Changes related to R/CRAN updates:
 * Using requireNamespace() instead of require().
 * Declaring all S3 methods.
 * Added forgotten imports.
+
+Follow up on 2015-02-14:
+* Using \dontrun{} in example(rfile) instead of non-approved
+  \donttest{}, which was there to avoid 'R CMD check --as-cran'
+  reporting on "Examples with CPU or elapsed time > 5s".

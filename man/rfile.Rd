@@ -87,7 +87,7 @@ lines <- readLines(pathname, warn=FALSE)
 cat(lines, collapse="\n")
 
 
-\donttest{
+\dontrun{
 # Compile and display the main vignette (requires LaTeX)
 if (isCapableOf(R.rsp, "latex")) {
   path <- system.file("doc", package="R.rsp")
