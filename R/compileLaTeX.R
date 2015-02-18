@@ -24,6 +24,14 @@
 #   Returns the pathname of the generated (PDF or DVI) document.
 # }
 #
+# \section{Supported filename extensions}{
+#   Internally @see "tools::texi2dvi" is used, which in turn uses
+#   \code{Sys.which("texi2dvi")} if available.  Most known implementation
+#   of the latter will only recognize LaTeX documents with filename
+#   extensions *.tex and *.ltx (case sensitive).  (Any other filenames
+#   will be compiled with 'texinfo', which is not a LaTeX compiler.)
+# }
+#
 # @author
 #
 # \seealso{
@@ -73,6 +81,12 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
     pathname <- downloadFile(url, verbose=less(verbose,50));
     verbose && cat(verbose, "Local file: ", pathname);
     verbose && exit(verbose);
+  }
+
+  ## Assert supported filename extension
+  ext <- file_ext(pathname)
+  if (!ext %in% c("tex", "ltx")) {
+    throw("Unknown LaTeX filename extension (should lower case *.tex or *.ltx): ", pathname)
   }
 
   # Shorten, e.g. ../foo/../foo/ to ../foo
