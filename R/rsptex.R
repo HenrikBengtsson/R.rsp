@@ -63,7 +63,7 @@ setMethodS3("rsptex", "default", function(..., pdf=TRUE, force=FALSE, verbose=FA
   filename2 <- basename(pathname2);
 
   ext <- ifelse(pdf, ".pdf", ".dvi");
-  pathname3 <- gsub("[.](tex|latex)$", ext, filename2);
+  pathname3 <- gsub("[.](tex|ltx)$", ext, filename2);
   verbose && cat(verbose, "Output pathname: ", pathname3);
   verbose && cat(verbose, "Output exists: ", file.exists(pathname3));
 

@@ -353,7 +353,7 @@ buildNonSweaveVignettes <- function(...) {
 # @keyword IO
 # @keyword internal
 #*/###########################################################################
-buildNonSweaveTexToPdf <- function(path=".", pattern="[.](tex|latex)$", ...) {
+buildNonSweaveTexToPdf <- function(path=".", pattern="[.](tex|ltx)$", ...) {
   pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE);
 
   # Ignore dummy.tex (which is created by R from dummy.Rnw just before make)
