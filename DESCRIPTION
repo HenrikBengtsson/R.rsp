@@ -8,7 +8,7 @@ Suggests: tcltk, digest (>= 0.6.8),
           R.devices (>= 2.12.0), base64enc (>= 0.1-2)
 SuggestsNote: Recommended: digest, R.devices, base64enc, markdown
 VignetteBuilder: R.rsp
-Date: 2015-02-13
+Date: 2015-02-18
 Title: Dynamic Generation of Scientific Reports
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
