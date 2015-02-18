@@ -23,7 +23,8 @@
 
 \arguments{
   \item{filename, path}{The filename and (optional) path of the
-     LaTeX document to be compiled.}
+     LaTeX document to be compiled.
+     Only *.tex and *.ltx filename extensions are allowed.}
   \item{format}{A \code{\link[base]{character}} string specifying the output format.}
   \item{clean, quiet, texinputs}{Additional arguments passed to
      \code{\link[tools]{texi2dvi}}.}
