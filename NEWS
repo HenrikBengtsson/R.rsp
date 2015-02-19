@@ -8,7 +8,7 @@ o ROBUSTNESS: Now compileLaTeX() will give an error if the filename
   underlying 'texi2dvi' script (if a different filename extension is
   used, 'texi2dvi' will use 'texinfo' instead of 'latex' to compile
   the document which for obvious reasons will not compile; texinfo
-  files are not LaTeX files).  I'd like to that Kurt Hornik at CRAN
+  files are not LaTeX files).  I'd like to thank Kurt Hornik at CRAN
   for helping me troubleshoot this as I incorrectly had a static 
   LaTeX vignette named *.latex.
 
@@ -26,7 +26,7 @@ o Now the full RspFileProduct object is passed to postprocessors
 Version: 0.19.7 [2015-01-18]
 o Added Unix shell (and Windows batch) scripts 'rsource', 'rfile'
   and 'rcat' moved to system.file("exec", package="R.rsp").  These
-  scripts are convenient wrappers that uses Rscript internally.
+  scripts are convenient wrappers that use Rscript internally.
 o CLEANUP: Defunct epsDev().
 o BUG FIX: isCapableOf() for "asciidoc" and "pandoc" would given an
   error (instead of FALSE) if the binary was not found.
@@ -67,7 +67,7 @@ o DOCUMENTATION: Updated the 'Dynamic document creation using RSP'
   package vignette.
 o Added Unix shell (and Windows batch) scripts 'rsource', 'rfile'
   and 'rcat' to system.file("bin", package="R.rsp").  These scripts
-  are convenient wrappers that uses Rscript internally.
+  are convenient wrappers that use Rscript internally.
 o CLEANUP: Removed false R CMD check NOTEs recently introduced.
 o Bumped package dependencies.
 

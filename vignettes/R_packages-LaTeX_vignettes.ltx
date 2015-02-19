@@ -29,7 +29,7 @@
 
 \title{R packages: LaTeX vignettes}
 \author{Henrik Bengtsson}
-\date{2015-02-18}
+\date{2015-02-19}
 
 \begin{document}
 
@@ -45,7 +45,10 @@ package.  For instance, this PDF document was compiled from LaTeX file:
 which contains the following meta directives at the top of the file:
 \begin{verbatim} 
   %\VignetteIndexEntry{R packages: LaTeX vignettes}
-  %\VignetteKeyword{R package, vignette, LaTeX}
+  %\VignetteKeyword{R}
+  %\VignetteKeyword{package}
+  %\VignetteKeyword{vignette}
+  %\VignetteKeyword{LaTeX}
   %\VignetteEngine{R.rsp::tex}
 \end{verbatim}
 Here I choose filename extension \code{*.ltx}, which is a lesser known LaTeX filename extension, because if one uses \code{*.tex}, then \code{R CMD check} will give a NOTE complaining that the file is a stray file that should not be part of the built package.
