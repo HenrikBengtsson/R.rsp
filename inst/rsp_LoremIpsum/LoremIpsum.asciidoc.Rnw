@@ -3,6 +3,7 @@ Lorem Ipsum
 
 Author: R.rsp
 
+\SweaveOpts{prefix.string=LoremIpsum_asciidoc}
 
 Text
 ----

@@ -248,7 +248,7 @@ setMethodS3("startHelp", "HttpDaemon", function(static, ...) {
 #*/#########################################################################
 setMethodS3("getConfig", "HttpDaemon", function(static, ...) {
   # Load required package
-  require("tcltk") || stop("Package not installed/found: tcltk");
+  requireNamespace("tcltk") || stop("Package not installed/found: tcltk");
 
   config <- tcltk::as.tclObj("config");
   class(config) <- c("tclArray", class(config));
@@ -630,7 +630,7 @@ setMethodS3("isStarted", "HttpDaemon", function(x, ...) {
 #*/#########################################################################
 setMethodS3("sourceTcl", "HttpDaemon", function(static, ...) {
   # Load required package
-  require("tcltk") || stop("Package not installed/found: tcltk");
+  requireNamespace("tcltk") || stop("Package not installed/found: tcltk");
 
   tclPath <- system.file("tcl", package="R.rsp");
   pathname <- file.path(tclPath, "r-httpd.tcl");

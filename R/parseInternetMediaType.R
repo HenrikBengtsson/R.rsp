@@ -20,7 +20,7 @@ extensionToIMT <- function(filename, ext=NULL, default=NA) {
     "js"       = "application/javascript",
     "json"     = "application/json",
     "kml"      = "application/vnd.google-earth.kml+xml",
-    "latex"    = "application/x-latex",  # To allow TeX vignette sources
+    "ltx"      = "application/x-latex", # To allow static LaTeX vignettes
     "md"       = "application/x-markdown",
     "pdf"      = "application/pdf",
     "ps"       = "application/postscript",

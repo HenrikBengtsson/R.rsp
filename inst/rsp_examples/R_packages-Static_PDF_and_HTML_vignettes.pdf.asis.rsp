@@ -3,3 +3,6 @@
 <%@meta keywords="PDF, HTML, vignette, package"%>
 %\VignetteIndexEntry{<%@meta name="title"%>}
 %\VignetteEngine{R.rsp::asis}
+<% for (keyword in unlist(strsplit("<%@meta name='keywords'%>", split=",[ ]*"))) { %>
+%\VignetteKeyword{<%=keyword%>}
+<% } %>

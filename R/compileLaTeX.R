@@ -11,7 +11,8 @@
 #
 # \arguments{
 #   \item{filename, path}{The filename and (optional) path of the
-#      LaTeX document to be compiled.}
+#      LaTeX document to be compiled.
+#      Only *.tex and *.ltx filename extensions are allowed.}
 #   \item{format}{A @character string specifying the output format.}
 #   \item{clean, quiet, texinputs}{Additional arguments passed to
 #      @see "tools::texi2dvi".}
@@ -22,6 +23,14 @@
 #
 # \value{
 #   Returns the pathname of the generated (PDF or DVI) document.
+# }
+#
+# \section{Supported filename extensions}{
+#   Internally @see "tools::texi2dvi" is used, which in turn uses
+#   \code{Sys.which("texi2dvi")} if available.  Most known implementation
+#   of the latter will only recognize LaTeX documents with filename
+#   extensions *.tex and *.ltx (case sensitive).  (Any other filenames
+#   will be compiled with 'texinfo', which is not a LaTeX compiler.)
 # }
 #
 # @author
@@ -73,6 +82,12 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
     pathname <- downloadFile(url, verbose=less(verbose,50));
     verbose && cat(verbose, "Local file: ", pathname);
     verbose && exit(verbose);
+  }
+
+  ## Assert supported filename extension
+  ext <- file_ext(pathname)
+  if (!ext %in% c("tex", "ltx")) {
+    throw("Unknown LaTeX filename extension (should lower case *.tex or *.ltx): ", pathname)
   }
 
   # Shorten, e.g. ../foo/../foo/ to ../foo
@@ -215,7 +230,8 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
     # Disable fallback until done to avoid recursive calls when
     # calling isCapableOf(..., "latex").
     Sys.unsetenv("R_RSP_COMPILELATEX_FALLBACK");
-    on.exit(Sys.setenv("R_RSP_COMPILELATEX_FALLBACK"=fallback), add=TRUE);
+    fallback0 <- fallback;
+    on.exit(Sys.setenv("R_RSP_COMPILELATEX_FALLBACK"=fallback0), add=TRUE);
 
     verbose && cat(verbose, "R_RSP_COMPILELATEX_FALLBACK=", fallback);
     forceFB <- (regexpr("-force", fallback) != -1L);

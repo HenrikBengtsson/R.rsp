@@ -41,9 +41,11 @@ setMethodS3("print", "RspDocument", function(x, ...) {
   s <- c(s, sprintf("Total number of RSP constructs: %d", length(x)));
   if (length(x) > 0L) {
     types <- sapply(x, FUN=function(x) class(x)[1L]);
-    tbl <- table(types);
-    for (kk in seq_along(tbl)) {
-      s <- c(s, sprintf("Number of %s(s): %d", names(tbl)[kk], tbl[kk]));
+    if (length(types) > 0L) {
+      tbl <- table(types);
+      for (kk in seq_along(tbl)) {
+        s <- c(s, sprintf("Number of %s(s): %d", names(tbl)[kk], tbl[kk]));
+      }
     }
   }
   s <- c(s, sprintf("Content type: %s", getType(x)));
@@ -93,68 +95,6 @@ setMethodS3("getType", "RspDocument", function(object, default=NA, as=c("text", 
   }
   res;
 }, protected=TRUE)
-
-
-
-#########################################################################/**
-# @RdocMethod getMetadata
-# @aliasmethod setMetadata
-#
-# @title "Gets the metadata of the RspDocument"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{name}{(optional) A @character string specifying a specific
-#      metadata variable to retrieve.}
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a @character string.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
-setMethodS3("getMetadata", "RspDocument", function(object, name=NULL, default=NULL, local=FALSE, ...) {
-  res <- getAttribute(object, "metadata", default=list());
-  if (!local) {
-    isLocal <- is.element(names(res), "source");
-    res <- res[!isLocal];
-  }
-  if (!is.null(name)) {
-    if (is.element(name, names(res))) {
-      res <- res[[name]];
-    } else {
-      res <- default;
-    }
-  }
-  res;
-}, protected=TRUE)
-
-
-setMethodS3("setMetadata", "RspDocument", function(object, metadata=NULL, name, value, ...) {
-  data <- getMetadata(object, local=TRUE);
-
-  if (!is.null(metadata)) {
-    for (name in names(metadata)) {
-      data[[name]] <- metadata[[name]];
-    }
-  } else {
-    data[[name]] <- value;
-  }
-
-  setAttribute(object, "metadata", data);
-}, protected=TRUE)
-
 
 
 
@@ -264,9 +204,7 @@ setMethodS3("dropEmptyText", "RspDocument", function(object, ..., verbose=FALSE)
   }
 
   # Nothing to do?
-  if (length(object) == 0L) {
-    return(object);
-  }
+  if (length(object) == 0L) return(object);
 
   verbose && enter(verbose, "Dropping empty RSP text constructs");
 
@@ -330,13 +268,6 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  countLineBreaks <- function(s, ...) {
-    s <- gsub("\r\n", "\n", s, fixed=TRUE);
-    s <- gsub("\r", "\n", s, fixed=TRUE);
-    s <- charToRaw(s);
-    sum(s == as.raw(0x0a));
-  } # countLineBreaks()
-
   tailString <- function(s, n=10L) {
     len <- nchar(s);
     s <- substring(s, first=max(1L, len-n+1, n));
@@ -350,7 +281,7 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
     s <- gsub("\n", "\\n", s, fixed=TRUE);
     s <- gsub("\r", "\\r", s, fixed=TRUE);
     s;
-  } # tailString()
+  } # headString()
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -739,18 +670,14 @@ setMethodS3("mergeTexts", "RspDocument", function(object, trim=FALSE, ..., verbo
 
 
   # Nothing to do?
-  if (length(object) <= 1L) {
-    return(object);
-  }
+  if (length(object) <= 1L) return(object);
 
   # All RSP text constructs
   isText <- sapply(object, FUN=inherits, "RspText");
   idxs <- which(isText);
 
   # Nothing todo?
-  if (length(idxs) == 0L) {
-    return(object);
-  }
+  if (length(idxs) == 0L) return(object);
 
   verbose && enter(verbose, "Merging RSP texts");
 
@@ -816,15 +743,11 @@ setMethodS3("flatten", "RspDocument", function(object, ..., verbose=FALSE) {
   object <- mergeTexts(object);
 
   # Nothing to do?
-  if (length(object) == 0L) {
-    return(object);
-  }
+  if (length(object) == 0L) return(object);
 
   # Nothing todo?
   idxs <- which(sapply(object, FUN=inherits, "RspDocument"));
-  if (length(idxs) == 0L) {
-    return(object);
-  }
+  if (length(idxs) == 0L) return(object);
 
   res <- list();
 
@@ -2144,10 +2067,14 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   object <- mergeTexts(object);
 
   if (verbose) {
-    classes <- sapply(object, FUN=function(x) class(x)[1L]);
-    tbl <- table(classes);
-    msg <- sprintf("%s [n=%d]", names(tbl), tbl);
-    printf(verbose, "Returning RSP document with %d RSP constructs: %s\n", length(object), paste(msg, collapse=", "));
+    if (length(object) > 0L) {
+      classes <- sapply(object, FUN=function(x) class(x)[1L]);
+      if (length(classes) > 0L) {
+        tbl <- table(classes);
+        msg <- sprintf("%s [n=%d]", names(tbl), tbl);
+        printf(verbose, "Returning RSP document with %d RSP constructs: %s\n", length(object), paste(msg, collapse=", "));
+      }
+    }
   }
 
 

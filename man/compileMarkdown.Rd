@@ -17,7 +17,8 @@
 }
 
 \usage{
-\method{compileMarkdown}{default}(filename, path=NULL, ..., outPath=".", verbose=FALSE)
+\method{compileMarkdown}{default}(filename, path=NULL, ..., outPath=".", header=NULL,
+  metadata=getMetadata(filename), verbose=FALSE)
 }
 
 \arguments{
@@ -25,6 +26,8 @@
      Markdown document to be compiled.}
   \item{...}{Additional arguments passed to \code{\link[markdown]{markdownToHTML}}.}
   \item{outPath}{The output and working directory.}
+  \item{header}{\code{\link[base]{character}} \code{\link[base]{vector}} of valid HTML strings that should be added to the HTML <head> section.}
+  \item{metadata}{A named \code{\link[base]{list}} with meta data that will add as <meta> tags in the HTML <head> section.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 

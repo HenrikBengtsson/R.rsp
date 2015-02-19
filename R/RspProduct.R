@@ -118,64 +118,6 @@ setMethodS3("getType", "RspProduct", function(object, default=NA_character_, as=
 }, protected=TRUE)
 
 
-#########################################################################/**
-# @RdocMethod getMetadata
-# @aliasmethod setMetadata
-#
-# @title "Gets the metadata an RSP product"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
-# }
-#
-# \value{
-#  Returns a named @list.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/#########################################################################
-setMethodS3("getMetadata", "RspProduct", function(object, name=NULL, default=NULL, local=FALSE, ...) {
-  res <- getAttribute(object, "metadata");
-  if (!local) {
-    isLocal <- is.element(names(res), "source");
-    res <- res[!isLocal];
-  }
-  if (!is.null(name)) {
-    if (is.element(name, names(res))) {
-      res <- res[[name]];
-    } else {
-      res <- default;
-    }
-  }
-  res;
-}, protected=TRUE)
-
-
-setMethodS3("setMetadata", "RspProduct", function(object, metadata=NULL, name, value, ...) {
-  data <- getMetadata(object, local=TRUE);
-
-  if (!is.null(metadata)) {
-    for (name in names(metadata)) {
-      data[[name]] <- metadata[[name]];
-    }
-  } else {
-    data[[name]] <- value;
-  }
-
-  setAttribute(object, "metadata", data);
-}, protected=TRUE)
-
-
 
 ###########################################################################/**
 # @RdocMethod hasProcessor
@@ -342,6 +284,9 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
   if (identical(type, getType(object))) {
     object <- setAttribute(object, "type", type);
   }
+
+  verbose && print(verbose, object);
+  verbose && print(verbose, processor);
   res <- processor(object, envir=envir, ..., verbose=verbose);
   verbose && print(verbose, res);
 

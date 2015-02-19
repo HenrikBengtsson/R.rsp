@@ -3,7 +3,10 @@
 
   %\VignetteIndexEntry{R packages: RSP vignettes}
   %\VignetteAuthor{Henrik Bengtsson}
-  %\VignetteKeyword{R, package, vignette, RSP}
+  %\VignetteKeyword{R}
+  %\VignetteKeyword{package}
+  %\VignetteKeyword{vignette}
+  %\VignetteKeyword{RSP}
   %\VignetteEngine{R.rsp::rsp}
   %\VignetteTangle{FALSE}
 --------------------------------------------------------------------"%>
@@ -35,7 +38,9 @@ Second, make sure they both carry the required R vignette markup, which are `%\V
 
   %\VignetteIndexEntry{YAPackage: An Introduction}
   %\VignetteAuthor{Ann Statisticus}
-  %\VignetteKeyword{R, package, introduction}
+  %\VignetteKeyword{R}
+  %\VignetteKeyword{package}
+  %\VignetteKeyword{introduction}
   %\VignetteTangle{no}
   %\VignetteEngine{R.rsp::rsp}
 --------------------------------------------------------------------"%%>
@@ -50,7 +55,7 @@ and in `vignettes/YAPackage-ExampleReport.md.rsp` we use (somewhere at the top):
   %\VignetteEngine{R.rsp::rsp}
 --------------------------------------------------------------------"%%>
 ```
-The advantage of using RSP meta directive for this is that it will also populate corresponding meta variables, i.e. `title`, `author`, and `keyword`.  This information can be be reused in the vignette, without having to retype the same information.  For instance, in the TeX vignette we can use `\title{<%%@meta name="title"%%>}` and `\author{<%%@meta name="author"%%>}`.  For Markdown, these meta variables will also be passed along to any Markdown-to-HTML postprocessor such that they annotate the corresponding HTML `<head>` tags.
+The advantage of using RSP meta directive for this is that it will also populate corresponding meta variables, i.e. `title`, `author`, and `keywords`.  This information can be be reused in the vignette, without having to retype the same information.  For instance, in the TeX vignette we can use `\title{<%%@meta name="title"%%>}` and `\author{<%%@meta name="author"%%>}`.  For Markdown, these meta variables will also be passed along to any Markdown-to-HTML postprocessor such that they annotate the corresponding HTML `<head>` tags.
 
 Furthermore, in the above example additional custom vignette markup was used, which has special meaning to some vignette engines.  For instance, `%\VignetteTangle{no}` causes the RSP vignette engine to skip the tangling of that vignette, i.e. the `YAPackage-Intro.R` script file will not be generated, which otherwise is the default.
 

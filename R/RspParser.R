@@ -63,13 +63,6 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  countLineBreaks <- function(s, ...) {
-    s <- gsub("\r\n", "\n", s, fixed=TRUE);
-    s <- gsub("\r", "\n", s, fixed=TRUE);
-    s <- charToRaw(s);
-    sum(s == as.raw(0x0a));
-  } # countLineBreaks()
-
   # Escape '<%%' and '%%>'
   escapeP <- function(s) {
     s <- gsub("<%%", "---<<<---%%%---%%%---", s, fixed=TRUE);
@@ -503,7 +496,11 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
     # Identify the comment length of the first comment found
     n <- attr(pos, "match.length") - 2L;
-    stopifnot(n >= 2L);
+    if (n < 2L) {
+       tag <- substring(object, first=pos)
+       start <- substring(tag, first=1L, n+2L)
+       throw(RspParseException(sprintf("Detected an RSP comment start tag (%s) but no matching end tag: %s", sQuote(start), sQuote(tag))))
+    }
 
     verbose && printf(verbose, "Number of hypens of first comment found: %d\n", n);
 

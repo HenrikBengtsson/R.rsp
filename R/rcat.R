@@ -123,7 +123,7 @@ setMethodS3("rcat", "default", function(..., file=NULL, path=NULL, envir=parent.
 }) # rcat()
 
 
-setMethodS3("rcat", "RspString", function(..., envir=parent.frame(), args="*", output="", buffered=TRUE, append=FALSE) {
+setMethodS3("rcat", "RspString", function(..., envir=parent.frame(), args="*", output="", buffered=TRUE, append=FALSE, verbose=FALSE) {
   # Argument 'buffered':
   if (!buffered) {
     isStdout <- FALSE;
@@ -139,11 +139,42 @@ setMethodS3("rcat", "RspString", function(..., envir=parent.frame(), args="*", o
     }
   }
 
-  outputP <- ifelse(buffered, "RspStringProduct", "stdout");
-  s <- rstring(..., envir=envir, args=args, output=outputP);
-  if (!is.null(s)) {
-    cat(s, file=output, append=append);
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose);
+  if (verbose) {
+    pushState(verbose);
+    on.exit(popState(verbose));
   }
+
+  verbose && enter(verbose, "rcat() for RspString");
+
+  outputP <- ifelse(buffered, "RspStringProduct", "stdout");
+  verbose && printf(verbose, "Buffered: %s\n", buffered)
+  verbose && printf(verbose, "Type of output: %s\n", outputP)
+  verbose && cat(verbose, "Arguments:")
+  verbose && str(verbose, args)
+
+  s <- rstring(..., envir=envir, args=args, output=outputP);
+
+  verbose && cat(verbose, "Result:");
+  verbose && str(verbose, s);
+
+  if (!is.null(s)) {
+    verbose && enter(verbose, "Outputting");
+    outputT <- output;
+    if (is.character(output)) {
+      if (output == "")
+        outputT <- "<stdout>"
+    } else {
+      outputT <- "<connection>"
+    }
+    verbose && printf(verbose, "Output: %s\n", outputT)
+    cat(s, file=output, append=append);
+    verbose && exit(verbose);
+  }
+
+  verbose && exit(verbose);
+
   invisible(s);
 }) # rcat()
 

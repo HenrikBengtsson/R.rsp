@@ -22,7 +22,7 @@
 \code{~~+--}\code{RspObject}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.rsp]{RspCode}, \link[R.rsp]{RspCodeChunk}, \link[R.rsp]{RspComment}, \link[R.rsp]{RspConstruct}, \link[R.rsp]{RspCopyDirective}, \link[R.rsp]{RspCutDirective}, \link[R.rsp]{RspDirective}, \link[R.rsp]{RspDocument}, \link[R.rsp]{RspElseDirective}, \link[R.rsp]{RspEndcopyDirective}, \link[R.rsp]{RspEndcutDirective}, \link[R.rsp]{RspEndifDirective}, \link[R.rsp]{RspErrorDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspExpression}, \link[R.rsp]{RspFileProduct}, \link[R.rsp]{RspIfDirective}, \link[R.rsp]{RspIfeqDirective}, \link[R.rsp]{RspIfneqDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspIntegerDirective}, \link[R.rsp]{RspLogicalDirective}, \link[R.rsp]{RspMetaDirective}, \link[R.rsp]{RspNumericDirective}, \link[R.rsp]{RspPageDirective}, \link[R.rsp]{RspPasteDirective}, \emph{\link[R.rsp]{RspProduct}}, \emph{\link[R.rsp]{RspRSourceCode}}, \emph{\link[R.rsp]{RspShSourceCode}}, \emph{\link[R.rsp]{RspSourceCode}}, \link[R.rsp]{RspString}, \link[R.rsp]{RspStringDirective}, \emph{\link[R.rsp]{RspStringProduct}}, \link[R.rsp]{RspText}, \link[R.rsp]{RspUnknownDirective}, \link[R.rsp]{RspUnparsedDirective}, \link[R.rsp]{RspUnparsedExpression}, \link[R.rsp]{RspVariableDirective}\cr
+\link[R.rsp]{RspCode}, \link[R.rsp]{RspCodeChunk}, \link[R.rsp]{RspComment}, \link[R.rsp]{RspConstruct}, \link[R.rsp]{RspCopyDirective}, \link[R.rsp]{RspCutDirective}, \link[R.rsp]{RspDirective}, \link[R.rsp]{RspDocument}, \link[R.rsp]{RspElseDirective}, \link[R.rsp]{RspEndcopyDirective}, \link[R.rsp]{RspEndcutDirective}, \link[R.rsp]{RspEndifDirective}, \link[R.rsp]{RspErrorDirective}, \link[R.rsp]{RspEvalDirective}, \link[R.rsp]{RspExpression}, \link[R.rsp]{RspFileProduct}, \link[R.rsp]{RspIfDirective}, \link[R.rsp]{RspIfeqDirective}, \link[R.rsp]{RspIfneqDirective}, \link[R.rsp]{RspIncludeDirective}, \link[R.rsp]{RspIntegerDirective}, \link[R.rsp]{RspLogicalDirective}, \link[R.rsp]{RspMetaDirective}, \link[R.rsp]{RspNumericDirective}, \link[R.rsp]{RspPageDirective}, \link[R.rsp]{RspPasteDirective}, \emph{\link[R.rsp]{RspProduct}}, \emph{\link[R.rsp]{RspRSourceCode}}, \emph{\link[R.rsp]{RspShSourceCode}}, \emph{\link[R.rsp]{RspSourceCode}}, \link[R.rsp]{RspString}, \link[R.rsp]{RspStringDirective}, \emph{\link[R.rsp]{RspStringProduct}}, \link[R.rsp]{RspText}, \link[R.rsp]{RspUnknownDirective}, \link[R.rsp]{RspUnparsedDirective}, \link[R.rsp]{RspUnparsedExpression}, \link[R.rsp]{RspVariableDirective}, \link[R.rsp]{RspVoid}\cr
 
 public class \bold{RspObject}\cr
 extends logical\cr
@@ -46,12 +46,7 @@ RspObject(value=NA, attrs=list(), ...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{getAttribute} \tab  -\cr
- \tab \code{\link[R.rsp:getAttributes.RspObject]{getAttributes}} \tab Gets the attributes of an RSP object.\cr
- \tab \code{hasAttribute} \tab  -\cr
  \tab \code{\link[R.rsp:print.RspObject]{print}} \tab Prints a summary of an RSP object.\cr
- \tab \code{setAttribute} \tab  -\cr
- \tab \code{setAttributes} \tab  -\cr
 }
 
 

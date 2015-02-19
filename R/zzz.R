@@ -1,31 +1,22 @@
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Make functions callable from the command line
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-rcat <- CmdArgsFunction(rcat)
-rclean <- CmdArgsFunction(rclean)
-rcompile <- CmdArgsFunction(rcompile)
-rfile <- CmdArgsFunction(rfile)
-rscript <- CmdArgsFunction(rscript)
-rsource <- CmdArgsFunction(rsource)
-rstring <- CmdArgsFunction(rstring)
+## covr: skip=all
 
 .onUnload <- function(libpath) {
   # Force finalize() on HttpDaemon objects
-  base::gc();
+  base::gc()
 } # .onUnload()
 
 
 .onLoad <- function(libname, pkgname) {
-  .registerVignetteEngines(pkgname);
+  .registerVignetteEngines(pkgname)
 
-  ns <- getNamespace(pkgname);
-  pkg <- RRspPackage(pkgname);
-  assign(pkgname, pkg, envir=ns);
+  ns <- getNamespace(pkgname)
+  pkg <- RRspPackage(pkgname)
+  assign(pkgname, pkg, envir=ns)
 }
 
 
 .onAttach <- function(libname, pkgname) {
-  startupMessage(get(pkgname, envir=getNamespace(pkgname)));
+  startupMessage(get(pkgname, envir=getNamespace(pkgname)))
 }
 
 
