@@ -288,6 +288,12 @@ $(R_OUTDIR)/vigns: install
 
 vignettes: $(R_OUTDIR)/vigns
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Build package README.md
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+README.md: README.md.rsp
+	$(R_SCRIPT) -e "R.rsp::rfile('README.md.rsp', postprocess=FALSE)"
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Run package tests
