@@ -183,12 +183,21 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
   }
   type <- parseInternetMediaType(type)$contentType;
 
+  postprocess <- getMetadata(object, "postprocess", local=TRUE)
+  if (is.logical(postprocess) && !postprocess) {
+    verbose && cat(verbose, "Metadata 'postprocess' (=FALSE) disables further postprocessing.")
+    verbose && exit(verbose)
+    return(NULL)
+  }
+
+
   source <- getMetadata(object, "source", local=TRUE);
   if (is.null(source)) {
     verbose && cat(verbose, "Source document: <unknown>");
   } else {
     verbose && cat(verbose, "Source document: ", sQuote(source));
   }
+
 
 
   # Find a down-stream compiler/processor:
@@ -266,10 +275,20 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
       # NOTE: It is not sure that the processor supports URLs
       pathnameR <- processor(pathname, ...);
 
+      ## Check if further postprocessoring should be disabled
+      metadataR <- getMetadata(pathnameR)
+      postprocessR <- getMetadata(pathnameR, "postprocess", local=TRUE)
+      if (is.logical(postprocessR) && !postprocessR) {
+        metadata$postprocess <- postprocessR
+        verbose && cat(verbose, "Disabling further postprocessing.")
+      }
+
+
       # Always return the relative path
       pathnameR <- getAbsolutePath(pathnameR);
       res <- RspFileProduct(pathnameR, attrs=list(metadata=metadata), mustExist=FALSE);
       res <- setMetadata(res, name="source", value=pathname);
+
       res;
     } # fcn()
     verbose && cat(verbose, "Processor found: ", type);
