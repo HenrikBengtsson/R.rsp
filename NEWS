@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.20.0-9000 [2015-05-11]
+o ...
+
+
 Version: 0.20.0 [2015-02-18]
 o ROBUSTNESS: Now compileLaTeX() will give an error if the filename
   extension is neither *.tex nor *.ltx (case sensitive).  The reason
