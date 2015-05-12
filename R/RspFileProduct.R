@@ -176,40 +176,6 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
     ## Get compression level
     compression <- metadata$compression
-    compression <- trim(compression)
-
-    ## Nothing to do, i.e. no compression requested?
-    if (length(compression) == 0L || nchar(compression) == 0L) return(pathname)
-
-    verbose && enter(verbose, "Trying to compress PDF")
-    verbose && cat(verbose, "Compression requested: ", compression)
-
-    compressionT <- unlist(strsplit(compression, split="+", fixed=TRUE))
-    cmethod <- gsub("[(].*", "", compressionT)
-    carg <- gsub("[)].*", "", gsub(".*[(]", "", compressionT))
-    keep <- is.element(cmethod, c("gs", "qpdf"))
-    if (any(!keep)) {
-      warning("Ignoring unknown PDF compression method: ", hpaste(cmethod[!keep]))
-      compression <- compression[keep]
-      cmethod <- cmethod[keep]
-      carg <- carg[keep]
-    }
-
-    ## Nothing to do?
-    if (length(cmethod) == 0L) {
-      verbose && cat(verbose, "No known compression: ", compression)
-      verbose && exit(verbose)
-      return(pathname)
-    }
-
-    cargs <- list()
-    for (kk in seq_along(cmethod)) {
-      if (cmethod[kk] == "gs") {
-        opts <- unlist(strsplit(carg[kk], split=",", fixed=TRUE))
-        if (length(opts) > 0L) cargs$gs_quality <- opts[1L]
-        if (length(opts) > 1L) cargs$gs_extras <- opts[-1L]
-      }
-    }
 
     ## Check if R.utils::compressPDF() is available
     ## (only in R.utils develop as of 2015-05-11)
@@ -220,10 +186,8 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
       verbose && exit(verbose)
       return(pathname)
     }
-
-    ## Compress if R.utils::compressPDF() is available
-    ## (only in R.utils develop as of 2015-05-11)
     compressPDF <- get("compressPDF", mode="function", envir=ns, inherits=FALSE)
+
     pathT <- tempfile(pattern=".dir", tmpdir=".")
     on.exit(removeDirectory(pathT, recursive=TRUE), add=TRUE)
 
@@ -231,12 +195,9 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     ## other, fall back to keep the non-compressed version.
     tryCatch({
       verbose && enter(verbose, "R.utils::compressPDF()...")
-      verbose && cat(verbose, "Arguments:")
-      args <- list(pathname, outPath=pathT)
-      args <- c(args, cargs)
-      verbose && str(verbose, args)
       suppressWarnings({
-        pathnameZ <- do.call(compressPDF, args=args)
+        pathnameZ <- compressPDF(pathname, outPath=pathT,
+                                 compression=compression)
       })
       verbose && exit(verbose)
 
