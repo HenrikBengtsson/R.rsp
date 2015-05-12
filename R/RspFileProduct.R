@@ -190,6 +190,7 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     keep <- is.element(cmethod, c("gs", "qpdf"))
     if (any(!keep)) {
       warning("Ignoring unknown PDF compression method: ", hpaste(cmethod[!keep]))
+      compression <- compression[keep]
       cmethod <- cmethod[keep]
       carg <- carg[keep]
     }
@@ -226,19 +227,29 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     pathT <- tempfile(pattern=".dir", tmpdir=".")
     on.exit(removeDirectory(pathT, recursive=TRUE), add=TRUE)
 
-    verbose && enter(verbose, "R.utils::compressPDF()...")
-    verbose && cat(verbose, "Arguments:")
-    args <- list(pathname, outPath=pathT)
-    args <- c(args, cargs)
-    verbose && str(verbose, args)
-    pathnameZ <- do.call(compressPDF, args=args)
-    verbose && exit(verbose)
+    ## ROBUSTNESS: If compression fails for one reason or the
+    ## other, fall back to keep the non-compressed version.
+    tryCatch({
+      verbose && enter(verbose, "R.utils::compressPDF()...")
+      verbose && cat(verbose, "Arguments:")
+      args <- list(pathname, outPath=pathT)
+      args <- c(args, cargs)
+      verbose && str(verbose, args)
+      suppressWarnings({
+        pathnameZ <- do.call(compressPDF, args=args)
+      })
+      verbose && exit(verbose)
 
-    size <- file.info(pathname)$size
-    sizeZ <- file.info(pathnameZ)$size
-    if (!identical(sizeZ, size)) {
-      renameFile(pathnameZ, pathname, overwrite=TRUE)
-    }
+      size <- file.info(pathname)$size
+      sizeZ <- file.info(pathnameZ)$size
+      if (!identical(sizeZ, size)) {
+        renameFile(pathnameZ, pathname, overwrite=TRUE)
+      }
+    }, error = function(ex) {
+      msg <- sprintf("Compression of '%s' using '%s' failed. Keeping the original PDF file. Reason was: %s", pathname, compression, ex$message)
+      verbose && cat(verbose, msg)
+      warning(msg)
+    })
 
     verbose && exit(verbose)
 
