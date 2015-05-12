@@ -204,8 +204,8 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
     cargs <- list()
     for (kk in seq_along(cmethod)) {
-      if (cmethod == "gs") {
-        opts <- unlist(strsplit(carg, split=",", fixed=TRUE))
+      if (cmethod[kk] == "gs") {
+        opts <- unlist(strsplit(carg[kk], split=",", fixed=TRUE))
         if (length(opts) > 0L) cargs$gs_quality <- opts[1L]
         if (length(opts) > 1L) cargs$gs_extras <- opts[-1L]
       }
