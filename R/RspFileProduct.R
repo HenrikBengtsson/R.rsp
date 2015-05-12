@@ -160,6 +160,92 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
   } # localCompileLaTeX()
 
 
+  localCompressPDF <- function(pathname, ..., verbose=FALSE) {
+    # Argument 'verbose':
+    verbose <- Arguments$getVerbose(verbose)
+    if (verbose) {
+      pushState(verbose)
+      on.exit(popState(verbose))
+    }
+
+    ## Disabling further postprocessing after this,
+    ## which avoids recursive loop.
+    metadata <- attr(pathname, "metadata")
+    metadata$postprocess <- FALSE
+    attr(pathname, "metadata") <- metadata
+
+    ## Get compression level
+    compression <- metadata$compression
+    compression <- trim(compression)
+
+    ## Nothing to do, i.e. no compression requested?
+    if (length(compression) == 0L || nchar(compression) == 0L) return(pathname)
+
+    verbose && enter(verbose, "Trying to compress PDF")
+    verbose && cat(verbose, "Compression requested: ", compression)
+
+    compressionT <- unlist(strsplit(compression, split="+", fixed=TRUE))
+    cmethod <- gsub("[(].*", "", compressionT)
+    carg <- gsub("[)].*", "", gsub(".*[(]", "", compressionT))
+    keep <- is.element(cmethod, c("gs", "qpdf"))
+    if (any(!keep)) {
+      warning("Ignoring unknown PDF compression method: ", hpaste(cmethod[!keep]))
+      cmethod <- cmethod[keep]
+      carg <- carg[keep]
+    }
+
+    ## Nothing to do?
+    if (length(cmethod) == 0L) {
+      verbose && cat(verbose, "No known compression: ", compression)
+      verbose && exit(verbose)
+      return(pathname)
+    }
+
+    cargs <- list()
+    for (kk in seq_along(cmethod)) {
+      if (cmethod == "gs") {
+        opts <- unlist(strsplit(carg, split=",", fixed=TRUE))
+        if (length(opts) > 0L) cargs$gs_quality <- opts[1L]
+        if (length(opts) > 1L) cargs$gs_extras <- opts[-1L]
+      }
+    }
+
+    ## Check if R.utils::compressPDF() is available
+    ## (only in R.utils develop as of 2015-05-11)
+    ns <- loadNamespace("R.utils")
+    if (!exists("compressPDF", mode="function", envir=ns, inherits=FALSE)) {
+      ## Nothing we can do. Skipping.
+      verbose && cat(verbose, "R.utils::compressPDF() not found. Skipping.")
+      verbose && exit(verbose)
+      return(pathname)
+    }
+
+    ## Compress if R.utils::compressPDF() is available
+    ## (only in R.utils develop as of 2015-05-11)
+    compressPDF <- get("compressPDF", mode="function", envir=ns, inherits=FALSE)
+    pathT <- tempfile(pattern=".dir", tmpdir=".")
+    on.exit(removeDirectory(pathT, recursive=TRUE), add=TRUE)
+
+    verbose && enter(verbose, "R.utils::compressPDF()...")
+    verbose && cat(verbose, "Arguments:")
+    args <- list(pathname, outPath=pathT)
+    args <- c(args, cargs)
+    verbose && str(verbose, args)
+    pathnameZ <- do.call(compressPDF, args=args)
+    verbose && exit(verbose)
+
+    size <- file.info(pathname)$size
+    sizeZ <- file.info(pathnameZ)$size
+    if (!identical(sizeZ, size)) {
+      renameFile(pathnameZ, pathname, overwrite=TRUE)
+    }
+
+    verbose && exit(verbose)
+
+    pathname
+  } # localCompressPDF()
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -183,9 +269,11 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
   }
   type <- parseInternetMediaType(type)$contentType;
 
+
+  # Nothing to do?
   postprocess <- getMetadata(object, "postprocess", local=TRUE)
   if (is.logical(postprocess) && !postprocess) {
-    verbose && cat(verbose, "Metadata 'postprocess' (=FALSE) disables further postprocessing.")
+    verbose && cat(verbose, "Processing disabled: metadata variable 'postprocess' is FALSE")
     verbose && exit(verbose)
     return(NULL)
   }
@@ -210,6 +298,10 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     # *.tex => ... => *.pdf
     "application/x-tex" = localCompileLaTeX,
     "application/x-latex" = localCompileLaTeX,
+
+    ## PDF documents:
+    # *.pdf => ... => *.pdf
+    "application/pdf" = localCompressPDF,
 
     # Markdown documents:
     # *.md => *.html
@@ -280,7 +372,6 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
       postprocessR <- getMetadata(pathnameR, "postprocess", local=TRUE)
       if (is.logical(postprocessR) && !postprocessR) {
         metadata$postprocess <- postprocessR
-        verbose && cat(verbose, "Disabling further postprocessing.")
       }
 
 
@@ -303,6 +394,8 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
 ############################################################################
 # HISTORY:
+# 2015-05-11
+# o Added postprocessor for PDF compression.
 # 2015-02-04
 # o Now the processor function returned by findProcessor() passes
 #   meta data as a named list to the underlying compiler/processor.

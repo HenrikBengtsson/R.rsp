@@ -2,9 +2,12 @@ Package: R.rsp
 ==============
 
 Version: 0.20.0-9000 [2015-05-11]
-o Setting meta variable 'postprocess' to FALSE can now be used to 
-  disable postprocessing, e.g. <%@meta postprocess=FALSE%> in 
-  foo.md.rsp builds foo.md and does not continue compiling into 
+o Added postprocessor for PDF compression, which can be enabled
+  and controlled vua meta variable 'compression', e.g.
+  <%@meta compression="gs(ebook)"%>.
+o Setting meta variable 'postprocess' to FALSE can now be used to
+  disable postprocessing, e.g. <%@meta postprocess=FALSE%> in
+  foo.md.rsp builds foo.md and does not continue compiling into
   an HTML document as well, which is otherwise the default.
 
 

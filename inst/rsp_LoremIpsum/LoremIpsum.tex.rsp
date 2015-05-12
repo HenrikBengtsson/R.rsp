@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage[margin=1.0in]{geometry}
 \usepackage{graphicx}
+<%@meta compression="gs(ebook)"%>
 <%
 R.utils::use("R.devices")
 %>
