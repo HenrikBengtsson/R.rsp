@@ -177,6 +177,9 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     ## Get compression level
     compression <- metadata$compression
 
+    verbose && enter(verbose, "Trying to compress PDF")
+    verbose && cat(verbose, "Compression: ", compression)
+
     ## Check if R.utils::compressPDF() is available
     ## (only in R.utils develop as of 2015-05-11)
     ns <- loadNamespace("R.utils")
