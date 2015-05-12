@@ -20,7 +20,8 @@
     "Subject"="subject",
     "Author"="author",
     "Date"="date",
-    "Tangle"="tangle"
+    "Tangle"="tangle",
+    "Compression"="compression"
   )
 
   metadata <- grep(pattern, bfr, value=TRUE)
@@ -54,6 +55,8 @@
 
 ##############################################################################
 # HISTORY:
+# 2015-05-11
+# o Added \VignetteCompression{}.
 # 2015-02-04
 # o Now all \VignetteKeyword{} directives are parsed into meta data
 #   field 'keywords'.
@@ -64,5 +67,3 @@
 # o Added .parseRVignetteMetadata().  Was an internal function of the
 #   preprocess() method for RspDocument.
 ##############################################################################
-
-

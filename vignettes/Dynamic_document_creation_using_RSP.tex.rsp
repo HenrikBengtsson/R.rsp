@@ -21,6 +21,7 @@
   %\VignetteKeyword{PDF}
   %\VignetteEngine{R.rsp::rsp}
   %\VignetteTangle{FALSE}
+  %\VignetteCompression{gs(ebook)+qpdf}
 --------------------------------------------------------------------"%>
 
 <%
