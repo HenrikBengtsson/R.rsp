@@ -24,7 +24,7 @@ for (kk in seq_along(pathnames)) {
   pathnameR <- pathnamesR[kk]
   verbose && enter(verbose, sprintf("RSP file #%d ('%s') of %d", kk, pathname, length(pathnames)))
 
-  rc <- rscript(file=pathname)
+  rc <- rcode(file=pathname)
 
   rs <- rstring(file=pathname)
   s <- as.character(rs)

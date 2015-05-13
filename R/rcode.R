@@ -1,7 +1,8 @@
 ###########################################################################/**
-# @RdocDefault rscript
-# @alias rscript.RspString
-# @alias rscript.RspDocument
+# @RdocDefault rcode
+# @alias rcode.RspString
+# @alias rcode.RspDocument
+# @alias rscript
 #
 # @title "Compiles an RSP document and returns the generated source code script"
 #
@@ -39,7 +40,7 @@
 #   otherwise an @see "RspSourceCode".
 # }
 #
-# @examples "../incl/rscript.Rex"
+# @examples "../incl/rcode.Rex"
 #
 # @author
 #
@@ -51,7 +52,7 @@
 # @keyword IO
 # @keyword internal
 #*/###########################################################################
-setMethodS3("rscript", "default", function(..., file=NULL, path=NULL, output=NULL, workdir=NULL, envir=parent.frame(), args="*", verbose=FALSE) {
+setMethodS3("rcode", "default", function(..., file=NULL, path=NULL, output=NULL, workdir=NULL, envir=parent.frame(), args="*", verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -134,7 +135,7 @@ setMethodS3("rscript", "default", function(..., file=NULL, path=NULL, output=NUL
   }
 
 
-  verbose && enter(verbose, "rscript() for default");
+  verbose && enter(verbose, "rcode() for default");
 
   if (is.null(file)) {
     s <- RspString(...);
@@ -146,15 +147,15 @@ setMethodS3("rscript", "default", function(..., file=NULL, path=NULL, output=NUL
   }
   verbose && cat(verbose, "Length of RSP string: ", nchar(s));
 
-  res <- rscript(s, output=output, workdir=workdir, envir=envir, args=args, verbose=verbose);
+  res <- rcode(s, output=output, workdir=workdir, envir=envir, args=args, verbose=verbose);
 
   verbose && exit(verbose);
 
   res;
-}) # rscript()
+}) # rcode()
 
 
-setMethodS3("rscript", "RspString", function(object, output=NULL, workdir=NULL, envir=parent.frame(), args="*", ..., verbose=FALSE) {
+setMethodS3("rcode", "RspString", function(object, output=NULL, workdir=NULL, envir=parent.frame(), args="*", ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -168,7 +169,7 @@ setMethodS3("rscript", "RspString", function(object, output=NULL, workdir=NULL, 
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "rscript() for ", class(object)[1L]);
+  verbose && enter(verbose, "rcode() for ", class(object)[1L]);
 
   if (length(args) > 0L) {
     verbose && enter(verbose, "Assigning RSP arguments to processing environment");
@@ -204,15 +205,15 @@ setMethodS3("rscript", "RspString", function(object, output=NULL, workdir=NULL, 
   verbose && print(verbose, expr);
   verbose && exit(verbose);
 
-  res <- rscript(expr, output=output, workdir=workdir, envir=envir, args=NULL, ..., verbose=verbose);
+  res <- rcode(expr, output=output, workdir=workdir, envir=envir, args=NULL, ..., verbose=verbose);
 
   verbose && exit(verbose);
 
   res;
-}) # rscript()
+}) # rcode()
 
 
-setMethodS3("rscript", "RspDocument", function(object, output=NULL, workdir=NULL, envir=parent.frame(), ..., verbose=FALSE) {
+setMethodS3("rcode", "RspDocument", function(object, output=NULL, workdir=NULL, envir=parent.frame(), ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -244,7 +245,7 @@ setMethodS3("rscript", "RspDocument", function(object, output=NULL, workdir=NULL
     on.exit(popState(verbose));
   }
 
-  verbose && enter(verbose, "rscript() for ", class(object)[1L]);
+  verbose && enter(verbose, "rcode() for ", class(object)[1L]);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Coerce
@@ -285,11 +286,20 @@ setMethodS3("rscript", "RspDocument", function(object, output=NULL, workdir=NULL
   verbose && exit(verbose);
 
   output;
-}) # rscript()
+}) # rcode()
+
+## BACKWARD COMPATIBILITY:
+setMethodS3("rscript", "default", function(...) {
+  .Deprecated(new="rcode")
+  rcode(...)
+}, deprecated=TRUE)
+
 
 
 ##############################################################################
 # HISTORY:
+# 2015-05-12
+# o Renamed rscript() to rcode().  rscript() is not deprecated.
 # 2014-05-27
 # o Now rscript(file) writes to file by default.
 # o Now rscript() adds metadata attributes.
