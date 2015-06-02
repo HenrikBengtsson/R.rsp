@@ -2,7 +2,7 @@ Package: R.rsp
 ==============
 
 Version: 0.20.0-9000 [2015-05-12]
-o Renamed rscript() to rcode().  rscript() is not deprecated.
+o Renamed rscript() to rcode().  rscript() is now deprecated.
 o Added vignette option %\VignetteCompression{} for alternative
   way of setting meta variable 'compression', e.g.
   %\VignetteCompression{gs(ebook)+qpdf} to compressed PDF output.
