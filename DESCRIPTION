@@ -8,7 +8,7 @@ Imports:
   utils,
   R.methodsS3 (>= 1.7.0),
   R.oo (>= 1.19.0),
-  R.utils (>= 2.0.2),
+  R.utils (>= 2.1.0),
   R.cache (>= 0.10.0)
 Suggests:
   tcltk,
@@ -21,7 +21,7 @@ Suggests:
 SuggestsNote:
   Recommended: digest, R.devices, base64enc, markdown
 VignetteBuilder: R.rsp
-Date: 2015-05-12
+Date: 2015-06-08
 Title: Dynamic Generation of Scientific Reports
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))

@@ -180,17 +180,6 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     verbose && enter(verbose, "Trying to compress PDF")
     verbose && cat(verbose, "Compression: ", compression)
 
-    ## Check if R.utils::compressPDF() is available
-    ## (only in R.utils develop as of 2015-05-11)
-    ns <- loadNamespace("R.utils")
-    if (!exists("compressPDF", mode="function", envir=ns, inherits=FALSE)) {
-      ## Nothing we can do. Skipping.
-      verbose && cat(verbose, "R.utils::compressPDF() not found. Skipping.")
-      verbose && exit(verbose)
-      return(pathname)
-    }
-    compressPDF <- get("compressPDF", mode="function", envir=ns, inherits=FALSE)
-
     pathT <- tempfile(pattern=".dir", tmpdir=".")
     on.exit(removeDirectory(pathT, recursive=TRUE), add=TRUE)
 

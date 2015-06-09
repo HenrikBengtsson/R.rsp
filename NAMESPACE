@@ -48,6 +48,7 @@ importFrom("R.utils", "capitalize")
 importFrom("R.utils", "capture")
 importFrom("R.utils", "cat") ## Multi-sources: R.utils, base
 importFrom("R.utils", "cmdArgs")
+importFrom("R.utils", "compressPDF")
 importFrom("R.utils", "createLink")
 importFrom("R.utils", "copyFile")
 importFrom("R.utils", "displayCode")
