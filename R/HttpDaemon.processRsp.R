@@ -65,7 +65,7 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
   debug <- isTRUE(daemon$.debug);
 
   if (debug) {
-    cat("DEBUG: RSP version: ", version, "\n", sep="");
+    mcat("DEBUG: RSP version: ", version, "\n", sep="");
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -86,8 +86,8 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
   request <- getHttpRequest(daemon);
 
   if (debug) {
-    cat("DEBUG: RSP file: ", pathname, "\n", sep="");
-    cat("DEBUG: Working directory: ", path, "\n", sep="");
+    mcat("DEBUG: RSP file: ", pathname, "\n", sep="");
+    mcat("DEBUG: Working directory: ", path, "\n", sep="");
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -120,11 +120,14 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
 
 
   }, error = function(ex) {
-    print("ERROR:");
-    print(ex);
+    mcat("ERROR:");
+    mprint(ex);
     writeResponse(daemon, as.character(ex));
     if (!is.null(ex$code)) {
-      writeResponse(daemon, ex$code, collapse="\n");
+      code <- paste(ex$code, collapse="\n");
+      mcat(code, "\n");
+      mprint(ex);
+      writeResponse(daemon, code);
     }
   }) # tryCatch()
 }, static=TRUE, protected=TRUE)

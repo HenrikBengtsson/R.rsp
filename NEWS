@@ -13,6 +13,8 @@ o Setting meta variable 'postprocess' to FALSE can now be used to
   disable postprocessing, e.g. <%@meta postprocess=FALSE%> in
   foo.md.rsp builds foo.md and does not continue compiling into
   an HTML document as well, which is otherwise the default.
+o BUG FIX/LEGACY CODE: While trying to generate an error message
+  another error was thrown.
 
 
 Version: 0.20.0 [2015-02-18]
