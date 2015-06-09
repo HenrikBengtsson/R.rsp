@@ -46,6 +46,8 @@ install:
 
  - $RENV install_r base64enc digest markdown R.devices
 
+ - $RENV install_r R.rsp
+
  - $RENV install_r R.cache R.methodsS3 R.oo R.utils
 
  - $RENV install_r ascii base64enc digest knitr markdown R.devices
