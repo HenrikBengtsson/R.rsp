@@ -150,6 +150,12 @@ setMethodS3("getFileSize", "RspFileProduct", function(object, what=c("numeric", 
 
 
 setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FALSE) {
+  isFALSE <- function(x) {
+    if (is.character(x)) return(toupper(x) == "FALSE")
+    if (is.logical(x) && !x) return(TRUE)
+    FALSE
+  }
+
   localCompileLaTeX <- function(..., texinputs=NULL) {
     if (!is.null(source)) {
       path <- dirname(source)
@@ -236,8 +242,7 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
   # Nothing to do?
   postprocess <- getMetadata(object, "postprocess", local=TRUE)
-  postprocess <- as.logical(postprocess)
-  if (!postprocess) {
+  if (isFALSE(postprocess)) {
     verbose && cat(verbose, "Processing disabled: metadata variable 'postprocess' is FALSE")
     verbose && exit(verbose)
     return(NULL)
@@ -335,8 +340,7 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
       ## Check if further postprocessoring should be disabled
       metadataR <- getMetadata(pathnameR)
       postprocessR <- getMetadata(pathnameR, "postprocess", local=TRUE)
-      postprocessR <- as.logical(postprocessR)
-      if (!postprocessR) metadata$postprocess <- FALSE
+      if (isFALSE(postprocessR)) metadata$postprocess <- FALSE
 
       # Always return the relative path
       pathnameR <- getAbsolutePath(pathnameR);
