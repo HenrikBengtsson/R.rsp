@@ -86,6 +86,8 @@ importFrom("R.utils", "withoutGString")
 importFrom("R.utils", "CmdArgsFunction")
 importFrom("R.utils", "use")
 
+importFrom("methods", "as")
+
 importFrom("tools", "file_ext")
 importFrom("tools", "file_path_sans_ext")
 importFrom("tools", "file_path_as_absolute")

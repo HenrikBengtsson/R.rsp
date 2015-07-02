@@ -1,7 +1,7 @@
 Package: R.rsp
 ==============
 
-Version: 0.20.0-9000 [2015-06-08]
+Version: 0.20.0-9000 [2015-07-01]
 o Renamed rscript() to rcode().  rscript() is now deprecated.
 o Added vignette option %\VignetteCompression{} for alternative
   way of setting meta variable 'compression', e.g.
@@ -17,7 +17,7 @@ o BUG FIX/LEGACY CODE: Old RSP -> R script compiler could generate
   invalid R syntax for multiline RSP code expressions put in R
   source code comments.  Not sure why this all of a sudden shows
   up; maybe something changed in R that causes the bug to reveal
-  itself.  This is old legacy code so the default / modern RSP 
+  itself.  This is old legacy code so the default / modern RSP
   engine is unaffected.
 o BUG FIX/LEGACY CODE: While trying to generate an error message
   another error was thrown.
