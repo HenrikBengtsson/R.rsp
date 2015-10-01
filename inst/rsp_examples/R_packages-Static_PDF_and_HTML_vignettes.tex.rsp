@@ -20,7 +20,7 @@ where the \emph{"asis" file} contains the lines:
 \begin{verbatim} 
 <%@include file="${label}.pdf.asis.rsp"%>
 \end{verbatim}
-Above the first two entries are required whereas the keyword entries are optional.  Note also that the \code{\%{\bs}VignetteIndexEntry\{\}} controls the title in R's help indices as well as in online package respositories such as CRAN.
+Above the first two entries are required whereas the keyword entries are optional.  Note also that the \code{\%{\bs}VignetteIndexEntry\{\}} controls the title shown in R's help indices as well as in online package respositories such as CRAN.
 
 As for any type of (non-Sweave) package vignette, don't forget to specify:
 \begin{verbatim}
