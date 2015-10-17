@@ -12,7 +12,7 @@ o Added postprocessor for PDF compression, which can be enabled
 o Setting meta variable 'postprocess' to FALSE can now be used to
   disable postprocessing, e.g. <%@meta postprocess="FALSE"%> in
   foo.md.rsp builds foo.md and does not continue compiling into
-  an HTML document as well, which is otherwise the default.
+  an HTML document, which is otherwise the default.
 o BUG FIX/LEGACY CODE: Old RSP -> R script compiler could generate
   invalid R syntax for multiline RSP code expressions put in R
   source code comments.  Not sure why this all of a sudden shows
