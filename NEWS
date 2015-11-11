@@ -1,7 +1,7 @@
 Package: R.rsp
 ==============
 
-Version: 0.20.0-9000 [2015-07-01]
+Version: 0.20.0-9000 [2015-11-11]
 o Renamed rscript() to rcode().  rscript() is now deprecated.
 o Added vignette option %\VignetteCompression{} for alternative
   way of setting meta variable 'compression', e.g.
@@ -13,6 +13,9 @@ o Setting meta variable 'postprocess' to FALSE can now be used to
   disable postprocessing, e.g. <%@meta postprocess="FALSE"%> in
   foo.md.rsp builds foo.md and does not continue compiling into
   an HTML document as well, which is otherwise the default.
+o ROBUSTNESS: findPandoc() could give an error if the pandoc
+  executable failed for unpredictable reasons. Now it returns
+  NULL if that is the case.  Same for findAsciidoc().
 o BUG FIX/LEGACY CODE: Old RSP -> R script compiler could generate
   invalid R syntax for multiline RSP code expressions put in R
   source code comments.  Not sure why this all of a sudden shows

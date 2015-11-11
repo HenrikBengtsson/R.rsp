@@ -64,10 +64,17 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
 
   # Validate by retrieving version information
   if (isFile(bin)) {
-    res <- system2(bin, args="--version", stdout=TRUE);
-    ver <- trim(gsub("asciidoc", "", res));
-    ver <- numeric_version(ver);
-    attr(bin, "version") <- ver;
+    res <- tryCatch({
+      system2(bin, args="--version", stdout=TRUE)
+    }, error = function(ex) {
+      NULL
+    })
+
+    if (!is.null(res)) {
+      ver <- trim(gsub("asciidoc", "", res))
+      ver <- numeric_version(ver)
+      attr(bin, "version") <- ver
+    }
   }
 
   verbose && exit(verbose);

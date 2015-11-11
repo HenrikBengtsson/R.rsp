@@ -64,12 +64,19 @@ setMethodS3("findPandoc", "default", function(mustExist=TRUE, ..., verbose=FALSE
 
   # Validate by retrieving version information
   if (isFile(bin)) {
-    res <- system2(bin, args="--version", stdout=TRUE);
-    pattern <- "pandoc.* ([0-9.-]+).*";
-    ver <- grep(pattern, res, value=TRUE);
-    ver <- gsub(pattern, "\\1", ver);
-    ver <- numeric_version(ver);
-    attr(bin, "version") <- ver;
+    res <- tryCatch({
+      system2(bin, args="--version", stdout=TRUE)
+    }, error = function(ex) {
+      NULL
+    })
+
+    if (!is.null(res)) {
+      pattern <- "pandoc.* ([0-9.-]+).*"
+      ver <- grep(pattern, res, value=TRUE)
+      ver <- gsub(pattern, "\\1", ver)
+      ver <- numeric_version(ver)
+      attr(bin, "version") <- ver
+    }
   }
 
   verbose && exit(verbose);
