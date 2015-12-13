@@ -198,7 +198,7 @@ setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "tangle"
 
   if (format == "demo") {
     # (a) Display a cleaner .rout()
-    hdr <- c('.rout <- function(x)\n  cat(paste0(x, collapse=""))')
+    hdr <- c('.rout <- function(x)\n  cat(paste(x, sep="", collapse=""))')
     code <- c(hdr, code);
   } else if (format == "unsafedemo") {
     # NOTE: The generated demo code may not display properly

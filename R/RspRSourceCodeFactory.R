@@ -282,7 +282,12 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
     }
 
     ## Look up \'base\' function once (faster)
-    .base_paste0 <- base::paste0
+    if (getRversion() < "2.15.0") {
+      .base_paste <- base::paste
+      .base_paste0 <- function(...) .base_paste(..., sep="")
+    } else {
+      .base_paste0 <- base::paste0
+    }
     .base_cat <- base::cat
 
     ## RSP output function
