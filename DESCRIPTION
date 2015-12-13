@@ -1,7 +1,7 @@
 Package: R.rsp
 Version: 0.20.0-9000
 Depends:
-  R (>= 2.5.0)
+  R (>= 2.14.0)
 Imports:
   methods,
   stats,
@@ -10,7 +10,7 @@ Imports:
   R.methodsS3 (>= 1.7.0),
   R.oo (>= 1.19.0),
   R.utils,
-  R.cache (>= 0.10.0)
+  R.cache (>= 0.12.0)
 Suggests:
   tcltk,
   digest (>= 0.6.8),
@@ -18,11 +18,11 @@ Suggests:
   markdown (>= 0.7.7),
   knitr (>= 1.11),
   R.devices (>= 2.13.1),
-  base64enc (>= 0.1-3)
+  base64enc (>= 0.1-2)
 SuggestsNote:
   Recommended: digest, R.devices, base64enc, markdown
 VignetteBuilder: R.rsp
-Date: 2015-11-11
+Date: 2015-12-13
 Title: Dynamic Generation of Scientific Reports
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
