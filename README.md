@@ -7,6 +7,15 @@ R package R.rsp is available on [CRAN](http://cran.r-project.org/package=R.rsp) 
 install.packages('R.rsp')
 ```
 
+### Pre-release version
+
+To install the pre-release version that is available in branch `develop`, use:
+```r
+source('http://callr.org/install#HenrikBengtsson/R.rsp@develop')
+```
+This will install the package from source.  
+
+
 
 ## Software status
 
