@@ -13,6 +13,7 @@ o Setting meta variable 'postprocess' to FALSE can now be used to
   disable postprocessing, e.g. <%@meta postprocess="FALSE"%> in
   foo.md.rsp builds foo.md and does not continue compiling into
   an HTML document, which is otherwise the default.
+o Explicit import of 'methods' functions.
 o ROBUSTNESS: findPandoc() could give an error if the pandoc
   executable failed for unpredictable reasons. Now it returns
   NULL if that is the case.  Same for findAsciidoc().
