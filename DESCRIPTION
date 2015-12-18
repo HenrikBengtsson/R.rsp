@@ -17,12 +17,12 @@ Suggests:
   ascii (>= 2.1),
   markdown (>= 0.7.7),
   knitr (>= 1.11),
-  R.devices (>= 2.13.1),
+  R.devices (>= 2.13.2),
   base64enc (>= 0.1-2)
 SuggestsNote:
   Recommended: digest, R.devices, base64enc, markdown
 VignetteBuilder: R.rsp
-Date: 2015-12-13
+Date: 2015-12-17
 Title: Dynamic Generation of Scientific Reports
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
