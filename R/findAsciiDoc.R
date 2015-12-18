@@ -52,9 +52,10 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
   verbose && enter(verbose, "Locating external software");
   verbose && cat(verbose, "Command: ", command);
 
-  bin <- Sys.which(command);
-  if (identical(bin, "")) bin <- NULL;
-  if (!isFile(bin)) bin <- NULL;
+  bin <- Sys.getenv("R_ASCIIDOC")
+  if (identical(bin, "")) bin <- Sys.which(command)
+  if (identical(bin, "")) bin <- NULL
+  if (!isFile(bin)) bin <- NULL
 
   verbose && cat(verbose, "Located pathname: ", bin);
 

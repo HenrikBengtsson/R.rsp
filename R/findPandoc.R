@@ -52,9 +52,11 @@ setMethodS3("findPandoc", "default", function(mustExist=TRUE, ..., verbose=FALSE
   verbose && enter(verbose, "Locating external software");
   verbose && cat(verbose, "Command: ", command);
 
-  bin <- Sys.which(command);
-  if (identical(bin, "")) bin <- NULL;
-  if (!isFile(bin)) bin <- NULL;
+  bin <- Sys.getenv("R_PANDOC")
+  if (identical(bin, "")) bin <- Sys.getenv("RSTUDIO_PANDOC")
+  if (identical(bin, "")) bin <- Sys.which(command)
+  if (identical(bin, "")) bin <- NULL
+  if (!isFile(bin)) bin <- NULL
 
   verbose && cat(verbose, "Located pathname: ", bin);
 
