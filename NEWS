@@ -1,7 +1,7 @@
 Package: R.rsp
 ==============
 
-Version: 0.20.0-9000 [2015-12-18]
+Version: 0.21.0 [2015-12-18]
 o Renamed rscript() to rcode().  rscript() is now deprecated.
 o Added vignette option %\VignetteCompression{} for alternative
   way of setting meta variable 'compression', e.g.
