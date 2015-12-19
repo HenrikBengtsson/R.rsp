@@ -863,13 +863,13 @@ setMethodS3("writeResponse", "HttpDaemon", function(static, ...) {
   }
 
   if (isTRUE(static$.debug)) {
-    cat("=========================================================\n");
-    cat("= BEGIN: Fake HttpDaemon response\n");
-    cat("=========================================================\n");
-    cat(str);
-    cat("=========================================================\n");
-    cat("= END: Fake HttpDaemon response\n");
-    cat("=========================================================\n");
+    mcat("=========================================================\n");
+    mcat("= BEGIN: Fake HttpDaemon response\n");
+    mcat("=========================================================\n");
+    mcat(str);
+    mcat("=========================================================\n");
+    mcat("= END: Fake HttpDaemon response\n");
+    mcat("=========================================================\n");
   } else {
     # Escape certain characters, by converting the string to a Tcl string
     # and back.

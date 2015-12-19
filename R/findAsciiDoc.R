@@ -52,9 +52,10 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
   verbose && enter(verbose, "Locating external software");
   verbose && cat(verbose, "Command: ", command);
 
-  bin <- Sys.which(command);
-  if (identical(bin, "")) bin <- NULL;
-  if (!isFile(bin)) bin <- NULL;
+  bin <- Sys.getenv("R_ASCIIDOC")
+  if (identical(bin, "")) bin <- Sys.which(command)
+  if (identical(bin, "")) bin <- NULL
+  if (!isFile(bin)) bin <- NULL
 
   verbose && cat(verbose, "Located pathname: ", bin);
 
@@ -64,10 +65,17 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
 
   # Validate by retrieving version information
   if (isFile(bin)) {
-    res <- system2(bin, args="--version", stdout=TRUE);
-    ver <- trim(gsub("asciidoc", "", res));
-    ver <- numeric_version(ver);
-    attr(bin, "version") <- ver;
+    res <- tryCatch({
+      system2(bin, args="--version", stdout=TRUE)
+    }, error = function(ex) {
+      NULL
+    })
+
+    if (!is.null(res)) {
+      ver <- trim(gsub("asciidoc", "", res))
+      ver <- numeric_version(ver)
+      attr(bin, "version") <- ver
+    }
   }
 
   verbose && exit(verbose);

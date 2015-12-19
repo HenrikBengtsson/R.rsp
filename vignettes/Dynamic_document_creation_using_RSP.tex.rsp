@@ -21,6 +21,7 @@
   %\VignetteKeyword{PDF}
   %\VignetteEngine{R.rsp::rsp}
   %\VignetteTangle{FALSE}
+  %\VignetteCompression{gs(ebook)+qpdf}
 --------------------------------------------------------------------"%>
 
 <%
@@ -719,14 +720,15 @@ For convenience, \code{<\%@meta \content{name}="\content{content}"\%>} is short 
 
 
 \paragraph{Setting metadata via R vignette metadata}
-The R framework uses a LaTeX-flavored markup for specifying metadata in vignettes, e.g. \code{{\bs}VignetteIndexEntry\{My Report\}} and\linebreak \code{{\bs}VignetteKeyword\{statistics, report\}}.
+The R framework uses a LaTeX-flavored markup for specifying metadata in vignettes, e.g. \code{{\bs}VignetteIndexEntry\{My Report\}} and\linebreak \code{{\bs}VignetteKeyword\{statistics\}}.
 %
 It is possible to "import" this metadata information via \code{<\%@meta content="\content{R vignette metadata markup}" language="R-vignettes"\%>}.  For instance,
 \begin{rspVerbatim}
 <\%@meta content="
   DIRECTIVES FOR R:
   %{\bs}VignetteIndexEntry\{My Report\}
-  %{\bs}VignetteKeyword\{statistics, report\}
+  %{\bs}VignetteKeyword\{statistics\}
+  %{\bs}VignetteKeyword\{report\}
   %{\bs}VignetteAuthor\{John Doe\}
 " language="R-vignette"\%>
 

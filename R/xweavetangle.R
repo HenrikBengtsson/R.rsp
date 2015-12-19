@@ -135,7 +135,7 @@ rspTangle <- function(file, ..., envir=new.env(), pattern="(|[.][^.]*)[.]rsp$") 
   pathnameR <- getAbsolutePath(pathnameR)
 
   # Translate RSP document to RSP code script
-  rcode <- rscript(file=file, output=RspSourceCode(), ...)
+  rcode <- rcode(file=file, output=RspSourceCode(), ...)
 
   # Check if tangle is disabled by the vignette
   tangle <- getMetadata(rcode, "tangle")

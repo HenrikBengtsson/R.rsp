@@ -31,7 +31,7 @@ For example, assume that you setup a new package called 'YAPackage' with two RSP
  * `vignettes/YAPackage-Intro.tex.rsp` - an RSP-embedded TeX vignette 
  * `vignettes/YAPackage-ExampleReport.md.rsp` - an RSP-embedded Markdown vignette 
 
-Second, make sure they both carry the required R vignette markup, which are `%\VignetteIndexEntry{...}` and `%\VignetteEngine{...}`.  This markup is independent of vignette format (TeX, Markdown, HTML, etc.) and vignette engine (Sweave, RSP, knitr, etc.).  What may matter is how you include it the source vignette such that it won't be part of the final vignette.  With RSP this is easy, because you can do it the same way regardless of format by using RSP preprocessing directives.  For example, in `vignettes/YAPackage-Intro.tex.rsp` we have the following in the preamble of the TeX file:
+Second, make sure they both carry the required R vignette markup, which are `%\VignetteIndexEntry{...}` and `%\VignetteEngine{...}`.  The former controls the title shown in R's help indices as well as in online package respositories such as CRAN.   Moreover, the same vignette markup is used everywhere in R regardless of vignette format (TeX, Markdown, HTML, etc.) and vignette engine (Sweave, RSP, knitr, etc.).  What may differ is how you include it the source vignette such that it won't be part of the final vignette.  With RSP this is easy, because you can do it the same way regardless of format by using RSP preprocessing directives.  For example, in `vignettes/YAPackage-Intro.tex.rsp` we have the following in the preamble of the TeX file:
 ```
 <%%@meta language="R-vignette" content="--------------------------------
   DIRECTIVES FOR R:

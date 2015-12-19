@@ -1,6 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage{xspace}
 \newcommand{\code}[1]{\texttt{#1}\xspace}
+\newcommand{\bs}{$\backslash$}
 
 <%@string label="R_packages-Static_PDF_and_HTML_vignettes"%>
 <%@include file="${label}.pdf.asis.rsp"%>
@@ -15,16 +16,19 @@ To include a static PDF vignette in package, all you need is the PDF file and co
  \item \code{vignettes/<%=toLatex("<%@string name="label"%>")%>.pdf}
  \item \code{vignettes/<%=toLatex("<%@string name="label"%>")%>.pdf.asis}
 \end{enumerate}
-where the "asis" file contains the lines:
+where the \emph{"asis" file} contains the lines:
 \begin{verbatim} 
 <%@include file="${label}.pdf.asis.rsp"%>
 \end{verbatim}
+Above the first two entries are required whereas the keyword entries are optional.  Note also that the \code{\%{\bs}VignetteIndexEntry\{\}} controls the title shown in R's help indices as well as in online package respositories such as CRAN.
+
 As for any type of (non-Sweave) package vignette, don't forget to specify:
 \begin{verbatim}
 Suggests: R.rsp
 VignetteBuilder: R.rsp
 \end{verbatim}
-in your package's DESCRIPTION file.  The keyword entries are optional.  That's all it takes to include a static PDF as a vignette in a package.
+in your package's DESCRIPTION file.  That's all it takes to include a static PDF as a vignette in a package.
+
 This same approach can also be used to include static (self-contained) HTML vignettes.  In order for such an HTML document to display images correctly, the HTML images cannot be links to image files but instead need to be embedded inside the HTML document as 'dataURI' strings.
 
 Finally, a note of concern.  Several would argue that you break open-source ethics if you include static PDF vignettes without providing the source of the PDF.  This is because a PDF is often a product of another artifact, e.g. a Microsoft Word document.  Because of this, you may consider to include such files as well in your package in order to maintain all the source files.

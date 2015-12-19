@@ -248,7 +248,7 @@ Output written to standard output is inserted into the final document.
 <%@eval language="R" content="
 ## This utilizes the RSP `eval' preprocessing directive to
 ## translate the example into R code.
-code <- R.rsp::rscript('${doc}', output=RspSourceCode());
+code <- R.rsp::rcode('${doc}', output=RspSourceCode());
 code <- R.rsp::tidy(code, format='unsafedemo');
 "%>
 <%@string name="code"%>

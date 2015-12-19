@@ -150,6 +150,12 @@ setMethodS3("getFileSize", "RspFileProduct", function(object, what=c("numeric", 
 
 
 setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FALSE) {
+  isFALSE <- function(x) {
+    if (is.character(x)) return(toupper(x) == "FALSE")
+    if (is.logical(x) && !x) return(TRUE)
+    FALSE
+  }
+
   localCompileLaTeX <- function(..., texinputs=NULL) {
     if (!is.null(source)) {
       path <- dirname(source)
@@ -158,6 +164,56 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     }
     compileLaTeX(..., texinputs=texinputs)
   } # localCompileLaTeX()
+
+
+  localCompressPDF <- function(pathname, ..., verbose=FALSE) {
+    # Argument 'verbose':
+    verbose <- Arguments$getVerbose(verbose)
+    if (verbose) {
+      pushState(verbose)
+      on.exit(popState(verbose))
+    }
+
+    ## Disabling further postprocessing after this,
+    ## which avoids recursive loop.
+    metadata <- attr(pathname, "metadata")
+    metadata$postprocess <- FALSE
+    attr(pathname, "metadata") <- metadata
+
+    ## Get compression level
+    compression <- metadata$compression
+
+    verbose && enter(verbose, "Trying to compress PDF")
+    verbose && cat(verbose, "Compression: ", compression)
+
+    pathT <- tempfile(pattern=".dir", tmpdir=".")
+    on.exit(removeDirectory(pathT, recursive=TRUE), add=TRUE)
+
+    ## ROBUSTNESS: If compression fails for one reason or the
+    ## other, fall back to keep the non-compressed version.
+    tryCatch({
+      verbose && enter(verbose, "R.utils::compressPDF()...")
+      suppressWarnings({
+        pathnameZ <- compressPDF(pathname, outPath=pathT,
+                                 compression=compression)
+      })
+      verbose && exit(verbose)
+
+      size <- file.info(pathname)$size
+      sizeZ <- file.info(pathnameZ)$size
+      if (!identical(sizeZ, size)) {
+        renameFile(pathnameZ, pathname, overwrite=TRUE)
+      }
+    }, error = function(ex) {
+      msg <- sprintf("Compression of '%s' using '%s' failed. Keeping the original PDF file. Reason was: %s", pathname, compression, ex$message)
+      verbose && cat(verbose, msg)
+      warning(msg)
+    })
+
+    verbose && exit(verbose)
+
+    pathname
+  } # localCompressPDF()
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -183,12 +239,23 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
   }
   type <- parseInternetMediaType(type)$contentType;
 
+
+  # Nothing to do?
+  postprocess <- getMetadata(object, "postprocess", local=TRUE)
+  if (isFALSE(postprocess)) {
+    verbose && cat(verbose, "Processing disabled: metadata variable 'postprocess' is FALSE")
+    verbose && exit(verbose)
+    return(NULL)
+  }
+
+
   source <- getMetadata(object, "source", local=TRUE);
   if (is.null(source)) {
     verbose && cat(verbose, "Source document: <unknown>");
   } else {
     verbose && cat(verbose, "Source document: ", sQuote(source));
   }
+
 
 
   # Find a down-stream compiler/processor:
@@ -201,6 +268,10 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     # *.tex => ... => *.pdf
     "application/x-tex" = localCompileLaTeX,
     "application/x-latex" = localCompileLaTeX,
+
+    ## PDF documents:
+    # *.pdf => ... => *.pdf
+    "application/pdf" = localCompressPDF,
 
     # Markdown documents:
     # *.md => *.html
@@ -266,10 +337,16 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
       # NOTE: It is not sure that the processor supports URLs
       pathnameR <- processor(pathname, ...);
 
+      ## Check if further postprocessoring should be disabled
+      metadataR <- getMetadata(pathnameR)
+      postprocessR <- getMetadata(pathnameR, "postprocess", local=TRUE)
+      if (isFALSE(postprocessR)) metadata$postprocess <- FALSE
+
       # Always return the relative path
       pathnameR <- getAbsolutePath(pathnameR);
       res <- RspFileProduct(pathnameR, attrs=list(metadata=metadata), mustExist=FALSE);
       res <- setMetadata(res, name="source", value=pathname);
+
       res;
     } # fcn()
     verbose && cat(verbose, "Processor found: ", type);
@@ -284,6 +361,8 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
 
 ############################################################################
 # HISTORY:
+# 2015-05-11
+# o Added postprocessor for PDF compression.
 # 2015-02-04
 # o Now the processor function returned by findProcessor() passes
 #   meta data as a named list to the underlying compiler/processor.

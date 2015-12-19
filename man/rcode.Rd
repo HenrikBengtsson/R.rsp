@@ -1,16 +1,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  rscript.R
+%  rcode.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{rscript}
-\alias{rscript.default}
+\name{rcode}
+\alias{rcode.default}
+\alias{rcode}
+\alias{rcode.RspString}
+\alias{rcode.RspDocument}
 \alias{rscript}
-\alias{rscript.RspString}
-\alias{rscript.RspDocument}
 
 \title{Compiles an RSP document and returns the generated source code script}
 
@@ -19,7 +20,7 @@
 }
 
 \usage{
-\method{rscript}{default}(..., file=NULL, path=NULL, output=NULL, workdir=NULL, envir=parent.frame(),
+\method{rcode}{default}(..., file=NULL, path=NULL, output=NULL, workdir=NULL, envir=parent.frame(),
   args="*", verbose=FALSE)
 }
 
@@ -53,11 +54,11 @@
 
 \examples{
 # RSP-embedded text to an R script
-code <- rscript("Current time is <\%=Sys.time()\%>\n")
+code <- rcode("Current time is <\%=Sys.time()\%>\n")
 cat(code, sep="\n")
 
 # RSP-embedded text to a shell script
-code <- rscript("Current time is <\%=date\%>\n", language="sh")
+code <- rcode("Current time is <\%=date\%>\n", language="sh")
 cat(code, sep="\n")
 }
 

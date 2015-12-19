@@ -1,15 +1,41 @@
 Package: R.rsp
 ==============
 
+Version: 0.21.0 [2015-12-18]
+o Renamed rscript() to rcode().  rscript() is now deprecated.
+o Added vignette option %\VignetteCompression{} for alternative
+  way of setting meta variable 'compression', e.g.
+  %\VignetteCompression{gs(ebook)+qpdf} to compressed PDF output.
+o Added postprocessor for PDF compression, which can be enabled
+  and controlled via meta variable 'compression', e.g.
+  <%@meta compression="gs(ebook)"%>.
+o Setting meta variable 'postprocess' to FALSE can now be used to
+  disable postprocessing, e.g. <%@meta postprocess="FALSE"%> in
+  foo.md.rsp builds foo.md and does not continue compiling into
+  an HTML document, which is otherwise the default.
+o Explicit import of 'methods' functions.
+o ROBUSTNESS: findPandoc() could give an error if the pandoc
+  executable failed for unpredictable reasons. Now it returns
+  NULL if that is the case.  Same for findAsciidoc().
+o BUG FIX/LEGACY CODE: Old RSP -> R script compiler could generate
+  invalid R syntax for multiline RSP code expressions put in R
+  source code comments.  Not sure why this all of a sudden shows
+  up; maybe something changed in R that causes the bug to reveal
+  itself.  This is old legacy code so the default / modern RSP
+  engine is unaffected.
+o BUG FIX/LEGACY CODE: While trying to generate an error message
+  another error was thrown.
+
+
 Version: 0.20.0 [2015-02-18]
 o ROBUSTNESS: Now compileLaTeX() will give an error if the filename
   extension is neither *.tex nor *.ltx (case sensitive).  The reason
-  for this is that it is only those that are recognized by the 
+  for this is that it is only those that are recognized by the
   underlying 'texi2dvi' script (if a different filename extension is
   used, 'texi2dvi' will use 'texinfo' instead of 'latex' to compile
   the document which for obvious reasons will not compile; texinfo
-  files are not LaTeX files).  I'd like to that Kurt Hornik at CRAN
-  for helping me troubleshoot this as I incorrectly had a static 
+  files are not LaTeX files).  I'd like to thank Kurt Hornik at CRAN
+  for helping me troubleshoot this as I incorrectly had a static
   LaTeX vignette named *.latex.
 
 
@@ -26,7 +52,7 @@ o Now the full RspFileProduct object is passed to postprocessors
 Version: 0.19.7 [2015-01-18]
 o Added Unix shell (and Windows batch) scripts 'rsource', 'rfile'
   and 'rcat' moved to system.file("exec", package="R.rsp").  These
-  scripts are convenient wrappers that uses Rscript internally.
+  scripts are convenient wrappers that use Rscript internally.
 o CLEANUP: Defunct epsDev().
 o BUG FIX: isCapableOf() for "asciidoc" and "pandoc" would given an
   error (instead of FALSE) if the binary was not found.
@@ -67,7 +93,7 @@ o DOCUMENTATION: Updated the 'Dynamic document creation using RSP'
   package vignette.
 o Added Unix shell (and Windows batch) scripts 'rsource', 'rfile'
   and 'rcat' to system.file("bin", package="R.rsp").  These scripts
-  are convenient wrappers that uses Rscript internally.
+  are convenient wrappers that use Rscript internally.
 o CLEANUP: Removed false R CMD check NOTEs recently introduced.
 o Bumped package dependencies.
 

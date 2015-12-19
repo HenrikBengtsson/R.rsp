@@ -29,7 +29,7 @@
 
 \title{R packages: LaTeX vignettes}
 \author{Henrik Bengtsson}
-\date{2015-02-18}
+\date{2015-10-01}
 
 \begin{document}
 
@@ -45,10 +45,18 @@ package.  For instance, this PDF document was compiled from LaTeX file:
 which contains the following meta directives at the top of the file:
 \begin{verbatim} 
   %\VignetteIndexEntry{R packages: LaTeX vignettes}
-  %\VignetteKeyword{R package, vignette, LaTeX}
   %\VignetteEngine{R.rsp::tex}
+  %\VignetteKeyword{R}
+  %\VignetteKeyword{package}
+  %\VignetteKeyword{vignette}
+  %\VignetteKeyword{LaTeX}
 \end{verbatim}
 Here I choose filename extension \code{*.ltx}, which is a lesser known LaTeX filename extension, because if one uses \code{*.tex}, then \code{R CMD check} will give a NOTE complaining that the file is a stray file that should not be part of the built package.
+
+Also, the above first two entries are required whereas the keyword
+entries are optional.  Note also that the
+\code{\%{\bs}VignetteIndexEntry\{\}} controls the title shown in R's
+help indices as well as in online package respositories such as CRAN. 
 
 As for any type of (non-Sweave) package vignette, don't forget to specify:
 \begin{verbatim}

@@ -378,7 +378,9 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
 
     if (type == "rsp") {
       rspTag <- paste("<%", part, "%>", sep="");
-      codeComment <- paste("# ", rspTag, "\n", sep="");
+      rspTagE <- gsub("\n", "\\n", rspTag, fixed=TRUE)
+      rspTagE <- gsub("\r", "\\r", rspTagE, fixed=TRUE)
+      codeComment <- paste("# ", rspTagE, "\n", sep="");
       rspCode <- trim(part);
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
