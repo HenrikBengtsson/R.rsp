@@ -356,7 +356,7 @@ setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getPa
   rCode <- c(rCode, code);
 
   types <- names(parts);
-  for (kk in seq(length=length(parts))) {
+  for (kk in seq_along(parts)) {
     part <- parts[[kk]];
     type <- types[[kk]];
 

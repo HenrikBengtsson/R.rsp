@@ -426,7 +426,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
   rCode <- NULL;
 
   types <- names(parts);
-  for (kk in seq(length=length(parts))) {
+  for (kk in seq_along(parts)) {
     part <- parts[[kk]];
     type <- types[[kk]];
 
