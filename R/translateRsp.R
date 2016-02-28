@@ -37,7 +37,7 @@ setMethodS3("translateRsp", "default", function(filename, path=NULL, ..., force=
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ruler <- function(char="#", width=70, ...) {
-    ruler <- rep(char, length=width);
+    ruler <- rep(char, times=width);
     ruler <- paste(ruler, collapse="");
     ruler <- substring(ruler, 1, width);
     ruler;
