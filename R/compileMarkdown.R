@@ -34,8 +34,6 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("compileMarkdown", "default", function(filename, path=NULL, ..., outPath=".", header=NULL, metadata=getMetadata(filename), verbose=FALSE) {
-  # Load the package (super quietly), in case R.rsp::nnn() was called.
-  use("markdown", quietly=TRUE);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -112,28 +110,22 @@ setMethodS3("compileMarkdown", "default", function(filename, path=NULL, ..., out
     opwd <- setwd(outPath);
   }
 
-  verbose && enter(verbose, "Calling markdown::markdownToHTML()");
+  mdToHTML <- markdown::markdownToHTML
+  fcnName <- "markdown::markdownToHTML()"
+
+  verbose && enterf(verbose, "Calling %s", fcnName);
   pathnameR <- getRelativePath(pathname);
   pathnameOutR <- getRelativePath(pathnameOut);
 
-  mdToHTML <- markdown::markdownToHTML;
   userArgs <- list(...);
   keep <- is.element(names(userArgs), names(formals(mdToHTML)));
   userArgs <- userArgs[keep];
 
-  # Workaround for bug in markdown v0.5.4. /HB 2013-03-28
-  if (packageVersion("markdown") <= "0.5.4") {
-    args <- c(list(pathnameR, output=NULL), userArgs, header=header);
-    verbose && cat(verbose, "Arguments to markdownToHTML():");
-    verbose && str(verbose, args);
-    bfr <- do.call(mdToHTML, args=args);
-    cat(bfr, file=pathnameOutR);
-  } else {
-    args <- c(list(pathnameR, output=pathnameOutR), userArgs, header=header);
-    verbose && cat(verbose, "Arguments to markdownToHTML():");
-    verbose && str(verbose, args);
-    do.call(mdToHTML, args=args);
-  }
+  args <- c(list(pathnameR, output=pathnameOutR), userArgs, header=header);
+  verbose && cat(verbose, "Arguments:");
+  verbose && str(verbose, args);
+  do.call(mdToHTML, args=args);
+
   verbose && exit(verbose);
 
   setwd(opwd); opwd <- ".";
