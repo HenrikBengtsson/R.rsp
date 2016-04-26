@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.21.0-9000 [2016-04-17]
+o CLEANUP: Workaround for markdown (<= 0.5.4; Jan 2013) removed.
+
+
 Version: 0.21.0 [2015-12-18]
 o Renamed rscript() to rcode().  rscript() is now deprecated.
 o Added vignette option %\VignetteCompression{} for alternative

@@ -16,6 +16,7 @@ Suggests:
   digest (>= 0.6.8),
   ascii (>= 2.1),
   markdown (>= 0.7.7),
+  commonmark (>= 0.8),
   knitr (>= 1.11),
   R.devices (>= 2.13.2),
   base64enc (>= 0.1-2)
