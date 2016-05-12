@@ -51,7 +51,8 @@ before_install:
 
 install:
  - $RENV install_deps
-## - $RENV install_r base64enc digest markdown R.devices
+ - $RENV install_r base64enc digest markdown R.devices
+ - $RENV install_github HenrikBengtsson/R.rsp@develop
 
 script:
   - $RENV run_build
