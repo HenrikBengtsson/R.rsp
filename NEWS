@@ -2,7 +2,7 @@ Package: R.rsp
 ==============
 
 Version: 0.21.0-9000 [2016-04-25]
-o CLEANUP: Workaround for markdown (<= 0.5.4; Jan 2013) removed.
+o CLEANUP: Workaround for markdown (<= 0.5.4) (Jan 2013) removed.
 
 
 Version: 0.21.0 [2015-12-18]
