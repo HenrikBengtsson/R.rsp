@@ -22,11 +22,11 @@
 \usage{
 ## Static method (use this):
 ## HttpDaemon$processRsp(pathname=tcltk::tclvalue("mypath"),
-##   version=getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0"), ...)
+##   version=getOption("R.rsp/HttpDaemon/RspVersion", "1.0.0"), ...)
 
 ## Don't use the below:
 \method{processRsp}{HttpDaemon}(static=getStaticInstance(HttpDaemon), pathname=tcltk::tclvalue("mypath"),
-  version=getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0"), ...)
+  version=getOption("R.rsp/HttpDaemon/RspVersion", "1.0.0"), ...)
 }
 
 \arguments{
