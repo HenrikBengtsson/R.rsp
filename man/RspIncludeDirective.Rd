@@ -71,7 +71,7 @@ asRspString, getComment, getInclude, getSuffixSpecs
 print
 
  \bold{Methods inherited from character}:\cr
-all.equal, as.Date, as.POSIXlt, as.data.frame, as.raster, formula, getDLLRegisteredRoutines, isOpen, toLatex, uses
+all.equal, as.Date, as.POSIXlt, as.data.frame, as.raster, downloadFile, formula, getDLLRegisteredRoutines, isOpen, toAsciiRegExprPattern, toFileListTree, toLatex, uses
 
 
 }

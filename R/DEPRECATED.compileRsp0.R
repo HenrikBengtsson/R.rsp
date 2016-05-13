@@ -1,4 +1,6 @@
 setMethodS3("compileRsp0", "default", function(..., envir=parent.frame(), force=FALSE, verbose=FALSE) {
+  .Deprecated(new="compileRsp()")
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -59,7 +61,7 @@ setMethodS3("compileRsp0", "default", function(..., envir=parent.frame(), force=
 
 
   invisible(pathname3);
-}) # compileRsp0()
+}, deprecated=TRUE) # compileRsp0()
 
 
 ###########################################################################

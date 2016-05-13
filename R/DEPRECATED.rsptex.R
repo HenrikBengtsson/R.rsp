@@ -45,6 +45,8 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("rsptex", "default", function(..., pdf=TRUE, force=FALSE, verbose=FALSE) {
+  .Deprecated(new="rfile()")
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -91,7 +93,7 @@ setMethodS3("rsptex", "default", function(..., pdf=TRUE, force=FALSE, verbose=FA
   verbose && exit(verbose);
 
   invisible(pathname3);
-}, private=TRUE) # rsptex()
+}, deprecated=TRUE, private=TRUE) # rsptex()
 
 
 ############################################################################
