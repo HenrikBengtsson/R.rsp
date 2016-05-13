@@ -98,7 +98,6 @@
 \alias{urlDecode}
 \alias{compileRsp0}
 \alias{compileRsp0.default}
-\alias{epsDev}
 \alias{dvips}
 \alias{ps2pdf}
 \alias{rspCapture}
