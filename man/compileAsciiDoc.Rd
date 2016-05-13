@@ -27,6 +27,7 @@
     (which must be on the system search path)
     called via \code{\link[base]{system2}}().}
   \item{outPath}{The output and working directory.}
+  \item{postprocess}{Should the generated document be post processed or not?}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
 
