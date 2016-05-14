@@ -1,4 +1,6 @@
 rspCapture <- function(..., wrapAt=80, collapse="\n") {
+  .Deprecated(new="R.utils::withCapture()")
+
   file <- rawConnection(raw(0L), open="w");
   on.exit({
     if (!is.null(file)) close(file);
