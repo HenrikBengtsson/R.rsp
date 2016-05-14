@@ -2,6 +2,7 @@ Package: R.rsp
 ==============
 
 Version: 0.21.0-9000 [2016-05-13]
+o CLEANUP: Renamed exec/ script 'rsource(.bat)' to 'rcode(.bat)'.
 o CLEANUP: Removed epsDev(), which has been defunct since 
   R.rsp 0.19.7 (Jan 2015).
 o CLEANUP: Workaround for markdown (<= 0.5.4) (Jan 2013) removed.
