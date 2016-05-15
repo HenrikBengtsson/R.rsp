@@ -132,7 +132,9 @@ export("buildNonSweaveTexToPdf")
 export("buildNonSweaveVignette")
 export("buildNonSweaveVignettes")
 export("buildPkgIndexHtml")
-export("buildVignette")
+if (getRversion() < "3.1.0") {
+  export("buildVignette")
+}
 export("capabilitiesOf")
 export("compileAsciiDoc")
 export("compileAsciiDocNoweb")
