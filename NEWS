@@ -1,7 +1,7 @@
 Package: R.rsp
 ==============
 
-Version: 0.29.9-9000 [2016-05-14]
+Version: 0.30.0 [2016-05-15]
 o CLEANUP: Deprecated several methods that was part of the old
   API, e.g. compileRsp(), sourceRsp(), translateRsp() etc.
 o CLEANUP: Renamed exec/ script 'rsource(.bat)' to 'rcode(.bat)'.
