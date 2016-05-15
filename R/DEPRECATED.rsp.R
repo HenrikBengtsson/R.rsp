@@ -32,7 +32,9 @@
 #   is returned (invisibly).
 # }
 #
-# @examples "../incl/rsp.Rex"
+# \examples{\dontrun{
+#  @include"../incl/rsp.Rex"
+# }}
 #
 # @author
 #
@@ -46,6 +48,8 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, response=NULL, ..., envir=parent.frame(), outPath=".", postprocess=TRUE, verbose=FALSE) {
+  .Deprecated(new="rfile()")
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -136,7 +140,7 @@ setMethodS3("rsp", "default", function(filename=NULL, path=NULL, text=NULL, resp
   verbose && exit(verbose);
 
   invisible(res);
-}) # rsp()
+}, deprecated=TRUE) # rsp()
 
 
 ############################################################################

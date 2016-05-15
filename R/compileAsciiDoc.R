@@ -16,6 +16,7 @@
 #     (which must be on the system search path)
 #     called via @see "base::system2".}
 #   \item{outPath}{The output and working directory.}
+#   \item{postprocess}{Should the generated document be post processed or not?}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
 #

@@ -190,10 +190,10 @@ setMethodS3("tidy", "RspRSourceCode", function(object, format=c("asis", "tangle"
   if (is.element(format, c("tangle", "safetangle", "demo", "unsafedemo"))) {
     # Drop header
     idx <- grep('## RSP source code script [BEGIN]', code, fixed=TRUE)[1L];
-    if (!is.na(idx)) code <- code[-seq(length=idx+1L)];
+    if (!is.na(idx)) code <- code[-seq_len(idx+1L)];
     # Drop footer
     idx <- grep('## RSP source code script [END]', code, fixed=TRUE)[1L];
-    if (!is.na(idx)) code <- code[seq(length=idx-2L)];
+    if (!is.na(idx)) code <- code[seq_len(idx-2L)];
   }
 
   if (format == "demo") {

@@ -24,10 +24,11 @@
 #   The \pkg{R.rsp} package implements different RSP engines.
 #   It is possible to specify which version the Tcl HTTP daemon
 #   should use via the option \code{R.rsp/HttpDaemon/RspVersion}.
-#   The default is still to use the old RSP engine, which corresponds
-#   to \code{options("R.rsp/HttpDaemon/RspVersion"="0.1.0")}.
-#   To use the new RSP engine, which is still under development, use
+#   The default is now to use the new RSP engine, which corresponds
 #   \code{options("R.rsp/HttpDaemon/RspVersion"="1.0.0")}.
+#   To use the old legacy RSP engine, which is deprecated and will
+#   eventually be defunct and removed, use
+#   \code{options("R.rsp/HttpDaemon/RspVersion"="0.1.0")}.
 # }
 #
 # @author
@@ -38,7 +39,7 @@
 #
 # @keyword IO
 #*/#########################################################################
-setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDaemon), pathname=tcltk::tclvalue("mypath"), version=getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0"), ...) {
+setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDaemon), pathname=tcltk::tclvalue("mypath"), version=getOption("R.rsp/HttpDaemon/RspVersion", "1.0.0"), ...) {
   # If processRsp() was called from Tcl, then it is called without
   # arguments, which is why we need this rather ad hoc solution to
   # default 'static' to getStaticInstance().
@@ -93,7 +94,16 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Process RSP file
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (version == "0.1.0") {
+  if (version == "1.0.0") {
+    response <- HttpDaemonRspResponse(httpDaemon=daemon);
+    page <- RspPage(pathname);
+    pathnameR <- rfile(file=filename, workdir=opwd, args=list(page=page, request=request, response=response));
+    s <- readLines(pathnameR, warn=FALSE);
+    s <- paste(s, collapse="\n");
+    if (nchar(s) > 0L) writeResponse(daemon, s);
+  } else if (version == "0.1.0") {
+    .Deprecated("RSP HTTP daemon v0.1.0 is deprecated, because it relies on the old legacy RSP engine. Use v1.0.0 instead, by removing options 'R.rsp/HttpDaemon/RspVersion' or setting it to '1.0.0'. The old engine will be defunct and removed in a near future.")
+
     # The connection where to write RSP response output to.
     response <- HttpDaemonRspResponse(httpDaemon=daemon);
     on.exit({
@@ -109,13 +119,6 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
       # Rethrow
       throw(ex);
     })
-  } else if (version == "1.0.0") {
-    response <- HttpDaemonRspResponse(httpDaemon=daemon);
-    page <- RspPage(pathname);
-    pathnameR <- rfile(file=filename, workdir=opwd, args=list(page=page, request=request, response=response));
-    s <- readLines(pathnameR, warn=FALSE);
-    s <- paste(s, collapse="\n");
-    if (nchar(s) > 0L) writeResponse(daemon, s);
   }
 
 
@@ -136,6 +139,8 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
 
 ###############################################################################
 # HISTORY:
+# 2015-02-05
+# o CLEANUP: Now processRsp() for HttpDaemon uses RSP engine v1.0.0.
 # 2013-05-23
 # o Now processRsp() for HttpDaemon with version="1.0.0" also sets
 #   HttpDaemonRspResponse 'response' variable, which works just as

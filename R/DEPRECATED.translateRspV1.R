@@ -1,7 +1,7 @@
 ###########################################################################/**
-# @RdocDefault parseRsp
+# @RdocDefault translateRspV1
 #
-# @title "Parse an RSP code string to an R RSP code string"
+# @title "Translates an RSP file to an R servlet"
 #
 # \description{
 #  @get "title".
@@ -10,11 +10,16 @@
 # @synopsis
 #
 # \arguments{
-#   \item{rspCode}{A @character @vector of RSP code to parsed.}
+#   \item{file}{A filename, a URL, or a @connection to be read.
+#               Ignored if \code{text} is not @NULL.}
+#   \item{text}{If specified, a @character @vector of RSP code to be
+#               translated.}
+#   \item{path}{A pathname setting the current include path.
+#               If \code{file} is a filename and its parent directory
+#               is different from this one, \code{path} is added
+#               to the beginning of \code{file} before the file is read.}
 #   \item{rspLanguage}{An @see "RspLanguage" object.}
 #   \item{trimRsp}{If @TRUE, white space is trimmed from RSP blocks.}
-#   \item{validate}{If @TRUE, the parsed RSP code is validated through the
-#     \R parser.}
 #   \item{verbose}{Either a @logical, a @numeric, or a @see "R.utils::Verbose"
 #     object specifying how much verbose/debug information is written to
 #     standard output. If a Verbose object, how detailed the information is
@@ -40,7 +45,9 @@
 # @keyword IO
 # @keyword internal
 #*/###########################################################################
-setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspLanguage"), trimRsp=TRUE, validate=TRUE, verbose=FALSE, ...) {
+setMethodS3("translateRspV1", "default", function(file="", text=NULL, path=getParent(file), rspLanguage=getOption("rspLanguage"), trimRsp=TRUE, verbose=FALSE, ...) {
+  .Deprecated(new="rcode()")
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -92,98 +99,6 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
   } # trimTextParts()
 
 
-  dropRspComments <- function(rspCode, trimRsp=FALSE, ...) {
-    pattern <- "<%--.*?--%>";
-    if (trimRsp) {
-      pattern <- sprintf("%s(|[ \t\v]*(\n|\r|\r\n))", pattern);
-    }
-    gsub(pattern, "", rspCode, ...);
-  } # dropRspComments()
-
-
-
-  preprocessRspDirectives <- function(rspCode, ...) {
-    rspPattern <- "<%[#@][ ]*([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*)[ ]+(.*?)%>";
-
-    bfr <- rspCode;
-    rspCode <- c();
-    while (nchar(bfr) > 0) {
-      pos <- regexpr(rspPattern, bfr);
-      if (pos == -1) {
-        break;
-      }
-
-      len <- attr(pos, "match.length");
-      head <- substring(bfr, first=1, last=pos-1L);
-      rspCode <- c(rspCode, head);
-
-      part <- substring(bfr, first=pos, last=pos+len-1L);
-      bfr <- substring(bfr, first=pos+len);
-
-
-      # <%@foo attr1="bar" attr2="geek"%> => ...
-      directive <- gsub(rspPattern, "\\1", part);
-#      printf("directive: %s\n", directive);
-
-      attrs <- gsub(rspPattern, "\\2", part);
-#      printf("attrs: %s\n", attrs);
-
-      if (directive == "insert") {
-        attrList <- parseAttributes(attrs, known=NULL);
-#        str(attrList);
-
-        path <- attrList$path;
-        path <- Arguments$getReadablePath(path, mustExist=TRUE);
-
-        file <- attrList$file;
-        pattern <- attrList$pattern;
-        if (!is.null(file) && !is.null(pattern)) {
-          throw(sprintf("Incorrect RSP directive <%%@insert ...%%>: Only one of attributes 'file' and 'pattern' may be given: <%%@%s %s%%>", directive, attrs));
-        }
-
-#str(pattern);
-#str(file);
-        pathnames <- NULL;
-        if (!is.null(pattern)) {
-          if (is.null(path))
-            path <- ".";
-          pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE);
-          # Keep only files
-          pathnames <- pathnames[sapply(pathnames, FUN=isFile)];
-          # Guarantee lexicographic ordering
-          pathnames <- sort(pathnames);
-        } else if (!is.null(file)) {
-          pathname <- Arguments$getReadablePathname(file, path=path, mustExist=TRUE);
-#          printf("Pathname: %s\n", pathname);
-          pathnames <- pathname;
-        } else {
-          throw(sprintf("Incomplete RSP directive <%%@insert ...%%>: Either attribute 'file' or 'pattern' must be given: <%%@%s %s%%>", directive, attrs));
-        }
-
-        part <- NULL;
-        for (pathname in pathnames) {
-          bfrT <- readLines(pathname, warn=FALSE);
-##          bfrT <- gsub("\\", "\\\\", bfrT, fixed=TRUE);
-          bfrT <- paste(bfrT, collapse="\n");
-          part <- c(part, bfrT);
-        }
-
-        collapse <- attrList$collapse;
-        if (is.null(collapse)) collapse <- "\n";
-        part <- paste(part, collapse=collapse);
-      } # if (directive == ...)
-
-      rspCode <- c(rspCode, part);
-    } # while(...)
-
-    rspCode <- c(rspCode, bfr);
-    rspCode <- paste(rspCode, collapse="");
-
-    rspCode;
-  } # preprocessRspDirectives()
-
-
-
   splitRspTags <- function(..., trimRsp=FALSE) {
     bfr <- paste(..., collapse="\n", sep="");
 
@@ -209,11 +124,6 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
         part <- list(rsp=substring(bfr, first=1, last=pos-1));
         bfr <- substring(bfr, first=pos+2);
-##        # Trim trailing white space from RSP tag, if there is
-##        # nothing else on the rest of the line?
-##        if (trimRsp) {
-##          bfr <- sub("^[ \t\v]*(\n|\r|\r\n)", "", bfr);
-##        }
         state <- START;
       }
 
@@ -251,13 +161,13 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         # Read all (mandatory) white spaces
         pos <- regexpr("^[ \t]+", bfr);
         if (pos == -1)
-          throw(Exception("Error when parsing attributes for RSP preprocessing directive. Expected a white space.", code=rspCode));
+          throw(Exception("Error when parsing attributes. Expected a white space.", code=rspCode));
         len <- attr(pos, "match.length");
         bfr <- substring(bfr, len+1);
         # Read the attribute name
         pos <- regexpr("^[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]*", bfr);
         if (pos == -1)
-          throw(Exception("Error when parsing attributes for RSP preprocessing directive. Expected an attribute name.", code=rspCode));
+          throw(Exception("Error when parsing attributes. Expected an attribute name.", code=rspCode));
         len <- attr(pos, "match.length");
         name <- substring(bfr, 1, len);
         bfr <- substring(bfr, len+1);
@@ -265,14 +175,14 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         # Read the '=' with optional white spaces around it
         pos <- regexpr("^[ ]*=[ ]*", bfr);
         if (pos == -1)
-          throw(Exception("Error when parsing attributes for RSP preprocessing directive. Expected an equal sign.", code=rspCode));
+          throw(Exception("Error when parsing attributes. Expected an equal sign.", code=rspCode));
         len <- attr(pos, "match.length");
         bfr <- substring(bfr, len+1);
 
         # Read the value with mandatory quotation marks around it
         pos <- regexpr("^\"[^\"]*\"", bfr);
         if (pos == -1)
-          throw(Exception("Error when parsing attributes for RSP preprocessing directive. Expected a quoted attribute value string.", code=rspCode));
+          throw(Exception("Error when parsing attributes. Expected a quoted attribute value string.", code=rspCode));
         len <- attr(pos, "match.length");
         value <- substring(bfr, 2, len-1);
         bfr <- substring(bfr, len+1);
@@ -283,14 +193,14 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
     # Check for duplicated attributes
     if (length(names(attrs)) != length(unique(names(attrs))))
-        throw(Exception("Duplicated attributes in RSP preprocessing directive.", code=rspCode));
+        throw(Exception("Duplicated attributes.", code=rspCode));
 
     # Check for unknown attributes
     if (!is.null(known)) {
       nok <- which(is.na(match(names(attrs), known)));
       if (length(nok) > 0) {
         nok <- paste("'", names(attrs)[nok], "'", collapse=", ", sep="");
-        throw(Exception("Unknown attribute(s) in RSP preprocessing directive: ", nok, code=rspCode));
+        throw(Exception("Unknown attribute(s): ", nok, code=rspCode));
       }
     }
 
@@ -299,7 +209,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
       nok <- which(is.na(match(mandatory, names(attrs))));
       if (length(nok) > 0) {
         nok <- paste("'", mandatory[nok], "'", collapse=", ", sep="");
-        throw(Exception("Missing attribute(s) in RSP preprocessing directive: ", nok, code=rspCode));
+        throw(Exception("Missing attribute(s): ", nok, code=rspCode));
       }
     }
 
@@ -353,12 +263,12 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
     text;
   } # escapeRspText()
 
-
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
+  # MAIN
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'rspCode'
-  rspCode <- Arguments$getCharacters(rspCode);
+  # Argument 'text'
+  if (!is.null(text) && length(as.character(text)) == 0)
+    return("");
 
   # Argument 'rspLanguage'
   if (is.null(rspLanguage)) {
@@ -377,56 +287,78 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
                                                      class(rspLanguage)[1]);
   }
 
-  # Argument 'validate'
-  validate <- Arguments$getLogical(validate);
+  # Argument 'path'
+  if (is.null(path)) {
+    path <- ".";
+  } else {
+    path <- Arguments$getReadablePathname(path, mustExist=FALSE);
+  }
+
+  # Argument 'file'
+  pathname <- "";
+  if (is.null(text) && is.character(file)) {
+    if (file == "") {
+      text <- readLines(warn=FALSE);
+    } else {
+      if (isUrl(file)) {
+        pathname <- file;
+      } else {
+        if (!identical(getParent(file), path)) {
+          pathname <- filePath(path, file);
+        } else {
+          pathname <- file;
+        }
+
+        if (!isFile(pathname))
+          throw("Cannot translate RSP file. File not found: ", pathname);
+      }
+      text <- readLines(pathname, warn=FALSE);
+    }
+  } else {
+    # When does this happen? /HB 2006-07-04
+  }
+
+  # Argument 'trimRsp'
+  trimRsp <- Arguments$getLogical(trimRsp);
 
 
+  text <- paste(paste(text, collapse="\n"), "\n", sep="");
 
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Tidy up RSP code
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Concatenate rsp code strings
-  rspCode <- paste(rspCode, collapse="\n");
-  rspCode <- paste(rspCode, "\n", sep="");
-
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # (a) Preprocess RSP code
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  lastRspCode <- "";
-  while (rspCode != lastRspCode) {
-    lastRspCode <- rspCode;
-
-    # Drop RSP comments
-    # [1] Example Depot, Greedy and Nongreedy Matching in a Regular
-    #     Expression, 2009.
-    #     http://www.exampledepot.com/egs/java.util.regex/Greedy.html
-    rspCode <- dropRspComments(rspCode, trimRsp=trimRsp);
-
-    # Preprocessing RSP directives should go here, e.g. @insert.
-    rspCode <- preprocessRspDirectives(rspCode);
-  } # while (...)
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # (b) Parse RSP code
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Split in non-RSP and RSP parts, e.g splitting by '<%...%>'.
-  parts <- splitRspTags(rspCode, trimRsp=trimRsp);
-  rspCode <- NULL; # Not needed anymore
+  parts <- splitRspTags(text, trimRsp=trimRsp);
+  text <- NULL; # Not needed anymore
 
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # (c) Translate RSP code (to R code)
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   error <- NULL;
-  rCode <- NULL;
+
+  # Translate RSP document to R code
+  rCode <- paste(
+  "#######################################################################\n",
+  "# DO NOT EDIT!  DO NOT EDIT!  DO NOT EDIT!  DO NOT EDIT!  DO NOT EDIT! \n",
+  "#                                                                      \n",
+  "# This R code was translated from RSP by the R.rsp package.            \n",
+  "#                                                                      \n",
+  "# Details:                                                             \n",
+  "# File: ", file, "\n",
+  "# Path: ", path, "\n",
+  "#######################################################################\n",
+  "\n", sep="");
+
+  code <- "# Assert that write() of R.rsp is used below\n";
+  rCode <- c(rCode, code);
+  code <- "write <- R.rsp:::write;\n";
+  rCode <- c(rCode, code);
+
+  code <- "# Sets the public RspPage 'page' object\n";
+  rCode <- c(rCode, code);
+  pageCode <- paste("page <- RspPage(pathname=\"", pathname, "\");\n", sep="");
+  rCode <- c(rCode, pageCode);
+  code <- "# Gets the output connection (or filename) for the response [OBSOLETE]\n";
+  rCode <- c(rCode, code);
+  code <- "out <- getOutput(response);\n";
+  rCode <- c(rCode, code);
 
   types <- names(parts);
-  for (kk in seq(length=length(parts))) {
+  for (kk in seq_along(parts)) {
     part <- parts[[kk]];
     type <- types[[kk]];
 
@@ -436,7 +368,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         while (nchar(part) > 0) {
           currPart <- substring(part, 1, 1024);
           value <- escapeRspText(currPart);
-          code <- sprintf("write(response, \"%s\");\n", value);
+          code <- c("write(response, \"", value, "\");\n");
           rCode <- c(rCode, code);
           part <- substring(part, 1025);
         }
@@ -448,18 +380,15 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
 
     if (type == "rsp") {
       rspTag <- paste("<%", part, "%>", sep="");
-      codeComment <- unlist(strsplit(rspTag, split="\n", fixed=TRUE), use.names=FALSE);
-      codeComment <- paste("# ", codeComment, sep="");
-      codeComment <- c(codeComment, "");
-      codeComment <- paste(codeComment, collapse="\n");
+      rspTagE <- gsub("\n", "\\n", rspTag, fixed=TRUE)
+      rspTagE <- gsub("\r", "\\r", rspTagE, fixed=TRUE)
+      codeComment <- paste("# ", rspTagE, "\n", sep="");
       rspCode <- trim(part);
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # RSP Scripting Elements and Variables
       #
       # <%--[comment]--%>
-      #
-      # NOTE: With dropRspComments() above, this will never occur here.
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       pattern <- "^--(.*)--$";
       if (regexpr(pattern, part) != -1) {
@@ -472,19 +401,6 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # RSP Scripting Elements and Variables
       #
-      # <%# [comment] %>  [MAY BE AMBIGOUS! /HB 2011-03-16]
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-##       pattern <- "^#(.*)$";
-##       if (regexpr(pattern, part) != -1) {
-##         # <%# [comment] %>  => # [comment]
-##         comment <- gsub(pattern, "\\1", part);
-##         rCode <- c(rCode, comment);
-##         next;
-##       }
-
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # RSP Scripting Elements and Variables
-      #
       # <%=[expression]%>
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       pattern <- "^=(.*)$";
@@ -493,7 +409,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         value <- gsub(pattern, "\\1", part);
         value <- trim(value);
         # TODO: Try to parse here to catch invalid code as soon as possible?
-        code <- c(codeComment, sprintf("write(response, {%s});\n", value));
+        code <- c(codeComment, "write(response, {", value, "});\n");
 
         rCode <- c(rCode, code);
         next;
@@ -512,7 +428,7 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
         attrs <- parseAttributes(attrs, known=NULL);
 
 
-        # <%@include file="url"%> => add what parseRsp(url) returns.
+        # <%@include file="url"%> => add what translateRsp(url) returns.
         if (directive == "include") {
           file <- attrs[["file"]];
           if (is.null(file))
@@ -527,7 +443,6 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
             lines <- readLines(fh, warn=FALSE);
           } else {
             if (!isAbsolutePath(file)) {
-              path <- getwd();
               file <- filePath(path, file);
               file <- getAbsolutePath(file);
             }
@@ -552,9 +467,9 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
                                   escapeRspText(value), "\");\n", sep="");
           } else {
             # Process and include file.
-            value <- parseRsp(text=lines, path=getParent(file));
-#            value <- c(value, "\n# Resets the 'page' object\n");
-#            value <- c(value, pageCode);
+            value <- translateRspV1(text=lines, path=getParent(file));
+            value <- c(value, "\n# Resets the 'page' object\n");
+            value <- c(value, pageCode);
           }
 
           code <- c(codeComment, value);
@@ -616,55 +531,18 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
           }
 
           next;
-        } # if (directive == ...)
+        }
 
         # <%@directive attr1="foo" attr2="bar"%>
         #     => write(response, directive(attr1="foo", attr2="bar"))
         # TODO: Try to parse here to catch invalid code as soon as possible?
         rspDirective <- directive;
-        args <- sprintf("%s=\"%s\"", names(attrs), attrs);
+        args <-paste(names(attrs), attrs, sep="=");
         args <- paste(args, collapse=", ");
-        cmd <- sprintf("%s(%s)", rspDirective, args);
-        code <- c(codeComment, "write(response, ", cmd, ");\n");
+        value <- paste(rspDirective, "(response, ", args, ")", sep="");
+        code <- c(codeComment, "write(response, ", value, ");\n");
 
         rCode <- c(rCode, code);
-        next;
-      }
-
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      # RSP Scripting Elements and Variables
-      #
-      # <%:: [expressions] %>  - Output the code and evaluate it
-      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      pattern <- "^::(.*)";
-      if (regexpr(pattern, part) != -1) {
-        expressions <- gsub(pattern, "\\1", part);
-        expressions <- trim(expressions);
-        expressions <- paste(expressions, "\n", sep="");
-
-        flavor <- c("echo", "chunk")[2];
-        if (flavor == "echo") {
-          expressions <- strsplit(expressions, split="\n", fixed=TRUE);
-          expressions <- unlist(expressions, use.names=FALSE);
-          code <- sprintf("write(response, R.utils::withCapture({%s}), collapse='\\n');\n", expressions);
-        }
-
-        if (flavor == "chunk") {
-          # Sanity check (this code chunk needs to be complete!)
-          tryCatch({
-            parse(text=expressions);
-          }, error = function(ex) {
-            throw(ex);
-          });
-          expressions <- paste(expressions, collapse="");
-          # FIXME: The following does not handled "nested" code
-          # inside strings, e.g. cat("cat('cat(\''hello\\')')").
-          # /HB 2011-03-16
-          expressions <- gsub("'", "\\'", expressions, fixed=TRUE);
-          code <- sprintf("write(response, sourceWithTrim('%s', echo=TRUE), collapse='\\n');\n", expressions);
-        }
-        rCode <- c(rCode, code);
-
         next;
       }
 
@@ -698,69 +576,28 @@ setMethodS3("parseRsp", "default", function(rspCode, rspLanguage=getOption("rspL
   # Paste all code snippets together
   rCode <- paste(rCode, collapse="", sep="");
 
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # (d) Validate R code (via parsing)
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if (validate) {
-    # Parse the R RSP code so that error messages contains line numbers.
-    con <- textConnection(rCode);
-    on.exit(close(con));
-
-    tryCatch({
-      # Parse parsed R code
-      rExpr <- parse(con);
-    }, error = function(ex) {
-      # If an parse error occurs, show tranlated code.
-      msg <- ex$message;
-      line <- gsub(".*line *([0-9]+).*", "\\1", msg);
-      code <- displayCode(code=rCode, highlight=line, pager="none");
-      code <- unlist(strsplit(code, split="\n", fixed=TRUE), use.names=FALSE);
-      ex$code <- code;
-      stop(ex);
-    });
-  }
-  attr(rCode, "validate") <- validate;
+  attr(rCode, "pathname") <- pathname;
 
   rCode;
-})
+}, deprecated=TRUE)
 
 ##############################################################################
 # HISTORY:
-# 2011-11-14
-# o ROBUSTNESS: Now <%=[expr]%> is translated with curly brackets around
-#   the expression, i.e. write(response, {[expr]}).  This allows for
-#   writing <%= x <- 1; x^2 %> instead of <%={ x <- 1; x^2 }%>.
-# 2011-11-07
-# o BUG FIX: <@fcn foo="bar"> for "fallback" directives would try to call
-#   fcn(foo=bar) instead of fcn(foo="bar").
-# o CLEANUP: Now translating to evalCapture() instead of evalWithEcho().
-# o BUG FIX: One of the tags would generate invalid evalWithEcho() code.
-# 2011-04-12
-# o Change the preprocess directives to have format <%#insert ...%>.
-# 2011-04-01
-# o Added support for <%insert path="<path>" pattern="<pattern>"%>.
-# o Added support for <%insert file="<filename>" path="<path>"%>.
-# o Added support for <%insert file="<pathname>"%>.
-# o Added internal processRspInserts().
-# 2011-03-30
-# o Now parseRsp() drops RSP comments, i.e. '<%-- {anything} --%>'.
-# o Added internal dropRspComments() for dropping '<%-- {anything} --%>'.
-# 2011-03-15
-# o Added RSP markup <%;{R code}%> for evaluating and echoing code.
+# 2014-10-18
+# o CLEANUP/ROBUSTNESS: translateRsp() and translateRspV1(), which are
+#   both deprecated, no longer assume that write() is exported from R.rsp.
+# 2011-11-17
+# o Now the generated R script adds 'write <- R.rsp::write' at the
+#   beginning, to assure that it is used instead of base::write().
 # 2011-03-12
 # o Now the trimming of RSP handles all newline types, i.e. LF, CR+LF, CR.
 # 2011-03-08
-# o Added argument 'trimRsp' to parseRsp() for trimming white space
+# o Added argument 'trimRsp' to translateRspV1() for trimming white spaces
 #   surrounding RSP blocks that have preceeding and succeeding white space
 #   and that are followed by a newline.
-# 2011-02-13
-# o BUG FIX: parseRsp() would generate invalid R code/R comments for
-#   multiline <%=...%> statements.
 # 2009-02-23
-# o Now parseRsp() does the validation of the R code.
-# o Renamed translateRsp() to parseRsp().
+# o There is a new translateRsp(). The old version is keep for backward
+#   compatibility as translateRspV1().
 # 2007-04-07
 # o Replace regexpr pattern "^[ \]*=[ \]*" with "^[ \]*=[ \]*".
 # 2006-07-20

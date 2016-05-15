@@ -1,4 +1,6 @@
 urlDecode <- function(url, ...) {
+  .Deprecated(new="utils::URLdecode()")
+
   pattern <- "(.*)(%)([[:xdigit:]]{2})(.*)";
   value <- url;
   if (is.na(value))

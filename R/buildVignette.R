@@ -47,6 +47,10 @@
 # @keyword internal
 #*/###########################################################################
 buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = TRUE, clean = TRUE, engine=NULL, buildPkg=NULL, ...) {
+    if (getRversion() >= "3.1.0") {
+      .Deprecated(new="tools::buildVignette")
+    }
+
     ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ### BEGIN: Workaround until buildVignette() is in the 'tools' package.
     ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

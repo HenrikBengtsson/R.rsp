@@ -50,7 +50,7 @@ setMethodS3("rclean", "default", function(..., file=NULL, path=NULL, envir=paren
       file <- file.path(path, file);
     }
     if (!isUrl(file)) {
-      file <- Arguments$getReadablePathname(file, absolute=TRUE);
+      file <- Arguments$getReadablePathname(file, absolutePath=TRUE);
     }
   }
 

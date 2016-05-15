@@ -1,5 +1,6 @@
 
 hexToInt <- function(hex, ...) {
+  .Deprecated()
   hex <- as.character(hex);
   hex <- tolower(hex);
   hex <- strsplit(hex, split="", fixed=TRUE)[[1]];

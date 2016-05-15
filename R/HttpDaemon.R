@@ -321,10 +321,10 @@ setMethodS3("getHttpRequest", "HttpDaemon", function(static, ...) {
 
       query <- strsplit(query, split="=", fixed=TRUE);
 
-      for (kk in seq(along=query)) {
+      for (kk in seq_along(query)) {
         pair <- query[[kk]];
-        name <- urlDecode(pair[1L]);
-        value <- urlDecode(pair[2L]);
+        name <- URLdecode(pair[1L]);
+        value <- URLdecode(pair[2L]);
         params[[kk]] <- value;
         names(params)[kk] <- name;
       }

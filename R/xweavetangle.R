@@ -296,6 +296,14 @@ asisTangle <- function(file, ...) NULL
     suppressMessages({
       html <- pandoc(md, format=format)
     })
+
+    ## WORKAROUND: Did knitr::pandoc() append '_utf8' to the full name?
+    html0 <- file_path_sans_ext(basename(html))
+    if (grepl("_utf8$", html0)) {
+      html1 <- gsub("_utf8.", ".", html, fixed=TRUE)
+      renameFile(html, html1)
+      html <- html1
+    }
     html <- RspFileProduct(html)
   } else {
     if (isTRUE(Sys.getenv("RSP_REQ_PANDOC"))) {

@@ -1,6 +1,19 @@
 Package: R.rsp
 ==============
 
+Version: 0.30.0 [2016-05-15]
+o CLEANUP: Deprecated several methods that was part of the old
+  API, e.g. compileRsp(), sourceRsp(), translateRsp() etc.
+o CLEANUP: Renamed exec/ script 'rsource(.bat)' to 'rcode(.bat)'.
+o CLEANUP: Removed epsDev(), which has been defunct since
+  R.rsp 0.19.7 (Jan 2015).
+o CLEANUP: Workaround for markdown (<= 0.5.4) (Jan 2013) removed.
+o WORKAROUND: knitr::pandoc() in knitr (>= 1.13) appends '_utf8'
+  to output HTML filename (to the part before the extension).
+  This caused one of the vignette engines to fail.  Now '_utf8'
+  is dropped from the HTML filename if this is detected.
+
+
 Version: 0.21.0 [2015-12-18]
 o Renamed rscript() to rcode().  rscript() is now deprecated.
 o Added vignette option %\VignetteCompression{} for alternative

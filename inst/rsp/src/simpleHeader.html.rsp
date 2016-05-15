@@ -18,7 +18,7 @@ if (regexpr("./$", uri) != -1) {
 <div class="PageHeader">
  <div style="float: left;">
   <a href="/">~</a> / 
-  <% for (kk in seq(length=length(uriPath))) { %>
+  <% for (kk in seq_along(uriPath)) { %>
     <a href="/<%=paste(uriPath[1:kk], collapse="/")%>/"><%=uriPath[kk]%></a> /
   <% } %>
  </div>

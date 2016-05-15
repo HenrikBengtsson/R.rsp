@@ -13,18 +13,18 @@
 #   \item{pattern}{A filename pattern.}
 #   \item{path}{The pathname of the directory to be search for RSP files.}
 #   \item{extension}{The filename extension to be used for the output files.}
-#   \item{outputPath}{The pathname of the directory where to save the 
+#   \item{outputPath}{The pathname of the directory where to save the
 #         output files.}
 #   \item{overwrite}{If @FALSE, an error is thrown if an output file already
 #     exists, otherwise not.}
 #   \item{...}{Additional arguments passed to @see "sourceRsp".}
-#   \item{envir}{An @environment to be the working environment of the 
+#   \item{envir}{An @environment to be the working environment of the
 #     servlets, i.e. where RSP variables and objects are stored.}
 # }
 #
 # \value{
 #   Returns (invisibly) a @character @list of pathnames of all processed
-#   RSP files. 
+#   RSP files.
 # }
 #
 # \section{Exceptions}{
@@ -32,7 +32,9 @@
 #   the next one and records the error.
 # }
 #
-# @examples "../incl/sourceAllRsp.Rex"
+# \examples{\dontrun{
+#  @include "../incl/sourceAllRsp.Rex"
+# }}
 #
 # @author
 #
@@ -45,6 +47,8 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("sourceAllRsp", "default", function(pattern="[.]rsp$", path=".", extension="html", outputPath=extension, overwrite=FALSE, ..., envir=parent.frame()) {
+  .Deprecated(new="lapply(dir(pattern='[.]rsp$', FUN=rfile)")
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -82,7 +86,7 @@ setMethodS3("sourceAllRsp", "default", function(pattern="[.]rsp$", path=".", ext
     tryCatch({
       sourceRsp(file=file, path=path, response=response, ..., envir=envir);
     }, error = function(ex) {
-      cat("An exception occured while processing RSP file '", file, 
+      cat("An exception occured while processing RSP file '", file,
                                               "' (in '", path, "'):", sep="");
       print(ex);
       attr(file, "error") <<- ex;
@@ -91,7 +95,7 @@ setMethodS3("sourceAllRsp", "default", function(pattern="[.]rsp$", path=".", ext
   }
 
   invisible(res);
-})
+}, deprecated=TRUE)
 
 ##############################################################################
 # HISTORY:
