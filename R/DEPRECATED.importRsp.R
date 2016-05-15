@@ -26,8 +26,10 @@
 # @keyword file
 # @keyword IO
 # @keyword internal
-#*/########################################################################### 
+#*/###########################################################################
 setMethodS3("importRsp", "default", function(...) {
+  .Deprecated(msg="importRsp() is deprecated. Please use <%@include ...%> instead")
+
   input <- NULL; # Declare variable to please R CMD check R v2.6.0
 
   output <- textConnection("input", open="w", local=TRUE);
