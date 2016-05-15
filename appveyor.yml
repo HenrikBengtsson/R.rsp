@@ -39,14 +39,8 @@ install:
 
 build_script:
   - echo Current directory=%CD%
-
-  - travis-tool.sh install_r base64enc digest markdown R.devices
-
-  - travis-tool.sh install_r R.rsp
-
-  - travis-tool.sh install_r R.cache R.methodsS3 R.oo R.utils
-
-  - travis-tool.sh install_r ascii base64enc digest knitr markdown R.devices
+  - travis-tool.sh install_r ascii base64enc digest knitr markdown
+  - travis-tool.sh install_r R.cache R.methodsS3 R.oo R.utils R.devices R.rsp
 
 test_script:
   - travis-tool.sh run_tests
