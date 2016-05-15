@@ -51,7 +51,7 @@ before_install:
 
 install:
  - $RENV install_deps
- - $RENV install_r base64enc digest markdown R.devices
+ - $RENV install_r ascii base64enc digest markdown R.devices R.rsp
 
 script:
   - $RENV run_build
