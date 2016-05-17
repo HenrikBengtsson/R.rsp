@@ -11,7 +11,8 @@
 \begin{document}
 \maketitle
 
-To include a static PDF vignette in package, all you need is the PDF file and companion \code{*.pdf.asis} file with directives to R on which title should be used in vignette indices and what vignette engine to use.  For instance, this document was included in this package by:
+To include a static PDF vignette in package, all you need is the PDF file and companion \code{*.pdf.asis} file with directives to R on which title should be used in vignette indices and what vignette engine to use.  These two files should be placed in the \code{vignettes/} directory of your package.
+For instance, this document was included in this package by:
 \begin{enumerate}
  \item \code{vignettes/<%=toLatex("<%@string name="label"%>")%>.pdf}
  \item \code{vignettes/<%=toLatex("<%@string name="label"%>")%>.pdf.asis}

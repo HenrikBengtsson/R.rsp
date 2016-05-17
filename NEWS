@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.30.0-9000 [2016-05-16]
+o ...
+
+
 Version: 0.30.0 [2016-05-15]
 o CLEANUP: Deprecated several methods that was part of the old
   API, e.g. compileRsp(), sourceRsp(), translateRsp() etc.
