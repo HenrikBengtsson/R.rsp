@@ -61,7 +61,7 @@ rm(paths);
 %>
 
 <ol>
-<% for (kk in seq(along=pkgs)) { 
+<% for (kk in seq_along(pkgs)) { 
   pkg <- pkgs[kk]; 
   dd <- packageDescription(pkg);
   path <- system.file(package=pkg);

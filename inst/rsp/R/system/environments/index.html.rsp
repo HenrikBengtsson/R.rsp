@@ -19,7 +19,7 @@ Current search path:<br>
 searchPath <- search();
 %>
 <ol>
-<% for (kk in seq(along=searchPath)) { %>
+<% for (kk in seq_along(searchPath)) { %>
 <%
 name <- searchPath[kk];
 env <- pos.to.env(kk);

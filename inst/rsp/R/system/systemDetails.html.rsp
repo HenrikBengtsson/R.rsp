@@ -48,7 +48,7 @@ names <- names(values);
 names[nchar(names)==0] <- "&lt;no name&gt;";
 %>
 
-<% for (kk in seq(length=length(values))) { %>
+<% for (kk in seq_along(values)) { %>
  <div style="width: 100%; <%=ifelse(kk == 1, "border-top: 1px solid;", "")%> border-bottom: 1px solid; padding-bottom: 0.5ex; background: <%=ifelse(kk %% 2 == 0, "#cccccc", "#ffffff")%>;">
   <strong><%=names[kk]%></strong><br>
   <code><%=values[kk]%></code><br>
@@ -64,7 +64,7 @@ names <- names(values);
 names[nchar(names)==0] <- "&lt;no name&gt;";
 %>
 
-<% for (kk in seq(length=length(values))) { %>
+<% for (kk in seq_along(values)) { %>
  <div style="width: 100%; <%=ifelse(kk == 1, "border-top: 1px solid;", "")%> border-bottom: 1px solid; padding-bottom: 0.5ex; background: <%=ifelse(kk %% 2 == 0, "#cccccc", "#ffffff")%>;">
   <strong><%=names[kk]%></strong><br>
   <code><%=values[kk]%></code><br>
@@ -80,7 +80,7 @@ names <- names(values);
 names[nchar(names)==0] <- "&lt;no name&gt;";
 %>
 
-<% for (kk in seq(length=length(values))) { %>
+<% for (kk in seq_along(values)) { %>
  <div style="width: 100%; <%=ifelse(kk == 1, "border-top: 1px solid;", "")%> border-bottom: 1px solid; padding-bottom: 0.5ex; background: <%=ifelse(kk %% 2 == 0, "#cccccc", "#ffffff")%>;">
   <strong><%=names[kk]%></strong><br>
   <code><%=values[kk]%></code><br>
@@ -95,7 +95,7 @@ names <- names(values);
 names[nchar(names)==0] <- "&lt;no name&gt;";
 %>
 
-<% for (kk in seq(length=length(values))) { %>
+<% for (kk in seq_along(values)) { %>
  <div style="width: 100%; <%=ifelse(kk == 1, "border-top: 1px solid;", "")%> border-bottom: 1px solid; padding-bottom: 0.5ex; background: <%=ifelse(kk %% 2 == 0, "#cccccc", "#ffffff")%>;">
   <strong><%=names[kk]%></strong><br>
   <code><%=values[kk]%></code><br>
@@ -121,7 +121,7 @@ names <- names(values);
 names[nchar(names)==0] <- "&lt;no name&gt;";
 %>
 
-<% for (kk in seq(length=length(values))) { %>
+<% for (kk in seq_along(values)) { %>
  <div style="width: 100%; <%=ifelse(kk == 1, "border-top: 1px solid;", "")%> border-bottom: 1px solid; padding-bottom: 0.5ex; background: <%=ifelse(kk %% 2 == 0, "#cccccc", "#ffffff")%>;">
   <strong><%=names[kk]%></strong><br>
   <code><%=values[kk]%></code><br>
@@ -137,7 +137,7 @@ names <- names(values);
 names[nchar(names)==0] <- "&lt;no name&gt;";
 %>
 
-<% for (kk in seq(length=length(values))) { %>
+<% for (kk in seq_along(values)) { %>
  <div style="width: 100%; <%=ifelse(kk == 1, "border-top: 1px solid;", "")%> border-bottom: 1px solid; padding-bottom: 0.5ex; background: <%=ifelse(kk %% 2 == 0, "#cccccc", "#ffffff")%>;">
   <strong><%=names[kk]%></strong><br>
   <code><%=values[kk]%></code><br>
@@ -152,7 +152,7 @@ names <- names(values);
 names[nchar(names)==0] <- "&lt;no name&gt;";
 %>
 
-<% for (kk in seq(length=length(values))) { %>
+<% for (kk in seq_along(values)) { %>
  <div style="width: 100%; <%=ifelse(kk == 1, "border-top: 1px solid;", "")%> border-bottom: 1px solid; padding-bottom: 0.5ex; background: <%=ifelse(kk %% 2 == 0, "#cccccc", "#ffffff")%>;">
   <strong><%=names[kk]%></strong><br>
   <code><%=values[kk]%></code><br>
@@ -168,7 +168,7 @@ names <- names(values);
 names[nchar(names)==0] <- "&lt;no name&gt;";
 %>
 
-<% for (kk in seq(length=length(values))) { %>
+<% for (kk in seq_along(values)) { %>
  <div style="width: 100%; <%=ifelse(kk == 1, "border-top: 1px solid;", "")%> border-bottom: 1px solid; padding-bottom: 0.5ex; background: <%=ifelse(kk %% 2 == 0, "#cccccc", "#ffffff")%>;">
   <strong><%=names[kk]%></strong><br>
   <code><%=values[kk]%></code><br>

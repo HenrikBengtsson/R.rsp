@@ -20,7 +20,7 @@
 <h2>Details</h2>
 <% 
 opts <- Sys.getenv(); 
-for (kk in seq(length=length(opts))) { 
+for (kk in seq_along(opts)) { 
   name <- names(opts)[kk];
   if (nchar(name) == 0)
     name <- "&lt;no name&gt;";
