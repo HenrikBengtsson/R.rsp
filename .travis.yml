@@ -32,7 +32,10 @@ matrix:
     - os: osx
       r: release
       latex: false
-    
+
+r_packages:
+    - R.rsp
+   
 notifications:
   email:
     on_success: change
