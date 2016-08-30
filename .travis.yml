@@ -28,7 +28,7 @@ matrix:
       r: devel
     - os: osx
       r: oldrel
-     - os: osx
+    - os: osx
       r: release
 
 r_packages:
