@@ -61,7 +61,7 @@ setMethodS3("rcompile", "default", function(..., file=NULL, path=NULL, output=NU
       file <- file.path(path, file);
     }
     if (!isUrl(file)) {
-      file <- Arguments$getReadablePathname(file, absolutePath=TRUE);
+      file <- Arguments$getReadablePathname(file, absolute=TRUE);
     }
   }
 
