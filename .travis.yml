@@ -28,10 +28,8 @@ matrix:
       r: devel
     - os: osx
       r: oldrel
-      latex: false
-    - os: osx
+     - os: osx
       r: release
-      latex: false
 
 r_packages:
     - R.rsp
