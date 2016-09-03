@@ -1,7 +1,7 @@
 library("R.rsp")
 
 if (Sys.getenv("_R_CHECK_FULL_") != "" && isCapableOf(R.rsp, "latex")) {
-  urlPath <- "http://latex-project.org/guides"
+  urlPath <- "http://www.latex-project.org/help/documentation"
   filenames <- c(
     usrguide="usrguide.tex"
   );
