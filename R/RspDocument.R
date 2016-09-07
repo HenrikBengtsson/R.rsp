@@ -761,7 +761,7 @@ setMethodS3("flatten", "RspDocument", function(object, ..., verbose=FALSE) {
       expr <- list(expr);
       names(expr) <- key;
     }
-    res <- append(res, expr);
+    res <- c(res, expr);
   } # for (kk ...)
 
   class(res) <- class(object);
