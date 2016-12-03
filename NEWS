@@ -2,7 +2,7 @@ Package: R.rsp
 ==============
 
 Version: 0.30.0-9000 [2016-12-02]
-o All vignette formats now outputs a tangle file because it
+o All vignette formats now output a tangle file because it
   will soon be required by R.
 
 
