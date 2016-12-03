@@ -72,6 +72,5 @@ all.equal, as.Date, as.POSIXlt, as.data.frame, as.raster, downloadFile, formula,
 \author{Henrik Bengtsson}
 
 
-\keyword{internal}
-\keyword{methods}
 \keyword{classes}
+\keyword{internal}
