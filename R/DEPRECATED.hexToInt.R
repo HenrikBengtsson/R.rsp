@@ -1,3 +1,0 @@
-hexToInt <- function(hex, ...) .Defunct()
-
-

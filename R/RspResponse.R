@@ -100,11 +100,6 @@ setMethodS3("write", "RspResponse", abstract=TRUE);
 setMethodS3("flush", "RspResponse", appendVarArgs=FALSE, abstract=TRUE)
 
 
-setMethodS3("import", "RspResponse", function(response, ...) {
-  .Defunct(msg = "RSP construct <%@import file=\"url\"%> is defunct.")
-}, protected=TRUE, deprecated=TRUE)
-
-
 
 ##############################################################################
 # HISTORY:
