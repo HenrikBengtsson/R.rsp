@@ -294,5 +294,5 @@ code <- R.rsp::tidy(code, format='unsafedemo');
 <%@endif%>
 
 \vfill
-\hfill{\footnotesize \href{http://cran.r-project.org/package=R.rsp}{R.rsp v<%=R.rsp$version%>} (<%=R.rsp$date%>) by Henrik Bengtsson}
+\hfill{\footnotesize \href{https://cran.r-project.org/package=R.rsp}{R.rsp v<%=R.rsp$version%>} (<%=R.rsp$date%>) by Henrik Bengtsson}
 \end{document}

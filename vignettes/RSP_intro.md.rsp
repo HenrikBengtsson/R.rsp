@@ -31,7 +31,7 @@
   html <- R.rsp::RspFileProduct(knitr::pandoc(md, format="dzslides"))
 
   References:
-  [1] http://cran.r-project.org/package=R.rsp
+  [1] https://cran.r-project.org/package=R.rsp
   [2] yihui.name/knitr/
   [3] http://paulrouget.com/dzslides/
   ---------------------------------------------------------------------%>
@@ -118,7 +118,7 @@ Slide <%=page%> <% if (!is.null(maxSlide)) { %> of <%=maxSlide%><% } %>
 
 <%=format(as.Date(R.rsp$date), format="%B %d, %Y")%>
 
-Availability: `install.packages("R.rsp")` from <a href="http://cran.r-project.org/package=R.rsp">CRAN</a>
+Availability: `install.packages("R.rsp")` from <a href="https://cran.r-project.org/package=R.rsp">CRAN</a>
 
 Since: 2002
 
@@ -155,8 +155,8 @@ A random number: 7
 ## Some usage
 * PSCBS: PDF reports of copy-number segmentation results
 * aroma-project.org: Interactive [Chromosome Explorer](http://aroma-project.org/data/reports/GSE8605/ACC,-XY,BPN,-XY,AVG,FLN,-XY,paired/ChromosomeExplorer.html) and [Array Explorer](http://www.aroma-project.org/data/reports/GSE8605/raw/ArrayExplorer.html)
-* [Haplin GUI](http://haplin.fhi.no/default.asp?active_page_id=1) - genetic association analyses
-* [googleVis](http://code.google.com/p/google-motion-charts-with-r/#Examples) - Google Chart Tools from R
+* [Haplin GUI](https://folk.uib.no/gjessing/genetics/software/haplin/) - genetic association analyses
+* [googleVis](https://code.google.com/p/google-motion-charts-with-r/#Examples) - Google Chart Tools from R
 
 
 <%---------------------------------------------------------------------%>
