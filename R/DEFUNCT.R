@@ -55,3 +55,7 @@ urlDecode <- function(url, ...) {
 setMethodS3("import", "RspResponse", function(response, ...) {
   .Defunct(msg = "RSP construct <%@import file=\"url\"%> is defunct.")
 }, protected=TRUE, deprecated=TRUE)
+
+setMethodS3("rscript", "default", function(...) {
+  .Defunct(new="rcode()")
+}, deprecated=TRUE)
