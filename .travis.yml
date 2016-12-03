@@ -28,8 +28,12 @@ matrix:
       r: devel
     - os: osx
       r: oldrel
+      before_install:
+      - wget http://mirror.jmu.edu/pub/CTAN/macros/latex/contrib/titlesec/titlesec.sty -o vignettes/titlesec.sty
     - os: osx
       r: release
+      before_install:
+      - wget http://mirror.jmu.edu/pub/CTAN/macros/latex/contrib/titlesec/titlesec.sty -o vignettes/titlesec.sty
 
 r_packages:
     - R.rsp
