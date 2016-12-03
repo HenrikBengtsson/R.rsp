@@ -159,7 +159,7 @@ escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
 
 # \references{
 #   [1] \emph{Internet Media Type},
-#       \url{http://www.wikipedia.org/wiki/Internet_media_type}
+#       \url{https://www.wikipedia.org/wiki/Internet_media_type}
 # }
 parseInternetMediaType <- function(s, ...) {
   # Nothing to do?
