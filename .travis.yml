@@ -30,10 +30,12 @@ matrix:
       r: oldrel
       before_install:
       - wget http://mirror.jmu.edu/pub/CTAN/macros/latex/contrib/titlesec/titlesec.sty -o vignettes/titlesec.sty
+      - wget http://mirror.jmu.edu/pub/CTAN/macros/latex/contrib/titlesec/ttlkeys.def -o vignettes/ttlkeys.def
     - os: osx
       r: release
       before_install:
       - wget http://mirror.jmu.edu/pub/CTAN/macros/latex/contrib/titlesec/titlesec.sty -o vignettes/titlesec.sty
+      - wget http://mirror.jmu.edu/pub/CTAN/macros/latex/contrib/titlesec/ttlkeys.def -o vignettes/ttlkeys.def
 
 r_packages:
     - R.rsp
