@@ -28,8 +28,14 @@ matrix:
       r: devel
     - os: osx
       r: oldrel
+      latex: false
+      r_build_args: --no-build-vignettes
+      r_check_args: --as-cran --no-vignettes
     - os: osx
       r: release
+      latex: false
+      r_build_args: --no-build-vignettes
+      r_check_args: --as-cran --ignore-vignettes
 
 r_packages:
     - R.rsp
