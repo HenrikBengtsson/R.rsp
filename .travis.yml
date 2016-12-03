@@ -28,14 +28,14 @@ matrix:
       r: devel
     - os: osx
       r: oldrel
-      before_install:
-      - wget http://mirror.jmu.edu/pub/CTAN/macros/latex/contrib/titlesec/titlesec.sty -o vignettes/titlesec.sty
-      - wget http://mirror.jmu.edu/pub/CTAN/macros/latex/contrib/titlesec/ttlkeys.def -o vignettes/ttlkeys.def
+      latex: false
+      r_build_args: --no-build-vignettes
+      r_check_args: --as-cran --ignore-vignettes
     - os: osx
       r: release
-      before_install:
-      - wget http://mirror.jmu.edu/pub/CTAN/macros/latex/contrib/titlesec/titlesec.sty -o vignettes/titlesec.sty
-      - wget http://mirror.jmu.edu/pub/CTAN/macros/latex/contrib/titlesec/ttlkeys.def -o vignettes/ttlkeys.def
+      latex: false
+      r_build_args: --no-build-vignettes
+      r_check_args: --as-cran --ignore-vignettes
 
 r_packages:
     - R.rsp
