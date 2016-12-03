@@ -66,17 +66,35 @@ setMethodS3("findPandoc", "default", function(mustExist=TRUE, ..., verbose=FALSE
 
   # Validate by retrieving version information
   if (isFile(bin)) {
-    res <- tryCatch({
+    output <- tryCatch({
       system2(bin, args="--version", stdout=TRUE)
     }, error = function(ex) {
       NULL
     })
 
-    if (!is.null(res)) {
+    if (!is.null(output)) {
+      name <- "pandoc"
       pattern <- "pandoc.* ([0-9.-]+).*"
-      ver <- grep(pattern, res, value=TRUE)
+      ver <- grep(pattern, output, value=TRUE)
       ver <- gsub(pattern, "\\1", ver)
-      ver <- numeric_version(ver)
+      
+      ## No matching output?
+      if (length(ver) == 0) {
+        stop(sprintf("Failed to infer version of %s based on captured output: ", sQuote(name), paste(dQuote(output), collapse=", ")))
+      }
+
+      ## Try to coerce to version objects
+      ver <- numeric_version(ver, strict = FALSE)
+      ver <- ver[!is.na(ver)]
+      
+      ## Failed to coerce?
+      if (length(ver) == 0) {
+        stop("Failed to parse version of %s based on captured output: ", sQuote(name), paste(dQuote(output), collapse=", "))
+      }
+
+      ## If more than one match, use the first one
+      ver <- ver[[1]]
+
       attr(bin, "version") <- ver
     }
   }
