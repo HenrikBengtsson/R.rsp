@@ -21,7 +21,7 @@
 # @author
 #
 # \references{
-#  [1] \url{http://www.wikipedia.org/wiki/URI_scheme}
+#  [1] \url{https://www.wikipedia.org/wiki/URI_scheme}
 # }
 #
 # @keyword IO

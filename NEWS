@@ -1,9 +1,12 @@
 Package: R.rsp
 ==============
 
-Version: 0.30.0-9000 [2016-12-02]
+Version: 0.30.0-9000 [2016-12-03]
 o All vignette formats now output a tangle file because it
   will soon be required by R.
+o ROBUSTNESS: findAsciiDoc() and findPandoc() is more liberal when
+  trying to infer and parse the version of the executable and if
+  they still fail they give more informative error messages.
 
 
 Version: 0.30.0 [2016-05-15]

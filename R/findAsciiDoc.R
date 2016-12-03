@@ -65,15 +65,33 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
 
   # Validate by retrieving version information
   if (isFile(bin)) {
-    res <- tryCatch({
+    output <- tryCatch({
       system2(bin, args="--version", stdout=TRUE)
     }, error = function(ex) {
       NULL
     })
 
-    if (!is.null(res)) {
-      ver <- trim(gsub("asciidoc", "", res))
-      ver <- numeric_version(ver)
+    if (!is.null(output)) {
+      name <- "asciidoc"
+      ver <- trim(gsub("asciidoc", "", output))
+      
+      ## No matching output?
+      if (length(ver) == 0) {
+        stop(sprintf("Failed to infer version of %s based on captured output: ", sQuote(name), paste(dQuote(output), collapse=", ")))
+      }
+
+      ## Try to coerce to version objects
+      ver <- numeric_version(ver, strict = FALSE)
+      ver <- ver[!is.na(ver)]
+      
+      ## Failed to coerce?
+      if (length(ver) == 0) {
+        stop("Failed to parse version of %s based on captured output: ", sQuote(name), paste(dQuote(output), collapse=", "))
+      }
+
+      ## If more than one match, use the first one
+      ver <- ver[[1]]
+
       attr(bin, "version") <- ver
     }
   }
