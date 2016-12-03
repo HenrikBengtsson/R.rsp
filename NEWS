@@ -1,8 +1,9 @@
 Package: R.rsp
 ==============
 
-Version: 0.30.0-9000 [2016-05-16]
-o ...
+Version: 0.30.0-9000 [2016-12-02]
+o All vignette formats now outputs a tangle file because it
+  will soon be required by R.
 
 
 Version: 0.30.0 [2016-05-15]
