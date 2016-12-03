@@ -286,7 +286,6 @@ export("HtmlRspLanguage")
 export("HttpDaemon")
 export("HttpDaemonRspResponse")
 export("HttpRequest")
-export("import")
 export("indexOfNonQuoted")
 export("insertRootPaths")
 export("isStarted")
@@ -550,7 +549,6 @@ S3method("!", "RspProduct")
 
 # RspResponse
 S3method("flush", "RspResponse")
-S3method("import", "RspResponse")
 S3method("write", "RspResponse")
 
 # RspRSourceCode
@@ -627,14 +625,15 @@ S3method("asRspString", "RspVoid")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# DEPRECATED
+# DEFUNCT
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Deprecated R.rsp (0.21.0) December 2015
+## Defunct R.rsp (0.31.0) Dec 2016
 export("rscript")
 S3method("rscript", "default")
 
-
 ## Deprecated R.rsp (0.30.0) May 2016
+## Defunct R.rsp (0.31.0) Dec 2016
 export("urlDecode")
 export("compileRsp0")
 export("importRsp")
@@ -648,5 +647,7 @@ export("translateRsp")
 export("rsptex")
 export("rsp")
 export("rspCapture")
+export("import")
 S3method("rsp", "default")
 S3method("compileRsp0", "default")
+S3method("import", "RspResponse")

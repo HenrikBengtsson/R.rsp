@@ -100,47 +100,9 @@ setMethodS3("write", "RspResponse", abstract=TRUE);
 setMethodS3("flush", "RspResponse", appendVarArgs=FALSE, abstract=TRUE)
 
 
-
-###########################################################################/**
-# @RdocMethod import
-#
-# @title "Imports the output from another RSP file"
-#
-# \description{
-#  @get "title".
-#  This is an internal methods called when processing the
-#  \code{<\%@ import file="url"\%>} tag.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Arguments passed to @see "sourceRsp".}
-# }
-#
-# \value{
-#   Writes the output from @see "sourceRsp" to the RSP response output file.
-#   If an error occurs, the error message is written too.
-# }
-#
-# @author
-#
-# \seealso{
-#   @see "sourceRsp".
-#   @seeclass
-# }
-#
-# @keyword file
-# @keyword IO
-#*/###########################################################################
 setMethodS3("import", "RspResponse", function(response, ...) {
-  tryCatch({
-    sourceRsp(..., response=response);
-  }, error = function(ex) {
-    error <- as.character(ex);
-    write(response, error);
-  })
-})
+  .Defunct(msg = "RSP construct <%@import file=\"url\"%> is defunct.")
+}, protected=TRUE, deprecated=TRUE)
 
 
 
