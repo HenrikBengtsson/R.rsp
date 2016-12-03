@@ -63,6 +63,10 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
     throw("Unknown HttpDaemon RSP version: ", version);
   }
 
+  if (version == "0.1.0") {
+    .Defunct("RSP HTTP daemon v0.1.0 is defunct, because it relies on an old legacy RSP engine, which has been removed. Use v1.0.0 instead, by removing options 'R.rsp/HttpDaemon/RspVersion' or setting it to '1.0.0'.")
+  }
+
   debug <- isTRUE(daemon$.debug);
 
   if (debug) {
@@ -101,26 +105,7 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
     s <- readLines(pathnameR, warn=FALSE);
     s <- paste(s, collapse="\n");
     if (nchar(s) > 0L) writeResponse(daemon, s);
-  } else if (version == "0.1.0") {
-    .Deprecated("RSP HTTP daemon v0.1.0 is deprecated, because it relies on the old legacy RSP engine. Use v1.0.0 instead, by removing options 'R.rsp/HttpDaemon/RspVersion' or setting it to '1.0.0'. The old engine will be defunct and removed in a near future.")
-
-    # The connection where to write RSP response output to.
-    response <- HttpDaemonRspResponse(httpDaemon=daemon);
-    on.exit({
-      # print("Flushing buffered response.");
-      flush(response);
-    }, add=TRUE);
-
-    # Process the RSP
-    tryCatch({
-      sourceRsp(file=filename, path=getwd(), request=request, response=response);
-    }, error = function(ex) {
-      flush(response);
-      # Rethrow
-      throw(ex);
-    })
   }
-
 
   }, error = function(ex) {
     mcat("ERROR:");

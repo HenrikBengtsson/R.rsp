@@ -1,20 +1,5 @@
 urlDecode <- function(url, ...) {
-  .Deprecated(new="utils::URLdecode()")
-
-  pattern <- "(.*)(%)([[:xdigit:]]{2})(.*)";
-  value <- url;
-  if (is.na(value))
-    return("");
-  value <- gsub("+", " ", value, fixed=TRUE);
-  while(TRUE) {
-    pos <- regexpr(pattern, value);
-    if (pos == -1)
-      break;
-    hex <- sub(pattern, "\\3", value);
-    ascii <- intToChar(hexToInt(hex));
-    value <- sub(pattern, paste("\\1", ascii, "\\4", sep=""), value);
-  }
-  value;
+  .Defunct(new="utils::URLdecode()")
 }
 
 ###############################################################################

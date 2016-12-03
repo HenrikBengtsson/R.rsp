@@ -47,54 +47,7 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("sourceAllRsp", "default", function(pattern="[.]rsp$", path=".", extension="html", outputPath=extension, overwrite=FALSE, ..., envir=parent.frame()) {
-  .Deprecated(new="lapply(dir(pattern='[.]rsp$', FUN=rfile)")
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'pattern'
-  pattern <- Arguments$getRegularExpression(pattern);
-
-  # Argument 'path'
-  path <- Arguments$getReadablePath(path=path, mustExist=TRUE);
-
-  # Argument 'extension'
-  extension <- Arguments$getCharacter(extension, length=1, nchar=c(1,64));
-
-  # Argument 'outputPath'
-  outputPath <- Arguments$getWritablePath(path=outputPath);
-
-  # Argument 'envir'
-  if (!is.environment(envir))
-    throw("Argument 'envir' is not an environment: ", class(envir)[1]);
-
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # MAIN
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  files <- list.files(pattern=pattern, path=path, all.files=TRUE, full.names=TRUE);
-  res <- list();
-  for (file in files) {
-    # Replace current filename extension with the output extension
-    output <- gsub("[.](.*)$", paste(".", extension, sep=""), basename(file));
-    output <- filePath(outputPath, output);
-
-    # Create a response object for the output file
-    response <- FileRspResponse(file=output, overwrite=overwrite);
-
-    # Process the RSP file
-    tryCatch({
-      sourceRsp(file=file, path=path, response=response, ..., envir=envir);
-    }, error = function(ex) {
-      cat("An exception occured while processing RSP file '", file,
-                                              "' (in '", path, "'):", sep="");
-      print(ex);
-      attr(file, "error") <<- ex;
-    })
-    res <- c(res, file);
-  }
-
-  invisible(res);
+  .Defunct(new="lapply(dir(pattern='[.]rsp$', FUN=rfile)")
 }, deprecated=TRUE)
 
 ##############################################################################

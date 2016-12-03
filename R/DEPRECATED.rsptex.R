@@ -45,54 +45,7 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("rsptex", "default", function(..., pdf=TRUE, force=FALSE, verbose=FALSE) {
-  .Deprecated(new="rfile()")
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
-  if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
-  }
-
-
-  verbose && enter(verbose, "Compiling RSP LaTeX file");
-
-  pathname2 <- compileRsp0(..., trimRsp=TRUE, force=force, verbose=verbose);
-  verbose && cat(verbose, "LaTeX pathname: ", pathname2);
-  filename2 <- basename(pathname2);
-
-  ext <- ifelse(pdf, ".pdf", ".dvi");
-  pathname3 <- gsub("[.](tex|ltx)$", ext, filename2);
-  verbose && cat(verbose, "Output pathname: ", pathname3);
-  verbose && cat(verbose, "Output exists: ", file.exists(pathname3));
-
-  # Is output file up to date?
-  isUpToDate <- FALSE;
-  if (!force && isFile(pathname3)) {
-    date <- file.info(pathname2)$mtime;
-    verbose && cat(verbose, "Source file modified on: ", date);
-    outDate <- file.info(pathname3)$mtime;
-    verbose && cat(verbose, "Output file modified on: ", outDate);
-    if (is.finite(date) && is.finite(outDate)) {
-      isUpToDate <- (outDate >= date);
-    }
-    verbose && printf(verbose, "Output file is %sup to date.\n", ifelse(isUpToDate, "", "not "));
-  }
-
-  if (force || !isUpToDate) {
-    verbose && enter(verbose, "Compiling LaTeX file");
-    texi2dvi(pathname2, pdf=pdf);
-    verbose && exit(verbose);
-  }
-
-  verbose && cat(verbose, "Output exists: ", file.exists(pathname3));
-
-  verbose && exit(verbose);
-
-  invisible(pathname3);
+  .Defunct(new="rfile()")
 }, deprecated=TRUE, private=TRUE) # rsptex()
 
 

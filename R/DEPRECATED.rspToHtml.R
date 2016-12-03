@@ -35,32 +35,7 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("rspToHtml", "default", function(file=NULL, path=NULL, outFile=NULL, outPath=NULL, extension="html", overwrite=TRUE, ...) {
-  .Deprecated(new="rfile()")
-
-  # Argument 'file' and 'path':
-  pathname <- Arguments$getReadablePathname(file, path=path, mustExist=FALSE);
-
-  # Argument 'extension':
-  extension <- Arguments$getCharacter(extension);
-
-  # Generate the name of the output document
-  if (is.null(outFile)) {
-    repl <- paste(".", extension, sep="");
-    outFile <- gsub("[.](r|R)(s|S)(p|P)$", repl, basename(pathname));
-  }
-
-  # Generate the response object
-  response <- FileRspResponse(file=outFile, path=outPath, overwrite=overwrite);
-
-  # Assure that we do not overwrite the RSP file
-  if (getAbsolutePath(pathname) == getAbsolutePath(response)) {
-    throw("Cannot compile RSP document. Pathname of output document is identical to the pathname of the RSP file: ", pathname);
-  }
-
-  # Compile
-  sourceRsp(file=pathname, response=response, ...);
-
-  invisible(getAbsolutePath(response));
+  .Defunct(new="rfile()")
 }, deprecated=TRUE, private=TRUE) # rspToHtml()
 
 

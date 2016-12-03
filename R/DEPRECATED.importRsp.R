@@ -28,26 +28,7 @@
 # @keyword internal
 #*/###########################################################################
 setMethodS3("importRsp", "default", function(...) {
-  .Deprecated(msg="importRsp() is deprecated. Please use <%@include ...%> instead")
-
-  input <- NULL; # Declare variable to please R CMD check R v2.6.0
-
-  output <- textConnection("input", open="w", local=TRUE);
-  on.exit(close(output));
-
-  tryCatch({
-    sourceRsp(..., response=FileRspResponse(file=output));
-  }, error = function(ex) {
-    error <- as.character(ex);
-    input <<- paste(input, error, sep="");
-    code <- ex$code;
-    if (!is.null(code)) {
-      code <- paste(code, collapse="\n", sep="");
-      input <<- paste(input, code, sep="");
-    }
-  })
-
-  input;
+  .Defunct(msg="importRsp() is deprecated. Please use <%@include ...%> instead")
 })
 
 
