@@ -15,9 +15,7 @@ availableCores <- function() {
   1L
 }
 
-ignore <- c("canceR", "crisprseekplus")
-
 ## If recursive = TRUE, then it'll check 8000+ packages
-revdep_check(bioconductor = TRUE, recursive = FALSE, ignore = ignore, threads = availableCores())
-#revdep_check_save_summary()
-#revdep_check_print_problems()
+revdep_check(bioconductor = TRUE, recursive = FALSE, threads = availableCores())
+revdep_check_save_summary()
+revdep_check_print_problems()

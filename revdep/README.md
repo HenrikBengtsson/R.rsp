@@ -30,19 +30,27 @@
 
 # Check results
 
-73 packages
+81 packages
 
 |package             |version | errors| warnings| notes|
 |:-------------------|:-------|------:|--------:|-----:|
+|AFLPsim             |0.4-2   |      0|        0|     0|
+|bayesGDS            |0.6.2   |      0|        0|     0|
 |bootTimeInference   |0.1.0   |      0|        0|     0|
+|brms                |1.2.0   |      0|        0|     0|
+|brotli              |0.8     |      0|        0|     1|
 |brr                 |1.0.0   |      0|        0|     0|
+|bst                 |0.3-14  |      0|        0|     0|
 |bujar               |0.2-1   |      0|        0|     0|
+|canceR              |1.6.0   |      1|        0|     1|
 |causaleffect        |1.3.0   |      0|        0|     0|
 |comf                |0.1.6   |      0|        0|     0|
 |Compind             |1.1.2   |      0|        0|     0|
+|crisprseekplus      |1.0.0   |      0|        1|     1|
 |CryptRndTest        |1.2.2   |      0|        0|     0|
 |deBInfer            |0.4.1   |      0|        0|     0|
 |debrowser           |1.2.3   |      1|        0|     0|
+|dggridR             |0.1.11  |      0|        0|     1|
 |DiffusionRgqd       |0.1.3   |      0|        0|     1|
 |DiffusionRimp       |0.1.2   |      0|        0|     0|
 |DiffusionRjgqd      |0.1.1   |      0|        0|     1|
@@ -108,13 +116,49 @@
 |WACS                |1.0     |      0|        0|     0|
 |WCE                 |1.0     |      0|        0|     2|
 
+## AFLPsim (0.4-2)
+Maintainer: Francisco Balao <fbalao@us.es>
+
+0 errors | 0 warnings | 0 notes
+
+## bayesGDS (0.6.2)
+Maintainer: Michael Braun <braunm@smu.edu>
+
+0 errors | 0 warnings | 0 notes
+
 ## bootTimeInference (0.1.0)
 Maintainer: Aleksandar Spasojevic <aleksandar.spasojevic@outlook.com>
 
 0 errors | 0 warnings | 0 notes
 
+## brms (1.2.0)
+Maintainer: Paul-Christian Buerkner <paul.buerkner@gmail.com>  
+Bug reports: https://github.com/paul-buerkner/brms/issues
+
+0 errors | 0 warnings | 0 notes
+
+## brotli (0.8)
+Maintainer: Jeroen Ooms <jeroen.ooms@stat.ucla.edu>  
+Bug reports: http://github.com/jeroenooms/brotli/issues
+
+0 errors | 0 warnings | 1 note 
+
+```
+checking installed package size ... NOTE
+  installed size is  5.9Mb
+  sub-directories of 1Mb or more:
+    bin    2.3Mb
+    doc    1.3Mb
+    libs   2.2Mb
+```
+
 ## brr (1.0.0)
 Maintainer: Stéphane Laurent <laurent_step@yahoo.fr>
+
+0 errors | 0 warnings | 0 notes
+
+## bst (0.3-14)
+Maintainer: Zhu Wang <zwang@connecticutchildrens.org>
 
 0 errors | 0 warnings | 0 notes
 
@@ -122,6 +166,23 @@ Maintainer: Stéphane Laurent <laurent_step@yahoo.fr>
 Maintainer: Zhu Wang <zwang@connecticutchildrens.org>
 
 0 errors | 0 warnings | 0 notes
+
+## canceR (1.6.0)
+Maintainer: Karim Mezhoud <kmezhoud@gmail.com>
+
+1 error  | 0 warnings | 1 note 
+
+```
+checking whether package ‘canceR’ can be installed ... ERROR
+Installation failed.
+See ‘/home/hb/repositories/R.rsp/revdep/checks/canceR.Rcheck/00install.out’ for details.
+
+checking for hidden files and directories ... NOTE
+Found the following hidden files and directories:
+  .travis.yml
+These were most likely included in error. See section ‘Package
+structure’ in the ‘Writing R Extensions’ manual.
+```
 
 ## causaleffect (1.3.0)
 Maintainer: Santtu Tikka <santtuth@gmail.com>
@@ -137,6 +198,26 @@ Maintainer: Marcel Schweiker <marcel.schweiker@kit.edu>
 Maintainer: Francesco Vidoli <fvidoli@gmail.com>
 
 0 errors | 0 warnings | 0 notes
+
+## crisprseekplus (1.0.0)
+Maintainer: Alper Kucukural <alper.kucukural@umassmed.edu>  
+Bug reports: https://github.com/UMMS-Biocore/crisprseekplus/issues/new
+
+0 errors | 1 warning  | 1 note 
+
+```
+checking re-building of vignette outputs ... WARNING
+Error in re-building vignettes:
+  ...
+Error: processing vignette 'crisprseekplus.Rmd' failed with diagnostics:
+unused arguments (self_contained, lib_dir, output_dir)
+Execution halted
+
+
+checking top-level files ... NOTE
+Non-standard file/directory found at top level:
+  ‘docs’
+```
 
 ## CryptRndTest (1.2.2)
 Maintainer: Haydar Demirhan <haydarde@hacettepe.edu.tr>
@@ -158,6 +239,20 @@ Bug reports: https://github.com/UMMS-Biocore/debrowser/issues/new
 checking whether package ‘debrowser’ can be installed ... ERROR
 Installation failed.
 See ‘/home/hb/repositories/R.rsp/revdep/checks/debrowser.Rcheck/00install.out’ for details.
+```
+
+## dggridR (0.1.11)
+Maintainer: Richard Barnes <rbarnes@umn.edu>  
+Bug reports: https://github.com/r-barnes/dggridR/
+
+0 errors | 0 warnings | 1 note 
+
+```
+checking installed package size ... NOTE
+  installed size is 26.7Mb
+  sub-directories of 1Mb or more:
+    bin  24.6Mb
+    doc   1.7Mb
 ```
 
 ## DiffusionRgqd (0.1.3)

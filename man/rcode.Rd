@@ -11,7 +11,6 @@
 \alias{rcode}
 \alias{rcode.RspString}
 \alias{rcode.RspDocument}
-\alias{rscript}
 
 \title{Compiles an RSP document and returns the generated source code script}
 

@@ -2,7 +2,6 @@
 # @RdocDefault rcode
 # @alias rcode.RspString
 # @alias rcode.RspDocument
-# @alias rscript
 #
 # @title "Compiles an RSP document and returns the generated source code script"
 #
@@ -287,12 +286,6 @@ setMethodS3("rcode", "RspDocument", function(object, output=NULL, workdir=NULL, 
 
   output;
 }) # rcode()
-
-## BACKWARD COMPATIBILITY:
-setMethodS3("rscript", "default", function(...) {
-  .Deprecated(new="rcode")
-  rcode(...)
-}, deprecated=TRUE)
 
 
 

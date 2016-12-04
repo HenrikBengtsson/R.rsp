@@ -5,6 +5,8 @@ Version: 0.30.0-9000 [2016-12-03]
 o ROBUSTNESS: findAsciiDoc() and findPandoc() is more liberal when
   trying to infer and parse the version of the executable and if
   they still fail they give more informative error messages.
+o CLEANUP: Deprecated RSP engine v0.1.0 is now defunct.
+o CLEANUP: Made deprecated methods defunct.
 
 
 Version: 0.30.0 [2016-05-15]

@@ -30,14 +30,53 @@
 
 # Check results
 
-4 packages with problems
+6 packages with problems
 
-|package   |version | errors| warnings| notes|
-|:---------|:-------|------:|--------:|-----:|
-|debrowser |1.2.3   |      1|        0|     0|
-|madness   |0.2.0   |      1|        0|     0|
-|metafor   |1.9-9   |      1|        0|     0|
-|PrevMap   |1.4     |      0|        1|     1|
+|package        |version | errors| warnings| notes|
+|:--------------|:-------|------:|--------:|-----:|
+|canceR         |1.6.0   |      1|        0|     1|
+|crisprseekplus |1.0.0   |      0|        1|     1|
+|debrowser      |1.2.3   |      1|        0|     0|
+|madness        |0.2.0   |      1|        0|     0|
+|metafor        |1.9-9   |      1|        0|     0|
+|PrevMap        |1.4     |      0|        1|     1|
+
+## canceR (1.6.0)
+Maintainer: Karim Mezhoud <kmezhoud@gmail.com>
+
+1 error  | 0 warnings | 1 note 
+
+```
+checking whether package ‘canceR’ can be installed ... ERROR
+Installation failed.
+See ‘/home/hb/repositories/R.rsp/revdep/checks/canceR.Rcheck/00install.out’ for details.
+
+checking for hidden files and directories ... NOTE
+Found the following hidden files and directories:
+  .travis.yml
+These were most likely included in error. See section ‘Package
+structure’ in the ‘Writing R Extensions’ manual.
+```
+
+## crisprseekplus (1.0.0)
+Maintainer: Alper Kucukural <alper.kucukural@umassmed.edu>  
+Bug reports: https://github.com/UMMS-Biocore/crisprseekplus/issues/new
+
+0 errors | 1 warning  | 1 note 
+
+```
+checking re-building of vignette outputs ... WARNING
+Error in re-building vignettes:
+  ...
+Error: processing vignette 'crisprseekplus.Rmd' failed with diagnostics:
+unused arguments (self_contained, lib_dir, output_dir)
+Execution halted
+
+
+checking top-level files ... NOTE
+Non-standard file/directory found at top level:
+  ‘docs’
+```
 
 ## debrowser (1.2.3)
 Maintainer: Alper Kucukural <alper.kucukural@umassmed.edu>  
