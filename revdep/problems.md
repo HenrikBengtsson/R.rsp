@@ -30,12 +30,14 @@
 
 # Check results
 
-2 packages with problems
+4 packages with problems
 
 |package   |version | errors| warnings| notes|
 |:---------|:-------|------:|--------:|-----:|
 |debrowser |1.2.3   |      1|        0|     0|
 |madness   |0.2.0   |      1|        0|     0|
+|metafor   |1.9-9   |      1|        0|     0|
+|PrevMap   |1.4     |      0|        1|     1|
 
 ## debrowser (1.2.3)
 Maintainer: Alper Kucukural <alper.kucukural@umassmed.edu>  
@@ -72,5 +74,45 @@ Last 13 lines of output:
   
   Error: testthat unit tests failed
   Execution halted
+```
+
+## metafor (1.9-9)
+Maintainer: Wolfgang Viechtbauer <wvb@metafor-project.org>  
+Bug reports: https://github.com/wviechtb/metafor/issues
+
+1 error  | 0 warnings | 0 notes
+
+```
+checking tests ... ERROR
+Running the tests in ‘tests/testthat.R’ failed.
+Last 13 lines of output:
+  1. Error: results are correct for example 1. (@test_analysis_example_law2016.r#74) 
+  Optimizer (nlminb) did not achieve convergence (convergence = 1).
+  1: rma.mv(y, S1, mods = X, intercept = FALSE, random = list(~contr | study, ~contr | 
+         design), rho = 1/2, phi = 1/2, data = EG1) at testthat/test_analysis_example_law2016.r:74
+  2: stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", 
+         opt.res$convergence, ")."))
+  
+  testthat results ================================================================
+  OK: 776 SKIPPED: 30 FAILED: 1
+  1. Error: results are correct for example 1. (@test_analysis_example_law2016.r#74) 
+  
+  Error: testthat unit tests failed
+  Execution halted
+```
+
+## PrevMap (1.4)
+Maintainer: Emanuele Giorgi <e.giorgi@lancaster.ac.uk>
+
+0 errors | 1 warning  | 1 note 
+
+```
+checking whether package ‘PrevMap’ can be installed ... WARNING
+Found the following significant warnings:
+  Warning: no DISPLAY variable so Tk is not available
+See ‘/home/hb/repositories/R.rsp/revdep/checks/PrevMap.Rcheck/00install.out’ for details.
+
+checking package dependencies ... NOTE
+Package suggested but not available for checking: ‘INLA’
 ```
 
