@@ -29,7 +29,17 @@
 |R.utils     |   |2.5.0       |2016-11-07 |cran (@2.5.0)                    |
 
 # Check results
+
 6 packages with problems
+
+|package        |version | errors| warnings| notes|
+|:--------------|:-------|------:|--------:|-----:|
+|canceR         |1.6.0   |      1|        0|     1|
+|crisprseekplus |1.0.0   |      0|        1|     1|
+|debrowser      |1.2.3   |      1|        0|     0|
+|madness        |0.2.0   |      1|        0|     0|
+|metafor        |1.9-9   |      1|        0|     0|
+|PrevMap        |1.4     |      0|        1|     1|
 
 ## canceR (1.6.0)
 Maintainer: Karim Mezhoud <kmezhoud@gmail.com>
