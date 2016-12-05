@@ -11,7 +11,7 @@
 environment:
   _R_CHECK_FORCE_SUGGESTS_: false
   FORCE_VIGNETTES: true
-  R_RSP_COMPILELATEX_FALLBACK: copy
+  R_RSP_COMPILELATEX_FALLBACK: copy-force
   
   matrix:
   - R_VERSION: devel
