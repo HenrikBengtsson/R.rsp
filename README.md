@@ -9,9 +9,9 @@ install.packages('R.rsp')
 
 ### Pre-release version
 
-To install the pre-release version that is available in branch `develop`, use:
+To install the pre-release version that is available in branch `feature/non-empty-tangle`, use:
 ```r
-source('http://callr.org/install#HenrikBengtsson/R.rsp@develop')
+source('http://callr.org/install#HenrikBengtsson/R.rsp@feature/non-empty-tangle')
 ```
 This will install the package from source.  
 

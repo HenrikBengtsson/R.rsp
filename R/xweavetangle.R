@@ -142,10 +142,12 @@ rspTangle <- function(file, ..., envir=new.env(), pattern="(|[.][^.]*)[.]rsp$") 
   tangle <- tolower(tangle)
   tangle <- (length(tangle) == 0L) || !is.element(tangle, c("false", "no"))
 
-  # Skip tangling?
-  if (!tangle) return(NULL)
-
-  rcode <- tangle(rcode)
+  if (tangle) {
+    rcode <- tangle(rcode)
+  } else {
+    ## As of R (> 3.3.2) all vignettes have to output at least one tangled file
+    rcode <- NULL
+  }
 
   # Create header
   hdr <- NULL
@@ -160,7 +162,7 @@ rspTangle <- function(file, ..., envir=new.env(), pattern="(|[.][^.]*)[.]rsp$") 
   }
 
   # Turn into header comments and prepend to code
-  hdr <- sprintf("## %s", hdr)
+  hdr <- sprintf("### %s", hdr)
   ruler <- paste(rep("#", times=75L), collapse="")
   rcode <- c(ruler, hdr, ruler, "", rcode)
 
@@ -211,7 +213,17 @@ asisWeave <- function(file, ...) {
   output
 } # asisWeave()
 
-asisTangle <- function(file, ...) NULL
+asisTangle <- function(file, ..., pattern="(|[.][^.]*)[.]asis$") {
+  # Setup output R file
+  workdir <- "."
+  filename <- basename(file)
+  fullname <- gsub(pattern, "", filename)
+  filenameR <- sprintf("%s.R", fullname)
+  pathnameR <- Arguments$getWritablePathname(filenameR, path=workdir)
+  pathnameR <- getAbsolutePath(pathnameR)
+  cat(sprintf("### This is an R script tangled from '%s'\n", filename), file=pathnameR)
+  invisible(pathnameR)  
+} # asisTangle()
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -362,14 +374,14 @@ asisTangle <- function(file, ...) NULL
   vignetteEngine("tex", package=pkgname,
     pattern="[.](tex|ltx)$",
     weave=rspWeave,
-    tangle=asisTangle
+    tangle=function(file, ..., pattern="[.](tex|ltx)$") asisTangle(file, ..., pattern=pattern)
   )
 
   # Markdown engine
   vignetteEngine("md", package=pkgname,
     pattern="[.]md$",
     weave=rspWeave,
-    tangle=asisTangle
+    tangle=function(file, ..., pattern="[.]md$") asisTangle(file, ..., pattern=pattern)
   )
 
   # Markdown RSP + knitr::pandoc engine (non-offical trial version)
