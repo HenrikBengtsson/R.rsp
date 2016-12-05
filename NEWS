@@ -1,8 +1,8 @@
 Package: R.rsp
 ==============
 
-Version: 0.30.0-9000 [2016-12-04]
-o All vignette formats now output a tangle file even if it empty.
+Version: 0.30.0-9000 [2016-12-05]
+o All vignette formats now output a tangle file even if empty.
   For example, in the past *.asis and *.ltx vignettes would not
   generate *.R tangle files, whereas now they generate "empty" ones
   (R CMD build drops such "empty" tangle R files but that is a
