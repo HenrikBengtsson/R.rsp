@@ -162,7 +162,7 @@ rspTangle <- function(file, ..., envir=new.env(), pattern="(|[.][^.]*)[.]rsp$") 
   }
 
   # Turn into header comments and prepend to code
-  hdr <- sprintf("## %s", hdr)
+  hdr <- sprintf("### %s", hdr)
   ruler <- paste(rep("#", times=75L), collapse="")
   rcode <- c(ruler, hdr, ruler, "", rcode)
 
@@ -221,7 +221,7 @@ asisTangle <- function(file, ..., pattern="(|[.][^.]*)[.]asis$") {
   filenameR <- sprintf("%s.R", fullname)
   pathnameR <- Arguments$getWritablePathname(filenameR, path=workdir)
   pathnameR <- getAbsolutePath(pathnameR)
-  cat(sprintf("## This is an R script tangled from '%s'\n", filename), file=pathnameR)
+  cat(sprintf("### This is an R script tangled from '%s'\n", filename), file=pathnameR)
   invisible(pathnameR)  
 } # asisTangle()
 
