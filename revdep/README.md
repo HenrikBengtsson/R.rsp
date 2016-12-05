@@ -14,110 +14,71 @@
 
 ## Packages
 
-|package     |*  |version |date       |source         |
-|:-----------|:--|:-------|:----------|:--------------|
-|ascii       |   |2.1     |2011-09-29 |cran (@2.1)    |
-|base64enc   |   |0.1-4   |2016-11-11 |cran (@0.1-4)  |
-|digest      |   |0.6.10  |2016-08-02 |CRAN (R 3.3.1) |
-|knitr       |   |1.15.2  |2016-12-04 |cran (@1.15.2) |
-|markdown    |   |0.7.7   |2015-04-22 |cran (@0.7.7)  |
-|R.cache     |   |0.12.0  |2015-11-12 |cran (@0.12.0) |
-|R.devices   |   |2.15.1  |2016-11-10 |cran (@2.15.1) |
-|R.methodsS3 |   |1.7.1   |2016-02-16 |cran (@1.7.1)  |
-|R.oo        |   |1.21.0  |2016-11-01 |cran (@1.21.0) |
-|R.rsp       |   |0.30.0  |2016-05-15 |cran (@0.30.0) |
-|R.utils     |   |2.5.0   |2016-11-07 |cran (@2.5.0)  |
+|package     |*  |version     |date       |source                           |
+|:-----------|:--|:-----------|:----------|:--------------------------------|
+|ascii       |   |2.1         |2011-09-29 |cran (@2.1)                      |
+|base64enc   |   |0.1-4       |2016-11-11 |cran (@0.1-4)                    |
+|digest      |   |0.6.10      |2016-08-02 |CRAN (R 3.3.1)                   |
+|knitr       |   |1.15.2      |2016-12-04 |cran (@1.15.2)                   |
+|markdown    |   |0.7.7       |2015-04-22 |cran (@0.7.7)                    |
+|R.cache     |   |0.12.0      |2015-11-12 |cran (@0.12.0)                   |
+|R.devices   |   |2.15.1      |2016-11-10 |cran (@2.15.1)                   |
+|R.methodsS3 |   |1.7.1       |2016-02-16 |cran (@1.7.1)                    |
+|R.oo        |   |1.21.0      |2016-11-01 |cran (@1.21.0)                   |
+|R.rsp       |   |0.30.0-9000 |2016-12-05 |local (HenrikBengtsson/R.rsp@NA) |
+|R.utils     |   |2.5.0       |2016-11-07 |cran (@2.5.0)                    |
 
 # Check results
+85 packages
 
-81 packages
+## AEDForecasting (0.20.0)
+Maintainer: Nhat Cuong Pham <acmetal74@gmail.com>
 
-|package             |version | errors| warnings| notes|
-|:-------------------|:-------|------:|--------:|-----:|
-|AFLPsim             |0.4-2   |      0|        0|     0|
-|bayesGDS            |0.6.2   |      0|        0|     0|
-|bootTimeInference   |0.1.0   |      0|        0|     0|
-|brms                |1.2.0   |      0|        0|     0|
-|brotli              |0.8     |      0|        0|     1|
-|brr                 |1.0.0   |      0|        0|     0|
-|bst                 |0.3-14  |      0|        0|     0|
-|bujar               |0.2-1   |      0|        0|     0|
-|canceR              |1.6.0   |      1|        0|     1|
-|causaleffect        |1.3.0   |      0|        0|     0|
-|comf                |0.1.6   |      0|        0|     0|
-|Compind             |1.1.2   |      0|        0|     0|
-|crisprseekplus      |1.0.0   |      0|        1|     1|
-|CryptRndTest        |1.2.2   |      0|        0|     0|
-|deBInfer            |0.4.1   |      0|        0|     0|
-|debrowser           |1.2.3   |      1|        0|     0|
-|dggridR             |0.1.11  |      0|        0|     1|
-|DiffusionRgqd       |0.1.3   |      0|        0|     1|
-|DiffusionRimp       |0.1.2   |      0|        0|     0|
-|DiffusionRjgqd      |0.1.1   |      0|        0|     1|
-|doFuture            |0.3.0   |      0|        0|     0|
-|easyVerification    |0.3.0   |      0|        0|     0|
-|ecp                 |3.0.0   |      0|        0|     0|
-|enaR                |2.9.1   |      0|        0|     0|
-|EnsemblePCReg       |1.1.1   |      0|        0|     0|
-|erah                |1.0.4   |      0|        0|     0|
-|future.BatchJobs    |0.13.1  |      0|        0|     0|
-|future              |1.2.0   |      0|        0|     0|
-|FuzzyLP             |0.1-3   |      0|        0|     0|
-|FuzzyStatProb       |2.0.2   |      0|        0|     0|
-|GameTheory          |2.4     |      0|        0|     0|
-|gdm                 |1.2.3   |      0|        0|     0|
-|generalCorr         |1.0.3   |      0|        0|     0|
-|GHap                |1.2.1   |      0|        0|     0|
-|gitlabr             |0.6.4   |      0|        0|     0|
-|haplo.stats         |1.7.7   |      0|        0|     0|
-|IsoriX              |0.4-1   |      0|        0|     0|
-|jsonlite            |1.1     |      0|        0|     0|
-|kdecopula           |0.7.0   |      0|        0|     0|
-|listenv             |0.6.0   |      0|        0|     0|
-|lqmm                |1.5.3   |      0|        0|     0|
-|madness             |0.2.0   |      1|        0|     0|
-|manifestoR          |1.2.3   |      0|        0|     0|
-|marmap              |0.9.5   |      0|        0|     1|
-|matrixpls           |1.0.1   |      0|        0|     0|
-|matrixStats         |0.51.0  |      0|        0|     1|
-|metafor             |1.9-9   |      1|        0|     0|
-|metaplus            |0.7-9   |      0|        0|     0|
-|metaSEM             |0.9.10  |      0|        0|     0|
-|MIAmaxent           |0.3.7   |      0|        0|     0|
-|micromapST          |1.0.5   |      0|        0|     1|
-|mpath               |0.2-4   |      0|        0|     0|
-|MRH                 |2.2     |      0|        0|     0|
-|opencpu             |1.6.1   |      0|        0|     0|
-|OpenML              |1.1     |      0|        0|     0|
-|PAFit               |0.8.7   |      0|        0|     0|
-|pleio               |1.1     |      0|        0|     0|
-|plsRglm             |1.1.1   |      0|        0|     2|
-|PrevMap             |1.4     |      0|        1|     1|
-|profmem             |0.4.0   |      0|        0|     0|
-|PSCBS               |0.62.0  |      0|        0|     0|
-|Qtools              |1.1     |      0|        0|     0|
-|randomUniformForest |1.1.5   |      0|        0|     1|
-|RAppArmor           |2.0.2   |      0|        0|     0|
-|rccmisc             |0.3.7   |      0|        0|     0|
-|rcss                |1.1     |      0|        0|     1|
-|R.devices           |2.15.1  |      0|        0|     0|
-|RLumModel           |0.1.2   |      0|        0|     0|
-|rSARP               |1.0.0   |      0|        0|     0|
-|SemiCompRisks       |2.5     |      0|        0|     0|
-|SetRank             |1.1.0   |      0|        0|     0|
-|sgd                 |1.1     |      0|        0|     0|
-|spam                |1.4-0   |      0|        0|     0|
-|SRCS                |1.1     |      0|        0|     0|
-|ssfa                |1.1     |      0|        0|     1|
-|stagePop            |1.1-1   |      0|        0|     1|
-|tailDepFun          |1.0.0   |      0|        0|     0|
-|timma               |1.2.1   |      0|        0|     1|
-|tsdisagg2           |0.1.0   |      0|        0|     0|
-|WACS                |1.0     |      0|        0|     0|
-|WCE                 |1.0     |      0|        0|     2|
+0 errors | 0 warnings | 0 notes
 
 ## AFLPsim (0.4-2)
 Maintainer: Francisco Balao <fbalao@us.es>
+
+0 errors | 0 warnings | 0 notes
+
+## aroma.core (3.0.0)
+Maintainer: Henrik Bengtsson <henrikb@braju.com>  
+Bug reports: https://github.com/HenrikBengtsson/aroma.core/issues
+
+0 errors | 0 warnings | 1 note 
+
+```
+checking package dependencies ... NOTE
+Packages suggested but not available for checking:
+  ‘expectile’ ‘HaarSeg’ ‘mpcbs’
+```
+
+## babar (1.0)
+Maintainer: Matthew Hartley <Matthew.Hartley@jic.ac.uk>
+
+0 errors | 0 warnings | 1 note 
+
+```
+checking R code for possible problems ... NOTE
+.generateTransform: no visible global function definition for ‘sd’
+.generateUnitHyperCube: no visible global function definition for
+  ‘runif’
+.makeBoundedSingleStep: no visible global function definition for
+  ‘runif’
+.makeBoundedStep: no visible global function definition for ‘runif’
+.makeStep: no visible global function definition for ‘runif’
+.staircaseSampling: no visible global function definition for ‘runif’
+GaussianPrior: no visible global function definition for ‘qnorm’
+LogNormalPrior: no visible global function definition for ‘qnorm’
+Undefined global functions or variables:
+  qnorm runif sd
+Consider adding
+  importFrom("stats", "qnorm", "runif", "sd")
+to your NAMESPACE file.
+```
+
+## babel (0.3-0)
+Maintainer: Adam B. Olshen <adam.olshen@ucsf.edu>
 
 0 errors | 0 warnings | 0 notes
 

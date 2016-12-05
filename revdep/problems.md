@@ -14,32 +14,22 @@
 
 ## Packages
 
-|package     |*  |version |date       |source         |
-|:-----------|:--|:-------|:----------|:--------------|
-|ascii       |   |2.1     |2011-09-29 |cran (@2.1)    |
-|base64enc   |   |0.1-4   |2016-11-11 |cran (@0.1-4)  |
-|digest      |   |0.6.10  |2016-08-02 |CRAN (R 3.3.1) |
-|knitr       |   |1.15.2  |2016-12-04 |cran (@1.15.2) |
-|markdown    |   |0.7.7   |2015-04-22 |cran (@0.7.7)  |
-|R.cache     |   |0.12.0  |2015-11-12 |cran (@0.12.0) |
-|R.devices   |   |2.15.1  |2016-11-10 |cran (@2.15.1) |
-|R.methodsS3 |   |1.7.1   |2016-02-16 |cran (@1.7.1)  |
-|R.oo        |   |1.21.0  |2016-11-01 |cran (@1.21.0) |
-|R.rsp       |   |0.30.0  |2016-05-15 |cran (@0.30.0) |
-|R.utils     |   |2.5.0   |2016-11-07 |cran (@2.5.0)  |
+|package     |*  |version     |date       |source                           |
+|:-----------|:--|:-----------|:----------|:--------------------------------|
+|ascii       |   |2.1         |2011-09-29 |cran (@2.1)                      |
+|base64enc   |   |0.1-4       |2016-11-11 |cran (@0.1-4)                    |
+|digest      |   |0.6.10      |2016-08-02 |CRAN (R 3.3.1)                   |
+|knitr       |   |1.15.2      |2016-12-04 |cran (@1.15.2)                   |
+|markdown    |   |0.7.7       |2015-04-22 |cran (@0.7.7)                    |
+|R.cache     |   |0.12.0      |2015-11-12 |cran (@0.12.0)                   |
+|R.devices   |   |2.15.1      |2016-11-10 |cran (@2.15.1)                   |
+|R.methodsS3 |   |1.7.1       |2016-02-16 |cran (@1.7.1)                    |
+|R.oo        |   |1.21.0      |2016-11-01 |cran (@1.21.0)                   |
+|R.rsp       |   |0.30.0-9000 |2016-12-05 |local (HenrikBengtsson/R.rsp@NA) |
+|R.utils     |   |2.5.0       |2016-11-07 |cran (@2.5.0)                    |
 
 # Check results
-
 6 packages with problems
-
-|package        |version | errors| warnings| notes|
-|:--------------|:-------|------:|--------:|-----:|
-|canceR         |1.6.0   |      1|        0|     1|
-|crisprseekplus |1.0.0   |      0|        1|     1|
-|debrowser      |1.2.3   |      1|        0|     0|
-|madness        |0.2.0   |      1|        0|     0|
-|metafor        |1.9-9   |      1|        0|     0|
-|PrevMap        |1.4     |      0|        1|     1|
 
 ## canceR (1.6.0)
 Maintainer: Karim Mezhoud <kmezhoud@gmail.com>
