@@ -7,5 +7,5 @@ cat(x)
 x <- rstring("A random integer in [1,<%=K%>]: <%=sample(1:K, size=1)%>\n", args=list(K=50))
 cat(x)
 
-x <- rstring("A random integer in [1,100]: <%=sample(1:100, size=1)%>\n", verbose = TRUE)
+x <- rstring("A random integer in [1,<%=K%>]: <%=sample(1:K, size=1)%>\n", args=list(K=50), verbose = TRUE)
 cat(x)
