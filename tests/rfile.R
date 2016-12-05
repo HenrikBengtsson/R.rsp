@@ -27,6 +27,6 @@ path <- system.file("exData", package="R.rsp")
 filenames <- list.files(pattern="LoremIpsum.*.rsp$", path=path)
 for (filename in filenames) {
   print(filename)
-  pathname <- rfile(filename, path=path)
+  pathname <- rfile(filename, path=path, verbose = TRUE)
   print(pathname)
 }

@@ -16,7 +16,7 @@ untils <- setdiff(untils, "*")
 for (kk in seq_along(untils)) {
   until <- untils[kk]
   verbose && enter(verbose, sprintf("Until #%d ('%s') of %d", kk, until, length(untils)))
-  s <- rcompile(file=pathname, until=until, output=RspString())
+  s <- rcompile(file=pathname, until=until, output=RspString(), verbose = TRUE)
   verbose && ruler(verbose)
   cat(s)
   verbose && ruler(verbose)
