@@ -10,7 +10,9 @@
 #----------------------------------------------------------------
 environment:
   _R_CHECK_FORCE_SUGGESTS_: false
-
+  FORCE_VIGNETTES: true
+  R_RSP_COMPILELATEX_FALLBACK: copy-force
+  
   matrix:
   - R_VERSION: devel
     R_ARCH: x64
@@ -28,7 +30,7 @@ environment:
 init:
   ps: |
         $ErrorActionPreference = "Stop"
-        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+        Invoke-WebRequest http://raw.github.com/HenrikBengtsson/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
         Import-Module '..\appveyor-tool.ps1'
 install:
   ps: |

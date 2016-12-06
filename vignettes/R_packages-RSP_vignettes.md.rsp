@@ -17,7 +17,7 @@
 
 <%@meta name="author"%> on <%=format(as.Date(R.rsp$date), format="%B %d, %Y")%>
 
-When building an R package, Sweave vignettes are automatically recognized, compiled into PDFs, which in turn are listed along with their source in the R help system, e.g. `help.start()`.  These package vignettes are also listed online on the CRAN and Bioconductor package pages, e.g. [RSP](http://cran.r-project.org/package=R.rsp).
+When building an R package, Sweave vignettes are automatically recognized, compiled into PDFs, which in turn are listed along with their source in the R help system, e.g. `help.start()`.  These package vignettes are also listed online on the CRAN and Bioconductor package pages, e.g. [RSP](https://cran.r-project.org/package=R.rsp).
 
 Other vignette formats than Sweave can also be included in R packages.  To include such a vignette in a package, three things need to be correct:
 

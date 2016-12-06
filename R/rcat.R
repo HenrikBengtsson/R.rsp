@@ -91,7 +91,7 @@ setMethodS3("rcat", "default", function(..., file=NULL, path=NULL, envir=parent.
       file <- file.path(path, file);
     }
     if (!isUrl(file)) {
-      file <- Arguments$getReadablePathname(file, absolutePath=TRUE);
+      file <- Arguments$getReadablePathname(file, absolute=TRUE);
     }
   }
 

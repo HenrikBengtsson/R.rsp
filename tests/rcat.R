@@ -18,3 +18,7 @@ text <- '<%={
 20 goto 10
 }%>\n'
 tryCatch({ rcat(text) }, error=function(ex) cat(ex$message))
+
+
+rcat("A random integer in [1,100]: <%=sample(1:100, size=1)%>\n", verbose = TRUE)
+

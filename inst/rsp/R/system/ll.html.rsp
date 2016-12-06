@@ -48,9 +48,9 @@ td {
  <th><%=name%></th>
 <% } %>
 </tr>
-<% for (rr in seq(length=nrow(res))) { %>
+<% for (rr in seq_len(nrow(res))) { %>
  <tr valign="top">
- <% for (cc in seq(length=ncol(res))) { %>
+ <% for (cc in seq_len(ncol(res))) { %>
   <td><%=res[rr,cc]%></td>
  <% } %>
  </tr>

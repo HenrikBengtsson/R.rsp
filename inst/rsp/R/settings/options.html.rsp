@@ -15,7 +15,7 @@ if (identical(action, "Save")) {
   # Update only valid keys
   keys <- intersect(names(options()), keys);
   params <- params[keys];
-  for (kk in seq(length=length(params))) { 
+  for (kk in seq_along(params)) { 
     key <- names(params)[kk];
     value <- params[[kk]]; 
     oldValue <- getOption(key);
@@ -42,7 +42,7 @@ if (identical(action, "Save")) {
 <% 
 
 opts <- options(); 
-for (kk in seq(length=length(opts))) { 
+for (kk in seq_along(opts)) { 
   name <- names(opts)[kk];
   value <- opts[[kk]];
   valueStr <- value;

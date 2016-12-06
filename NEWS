@@ -1,6 +1,20 @@
 Package: R.rsp
 ==============
 
+Version: 0.40.0 [2016-12-05]
+o All vignette formats now output a tangle file even if empty.
+  For example, in the past *.asis and *.ltx vignettes would not
+  generate *.R tangle files, whereas now they generate "empty" ones
+  (R CMD build drops such "empty" tangle R files but that is a
+  different story).  This was done in order to hotfix / workaround
+  PR #17185 (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17185)
+o ROBUSTNESS: findAsciiDoc() and findPandoc() is more liberal when
+  trying to infer and parse the version of the executable and if
+  they still fail they give more informative error messages.
+o CLEANUP: Deprecated RSP engine v0.1.0 is now defunct.
+o CLEANUP: Made deprecated methods defunct.
+
+
 Version: 0.30.0 [2016-05-15]
 o CLEANUP: Deprecated several methods that was part of the old
   API, e.g. compileRsp(), sourceRsp(), translateRsp() etc.

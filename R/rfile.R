@@ -93,7 +93,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
     }
     if (!isUrl(file)) {
       withoutGString({
-        file <- Arguments$getReadablePathname(file, absolutePath=TRUE);
+        file <- Arguments$getReadablePathname(file, absolute=TRUE);
       })
     }
   }

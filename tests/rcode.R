@@ -15,3 +15,6 @@ stopifnot(basename(pathnameR) == "slowcounting.txt.R")
 metadata <- list(foo="ABC", bar="123")
 code <- rcode(file=pathname, metadata=metadata, output=RspSourceCode())
 print(code)
+
+code <- rcode(file=pathname, metadata=metadata, output=RspSourceCode(), verbose = TRUE)
+print(code)

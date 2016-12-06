@@ -24,7 +24,7 @@ if (!refresh && exists(".installedPackages", envir=.GlobalEnv)) {
   assign(".installedPackages", packages, envir=.GlobalEnv);
 }
 footnotes <- toupper(base::letters);
-packages <- cbind("#"=seq(length=nrow(packages)), packages);
+packages <- cbind("#"=seq_len(nrow(packages)), packages);
 packages[,"#"] <- paste("<a href=\"packageDetails.html.rsp?package=", packages[,"Package"], "\">", packages[,"#"], "</a>", sep="");
 packages[,"Package"] <- paste("<a href=\"packageDetails.html.rsp?package=", packages[,"Package"], "\">", packages[,"Package"], "</a>", sep="");
 libPaths <- unique(packages[,"LibPath"]);
@@ -54,7 +54,7 @@ header <- paste(header, collapse="");
 header <- paste("<tr valign=\"top\">", header, "</tr>\n", sep="");
 %>
 <%=header%>
-<% for (kk in seq(length=nrow(packages))) { %>
+<% for (kk in seq_len(nrow(packages))) { %>
 <%
 package <- packages[kk,];
 bgColor <- ifelse(kk %% 2 == 0, "background: #cccccc; ", "");
@@ -69,7 +69,7 @@ package <- paste("<tr valign=\"top\" style=\"", bgColor, "margin: 0px; padding: 
 
 <small>
 <strong>Library paths</strong><br>
-<% for (kk in seq(length=length(libPaths))) { %>
+<% for (kk in seq_len(length(libPaths))) { %>
 <a name="LibPath<%=footnotes[kk]%>"><%=footnotes[kk]%>) <%=libPaths[kk]%><br>
 <% } %>
 </small>

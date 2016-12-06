@@ -61,7 +61,7 @@ HttpDaemonRspResponse(httpDaemon=NULL, ...)
 flush, getAbsolutePath, getName, getOutput, getPath, write
 
  \bold{Methods inherited from RspResponse}:\cr
-flush, import, write
+flush, write
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, names, objectSize, print, save

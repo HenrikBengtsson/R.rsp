@@ -2,7 +2,6 @@
 # @RdocDefault rcode
 # @alias rcode.RspString
 # @alias rcode.RspDocument
-# @alias rscript
 #
 # @title "Compiles an RSP document and returns the generated source code script"
 #
@@ -63,7 +62,7 @@ setMethodS3("rcode", "default", function(..., file=NULL, path=NULL, output=NULL,
       file <- file.path(path, file);
     }
     if (!isUrl(file)) {
-      file <- Arguments$getReadablePathname(file, absolutePath=TRUE);
+      file <- Arguments$getReadablePathname(file, absolute=TRUE);
     }
   }
 
@@ -287,12 +286,6 @@ setMethodS3("rcode", "RspDocument", function(object, output=NULL, workdir=NULL, 
 
   output;
 }) # rcode()
-
-## BACKWARD COMPATIBILITY:
-setMethodS3("rscript", "default", function(...) {
-  .Deprecated(new="rcode")
-  rcode(...)
-}, deprecated=TRUE)
 
 
 

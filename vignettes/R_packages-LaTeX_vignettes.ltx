@@ -29,7 +29,7 @@
 
 \title{R packages: LaTeX vignettes}
 \author{Henrik Bengtsson}
-\date{2015-10-01}
+\date{2016-05-16}
 
 \begin{document}
 
@@ -38,7 +38,12 @@
 To include a PDF vignette that is compiled from a plain LaTeX file,
 all you need is the LaTeX file with LaTeX comments containing
 meta directives to R such that it will be listed as a vignette in the
-package.  For instance, this PDF document was compiled from LaTeX file:
+package.
+The LaTeX-based vignette file should be placed in the
+\code{vignettes/} directory of your package.  If your LaTeX file
+includes other files such as figure files, these should also be
+located in the vignettes/.
+For instance, this PDF document was compiled from LaTeX file:
 \begin{enumerate}
  \item \code{vignettes/R\_packages-LaTeX\_vignettes.ltx}
 \end{enumerate}

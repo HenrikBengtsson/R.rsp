@@ -93,7 +93,7 @@ Case sensitive: <input type="checkbox" name="caseSensitive" <%=ifelse(caseSensit
 Fuzzy matching: <input type="checkbox" name="agrep" <%=ifelse(is.null(agrep), "checked", "")%> value="TRUE"><br>
 </form>
 <% if (!is.null(res)) { %>
-  <% for (kk in seq(length=nrow(res))) { %>
+  <% for (kk in seq_len(nrow(res))) { %>
     <% row <- res[kk,]; %>
 <div style="width: 100%; <%=ifelse(kk == 1, "border-top: 1px solid;", "")%> border-bottom: 1px solid; padding-bottom: 0.5ex; background: <%=ifelse(kk %% 2 == 0, "#cccccc", "#ffffff")%>;">
 <%
@@ -114,7 +114,7 @@ help <- paste(help, collapse=", ");
 highlight <- function(s) {
   queries <- unlist(strsplit(query, split=" "));
   cols <- rep(c("yellow", "cyan", "purple", "green", "blue"), length.out=length(queries));
-  for (kk in seq(length=length(queries))) {
+  for (kk in seq_along(queries)) {
     pattern <- paste("(", queries[kk], ")", sep="");
     repl <- sprintf("<span style=\"background: %s;\">\\1</span>", cols[kk]);
     s <- gsub(pattern, repl, s, ignore.case=!caseSensitive);
