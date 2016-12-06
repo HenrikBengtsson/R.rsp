@@ -1,6 +1,10 @@
 Package: R.rsp
 ==============
 
+Version: 0.40.0-9000 [2016-12-06]
+o ...
+
+
 Version: 0.40.0 [2016-12-05]
 o All vignette formats now output a tangle file even if empty.
   For example, in the past *.asis and *.ltx vignettes would not
