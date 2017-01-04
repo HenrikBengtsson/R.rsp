@@ -23,6 +23,12 @@
 #   Returns the pathname of the generated HTML document.
 # }
 #
+# \details{
+#   The input encoding is based on \code{getOption("encoding")} and
+#   the output encoding is \code{"UTF-8"}
+#   (forced by @see "markdown::markdownToHTML").
+# }
+#
 # @author
 #
 # \seealso{
@@ -124,6 +130,8 @@ setMethodS3("compileMarkdown", "default", function(filename, path=NULL, ..., out
   args <- c(list(pathnameR, output=pathnameOutR), userArgs, header=header);
   verbose && cat(verbose, "Arguments:");
   verbose && str(verbose, args);
+  verbose && printf(verbose, "Input encoding: %s (from option 'encoding')\n", getOption("encoding"))
+  verbose && printf(verbose, "Output encoding: UTF-8 (forced by %s)\n", fcnName)
   do.call(mdToHTML, args=args);
 
   verbose && exit(verbose);

@@ -35,6 +35,12 @@
   Returns the pathname of the generated HTML document.
 }
 
+\details{
+  The input encoding is based on \code{getOption("encoding")} and
+  the output encoding is \code{"UTF-8"}
+  (forced by \code{\link[markdown]{markdownToHTML}}).
+}
+
 \author{Henrik Bengtsson}
 
 \seealso{
