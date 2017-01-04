@@ -185,7 +185,7 @@ setMethodS3("rcat", "RspString", function(..., envir=parent.frame(), args="*", o
       msg <- conditionMessage(ex)
       if (any(grepl(pattern, msg))) {
         options(oopts)
-        msg <- sprintf("Failed to output RSP product under encoding %s using cat(), because %s. Used writeBin(charToRaw(<string of length %s character>)) as a fallback, but please validate output.", sQuote(getOption("encoding")), sQuote(msg), nchar(s))
+        msg <- sprintf("Failed to output RSP product (<string of length %s character> with encoding %s) under encoding %s using cat(), because %s. Used writeBin(charToRaw(.)) as a fallback, but please validate output.", nchar(s), hpaste(sQuote(unique(Encoding(s)))), sQuote(getOption("encoding")), sQuote(msg))
         warning(msg)
         r <- charToRaw(s)
         writeBin(r, con = output)
