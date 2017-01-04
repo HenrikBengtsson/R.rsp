@@ -35,6 +35,8 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   escapeRspText <- function(text) {
+    ## FIXME: deparse() does not handle UTF-8 strings, e.g.
+    ## deparse("g\u00e9nome") == "g<U+00E9>nome" :( /HB 2017-01-04
     text <- deparse(text);
     text <- substring(text, first=2L, last=nchar(text)-1L);
     text;
