@@ -25,4 +25,3 @@ if (Sys.getenv("_R_CHECK_FULL_") != "") {
   print(pathnameR)
   pathnameR <- Arguments$getReadablePathname(pathnameR)
 }
-

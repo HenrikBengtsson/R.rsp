@@ -1,7 +1,7 @@
 ps2pdf <- function(filename, path=NULL, opts=NULL, ..., force=FALSE, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'filename' & 'path':
   pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=TRUE);
 
