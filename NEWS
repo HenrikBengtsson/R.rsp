@@ -19,6 +19,8 @@ BUG FIXES:
  
 DEPRECATED AND DEFUNCT:
 
+  * Removed defunct methods that were part of the legacy API.
+  
   * Attribute 'verbatim' for RSP 'include' preprocessing directives is defunct.
     Use attribute 'type' instead.
 

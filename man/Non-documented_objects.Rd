@@ -163,19 +163,6 @@
 \alias{getFileSize}
 \alias{getFileSize.RspFileProduct}
 
-%% DEFUNCT
-\alias{importRsp}
-\alias{parseRsp}
-\alias{rsp}
-\alias{rspToHtml}
-\alias{rsptex}
-\alias{sourceAllRsp}
-\alias{sourceRsp}
-\alias{translateRsp}
-\alias{translateRspV1}
-\alias{import.RspResponse}
-\alias{rscript}
-
 \description{
 This page contains aliases for all "non-documented" objects that
 \code{R CMD check} detects in this package.
