@@ -1741,9 +1741,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       if (is.null(contentType)) {
         verbatim <- getAttribute(item, "verbatim");
         if (!is.null(verbatim)) {
-          warning("Attribute 'verbatim' for RSP 'include' preprocessing directives is deprecated. Use attribute 'type' instead.");
-          if (isTRUE(as.logical(verbatim)))
-            contentType <- "text/plain";
+          .Defunct(msg = "Attribute 'verbatim' for RSP 'include' preprocessing directives is deprecated. Use attribute 'type' instead.")
         }
       }
 

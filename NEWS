@@ -17,7 +17,12 @@ BUG FIXES:
 
  * rcode() would sometimes return NULL.
  
- 
+DEPRECATED AND DEFUNCT:
+
+  * Attribute 'verbatim' for RSP 'include' preprocessing directives is defunct.
+    Use attribute 'type' instead.
+
+
 Version: 0.40.0 [2016-12-05]
 
 SIGNIFICANT CHANGES:
