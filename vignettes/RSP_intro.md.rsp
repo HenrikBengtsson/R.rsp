@@ -155,8 +155,6 @@ A random number: 7
 ## Some usage
 * PSCBS: PDF reports of copy-number segmentation results
 * aroma-project.org: Interactive [Chromosome Explorer](http://aroma-project.org/data/reports/GSE8605/ACC,-XY,BPN,-XY,AVG,FLN,-XY,paired/ChromosomeExplorer.html) and [Array Explorer](http://www.aroma-project.org/data/reports/GSE8605/raw/ArrayExplorer.html)
-* [Haplin GUI](https://folk.uib.no/gjessing/genetics/software/haplin/) - genetic association analyses
-* [googleVis](https://code.google.com/p/google-motion-charts-with-r/#Examples) - Google Chart Tools from R
 
 
 <%---------------------------------------------------------------------%>
