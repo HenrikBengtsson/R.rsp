@@ -26,8 +26,7 @@
 <% t0 <- Sys.time() %>
 <%---------------------------------------------------------------------
   Usage:
-  rsp <- "RSP_intro.md.rsp"
-  md <- R.rsp::rfile(rsp, postprocess=FALSE)
+  md <- R.rsp::rfile("RSP_intro.md.rsp", postprocess=FALSE)
   html <- R.rsp::RspFileProduct(knitr::pandoc(md, format="dzslides"))
 
   References:
@@ -74,10 +73,14 @@ div.footer {
   bottom: 0;
   width: 100%;
   padding: 1ex;
-  font-size: 60%;
   text-align: left;
   background-color: #F3F4F8;
   border-top: 1px solid #CCC;
+}
+div.footer p {
+  margin: 0;
+  padding: 0;
+  font-size: 60%;
 }
 /* The current item */
 .incremental > *[aria-selected] { color: #0000F3; opacity: 1; }
