@@ -356,6 +356,13 @@ asisTangle <- function(file, ..., pattern="(|[.][^.]*)[.]asis$") {
   # Register vignette engines
   vignetteEngine <- get("vignetteEngine", envir=asNamespace("tools"))
 
+  # HTML engine
+  vignetteEngine("html.rsp", package=pkgname,
+    pattern="[.]html[.]rsp$",
+    weave=function(file, ...) rspWeave(file, ..., postprocess=FALSE),
+    tangle=function(file, ..., pattern="[.]html.rsp$") asisTangle(file, ..., pattern=pattern)
+  )
+  
   # RSP engine
   vignetteEngine("rsp", package=pkgname,
     pattern="[.][^.]*[.]rsp$",
