@@ -20,7 +20,7 @@
   %\VignetteKeyword{Org-Mode}
   %\VignetteKeyword{HTML}
   %\VignetteKeyword{PDF}
-  %\VignetteEngine{R.rsp::html.rsp}
+  %\VignetteEngine{R.rsp::rsp}
   %\VignetteTangle{FALSE}
 --------------------------------------------------------------------"%>
 <% t0 <- Sys.time() %>

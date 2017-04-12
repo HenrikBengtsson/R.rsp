@@ -1,7 +1,7 @@
 Package: R.rsp
 ==============
 
-Version: 0.40.0-9000 [2017-04-08]
+Version: 0.40.0-9000 [2017-04-11]
 
 BUG FIXES:
 
@@ -16,6 +16,10 @@ BUG FIXES:
    (they where turned into "<U+NNNN>" strings).
 
  * rcode() would sometimes return NULL.
+
+ * When used on *.html.rsp vignettes, vignette engine R.rsp::rsp would delete
+   the generated *.html immediately after being produced.
+
  
 DEPRECATED AND DEFUNCT:
 
