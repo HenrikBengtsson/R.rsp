@@ -1,7 +1,7 @@
 Package: R.rsp
 ==============
 
-Version: 0.40.0-9000 [2017-04-11]
+Version: 0.41.0 [2017-04-15]
 
 BUG FIXES:
 
@@ -19,7 +19,6 @@ BUG FIXES:
 
  * When used on *.html.rsp vignettes, vignette engine R.rsp::rsp would delete
    the generated *.html immediately after being produced.
-
  
 DEPRECATED AND DEFUNCT:
 
