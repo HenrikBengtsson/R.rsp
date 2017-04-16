@@ -69,10 +69,11 @@ rspWeave <- function(file, ..., postprocess=TRUE, clean=TRUE, quiet=FALSE, envir
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Cleanup, i.e. remove intermediate RSP files, e.g. Markdown and TeX?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ext <- tolower(file_ext(file))
-  if (postprocess && clean && (ext == "rsp")) {
+  if (postprocess && clean) {
     tmp <- file_path_sans_ext(basename(file))
-    if (file_test("-f", tmp)) file.remove(tmp)
+    if (tmp != basename(res) && tolower(file_ext(file)) == "rsp") {
+      if (file_test("-f", tmp)) file.remove(tmp)
+    }
   }
 
   # DEBUG: Store generated file? /HB 2013-09-17
@@ -355,7 +356,7 @@ asisTangle <- function(file, ..., pattern="(|[.][^.]*)[.]asis$") {
 
   # Register vignette engines
   vignetteEngine <- get("vignetteEngine", envir=asNamespace("tools"))
-
+  
   # RSP engine
   vignetteEngine("rsp", package=pkgname,
     pattern="[.][^.]*[.]rsp$",

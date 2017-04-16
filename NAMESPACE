@@ -281,7 +281,6 @@ export("getSuffixSpecs")
 export("getVerbatim")
 export("hasParameter")
 export("hasProcessor")
-export("hexToInt")
 export("HtmlRspLanguage")
 export("HttpDaemon")
 export("HttpDaemonRspResponse")
@@ -339,10 +338,8 @@ S3method("getMetadata", "default")
 S3method("setMetadata", "default")
 S3method("findAsciiDoc", "default")
 S3method("findPandoc", "default")
-S3method("importRsp", "default")
 S3method("indexOfNonQuoted", "default")
 S3method("wstring", "default")
-S3method("parseRsp", "default")
 S3method("rargs", "default")
 S3method("rcat", "default")
 S3method("rclean", "default")
@@ -351,14 +348,10 @@ S3method("rfile", "default")
 S3method("rcode", "default")
 S3method("rsource", "default")
 S3method("rstring", "default")
-S3method("sourceAllRsp", "default")
-S3method("sourceRsp", "default")
 S3method("sourceWithTrim", "default")
 S3method("splitUrl", "default")
 S3method("stop", "default")
 S3method("toLatex", "default")
-S3method("translateRsp", "default")
-S3method("translateRspV1", "default")
 S3method("typeOfRnw", "default")
 
 # FileRspResponse
@@ -622,32 +615,3 @@ S3method("getInclude", "RspVariableDirective")
 
 # RspVoid
 S3method("asRspString", "RspVoid")
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# DEFUNCT
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-## Deprecated R.rsp (0.21.0) December 2015
-## Defunct R.rsp (0.31.0) Dec 2016
-export("rscript")
-S3method("rscript", "default")
-
-## Deprecated R.rsp (0.30.0) May 2016
-## Defunct R.rsp (0.31.0) Dec 2016
-export("urlDecode")
-export("compileRsp0")
-export("importRsp")
-export("translateRspV1")
-export("sourceAllRsp")
-export("sourceRsp")
-export("sourceRspV2")
-export("rspToHtml")
-export("parseRsp")
-export("translateRsp")
-export("rsptex")
-export("rsp")
-export("rspCapture")
-export("import")
-S3method("rsp", "default")
-S3method("compileRsp0", "default")
-S3method("import", "RspResponse")

@@ -15,4 +15,3 @@ if (Sys.getenv("_R_CHECK_FULL_") != "") {
     pathnameR <- Arguments$getReadablePathname(pathnameR)
   }
 }
-

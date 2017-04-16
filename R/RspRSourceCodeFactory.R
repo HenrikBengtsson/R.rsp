@@ -35,9 +35,21 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   escapeRspText <- function(text) {
-    text <- deparse(text);
-    text <- substring(text, first=2L, last=nchar(text)-1L);
-    text;
+    stopifnot(is.character(text), length(text) == 1L)
+    
+    ## NOTE: deparse() does not handle UTF-8 strings, e.g.
+    ## deparse("g\u00e9nome") == "g<U+00E9>nome" :( /HB 2017-01-04
+    # text <- deparse(text)
+    # text <- substring(text, first=2L, last=nchar(text1)-1L)
+    
+    ## BETTER: encodeString() preserves the "\u00e9" format
+    text <- encodeString(text)
+    ## WORKAROUND: but we have to undo other escaped other characters
+    text <- gsub('\"', '\\\"', text, fixed = TRUE)
+    
+    stopifnot(is.character(text), length(text) == 1L)
+
+    text
   } # escapeRspText()
 
 

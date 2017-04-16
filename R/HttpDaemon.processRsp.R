@@ -26,9 +26,7 @@
 #   should use via the option \code{R.rsp/HttpDaemon/RspVersion}.
 #   The default is now to use the new RSP engine, which corresponds
 #   \code{options("R.rsp/HttpDaemon/RspVersion"="1.0.0")}.
-#   To use the old legacy RSP engine, which is deprecated and will
-#   eventually be defunct and removed, use
-#   \code{options("R.rsp/HttpDaemon/RspVersion"="0.1.0")}.
+#   The old legacy RSP engine \code{"0.1.0"} is defunct.
 # }
 #
 # @author
@@ -64,7 +62,7 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
   }
 
   if (version == "0.1.0") {
-    .Defunct("RSP HTTP daemon v0.1.0 is defunct, because it relies on an old legacy RSP engine, which has been removed. Use v1.0.0 instead, by removing options 'R.rsp/HttpDaemon/RspVersion' or setting it to '1.0.0'.")
+    .Defunct(msg = "RSP HTTP daemon v0.1.0 is defunct, because it relies on an old legacy RSP engine, which has been removed. Use v1.0.0 instead, by removing options 'R.rsp/HttpDaemon/RspVersion' or setting it to '1.0.0'.")
   }
 
   debug <- isTRUE(daemon$.debug);

@@ -169,7 +169,31 @@ setMethodS3("rcat", "RspString", function(..., envir=parent.frame(), args="*", o
       outputT <- "<connection>"
     }
     verbose && printf(verbose, "Output: %s\n", outputT)
-    cat(s, file=output, append=append);
+    verbose && printf(verbose, "Appending: %s\n", append)
+    verbose && printf(verbose, "String: (nchars = %d) %s\n", nchar(s), sQuote(substring(s, first = 1L, last = 60L)))
+    
+    tryCatch({
+      ## WORKAROUND: Avoid infinite loop of warnings on "invalid char string
+      ## in output conversion" by cat().  Reported to R-devel on 2017-01-03;
+      ## https://stat.ethz.ch/pipermail/r-devel/2017-January/073571.html
+      oopts <- options(warn = 2)
+      on.exit(options(oopts))
+     
+      base::cat(s, file=output, append=append)
+    }, error = function(ex) {
+      pattern <- gettextf("invalid char string in output conversion")
+      msg <- conditionMessage(ex)
+      if (any(grepl(pattern, msg))) {
+        options(oopts)
+        msg <- sprintf("Failed to output RSP product (<string of length %s character> with encoding %s) under encoding %s using cat(), because %s. Used writeBin(charToRaw(.)) as a fallback, but please validate output.", nchar(s), hpaste(sQuote(unique(Encoding(s)))), sQuote(getOption("encoding")), sQuote(msg))
+        warning(msg)
+        r <- charToRaw(s)
+        writeBin(r, con = output)
+      } else {
+        throw(msg)
+      }
+    })
+    
     verbose && exit(verbose);
   }
 

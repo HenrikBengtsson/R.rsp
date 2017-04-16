@@ -280,6 +280,9 @@ setMethodS3("rcode", "RspDocument", function(object, output=NULL, workdir=NULL, 
     verbose && exit(verbose);
 
     output <- RspFileProduct(output, type=getType(code), metadata=getMetadata(code, local=TRUE), mustExist=FALSE);
+  } else {
+    ## Return RspSourceCode
+    output <- code;
   }
 
   verbose && exit(verbose);

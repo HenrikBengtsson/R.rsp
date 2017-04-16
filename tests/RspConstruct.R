@@ -56,5 +56,3 @@ print(d)
 
 d <- RspCodeChunk()
 print(d)
-
-

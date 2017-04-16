@@ -45,9 +45,7 @@
   should use via the option \code{R.rsp/HttpDaemon/RspVersion}.
   The default is now to use the new RSP engine, which corresponds
   \code{options("R.rsp/HttpDaemon/RspVersion"="1.0.0")}.
-  To use the old legacy RSP engine, which is deprecated and will
-  eventually be defunct and removed, use
-  \code{options("R.rsp/HttpDaemon/RspVersion"="0.1.0")}.
+  The old legacy RSP engine \code{"0.1.0"} is defunct.
 }
 
 \author{Henrik Bengtsson}
