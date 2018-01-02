@@ -106,6 +106,7 @@ importFrom("utils", "URLdecode")
 
 ## Manually added
 importFrom("R.oo", "ll")
+importFrom("digest", "digest")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

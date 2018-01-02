@@ -1,10 +1,17 @@
 Package: R.rsp
 ==============
 
-Version: 0.41.0-9000 [2017-04-16]
+Version: 0.41.0-9000 [2018-01-01]
 
- * ...
- 
+SIGNIFICANT CHANGES:
+
+ * Now importing 'digest' (used to be a suggested package).
+
+BUG FIXES:
+
+ * Package failed to install under _R_CHECK_DEPENDS_ONLY_=true and 'digest'
+   not being installed. Now importing 'digest'.
+   
 
 Version: 0.41.0 [2017-04-15]
 
