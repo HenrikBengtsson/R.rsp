@@ -93,6 +93,7 @@ importFrom("tools", "file_path_sans_ext")
 importFrom("tools", "file_path_as_absolute")
 importFrom("tools", "texi2dvi")
 importFrom("tools", "texi2pdf")
+if (getRversion() >= "3.0.0") importFrom("tools", "vignetteEngine")
 
 importFrom("utils", "browseURL")
 importFrom("utils", "capture.output")

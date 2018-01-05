@@ -54,12 +54,14 @@ buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = 
     ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ### BEGIN: Workaround until buildVignette() is in the 'tools' package.
     ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    use("tools", quietly=TRUE);
-    ns <- getNamespace("tools");
-    .get_vignette_metadata <- get(".get_vignette_metadata", mode="function", envir=ns);
-    vignette_is_tex <- get("vignette_is_tex", mode="function", envir=ns);
-    find_vignette_product <- get("find_vignette_product", mode="function", envir=ns);
-    vignetteEngine <- get("vignetteEngine", mode="function", envir=ns);
+    .get_vignette_metadata <- import_tools(".get_vignette_metadata")
+    vignette_is_tex <- import_tools("vignette_is_tex")
+    find_vignette_product <- import_tools("find_vignette_product")
+    
+    ## vignetteEngine() is exported in tools (>= 3.0.0)
+    if (getRversion() < "3.0.0") {
+      vignetteEngine <- import_tools("vignetteEngine")
+    }
 
     list.files <- function(..., no..=FALSE) {
       res <- base::list.files(...);
