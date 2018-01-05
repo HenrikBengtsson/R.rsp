@@ -64,11 +64,3 @@ setMethodS3("evaluate", "RspDocument", function(object, envir=parent.frame(), ..
   code <- toR(object);
   process(code, envir=envir, ...);
 }, createGeneric=FALSE)
-
-
-
-##############################################################################
-# HISTORY:
-# 2013-02-09
-# o Created.
-##############################################################################

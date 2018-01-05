@@ -100,22 +100,3 @@ setMethodS3("flush", "HttpDaemonRspResponse", function(con) {
 
   invisible(len);
 }, appendVarArgs=FALSE)
-
-
-
-##############################################################################
-# HISTORY:
-# 2013-05-23
-# o Now write() for HttpDaemonRspResponse supports the new RSP engine too.
-# 2011-03-15
-# o BUG FIX: write() for RspResponse classes would ignore arguments
-#   'collapse' and 'sep'.
-# 2006-07-04
-# o Renamed from HttpDaemonResponse to HttpDaemonRspResponse.
-# 2006-01-21
-# o Made the class independent of the Tcl source code.  Now it is simply
-#   flushing output to writeResponse() of the HttpDaemon object.
-# o Added Rdoc comments.
-# 2005-11-30
-# o Created.
-##############################################################################

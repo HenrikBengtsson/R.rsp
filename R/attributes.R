@@ -125,11 +125,3 @@ setMethodS3("setMetadata", "default", function(object, metadata=NULL, name, valu
 
   setAttribute(object, "metadata", data)
 }, protected=TRUE)
-
-
-##############################################################################
-# HISTORY:
-# 2015-02-04
-# o Now all attribute and metadata functions are for "default" objects.
-# o Created from RspNnn.R files.
-##############################################################################

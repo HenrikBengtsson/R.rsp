@@ -62,13 +62,3 @@ setMethodS3("evaluate", "RspString", function(object, envir=parent.frame(), ...)
   rCode <- toR(object, ...);
   process(rCode, envir=envir, ...);
 }, createGeneric=FALSE)
-
-
-
-##############################################################################
-# HISTORY:
-# 2013-02-11
-# o Added Rdoc help.
-# 2013-02-09
-# o Created.
-##############################################################################

@@ -64,14 +64,3 @@ setMethodS3("as.character", "RspStringProduct", function(x, ...) {
 setMethodS3("print", "RspStringProduct", function(x, ...) {
   print(as.character(x), ...);
 }, protected=TRUE)
-
-
-
-
-############################################################################
-# HISTORY:
-# 2013-02-13
-# o Added RspProduct and RspFileProduct with corresponding
-#   process() methods.
-# o Created.
-############################################################################

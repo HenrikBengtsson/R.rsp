@@ -128,15 +128,3 @@ setMethodS3("parse", "RspUnparsedExpression", function(expr, ...) {
   attr(res, "suffixSpecs") <- suffixSpecs;
   res;
 }, createGeneric=FALSE) # parse()
-
-
-
-##############################################################################
-# HISTORY:
-# 2013-02-22
-# o Added RspUnparsedExpression.
-# 2013-02-11
-# o Added Rdoc help.
-# 2013-02-09
-# o Created.
-##############################################################################

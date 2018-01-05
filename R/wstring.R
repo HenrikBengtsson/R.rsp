@@ -34,11 +34,3 @@ setMethodS3("wstring", "default", function(..., sep="", envir=parent.frame()) {
 
   bfr;
 }, protected=TRUE) # wstring()
-
-
-############################################################################
-# HISTORY:
-# 2013-12-21
-# o Added wstring().  Should probably endup in R.utils one day.
-# o Created.
-############################################################################

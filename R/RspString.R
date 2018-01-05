@@ -187,21 +187,3 @@ setMethodS3("parse", "RspString", function(object, ..., envir=parent.frame(), pa
 
   parse(parser, object, ..., envir=envir);
 }, createGeneric=FALSE, protected=TRUE) # parse()
-
-
-
-##############################################################################
-# HISTORY:
-# 2013-03-14
-# o Added a print() method for RspStrings.
-# 2013-03-09
-# o Moved all parsing code to the new RspParser class.
-# 2013-03-07
-# o Added annotation attributes to RspString and RspDocument.
-# 2013-02-13
-# o Added getType() for RspString.
-# 2013-02-11
-# o Added Rdoc help.
-# 2013-02-09
-# o Created.
-##############################################################################

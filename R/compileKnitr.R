@@ -96,10 +96,3 @@ setMethodS3("compileKnitr", "default", function(filename, path=NULL, ..., outPat
 
   res;
 }) # compileKnitr()
-
-
-############################################################################
-# HISTORY:
-# 2013-01-20
-# o Created from compileSweave.R.
-############################################################################

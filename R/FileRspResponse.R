@@ -190,25 +190,3 @@ setMethodS3("getName", "FileRspResponse", function(this, ...) {
 setMethodS3("getAbsolutePath", "FileRspResponse", function(this, ...) {
   getAbsolutePath(this$file);
 }, createGeneric=FALSE)
-
-
-
-##############################################################################
-# HISTORY:
-# 2006-07-04
-# o Added argument 'path'.
-# o Rename class RspResponse to FileRspResponse.  New superclass in
-#   RspResponse and not Response.
-# 2005-10-31
-# o Added argument 'overwrite' to constructor of RspResponse.
-# 2005-10-21
-# o Replace 'overwrite' arguments with 'mustNotExist' in calls to Arguments.
-# 2005-08-15
-# o Now all output is written as GString:s by write().
-# o Added getOutput().
-# 2005-08-01
-# o Added import().
-# o Added Rdoc comments.
-# 2005-07-31
-# o Created.
-##############################################################################

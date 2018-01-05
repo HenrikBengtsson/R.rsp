@@ -54,16 +54,3 @@ le <- function(...) {
     gsub("_", "\\_", s, fixed=TRUE);
   });
 } # le()
-
-
-##############################################################################
-# HISTORY:
-# 2013-03-12
-# o Now toLatex() for character escapes many more symbols.
-# o Added default toLatex().
-# 2012-02-28
-# o Added Rdoc comments to toLatex().
-# o Added toLatex() and le() adopted from the R.rsp.addons package.
-# 2011-05-23
-# o Added toLatex().
-##############################################################################

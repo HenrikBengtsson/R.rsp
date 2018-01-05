@@ -312,28 +312,3 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
 
   res;
 }) # process()
-
-
-############################################################################
-# HISTORY:
-# 2013-12-15
-# o Added !() for RspProduct, which is short for view().
-# 2013-08-04
-# o Now process() for RspProduct handles when the processor returns NULL,
-#   e.g. when output are directed directly to standard output without
-#   being captured.
-# 2013-03-29
-# o Added view().
-# o Added argument 'recursive' to process().
-# 2013-03-12
-# o Renamed annotations to metadata.
-# 2013-02-18
-# o Added argument 'fake' to process() for RspProduct.
-# 2013-02-16
-# o Added a general process() for RspProduct, which was adopted from
-#   former ditto for RspFileProduct.
-# 2013-02-13
-# o Added RspProduct and RspFileProduct with corresponding
-#   process() methods.
-# o Created.
-############################################################################

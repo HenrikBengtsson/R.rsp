@@ -30,16 +30,3 @@ setMethodS3("sourceWithTrim", "default", function(code, echo=TRUE, prompt=getOpt
 
   invisible(bfr);
 }) # sourceWithTrim()
-
-
-##############################################################################
-# HISTORY:
-# 2014-02-04
-# o SPEEDUP: Now sourceWithTrim() for RspRSourceCode captures output via
-#   a raw connection.
-# 2011-05-05
-# o Now using full 'prompt.echo' argument name in call to base:source().
-# 2011-03-15
-# o Added sourceWithTrim().
-# o Created.
-##############################################################################

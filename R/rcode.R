@@ -289,20 +289,3 @@ setMethodS3("rcode", "RspDocument", function(object, output=NULL, workdir=NULL, 
 
   output;
 }) # rcode()
-
-
-
-##############################################################################
-# HISTORY:
-# 2015-05-12
-# o Renamed rscript() to rcode().  rscript() is not deprecated.
-# 2014-05-27
-# o Now rscript(file) writes to file by default.
-# o Now rscript() adds metadata attributes.
-# o Added arguments 'output' and 'workdir' to rscript().
-# 2014-01-26
-# o CLEANUP: Now R.oo::ll() is only called if 'verbose' is enabled, because
-#   calling ll() still triggers attachment of R.oo as of R.oo (>= 1.17.0).
-# 2013-03-14
-# o Created from rstring.R.
-##############################################################################

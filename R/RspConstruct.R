@@ -170,19 +170,3 @@ setMethodS3("getSuffixSpecs", "RspConstruct", function(object, ...) {
 setMethodS3("asRspString", "RspConstruct", function(object, ...) {
   throw(sprintf("Do not know how to construct an RSP string from %s: %s", class(object)[1L], capture.output(str(object))));
 })
-
-
-
-##############################################################################
-# HISTORY:
-# 2013-03-26
-# o Added getInclude() to RspConstruct that defaults to FALSE.
-# 2013-03-15
-# o Now RspConstruct extends RspObject.
-# 2013-02-22
-# o Added RspUnparsedExpression.
-# 2013-02-11
-# o Added Rdoc help.
-# 2013-02-09
-# o Created.
-##############################################################################

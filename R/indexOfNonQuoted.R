@@ -99,21 +99,3 @@ setMethodS3("indexOfNonQuoted", "default", function(str, pattern, ...) {
 
   pos;
 }, protected=TRUE) # indexOfNonQuoted()
-
-
-##############################################################################
-# HISTORY:
-# 2007-04-07
-# o Replaced gsub pattern "\\\[\"\']" with "\\\\[\"\']" in indexOfNonQuoted().
-# 2006-07-04
-# o Made the Rdoc help internal.
-# 2005-09-16
-# o Made the method protected.
-# 2005-08-14
-# o BUG FIX: Forgot to deal with single quotation marks.
-# o BUG FIX: Internal countQoutationMarks() would incorrectly consider '\\"'
-#   as an escaped quotation mark. Fix was to remove all '\\' first.
-# 2005-08-13
-# o Created. Made a seperate function because it most likely will be useful
-#   elsewhere.
-##############################################################################

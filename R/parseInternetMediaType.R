@@ -200,19 +200,3 @@ parseInternetMediaType <- function(s, ...) {
     args=args
   );
 } # parseInternetMediaType()
-
-
-##############################################################################
-# HISTORY:
-# 2014-05-27
-# o Added application/R.
-# 2013-12-14
-# o Now extensionToIMT() also handles URLs with parameters.
-# 2013-05-22
-# o Now parseInternetMediaType() returns NA if input is NA.
-# 2013-03-11
-# o Added escapeRspContent().
-# o Added extensionToIMT().
-# o Added parseInternetMediaType().
-# o Created.
-##############################################################################

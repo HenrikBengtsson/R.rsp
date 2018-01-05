@@ -146,17 +146,3 @@ setMethodS3("compileMarkdown", "default", function(filename, path=NULL, ..., out
 
   pathnameOut;
 }) # compileMarkdown()
-
-
-
-############################################################################
-# HISTORY:
-# 2015-02-04
-# o Added arguments 'header' and 'metadata' to compileMarkdown().
-# 2013-03-28
-# o PATCH: compileMarkdown() works around bug in markdown v0.5.4.
-#   I have reported the bug to the 'markdown' maintainer.
-# o BUG FIX: compileMarkdown() only worked for outPath=".".
-# 2013-03-25
-# o Created (from compileLaTeX.R).
-############################################################################

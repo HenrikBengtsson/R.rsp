@@ -51,19 +51,3 @@
 
   metadata
 } # .parseRVignetteMetadata()
-
-
-##############################################################################
-# HISTORY:
-# 2015-05-11
-# o Added \VignetteCompression{}.
-# 2015-02-04
-# o Now all \VignetteKeyword{} directives are parsed into meta data
-#   field 'keywords'.
-# 2013-09-18
-# o Now .parseRVignetteMetadata() also records R vignette meta data
-#   'engine' (from %\VignetteEngine{}) and RSP custom 'tangle' (from
-#   %\VignetteTangle{}).
-# o Added .parseRVignetteMetadata().  Was an internal function of the
-#   preprocess() method for RspDocument.
-##############################################################################

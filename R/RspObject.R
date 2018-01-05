@@ -81,13 +81,3 @@ setMethodS3("print", "RspObject", function(x, ...) {
   s <- paste(s, collapse="\n");
   cat(s, "\n", sep="");
 }, protected=TRUE)
-
-
-
-##############################################################################
-# HISTORY:
-# 2015-02-04
-# o CLEANUP: Turned all attribute methods into "default" methods.
-# 2013-??-??
-# o Created from RspString.R.
-##############################################################################

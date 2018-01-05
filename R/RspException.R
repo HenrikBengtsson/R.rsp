@@ -60,12 +60,3 @@ setMethodS3("getMessage", "RspPreprocessingException", function(this, ...) {
 setMethodS3("getItem", "RspPreprocessingException", function(this, ...) {
   this$item;
 })
-
-
-
-
-##############################################################################
-# HISTORY:
-# 2013-03-17
-# o Created.
-##############################################################################

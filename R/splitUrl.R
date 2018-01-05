@@ -83,15 +83,3 @@ setMethodS3("splitUrl", "default", function(url, ...) {
   list(protocol=protocol, host=host, path=path,
        query=query, fragment=fragment, parameters=parameters);
 })
-
-
-
-###########################################################################
-# HISTORY:
-# 2013-07-17
-# o Added to R.rsp for now (originally planned for R.utils).
-# o Updated.  Rename names of returned values. Now parsing 'query' and
-#   'fragment' as well.
-# 2005-07-21
-# o Created.
-###########################################################################

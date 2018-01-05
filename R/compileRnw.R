@@ -85,12 +85,3 @@ setMethodS3("compileRnw", "default", function(filename, path=NULL, ..., type=NUL
 
   pathnameR;
 }) # compileRnw()
-
-
-############################################################################
-# HISTORY:
-# 2013-03-29
-# o Added support for AsciiDoc Rnw:s.
-# 2013-01-20
-# o Created from compileSweave.R.
-############################################################################

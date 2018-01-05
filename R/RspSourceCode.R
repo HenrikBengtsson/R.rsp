@@ -144,19 +144,3 @@ setMethodS3("tidy", "RspSourceCode", function(object, format=c("asis"), collapse
 
   object;
 })
-
-
-##############################################################################
-# HISTORY:
-# 2013-02-16
-# o Now RspSourceCode extends RspProduct,
-# o Renamed SourceCode to RspSourceCode.
-# 2013-02-14
-# o Added tangle() for SourceCode.
-# 2013-02-13
-# o Added getType() for SourceCode.
-# 2013-02-11
-# o Added Rdoc help.
-# 2013-02-09
-# o Created.
-##############################################################################

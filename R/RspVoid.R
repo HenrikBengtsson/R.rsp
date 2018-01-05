@@ -31,11 +31,3 @@ setConstructorS3("RspVoid", function(...) {
 setMethodS3("asRspString", "RspVoid", function(object, ...) {
   RspString()
 })
-
-##############################################################################
-# HISTORY:
-# 2015-02-04
-# o Added Rdoc.
-# 2014-10-19
-# o Created.
-##############################################################################

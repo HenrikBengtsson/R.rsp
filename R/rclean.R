@@ -161,13 +161,3 @@ setMethodS3("rclean", "RspDocument", function(object, envir=parent.frame(), ...,
 
   s;
 }) # rclean()
-
-
-##############################################################################
-# HISTORY:
-# 2014-01-26
-# o CLEANUP: Now R.oo::ll() is only called if 'verbose' is enabled, because
-#   calling ll() still triggers attachment of R.oo as of R.oo (>= 1.17.0).
-# 2013-03-14
-# o Created from rscript.R.
-##############################################################################

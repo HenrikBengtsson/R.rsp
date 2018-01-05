@@ -207,27 +207,3 @@ setMethodS3("rcat", "RspDocument", rcat.RspString)
 setMethodS3("rcat", "RspRSourceCode", rcat.RspString)
 setMethodS3("rcat", "function", rcat.RspString)
 setMethodS3("rcat", "expression", rcat.RspString)
-
-
-##############################################################################
-# HISTORY:
-# 2014-01-02
-# o CLEANUP: Now rcat() methods for several classes uses the exact
-#   same function definition.  Also harmonized the ordering of arguments.
-# o Added rstring(), rcat() and rfile() for expression:s too.
-# 2013-07-16
-# o Added rstring(), rcat() and rfile() for function:s.
-# 2013-05-08
-# o Explicitly added arguments 'file' & 'path' to rcat() [although they're
-#   just passed as is to rstring()].
-# 2013-02-20
-# o Renamed argument 'file' for rcat() to 'output', cf. rfile().  This
-#   automatically makes argument 'file' & 'path' work also for rcat()
-#   just as it works for rstring() and rfile().
-# 2013-02-13
-# o Added rcat() for several RSP-related classes.
-# 2013-02-11
-# o Added Rdoc help.
-# 2013-02-09
-# o Created.
-##############################################################################

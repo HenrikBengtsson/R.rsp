@@ -98,13 +98,3 @@ setMethodS3("write", "RspResponse", abstract=TRUE);
 # @keyword IO
 #*/#########################################################################
 setMethodS3("flush", "RspResponse", appendVarArgs=FALSE, abstract=TRUE)
-
-
-
-##############################################################################
-# HISTORY:
-# 2006-07-04
-# o Renamed from Response to RspResponse.
-# 2005-11-30
-# o Created from (File)RspResponse.  This is to be the new superclass.
-##############################################################################

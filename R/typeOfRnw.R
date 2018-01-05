@@ -65,12 +65,3 @@ setMethodS3("typeOfRnw", "default", function(filename, path=NULL, default="appli
 
   default;
 }) # typeOfRnw()
-
-
-############################################################################
-# HISTORY:
-# 2014-04-18
-# o Now typeOfRnw() supports URLs.
-# 2013-01-20
-# o Created.
-############################################################################

@@ -91,10 +91,3 @@ setMethodS3("compileAsciiDocNoweb", "default", function(filename, path=NULL, ...
 
   res;
 }) # compileAsciiDocNoweb()
-
-
-############################################################################
-# HISTORY:
-# 2013-03-29
-# o Created (from compileMarkdown.R).
-############################################################################

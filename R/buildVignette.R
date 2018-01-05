@@ -163,18 +163,3 @@ buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = 
 
     final
 } # buildVignette()
-
-
-############################################################################
-# HISTORY:
-# 2013-03-25
-# o BUG FIX: buildVignette(..., clean=TRUE) would give an error on a
-#   non-existing 'origfiles'.
-# 2013-03-18
-# o Added argument 'engine' and 'buildPkg'.
-# o ROBUSTNESS: buildVignette() resets the current working directory
-#   after calling weave()/tangle() in case they changed it.
-# 2013-03-08
-# o Added buildVignette(). Code such that it could go into 'tools' with
-#   only minor adjustments.
-############################################################################

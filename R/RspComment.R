@@ -69,13 +69,3 @@ setMethodS3("asRspString", "RspComment", function(object, ...) {
   s <- sprintf(fmtstr, body, suffixSpecs);
   RspString(s);
 })
-
-##############################################################################
-# HISTORY:
-# 2013-03-26
-# o Added asRspString() for RspComment.
-# 2013-02-11
-# o Added Rdoc help.
-# 2013-02-09
-# o Created.
-##############################################################################
