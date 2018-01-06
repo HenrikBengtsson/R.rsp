@@ -7,9 +7,3 @@ if (exists("restart", mode="function")) {
   restart <- NULL; rm(list="restart"); # To please R CMD check on R (>= 2.15.0)
   restart <- appendVarArgs(restart);
 }
-
-# To avoid creating an internal copy with a .Internal() call
-stop <- function(...) UseMethod("stop");
-setMethodS3("stop", "default", function(...) {
-  base::stop(...);
-})

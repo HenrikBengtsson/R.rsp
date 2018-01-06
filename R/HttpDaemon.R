@@ -66,7 +66,7 @@ setConstructorS3("HttpDaemon", function(...) {
 
 setMethodS3("finalize", "HttpDaemon", function(this, ...) {
   if (isStarted(this))
-    stop(this);
+    terminate(this);
   this$count <- this$count - 1L;
 }, protected=TRUE, createGeneric=FALSE)
 
@@ -584,7 +584,7 @@ setMethodS3("getDefaultFilenamePattern", "HttpDaemon", function(static, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "start" and @seemethod "stop".
+#   @seemethod "start" and @seemethod "terminate".
 #   @seeclass
 # }
 #
@@ -677,7 +677,7 @@ setMethodS3("sourceTcl", "HttpDaemon", function(static, ...) {
 # \seealso{
 #   @seemethod "setRootPaths".
 #   @seemethod "isStarted".
-#   @seemethod "stop".
+#   @seemethod "terminate".
 #   @seemethod "restart".
 #   @seeclass
 # }
@@ -732,9 +732,9 @@ setMethodS3("start", "HttpDaemon", function(x, rootPaths=NULL, port=8080, defaul
 
 
 #########################################################################/**
-# @RdocMethod stop
+# @RdocMethod terminate
 #
-# @title "Stops the HTTP daemon"
+# @title "Terminates the HTTP daemon"
 #
 # \description{
 #  @get "title".
@@ -761,7 +761,7 @@ setMethodS3("start", "HttpDaemon", function(x, rootPaths=NULL, port=8080, defaul
 #
 # @keyword IO
 #*/#########################################################################
-setMethodS3("stop", "HttpDaemon", function(static, ...) {
+setMethodS3("terminate", "HttpDaemon", function(static, ...) {
   # Is HTTP daemon already started?
   if (!isStarted(static))
     stop("HTTP daemon is not started.");
@@ -800,7 +800,7 @@ setMethodS3("stop", "HttpDaemon", function(static, ...) {
 # \seealso{
 #   @seemethod "isStarted".
 #   @seemethod "start".
-#   @seemethod "stop".
+#   @seemethod "terminate".
 #   @seeclass
 # }
 #
@@ -814,7 +814,7 @@ setMethodS3("restart", "HttpDaemon", function(static, ...) {
   port <- getPort(static);
   default <- getDefaultFilenamePattern(static);
 
-  stop(static, ...);
+  terminate(static, ...);
 
   start(static, rootPaths=rootPaths, port=port, default=default, ...);
 }, static=TRUE)

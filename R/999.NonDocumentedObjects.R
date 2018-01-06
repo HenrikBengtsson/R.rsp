@@ -23,7 +23,7 @@
 # @alias setRootPaths
 # @alias sourceTcl
 # @alias startHelp
-# @alias stop
+# @alias terminate
 # @aliaswriteResponse
 #
 # % The HttpDaemonResponse class

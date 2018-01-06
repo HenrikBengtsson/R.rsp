@@ -33,7 +33,7 @@
 \alias{setRootPaths}
 \alias{sourceTcl}
 \alias{startHelp}
-\alias{stop}
+\alias{terminate}
 \alias{writeResponse}
 
 % The HttpDaemonResponse class

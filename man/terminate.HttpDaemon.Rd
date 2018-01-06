@@ -6,24 +6,24 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{HttpDaemon$stop}
-\alias{HttpDaemon$stop}
-\alias{stop.HttpDaemon}
-\alias{HttpDaemon.stop}
-\alias{stop,HttpDaemon-method}
+\name{HttpDaemon$terminate}
+\alias{HttpDaemon$terminate}
+\alias{terminate.HttpDaemon}
+\alias{HttpDaemon.terminate}
+\alias{terminate,HttpDaemon-method}
 
-\title{Stops the HTTP daemon}
+\title{Terminates the HTTP daemon}
 
 \description{
- Stops the HTTP daemon.
+ Terminates the HTTP daemon.
 }
 
 \usage{
 ## Static method (use this):
-## HttpDaemon$stop(...)
+## HttpDaemon$terminate(...)
 
 ## Don't use the below:
-\method{stop}{HttpDaemon}(static, ...)
+\method{terminate}{HttpDaemon}(static, ...)
 }
 
 \arguments{

@@ -37,7 +37,7 @@
 \author{Henrik Bengtsson}
 
 \seealso{
-  \code{\link[R.rsp:start.HttpDaemon]{*start}()} and \code{\link[R.rsp:stop.HttpDaemon]{*stop}()}.
+  \code{\link[R.rsp:start.HttpDaemon]{*start}()} and \code{\link[R.rsp:terminate.HttpDaemon]{*terminate}()}.
   For more information see \code{\link{HttpDaemon}}.
 }
 
