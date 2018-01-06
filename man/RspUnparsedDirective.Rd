@@ -53,7 +53,7 @@ RspUnparsedDirective(value="unparsed", ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{asRspString} \tab  -\cr
- \tab \code{\link[R.rsp:parse.RspUnparsedDirective]{parse}} \tab Parses the unknown RSP directive for its class.\cr
+ \tab \code{\link[R.rsp:parseDirective.RspUnparsedDirective]{parseDirective}} \tab Parses the unknown RSP directive for its class.\cr
 }
 
 

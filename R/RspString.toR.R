@@ -26,7 +26,7 @@
 # }
 #*/#########################################################################
 setMethodS3("toR", "RspString", function(object, envir=parent.frame(), ...) {
-  expr <- parse(object, preprocess=TRUE, envir=envir, ...);
+  expr <- parseExpression(object, preprocess=TRUE, envir=envir, ...);
   toR(expr, ...);
 }, protected=TRUE) # toR()
 

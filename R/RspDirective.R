@@ -189,7 +189,7 @@ setConstructorS3("RspUnparsedDirective", function(value="unparsed", ...) {
 
 
 #########################################################################/**
-# @RdocMethod parse
+# @RdocMethod parseDirective
 #
 # @title "Parses the unknown RSP directive for its class"
 #
@@ -213,7 +213,7 @@ setConstructorS3("RspUnparsedDirective", function(value="unparsed", ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
+setMethodS3("parseDirective", "RspUnparsedDirective", function(expr, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -435,7 +435,7 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
   attr(res, "suffixSpecs") <- attr(expr, "suffixSpecs");
 
   res;
-}, createGeneric=FALSE) # parse()
+})
 
 
 setMethodS3("asRspString", "RspUnparsedDirective", function(object, ...) {

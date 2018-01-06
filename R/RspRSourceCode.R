@@ -30,7 +30,7 @@ setConstructorS3("RspRSourceCode", function(...) {
 
 
 #########################################################################/**
-# @RdocMethod parse
+# @RdocMethod parseCode
 #
 # @title "Parses the R code"
 #
@@ -54,7 +54,7 @@ setConstructorS3("RspRSourceCode", function(...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("parse", "RspRSourceCode", function(object, ...) {
+setMethodS3("parseCode", "RspRSourceCode", function(object, ...) {
   # Get the source code
   code <- as.character(object);
 
@@ -73,7 +73,7 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
   expr <- base::parse(text=code);
 
   expr;
-}, createGeneric=FALSE, protected=TRUE) # parse()
+}, protected=TRUE)
 
 
 
@@ -125,7 +125,7 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(),
 
 
   # Parse R RSP source code
-  expr <- parse(object);
+  expr <- parseCode(object);
 
   # Assign arguments to the parse/evaluation environment
   attachLocally(args, envir=envir);

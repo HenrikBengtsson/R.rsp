@@ -240,7 +240,7 @@ setMethodS3("rcompile", "RspString", function(object, envir=parent.frame(), outp
 
   # Class to parse to
   as <- if (inherits(output, "RspDocument")) "RspDocument" else "RspString";
-  res <- parse(object, envir=envir, ..., until=until, as=as, verbose=verbose);
+  res <- parseDocument(object, envir=envir, ..., until=until, as=as, verbose=verbose);
   verbose && print(verbose, res);
   verbose && exit(verbose);
 

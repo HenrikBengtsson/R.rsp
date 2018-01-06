@@ -6,20 +6,21 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{parse.RspParser}
-\alias{parse.RspParser}
-\alias{RspParser.parse}
-\alias{parse,RspParser-method}
+\name{parseDocument.RspParser}
+\alias{parseDocument.RspParser}
+\alias{RspParser.parseDocument}
+\alias{parseDocument,RspParser-method}
 
-\title{Parses the RSP string}
+\title{Parse an RSP string into and RSP document}
 
 \description{
- Parses the RSP string with RSP comments dropped.
+ Parse an RSP string into and RSP document with RSP comments dropped.
 }
 
 \usage{
-\method{parse}{RspParser}(parser, object, envir=parent.frame(), ..., until=c("*", "end", "expressions",
-  "directives", "comments"), as=c("RspDocument", "RspString"), verbose=FALSE)
+\method{parseDocument}{RspParser}(parser, object, envir=parent.frame(), ...,
+  until=c("*", "end", "expressions", "directives", "comments"),
+  as=c("RspDocument", "RspString"), verbose=FALSE)
 }
 
 \arguments{

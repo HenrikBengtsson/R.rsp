@@ -128,11 +128,11 @@ setMethodS3("rclean", "RspString", function(object, envir=parent.frame(), args="
       print(verbose, ll);
     }
   }
-  expr <- parse(object, envir=envir, ..., verbose=verbose);
-  verbose && print(verbose, expr);
+  doc <- parseDocument(object, envir=envir, ..., verbose=verbose);
+  verbose && print(verbose, doc);
   verbose && exit(verbose);
 
-  res <- rclean(expr, envir=envir, args=NULL, ..., verbose=verbose);
+  res <- rclean(doc, envir=envir, args=NULL, ..., verbose=verbose);
 
   verbose && exit(verbose);
 

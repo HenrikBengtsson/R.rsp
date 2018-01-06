@@ -10,7 +10,7 @@ pathname <- file.path(path, "trimming-1.txt.rsp")
 
 verbose && enter(verbose, "rcompile()")
 
-untils <- rev(eval(formals(R.rsp:::parse.RspParser)$until))
+untils <- rev(eval(formals(R.rsp:::parseDocument.RspParser)$until))
 untils <- setdiff(untils, "*")
 
 for (kk in seq_along(untils)) {

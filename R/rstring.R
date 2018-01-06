@@ -134,11 +134,11 @@ setMethodS3("rstring", "RspString", function(object, envir=parent.frame(), args=
       print(verbose, ll);
     }
   }
-  expr <- parse(object, envir=envir, ..., verbose=verbose);
-  verbose && print(verbose, expr);
+  doc <- parseDocument(object, envir=envir, ..., verbose=verbose);
+  verbose && print(verbose, doc);
   verbose && exit(verbose);
 
-  res <- rstring(expr, envir=envir, args=NULL, ..., verbose=verbose);
+  res <- rstring(doc, envir=envir, args=NULL, ..., verbose=verbose);
 
   verbose && exit(verbose);
 

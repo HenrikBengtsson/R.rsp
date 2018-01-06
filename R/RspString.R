@@ -154,9 +154,9 @@ setMethodS3("getSource", "RspString", function(object, ...) {
 
 
 #########################################################################/**
-# @RdocMethod parse
+# @RdocMethod parseDocument
 #
-# @title "Parses the RSP string"
+# @title "Parses an RSP string into a RSP document"
 #
 # \description{
 #  @get "title".
@@ -181,9 +181,9 @@ setMethodS3("getSource", "RspString", function(object, ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("parse", "RspString", function(object, ..., envir=parent.frame(), parser=RspParser()) {
+setMethodS3("parseDocument", "RspString", function(object, ..., envir=parent.frame(), parser=RspParser()) {
   # Argument 'parser':
   parser <- Arguments$getInstanceOf(parser, "RspParser");
 
-  parse(parser, object, ..., envir=envir);
-}, createGeneric=FALSE, protected=TRUE) # parse()
+  parseDocument(parser, object, ..., envir=envir);
+}, protected=TRUE)

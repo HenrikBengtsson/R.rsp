@@ -23,7 +23,7 @@ setMethodS3("wstring", "default", function(..., sep="", envir=parent.frame()) {
     s <- substring(s, first=pos+len);
 
     # Evaluate
-    expr <- parse(text=code);
+    expr <- base::parse(text=code);
     value <- eval(expr, envir=envir);
     value <- as.character(value);
 

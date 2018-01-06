@@ -341,9 +341,9 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 
 
 #########################################################################/**
-# @RdocMethod parse
+# @RdocMethod parseDocument
 #
-# @title "Parses the RSP string"
+# @title "Parse an RSP string into and RSP document"
 #
 # \description{
 #  @get "title" with RSP comments dropped.
@@ -373,7 +373,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), as=c("RspDocument", "RspString"), verbose=FALSE) {
+setMethodS3("parseDocument", "RspParser", function(parser, object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), as=c("RspDocument", "RspString"), verbose=FALSE) {
   ## WORKAROUND: For unknown reasons, the R.oo package needs to be
   ## attached in order for 'R CMD build' to build the R.rsp package.
   ## If not, the generated RSP-to-R script becomes corrupt and contains
@@ -557,7 +557,7 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
     # Parse each of them
     for (idx in idxs) {
-      doc[[idx]] <- parse(doc[[idx]]);
+      doc[[idx]] <- parseDirective(doc[[idx]]);
     }
 
     # Trim non-text RSP constructs
@@ -602,7 +602,7 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
     # Parse them
     for (idx in idxs) {
-      doc[[idx]] <- parse(doc[[idx]]);
+      doc[[idx]] <- parseExpression(doc[[idx]]);
     }
 
     # Trim non-text RSP constructs
@@ -629,4 +629,4 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
   verbose && exit(verbose);
 
   returnAs(doc, as=as);
-}, createGeneric=FALSE, protected=TRUE) # parse()
+}, protected=TRUE)

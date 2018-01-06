@@ -6,10 +6,10 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{parse.RspUnparsedExpression}
-\alias{parse.RspUnparsedExpression}
-\alias{RspUnparsedExpression.parse}
-\alias{parse,RspUnparsedExpression-method}
+\name{parseExpression.RspUnparsedExpression}
+\alias{parseExpression.RspUnparsedExpression}
+\alias{RspUnparsedExpression.parseExpression}
+\alias{parseExpression,RspUnparsedExpression-method}
 
 \title{Parses the unknown RSP expression for its class}
 
@@ -18,7 +18,7 @@
 }
 
 \usage{
-\method{parse}{RspUnparsedExpression}(expr, ...)
+\method{parseExpression}{RspUnparsedExpression}(expr, ...)
 }
 
 \arguments{

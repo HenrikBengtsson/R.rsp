@@ -108,6 +108,10 @@
 # @alias getReturn
 # @alias getContent
 # @alias makeSourceCode
+# @alias parseCode
+# @alias parseDirective
+# @alias parseDocument
+# @alias parseExpression
 # @alias parseRaw
 # @alias toR
 # @alias toSourceCode
@@ -142,9 +146,6 @@
 # @alias getInclude
 # @alias tidy
 # @alias view
-#
-# @alias parse
-# @alias parse.default
 #
 # @alias withoutGString
 # @alias wstring

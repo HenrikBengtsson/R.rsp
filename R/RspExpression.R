@@ -62,7 +62,7 @@ setConstructorS3("RspUnparsedExpression", function(...) {
 
 
 #########################################################################/**
-# @RdocMethod parse
+# @RdocMethod parseExpression
 #
 # @title "Parses the unknown RSP expression for its class"
 #
@@ -86,7 +86,7 @@ setConstructorS3("RspUnparsedExpression", function(...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("parse", "RspUnparsedExpression", function(expr, ...) {
+setMethodS3("parseExpression", "RspUnparsedExpression", function(expr, ...) {
   suffixSpecs <- attr(expr, "suffixSpecs");
   body <- expr;
 
@@ -127,4 +127,4 @@ setMethodS3("parse", "RspUnparsedExpression", function(expr, ...) {
   res <- RspCode(trim(body));
   attr(res, "suffixSpecs") <- suffixSpecs;
   res;
-}, createGeneric=FALSE) # parse()
+})

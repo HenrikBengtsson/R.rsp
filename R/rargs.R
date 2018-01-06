@@ -44,7 +44,7 @@ setMethodS3("rargs", "default", function(...) {
 
   # Parse RSP directives
   for (idx in seq_along(doc)) {
-    doc[[idx]] <- parse(doc[[idx]]);
+    doc[[idx]] <- parseDirective(doc[[idx]]);
   }
 
   # Extract RSP preprocessing variables

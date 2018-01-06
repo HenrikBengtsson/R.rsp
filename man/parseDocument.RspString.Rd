@@ -6,19 +6,19 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{parse.RspString}
-\alias{parse.RspString}
-\alias{RspString.parse}
-\alias{parse,RspString-method}
+\name{parseDocument.RspString}
+\alias{parseDocument.RspString}
+\alias{RspString.parseDocument}
+\alias{parseDocument,RspString-method}
 
-\title{Parses the RSP string}
+\title{Parses an RSP string into a RSP document}
 
 \description{
- Parses the RSP string.
+ Parses an RSP string into a RSP document.
 }
 
 \usage{
-\method{parse}{RspString}(object, ..., envir=parent.frame(), parser=RspParser())
+\method{parseDocument}{RspString}(object, ..., envir=parent.frame(), parser=RspParser())
 }
 
 \arguments{

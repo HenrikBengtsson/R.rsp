@@ -6,10 +6,10 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{parse.RspRSourceCode}
-\alias{parse.RspRSourceCode}
-\alias{RspRSourceCode.parse}
-\alias{parse,RspRSourceCode-method}
+\name{parseCode.RspRSourceCode}
+\alias{parseCode.RspRSourceCode}
+\alias{RspRSourceCode.parseCode}
+\alias{parseCode,RspRSourceCode-method}
 
 \title{Parses the R code}
 
@@ -18,7 +18,7 @@
 }
 
 \usage{
-\method{parse}{RspRSourceCode}(object, ...)
+\method{parseCode}{RspRSourceCode}(object, ...)
 }
 
 \arguments{

@@ -15,8 +15,9 @@ BUG FIXES:
 DEPRECATED AND DEFUNCT:
 
  * Deprecated write() for RspResponse - use writeResponse() instead.
- 
- * Renamed (internal) stop() method to terminate().
+
+ * Replaced parse() with parseDocument(), parseCode(), parseDirectory(),
+   and parseExpression().
 
 
 Version: 0.41.0 [2017-04-15]

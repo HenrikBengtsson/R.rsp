@@ -1836,7 +1836,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         verbose && printf(verbose, "Parsing RSP document until '%s'\n", until);
 
         # Parse RSP string to RSP document
-        doc <- parse(rstr, envir=envir, until=until, verbose=verbose);
+        doc <- parseDocument(rstr, envir=envir, until=until, verbose=verbose);
         verbose && cat(verbose, "Included RSP document:");
         verbose && print(verbose, doc);
 

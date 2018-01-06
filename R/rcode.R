@@ -200,11 +200,12 @@ setMethodS3("rcode", "RspString", function(object, output=NULL, workdir=NULL, en
       print(verbose, ll);
     }
   }
-  expr <- parse(object, envir=envir, ..., verbose=verbose);
-  verbose && print(verbose, expr);
+  
+  doc <- parseDocument(object, envir=envir, ..., verbose=verbose);
+  verbose && print(verbose, doc);
   verbose && exit(verbose);
 
-  res <- rcode(expr, output=output, workdir=workdir, envir=envir, args=NULL, ..., verbose=verbose);
+  res <- rcode(doc, output=output, workdir=workdir, envir=envir, args=NULL, ..., verbose=verbose);
 
   verbose && exit(verbose);
 
