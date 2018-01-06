@@ -1,878 +1,184 @@
-# Setup
+# Platform
 
-## Platform
-
-|setting  |value                        |
+|field    |value                        |
 |:--------|:----------------------------|
-|version  |R version 3.3.2 (2016-10-31) |
+|version  |R version 3.4.2 (2017-09-28) |
+|os       |CentOS Linux 7 (Core)        |
 |system   |x86_64, linux-gnu            |
 |ui       |X11                          |
 |language |en                           |
 |collate  |en_US.UTF-8                  |
-|tz       |US/Pacific                   |
-|date     |2016-12-04                   |
-
-## Packages
-
-|package     |*  |version     |date       |source                           |
-|:-----------|:--|:-----------|:----------|:--------------------------------|
-|ascii       |   |2.1         |2011-09-29 |cran (@2.1)                      |
-|base64enc   |   |0.1-4       |2016-11-11 |cran (@0.1-4)                    |
-|digest      |   |0.6.10      |2016-08-02 |CRAN (R 3.3.1)                   |
-|knitr       |   |1.15.2      |2016-12-04 |cran (@1.15.2)                   |
-|markdown    |   |0.7.7       |2015-04-22 |cran (@0.7.7)                    |
-|R.cache     |   |0.12.0      |2015-11-12 |cran (@0.12.0)                   |
-|R.devices   |   |2.15.1      |2016-11-10 |cran (@2.15.1)                   |
-|R.methodsS3 |   |1.7.1       |2016-02-16 |cran (@1.7.1)                    |
-|R.oo        |   |1.21.0      |2016-11-01 |cran (@1.21.0)                   |
-|R.rsp       |   |0.30.0-9000 |2016-12-05 |local (HenrikBengtsson/R.rsp@NA) |
-|R.utils     |   |2.5.0       |2016-11-07 |cran (@2.5.0)                    |
-
-# Check results
-
-81 packages
-
-|package             |version | errors| warnings| notes|
-|:-------------------|:-------|------:|--------:|-----:|
-|babar               |1.0     |      0|        0|     1|
-|babel               |0.3-0   |      0|        0|     0|
-|bootTimeInference   |0.1.0   |      0|        0|     0|
-|brms                |1.2.0   |      0|        0|     0|
-|brotli              |0.8     |      0|        0|     1|
-|brr                 |1.0.0   |      0|        0|     0|
-|bst                 |0.3-14  |      0|        0|     0|
-|bujar               |0.2-1   |      0|        0|     0|
-|canceR              |1.6.0   |      1|        0|     1|
-|causaleffect        |1.3.0   |      0|        0|     0|
-|comf                |0.1.6   |      0|        0|     0|
-|Compind             |1.1.2   |      0|        0|     0|
-|crisprseekplus      |1.0.0   |      0|        1|     1|
-|CryptRndTest        |1.2.2   |      0|        0|     0|
-|deBInfer            |0.4.1   |      0|        0|     0|
-|debrowser           |1.2.3   |      1|        0|     0|
-|dggridR             |0.1.11  |      0|        0|     1|
-|DiffusionRgqd       |0.1.3   |      0|        0|     1|
-|DiffusionRimp       |0.1.2   |      0|        0|     0|
-|DiffusionRjgqd      |0.1.1   |      0|        0|     1|
-|doFuture            |0.3.0   |      0|        0|     0|
-|easyVerification    |0.3.0   |      0|        0|     0|
-|ecp                 |3.0.0   |      0|        0|     0|
-|enaR                |2.9.1   |      0|        0|     0|
-|EnsemblePCReg       |1.1.1   |      0|        0|     0|
-|erah                |1.0.4   |      0|        0|     0|
-|future.BatchJobs    |0.13.1  |      0|        0|     0|
-|future              |1.2.0   |      0|        0|     0|
-|FuzzyLP             |0.1-3   |      0|        0|     0|
-|FuzzyStatProb       |2.0.2   |      0|        0|     0|
-|GameTheory          |2.4     |      0|        0|     0|
-|gdm                 |1.2.3   |      0|        0|     0|
-|generalCorr         |1.0.3   |      0|        0|     0|
-|GHap                |1.2.1   |      0|        0|     0|
-|gitlabr             |0.6.4   |      0|        0|     0|
-|haplo.stats         |1.7.7   |      0|        0|     0|
-|IsoriX              |0.4-1   |      0|        0|     0|
-|jsonlite            |1.1     |      0|        0|     0|
-|kdecopula           |0.7.0   |      0|        0|     0|
-|listenv             |0.6.0   |      0|        0|     0|
-|lqmm                |1.5.3   |      0|        0|     0|
-|madness             |0.2.0   |      1|        0|     0|
-|manifestoR          |1.2.3   |      0|        0|     0|
-|marmap              |0.9.5   |      0|        0|     1|
-|matrixpls           |1.0.1   |      0|        0|     0|
-|matrixStats         |0.51.0  |      0|        0|     1|
-|metafor             |1.9-9   |      1|        0|     0|
-|metaplus            |0.7-9   |      0|        0|     0|
-|metaSEM             |0.9.10  |      0|        0|     0|
-|MIAmaxent           |0.3.7   |      0|        0|     0|
-|micromapST          |1.0.5   |      0|        0|     1|
-|mpath               |0.2-4   |      0|        0|     0|
-|MRH                 |2.2     |      0|        0|     0|
-|opencpu             |1.6.1   |      0|        0|     0|
-|OpenML              |1.1     |      0|        0|     0|
-|PAFit               |0.8.7   |      0|        0|     0|
-|pleio               |1.1     |      0|        0|     0|
-|plsRglm             |1.1.1   |      0|        0|     2|
-|PrevMap             |1.4     |      0|        1|     1|
-|profmem             |0.4.0   |      0|        0|     0|
-|PSCBS               |0.62.0  |      0|        0|     0|
-|Qtools              |1.1     |      0|        0|     0|
-|randomUniformForest |1.1.5   |      0|        0|     1|
-|RAppArmor           |2.0.2   |      0|        0|     0|
-|rccmisc             |0.3.7   |      0|        0|     0|
-|rcss                |1.1     |      0|        0|     1|
-|R.devices           |2.15.1  |      0|        0|     0|
-|RLumModel           |0.1.2   |      0|        0|     0|
-|rSARP               |1.0.0   |      0|        0|     0|
-|SemiCompRisks       |2.5     |      0|        0|     0|
-|SetRank             |1.1.0   |      0|        0|     0|
-|sgd                 |1.1     |      0|        0|     0|
-|spam                |1.4-0   |      0|        0|     0|
-|SRCS                |1.1     |      0|        0|     0|
-|ssfa                |1.1     |      0|        0|     1|
-|stagePop            |1.1-1   |      0|        0|     1|
-|tailDepFun          |1.0.0   |      0|        0|     0|
-|timma               |1.2.1   |      0|        0|     1|
-|tsdisagg2           |0.1.0   |      0|        0|     0|
-|WACS                |1.0     |      0|        0|     0|
-|WCE                 |1.0     |      0|        0|     2|
-
-## babar (1.0)
-Maintainer: Matthew Hartley <Matthew.Hartley@jic.ac.uk>
-
-0 errors | 0 warnings | 1 note 
-
-```
-checking R code for possible problems ... NOTE
-.generateTransform: no visible global function definition for ‘sd’
-.generateUnitHyperCube: no visible global function definition for
-  ‘runif’
-.makeBoundedSingleStep: no visible global function definition for
-  ‘runif’
-.makeBoundedStep: no visible global function definition for ‘runif’
-.makeStep: no visible global function definition for ‘runif’
-.staircaseSampling: no visible global function definition for ‘runif’
-GaussianPrior: no visible global function definition for ‘qnorm’
-LogNormalPrior: no visible global function definition for ‘qnorm’
-Undefined global functions or variables:
-  qnorm runif sd
-Consider adding
-  importFrom("stats", "qnorm", "runif", "sd")
-to your NAMESPACE file.
-```
-
-## babel (0.3-0)
-Maintainer: Adam B. Olshen <adam.olshen@ucsf.edu>
-
-0 errors | 0 warnings | 0 notes
-
-## bootTimeInference (0.1.0)
-Maintainer: Aleksandar Spasojevic <aleksandar.spasojevic@outlook.com>
-
-0 errors | 0 warnings | 0 notes
-
-## brms (1.2.0)
-Maintainer: Paul-Christian Buerkner <paul.buerkner@gmail.com>  
-Bug reports: https://github.com/paul-buerkner/brms/issues
-
-0 errors | 0 warnings | 0 notes
-
-## brotli (0.8)
-Maintainer: Jeroen Ooms <jeroen.ooms@stat.ucla.edu>  
-Bug reports: http://github.com/jeroenooms/brotli/issues
-
-0 errors | 0 warnings | 1 note 
-
-```
-checking installed package size ... NOTE
-  installed size is  5.9Mb
-  sub-directories of 1Mb or more:
-    bin    2.3Mb
-    doc    1.3Mb
-    libs   2.2Mb
-```
-
-## brr (1.0.0)
-Maintainer: Stéphane Laurent <laurent_step@yahoo.fr>
-
-0 errors | 0 warnings | 0 notes
-
-## bst (0.3-14)
-Maintainer: Zhu Wang <zwang@connecticutchildrens.org>
-
-0 errors | 0 warnings | 0 notes
-
-## bujar (0.2-1)
-Maintainer: Zhu Wang <zwang@connecticutchildrens.org>
-
-0 errors | 0 warnings | 0 notes
-
-## canceR (1.6.0)
-Maintainer: Karim Mezhoud <kmezhoud@gmail.com>
-
-1 error  | 0 warnings | 1 note 
-
-```
-checking whether package ‘canceR’ can be installed ... ERROR
-Installation failed.
-See ‘/home/hb/repositories/R.rsp/revdep/checks/canceR.Rcheck/00install.out’ for details.
-
-checking for hidden files and directories ... NOTE
-Found the following hidden files and directories:
-  .travis.yml
-These were most likely included in error. See section ‘Package
-structure’ in the ‘Writing R Extensions’ manual.
-```
-
-## causaleffect (1.3.0)
-Maintainer: Santtu Tikka <santtuth@gmail.com>
-
-0 errors | 0 warnings | 0 notes
-
-## comf (0.1.6)
-Maintainer: Marcel Schweiker <marcel.schweiker@kit.edu>
-
-0 errors | 0 warnings | 0 notes
-
-## Compind (1.1.2)
-Maintainer: Francesco Vidoli <fvidoli@gmail.com>
-
-0 errors | 0 warnings | 0 notes
-
-## crisprseekplus (1.0.0)
-Maintainer: Alper Kucukural <alper.kucukural@umassmed.edu>  
-Bug reports: https://github.com/UMMS-Biocore/crisprseekplus/issues/new
-
-0 errors | 1 warning  | 1 note 
-
-```
-checking re-building of vignette outputs ... WARNING
-Error in re-building vignettes:
-  ...
-Error: processing vignette 'crisprseekplus.Rmd' failed with diagnostics:
-unused arguments (self_contained, lib_dir, output_dir)
-Execution halted
-
-
-checking top-level files ... NOTE
-Non-standard file/directory found at top level:
-  ‘docs’
-```
-
-## CryptRndTest (1.2.2)
-Maintainer: Haydar Demirhan <haydarde@hacettepe.edu.tr>
-
-0 errors | 0 warnings | 0 notes
-
-## deBInfer (0.4.1)
-Maintainer: Philipp H Boersch-Supan <pboesu@gmail.com>
-
-0 errors | 0 warnings | 0 notes
-
-## debrowser (1.2.3)
-Maintainer: Alper Kucukural <alper.kucukural@umassmed.edu>  
-Bug reports: https://github.com/UMMS-Biocore/debrowser/issues/new
-
-1 error  | 0 warnings | 0 notes
-
-```
-checking whether package ‘debrowser’ can be installed ... ERROR
-Installation failed.
-See ‘/home/hb/repositories/R.rsp/revdep/checks/debrowser.Rcheck/00install.out’ for details.
-```
-
-## dggridR (0.1.11)
-Maintainer: Richard Barnes <rbarnes@umn.edu>  
-Bug reports: https://github.com/r-barnes/dggridR/
-
-0 errors | 0 warnings | 1 note 
-
-```
-checking installed package size ... NOTE
-  installed size is 26.7Mb
-  sub-directories of 1Mb or more:
-    bin  24.6Mb
-    doc   1.7Mb
-```
-
-## DiffusionRgqd (0.1.3)
-Maintainer: Etienne A.D. Pienaar <etiennead@gmail.com>  
-Bug reports: https://github.com/eta21/DiffusionRgqd/issues
-
-0 errors | 0 warnings | 1 note 
-
-```
-checking installed package size ... NOTE
-  installed size is  6.5Mb
-  sub-directories of 1Mb or more:
-    doc   5.2Mb
-```
-
-## DiffusionRimp (0.1.2)
-Maintainer: Etienne A.D. Pienaar <etiennead@gmail.com>  
-Bug reports: https://github.com/eta21/DiffusionRimp/issues
-
-0 errors | 0 warnings | 0 notes
-
-## DiffusionRjgqd (0.1.1)
-Maintainer: Etienne A.D. Pienaar <etiennead@gmail.com>  
-Bug reports: https://github.com/eta21/DiffusionRjgqd/issues
-
-0 errors | 0 warnings | 1 note 
-
-```
-checking installed package size ... NOTE
-  installed size is  6.8Mb
-  sub-directories of 1Mb or more:
-    doc   5.6Mb
-```
-
-## doFuture (0.3.0)
-Maintainer: Henrik Bengtsson <henrikb@braju.com>  
-Bug reports: https://github.com/HenrikBengtsson/doFuture/issues
-
-0 errors | 0 warnings | 0 notes
-
-## easyVerification (0.3.0)
-Maintainer: Jonas Bhend <jonas.bhend@meteoswiss.ch>
-
-0 errors | 0 warnings | 0 notes
-
-## ecp (3.0.0)
-Maintainer: Nicholas A. James <nj89@cornell.edu>
-
-0 errors | 0 warnings | 0 notes
-
-## enaR (2.9.1)
-Maintainer: Matthew K. Lau <enaR.maintainer@gmail.com>
-
-0 errors | 0 warnings | 0 notes
-
-## EnsemblePCReg (1.1.1)
-Maintainer: Alireza S. Mahani <alireza.s.mahani@gmail.com>
-
-0 errors | 0 warnings | 0 notes
-
-## erah (1.0.4)
-Maintainer: Xavier Domingo-Almenara <xavier.domingo@urv.cat>
-
-0 errors | 0 warnings | 0 notes
-
-## future.BatchJobs (0.13.1)
-Maintainer: Henrik Bengtsson <henrikb@braju.com>  
-Bug reports: https://github.com/HenrikBengtsson/future.BatchJobs/issues
-
-0 errors | 0 warnings | 0 notes
-
-## future (1.2.0)
-Maintainer: Henrik Bengtsson <henrikb@braju.com>  
-Bug reports: https://github.com/HenrikBengtsson/future/issues
-
-0 errors | 0 warnings | 0 notes
-
-## FuzzyLP (0.1-3)
-Maintainer: Carlos A. Rabelo <carabelo@gmail.com>
-
-0 errors | 0 warnings | 0 notes
-
-## FuzzyStatProb (2.0.2)
-Maintainer: Pablo J. Villacorta <pjvi@decsai.ugr.es>
-
-0 errors | 0 warnings | 0 notes
-
-## GameTheory (2.4)
-Maintainer: Sebastian Cano-Berlanga <cano.berlanga@gmail.com>
-
-0 errors | 0 warnings | 0 notes
-
-## gdm (1.2.3)
-Maintainer: Matthew C. Fitzpatrick <mfitzpatrick@al.umces.edu>
-
-0 errors | 0 warnings | 0 notes
-
-## generalCorr (1.0.3)
-Maintainer: H. D. Vinod <vinod@fordham.edu>
-
-0 errors | 0 warnings | 0 notes
-
-## GHap (1.2.1)
-Maintainer: Yuri Tani Utsunomiya <ytutsunomiya@gmail.com>
-
-0 errors | 0 warnings | 0 notes
-
-## gitlabr (0.6.4)
-Maintainer: Jirka Lewandowski <jirka.lewandowski@wzb.eu>  
-Bug reports: 
-        http://gitlab.points-of-interest.cc/points-of-interest/gitlabr/
-        issues/
-
-0 errors | 0 warnings | 0 notes
-
-## haplo.stats (1.7.7)
-Maintainer: Jason P. Sinnwell <sinnwell.jason@mayo.edu>
-
-0 errors | 0 warnings | 0 notes
-
-## IsoriX (0.4-1)
-Maintainer: Alexandre Courtiol <alexandre.courtiol@gmail.com>
-
-0 errors | 0 warnings | 0 notes
-
-## jsonlite (1.1)
-Maintainer: Jeroen Ooms <jeroen.ooms@stat.ucla.edu>  
-Bug reports: http://github.com/jeroenooms/jsonlite/issues
-
-0 errors | 0 warnings | 0 notes
-
-## kdecopula (0.7.0)
-Maintainer: Thomas Nagler <thomas.nagler@tum.de>  
-Bug reports: https://github.com/tnagler/kdecopula
-
-0 errors | 0 warnings | 0 notes
-
-## listenv (0.6.0)
-Maintainer: Henrik Bengtsson <henrikb@braju.com>  
-Bug reports: https://github.com/HenrikBengtsson/listenv/issues
-
-0 errors | 0 warnings | 0 notes
-
-## lqmm (1.5.3)
-Maintainer: Marco Geraci <geraci@mailbox.sc.edu>
-
-0 errors | 0 warnings | 0 notes
-
-## madness (0.2.0)
-Maintainer: Steven E. Pav <shabbychef@gmail.com>  
-Bug reports: https://github.com/shabbychef/madness/issues
-
-1 error  | 0 warnings | 0 notes
-
-```
-checking tests ... ERROR
-Running the tests in ‘tests/run-all.R’ failed.
-Last 13 lines of output:
-    val: 1.307766 1.468549 1.546559 1.280354 ...
-   dvdx: 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ...
-   varx:  ...
-  1. Failure: eigen functions (@test-correctness.r#400) --------------------------
-  comp_err(xval, thefun = thefun, scalfun = scalfun, eps = eps) is not strictly less than 1e-06. Difference: 1.09e-07
-  
-  
-  testthat results ================================================================
-  OK: 459 SKIPPED: 0 FAILED: 1
-  1. Failure: eigen functions (@test-correctness.r#400) 
-  
-  Error: testthat unit tests failed
-  Execution halted
-```
-
-## manifestoR (1.2.3)
-Maintainer: Jirka Lewandowski <jirka.lewandowski@wzb.eu>  
-Bug reports: https://github.com/ManifestoProject/manifestoR/issues
-
-0 errors | 0 warnings | 0 notes
-
-## marmap (0.9.5)
-Maintainer: Eric Pante <pante.eric@gmail.com>
-
-0 errors | 0 warnings | 1 note 
-
-```
-checking Rd cross-references ... NOTE
-Package unavailable to check Rd xrefs: ‘maptools’
-```
-
-## matrixpls (1.0.1)
-Maintainer: Mikko Rönkkö <mikko.ronkko@aalto.fi>  
-Bug reports: https://github.com/mronkko/matrixpls/issues
-
-0 errors | 0 warnings | 0 notes
-
-## matrixStats (0.51.0)
-Maintainer: Henrik Bengtsson <henrikb@braju.com>  
-Bug reports: https://github.com/HenrikBengtsson/matrixStats/issues
-
-0 errors | 0 warnings | 1 note 
-
-```
-checking installed package size ... NOTE
-  installed size is  8.1Mb
-  sub-directories of 1Mb or more:
-    libs   7.4Mb
-```
-
-## metafor (1.9-9)
-Maintainer: Wolfgang Viechtbauer <wvb@metafor-project.org>  
-Bug reports: https://github.com/wviechtb/metafor/issues
-
-1 error  | 0 warnings | 0 notes
-
-```
-checking tests ... ERROR
-Running the tests in ‘tests/testthat.R’ failed.
-Last 13 lines of output:
-  1. Error: results are correct for example 1. (@test_analysis_example_law2016.r#74) 
-  Optimizer (nlminb) did not achieve convergence (convergence = 1).
-  1: rma.mv(y, S1, mods = X, intercept = FALSE, random = list(~contr | study, ~contr | 
-         design), rho = 1/2, phi = 1/2, data = EG1) at testthat/test_analysis_example_law2016.r:74
-  2: stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", 
-         opt.res$convergence, ")."))
-  
-  testthat results ================================================================
-  OK: 776 SKIPPED: 30 FAILED: 1
-  1. Error: results are correct for example 1. (@test_analysis_example_law2016.r#74) 
-  
-  Error: testthat unit tests failed
-  Execution halted
-```
-
-## metaplus (0.7-9)
-Maintainer: Ken Beath <ken.beath@mq.edu.au>
-
-0 errors | 0 warnings | 0 notes
-
-## metaSEM (0.9.10)
-Maintainer: Mike W.-L. Cheung <mikewlcheung@nus.edu.sg>
-
-0 errors | 0 warnings | 0 notes
-
-## MIAmaxent (0.3.7)
-Maintainer: Julien Vollering <julien.vollering@hisf.no>  
-Bug reports: https://github.com/julienvollering/MIAmaxent/issues
-
-0 errors | 0 warnings | 0 notes
-
-## micromapST (1.0.5)
-Maintainer: Jim Pearson <jpearson@statnetconsulting.com>
-
-0 errors | 0 warnings | 1 note 
-
-```
-checking R code for possible problems ... NOTE
-micromapST : rlStateBoxplot: no visible global function definition for
-  ‘segments’
-micromapST: no visible global function definition for ‘adjustcolor’
-Undefined global functions or variables:
-  adjustcolor segments
-Consider adding
-  importFrom("grDevices", "adjustcolor")
-  importFrom("graphics", "segments")
-to your NAMESPACE file.
-```
-
-## mpath (0.2-4)
-Maintainer: Zhu Wang <zwang@connecticutchildrens.org>
-
-0 errors | 0 warnings | 0 notes
-
-## MRH (2.2)
-Maintainer: Yolanda Hagar <yolanda.hagar@colorado.edu>
-
-0 errors | 0 warnings | 0 notes
-
-## opencpu (1.6.1)
-Maintainer: Jeroen Ooms <jeroen.ooms@stat.ucla.edu>  
-Bug reports: https://github.com/jeroenooms/opencpu/issues
-
-0 errors | 0 warnings | 0 notes
-
-## OpenML (1.1)
-Maintainer: Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>  
-Bug reports: https://github.com/openml/openml-r/issues
-
-0 errors | 0 warnings | 0 notes
-
-## PAFit (0.8.7)
-Maintainer: Thong Pham <thongpham@thongpham.net>
-
-0 errors | 0 warnings | 0 notes
-
-## pleio (1.1)
-Maintainer: Jason Sinnwell <sinnwell.jason@mayo.edu>
-
-0 errors | 0 warnings | 0 notes
-
-## plsRglm (1.1.1)
-Maintainer: Frederic Bertrand <frederic.bertrand@math.unistra.fr>
-
-0 errors | 0 warnings | 2 notes
-
-```
-checking dependencies in R code ... NOTE
-'library' or 'require' calls in package code:
-  ‘MASS’ ‘plsdof’
-  Please use :: or requireNamespace() instead.
-  See section 'Suggested packages' in the 'Writing R Extensions' manual.
-
-checking R code for possible problems ... NOTE
-PLS_glm: no visible global function definition for ‘Gamma’
-PLS_glm: no visible global function definition for ‘gaussian’
-PLS_glm: no visible global function definition for ‘inverse.gaussian’
-PLS_glm: no visible global function definition for ‘binomial’
-PLS_glm: no visible global function definition for ‘poisson’
-PLS_glm: no visible global function definition for ‘weighted.mean’
-PLS_glm: no visible binding for global variable ‘weighted.mean’
-PLS_glm: no visible global function definition for ‘pnorm’
-PLS_glm: no visible global function definition for ‘coef’
-... 213 lines ...
-  importFrom("graphics", "abline", "arrows", "axis", "barplot",
-             "boxplot", "legend", "par", "plot", "points", "strwidth",
-             "text")
-  importFrom("stats", "AIC", "Gamma", "binomial", "coef", "contrasts",
-             "family", "gaussian", "glm", "inverse.gaussian",
-             "is.empty.model", "lm", "make.link", "model.frame",
-             "model.matrix", "model.offset", "model.response",
-             "model.weights", "na.exclude", "na.pass", "pnorm",
-             "poisson", "predict", "rbinom", "residuals.glm",
-             "weighted.mean")
-to your NAMESPACE file.
-```
-
-## PrevMap (1.4)
-Maintainer: Emanuele Giorgi <e.giorgi@lancaster.ac.uk>
-
-0 errors | 1 warning  | 1 note 
-
-```
-checking whether package ‘PrevMap’ can be installed ... WARNING
-Found the following significant warnings:
-  Warning: no DISPLAY variable so Tk is not available
-See ‘/home/hb/repositories/R.rsp/revdep/checks/PrevMap.Rcheck/00install.out’ for details.
-
-checking package dependencies ... NOTE
-Package suggested but not available for checking: ‘INLA’
-```
-
-## profmem (0.4.0)
-Maintainer: Henrik Bengtsson <henrikb@braju.com>  
-Bug reports: https://github.com/HenrikBengtsson/profmem/issues
-
-0 errors | 0 warnings | 0 notes
-
-## PSCBS (0.62.0)
-Maintainer: Henrik Bengtsson <henrikb@braju.com>  
-Bug reports: https://github.com/HenrikBengtsson/PSCBS/issues
-
-0 errors | 0 warnings | 0 notes
-
-## Qtools (1.1)
-Maintainer: Marco Geraci <geraci@mailbox.sc.edu>
-
-0 errors | 0 warnings | 0 notes
-
-## randomUniformForest (1.1.5)
-Maintainer: Saip Ciss <saip.ciss@wanadoo.fr>
-
-0 errors | 0 warnings | 1 note 
-
-```
-checking R code for possible problems ... NOTE
-HuberDist: no visible global function definition for ‘median’
-MDSscale: no visible global function definition for ‘plot’
-OOBquantiles : <anonymous>: no visible global function definition for
-  ‘quantile’
-OOBquantiles : <anonymous>: no visible global function definition for
-  ‘sd’
-OOBquantiles: no visible global function definition for ‘quantile’
-OOBquantiles: no visible global function definition for ‘plot’
-bCICore: no visible global function definition for ‘quantile’
-... 185 lines ...
-Consider adding
-  importFrom("grDevices", "dev.new", "dev.off", "graphics.off",
-             "heat.colors")
-  importFrom("graphics", "abline", "barplot", "grid", "legend",
-             "mosaicplot", "par", "persp", "plot", "points", "title")
-  importFrom("stats", "aggregate", "cor", "dist", "kmeans", "lm",
-             "median", "model.frame", "model.matrix", "model.response",
-             "na.omit", "pbinom", "predict", "qnorm", "quantile",
-             "rnorm", "runif", "sd")
-  importFrom("utils", "head", "memory.limit")
-to your NAMESPACE file.
-```
-
-## RAppArmor (2.0.2)
-Maintainer: Jeroen Ooms <jeroen.ooms@stat.ucla.edu>  
-Bug reports: http://github.com/jeroenooms/RAppArmor/issues
-
-0 errors | 0 warnings | 0 notes
-
-## rccmisc (0.3.7)
-Maintainer: Erik Bulow <erik.bulow@rccvast.se>  
-Bug reports: https://bitbucket.com/cancercentrum/rccmisc/issues
-
-0 errors | 0 warnings | 0 notes
-
-## rcss (1.1)
-Maintainer: Jeremy Yee <jeremyyee@outlook.com.au>  
-Bug reports: https://github.com/YeeJeremy/rcss/issues
-
-0 errors | 0 warnings | 1 note 
-
-```
-checking installed package size ... NOTE
-  installed size is 11.9Mb
-  sub-directories of 1Mb or more:
-    libs  11.5Mb
-```
-
-## R.devices (2.15.1)
-Maintainer: Henrik Bengtsson <henrikb@braju.com>  
-Bug reports: https://github.com/HenrikBengtsson/R.devices/issues
-
-0 errors | 0 warnings | 0 notes
-
-## RLumModel (0.1.2)
-Maintainer: Johannes Friedrich <johannes.friedrich@uni-bayreuth.de>
-
-0 errors | 0 warnings | 0 notes
-
-## rSARP (1.0.0)
-Maintainer: John Hutcheson <jacknx8a@gmail.com>
-
-0 errors | 0 warnings | 0 notes
-
-## SemiCompRisks (2.5)
-Maintainer: Kyu Ha Lee <klee@hsph.harvard.edu>
-
-0 errors | 0 warnings | 0 notes
-
-## SetRank (1.1.0)
-Maintainer: Cedric Simillion <cedric.simillion@dkf.unibe.ch>
-
-0 errors | 0 warnings | 0 notes
-
-## sgd (1.1)
-Maintainer: Dustin Tran <dustin@cs.columbia.edu>  
-Bug reports: https://github.com/airoldilab/sgd/issues
-
-0 errors | 0 warnings | 0 notes
-
-## spam (1.4-0)
-Maintainer: Reinhard Furrer <reinhard.furrer@math.uzh.ch>
-
-0 errors | 0 warnings | 0 notes
-
-## SRCS (1.1)
-Maintainer: Pablo J. Villacorta <pjvi@decsai.ugr.es>
-
-0 errors | 0 warnings | 0 notes
-
-## ssfa (1.1)
-Maintainer: Elisa Fusco <fusco_elisa@libero.it>
-
-0 errors | 0 warnings | 1 note 
-
-```
-checking R code for possible problems ... NOTE
-L_hNV: no visible global function definition for ‘pnorm’
-L_hNV_rho: no visible global function definition for ‘pnorm’
-eff.ssfa: no visible global function definition for ‘pnorm’
-plot_fitted: no visible global function definition for ‘lines’
-plot_moran: no visible global function definition for ‘residuals’
-print.summary.ssfa: no visible global function definition for
-  ‘printCoefmat’
-ssfa: no visible global function definition for ‘model.frame’
-ssfa: no visible global function definition for ‘model.response’
-... 8 lines ...
-u.ssfa: no visible global function definition for ‘dnorm’
-u.ssfa: no visible global function definition for ‘pnorm’
-Undefined global functions or variables:
-  df dnorm lines lm logLik model.frame model.response pchisq pnorm
-  printCoefmat residuals var
-Consider adding
-  importFrom("graphics", "lines")
-  importFrom("stats", "df", "dnorm", "lm", "logLik", "model.frame",
-             "model.response", "pchisq", "pnorm", "printCoefmat",
-             "residuals", "var")
-to your NAMESPACE file.
-```
-
-## stagePop (1.1-1)
-Maintainer: David Nutter <david.nutter@bioss.ac.uk>
-
-0 errors | 0 warnings | 1 note 
-
-```
-checking R code for possible problems ... NOTE
-genericPlot: no visible global function definition for ‘dev.new’
-genericPlot: no visible global function definition for ‘par’
-genericPlot: no visible global function definition for ‘rainbow’
-genericPlot: no visible global function definition for ‘plot’
-genericPlot: no visible global function definition for ‘lines’
-genericPlot: no visible global function definition for ‘legend’
-genericPlot: no visible global function definition for ‘dev.copy2pdf’
-genericPlot: no visible global function definition for ‘dev.copy2eps’
-genericPlot: no visible global function definition for ‘dev.print’
-... 11 lines ...
-plotStrains: no visible global function definition for ‘dev.print’
-plotStrains: no visible binding for global variable ‘png’
-plotStrains: no visible binding for global variable ‘tiff’
-Undefined global functions or variables:
-  dev.copy2eps dev.copy2pdf dev.new dev.print legend lines par plot png
-  rainbow tiff
-Consider adding
-  importFrom("grDevices", "dev.copy2eps", "dev.copy2pdf", "dev.new",
-             "dev.print", "png", "rainbow", "tiff")
-  importFrom("graphics", "legend", "lines", "par", "plot")
-to your NAMESPACE file.
-```
-
-## tailDepFun (1.0.0)
-Maintainer: Anna Kiriliouk <anna.kiriliouk@uclouvain.be>
-
-0 errors | 0 warnings | 0 notes
-
-## timma (1.2.1)
-Maintainer: Jing Tang <jing.tang@helsinki.fi>
-
-0 errors | 0 warnings | 1 note 
-
-```
-checking R code for possible problems ... NOTE
-drawGraph: no visible global function definition for ‘pdf’
-drawGraph: no visible global function definition for ‘par’
-drawGraph: no visible global function definition for ‘plot’
-drawGraph: no visible global function definition for ‘segments’
-drawGraph: no visible global function definition for ‘lines’
-drawGraph: no visible global function definition for ‘text’
-drawGraph: no visible global function definition for ‘dev.off’
-drugRank: no visible global function definition for ‘aggregate’
-floating2: no visible global function definition for ‘cor’
-timma: no visible global function definition for ‘median’
-timma: no visible global function definition for ‘write.table’
-Undefined global functions or variables:
-  aggregate cor dev.off lines median par pdf plot segments text
-  write.table
-Consider adding
-  importFrom("grDevices", "dev.off", "pdf")
-  importFrom("graphics", "lines", "par", "plot", "segments", "text")
-  importFrom("stats", "aggregate", "cor", "median")
-  importFrom("utils", "write.table")
-to your NAMESPACE file.
-```
-
-## tsdisagg2 (0.1.0)
-Maintainer: Jorge Vieira <jorgealexandrevieira@gmail.com>
-
-0 errors | 0 warnings | 0 notes
-
-## WACS (1.0)
-Maintainer: Denis Allard <allard@avignon.inra.fr>
-
-0 errors | 0 warnings | 0 notes
-
-## WCE (1.0)
-Maintainer: Marie-Pierre Sylvestre <marie-pierre.sylvestre@umontreal.ca>
-
-0 errors | 0 warnings | 2 notes
-
-```
-checking S3 generic/method consistency ... NOTE
-Found the following apparent S3 methods exported but not registered:
-  knots.WCE
-See section ‘Registering S3 methods’ in the ‘Writing R Extensions’
-manual.
-
-checking R code for possible problems ... NOTE
-.EstimateSplineConstrainedC: no visible global function definition for
-  ‘as.formula’
-.EstimateSplineConstrainedC: no visible global function definition for
-  ‘vcov’
-.EstimateSplineConstrainedCC: no visible global function definition for
-  ‘as.formula’
-.EstimateSplineConstrainedCC: no visible global function definition for
-  ‘glm’
-.EstimateSplineConstrainedCC: no visible binding for global variable
-... 36 lines ...
-plot.WCE: no visible global function definition for ‘plot’
-plot.WCE: no visible global function definition for ‘lines’
-Undefined global functions or variables:
-  as.formula binomial glm legend lines logLik matplot na.omit plot
-  pnorm points quantile title vcov
-Consider adding
-  importFrom("graphics", "legend", "lines", "matplot", "plot", "points",
-             "title")
-  importFrom("stats", "as.formula", "binomial", "glm", "logLik",
-             "na.omit", "pnorm", "quantile", "vcov")
-to your NAMESPACE file.
-```
+|tz       |America/Los_Angeles          |
+|date     |2018-01-05                   |
+
+# Dependencies
+
+|package     |old    |new         |Δ  |
+|:-----------|:------|:-----------|:--|
+|R.rsp       |0.41.0 |0.41.0-9000 |*  |
+|digest      |0.6.13 |0.6.13      |   |
+|R.cache     |0.13.0 |0.13.0      |   |
+|R.methodsS3 |1.7.1  |1.7.1       |   |
+|R.oo        |1.21.0 |1.21.0      |   |
+|R.utils     |2.6.0  |2.6.0       |   |
+
+# Revdeps
+
+## Couldn't check (3)
+
+|package                                                  |version |error |warning |note |
+|:--------------------------------------------------------|:-------|:-----|:-------|:----|
+|[crisprseekplus](problems.md#crisprseekplus)             |1.4.1   |1     |        |1    |
+|[MultiAssayExperiment](problems.md#multiassayexperiment) |1.4.4   |1     |        |1    |
+|[SemiCompRisks](problems.md#semicomprisks)               |2.8     |1     |        |     |
+
+## Broken (1)
+
+|package                          |version |error  |warning |note |
+|:--------------------------------|:-------|:------|:-------|:----|
+|[doFuture](problems.md#dofuture) |0.6.0   |__+1__ |        |1    |
+
+## All (139)
+
+|package                                                  |version       |error  |warning |note |
+|:--------------------------------------------------------|:-------------|:------|:-------|:----|
+|[acebayes](problems.md#acebayes)                         |1.4.1         |       |        |1    |
+|[AEDForecasting](problems.md#aedforecasting)             |0.20.0        |       |        |1    |
+|[AFLPsim](problems.md#aflpsim)                           |0.4-2         |1      |1       |1    |
+|[ALEPlot](problems.md#aleplot)                           |1.0           |       |1       |1    |
+|[aroma.core](problems.md#aromacore)                      |3.1.1         |       |        |2    |
+|[babar](problems.md#babar)                               |1.0           |       |        |2    |
+|[babel](problems.md#babel)                               |0.3-0         |       |        |1    |
+|[baitmet](problems.md#baitmet)                           |1.0.1         |       |        |2    |
+|[bayesGDS](problems.md#bayesgds)                         |0.6.2         |       |        |1    |
+|[bayesmeta](problems.md#bayesmeta)                       |2.0           |       |        |1    |
+|[BayesRS](problems.md#bayesrs)                           |0.1.2         |1      |        |1    |
+|[BayLum](problems.md#baylum)                             |0.1.1         |1      |        |1    |
+|[biglasso](problems.md#biglasso)                         |1.3-6         |       |        |2    |
+|[bridgesampling](problems.md#bridgesampling)             |0.4-0         |       |1       |2    |
+|[brms](problems.md#brms)                                 |2.0.1         |       |1       |1    |
+|[brotli](problems.md#brotli)                             |1.0           |       |1       |2    |
+|[brr](problems.md#brr)                                   |1.0.0         |1      |        |1    |
+|[bst](problems.md#bst)                                   |0.3-14        |       |        |1    |
+|[bujar](problems.md#bujar)                               |0.2-3         |       |        |1    |
+|[canceR](problems.md#cancer)                             |1.10.0        |1      |        |1    |
+|[causaleffect](problems.md#causaleffect)                 |1.3.5         |       |1       |1    |
+|[chngpt](problems.md#chngpt)                             |2018.1-3      |       |        |1    |
+|[comf](problems.md#comf)                                 |0.1.7         |       |1       |1    |
+|Compind                                                  |1.2.1         |       |        |     |
+|[CorporaCoCo](problems.md#corporacoco)                   |1.1-0         |       |        |1    |
+|[crisprseekplus](problems.md#crisprseekplus)             |1.4.1         |1      |        |1    |
+|[CryptRndTest](problems.md#cryptrndtest)                 |1.2.2         |1      |        |1    |
+|[ctmcd](problems.md#ctmcd)                               |1.2           |       |        |1    |
+|[deBInfer](problems.md#debinfer)                         |0.4.1         |       |2       |1    |
+|[debrowser](problems.md#debrowser)                       |1.6.8         |1      |        |1    |
+|[dggridR](problems.md#dggridr)                           |2.0.1         |1      |        |1    |
+|[DiffusionRgqd](problems.md#diffusionrgqd)               |0.1.3         |       |        |2    |
+|[DiffusionRimp](problems.md#diffusionrimp)               |0.1.2         |       |        |1    |
+|[DiffusionRjgqd](problems.md#diffusionrjgqd)             |0.1.1         |       |        |2    |
+|[doFuture](problems.md#dofuture)                         |0.6.0         |__+1__ |        |1    |
+|[dynamichazard](problems.md#dynamichazard)               |0.5.1         |       |1       |2    |
+|[easyVerification](problems.md#easyverification)         |0.4.4         |       |        |1    |
+|[ecp](problems.md#ecp)                                   |3.1.0         |       |        |1    |
+|[EdSurvey](problems.md#edsurvey)                         |1.0.6         |       |1       |1    |
+|[emdi](problems.md#emdi)                                 |1.1.1         |1      |        |1    |
+|[enaR](problems.md#enar)                                 |3.0.0         |       |        |1    |
+|[EnsemblePCReg](problems.md#ensemblepcreg)               |1.1.1         |1      |        |1    |
+|[erah](problems.md#erah)                                 |1.0.5         |       |        |2    |
+|[flacco](problems.md#flacco)                             |1.7           |       |        |1    |
+|[FLSSS](problems.md#flsss)                               |5.2           |       |        |1    |
+|[forestinventory](problems.md#forestinventory)           |0.3.1         |       |        |1    |
+|[future](problems.md#future)                             |1.6.2         |-1     |        |1    |
+|[future.BatchJobs](problems.md#futurebatchjobs)          |0.15.0        |       |        |1    |
+|[future.batchtools](problems.md#futurebatchtools)        |0.6.0         |       |        |1    |
+|[FuzzyLP](problems.md#fuzzylp)                           |0.1-5         |1      |        |1    |
+|[FuzzyStatProb](problems.md#fuzzystatprob)               |2.0.3         |       |        |1    |
+|[GameTheory](problems.md#gametheory)                     |2.7           |       |        |1    |
+|[gdm](problems.md#gdm)                                   |1.3.4         |       |        |2    |
+|generalCorr                                              |1.1.0         |       |        |     |
+|[GHap](problems.md#ghap)                                 |1.2.2         |       |        |1    |
+|[gitlabr](problems.md#gitlabr)                           |0.9           |       |1       |1    |
+|[graphite](problems.md#graphite)                         |1.24.1        |2      |        |4    |
+|[haplo.stats](problems.md#haplostats)                    |1.7.7         |       |        |1    |
+|[httk](problems.md#httk)                                 |1.7           |       |        |2    |
+|[hyperSpec](problems.md#hyperspec)                       |0.99-20171005 |       |1       |4    |
+|[iprior](problems.md#iprior)                             |0.7.1         |       |1       |2    |
+|[IsoriX](problems.md#isorix)                             |0.7           |       |        |2    |
+|[jsonlite](problems.md#jsonlite)                         |1.5           |1      |1       |2    |
+|[kdecopula](problems.md#kdecopula)                       |0.9.1         |1      |2       |2    |
+|[LAGOSNE](problems.md#lagosne)                           |1.1.0         |1      |        |     |
+|[ldhmm](problems.md#ldhmm)                               |0.4.2         |1      |        |1    |
+|[lexRankr](problems.md#lexrankr)                         |0.5.0         |       |1       |     |
+|[listenv](problems.md#listenv)                           |0.6.0         |       |1       |1    |
+|[lmvar](problems.md#lmvar)                               |1.4.0         |1      |        |     |
+|[lqmm](problems.md#lqmm)                                 |1.5.3         |       |        |1    |
+|[madness](problems.md#madness)                           |0.2.2         |       |1       |1    |
+|[manifestoR](problems.md#manifestor)                     |1.2.4         |       |        |1    |
+|[marmap](problems.md#marmap)                             |0.9.6         |       |1       |1    |
+|[MatchIt](problems.md#matchit)                           |3.0.1         |1      |1       |3    |
+|[matrixpls](problems.md#matrixpls)                       |1.0.5         |1      |1       |1    |
+|[matrixStats](problems.md#matrixstats)                   |0.52.2        |       |        |2    |
+|[MDplot](problems.md#mdplot)                             |1.0.1         |       |        |2    |
+|[MDSMap](problems.md#mdsmap)                             |1.0           |       |        |1    |
+|[metafor](problems.md#metafor)                           |2.0-0         |1      |1       |2    |
+|[metagear](problems.md#metagear)                         |0.4           |1      |        |1    |
+|[metaplus](problems.md#metaplus)                         |0.7-9         |       |        |1    |
+|[metaSEM](problems.md#metasem)                           |0.9.16        |       |1       |1    |
+|[mets](problems.md#mets)                                 |1.2.2         |       |1       |3    |
+|[MIAmaxent](problems.md#miamaxent)                       |0.4.0         |       |1       |1    |
+|[micromapST](problems.md#micromapst)                     |1.1.1         |       |        |1    |
+|[microPop](problems.md#micropop)                         |1.3           |       |        |1    |
+|[mpath](problems.md#mpath)                               |0.3-4         |       |        |1    |
+|[MRH](problems.md#mrh)                                   |2.2           |       |        |1    |
+|[MultiAssayExperiment](problems.md#multiassayexperiment) |1.4.4         |1      |        |1    |
+|[MVisAGe](problems.md#mvisage)                           |0.2.0         |       |        |1    |
+|[MXM](problems.md#mxm)                                   |1.3.1         |1      |        |1    |
+|[nCal](problems.md#ncal)                                 |2017.12-3     |1      |        |2    |
+|[NUCOMBog](problems.md#nucombog)                         |1.0.4.1       |       |1       |1    |
+|[opencpu](problems.md#opencpu)                           |2.0.5         |1      |        |1    |
+|[OpenML](problems.md#openml)                             |1.7           |       |        |2    |
+|[optimization](problems.md#optimization)                 |1.0-7         |       |        |1    |
+|[PAFit](problems.md#pafit)                               |1.0.0.1       |       |        |1    |
+|[PakPC2017](problems.md#pakpc2017)                       |0.4.0         |       |        |1    |
+|[pleio](problems.md#pleio)                               |1.5           |       |        |1    |
+|[plsRglm](problems.md#plsrglm)                           |1.1.1         |1      |        |3    |
+|[PrevMap](problems.md#prevmap)                           |1.4.1         |       |1       |2    |
+|[profmem](problems.md#profmem)                           |0.4.0         |       |        |1    |
+|[PSCBS](problems.md#pscbs)                               |0.63.0        |       |        |1    |
+|[Qtools](problems.md#qtools)                             |1.2           |       |        |1    |
+|[R.devices](problems.md#rdevices)                        |2.15.1        |       |        |1    |
+|[randomLCA](problems.md#randomlca)                       |1.0-13        |       |        |1    |
+|[randomUniformForest](problems.md#randomuniformforest)   |1.1.5         |       |        |2    |
+|[RAppArmor](problems.md#rapparmor)                       |2.0.2         |       |        |1    |
+|[rbi](problems.md#rbi)                                   |0.8.0         |       |2       |2    |
+|[rCAT](problems.md#rcat)                                 |0.1.5         |1      |        |1    |
+|[rccmisc](problems.md#rccmisc)                           |0.3.7         |       |1       |2    |
+|[rcss](problems.md#rcss)                                 |1.2           |       |        |2    |
+|[rEDM](problems.md#redm)                                 |0.6.9         |       |1       |2    |
+|[repfdr](problems.md#repfdr)                             |1.2.3         |       |1       |1    |
+|[revengc](problems.md#revengc)                           |1.0.0         |       |1       |1    |
+|[Rlda](problems.md#rlda)                                 |0.2.2         |       |1       |2    |
+|[rmcfs](problems.md#rmcfs)                               |1.2.8         |1      |        |     |
+|[robumeta](problems.md#robumeta)                         |2.0           |       |        |2    |
+|[rSARP](problems.md#rsarp)                               |1.0.0         |       |        |1    |
+|[SemiCompRisks](problems.md#semicomprisks)               |2.8           |1      |        |     |
+|[SetRank](problems.md#setrank)                           |1.1.0         |       |        |1    |
+|[sgd](problems.md#sgd)                                   |1.1           |       |        |1    |
+|[sourceR](problems.md#sourcer)                           |1.0.1         |       |        |2    |
+|[spam](problems.md#spam)                                 |2.1-2         |       |1       |     |
+|[SpatialEpiApp](problems.md#spatialepiapp)               |0.3           |1      |        |1    |
+|[spmoran](problems.md#spmoran)                           |0.1.2         |       |        |1    |
+|[SRCS](problems.md#srcs)                                 |1.1           |       |1       |1    |
+|[ssfa](problems.md#ssfa)                                 |1.1           |       |        |3    |
+|[stagePop](problems.md#stagepop)                         |1.1-1         |       |        |2    |
+|[STPGA](problems.md#stpga)                               |4.0           |       |1       |1    |
+|[surrosurv](problems.md#surrosurv)                       |1.1.24        |1      |        |1    |
+|[tailDepFun](problems.md#taildepfun)                     |1.0.0         |1      |        |1    |
+|[timma](problems.md#timma)                               |1.2.1         |       |        |2    |
+|[TSCS](problems.md#tscs)                                 |0.1.1         |       |        |1    |
+|[tsdisagg2](problems.md#tsdisagg2)                       |0.1.0         |       |1       |1    |
+|[WACS](problems.md#wacs)                                 |1.0           |       |        |1    |
+|[WCE](problems.md#wce)                                   |1.0           |       |        |2    |
+|[webglobe](problems.md#webglobe)                         |1.0.2         |1      |        |1    |
+|[Wrapped](problems.md#wrapped)                           |2.0           |       |1       |1    |
 
