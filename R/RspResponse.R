@@ -33,9 +33,10 @@ setConstructorS3("RspResponse", function(...) {
 
 
 #########################################################################/**
-# @RdocMethod write
-# @alias write.FileRspResponse
-# @alias write.HttpDaemonRspResponse
+# @RdocMethod writeResponse
+# @alias writeResponse.FileRspResponse
+# @alias writeResponse.HttpDaemonRspResponse
+# @aliasmethod write
 #
 # @title "Writes an RSP response to the predefined output"
 #
@@ -63,7 +64,13 @@ setConstructorS3("RspResponse", function(...) {
 #
 # @keyword IO
 #*/#########################################################################
-setMethodS3("write", "RspResponse", abstract=TRUE);
+setMethodS3("writeResponse", "RspResponse", abstract=TRUE);
+
+
+setMethodS3("write", "RspResponse", function(...) {
+  .Deprecated(msg = "write() for RspResponse is deprecated. Use writeResponse() instead.")
+  writeResponse(...)
+})
 
 
 

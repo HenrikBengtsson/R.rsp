@@ -35,7 +35,7 @@ extends \link[R.rsp]{FileRspResponse}\cr
 
  An instance of class HttpDaemonRspResponse, which extends the
  \code{\link{RspResponse}} class, is a buffer for output (response) sent to an
- \code{\link{HttpDaemon}}.  It provides a method \code{write()} for writing
+ \code{\link{HttpDaemon}}.  It provides a method \code{writeResponse()} for writing
  output and a method \code{flush()} for flush the written output to
  the HTTP daemon.
 }
@@ -53,15 +53,15 @@ HttpDaemonRspResponse(httpDaemon=NULL, ...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{flush} \tab  -\cr
- \tab \code{write} \tab  -\cr
+ \tab \code{writeResponse} \tab  -\cr
 }
 
 
  \bold{Methods inherited from FileRspResponse}:\cr
-flush, getAbsolutePath, getName, getOutput, getPath, write
+flush, getAbsolutePath, getName, getOutput, getPath, writeResponse
 
  \bold{Methods inherited from RspResponse}:\cr
-flush, write
+flush, write, writeResponse
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, names, objectSize, print, save

@@ -6,12 +6,16 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{write.RspResponse}
-\alias{write.RspResponse}
+\name{writeResponse.RspResponse}
+\alias{writeResponse.RspResponse}
+\alias{RspResponse.writeResponse}
+\alias{writeResponse,RspResponse-method}
+\alias{writeResponse.FileRspResponse}
+\alias{writeResponse.HttpDaemonRspResponse}
 \alias{RspResponse.write}
+\alias{write.RspResponse}
 \alias{write,RspResponse-method}
-\alias{write.FileRspResponse}
-\alias{write.HttpDaemonRspResponse}
+
 
 \title{Writes an RSP response to the predefined output}
 
@@ -20,7 +24,7 @@
 }
 
 \usage{
-\method{write}{RspResponse}(...)
+\method{writeResponse}{RspResponse}(...)
 }
 
 \arguments{

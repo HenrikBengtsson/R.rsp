@@ -307,7 +307,7 @@ export("splitUrl")
 export("startHelp")
 export("terminate")
 export("unescapeRspTags")
-export("write")
+export("write")   ## Deprecated
 export("writeResponse")
 
 
@@ -361,7 +361,7 @@ S3method("getAbsolutePath", "FileRspResponse")
 S3method("getName", "FileRspResponse")
 S3method("getOutput", "FileRspResponse")
 S3method("getPath", "FileRspResponse")
-S3method("write", "FileRspResponse")
+S3method("writeResponse", "FileRspResponse")
 
 # function
 S3method("rcat", "function")
@@ -399,7 +399,7 @@ S3method("writeResponse", "HttpDaemon")
 
 # HttpDaemonRspResponse
 S3method("flush", "HttpDaemonRspResponse")
-S3method("write", "HttpDaemonRspResponse")
+S3method("writeResponse", "HttpDaemonRspResponse")
 
 # HttpRequest
 S3method("as.character", "HttpRequest")
@@ -543,7 +543,8 @@ S3method("!", "RspProduct")
 
 # RspResponse
 S3method("flush", "RspResponse")
-S3method("write", "RspResponse")
+S3method("writeResponse", "RspResponse")
+S3method("write", "RspResponse")  ## Deprecated
 
 # RspRSourceCode
 S3method("evaluate", "RspRSourceCode")

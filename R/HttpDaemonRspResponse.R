@@ -8,7 +8,7 @@
 #
 #  An instance of class HttpDaemonRspResponse, which extends the
 #  @see "RspResponse" class, is a buffer for output (response) sent to an
-#  @see "HttpDaemon".  It provides a method \code{write()} for writing
+#  @see "HttpDaemon".  It provides a method \code{writeResponse()} for writing
 #  output and a method \code{flush()} for flush the written output to
 #  the HTTP daemon.
 # }
@@ -62,7 +62,7 @@ setConstructorS3("HttpDaemonRspResponse", function(httpDaemon=NULL, ...) {
 })
 
 
-setMethodS3("write", "HttpDaemonRspResponse", function(this, ..., collapse="", sep="") {
+setMethodS3("writeResponse", "HttpDaemonRspResponse", function(this, ..., collapse="", sep="") {
   version <- getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0");
   # Argment 'version':
   if (!is.element(version, c("0.1.0", "1.0.0"))) {

@@ -75,7 +75,7 @@ setMethodS3("getOutput", "FileRspResponse", function(this, ...) {
 })
 
 
-setMethodS3("write", "FileRspResponse", function(this, ..., collapse="", sep="") {
+setMethodS3("writeResponse", "FileRspResponse", function(this, ..., collapse="", sep="") {
   msg <- paste(..., collapse=collapse, sep=sep);
   msg <- as.character(GString(msg));
   out <- getOutput(this);
