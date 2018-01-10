@@ -31,11 +31,15 @@ matrix:
       latex: false
       r_build_args: --no-build-vignettes
       r_check_args: --as-cran --no-vignettes
+      r_github_packages:
+      - HenrikBengtsson/R.cache
     - os: osx
       r: release
       latex: false
       r_build_args: --no-build-vignettes
       r_check_args: --as-cran --ignore-vignettes
+      r_github_packages:
+      - HenrikBengtsson/R.cache
 
 r_packages:
     - R.rsp
