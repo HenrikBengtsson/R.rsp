@@ -76,16 +76,3 @@ setMethodS3("compileRsp", "default", function(filename, path=NULL, ..., outPath=
 
   res;
 }) # compileRsp()
-
-
-###########################################################################
-# HISTORY:
-# 2013-12-14
-# o BUG FIX: compileRsp() did not acknowledge argument 'postprocess'.
-# 2013-12-13
-# o BUG FIX: compileRsp(..., postprocess=TRUE) would throw 'Error in
-#   UseMethod("process"): no applicable method for 'process' applied to
-#   an object of class "character"'.
-# 2013-03-29
-# o Created.
-###########################################################################

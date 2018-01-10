@@ -130,11 +130,3 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
 
   throw(sprintf("Unknown class of RSP expression (#%d): %s", index, class(expr)[1L]));
 }, protected=TRUE) # exprToCode()
-
-
-
-##############################################################################
-# HISTORY:
-# 2013-03-14
-# o Created.
-##############################################################################

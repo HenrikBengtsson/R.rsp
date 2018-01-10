@@ -52,12 +52,12 @@ FileRspResponse(file=stdout(), path=NULL, overwrite=FALSE, ...)
  \tab \code{\link[R.rsp:getName.FileRspResponse]{getName}} \tab Gets the (base)name of the current RSP file.\cr
  \tab \code{\link[R.rsp:getOutput.FileRspResponse]{getOutput}} \tab Gets the output for an RSP response.\cr
  \tab \code{\link[R.rsp:getPath.FileRspResponse]{getPath}} \tab Gets the path of the directory of the current RSP file.\cr
- \tab \code{write} \tab  -\cr
+ \tab \code{writeResponse} \tab  -\cr
 }
 
 
  \bold{Methods inherited from RspResponse}:\cr
-flush, write
+flush, write, writeResponse
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, names, objectSize, print, save

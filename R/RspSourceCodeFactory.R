@@ -273,17 +273,3 @@ setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
 
   code;
 }) # toSourceCode()
-
-
-##############################################################################
-# HISTORY:
-# 2013-02-14
-# o Added a default getCompleteCode() for RspSourceCodeFactory.
-# 2013-02-13
-# o ROBUSTNESS: Now toSourceCode() for RspDocument asserts that the document
-#   has been flattened and preprocessed.
-# 2013-02-11
-# o Added Rdoc help.
-# 2013-02-10
-# o Created.
-##############################################################################

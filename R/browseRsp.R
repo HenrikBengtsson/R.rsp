@@ -104,29 +104,3 @@ setMethodS3("browseRsp", "default", function(url=paste(urlRoot, path, sep="/"), 
 setMethodS3("browseRsp", "Package", function(this, ..., path=sprintf("library/%s/rsp/", getName(this))) {
   browseRsp(..., path=path);
 })
-
-
-############################################################################
-# HISTORY:
-# 2013-05-22
-# o Now it is possible to call R.rsp::browseRsp() without loading R.rsp.
-# o Now browseRsp() automatically adds the current directory as well
-#   an rsp/ subdirectory of it to the list of known root paths.
-# o Now browseRsp("foo.html") is interpreted as browseRsp(path="foo.html")
-#   whenever then requested file is not in an URL format.
-# o Added argument 'urlRoot' to browseRsp().
-# 2011-04-18
-# o Now browseRsp() pass '...' arguments to browseURL().
-# 2011-03-12
-# o Replaced all references to static class HttpDaemon by a single one.
-#   This will make it easier to generalize the code in the future.
-# 2007-07-19
-# o Added Rdoc comments.
-# 2007-07-11
-# o Added browseRsp() for the Package too, e.g. browseRsp(aroma.light).
-# o Now (the parents of) all library paths are added to the root paths.
-# o Now the root paths are updated each time browseRsp(start=TRUE) is
-#   called, even if the HTTP daemon is already started.
-# 2005-10-18
-# o Created.
-############################################################################

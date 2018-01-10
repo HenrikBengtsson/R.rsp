@@ -70,11 +70,3 @@ setConstructorS3("RspPasteDirective", function(value="paste", ...) {
   }
   this;
 })
-
-##############################################################################
-# HISTORY:
-# 2014-07-02
-# o Added RspCopyDirective and RspEndcopyDirective.
-# 2014-07-01
-# o Created.
-##############################################################################

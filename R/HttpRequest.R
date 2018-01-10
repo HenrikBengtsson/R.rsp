@@ -614,22 +614,3 @@ setMethodS3("getRealPath", "HttpRequest", function(this, uri, ...) {
   realPath <- filePath(contextRoot, uri);
   realPath;
 })
-
-
-##############################################################################
-# HISTORY:
-# 2013-05-22
-# o Added argument 'trim=FALSE' to getParameter() and getParameters()
-#   for HttpRequest.
-# 2011-03-08
-# o Updated getParameter() of HttpRequest to returning the value of a
-#   query parameters with multiple entries.  Added argument 'drop'.
-# 2006-02-22
-# o Added getParameters() for completeness.
-# 2005-10-27
-# o Added missing Rdoc comments.
-# 2005-09-26
-# o Added several getNNN() methods.
-# 2005-09-24
-# o Created.
-#############################################################################

@@ -142,10 +142,3 @@ setMethodS3("compileAsciiDoc", "default", function(filename, path=NULL, ..., out
 
   res;
 }) # compileAsciiDoc()
-
-
-############################################################################
-# HISTORY:
-# 2013-03-29
-# o Created (from compileAsciiDocNoweb.R).
-############################################################################

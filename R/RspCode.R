@@ -164,14 +164,3 @@ setMethodS3("asRspString", "RspCodeChunk", function(code, ...) {
   s <- sprintf(fmtstr, body);
   RspString(s);
 })
-
-
-##############################################################################
-# HISTORY:
-# 2013-03-26
-# o HARMONIZE: Renamed getReturn() to getInclude().
-# 2013-02-11
-# o Added Rdoc help.
-# 2013-02-09
-# o Created.
-##############################################################################

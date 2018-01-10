@@ -103,10 +103,3 @@ setMethodS3("findPandoc", "default", function(mustExist=TRUE, ..., verbose=FALSE
 
   bin;
 }) # findPandoc()
-
-
-############################################################################
-# HISTORY:
-# 2013-04-01
-# o Created from findAsciiDoc.R.
-############################################################################

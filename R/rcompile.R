@@ -240,7 +240,7 @@ setMethodS3("rcompile", "RspString", function(object, envir=parent.frame(), outp
 
   # Class to parse to
   as <- if (inherits(output, "RspDocument")) "RspDocument" else "RspString";
-  res <- parse(object, envir=envir, ..., until=until, as=as, verbose=verbose);
+  res <- parseDocument(object, envir=envir, ..., until=until, as=as, verbose=verbose);
   verbose && print(verbose, res);
   verbose && exit(verbose);
 
@@ -287,33 +287,3 @@ setMethodS3("rcompile", "RspDocument", function(object, envir=parent.frame(), ..
 
   res;
 }) # rcompile()
-
-
-
-##############################################################################
-# HISTORY:
-# 2014-05-30
-# o Now rcompile() can write to file and if the input is a file, then
-#   it does so by default.
-# o Added arguments 'output' and 'workdir' to rcompile() and dropped
-#   argument 'as'.
-# 2014-01-26
-# o CLEANUP: Now R.oo::ll() is only called if 'verbose' is enabled, because
-#   calling ll() still triggers attachment of R.oo as of R.oo (>= 1.17.0).
-# 2013-03-10
-# o Added rcompile().
-# 2013-02-23
-# o Now rstring() captures standard output such that all user output to
-#   stdout will be part of the output document in the order they occur.
-# 2013-02-16
-# o Now rstring() only takes a character vector; it no longer c(...) the
-#   '...' arguments.
-# o Added argument 'args' to rstring() for RspString and RspRSourceCode.
-# o Added argument 'envir' to rstring() for RspString.
-# 2013-02-13
-# o Added argument 'file' to rstring().
-# 2013-02-11
-# o Added Rdoc help.
-# 2013-02-09
-# o Created.
-##############################################################################

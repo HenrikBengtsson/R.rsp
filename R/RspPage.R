@@ -129,14 +129,3 @@ setMethodS3("getName", "RspPage", function(this, ...) {
 setMethodS3("getAbsolutePath", "RspPage", function(this, ...) {
   getAbsolutePath(this$pathname);
 }, createGeneric=FALSE)
-
-
-
-##############################################################################
-# HISTORY:
-# 2005-08-01
-# o Added Rdoc comments.
-# o Added getName() and getAbsolutePath().
-# 2005-07-31
-# o Created.
-##############################################################################

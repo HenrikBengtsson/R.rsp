@@ -1,6 +1,25 @@
 Package: R.rsp
 ==============
 
+Version: 0.42.0 [2018-01-09]
+
+SIGNIFICANT CHANGES:
+
+ * Now importing 'digest' (used to be a suggested package).
+
+BUG FIXES:
+
+ * Package failed to install under _R_CHECK_DEPENDS_ONLY_=true and 'digest'
+   not being installed. Now importing 'digest'.
+
+DEPRECATED AND DEFUNCT:
+
+ * Deprecated write() for RspResponse - use writeResponse() instead.
+
+ * Replaced parse() with parseDocument(), parseCode(), parseDirectory(),
+   and parseExpression().
+
+
 Version: 0.41.0 [2017-04-15]
 
 BUG FIXES:

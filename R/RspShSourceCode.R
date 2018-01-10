@@ -116,13 +116,3 @@ setMethodS3("findProcessor", "RspShSourceCode", function(object, ...) {
     evaluate(...);
   }
 }) # findProcess()
-
-
-
-##############################################################################
-# HISTORY:
-# 2013-08-04
-# o Added argument 'output' to evaluate() for RspShSourceCode.
-# 2013-03-14
-# o Created from RspRSourceCode.
-##############################################################################

@@ -100,12 +100,3 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
 
   bin;
 }) # findAsciiDoc()
-
-
-############################################################################
-# HISTORY:
-# 2013-04-01
-# o Now findAsciiDoc() only sets 'version' attribute if executable exists.
-# 2013-03-29
-# o Created.
-############################################################################

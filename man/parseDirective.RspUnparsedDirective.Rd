@@ -6,10 +6,10 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{parse.RspUnparsedDirective}
-\alias{parse.RspUnparsedDirective}
-\alias{RspUnparsedDirective.parse}
-\alias{parse,RspUnparsedDirective-method}
+\name{parseDirective.RspUnparsedDirective}
+\alias{parseDirective.RspUnparsedDirective}
+\alias{RspUnparsedDirective.parseDirective}
+\alias{parseDirective,RspUnparsedDirective-method}
 
 \title{Parses the unknown RSP directive for its class}
 
@@ -18,7 +18,7 @@
 }
 
 \usage{
-\method{parse}{RspUnparsedDirective}(expr, ...)
+\method{parseDirective}{RspUnparsedDirective}(expr, ...)
 }
 
 \arguments{

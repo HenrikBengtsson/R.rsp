@@ -51,7 +51,7 @@ RspUnparsedExpression(...)
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{\link[R.rsp:parse.RspUnparsedExpression]{parse}} \tab Parses the unknown RSP expression for its class.\cr
+ \tab \code{\link[R.rsp:parseExpression.RspUnparsedExpression]{parseExpression}} \tab Parses the unknown RSP expression for its class.\cr
 }
 
 

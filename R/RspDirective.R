@@ -189,7 +189,7 @@ setConstructorS3("RspUnparsedDirective", function(value="unparsed", ...) {
 
 
 #########################################################################/**
-# @RdocMethod parse
+# @RdocMethod parseDirective
 #
 # @title "Parses the unknown RSP directive for its class"
 #
@@ -213,7 +213,7 @@ setConstructorS3("RspUnparsedDirective", function(value="unparsed", ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
+setMethodS3("parseDirective", "RspUnparsedDirective", function(expr, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -435,7 +435,7 @@ setMethodS3("parse", "RspUnparsedDirective", function(expr, ...) {
   attr(res, "suffixSpecs") <- attr(expr, "suffixSpecs");
 
   res;
-}, createGeneric=FALSE) # parse()
+})
 
 
 setMethodS3("asRspString", "RspUnparsedDirective", function(object, ...) {
@@ -851,47 +851,3 @@ setConstructorS3("RspUnknownDirective", function(value="unknown", ...) {
 setConstructorS3("RspErrorDirective", function(value="error", ...) {
   extend(RspDirective(value, ...), "RspErrorDirective");
 })
-
-
-
-##############################################################################
-# HISTORY:
-# 2014-06-28
-# o GENERALIZATION: Now it is possible to use any symbol for enclosing
-#   attribute values in RSP directives in addition to the current x='y'
-#   and x="y" ones, e.g. x=.y., x=|y|, and so on.  Furthermore, paired
-#   brackets may also be used, e.g. x={y}, x=[y], x=<y> and x=(y), and
-#   then also in matched replicated, e.g. x={{{y}}}.
-# 2014-06-02
-# o BUG FIX: getNameContentDefaultAttributes() for RspDirective would
-#   return value=NULL if 'content' was an empty string, which was why
-#   <%@string empty=''%> would not set 'empty' but instead look it up.
-# 2014-05-30
-# o Now getNameContentDefaultAttributes() only sets the variable value
-#   by the 'default' attribute, iff 'content' is specified.
-# 2013-03-26
-# o Added getNameContentDefaultAttributes() - used to be a local function
-#   of preprocess() for RspDocument.
-# 2013-03-25
-# o BUG FIX: Forgot to add 'suffixSpecs' to the asRspString() string.
-# 2013-03-24
-# o BUG FIX: RspEvalDirective() would add erroneous attributes.
-# 2013-03-15
-# o Added requireAttributes() to RspDirective.
-# o Added RSP meta directive.
-# 2013-02-23
-# o Added asRspString() for RspDirective and RspUnparsedDirective.
-# 2013-02-22
-# o Added RspUnparsedDirective.
-# 2013-02-19
-# o Added support for attribute 'text' of RspIncludeDirective:s.
-# 2013-02-18
-# o Added RspIfeqDirective, RspElseDirective, and RspEndifDirective.
-# 2013-02-13
-# o Added RspPageDirective.
-# o Added 'language' attribute to RspEvalDirective.
-# 2013-02-11
-# o Added Rdoc help.
-# 2013-02-09
-# o Created.
-##############################################################################

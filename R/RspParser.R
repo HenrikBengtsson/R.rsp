@@ -341,9 +341,9 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 
 
 #########################################################################/**
-# @RdocMethod parse
+# @RdocMethod parseDocument
 #
-# @title "Parses the RSP string"
+# @title "Parse an RSP string into and RSP document"
 #
 # \description{
 #  @get "title" with RSP comments dropped.
@@ -373,7 +373,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), as=c("RspDocument", "RspString"), verbose=FALSE) {
+setMethodS3("parseDocument", "RspParser", function(parser, object, envir=parent.frame(), ..., until=c("*", "end", "expressions", "directives", "comments"), as=c("RspDocument", "RspString"), verbose=FALSE) {
   ## WORKAROUND: For unknown reasons, the R.oo package needs to be
   ## attached in order for 'R CMD build' to build the R.rsp package.
   ## If not, the generated RSP-to-R script becomes corrupt and contains
@@ -557,7 +557,7 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
     # Parse each of them
     for (idx in idxs) {
-      doc[[idx]] <- parse(doc[[idx]]);
+      doc[[idx]] <- parseDirective(doc[[idx]]);
     }
 
     # Trim non-text RSP constructs
@@ -602,7 +602,7 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
 
     # Parse them
     for (idx in idxs) {
-      doc[[idx]] <- parse(doc[[idx]]);
+      doc[[idx]] <- parseExpression(doc[[idx]]);
     }
 
     # Trim non-text RSP constructs
@@ -629,57 +629,4 @@ setMethodS3("parse", "RspParser", function(parser, object, envir=parent.frame(),
   verbose && exit(verbose);
 
   returnAs(doc, as=as);
-}, createGeneric=FALSE, protected=TRUE) # parse()
-
-
-
-##############################################################################
-# HISTORY:
-# 2014-05-30
-# o Now parse() for RspParser preserves any metadata, iff already set.
-# 2014-01-11
-# o BUG FIX: RSP comments with only a single character commented out would
-#   generate an RSP parsing error, e.g. '<%-- --%>' and '<%--\n--%>'.
-# 2013-09-17
-# o BUG FIX/WORKAROUND: parse() attaches 'R.oo' due to what appears to be
-#   a bug in how Object:s are finalize():ed when 'R.oo' is not attached.
-# 2013-03-10
-# o FIX: Now parse() trims non-text RSP constructs both before and after
-#   parsing each of them.  This fixed the problem of extraneous line breaks
-#   when consecutive RSP constructs exists.
-# 2013-03-09
-# o Created by extracting the code of RspString that does parsing.
-#   Comments below reflect such code.
-# 2013-03-08
-# o Now parseRaw() handles RSP tags '<%%' and '%%>'.
-# 2013-02-23
-# o Now parseRaw() always ignores empty text, i.e. it never adds an
-#   empty RspText object.
-# o Readded trim() at the end of parse().
-# o Added verbose output to parse().
-# o Replaced argument 'preprocess' with 'until' for parse().
-# 2013-02-22
-# o Major update of parse() for RspString to the state where RSP comments
-#   can contain anything, RSP preprocessing directives can be located
-#   anywhere including inside RSP expressions (but not inside RSP comments).
-#   This means that it is possible to for instance dynamically include code
-#   into an RSP code expression using and <%@include ...%> directive.
-# 2013-02-19
-# o RSP comments must be dropped by the RSP parser at the very beginning,
-#   otherwise they cannot be nested.  All other RSP constructs must not
-#   be nested.
-# o Added support for RSP comments of format <%-+[{count}]%>', where {count}
-#   specifies the maximum number of empty lines to drop after the comment,
-#   including the trailing whitespace and newline of the current line.
-#   If {count} is negative, it drops all but the last {count} empty rows.
-#   If {count} is zero, nothing is dropped.
-# 2013-02-18
-# o BUG FIX: Preprocessing directives without attributes where not recognized.
-# 2013-02-12
-# o Added support for nested RSP comments, by introducing "different" RSP
-#   comment styles: <%-- --%>, <%--- ---%>, <%---- ----%>, and so on.
-# 2013-02-11
-# o Added Rdoc help.
-# 2013-02-09
-# o Created.
-##############################################################################
+}, protected=TRUE)

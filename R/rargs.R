@@ -44,7 +44,7 @@ setMethodS3("rargs", "default", function(...) {
 
   # Parse RSP directives
   for (idx in seq_along(doc)) {
-    doc[[idx]] <- parse(doc[[idx]]);
+    doc[[idx]] <- parseDirective(doc[[idx]]);
   }
 
   # Extract RSP preprocessing variables
@@ -133,10 +133,3 @@ setMethodS3("print", "RspArguments", function(x, ...) {
   s <- paste(s, collapse="\n");
   cat(s, "\n", sep="");
 })
-
-
-############################################################################
-# HISTORY:
-# 2013-04-02
-# o Created.
-############################################################################

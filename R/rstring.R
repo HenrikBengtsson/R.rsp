@@ -134,11 +134,11 @@ setMethodS3("rstring", "RspString", function(object, envir=parent.frame(), args=
       print(verbose, ll);
     }
   }
-  expr <- parse(object, envir=envir, ..., verbose=verbose);
-  verbose && print(verbose, expr);
+  doc <- parseDocument(object, envir=envir, ..., verbose=verbose);
+  verbose && print(verbose, doc);
   verbose && exit(verbose);
 
-  res <- rstring(expr, envir=envir, args=NULL, ..., verbose=verbose);
+  res <- rstring(doc, envir=envir, args=NULL, ..., verbose=verbose);
 
   verbose && exit(verbose);
 
@@ -265,33 +265,3 @@ setMethodS3("rstring", "expression", function(object, envir=parent.frame(), ...,
 
   res;
 }) # rstring()
-
-
-
-##############################################################################
-# HISTORY:
-# 2014-01-26
-# o CLEANUP: Now R.oo::ll() is only called if 'verbose' is enabled, because
-#   calling ll() still triggers attachment of R.oo as of R.oo (>= 1.17.0).
-# 2014-01-02
-# o Added rstring(), rcat() and rfile() for expression:s too.
-# 2013-07-18
-# o BUG FIX: rstring(), rcat(), and rfile() for function:s would only work
-#   if the evaluation was done in the default environment.
-# 2013-07-16
-# o Added rstring(), rcat() and rfile() for function:s.
-# 2013-02-23
-# o Now rstring() captures standard output such that all user output to
-#   stdout will be part of the output document in the order they occur.
-# 2013-02-16
-# o Now rstring() only takes a character vector; it no longer c(...) the
-#   '...' arguments.
-# o Added argument 'args' to rstring() for RspString and RspRSourceCode.
-# o Added argument 'envir' to rstring() for RspString.
-# 2013-02-13
-# o Added argument 'file' to rstring().
-# 2013-02-11
-# o Added Rdoc help.
-# 2013-02-09
-# o Created.
-##############################################################################

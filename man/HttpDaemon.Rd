@@ -62,7 +62,7 @@ HttpDaemon(...)
  \tab \code{\link[R.rsp:sourceTcl.HttpDaemon]{sourceTcl}} \tab Loads the Tcl source for the HTTP daemon into R.\cr
  \tab \code{\link[R.rsp:start.HttpDaemon]{start}} \tab Starts the HTTP daemon.\cr
  \tab \code{\link[R.rsp:startHelp.HttpDaemon]{startHelp}} \tab Starts the HTTP daemon and launches the help page.\cr
- \tab \code{\link[R.rsp:stop.HttpDaemon]{stop}} \tab Stops the HTTP daemon.\cr
+ \tab \code{\link[R.rsp:terminate.HttpDaemon]{terminate}} \tab Terminates the HTTP daemon.\cr
  \tab \code{\link[R.rsp:writeResponse.HttpDaemon]{writeResponse}} \tab Writes a string to the HTTP output connection.\cr
 }
 

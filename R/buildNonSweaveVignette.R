@@ -423,34 +423,3 @@ buildPkgIndexHtml <- function(...) {
   # Build index.html
   rfile(filename);
 } # buildPkgIndexHtml()
-
-
-############################################################################
-# HISTORY:
-# 2014-04-30
-# o ROBUSTNESS: Now parseVignette() drops duplicated %\VignetteNnn{}
-#   entries, extra entries that may appear because the vignette actually
-#   talks about such markup, like some of the vignette in this package.
-# 2013-10-13
-# o BUG FIX: parseVignette() ignores files that do not contain a
-#   '%\VignetteIndexEntry{}'.
-# o Added argument 'dropDummy' to parseVignettes().
-# 2013-03-28
-# o Now buildNonSweaveTexToPdf() ignores 'dummy.tex'.
-# 2013-03-07
-# o Deprecated use of \VignetteBuild{} in favor of \VignetteEngine{}
-#   together with an 'enginesMap.R' file.
-# o Dropped use of \VignetteSource{}.
-# o Added parseVignettes().
-# o Now parseVignette() only scans the first 50 lines.
-# 2013-02-14
-# o Added Rdoc help for all functions.
-# o Now buildNonSweaveVignette() also handles \VignetteBuild{R.rsp::rfile}
-#   given that \VignetteSource{} is specified.
-# 2011-11-23
-# o Added buildPkgIndexHtml().
-# o Added parseVignette().
-# o Added buildNonSweaveVignettes().
-# o Added buildNonSweaveVignette().
-# o Created.
-############################################################################

@@ -264,7 +264,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
     verbose && enter(verbose, "Parsing RSP document");
     rstr <- RspString(str, type=type, source=file);
     rstr <- setMetadata(rstr, name="source", value=file);
-    doc <- parse(rstr, envir=envir, ...);
+    doc <- parseDocument(rstr, envir=envir, ...);
     verbose && print(verbose, doc);
     rstr <- str <- NULL; # Not needed anymore
     verbose && exit(verbose);
@@ -297,7 +297,7 @@ setMethodS3("rfile", "RspString", function(rstr, ..., verbose=FALSE) {
   verbose && enter(verbose, "Processing RSP string");
 
   verbose && enter(verbose, "Parsing RSP document");
-  doc <- parse(rstr, ...);
+  doc <- parseDocument(rstr, ...);
   verbose && print(verbose, doc);
   rstr <- str <- NULL; # Not needed anymore
   verbose && exit(verbose);
@@ -535,49 +535,3 @@ setMethodS3("rfile", "expression", function(object, ..., envir=parent.frame(), v
 
   res;
 }, protected=TRUE) # rfile()
-
-
-############################################################################
-# HISTORY:
-# 2015-02-14
-# o CRAN: Used to have \donttest{} in example(rfile), which was there to
-#   avoid the test running longer than 5 seconds.  This was disapproved
-#   in resubmission.  Now using \dontrun{} instead.
-# 2014-05-30
-# o Now metadata 'source' is set by rfile(), iff possible.  It gives the
-#   absolute path to the input file, or the URL, of the source RSP file.
-#   It can be accessed via <%@meta name="source"%>.
-# 2014-01-02
-# o Added rstring(), rcat() and rfile() for expression:s too.
-# 2013-12-14
-# o Now rfile() accepts also non-RSP documents, e.g. rfile("report.md"),
-#   rfile("report.Rnw"), and rfile("report.tex").
-# 2013-12-13
-# o Now rfile() does string variable substitution of the output pathname,
-#   if possible.
-# o Now rfile() no longer interprets input pathnames as GString:s.
-# 2013-07-16
-# o Added rstring(), rcat() and rfile() for function:s.
-# 2013-07-14
-# o Added rfile() for RspSourceCode, which now is utilized by the default
-#   rfile().
-# 2013-05-22
-# o ROBUSTNESS: Now rfile() handles files with only one filename extension.
-# 2013-02-23
-# o Now rfile() can also infer default filenames from URLs with parameters.
-# 2013-02-18
-# o Added argument 'fake' to rfile().
-# 2013-02-13
-# o Added argument 'postprocess' to rfile().
-# o Now rfile() sets the default content type based on the filename
-#   extension, iff possible.
-# o Added argument 'workdir' to rfile().
-# o Added support for 'pathname' also being a connection or a URL.
-# o Added some protection against overwriting the input file.
-# o Renamed rspPlain() to rfile(), cf. rstring() and rcat().
-# o rspPlain() is now utilizing the new RSP engine, e.g. rcat().
-# o CLEANUP: Removed all dependencies on RspResponse, FileRspResponse etc.
-# 2013-02-08
-# o Extracted rspPlain() from rsp().
-# o Created.
-############################################################################

@@ -28,7 +28,7 @@ importFrom("R.oo", "getSource")
 importFrom("R.oo", "trim")
 importFrom("R.utils", "evaluate")
 importFrom("R.utils", "getAbsolutePath")
-importFrom("R.utils", "parse")
+##importFrom("R.utils", "parse")
 importFrom("stats", "start")
 importFrom("utils", "toLatex")
 
@@ -93,6 +93,7 @@ importFrom("tools", "file_path_sans_ext")
 importFrom("tools", "file_path_as_absolute")
 importFrom("tools", "texi2dvi")
 importFrom("tools", "texi2pdf")
+if (getRversion() >= "3.0.0") importFrom("tools", "vignetteEngine")
 
 importFrom("utils", "browseURL")
 importFrom("utils", "capture.output")
@@ -106,6 +107,7 @@ importFrom("utils", "URLdecode")
 
 ## Manually added
 importFrom("R.oo", "ll")
+importFrom("digest", "digest")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -290,6 +292,10 @@ export("insertRootPaths")
 export("isStarted")
 export("nbrOfParameters")
 export("openUrl")
+export("parseCode")
+export("parseDocument")
+export("parseDirective")
+export("parseExpression")
 export("processRsp")
 export("ps2pdf")
 export("restart")
@@ -303,14 +309,10 @@ export("sourceTcl")
 export("sourceWithTrim")
 export("splitUrl")
 export("startHelp")
-## export("stop")
+export("terminate")
 export("unescapeRspTags")
-export("write")
+export("write")   ## Deprecated
 export("writeResponse")
-
-
-# TO DO: Find alternative name
-export("parse")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -350,7 +352,6 @@ S3method("rsource", "default")
 S3method("rstring", "default")
 S3method("sourceWithTrim", "default")
 S3method("splitUrl", "default")
-S3method("stop", "default")
 S3method("toLatex", "default")
 S3method("typeOfRnw", "default")
 
@@ -360,7 +361,7 @@ S3method("getAbsolutePath", "FileRspResponse")
 S3method("getName", "FileRspResponse")
 S3method("getOutput", "FileRspResponse")
 S3method("getPath", "FileRspResponse")
-S3method("write", "FileRspResponse")
+S3method("writeResponse", "FileRspResponse")
 
 # function
 S3method("rcat", "function")
@@ -393,12 +394,12 @@ S3method("setRootPaths", "HttpDaemon")
 S3method("sourceTcl", "HttpDaemon")
 S3method("start", "HttpDaemon")
 S3method("startHelp", "HttpDaemon")
-S3method("stop", "HttpDaemon")
+S3method("terminate", "HttpDaemon")
 S3method("writeResponse", "HttpDaemon")
 
 # HttpDaemonRspResponse
 S3method("flush", "HttpDaemonRspResponse")
-S3method("write", "HttpDaemonRspResponse")
+S3method("writeResponse", "HttpDaemonRspResponse")
 
 # HttpRequest
 S3method("as.character", "HttpRequest")
@@ -524,7 +525,7 @@ S3method("getPath", "RspPage")
 S3method("getType", "RspPageDirective")
 
 # RspParser
-S3method("parse", "RspParser")
+S3method("parseDocument", "RspParser")
 S3method("parseRaw", "RspParser")
 
 # RspPreprocessingException
@@ -542,7 +543,8 @@ S3method("!", "RspProduct")
 
 # RspResponse
 S3method("flush", "RspResponse")
-S3method("write", "RspResponse")
+S3method("writeResponse", "RspResponse")
+S3method("write", "RspResponse")  ## Deprecated
 
 # RspRSourceCode
 S3method("evaluate", "RspRSourceCode")
@@ -566,7 +568,7 @@ S3method("exprToCode", "RspShSourceCodeFactory")
 
 # RspSourceCode
 S3method("evaluate", "RspSourceCode")
-S3method("parse", "RspRSourceCode")
+S3method("parseCode", "RspRSourceCode")
 S3method("print", "RspSourceCode")
 S3method("rstring", "RspSourceCode")
 S3method("tangle", "RspSourceCode")
@@ -584,7 +586,7 @@ S3method("evaluate", "RspString")
 S3method("getSource", "RspString")
 S3method("getType", "RspString")
 S3method("nbrOfLines", "RspString")
-S3method("parse", "RspString")
+S3method("parseDocument", "RspString")
 S3method("print", "RspString")
 S3method("rcat", "RspString")
 S3method("rclean", "RspString")
@@ -605,10 +607,10 @@ S3method("getInclude", "RspText")
 
 # RspUnparsedDirective
 S3method("asRspString", "RspUnparsedDirective")
-S3method("parse", "RspUnparsedDirective")
+S3method("parseDirective", "RspUnparsedDirective")
 
 # RspUnparsedExpression
-S3method("parse", "RspUnparsedExpression")
+S3method("parseExpression", "RspUnparsedExpression")
 
 # RspVariableDirective
 S3method("getInclude", "RspVariableDirective")

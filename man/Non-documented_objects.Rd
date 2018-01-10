@@ -33,7 +33,7 @@
 \alias{setRootPaths}
 \alias{sourceTcl}
 \alias{startHelp}
-\alias{stop}
+\alias{terminate}
 \alias{writeResponse}
 
 % The HttpDaemonResponse class
@@ -118,6 +118,10 @@
 \alias{getReturn}
 \alias{getContent}
 \alias{makeSourceCode}
+\alias{parseCode}
+\alias{parseDirective}
+\alias{parseDocument}
+\alias{parseExpression}
 \alias{parseRaw}
 \alias{toR}
 \alias{toSourceCode}
@@ -152,9 +156,6 @@
 \alias{getInclude}
 \alias{tidy}
 \alias{view}
-
-\alias{parse}
-\alias{parse.default}
 
 \alias{withoutGString}
 \alias{wstring}

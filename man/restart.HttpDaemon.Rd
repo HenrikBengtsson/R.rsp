@@ -39,7 +39,7 @@
 \seealso{
   \code{\link[R.rsp:isStarted.HttpDaemon]{*isStarted}()}.
   \code{\link[R.rsp:start.HttpDaemon]{*start}()}.
-  \code{\link[R.rsp:stop.HttpDaemon]{*stop}()}.
+  \code{\link[R.rsp:terminate.HttpDaemon]{*terminate}()}.
   For more information see \code{\link{HttpDaemon}}.
 }
 

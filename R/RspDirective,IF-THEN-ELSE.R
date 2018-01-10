@@ -93,15 +93,3 @@ setConstructorS3("RspIfndefDirective", function(value="if", ...) {
   this <- setAttribute(this, "negate", negate);
   this;
 })
-
-
-##############################################################################
-# HISTORY:
-# 2013-10-18
-# o Added aliases <%@ifdef ...%>/<%@ifndef ...%> for <@if test="exists" ...%>.
-# 2013-03-17
-# o Now <%@ifeq ...%>/<%@ifneq ...%> is an alias for <@if test="equals" ...%>.
-# o Moved all RSP if-then-else directives to one file.
-# 2013-02-18
-# o Added RspIfeqDirective, RspElseDirective, and RspEndifDirective.
-##############################################################################

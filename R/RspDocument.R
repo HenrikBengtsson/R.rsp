@@ -1738,11 +1738,8 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       contentType <- getAttribute(item, "type");
 
       # Backward compatibility
-      if (is.null(contentType)) {
-        verbatim <- getAttribute(item, "verbatim");
-        if (!is.null(verbatim)) {
-          .Defunct(msg = "Attribute 'verbatim' for RSP 'include' preprocessing directives is deprecated. Use attribute 'type' instead.")
-        }
+      if (is.null(contentType) && hasAttribute(item, "verbatim")) {
+        .Defunct(msg = "Attribute 'verbatim' for RSP 'include' preprocessing directives is defunct. Use attribute 'type' instead.")
       }
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1839,7 +1836,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         verbose && printf(verbose, "Parsing RSP document until '%s'\n", until);
 
         # Parse RSP string to RSP document
-        doc <- parse(rstr, envir=envir, until=until, verbose=verbose);
+        doc <- parseDocument(rstr, envir=envir, until=until, verbose=verbose);
         verbose && cat(verbose, "Included RSP document:");
         verbose && print(verbose, doc);
 
@@ -2080,73 +2077,3 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
   object;
 }, protected=TRUE) # preprocess()
-
-
-##############################################################################
-# HISTORY:
-# 2014-09-03
-# o ROBUSTNESS: Now RspIfDirective is more conservative in how it
-#   locates RSP variables, i.e. it will only search for RSP variables
-#   of certain modes.
-# 2014-09-02
-# o Clarified some verbose output; useful for troubleshooting.
-# 2014-07-02
-# o Added support for copy directives.
-# o Now the cut'n'paste clipboard is available across files.
-# 2014-07-01
-# o Added support for cut'n'paste preprocessing directives.
-# 2014-05-30
-# o RSP directives <%@meta ...%>, <%@string ...%>, ... <%@integer ...%> for
-#   getting values gained attribute 'default'.
-# 2013-11-03
-# o Now "child" RSP documents imported into a "parent" RSP document,
-#   sees all meta data of the parent, and any meta data set by the
-#   child document are also set in the parent one.  Added a system
-#   test for this.
-# 2013-10-14
-# o BUG FIX: If an RspEvalDirective for language="R" had a parse or an
-#   evaluation error, the intended error message was not generated because
-#   it in turn would give another error.
-# o Grammar correction of a few error messages.
-# 2013-06-30
-# o Harmonized get- and setMetadata().
-# 2013-03-26
-# o Now trimNonText() for RspDocument only drops following "empty" text
-#   of an RSP construct iff it does not include content itself.
-# 2013-03-25
-# o BUG FIX: trimNonText() for RspDocument would cause constructs to also
-#   drop newlines in text that is following the next construct.
-# 2013-03-24
-# o Added support for <%@include file="foo.rsp"
-#   type="application/x-rsp; until=expressions"%>.
-# 2013-03-15
-# o Now fully supporting the RSP eval directive.
-# 2013-03-13
-# o Now preprocess() handles nested if-then-else preprocessing directives.
-# o Added protected parseIfElseStatements().
-# 2013-03-12
-# o Renamed annotations to metadata.
-# 2013-03-08
-# o Added 'language' attribute to RspIncludeDirective.
-# 2013-03-07
-# o Added annotation attributes to RspString and RspDocument.
-# o Added support for language = "R-vignette" to the RSP 'eval' directive.
-#   It parses \Vignette*{} entries to infer RSP title and keywords.
-#   The can also be set by the RSP 'page' directive.
-# 2013-02-23
-# o Added dropEmptyText() and trimNonText() for RspDocument.
-# 2013-02-22
-# o Added subset() and asRspString() for RspDocument.
-# 2013-02-19
-# o Now support suffix comment specifications for all RSP expressions.
-# o Added mergeTexts() for RspDocument.
-# o Added support for <%@ifeq ...%> ... <%@else%> ... <%@endif%> directives.
-# 2013-02-14
-# o Now RspDocument can include URLs as well.
-# 2013-02-13
-# o Added getType() for RspDocument.
-# o Added support for language:s 'system' and 'shell' for RspEvalDirective.
-# o Added print(), preprocess() and flatten() for RspDocument.
-# 2013-02-09
-# o Created.
-##############################################################################

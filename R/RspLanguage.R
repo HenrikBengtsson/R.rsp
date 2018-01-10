@@ -202,16 +202,3 @@ setMethodS3("escape", "RspLanguage", function(this, ...) {
 setMethodS3("getVerbatim", "RspLanguage", function(this, ...) {
   escape(this, ...);
 })
-
-
-
-##############################################################################
-# HISTORY:
-# 2006-07-04
-# o Added more Rdoc help.
-# 2005-08-01
-# o Made into an Object class.
-# o Added Rdoc comments.
-# 2005-07-29
-# o Created.
-##############################################################################

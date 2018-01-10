@@ -117,37 +117,3 @@ setMethodS3("processRsp", "HttpDaemon", function(static=getStaticInstance(HttpDa
     }
   }) # tryCatch()
 }, static=TRUE, protected=TRUE)
-
-
-
-###############################################################################
-# HISTORY:
-# 2015-02-05
-# o CLEANUP: Now processRsp() for HttpDaemon uses RSP engine v1.0.0.
-# 2013-05-23
-# o Now processRsp() for HttpDaemon with version="1.0.0" also sets
-#   HttpDaemonRspResponse 'response' variable, which works just as
-#   cat(...) when calling write(response, ...).
-# 2013-05-22
-# o Now processRsp() for HttpDaemon with version="1.0.0" utilizes
-#   rfile() rather than rstring() so that postprocessors are also
-#   applied.
-# 2013-05-18
-# o Added Rd help on how to specify which RSP engine version to use.
-# 2013-02-18
-# o Added argument 'version' to processRsp() for HttpDaemon.
-# 2011-03-12
-# o CLEANUP: Replaced on HttpDaemon$<method>(...) with <method>(static, ...).
-# 2007-06-10
-# o Now all methods of 'tcltk' are called explicitly with prefix 'tcltk::'.
-# 2006-01-21
-# o Moved processRsp() to its own file.  The purpose is to one day get a
-#   HttpDaemon class which does not know of RSP pages.
-# 2005-11-30
-# o Now processRsp() uses new HttpDaemonResponse class which outputs written
-#   response directly to the Tcl HTTP Daemon output stream.  This is one step
-#   closer to a immediate output to the browser.
-# 2005-09-22
-# o Added RSP preprocessor. It really works! Sweet.
-# For more history, see HttpDaemon.R.
-###############################################################################

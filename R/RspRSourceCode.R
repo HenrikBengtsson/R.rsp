@@ -30,7 +30,7 @@ setConstructorS3("RspRSourceCode", function(...) {
 
 
 #########################################################################/**
-# @RdocMethod parse
+# @RdocMethod parseCode
 #
 # @title "Parses the R code"
 #
@@ -54,7 +54,7 @@ setConstructorS3("RspRSourceCode", function(...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("parse", "RspRSourceCode", function(object, ...) {
+setMethodS3("parseCode", "RspRSourceCode", function(object, ...) {
   # Get the source code
   code <- as.character(object);
 
@@ -62,9 +62,6 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
   pathname <- getOption("R.rsp/debug/writeCode", NULL);
   if (!is.null(pathname)) {
     if (regexpr("%s", pathname, fixed=TRUE) != -1) {
-      use("digest")
-      # To please R CMD check
-      digest <- NULL; rm(list="digest");
       pathname <- sprintf(pathname, digest(code));
     }
     pathname <- Arguments$getWritablePathname(pathname, mustNotExist=FALSE);
@@ -76,7 +73,7 @@ setMethodS3("parse", "RspRSourceCode", function(object, ...) {
   expr <- base::parse(text=code);
 
   expr;
-}, createGeneric=FALSE, protected=TRUE) # parse()
+}, protected=TRUE)
 
 
 
@@ -128,7 +125,7 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(),
 
 
   # Parse R RSP source code
-  expr <- parse(object);
+  expr <- parseCode(object);
 
   # Assign arguments to the parse/evaluation environment
   attachLocally(args, envir=envir);
@@ -253,50 +250,3 @@ setMethodS3("tangle", "RspRSourceCode", function(code, format=c("safetangle", "t
   format <- match.arg(format);
   tidy(code, format=format);
 })
-
-
-##############################################################################
-# HISTORY:
-# 2014-02-04
-# o SPEEDUP: Now evaluate() for RspRSourceCode captures output via a raw
-#   connection rather than a text connection, because the processing
-#   time for the latter is exponential in the number of captured lines
-#   whereas the former is linear.
-# 2013-09-18
-# o Now tidy() handles the new RSP R source code footer comments.
-# 2013-08-04
-# o Added argument 'output' to evaluate() for RspRSourceCode.
-# 2013-07-29
-# o BUG FIX: tidy() for RspRSourceCode would not drop the last line
-#   of the header leaving a long '## - - - - ...' comment line at top.
-# 2013-07-17
-# o Now evaluate() for RspRSourceCode no longer passes '...' to eval().
-#   This make it possible to pass argument 'clean' all the way down to
-#   compileLaTeX() as rfile("foo.tex.rsp", clean=TRUE).
-# 2013-07-14
-# o BUG FIX: evaluate() for RspRSourceCode failed to evaluate in to proper
-#   environment if the default (parent) environment was used.  By adding an
-#   explicit envir <- as.argument(envir) the 'envir' argument is forced to
-#   be evaluated there and not later inside a capture.output() call.
-# 2013-03-26
-# o Added tidy() with support for formats 'asis', 'demo' and 'tangle'.
-# o CLEANUP: tangle() is now a wrapper for tidy(..., format="tangle").
-# 2013-03-25
-# o Now tangle() drops the top of the code that sets up output functions etc.
-# 2013-03-14
-# o Moved getCompleteCode() from RspRSourceCode to RspRSourceCodeFactory.
-# 2013-02-23
-# o Added support for getCompleteCode(..., output="stdout")
-# o Added debug option() for have parse() write R code to file.
-# 2013-02-16
-# o Added findProcessor() for RspRSourceCode, which returns the evaluate()
-#   method.
-# o Added getCompleteCode() for RspRSourceCode.
-# o Renamed RSourceCode to RspRSourceCode.
-# 2013-02-14
-# o Added tangle() for RSourceCode.
-# 2013-02-11
-# o Added Rdoc help.
-# 2013-02-09
-# o Created.
-##############################################################################

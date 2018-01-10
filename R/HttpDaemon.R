@@ -66,7 +66,7 @@ setConstructorS3("HttpDaemon", function(...) {
 
 setMethodS3("finalize", "HttpDaemon", function(this, ...) {
   if (isStarted(this))
-    stop(this);
+    terminate(this);
   this$count <- this$count - 1L;
 }, protected=TRUE, createGeneric=FALSE)
 
@@ -584,7 +584,7 @@ setMethodS3("getDefaultFilenamePattern", "HttpDaemon", function(static, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "start" and @seemethod "stop".
+#   @seemethod "start" and @seemethod "terminate".
 #   @seeclass
 # }
 #
@@ -677,7 +677,7 @@ setMethodS3("sourceTcl", "HttpDaemon", function(static, ...) {
 # \seealso{
 #   @seemethod "setRootPaths".
 #   @seemethod "isStarted".
-#   @seemethod "stop".
+#   @seemethod "terminate".
 #   @seemethod "restart".
 #   @seeclass
 # }
@@ -732,9 +732,9 @@ setMethodS3("start", "HttpDaemon", function(x, rootPaths=NULL, port=8080, defaul
 
 
 #########################################################################/**
-# @RdocMethod stop
+# @RdocMethod terminate
 #
-# @title "Stops the HTTP daemon"
+# @title "Terminates the HTTP daemon"
 #
 # \description{
 #  @get "title".
@@ -761,7 +761,7 @@ setMethodS3("start", "HttpDaemon", function(x, rootPaths=NULL, port=8080, defaul
 #
 # @keyword IO
 #*/#########################################################################
-setMethodS3("stop", "HttpDaemon", function(static, ...) {
+setMethodS3("terminate", "HttpDaemon", function(static, ...) {
   # Is HTTP daemon already started?
   if (!isStarted(static))
     stop("HTTP daemon is not started.");
@@ -800,7 +800,7 @@ setMethodS3("stop", "HttpDaemon", function(static, ...) {
 # \seealso{
 #   @seemethod "isStarted".
 #   @seemethod "start".
-#   @seemethod "stop".
+#   @seemethod "terminate".
 #   @seeclass
 # }
 #
@@ -814,7 +814,7 @@ setMethodS3("restart", "HttpDaemon", function(static, ...) {
   port <- getPort(static);
   default <- getDefaultFilenamePattern(static);
 
-  stop(static, ...);
+  terminate(static, ...);
 
   start(static, rootPaths=rootPaths, port=port, default=default, ...);
 }, static=TRUE)
@@ -881,68 +881,3 @@ setMethodS3("writeResponse", "HttpDaemon", function(static, ...) {
 
   invisible(nchar(str));
 })
-
-
-###############################################################################
-# HISTORY:
-# 2013-09-18
-# o ROBUSTNESS: Now start() for HttpDaemon makes sure that the R.rsp package
-#   is attached so that the Tcl HTTP daemon have access to its methods.
-# 2013-03-31
-# o Now HttpDaemon$openUrl() passes '...' to start().
-# o Now HttpDaemon$start() uses default="^index[.](html|.*)$".
-# o Renamed getDefaultFilename() to getDefaultFilenamePattern().
-# 2013-02-23
-# o Now writeResponse() for HttpDaemon writes to standard output only,
-#   if HttpDaemon$.fake is TRUE.
-# 2011-09-21
-# o BUG FIX: HttpDaemon$getRootPaths() did not handle paths with
-#   spaces correctly.  Added a getRootPaths() Tcl function to
-#   instead handle this, which is called by the former.
-# 2011-03-12
-# o CLEANUP: Replaced on HttpDaemon$<method>(...) with <method>(static, ...).
-# 2011-03-08
-# o BUG FIX: getHttpRequest() for HttpDaemon would drop all but the last
-#   of replicated query parameters of the same name.  Thanks to Truc Trung
-#   at University of Bergen, Norway, for reporting on this.
-# 2011-01-06
-# o DOCUMENTATION: Clarified in the help of HttpDaemon that it is only
-#   connections from the local host (127.0.0.1) that are accepted.
-#   This lowers the risk for unauthorized access to the R session.
-# 2007-06-10
-# o Now all methods of 'tcltk' are called explicitly with prefix 'tcltk::'.
-# 2006-07-10
-# o Now append- and insertRootPaths() pass arguments '...' to setRootPaths().
-# 2006-07-04
-# o Added openUrl().
-# 2006-10-13
-# o BUG FIX: Used obsolete setClassS3() instead of setConstructorS3().
-# 2006-01-21
-# o Added writeResponse().
-# o Moved processRsp() to its own file.  The purpose is to one day get a
-#   HttpDaemon class which does not know of RSP pages.
-# 2006-01-12
-# o The example of HttpDaemon is now "runnable" in interactive mode.
-# 2005-11-30
-# o Added restart().
-# o Now processRsp() uses new HttpDaemonResponse class which outputs written
-#   response directly to the Tcl HTTP Daemon output stream.  This is one step
-#   closer to a immediate output to the browser.
-# 2005-10-20
-# o Now root paths can be set before the server has started.
-# 2005-10-19
-# o Added append- and insertRootPaths().  Modified the server so it supports
-#   multiple root directories.
-# o Now the search for an existing file is 100% done by the Tcl HTTP daemon.
-# 2005-09-26
-# o Added Rdoc comments to getHttpRequest().
-# o Removed getRequestContext() and getRequestParameters().
-# 2005-09-24
-# o Added getRequestContext(), getRequestParameters(), getRequest().
-# 2005-09-22
-# o Added Rdoc comments.
-# o Added RSP preprocessor. It really works! Sweet.
-# o Created static HttpDaemon class.
-# o Added rsp to list of known mimetypes. /HB
-# o Adopted from the minihttpd.tcl in the Rpad package. /HB
-###############################################################################

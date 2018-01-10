@@ -50,7 +50,7 @@ RspString(s=character(), ...)
  \tab \code{\link[R.rsp:getSource.RspString]{getSource}} \tab Gets the source reference of an RSP string.\cr
  \tab \code{\link[R.rsp:getType.RspString]{getType}} \tab Gets the type of an RSP string.\cr
  \tab \code{\link[R.rsp:nbrOfLines.RspString]{nbrOfLines}} \tab Gets the number of lines in an RSP string.\cr
- \tab \code{\link[R.rsp:parse.RspString]{parse}} \tab Parses the RSP string.\cr
+ \tab \code{\link[R.rsp:parseDocument.RspString]{parseDocument}} \tab Parses an RSP string into a RSP document.\cr
  \tab \code{print} \tab  -\cr
  \tab \code{rcat} \tab  -\cr
  \tab \code{rclean} \tab  -\cr

@@ -149,14 +149,3 @@ setMethodS3("isCapableOf", "RRspPackage", function(static, what, ...) {
 
   res;
 })
-
-
-############################################################################
-# HISTORY:
-# 2013-09-28
-# o No isCapableOf() also supports version specifications.
-#   Ideally capabilitiesOf() and isCapableOf() should be moved to
-#   the Package class of the 'R.oo' package.
-# 2013-07-19
-# o Created from AromaSeq.R in aroma.seq.
-############################################################################

@@ -81,16 +81,3 @@ setMethodS3("getContent", "RspText", function(text, unescape=FALSE, ...) {
 setMethodS3("asRspString", "RspText", function(text, ...) {
   RspString(getContent(text));
 })
-
-
-##############################################################################
-# HISTORY:
-# 2013-03-08
-# o Added argument 'escape' to RspText() and 'unescape' to getText()
-#   for RspText.
-# o Now asRspString() returns escaped RSP texts.
-# 2013-02-11
-# o Added Rdoc help.
-# 2013-02-09
-# o Created.
-##############################################################################

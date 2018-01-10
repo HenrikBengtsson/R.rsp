@@ -33,9 +33,10 @@ setConstructorS3("RspResponse", function(...) {
 
 
 #########################################################################/**
-# @RdocMethod write
-# @alias write.FileRspResponse
-# @alias write.HttpDaemonRspResponse
+# @RdocMethod writeResponse
+# @alias writeResponse.FileRspResponse
+# @alias writeResponse.HttpDaemonRspResponse
+# @aliasmethod write
 #
 # @title "Writes an RSP response to the predefined output"
 #
@@ -63,7 +64,13 @@ setConstructorS3("RspResponse", function(...) {
 #
 # @keyword IO
 #*/#########################################################################
-setMethodS3("write", "RspResponse", abstract=TRUE);
+setMethodS3("writeResponse", "RspResponse", abstract=TRUE);
+
+
+setMethodS3("write", "RspResponse", function(...) {
+  .Deprecated(msg = "write() for RspResponse is deprecated. Use writeResponse() instead.")
+  writeResponse(...)
+})
 
 
 
@@ -98,13 +105,3 @@ setMethodS3("write", "RspResponse", abstract=TRUE);
 # @keyword IO
 #*/#########################################################################
 setMethodS3("flush", "RspResponse", appendVarArgs=FALSE, abstract=TRUE)
-
-
-
-##############################################################################
-# HISTORY:
-# 2006-07-04
-# o Renamed from Response to RspResponse.
-# 2005-11-30
-# o Created from (File)RspResponse.  This is to be the new superclass.
-##############################################################################

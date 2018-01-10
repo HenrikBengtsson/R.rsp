@@ -92,19 +92,3 @@ setMethodS3("compileSweave", "default", function(filename, path=NULL, ..., outPa
 
   res;
 }) # compileSweave()
-
-
-############################################################################
-# HISTORY:
-# 2013-02-18
-# o Added argument 'fake' to compileSweave().
-# 2012-12-06
-# o Added argument 'outPath' to compileSweave(), which is also the
-#   working directory.
-# 2011-04-14
-# o Now compileSweave() only calls compileLaTeX() if Sweave outputs
-#   a file with filename extension *.tex (non-case sensitive).
-# 2011-04-12
-# o Added compileSweave().
-# o Created.
-############################################################################

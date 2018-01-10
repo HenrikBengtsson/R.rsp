@@ -47,7 +47,7 @@
 \seealso{
   \code{\link[R.rsp:setRootPaths.HttpDaemon]{*setRootPaths}()}.
   \code{\link[R.rsp:isStarted.HttpDaemon]{*isStarted}()}.
-  \code{\link[R.rsp:stop.HttpDaemon]{*stop}()}.
+  \code{\link[R.rsp:terminate.HttpDaemon]{*terminate}()}.
   \code{\link[R.rsp:restart.HttpDaemon]{*restart}()}.
   For more information see \code{\link{HttpDaemon}}.
 }
