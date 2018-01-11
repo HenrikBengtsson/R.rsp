@@ -1,5 +1,5 @@
 Package: R.rsp
-Version: 0.42.0
+Version: 0.42.0-9000
 Depends:
   R (>= 2.14.0)
 Imports:
@@ -22,7 +22,7 @@ Suggests:
 SuggestsNote:
   Recommended: R.devices, base64enc, markdown
 VignetteBuilder: R.rsp
-Date: 2018-01-09
+Date: 2018-01-10
 Title: Dynamic Generation of Scientific Reports
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
