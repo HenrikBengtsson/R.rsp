@@ -311,9 +311,7 @@ export("splitUrl")
 export("startHelp")
 export("terminate")
 export("unescapeRspTags")
-export("write")   ## Deprecated
 export("writeResponse")
-
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # S3 methods
@@ -354,6 +352,12 @@ S3method("sourceWithTrim", "default")
 S3method("splitUrl", "default")
 S3method("toLatex", "default")
 S3method("typeOfRnw", "default")
+
+# expression
+S3method("rcat", "expression")
+S3method("rfile", "expression")
+S3method("rsource", "expression")
+S3method("rstring", "expression")
 
 # FileRspResponse
 S3method("flush", "FileRspResponse")
@@ -470,6 +474,7 @@ S3method("getPath", "RspDocument")
 S3method("getSource", "RspDocument")
 S3method("getType", "RspDocument")
 S3method("mergeTexts", "RspDocument")
+S3method("parseCutNPasteDirectives", "RspDocument")
 S3method("parseIfElseDirectives", "RspDocument")
 S3method("preprocess", "RspDocument")
 S3method("print", "RspDocument")
@@ -544,7 +549,6 @@ S3method("!", "RspProduct")
 # RspResponse
 S3method("flush", "RspResponse")
 S3method("writeResponse", "RspResponse")
-S3method("write", "RspResponse")  ## Deprecated
 
 # RspRSourceCode
 S3method("evaluate", "RspRSourceCode")
@@ -593,6 +597,7 @@ S3method("rclean", "RspString")
 S3method("rcompile", "RspString")
 S3method("rfile", "RspString")
 S3method("rcode", "RspString")
+S3method("rsource", "RspString")
 S3method("rstring", "RspString")
 S3method("toR", "RspString")
 
@@ -617,3 +622,8 @@ S3method("getInclude", "RspVariableDirective")
 
 # RspVoid
 S3method("asRspString", "RspVoid")
+
+
+## DEPRECATED:
+export("write")
+S3method("write", "RspResponse")
