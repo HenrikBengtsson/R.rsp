@@ -315,12 +315,18 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
     setInlineRsp <- function(class, fun, envir=parent.frame()) {
       name <- sprintf("rpaste.%s", class)
       assign(name, fun, envir=envir)
+      ## FIXME: How to register an S3 method at run-time? /HB 2018-04-06
+      ## registerS3method("rpaste", class = class, method = name, envir = envir)
     }
 
     ## The default is to coerce to character and collapse without
     ## a separator.  It is possible to override the default in an
     ## RSP code expression.
     setInlineRsp("default", function(x, ...) .base_paste0(x, collapse=""))
+
+    ## FIXME: Disable rpaste() generic until figuring out how to register
+    ## S3 methods at run time. /HB 2018-04-06
+    rpaste <- rpaste.default
 
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ## RSP source code script [BEGIN]
