@@ -418,7 +418,7 @@ buildPkgIndexHtml <- function(...) {
   }
 
   # Sanity check
-  stopifnot(file.exists(filename));
+  stop_if_not(file.exists(filename));
 
   # Build index.html
   rfile(filename);

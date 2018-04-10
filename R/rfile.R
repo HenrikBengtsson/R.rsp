@@ -173,7 +173,7 @@ setMethodS3("rfile", "default", function(file, path=NULL, output=NULL, workdir=N
   attr(type, "fixed") <- fixed;
 
   # Argument 'envir':
-  stopifnot(is.environment(envir));
+  stop_if_not(is.environment(envir));
 
   # Argument 'args':
   args <- cmdArgs(args=args);
@@ -387,7 +387,7 @@ setMethodS3("rfile", "RspRSourceCode", function(rcode, output, workdir=NULL, env
   }
 
   # Argument 'envir':
-  stopifnot(is.environment(envir));
+  stop_if_not(is.environment(envir));
 
   # Argument 'args':
   args <- cmdArgs(args=args);

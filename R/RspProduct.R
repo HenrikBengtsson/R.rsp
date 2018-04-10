@@ -230,7 +230,7 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
   type <- tolower(type);
 
   # Arguments 'envir':
-  stopifnot(is.environment(envir));
+  stop_if_not(is.environment(envir));
 
   # Arguments 'workdir':
   if (!is.null(workdir)) {

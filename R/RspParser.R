@@ -86,8 +86,8 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 
   # Argument 'commentLength':
   commentLength <- as.integer(commentLength);
-  stopifnot(is.finite(commentLength));
-  stopifnot(commentLength == -1L || commentLength >= 2L);
+  stop_if_not(is.finite(commentLength));
+  stop_if_not(commentLength == -1L || commentLength >= 2L);
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -169,7 +169,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
       if (posL == -1L)
         break;
       nL <- attr(posL, "match.length");
-      stopifnot(is.integer(nL));
+      stop_if_not(is.integer(nL));
 
       # (i) Extract RSP construct, '<%...%>[extra]'
       tag <- substring(bfr, first=posL, last=posL+nL-1L);

@@ -111,7 +111,7 @@ setMethodS3("getNameContentDefaultAttributes", "RspDirective", function(item, kn
       pathname <- file;
     }
     # Sanity check
-    stopifnot(!is.null(pathname));
+    stop_if_not(!is.null(pathname));
     content <- .readText(pathname);
   }
 

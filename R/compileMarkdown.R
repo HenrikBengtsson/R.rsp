@@ -56,7 +56,7 @@ setMethodS3("compileMarkdown", "default", function(filename, path=NULL, ..., out
 
   # Argument 'metadata':
   if (is.null(metadata)) metadata <- list()
-  stopifnot(is.list(metadata))
+  stop_if_not(is.list(metadata))
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);

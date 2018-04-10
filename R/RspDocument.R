@@ -377,10 +377,10 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
   verbose && exit(verbose);
 
   # Sanity checks
-  stopifnot(all(idxsText <= length(object)));
-  stopifnot(all(idxsNonText <= length(object)));
-  stopifnot(all(idxsSilentNonText <= length(object)));
-  stopifnot(inherits(object, "RspDocument"));
+  stop_if_not(all(idxsText <= length(object)));
+  stop_if_not(all(idxsNonText <= length(object)));
+  stop_if_not(all(idxsSilentNonText <= length(object)));
+  stop_if_not(inherits(object, "RspDocument"));
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -578,8 +578,8 @@ setMethodS3("trim", "RspDocument", function(object, ..., verbose=FALSE) {
 
   # This code assumes that the first and the last part in 'doc'
   # is always a "text" part.
-  stopifnot(idxs[1L] == 1L);
-#  stopifnot(idxs[length(idxs)] == length(doc));
+  stop_if_not(idxs[1L] == 1L);
+#  stop_if_not(idxs[length(idxs)] == length(doc));
 
   # Find text parts that ends with a new line
   endsWithNewline <- (regexpr("(\n|\r|\r\n)[ \t\v]*$", docT[-length(docT)]) != -1L);
@@ -1208,7 +1208,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   getFileT <- function(expr, path=".", ..., index=NA, verbose=FALSE) {
     file <- getFile(expr);
     # Sanity check
-    stopifnot(!is.null(file));
+    stop_if_not(!is.null(file));
 
     verbose && cat(verbose, "Attribute 'file': ", file);
 
@@ -1229,7 +1229,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
     }
     verbose && cat(verbose, "File: ", file);
     # Sanity check
-    stopifnot(!is.null(file));
+    stop_if_not(!is.null(file));
 
     if (isUrl(file) || FALSE) {
     } else {
@@ -1253,7 +1253,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'envir':
-  stopifnot(!is.null(envir));
+  stop_if_not(!is.null(envir));
 
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
@@ -1306,7 +1306,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
   # Assert that all 'cut' statements are consumed
   isCut <- sapply(object, FUN=inherits, "RspCutDirective");
-  stopifnot(!any(isCut));
+  stop_if_not(!any(isCut));
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1330,9 +1330,9 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
     # Assert that all ELSE and ENDIF directives are gone
     isElse <- sapply(items, FUN=inherits, "RspElseDirective");
-    stopifnot(!any(isElse));
+    stop_if_not(!any(isElse));
     isEndif <- sapply(items, FUN=inherits, "RspEndifDirective");
-    stopifnot(!any(isEndif));
+    stop_if_not(!any(isEndif));
 
     res <- object[c()];
     res[seq_along(items)] <- items;
@@ -1783,7 +1783,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
       content <- paste(content, collapse="\n");
 
       # Sanity check
-      stopifnot(!is.null(contentType));
+      stop_if_not(!is.null(contentType));
 
       # Parse content types
       hostCT <- parseInternetMediaType(hostContentType);
@@ -1988,7 +1988,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
         doc <- preprocess(doc, recursive=TRUE, flatten=flatten, envir=envir, clipboard=clipboard, ..., verbose=verbose);
         # Sanity check
         isIf <- sapply(doc, FUN=inherits, "RspIfDirective");
-        stopifnot(!any(isIf));
+        stop_if_not(!any(isIf));
       } else {
         verbose && print(verbose, "<not available>\n");
         doc <- NA;

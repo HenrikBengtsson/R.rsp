@@ -106,7 +106,7 @@
   }
 
   # Sanity check
-  stopifnot(inherits(con, "connection"));
+  stop_if_not(inherits(con, "connection"));
 
 
   bfr <- NULL;
