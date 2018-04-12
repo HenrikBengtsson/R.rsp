@@ -28,10 +28,10 @@
 #*/###########################################################################
 setConstructorS3("RspCode", function(code=character(), echo=FALSE, ...) {
   # Replace all '\r\n' and '\r' with '\n' newlines
-  code <- gsub("\r\n", "\n", code);
-  code <- gsub("\r", "\n", code);
+  code <- gsub("\r\n", "\n", code)
+  code <- gsub("\r", "\n", code)
 
-  extend(RspExpression(code, echo=echo, ...), "RspCode");
+  extend(RspExpression(code, echo=echo, ...), "RspCode")
 })
 
 
@@ -61,7 +61,7 @@ setConstructorS3("RspCode", function(code=character(), echo=FALSE, ...) {
 # }
 #*/#########################################################################
 setMethodS3("getCode", "RspCode", function(code, ...) {
-  as.character(code);
+  as.character(code)
 })
 
 
@@ -91,22 +91,22 @@ setMethodS3("getCode", "RspCode", function(code, ...) {
 # }
 #*/#########################################################################
 setMethodS3("getEcho", "RspCode", function(code, ...) {
-  isTRUE(getAttribute(code, "echo", default=FALSE));
+  isTRUE(getAttribute(code, "echo", default=FALSE))
 })
 
 
 setMethodS3("asRspString", "RspCode", function(code, ...) {
-  body <- getCode(code);
+  body <- getCode(code)
 
   if (getEcho(code)) {
-    fmtstr <- ":%s";
+    fmtstr <- ":%s"
   } else {
-    fmtstr <- "%s";
+    fmtstr <- "%s"
   }
 
-  fmtstr <- paste("<%%", fmtstr, "%%>", sep="");
-  s <- sprintf(fmtstr, body);
-  RspString(s);
+  fmtstr <- paste("<%%", fmtstr, "%%>", sep="")
+  s <- sprintf(fmtstr, body)
+  RspString(s)
 })
 
 
@@ -140,27 +140,27 @@ setMethodS3("asRspString", "RspCode", function(code, ...) {
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspCodeChunk", function(..., return=FALSE) {
-  extend(RspCode(..., return=return), "RspCodeChunk");
+  extend(RspCode(..., return=return), "RspCodeChunk")
 })
 
 
 setMethodS3("getInclude", "RspCodeChunk", function(code, ...) {
-  isTRUE(getAttribute(code, "return", default=FALSE));
+  isTRUE(getAttribute(code, "return", default=FALSE))
 })
 
 
 setMethodS3("asRspString", "RspCodeChunk", function(code, ...) {
-  body <- getCode(code);
+  body <- getCode(code)
 
   if (getEcho(code)) {
-    fmtstr <- ":%s";
+    fmtstr <- ":%s"
   } else if (getInclude(code)) {
-    fmtstr <- "=%s";
+    fmtstr <- "=%s"
   } else {
-    fmtstr <- "%s";
+    fmtstr <- "%s"
   }
 
-  fmtstr <- paste("<%%", fmtstr, "%%>", sep="");
-  s <- sprintf(fmtstr, body);
-  RspString(s);
+  fmtstr <- paste("<%%", fmtstr, "%%>", sep="")
+  s <- sprintf(fmtstr, body)
+  RspString(s)
 })

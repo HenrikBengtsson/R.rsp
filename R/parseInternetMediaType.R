@@ -2,11 +2,11 @@ extensionToIMT <- function(filename, ext=NULL, default=NA) {
   if (is.null(ext)) {
     # If URI, drop any URI arguments
     if (isUrl(filename)) {
-      filename <- splitUrl(filename)$path;
+      filename <- splitUrl(filename)$path
     }
-    ext <- gsub(".*[.]([^.]+)$", "\\1", filename);
+    ext <- gsub(".*[.]([^.]+)$", "\\1", filename)
   }
-  ext <- tolower(ext);
+  ext <- tolower(ext)
   type <- switch(ext,
     "asciidoc" = "application/x-asciidoc",
     "atom"     = "application/atom+xml",
@@ -43,54 +43,54 @@ extensionToIMT <- function(filename, ext=NULL, default=NA) {
     "xml"      = "text/xml",  # also "application/xml"
     "xul"      = "application/application/vnd.mozilla.xul+xml",
     default
-  );
-  type;
+  )
+  type
 } # extensionToIMT()
 
 
 escapeRspTags <- function(s) {
-  s <- gsub("<%", "<%%", s, fixed=TRUE);
-  s <- gsub("%>", "%%>", s, fixed=TRUE);
-  s;
+  s <- gsub("<%", "<%%", s, fixed=TRUE)
+  s <- gsub("%>", "%%>", s, fixed=TRUE)
+  s
 } # escapeRspTags()
 
 unescapeRspTags <- function(s) {
-  s <- gsub("<%%", "<%", s, fixed=TRUE);
-  s <- gsub("%%>", "%>", s, fixed=TRUE);
-  s;
+  s <- gsub("<%%", "<%", s, fixed=TRUE)
+  s <- gsub("%%>", "%>", s, fixed=TRUE)
+  s
 } # unescapeRspTags()
 
 escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
-  ct <- list(src=srcCT, target=targetCT);
+  ct <- list(src=srcCT, target=targetCT)
 
   if (!is.list(ct$src)) {
-    ct$src <- parseInternetMediaType(ct$src);
+    ct$src <- parseInternetMediaType(ct$src)
   }
   if (!is.list(ct$target)) {
-    ct$target <- parseInternetMediaType(ct$target);
+    ct$target <- parseInternetMediaType(ct$target)
   }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # (1a) Validate the source content type
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  knownSourceTypes <- c("text/plain", "application/x-rsp", "application/x-latex", "application/x-tex");
+  knownSourceTypes <- c("text/plain", "application/x-rsp", "application/x-latex", "application/x-tex")
   if (!is.element(ct$src$contentType, knownSourceTypes)) {
-    msg <- sprintf("Source content type '%s' is unknown.  Will use 'text/plain' for escaping.", ct$src$contentType);
-    warning(msg);
-    verbose && cat(verbose, msg);
-    ct$src <- parseInternetMediaType("text/plain");
+    msg <- sprintf("Source content type '%s' is unknown.  Will use 'text/plain' for escaping.", ct$src$contentType)
+    warning(msg)
+    verbose && cat(verbose, msg)
+    ct$src <- parseInternetMediaType("text/plain")
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # (1b) Validate the target content type
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  knownTargetTypes <- c("text/plain", "application/x-latex", "application/x-tex");
+  knownTargetTypes <- c("text/plain", "application/x-latex", "application/x-tex")
   if (!is.element(ct$target$contentType, knownTargetTypes)) {
-    msg <- sprintf("Target content type '%s' is unknown.  Will use 'text/plain' for escaping.", ct$target$contentType);
-    warning(msg);
-    verbose && cat(verbose, msg);
-    ct$target <- parseInternetMediaType("text/plain");
+    msg <- sprintf("Target content type '%s' is unknown.  Will use 'text/plain' for escaping.", ct$target$contentType)
+    warning(msg)
+    verbose && cat(verbose, msg)
+    ct$target <- parseInternetMediaType("text/plain")
   }
 
 
@@ -98,9 +98,9 @@ escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
   # (2) "Merge" content types with the same escape rules
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   for (key in names(ct)) {
-    type <- ct[[key]]$contentType;
-    type <- sub("application/x-latex", "application/x-tex", type);
-    ct[[key]]$contentType <- type;
+    type <- ct[[key]]$contentType
+    type <- sub("application/x-latex", "application/x-tex", type)
+    ct[[key]]$contentType <- type
   }
 
 
@@ -108,12 +108,12 @@ escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # (3) Escape text from source to target content type
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  srcArgs <- ct$src$args;
-  srcArgsS <- paste(paste(names(srcArgs), srcArgs, sep="="), collapse=" ");
-  targetArgs <- ct$target$args;
-  targetArgsS <- paste(paste(names(targetArgs), targetArgs, sep="="), collapse=" ");
+  srcArgs <- ct$src$args
+  srcArgsS <- paste(paste(names(srcArgs), srcArgs, sep="="), collapse=" ")
+  targetArgs <- ct$target$args
+  targetArgsS <- paste(paste(names(targetArgs), targetArgs, sep="="), collapse=" ")
 
-  verbose && printf(verbose, "Translating content of type '%s' (%s) into type '%s' (%s).\n", ct$src$contentType, srcArgsS, ct$target$contentType, targetArgsS);
+  verbose && printf(verbose, "Translating content of type '%s' (%s) into type '%s' (%s).\n", ct$src$contentType, srcArgsS, ct$target$contentType, targetArgsS)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -121,21 +121,21 @@ escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (ct$src$contentType == "text/plain") {
     if (ct$target$contentType == "text/plain") {
-      s <- escapeRspTags(s);
+      s <- escapeRspTags(s)
     } else if (ct$target$contentType == "application/x-tex") {
-      env <- ct$src$args["environment"];
-      if (is.null(env) || is.na(env)) env <- "";
-      env <- unlist(strsplit(env, split=",", fixed=TRUE), use.names=FALSE);
-      env <- trim(env);
+      env <- ct$src$args["environment"]
+      if (is.null(env) || is.na(env)) env <- ""
+      env <- unlist(strsplit(env, split=",", fixed=TRUE), use.names=FALSE)
+      env <- trim(env)
       if (is.element("math", env)) {
       }
       replace <- c("\\"="\\textbackslash", "{"="\\{", "}"="\\}",
                    "&"="\\&", "%"="\\%", "$"="\\$", "#"="\\#",
                    "_"="\\_",
                    "~"="\\~{}", "^"="\\^{}");  # <== ?
-      search <- names(replace);
+      search <- names(replace)
       for (ii in seq_along(replace)) {
-        s <- gsub(search[ii], replace[ii], s, fixed=TRUE);
+        s <- gsub(search[ii], replace[ii], s, fixed=TRUE)
       }
     }
   }
@@ -144,16 +144,16 @@ escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
   # 'application/x-rsp' -> ...
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (ct$src$contentType == "application/x-rsp") {
-    escaped <- identical(unname(ct$src$args["escaped"]), "TRUE");
+    escaped <- identical(unname(ct$src$args["escaped"]), "TRUE")
     if (escaped) {
-      s <- unescapeRspTags(s);
+      s <- unescapeRspTags(s)
     }
     if (ct$target$contentType == "text/plain") {
     } else if (ct$target$contentType == "application/x-tex") {
     }
   }
 
-  as.character(s);
+  as.character(s)
 } # escapeRspContent()
 
 
@@ -164,33 +164,33 @@ escapeRspContent <- function(s, srcCT, targetCT, verbose=FALSE) {
 parseInternetMediaType <- function(s, ...) {
   # Nothing to do?
   if (is.na(s)) {
-    return(s);
+    return(s)
   }
 
   # Example e.g. "text/html; charset=UTF-8"
-  s <- trim(s);
-  pattern <- "^([^/]*)/([^;]*)(|;[ ]*(.*))$";
+  s <- trim(s)
+  pattern <- "^([^/]*)/([^;]*)(|;[ ]*(.*))$"
   if (regexpr(pattern, s) == -1L) {
-    throw("Syntax error: Not an internet media type: ", sQuote(s));
+    throw("Syntax error: Not an internet media type: ", sQuote(s))
   }
 
   # Extract: <type>/<subtype>
-  type <- gsub(pattern, "\\1", s);
-  subtype <- gsub(pattern, "\\2", s);
+  type <- gsub(pattern, "\\1", s)
+  subtype <- gsub(pattern, "\\2", s)
 
   # Extract: <name>=<value>*
-  argsS <- gsub(pattern, "\\4", s);
-  patternS <- "^([^=]*)=([^ ]*)(.*)";
-  args <- NULL;
+  argsS <- gsub(pattern, "\\4", s)
+  patternS <- "^([^=]*)=([^ ]*)(.*)"
+  args <- NULL
   while(nchar(argsS <- trim(argsS)) > 0L) {
     if (regexpr(patternS, argsS) == -1L) {
-      throw("Syntax error: Invalid internet media type argument: ", sQuote(argsS));
+      throw("Syntax error: Invalid internet media type argument: ", sQuote(argsS))
     }
-    name <- gsub(patternS, "\\1", argsS);
-    value <- gsub(patternS, "\\2", argsS);
-    names(value) <- name;
-    args <- c(args, value);
-    argsS <- gsub(patternS, "\\3", argsS);
+    name <- gsub(patternS, "\\1", argsS)
+    value <- gsub(patternS, "\\2", argsS)
+    names(value) <- name
+    args <- c(args, value)
+    argsS <- gsub(patternS, "\\3", argsS)
   }
 
   list(
@@ -198,5 +198,5 @@ parseInternetMediaType <- function(s, ...) {
     type=type,
     subtype=subtype,
     args=args
-  );
+  )
 } # parseInternetMediaType()

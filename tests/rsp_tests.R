@@ -36,7 +36,7 @@ for (kk in seq_along(pathnames)) {
 
   # Compare
   res <- all.equal(s, sR, check.attributes=FALSE)
-  discrepancy <- !isTRUE(res);
+  discrepancy <- !isTRUE(res)
   if (discrepancy) {
     if (verbose) {
       enter(verbose, "Detected discrepancy of output and expected output")

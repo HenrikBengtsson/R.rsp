@@ -28,9 +28,9 @@
 #*/#########################################################################
 setMethodS3("toR", "RspDocument", function(object, factory=RspRSourceCodeFactory(), ...) {
   # Argument 'factory':
-  factory <- Arguments$getInstanceOf(factory, "RspSourceCodeFactory");
+  factory <- Arguments$getInstanceOf(factory, "RspSourceCodeFactory")
 
-  toSourceCode(factory, object, ...);
+  toSourceCode(factory, object, ...)
 }) # toR()
 
 
@@ -61,6 +61,6 @@ setMethodS3("toR", "RspDocument", function(object, factory=RspRSourceCodeFactory
 # }
 #*/#########################################################################
 setMethodS3("evaluate", "RspDocument", function(object, envir=parent.frame(), ...) {
-  code <- toR(object);
-  process(code, envir=envir, ...);
+  code <- toR(object)
+  process(code, envir=envir, ...)
 }, createGeneric=FALSE)

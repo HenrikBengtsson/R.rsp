@@ -38,7 +38,7 @@
 #               If \code{""}, the output is sent to the standard output.}
 #   \item{buffered}{If @TRUE, and \code{output=""}, then the RSP output is
 #     outputted as soon as possible, if possible.}
-#   \item{append}{Only applied if \code{output} specifies a pathname;
+#   \item{append}{Only applied if \code{output} specifies a pathname
 #     If @TRUE, then the output is appended to the file, otherwise
 #     the files content is overwritten.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
@@ -88,80 +88,80 @@ setMethodS3("rcat", "default", function(..., file=NULL, path=NULL, envir=parent.
   if (inherits(file, "connection")) {
   } else if (is.character(file)) {
     if (!is.null(path)) {
-      file <- file.path(path, file);
+      file <- file.path(path, file)
     }
     if (!isUrl(file)) {
-      file <- Arguments$getReadablePathname(file, absolute=TRUE);
+      file <- Arguments$getReadablePathname(file, absolute=TRUE)
     }
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "rcat() for default");
+  verbose && enter(verbose, "rcat() for default")
 
   if (is.null(file)) {
-    s <- RspString(...);
+    s <- RspString(...)
   } else {
-    verbose && cat(verbose, "Input file: ", file);
-    s <- .readText(file);
-    s <- RspString(s, source=file, ...);
-    s <- setMetadata(s, name="source", value=file);
+    verbose && cat(verbose, "Input file: ", file)
+    s <- .readText(file)
+    s <- RspString(s, source=file, ...)
+    s <- setMetadata(s, name="source", value=file)
   }
-  verbose && cat(verbose, "Length of RSP string: ", nchar(s));
+  verbose && cat(verbose, "Length of RSP string: ", nchar(s))
 
-  res <- rcat(s, output=output, buffered=buffered, append=append, envir=envir, args=args, verbose=verbose);
+  res <- rcat(s, output=output, buffered=buffered, append=append, envir=envir, args=args, verbose=verbose)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  invisible(res);
+  invisible(res)
 }) # rcat()
 
 
 setMethodS3("rcat", "RspString", function(..., envir=parent.frame(), args="*", output="", buffered=TRUE, append=FALSE, verbose=FALSE) {
   # Argument 'buffered':
   if (!buffered) {
-    isStdout <- FALSE;
+    isStdout <- FALSE
     if (is.character(output) && output == "") {
-      isStdout <- TRUE;
+      isStdout <- TRUE
     } else if (inherits(output, "connection")) {
-      ci <- summary(output);
+      ci <- summary(output)
       isStdout <- identical(ci$class, "terminal") &&
-                  identical(ci$description, "stdout");
+                  identical(ci$description, "stdout")
     }
     if (!isStdout) {
-      throw("Argument 'buffered' must be TRUE unless 'output' directs to the standard output.");
+      throw("Argument 'buffered' must be TRUE unless 'output' directs to the standard output.")
     }
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "rcat() for RspString");
+  verbose && enter(verbose, "rcat() for RspString")
 
-  outputP <- ifelse(buffered, "RspStringProduct", "stdout");
+  outputP <- ifelse(buffered, "RspStringProduct", "stdout")
   verbose && printf(verbose, "Buffered: %s\n", buffered)
   verbose && printf(verbose, "Type of output: %s\n", outputP)
   verbose && cat(verbose, "Arguments:")
   verbose && str(verbose, args)
 
-  s <- rstring(..., envir=envir, args=args, output=outputP);
+  s <- rstring(..., envir=envir, args=args, output=outputP)
 
-  verbose && cat(verbose, "Result:");
-  verbose && str(verbose, s);
+  verbose && cat(verbose, "Result:")
+  verbose && str(verbose, s)
 
   if (!is.null(s)) {
-    verbose && enter(verbose, "Outputting");
-    outputT <- output;
+    verbose && enter(verbose, "Outputting")
+    outputT <- output
     if (is.character(output)) {
       if (output == "")
         outputT <- "<stdout>"
@@ -174,7 +174,7 @@ setMethodS3("rcat", "RspString", function(..., envir=parent.frame(), args="*", o
     
     tryCatch({
       ## WORKAROUND: Avoid infinite loop of warnings on "invalid char string
-      ## in output conversion" by cat().  Reported to R-devel on 2017-01-03;
+      ## in output conversion" by cat().  Reported to R-devel on 2017-01-03
       ## https://stat.ethz.ch/pipermail/r-devel/2017-January/073571.html
       oopts <- options(warn = 2)
       on.exit(options(oopts))
@@ -194,12 +194,12 @@ setMethodS3("rcat", "RspString", function(..., envir=parent.frame(), args="*", o
       }
     })
     
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   }
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  invisible(s);
+  invisible(s)
 }) # rcat()
 
 

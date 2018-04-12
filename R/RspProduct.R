@@ -26,20 +26,20 @@
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspProduct", function(object=NA, ...) {
-  extend(RspObject(object, ...), "RspProduct");
+  extend(RspObject(object, ...), "RspProduct")
 })
 
 
 setMethodS3("print", "RspProduct", function(x, ...) {
-  s <- sprintf("%s:", class(x)[1L]);
-  s <- c(s, sprintf("Content type: %s", getType(x)));
-  md <- getMetadata(x, local=FALSE);
+  s <- sprintf("%s:", class(x)[1L])
+  s <- c(s, sprintf("Content type: %s", getType(x)))
+  md <- getMetadata(x, local=FALSE)
   for (key in names(md)) {
-    s <- c(s, sprintf("Metadata '%s': '%s'", key, md[[key]]));
+    s <- c(s, sprintf("Metadata '%s': '%s'", key, md[[key]]))
   }
-  s <- c(s, sprintf("Has processor: %s", hasProcessor(x)));
-  s <- paste(s, collapse="\n");
-  cat(s, "\n", sep="");
+  s <- c(s, sprintf("Has processor: %s", hasProcessor(x)))
+  s <- paste(s, collapse="\n")
+  cat(s, "\n", sep="")
 }, protected=TRUE)
 
 
@@ -108,13 +108,13 @@ setMethodS3("!", "RspProduct", function(x) {
 # }
 #*/#########################################################################
 setMethodS3("getType", "RspProduct", function(object, default=NA_character_, as=c("text", "IMT"), ...) {
-  as <- match.arg(as);
-  res <- getAttribute(object, "type", default=as.character(default));
-  res <- tolower(res);
+  as <- match.arg(as)
+  res <- getAttribute(object, "type", default=as.character(default))
+  res <- tolower(res)
   if (as == "IMT" && !is.na(res)) {
-    res <- parseInternetMediaType(res);
+    res <- parseInternetMediaType(res)
   }
-  res;
+  res
 }, protected=TRUE)
 
 
@@ -144,7 +144,7 @@ setMethodS3("getType", "RspProduct", function(object, default=NA_character_, as=
 # @keyword IO
 #*/###########################################################################
 setMethodS3("hasProcessor", "RspProduct", function(object, ...) {
-  !is.null(findProcessor(object, ...));
+  !is.null(findProcessor(object, ...))
 }, protected=TRUE)
 
 
@@ -176,7 +176,7 @@ setMethodS3("hasProcessor", "RspProduct", function(object, ...) {
 # @keyword IO
 #*/###########################################################################
 setMethodS3("findProcessor", "RspProduct", function(object, ...) {
-  NULL;
+  NULL
 }, protected=TRUE) # findProcessor()
 
 
@@ -224,91 +224,91 @@ setMethodS3("process", "RspProduct", function(object, type=NULL, envir=parent.fr
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'type':
   if (is.null(type)) {
-    type <- getType(object);
+    type <- getType(object)
   }
-  type <- Arguments$getCharacter(type, length=c(1L,1L));
-  type <- tolower(type);
+  type <- Arguments$getCharacter(type, length=c(1L,1L))
+  type <- tolower(type)
 
   # Arguments 'envir':
-  stop_if_not(is.environment(envir));
+  stop_if_not(is.environment(envir))
 
   # Arguments 'workdir':
   if (!is.null(workdir)) {
-    workdir <- Arguments$getWritablePath(workdir);
-    if (is.null(workdir)) workdir <- getwd();
-    workdir <- getAbsolutePath(workdir);
+    workdir <- Arguments$getWritablePath(workdir)
+    if (is.null(workdir)) workdir <- getwd()
+    workdir <- getAbsolutePath(workdir)
   }
 
   # Argument 'recursive':
   if (is.numeric(recursive)) {
-    recursive <- Arguments$getNumeric(recursive);
+    recursive <- Arguments$getNumeric(recursive)
   } else {
-    recursive <- Arguments$getLogical(recursive);
+    recursive <- Arguments$getLogical(recursive)
     if (recursive) {
-      recursive <- Inf;
+      recursive <- Inf
     } else {
-      recursive <- 0;
+      recursive <- 0
     }
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Processing RSP product");
-  verbose && print(verbose, object);
+  verbose && enter(verbose, "Processing RSP product")
+  verbose && print(verbose, object)
 
-  processor <- findProcessor(object, verbose=verbose);
+  processor <- findProcessor(object, verbose=verbose)
 
   # Nothing to do?
   if (is.null(processor)) {
-    verbose && cat(verbose, "There is no known processor for this content type: ", type);
-    verbose && exit(verbose);
-    return(object);
+    verbose && cat(verbose, "There is no known processor for this content type: ", type)
+    verbose && exit(verbose)
+    return(object)
   }
 
-  verbose && enter(verbose, "Processing");
+  verbose && enter(verbose, "Processing")
 
   # Change working directory?
   if (!is.null(workdir)) {
-    opwd <- getwd();
-    on.exit({ if (!is.null(opwd)) setwd(opwd) }, add=TRUE);
-    setwd(workdir);
+    opwd <- getwd()
+    on.exit({ if (!is.null(opwd)) setwd(opwd) }, add=TRUE)
+    setwd(workdir)
   }
 
   # Override type with user argument type, if given.
   if (identical(type, getType(object))) {
-    object <- setAttribute(object, "type", type);
+    object <- setAttribute(object, "type", type)
   }
 
-  verbose && print(verbose, object);
-  verbose && print(verbose, processor);
-  res <- processor(object, envir=envir, ..., verbose=verbose);
-  verbose && print(verbose, res);
+  verbose && print(verbose, object)
+  verbose && print(verbose, processor)
+  res <- processor(object, envir=envir, ..., verbose=verbose)
+  verbose && print(verbose, res)
 
   # Reset working directory
   if (!is.null(workdir)) {
     if (!is.null(opwd)) {
-      setwd(opwd);
-      opwd <- NULL;
+      setwd(opwd)
+      opwd <- NULL
     }
   }
 
   if (!is.null(res) && recursive > 0L && hasProcessor(res)) {
-    verbose && enter(verbose, "Recursive processing");
-    verbose && cat(verbose, "Recursive depth: ", recursive);
-    object <- res;
-    res <- process(object, type=type, envir=envir, workdir=workdir, ..., recursive=(recursive - 1), verbose=verbose);
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Recursive processing")
+    verbose && cat(verbose, "Recursive depth: ", recursive)
+    object <- res
+    res <- process(object, type=type, envir=envir, workdir=workdir, ..., recursive=(recursive - 1), verbose=verbose)
+    verbose && exit(verbose)
   }
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res;
+  res
 }) # process()

@@ -47,38 +47,38 @@ setMethodS3("rclean", "default", function(..., file=NULL, path=NULL, envir=paren
   if (inherits(file, "connection")) {
   } else if (is.character(file)) {
     if (!is.null(path)) {
-      file <- file.path(path, file);
+      file <- file.path(path, file)
     }
     if (!isUrl(file)) {
-      file <- Arguments$getReadablePathname(file, absolute=TRUE);
+      file <- Arguments$getReadablePathname(file, absolute=TRUE)
     }
   }
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "rclean() for default");
+  verbose && enter(verbose, "rclean() for default")
 
   if (is.null(file)) {
-    s <- RspString(...);
+    s <- RspString(...)
   } else {
-    verbose && cat(verbose, "Input file: ", file);
-    s <- .readText(file);
-    s <- RspString(s, source=file, ...);
-    s <- setMetadata(s, name="source", value=file);
+    verbose && cat(verbose, "Input file: ", file)
+    s <- .readText(file)
+    s <- RspString(s, source=file, ...)
+    s <- setMetadata(s, name="source", value=file)
   }
-  verbose && cat(verbose, "Length of RSP string: ", nchar(s));
+  verbose && cat(verbose, "Length of RSP string: ", nchar(s))
 
-  res <- rclean(s, envir=envir, args=args, verbose=verbose);
+  res <- rclean(s, envir=envir, args=args, verbose=verbose)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res;
+  res
 }) # rclean()
 
 
@@ -87,56 +87,56 @@ setMethodS3("rclean", "RspString", function(object, envir=parent.frame(), args="
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'args':
-  args <- cmdArgs(args=args);
+  args <- cmdArgs(args=args)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "rclean() for ", class(object)[1L]);
+  verbose && enter(verbose, "rclean() for ", class(object)[1L])
 
   if (length(args) > 0L) {
-    verbose && enter(verbose, "Assigning RSP arguments to processing environment");
-    verbose && cat(verbose, "Environment: ", getName(envir));
+    verbose && enter(verbose, "Assigning RSP arguments to processing environment")
+    verbose && cat(verbose, "Environment: ", getName(envir))
 
-    verbose && cat(verbose, "RSP arguments:");
-    verbose && str(verbose, args);
+    verbose && cat(verbose, "RSP arguments:")
+    verbose && str(verbose, args)
 
     # Assign arguments to the parse/evaluation environment
-    names <- attachLocally(args, envir=envir);
+    names <- attachLocally(args, envir=envir)
     if (verbose) {
       if (length(names) > 0L) {
-        printf(verbose, "Variables assigned: [%d] %s\n", length(names), hpaste(names));
+        printf(verbose, "Variables assigned: [%d] %s\n", length(names), hpaste(names))
         member <- NULL; rm(list="member"); # To please R CMD check
-        ll <- subset(ll(envir=envir), member %in% names);
-        print(verbose, ll);
+        ll <- subset(ll(envir=envir), member %in% names)
+        print(verbose, ll)
       }
     }
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   } else {
-    names <- NULL;
+    names <- NULL
   }
 
   if (verbose) {
-    enter(verbose, "Parse RSP string to RSP document");
-    cat(verbose, "Parse environment: ", getName(envir));
+    enter(verbose, "Parse RSP string to RSP document")
+    cat(verbose, "Parse environment: ", getName(envir))
     if (length(names) > 0L) {
-      ll <- subset(ll(envir=envir), member %in% names);
-      print(verbose, ll);
+      ll <- subset(ll(envir=envir), member %in% names)
+      print(verbose, ll)
     }
   }
-  doc <- parseDocument(object, envir=envir, ..., verbose=verbose);
-  verbose && print(verbose, doc);
-  verbose && exit(verbose);
+  doc <- parseDocument(object, envir=envir, ..., verbose=verbose)
+  verbose && print(verbose, doc)
+  verbose && exit(verbose)
 
-  res <- rclean(doc, envir=envir, args=NULL, ..., verbose=verbose);
+  res <- rclean(doc, envir=envir, args=NULL, ..., verbose=verbose)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res;
+  res
 }) # rclean()
 
 
@@ -145,19 +145,19 @@ setMethodS3("rclean", "RspDocument", function(object, envir=parent.frame(), ...,
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "rclean() for ", class(object)[1L]);
+  verbose && enter(verbose, "rclean() for ", class(object)[1L])
 
-  verbose && enter(verbose, "Coerce RSP document to RSP string");
-  s <- asRspString(object);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Coerce RSP document to RSP string")
+  s <- asRspString(object)
+  verbose && exit(verbose)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  s;
+  s
 }) # rclean()

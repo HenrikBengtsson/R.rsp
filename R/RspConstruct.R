@@ -28,9 +28,9 @@
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspConstruct", function(object=character(), ..., comment=NULL) {
-  this <- extend(RspObject(object, ...), "RspConstruct");
-  attr(this, "#comment") <- comment;
-  this;
+  this <- extend(RspObject(object, ...), "RspConstruct")
+  attr(this, "#comment") <- comment
+  this
 })
 
 
@@ -63,7 +63,7 @@ setConstructorS3("RspConstruct", function(object=character(), ..., comment=NULL)
 # }
 #*/#########################################################################
 setMethodS3("getInclude", "RspConstruct", function(object, ...) {
-  FALSE;
+  FALSE
 })
 
 
@@ -94,7 +94,7 @@ setMethodS3("getInclude", "RspConstruct", function(object, ...) {
 # }
 #*/#########################################################################
 setMethodS3("getComment", "RspConstruct", function(object, ...) {
-  getAttribute(object, "#comment");
+  getAttribute(object, "#comment")
 })
 
 
@@ -124,12 +124,12 @@ setMethodS3("getComment", "RspConstruct", function(object, ...) {
 # }
 #*/#########################################################################
 setMethodS3("getSuffixSpecs", "RspConstruct", function(object, ...) {
-  specs <- attr(object, "suffixSpecs");
-  if (is.null(specs)) return(NULL);
-  specs <- trim(specs);
-##  specs <- gsub("^\\[[ \t\v]*", "", specs);
-##  specs <- gsub("[ \t\v]*\\]$", "", specs);
-  specs;
+  specs <- attr(object, "suffixSpecs")
+  if (is.null(specs)) return(NULL)
+  specs <- trim(specs)
+##  specs <- gsub("^\\[[ \t\v]*", "", specs)
+##  specs <- gsub("[ \t\v]*\\]$", "", specs)
+  specs
 })
 
 
@@ -168,5 +168,5 @@ setMethodS3("getSuffixSpecs", "RspConstruct", function(object, ...) {
 # }
 #*/#########################################################################
 setMethodS3("asRspString", "RspConstruct", function(object, ...) {
-  throw(sprintf("Do not know how to construct an RSP string from %s: %s", class(object)[1L], capture.output(str(object))));
+  throw(sprintf("Do not know how to construct an RSP string from %s: %s", class(object)[1L], capture.output(str(object))))
 })

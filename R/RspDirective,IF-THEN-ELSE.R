@@ -36,10 +36,10 @@
 setConstructorS3("RspIfDirective", function(value="if", ...) {
   this <- extend(RspDirective(value, ...), "RspIfDirective")
   if (!missing(value)) {
-    requireAttributes(this, c("test"));
+    requireAttributes(this, c("test"))
 
     # Test aliases
-    test <- getAttribute(this, "test");
+    test <- getAttribute(this, "test")
     map <- c(
       "==" = "equal-to",
       "!=" = "not-equal-to",
@@ -47,13 +47,13 @@ setConstructorS3("RspIfDirective", function(value="if", ...) {
       ">=" = "greater-than-or-equal-to",
       "<"  = "less-than",
       "<=" = "less-than-or-equal-to"
-    );
-    testA <- map[test];
+    )
+    testA <- map[test]
     if (!is.na(testA)) {
-      this <- setAttribute(this, "test", testA);
+      this <- setAttribute(this, "test", testA)
     }
   }
-  this;
+  this
 })
 
 setConstructorS3("RspElseDirective", function(value="else", ...) {
@@ -67,29 +67,29 @@ setConstructorS3("RspEndifDirective", function(value="endif", ...) {
 
 # Alias: <%@ifeq ...%> => <%@if test="equals" ...%>
 setConstructorS3("RspIfeqDirective", function(value="if", ...) {
-  extend(RspIfDirective(value, test="equal-to", ...), "RspIfeqDirective");
+  extend(RspIfDirective(value, test="equal-to", ...), "RspIfeqDirective")
 })
 
 # Alias: <%@ifneq ...%> => <%@if test="equals" negate="TRUE", ...%>
 setConstructorS3("RspIfneqDirective", function(value="if", ...) {
-  this <- extend(RspIfeqDirective(value, ...), "RspIfneqDirective");
+  this <- extend(RspIfeqDirective(value, ...), "RspIfneqDirective")
   # Negate the 'test' result
-  negate <- !getAttribute(this, "negate", FALSE);
-  this <- setAttribute(this, "negate", negate);
-  this;
+  negate <- !getAttribute(this, "negate", FALSE)
+  this <- setAttribute(this, "negate", negate)
+  this
 })
 
 
 # Alias: <%@ifdef ...%> => <%@if test="exists" ...%>
 setConstructorS3("RspIfdefDirective", function(value="if", ...) {
-  extend(RspIfDirective(value, test="exists", ...), "RspIfeqDirective");
+  extend(RspIfDirective(value, test="exists", ...), "RspIfeqDirective")
 })
 
 # Alias: <%@ifndef ...%> => <%@if test="exists" negate="TRUE", ...%>
 setConstructorS3("RspIfndefDirective", function(value="if", ...) {
-  this <- extend(RspIfdefDirective(value, ...), "RspIfneqDirective");
+  this <- extend(RspIfdefDirective(value, ...), "RspIfneqDirective")
   # Negate the 'test' result
-  negate <- !getAttribute(this, "negate", FALSE);
-  this <- setAttribute(this, "negate", negate);
-  this;
+  negate <- !getAttribute(this, "negate", FALSE)
+  this <- setAttribute(this, "negate", negate)
+  this
 })

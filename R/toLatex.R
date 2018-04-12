@@ -30,27 +30,27 @@
 # @keyword internal
 #*/########################################################################### 
 setMethodS3("toLatex", "character", function(object, ...) {
-  s <- object;
+  s <- object
   replace <- c("\\"="\\textbackslash", "{"="\\{", "}"="\\}", 
                 "&"="\\&", "%"="\\%", "$"="\\$", "#"="\\#", 
                 "_"="\\_", 
                 "~"="\\~{}", "^"="\\^{}");  # <== ?
-  search <- names(replace);
+  search <- names(replace)
   for (ii in seq_along(replace)) {
-    s <- gsub(search[ii], replace[ii], s, fixed=TRUE);
+    s <- gsub(search[ii], replace[ii], s, fixed=TRUE)
   } 
-  s;
+  s
 }) # toLatex()
 
 # To handle the NULL case
 setMethodS3("toLatex", "default", function(object, ...) {
-  if (is.null(object)) return("");
-  object;
+  if (is.null(object)) return("")
+  object
 }) # toLatex()
 
 
 le <- function(...) { 
   sapply(c(...), FUN=function(s) {
-    gsub("_", "\\_", s, fixed=TRUE);
-  });
+    gsub("_", "\\_", s, fixed=TRUE)
+  })
 } # le()

@@ -45,30 +45,30 @@ setMethodS3("compileMarkdown", "default", function(filename, path=NULL, ..., out
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'filename' & 'path':
-  pathname <- if (is.null(path)) filename else file.path(path, filename);
+  pathname <- if (is.null(path)) filename else file.path(path, filename)
   if (!isUrl(pathname)) {
-    pathname <- Arguments$getReadablePathname(pathname);
+    pathname <- Arguments$getReadablePathname(pathname)
   }
 
   # Arguments 'outPath':
-  outPath <- Arguments$getWritablePath(outPath);
-  if (is.null(outPath)) outPath <- ".";
+  outPath <- Arguments$getWritablePath(outPath)
+  if (is.null(outPath)) outPath <- "."
 
   # Argument 'metadata':
   if (is.null(metadata)) metadata <- list()
   stop_if_not(is.list(metadata))
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
   # Arguments '...':
 
 
-  verbose && enter(verbose, "Compiling Markdown document");
+  verbose && enter(verbose, "Compiling Markdown document")
 
   ## Incorporate meta data into HTML header?
   if (length(metadata) > 0L) {
@@ -91,58 +91,58 @@ setMethodS3("compileMarkdown", "default", function(filename, path=NULL, ..., out
 
   # Download URL?
   if (isUrl(pathname)) {
-    verbose && enter(verbose, "Downloading URL");
-    url <- pathname;
-    verbose && cat(verbose, "URL: ", url);
-    pathname <- downloadFile(url, verbose=less(verbose,50));
-    verbose && cat(verbose, "Local file: ", pathname);
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Downloading URL")
+    url <- pathname
+    verbose && cat(verbose, "URL: ", url)
+    pathname <- downloadFile(url, verbose=less(verbose,50))
+    verbose && cat(verbose, "Local file: ", pathname)
+    verbose && exit(verbose)
   }
 
-  pathname <- getAbsolutePath(pathname);
-  verbose && cat(verbose, "Markdown pathname (absolute): ", pathname);
-  verbose && printf(verbose, "Input file size: %g bytes\n", file.info(pathname)$size);
-  verbose && cat(verbose, "Output and working directory: ", getAbsolutePath(outPath));
-  pattern <- "(.*)[.]([^.]+)$";
-  replace <- "\\1.html";
-  filenameOut <- gsub(pattern, replace, basename(pathname));
-  pathnameOut <- filePath(outPath, filenameOut);
-  pathnameOut <- getAbsolutePath(pathnameOut);
-  verbose && cat(verbose, "Output pathname: ", pathnameOut);
+  pathname <- getAbsolutePath(pathname)
+  verbose && cat(verbose, "Markdown pathname (absolute): ", pathname)
+  verbose && printf(verbose, "Input file size: %g bytes\n", file.info(pathname)$size)
+  verbose && cat(verbose, "Output and working directory: ", getAbsolutePath(outPath))
+  pattern <- "(.*)[.]([^.]+)$"
+  replace <- "\\1.html"
+  filenameOut <- gsub(pattern, replace, basename(pathname))
+  pathnameOut <- filePath(outPath, filenameOut)
+  pathnameOut <- getAbsolutePath(pathnameOut)
+  verbose && cat(verbose, "Output pathname: ", pathnameOut)
 
-  opwd <- ".";
-  on.exit(setwd(opwd), add=TRUE);
+  opwd <- "."
+  on.exit(setwd(opwd), add=TRUE)
   if (!is.null(outPath)) {
-    opwd <- setwd(outPath);
+    opwd <- setwd(outPath)
   }
 
   mdToHTML <- markdown::markdownToHTML
   fcnName <- "markdown::markdownToHTML()"
 
-  verbose && enterf(verbose, "Calling %s", fcnName);
-  pathnameR <- getRelativePath(pathname);
-  pathnameOutR <- getRelativePath(pathnameOut);
+  verbose && enterf(verbose, "Calling %s", fcnName)
+  pathnameR <- getRelativePath(pathname)
+  pathnameOutR <- getRelativePath(pathnameOut)
 
-  userArgs <- list(...);
-  keep <- is.element(names(userArgs), names(formals(mdToHTML)));
-  userArgs <- userArgs[keep];
+  userArgs <- list(...)
+  keep <- is.element(names(userArgs), names(formals(mdToHTML)))
+  userArgs <- userArgs[keep]
 
-  args <- c(list(pathnameR, output=pathnameOutR), userArgs, header=header);
-  verbose && cat(verbose, "Arguments:");
-  verbose && str(verbose, args);
+  args <- c(list(pathnameR, output=pathnameOutR), userArgs, header=header)
+  verbose && cat(verbose, "Arguments:")
+  verbose && str(verbose, args)
   verbose && printf(verbose, "Input encoding: %s (from option 'encoding')\n", getOption("encoding"))
   verbose && printf(verbose, "Output encoding: UTF-8 (forced by %s)\n", fcnName)
-  do.call(mdToHTML, args=args);
+  do.call(mdToHTML, args=args)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  setwd(opwd); opwd <- ".";
-  verbose && printf(verbose, "Output file size: %g bytes\n", file.info(pathnameOut)$size);
+  setwd(opwd); opwd <- "."
+  verbose && printf(verbose, "Output file size: %g bytes\n", file.info(pathnameOut)$size)
 
   # Sanity check
-  pathnameOut <- Arguments$getReadablePathname(pathnameOut);
+  pathnameOut <- Arguments$getReadablePathname(pathnameOut)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  pathnameOut;
+  pathnameOut
 }) # compileMarkdown()

@@ -34,26 +34,26 @@
 #*/###########################################################################
 setConstructorS3("RspCutDirective", function(value="cut", ..., .validate=TRUE) {
   # Argument '.validate':
-  if (missing(.validate)) .validate <- !missing(value);
+  if (missing(.validate)) .validate <- !missing(value)
 
   # Argument 'value':
-  value <- match.arg(value, choices=c("cut", "copy"));
+  value <- match.arg(value, choices=c("cut", "copy"))
 
   this <- extend(RspDirective(value, ...), "RspCutDirective")
   if (.validate) {
-    requireAttributes(this, c("name"));
+    requireAttributes(this, c("name"))
   }
-  this;
+  this
 })
 
 setConstructorS3("RspEndcutDirective", function(value="endcut", ...) {
-  value <- match.arg(value, choices=c("endcut", "endcopy"));
+  value <- match.arg(value, choices=c("endcut", "endcopy"))
   extend(RspDirective(value, ...), "RspEndcutDirective")
 })
 
 setConstructorS3("RspCopyDirective", function(value="copy", ..., .validate=TRUE) {
   # Argument '.validate':
-  if (missing(.validate)) .validate <- !missing(value);
+  if (missing(.validate)) .validate <- !missing(value)
 
   extend(RspCutDirective(value, ..., .validate=.validate), "RspCopyDirective")
 })
@@ -66,7 +66,7 @@ setConstructorS3("RspEndcopyDirective", function(value="endcopy", ...) {
 setConstructorS3("RspPasteDirective", function(value="paste", ...) {
   this <- extend(RspDirective(value, ...), "RspPasteDirective")
   if (!missing(value)) {
-    requireAttributes(this, c("name"));
+    requireAttributes(this, c("name"))
   }
-  this;
+  this
 })

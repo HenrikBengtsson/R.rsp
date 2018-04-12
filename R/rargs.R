@@ -36,31 +36,31 @@
 #*/###########################################################################
 setMethodS3("rargs", "default", function(...) {
   # Parse RSP document
-  doc <- rcompile(..., until="directives", output=RspDocument());
+  doc <- rcompile(..., until="directives", output=RspDocument())
 
   # Extract RSP preprocessing directives
-  keep <- unlist(sapply(doc, FUN=inherits, "RspUnparsedDirective"), use.names=FALSE);
-  doc <- doc[keep];
+  keep <- unlist(sapply(doc, FUN=inherits, "RspUnparsedDirective"), use.names=FALSE)
+  doc <- doc[keep]
 
   # Parse RSP directives
   for (idx in seq_along(doc)) {
-    doc[[idx]] <- parseDirective(doc[[idx]]);
+    doc[[idx]] <- parseDirective(doc[[idx]])
   }
 
   # Extract RSP preprocessing variables
-  keep <- unlist(sapply(doc, FUN=inherits, "RspVariableDirective"), use.names=FALSE);
-  doc <- doc[keep];
+  keep <- unlist(sapply(doc, FUN=inherits, "RspVariableDirective"), use.names=FALSE)
+  doc <- doc[keep]
 
   # Subset by those with 'description' attributes.
-  keep <- unlist(sapply(doc, FUN=hasAttribute, "description"), use.names=FALSE);
-  doc <- doc[keep];
+  keep <- unlist(sapply(doc, FUN=hasAttribute, "description"), use.names=FALSE)
+  doc <- doc[keep]
 
   args <- lapply(doc, FUN=function(d) {
-    attrs <- getNameContentDefaultAttributes(d);
-    type <- as.character(d);
-    default <- attrs$default;
-    if (is.null(default)) default <- vector(mode=type, length=1L);
-    default <- as(default, type);
+    attrs <- getNameContentDefaultAttributes(d)
+    type <- as.character(d)
+    default <- attrs$default
+    if (is.null(default)) default <- vector(mode=type, length=1L)
+    default <- as(default, type)
     data.frame(
       name        = attrs$name,
       type        = type,
@@ -68,9 +68,9 @@ setMethodS3("rargs", "default", function(...) {
       description = attr(d, "description"),
       stringsAsFactors=FALSE
     )
-  });
+  })
   if (length(args) > 0L) {
-    args <- Reduce(rbind, args);
+    args <- Reduce(rbind, args)
   } else {
     # Default
     args <- data.frame(
@@ -79,13 +79,13 @@ setMethodS3("rargs", "default", function(...) {
       default     = "",
       description = "",
       stringsAsFactors=FALSE
-    );
-    args <- args[c(),];
+    )
+    args <- args[c(),]
   }
 
-  rownames(args) <- NULL;
-  class(args) <- c("RspArguments", class(args));
-  args;
+  rownames(args) <- NULL
+  class(args) <- c("RspArguments", class(args))
+  args
 }) # rargs()
 
 
@@ -116,20 +116,20 @@ setMethodS3("rargs", "default", function(...) {
 # }
 #*/#########################################################################
 setMethodS3("print", "RspArguments", function(x, ...) {
-  s <- NULL;
+  s <- NULL
   for (kk in seq_len(nrow(x))) {
-    arg <- x[kk,];
-    title <- sprintf("'%s' [%s]", arg$name, arg$type);
-    title <- sprintf("%s:", title);
+    arg <- x[kk,]
+    title <- sprintf("'%s' [%s]", arg$name, arg$type)
+    title <- sprintf("%s:", title)
     if (!is.null(arg$default)) {
-      default <- sprintf("    Default: '%s'", arg$default);
+      default <- sprintf("    Default: '%s'", arg$default)
     } else {
-      default <- "    Default:";
+      default <- "    Default:"
     }
-    desc <- arg$description;
-    desc <- sprintf("    %s", desc);
-    s <- c(s, title, default, desc, "");
+    desc <- arg$description
+    desc <- sprintf("    %s", desc)
+    s <- c(s, title, default, desc, "")
   } # for (kk ...)
-  s <- paste(s, collapse="\n");
-  cat(s, "\n", sep="");
+  s <- paste(s, collapse="\n")
+  cat(s, "\n", sep="")
 })

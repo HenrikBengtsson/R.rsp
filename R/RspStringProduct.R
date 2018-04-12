@@ -25,7 +25,7 @@
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspStringProduct", function(...) {
-  extend(RspProduct(...), "RspStringProduct");
+  extend(RspProduct(...), "RspStringProduct")
 })
 
 
@@ -55,12 +55,12 @@ setConstructorS3("RspStringProduct", function(...) {
 # }
 #*/#########################################################################
 setMethodS3("as.character", "RspStringProduct", function(x, ...) {
-  s <- unclass(x);
-  attributes(s) <- NULL;
-  s;
+  s <- unclass(x)
+  attributes(s) <- NULL
+  s
 }, protected=TRUE)
 
 
 setMethodS3("print", "RspStringProduct", function(x, ...) {
-  print(as.character(x), ...);
+  print(as.character(x), ...)
 }, protected=TRUE)

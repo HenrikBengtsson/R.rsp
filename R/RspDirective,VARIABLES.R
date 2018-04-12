@@ -36,16 +36,16 @@ setConstructorS3("RspVariableDirective", function(value="variable", ...) {
 
 
 setMethodS3("getInclude", "RspVariableDirective", function(object, ...) {
-  attrs <- c("name", "content", "file", "default");
-  has <- hasAttribute(object, attrs);
-  names(has) <- attrs;
+  attrs <- c("name", "content", "file", "default")
+  has <- hasAttribute(object, attrs)
+  names(has) <- attrs
   if (!has["name"]) {
-    return(FALSE);
+    return(FALSE)
   }
   if (!any(has[c("content", "file", "default")])) {
-    return(TRUE);
+    return(TRUE)
   }
-  FALSE;
+  FALSE
 })
 
 setConstructorS3("RspStringDirective", function(value="string", ...) {
@@ -92,5 +92,5 @@ setConstructorS3("RspLogicalDirective", function(value="logical", ...) {
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspMetaDirective", function(value="meta", ...) {
-  extend(RspStringDirective(value, ...), "RspMetaDirective");
+  extend(RspStringDirective(value, ...), "RspMetaDirective")
 })

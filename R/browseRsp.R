@@ -49,43 +49,43 @@ setMethodS3("browseRsp", "default", function(url=paste(urlRoot, path, sep="/"), 
   # Argument 'url':
   if (!is.null(url)) {
     if (!isUrl(url) && isUrl(urlRoot) && nchar(path) == 0L) {
-      path <- getRelativePath(url);
+      path <- getRelativePath(url)
       if (isAbsolutePath(path)) {
-        throw("Cannot open file, because it is not possible to infer its relative pathname: ", url);
+        throw("Cannot open file, because it is not possible to infer its relative pathname: ", url)
       }
-      url <- paste(urlRoot, path, sep="/");
+      url <- paste(urlRoot, path, sep="/")
     }
   }
 
   # Argument 'port':
-  port <- Arguments$getInteger(port, range=c(0L,65535L));
+  port <- Arguments$getInteger(port, range=c(0L,65535L))
 
   # Argument 'stop':
-  stop <- Arguments$getLogical(stop);
+  stop <- Arguments$getLogical(stop)
 
 
   # Get the/a HTTP daemon
-  httpDaemon <- getStaticInstance(HttpDaemon);
+  httpDaemon <- getStaticInstance(HttpDaemon)
 
   # Stop HTTP server?
   if (stop) {
     if (isStarted(httpDaemon))
-      stop(httpDaemon);
-    return(!isStarted(httpDaemon));
+      stop(httpDaemon)
+    return(!isStarted(httpDaemon))
   }
 
   # Start HTTP server?
   if (start) {
     # Add the following directories to the list of known root paths:
     # (1) current directory
-    paths <- getwd();
+    paths <- getwd()
     # (2) rsp/ under current directory
-    paths <- c(paths, file.path(getwd(), "rsp"));
+    paths <- c(paths, file.path(getwd(), "rsp"))
     # (3) the parent of all library paths
-    paths <- c(paths, dirname(.libPaths()));
+    paths <- c(paths, dirname(.libPaths()))
     # (4) /library/R.rsp/rsp/ as a root path too.
-    paths <- c(paths, system.file("rsp", package="R.rsp"));
-    appendRootPaths(httpDaemon, paths);
+    paths <- c(paths, system.file("rsp", package="R.rsp"))
+    appendRootPaths(httpDaemon, paths)
 
     if (!isStarted(httpDaemon)) {
       # Start the web server
@@ -94,13 +94,13 @@ setMethodS3("browseRsp", "default", function(url=paste(urlRoot, path, sep="/"), 
   }
 
   if (!is.null(url)) {
-    browseURL(url, ...);
+    browseURL(url, ...)
   }
 
-  invisible(url);
+  invisible(url)
 })
 
 
 setMethodS3("browseRsp", "Package", function(this, ..., path=sprintf("library/%s/rsp/", getName(this))) {
-  browseRsp(..., path=path);
+  browseRsp(..., path=path)
 })

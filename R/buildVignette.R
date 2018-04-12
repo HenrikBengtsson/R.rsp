@@ -64,9 +64,9 @@ buildVignette <- function(file, dir = ".", latex = TRUE, tangle = TRUE, quiet = 
     }
 
     list.files <- function(..., no..=FALSE) {
-      res <- base::list.files(...);
-      if (no..) res <- setdiff(res, c(".", ".."));
-      res;
+      res <- base::list.files(...)
+      if (no..) res <- setdiff(res, c(".", ".."))
+      res
     }
     ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ### END: Workaround until buildVignette() is in the 'tools' package.

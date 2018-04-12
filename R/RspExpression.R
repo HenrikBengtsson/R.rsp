@@ -25,7 +25,7 @@
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspExpression", function(...) {
-  extend(RspConstruct(...), "RspExpression");
+  extend(RspConstruct(...), "RspExpression")
 })
 
 
@@ -57,7 +57,7 @@ setConstructorS3("RspExpression", function(...) {
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspUnparsedExpression", function(...) {
-  extend(RspExpression(...), "RspUnparsedExpression");
+  extend(RspExpression(...), "RspUnparsedExpression")
 })
 
 
@@ -87,21 +87,21 @@ setConstructorS3("RspUnparsedExpression", function(...) {
 # }
 #*/#########################################################################
 setMethodS3("parseExpression", "RspUnparsedExpression", function(expr, ...) {
-  suffixSpecs <- attr(expr, "suffixSpecs");
-  body <- expr;
+  suffixSpecs <- attr(expr, "suffixSpecs")
+  body <- expr
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # RSP Scripting Elements and Variables
   #
   # <%=[expression]%>
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pattern <- "^=(.*)$";
+  pattern <- "^=(.*)$"
   if (regexpr(pattern, body) != -1L) {
-    code <- gsub(pattern, "\\1", body);
-    code <- trim(code);
-    res <- RspCodeChunk(code, return=TRUE);
-    attr(res, "suffixSpecs") <- suffixSpecs;
-    return(res);
+    code <- gsub(pattern, "\\1", body)
+    code <- trim(code)
+    res <- RspCodeChunk(code, return=TRUE)
+    attr(res, "suffixSpecs") <- suffixSpecs
+    return(res)
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -109,12 +109,12 @@ setMethodS3("parseExpression", "RspUnparsedExpression", function(expr, ...) {
   #
   # <%:[expression]%>
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pattern <- "^:(|[ \t\v]*(\n|\r|\r\n))(.*)$";
+  pattern <- "^:(|[ \t\v]*(\n|\r|\r\n))(.*)$"
   if (regexpr(pattern, body) != -1L) {
-    code <- gsub(pattern, "\\3", body);
-    res <- RspCode(code, echo=TRUE);
-    attr(res, "suffixSpecs") <- suffixSpecs;
-    return(res);
+    code <- gsub(pattern, "\\3", body)
+    res <- RspCode(code, echo=TRUE)
+    attr(res, "suffixSpecs") <- suffixSpecs
+    return(res)
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -124,7 +124,7 @@ setMethodS3("parseExpression", "RspUnparsedExpression", function(expr, ...) {
   #
   # This applies to anything not recognized above.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  res <- RspCode(trim(body));
-  attr(res, "suffixSpecs") <- suffixSpecs;
-  res;
+  res <- RspCode(trim(body))
+  attr(res, "suffixSpecs") <- suffixSpecs
+  res
 })

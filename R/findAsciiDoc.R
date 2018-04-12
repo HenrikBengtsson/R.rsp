@@ -38,29 +38,29 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'mustExist':
-  mustExist <- Arguments$getLogical(mustExist);
+  mustExist <- Arguments$getLogical(mustExist)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  command <- "asciidoc";
+  command <- "asciidoc"
 
-  verbose && enter(verbose, "Locating external software");
-  verbose && cat(verbose, "Command: ", command);
+  verbose && enter(verbose, "Locating external software")
+  verbose && cat(verbose, "Command: ", command)
 
   bin <- Sys.getenv("R_ASCIIDOC")
   if (identical(bin, "")) bin <- Sys.which(command)
   if (identical(bin, "")) bin <- NULL
   if (!isFile(bin)) bin <- NULL
 
-  verbose && cat(verbose, "Located pathname: ", bin);
+  verbose && cat(verbose, "Located pathname: ", bin)
 
   if (mustExist && !isFile(bin)) {
-    throw(sprintf("Failed to located external executable: '%s'", command));
+    throw(sprintf("Failed to located external executable: '%s'", command))
   }
 
   # Validate by retrieving version information
@@ -96,7 +96,7 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
     }
   }
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  bin;
+  bin
 }) # findAsciiDoc()

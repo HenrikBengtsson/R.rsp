@@ -38,19 +38,19 @@ setMethodS3("findPandoc", "default", function(mustExist=TRUE, ..., verbose=FALSE
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'mustExist':
-  mustExist <- Arguments$getLogical(mustExist);
+  mustExist <- Arguments$getLogical(mustExist)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  command <- "pandoc";
+  command <- "pandoc"
 
-  verbose && enter(verbose, "Locating external software");
-  verbose && cat(verbose, "Command: ", command);
+  verbose && enter(verbose, "Locating external software")
+  verbose && cat(verbose, "Command: ", command)
 
   bin <- Sys.getenv("R_PANDOC")
   if (identical(bin, "")) bin <- Sys.getenv("RSTUDIO_PANDOC")
@@ -58,10 +58,10 @@ setMethodS3("findPandoc", "default", function(mustExist=TRUE, ..., verbose=FALSE
   if (identical(bin, "")) bin <- NULL
   if (!isFile(bin)) bin <- NULL
 
-  verbose && cat(verbose, "Located pathname: ", bin);
+  verbose && cat(verbose, "Located pathname: ", bin)
 
   if (mustExist && !isFile(bin)) {
-    throw(sprintf("Failed to located external executable: '%s'", command));
+    throw(sprintf("Failed to located external executable: '%s'", command))
   }
 
   # Validate by retrieving version information
@@ -99,7 +99,7 @@ setMethodS3("findPandoc", "default", function(mustExist=TRUE, ..., verbose=FALSE
     }
   }
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  bin;
+  bin
 }) # findPandoc()

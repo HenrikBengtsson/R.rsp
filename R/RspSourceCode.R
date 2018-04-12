@@ -27,15 +27,15 @@
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspSourceCode", function(code=character(), ...) {
-  extend(RspProduct(code, ...), "RspSourceCode");
+  extend(RspProduct(code, ...), "RspSourceCode")
 })
 
 
 setMethodS3("print", "RspSourceCode", function(x, ...) {
-  code <- x;
-  code <- paste(code, collapse="\n");
-  cat(code);
-  cat("\n");
+  code <- x
+  code <- paste(code, collapse="\n")
+  cat(code)
+  cat("\n")
 })
 
 
@@ -65,7 +65,7 @@ setMethodS3("print", "RspSourceCode", function(x, ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("evaluate", "RspSourceCode", abstract=TRUE, createGeneric=FALSE);
+setMethodS3("evaluate", "RspSourceCode", abstract=TRUE, createGeneric=FALSE)
 
 
 
@@ -95,7 +95,7 @@ setMethodS3("evaluate", "RspSourceCode", abstract=TRUE, createGeneric=FALSE);
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("tangle", "RspSourceCode", abstract=TRUE);
+setMethodS3("tangle", "RspSourceCode", abstract=TRUE)
 
 
 #########################################################################/**
@@ -129,18 +129,18 @@ setMethodS3("tangle", "RspSourceCode", abstract=TRUE);
 #*/#########################################################################
 setMethodS3("tidy", "RspSourceCode", function(object, format=c("asis"), collapse="\n", ...) {
   # Argument 'format':
-  format <- match.arg(format);
+  format <- match.arg(format)
 
   # Record attributes
-  attrs <- attributes(object);
+  attrs <- attributes(object)
 
   # Collapse?
   if (!is.null(collapse)) {
-    object <- paste(object, collapse=collapse);
+    object <- paste(object, collapse=collapse)
   }
 
   # Restore attributes (if lost above)
-  attributes(object) <- attrs;
+  attributes(object) <- attrs
 
-  object;
+  object
 })

@@ -34,96 +34,96 @@ parseVignette <- function(pathname, commentPrefix="^[ \t]*%[ \t]*", final=FALSE,
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   findOutput <- function(pathname, pattern) {
-     path <- dirname(pathname);
-     filename <- basename(pathname);
-     ext <- gsub(".*[.]([^.]*)$", "\\1", filename);
+     path <- dirname(pathname)
+     filename <- basename(pathname)
+     ext <- gsub(".*[.]([^.]*)$", "\\1", filename)
 
      # All available output files
-     filenames <- list.files(path=path, pattern=pattern);
-     fullnames <- gsub("[.][^.]*$", "", filenames);
-     patterns <- sprintf("^%s.*[.]%s$", fullnames, ext);
-     keep <- (unlist(lapply(patterns, FUN=regexpr, filename), use.names=FALSE) != -1L);
-     filenames <- filenames[keep];
-     if (length(filenames) == 0L) return(NULL);
+     filenames <- list.files(path=path, pattern=pattern)
+     fullnames <- gsub("[.][^.]*$", "", filenames)
+     patterns <- sprintf("^%s.*[.]%s$", fullnames, ext)
+     keep <- (unlist(lapply(patterns, FUN=regexpr, filename), use.names=FALSE) != -1L)
+     filenames <- filenames[keep]
+     if (length(filenames) == 0L) return(NULL)
 
      # Order by decreasing filename lengths
-     o <- order(nchar(filenames), decreasing=TRUE);
-     filenames <- filenames[o];
-     file.path(path, filenames);
+     o <- order(nchar(filenames), decreasing=TRUE)
+     filenames <- filenames[o]
+     file.path(path, filenames)
   }
 
 
   if (!file.exists(pathname)) {
-    stop("Cannot build vignette. File not found: ", pathname);
+    stop("Cannot build vignette. File not found: ", pathname)
   }
 
-  bfr <- readLines(pathname, warn=FALSE, n=maxLines);
+  bfr <- readLines(pathname, warn=FALSE, n=maxLines)
 
   # Parse for "\Vignette" options
-  pattern <- sprintf("%s\\\\Vignette(.*)\\{(.*)\\}", commentPrefix);
-  rows <- which(regexpr(pattern, bfr) != -1L);
-  bfr <- bfr[rows];
+  pattern <- sprintf("%s\\\\Vignette(.*)\\{(.*)\\}", commentPrefix)
+  rows <- which(regexpr(pattern, bfr) != -1L)
+  bfr <- bfr[rows]
 
   # Nothing found?
   if (length(bfr) == 0L) {
-    return(NULL);
+    return(NULL)
   }
 
   # If the first entry is not among the first 20 rows, assume the ones
   # founds are part of the text document such entries rather than entries
   # used for the vignette itself.
   if (rows[1L] > 20L) {
-    return(NULL);
+    return(NULL)
   }
 
-  opts <- grep(pattern, bfr, value=TRUE);
-  keys <- gsub(pattern, "\\1", opts);
-  values <- gsub(pattern, "\\2", opts);
-  names(values) <- keys;
-  opts <- as.list(values);
+  opts <- grep(pattern, bfr, value=TRUE)
+  keys <- gsub(pattern, "\\1", opts)
+  values <- gsub(pattern, "\\2", opts)
+  names(values) <- keys
+  opts <- as.list(values)
 
   # Drop duplicated entries, assuming the first ones are the intended
   # ones.  The extra ones may happen when a vignette documents how to
   # use %\\VignetteNnn{} markup.
-  keep <- !duplicated(names(opts));
-  opts <- opts[keep];
+  keep <- !duplicated(names(opts))
+  opts <- opts[keep]
 
   # No %\VignetteIndexEntry{}?
   if (!is.element("IndexEntry", names(values))) {
-    return(NULL);
+    return(NULL)
   }
 
-  vign <- c(list(pathname=pathname), opts);
+  vign <- c(list(pathname=pathname), opts)
 
 
   # Look for a generated PDF or HTML file?
   if (final) {
-     output <- findOutput(pathname, pattern="[.](pdf|PDF|html|HTML)$");
+     output <- findOutput(pathname, pattern="[.](pdf|PDF|html|HTML)$")
      if (length(output) == 0L) {
-       stop("Failed to located PDF or HTML output file for vignette: ", pathname);
+       stop("Failed to located PDF or HTML output file for vignette: ", pathname)
      } else if (length(output) > 1L) {
-       stop("Located more than one PDF or HTML output file for vignette: ", pathname);
+       stop("Located more than one PDF or HTML output file for vignette: ", pathname)
      }
-     vign$final <- output;
+     vign$final <- output
   }
 
   # Look for a generated R source code file?
   if (source) {
-     output <- findOutput(pathname, pattern="[.][rRsS]$");
+     output <- findOutput(pathname, pattern="[.][rRsS]$")
      if (length(output) > 1L) {
-       output <- output[1L];
+       output <- output[1L]
      }
-     vign$source <- output;
+     vign$source <- output
   }
 
   # Assert unique entries
-  names <- names(vign);
-  dups <- names[duplicated(names)];
+  names <- names(vign)
+  dups <- names[duplicated(names)]
   if (length(dups) > 0L) {
-    throw("Duplicated entries detected: ", paste(dups, collapse=", "));
+    throw("Duplicated entries detected: ", paste(dups, collapse=", "))
   }
 
-  vign;
+  vign
 } # parseVignette()
 
 
@@ -163,28 +163,28 @@ parseVignette <- function(pathname, commentPrefix="^[ \t]*%[ \t]*", final=FALSE,
 # @keyword internal
 #*/###########################################################################
 parseVignettes <- function(path=".", pattern="[.][^.~]*$", ..., drop="^dummy.tex$") {
-  pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE);
+  pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE)
 
   # Ignore certain files, e.g. "^dummy.Rnw$"?
   if (length(drop) > 0L) {
-    filenames <- basename(pathnames);
-    excl <- rep(FALSE, times=length(filenames));
+    filenames <- basename(pathnames)
+    excl <- rep(FALSE, times=length(filenames))
     for (pattern in drop) {
-      excl <- excl | (regexpr(pattern, filenames) != -1L);
+      excl <- excl | (regexpr(pattern, filenames) != -1L)
     }
-    pathnames <- pathnames[!excl];
+    pathnames <- pathnames[!excl]
   }
 
-  vigns <- list();
+  vigns <- list()
   for (kk in seq_along(pathnames)) {
-    pathname <- pathnames[kk];
-    vign <- parseVignette(pathname, ...);
+    pathname <- pathnames[kk]
+    vign <- parseVignette(pathname, ...)
     if (length(vign) == 0L)
-       next;
-    vigns[[pathname]] <- vign;
+       next
+    vigns[[pathname]] <- vign
   }
 
-  vigns;
+  vigns
 } # parseVignettes()
 
 
@@ -218,55 +218,55 @@ parseVignettes <- function(path=".", pattern="[.][^.~]*$", ..., drop="^dummy.tex
 buildNonSweaveVignette <- function(vign, envir=new.env(), ...) {
   # Local functions
   SweaveStangle <- function(file, ...) {
-    pathnameR <- utils::Sweave(file, ...);
-    utils::Stangle(file, ...);
-    pathnameR;
+    pathnameR <- utils::Sweave(file, ...)
+    utils::Stangle(file, ...)
+    pathnameR
   }
 
   # A filename?
   if (is.character(vign)) {
-    pathname <- vign;
-    vign <- parseVignette(pathname, ...);
+    pathname <- vign
+    vign <- parseVignette(pathname, ...)
   }
 
-  pathname <- vign$pathname;
+  pathname <- vign$pathname
 
   # Load required packages
   if (!is.null(vign$Depends)) {
-    pkgNames <- vign$Depends;
-    pkgNames <- unlist(strsplit(pkgNames, split=",", fixed=TRUE), use.names=FALSE);
-    pkgNames <- gsub("(^[ \t]*|[ \t]*$)", "", pkgNames);
+    pkgNames <- vign$Depends
+    pkgNames <- unlist(strsplit(pkgNames, split=",", fixed=TRUE), use.names=FALSE)
+    pkgNames <- gsub("(^[ \t]*|[ \t]*$)", "", pkgNames)
     for (pkgName in pkgNames) {
-      library(pkgName, character.only=TRUE);
+      library(pkgName, character.only=TRUE)
     }
   }
 
   # Build vignette according to \VignetteBuild{} command
   if (!is.null(cmd <- vign$Engine) && nchar(cmd) > 0L) {
     # Retrieve the "engine" according to \VignetteEngine{} expression
-    res <- get(cmd, envir=envir, mode="function");
+    res <- get(cmd, envir=envir, mode="function")
   } else if (!is.null(cmd <- vign$Build) && nchar(cmd) > 0L) {
     # Parse \VignetteBuild{} expression
     tryCatch({
-      expr <- parse(text=cmd);
+      expr <- parse(text=cmd)
     }, error = function(ex) {
-      stop(sprintf("Syntax error in \\VignetteBuild{%s}: %s", cmd, ex$message));
-    });
+      stop(sprintf("Syntax error in \\VignetteBuild{%s}: %s", cmd, ex$message))
+    })
 
     # Evaluate \VignetteBuild{} expression
-    res <- eval(expr);
+    res <- eval(expr)
   } else {
      # If not specified, assume Sweave
-     res <- SweaveStangle;
+     res <- SweaveStangle
   }
 
   # Was a function specified?
   if (is.function(res)) {
-    fcn <- res;
-    res <- fcn(pathname);
+    fcn <- res
+    res <- fcn(pathname)
   }
 
-  invisible(res);
+  invisible(res)
 } # buildNonSweaveVignette()
 
 
@@ -304,24 +304,24 @@ buildNonSweaveVignette <- function(vign, envir=new.env(), ...) {
 # @keyword internal
 #*/###########################################################################
 buildNonSweaveVignettes <- function(...) {
-  vigns <- parseVignettes(...);
+  vigns <- parseVignettes(...)
   if (length(vigns) > 0L) {
-     envir <- new.env();
-     path <- system.file("doc", "templates", package="R.rsp");
-     path <- c(path, dirname(vigns[[1L]]$pathname));
-     pathnames <- file.path(path, "enginesMap.R");
-     pathnames <- pathnames[file_test("-f", pathnames)];
+     envir <- new.env()
+     path <- system.file("doc", "templates", package="R.rsp")
+     path <- c(path, dirname(vigns[[1L]]$pathname))
+     pathnames <- file.path(path, "enginesMap.R")
+     pathnames <- pathnames[file_test("-f", pathnames)]
      for (pathname in pathnames) {
-       expr <- parse(pathname);
-       eval(expr, envir=envir);
+       expr <- parse(pathname)
+       eval(expr, envir=envir)
      }
   }
   for (kk in seq_along(vigns)) {
-    vign <- vigns[[kk]];
-    vign$result <- buildNonSweaveVignette(vign, envir=envir, ...);
-    vigns[[kk]] <- vign;
+    vign <- vigns[[kk]]
+    vign$result <- buildNonSweaveVignette(vign, envir=envir, ...)
+    vigns[[kk]] <- vign
   }
-  invisible(vigns);
+  invisible(vigns)
 } # buildNonSweaveVignettes()
 
 
@@ -354,20 +354,20 @@ buildNonSweaveVignettes <- function(...) {
 # @keyword internal
 #*/###########################################################################
 buildNonSweaveTexToPdf <- function(path=".", pattern="[.](tex|ltx)$", ...) {
-  pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE);
+  pathnames <- list.files(path=path, pattern=pattern, full.names=TRUE)
 
   # Ignore dummy.tex (which is created by R from dummy.Rnw just before make)
-  keep <- !is.element(basename(pathnames), c("dummy.tex"));
-  pathnames <- pathnames[keep];
+  keep <- !is.element(basename(pathnames), c("dummy.tex"))
+  pathnames <- pathnames[keep]
 
-  res <- list();
+  res <- list()
   for (pathname in pathnames) {
-    pathnamePDF <- sprintf("%s.pdf", gsub(pattern, "", pathname));
+    pathnamePDF <- sprintf("%s.pdf", gsub(pattern, "", pathname))
     if (!isFile(pathnamePDF)) {
-       res[[pathname]] <- texi2pdf(file=pathname, ...);
+       res[[pathname]] <- texi2pdf(file=pathname, ...)
     }
   }
-  invisible(res);
+  invisible(res)
 } # buildNonSweaveTexToPdf()
 
 
@@ -401,25 +401,25 @@ buildNonSweaveTexToPdf <- function(path=".", pattern="[.](tex|ltx)$", ...) {
 buildPkgIndexHtml <- function(...) {
   # Nothing to do?
   if (file.exists("index.html")) {
-    return(NULL);
+    return(NULL)
   }
 
-  library("R.rsp");
+  library("R.rsp")
 
-  filename <- "index.html.rsp";
+  filename <- "index.html.rsp"
   if (!file.exists(filename)) {
     # If not custom index.html.rsp exists, use the one of the R.rsp package
-    path <- system.file("doc/templates", package="R.rsp");
-    pathname <- file.path(path, filename);
-    file.copy(pathname, to=".");
+    path <- system.file("doc/templates", package="R.rsp")
+    pathname <- file.path(path, filename)
+    file.copy(pathname, to=".")
     on.exit({
-      file.remove(filename);
-    });
+      file.remove(filename)
+    })
   }
 
   # Sanity check
-  stop_if_not(file.exists(filename));
+  stop_if_not(file.exists(filename))
 
   # Build index.html
-  rfile(filename);
+  rfile(filename)
 } # buildPkgIndexHtml()

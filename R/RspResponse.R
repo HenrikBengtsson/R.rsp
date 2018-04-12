@@ -64,7 +64,7 @@ setConstructorS3("RspResponse", function(...) {
 #
 # @keyword IO
 #*/#########################################################################
-setMethodS3("writeResponse", "RspResponse", abstract=TRUE);
+setMethodS3("writeResponse", "RspResponse", abstract=TRUE)
 
 
 setMethodS3("write", "RspResponse", function(...) {

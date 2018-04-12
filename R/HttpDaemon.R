@@ -54,30 +54,30 @@ setConstructorS3("HttpDaemon", function(...) {
     .rootPaths = NULL
   )
 
-  this$count <- this$count + 1L;
+  this$count <- this$count + 1L
 
   # Check if another server is already running.
   if (this$count > 1L) {
-    throw("ERROR: There is already an HttpDaemon running. Sorry, but the current implementation allows only one per R session.");
+    throw("ERROR: There is already an HttpDaemon running. Sorry, but the current implementation allows only one per R session.")
   }
 
-  this;
+  this
 })
 
 setMethodS3("finalize", "HttpDaemon", function(this, ...) {
   if (isStarted(this))
-    terminate(this);
-  this$count <- this$count - 1L;
+    terminate(this)
+  this$count <- this$count - 1L
 }, protected=TRUE, createGeneric=FALSE)
 
 
 setMethodS3("getCount", "HttpDaemon", function(static, ...) {
-  as.integer(static$.count);
+  as.integer(static$.count)
 }, protected=TRUE)
 
 
 setMethodS3("setCount", "HttpDaemon", function(static, count, ...) {
-  static$.count <- as.integer(count);
+  static$.count <- as.integer(count)
 }, protected=TRUE)
 
 
@@ -112,19 +112,19 @@ setMethodS3("setCount", "HttpDaemon", function(static, count, ...) {
 #*/###########################################################################
 setMethodS3("as.character", "HttpDaemon", function(x, ...) {
   # To please R CMD check
-  static <- x;
+  static <- x
 
-  s <- paste(class(static)[1L], ":", sep="");
+  s <- paste(class(static)[1L], ":", sep="")
   if (isStarted(static)) {
-    s <- paste(s, " HTTP daemon is started.", sep="");
-    s <- paste(s, " Current root paths: ", paste(getRootPaths(static), collapse=";"), ".", sep="");
-    s <- paste(s, " Port: ", getPort(static), ".", sep="");
+    s <- paste(s, " HTTP daemon is started.", sep="")
+    s <- paste(s, " Current root paths: ", paste(getRootPaths(static), collapse=";"), ".", sep="")
+    s <- paste(s, " Port: ", getPort(static), ".", sep="")
     s <- paste(s, " Default filename: ", getDefaultFilenamePattern(static),
-                                                        ".", sep="");
+                                                        ".", sep="")
   } else {
-    s <- paste(s, " HTTP daemon is not started.", sep="");
+    s <- paste(s, " HTTP daemon is not started.", sep="")
   }
-  s;
+  s
 })
 
 
@@ -166,18 +166,18 @@ setMethodS3("openUrl", "HttpDaemon", function(static, url=sprintf("http://%s:%d/
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'port':
-  port <- Arguments$getInteger(port, range=c(0,65535));
+  port <- Arguments$getInteger(port, range=c(0,65535))
 
 
   # Start HTTP server, if not started.
   if (!isStarted(static)) {
     # Start the web server
     rootPath <- system.file("rsp", package="R.rsp")
-    start(static, rootPath=rootPath, port=port, ...);
+    start(static, rootPath=rootPath, port=port, ...)
   }
 
   if (!is.null(url))
-    browseURL(url);
+    browseURL(url)
 })
 
 
@@ -209,7 +209,7 @@ setMethodS3("openUrl", "HttpDaemon", function(static, url=sprintf("http://%s:%d/
 # @keyword IO
 #*/#########################################################################
 setMethodS3("startHelp", "HttpDaemon", function(static, ...) {
-  openUrl(static, path="R/Help/", ...);
+  openUrl(static, path="R/Help/", ...)
 })
 
 
@@ -248,11 +248,11 @@ setMethodS3("startHelp", "HttpDaemon", function(static, ...) {
 #*/#########################################################################
 setMethodS3("getConfig", "HttpDaemon", function(static, ...) {
   # Load required package
-  requireNamespace("tcltk") || stop("Package not installed/found: tcltk");
+  requireNamespace("tcltk") || stop("Package not installed/found: tcltk")
 
-  config <- tcltk::as.tclObj("config");
-  class(config) <- c("tclArray", class(config));
-  config;
+  config <- tcltk::as.tclObj("config")
+  class(config) <- c("tclArray", class(config))
+  config
 }, static=TRUE, protected=TRUE)
 
 
@@ -291,46 +291,46 @@ setMethodS3("getHttpRequest", "HttpDaemon", function(static, ...) {
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   getRequestUri <- function(...) {
-    url <- NA;
+    url <- NA
     tryCatch({
-      url <- as.character(tcltk::tclvalue("url"));
+      url <- as.character(tcltk::tclvalue("url"))
     }, error = function(ex) {
     })
-    url;
+    url
   }
 
   getData <- function(field=NULL, ...) {
-    data <- tcltk::as.tclObj("data");
-    class(data) <- c("tclArray", class(data));
+    data <- tcltk::as.tclObj("data")
+    class(data) <- c("tclArray", class(data))
     if (is.null(field))
-      return(data);
-    value <- data[[field]];
+      return(data)
+    value <- data[[field]]
     if (is.null(value))
-      return(NULL);
-    value <- tcltk::tclvalue(value);
-    value;
+      return(NULL)
+    value <- tcltk::tclvalue(value)
+    value
   }
 
   getRequestParameters <- function(...) {
-    params <- list();
-    query <- getData("query");
+    params <- list()
+    query <- getData("query")
     if (!is.null(query)) {
-      query <- strsplit(query, split="&", fixed=TRUE)[[1L]];
+      query <- strsplit(query, split="&", fixed=TRUE)[[1L]]
       if (length(query) == 0L)
-        return(params);
+        return(params)
 
-      query <- strsplit(query, split="=", fixed=TRUE);
+      query <- strsplit(query, split="=", fixed=TRUE)
 
       for (kk in seq_along(query)) {
-        pair <- query[[kk]];
-        name <- URLdecode(pair[1L]);
-        value <- URLdecode(pair[2L]);
-        params[[kk]] <- value;
-        names(params)[kk] <- name;
+        pair <- query[[kk]]
+        name <- URLdecode(pair[1L])
+        value <- URLdecode(pair[2L])
+        params[[kk]] <- value
+        names(params)[kk] <- name
       }
     }
 
-    params;
+    params
   }
 
   HttpRequest(
@@ -374,8 +374,8 @@ setMethodS3("getHttpRequest", "HttpDaemon", function(static, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getPort", "HttpDaemon", function(static, ...) {
-  config <- getConfig(static);
-  as.integer(config$port);
+  config <- getConfig(static)
+  as.integer(config$port)
 }, static=TRUE)
 
 
@@ -413,12 +413,12 @@ setMethodS3("getPort", "HttpDaemon", function(static, ...) {
 setMethodS3("getRootPaths", "HttpDaemon", function(static, ...) {
   # If server is started, updated rootPaths from the servers settings
   if (isStarted(static)) {
-    paths <- tcltk::tcl("getRootPaths");
-    paths <- as.character(paths);
-    static$.rootPaths <- paths;
+    paths <- tcltk::tcl("getRootPaths")
+    paths <- as.character(paths)
+    static$.rootPaths <- paths
   }
 
-  static$.rootPaths;
+  static$.rootPaths
 }, static=TRUE)
 
 
@@ -455,31 +455,31 @@ setMethodS3("getRootPaths", "HttpDaemon", function(static, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("setRootPaths", "HttpDaemon", function(static, paths, ...) {
-  oldPaths <- getRootPaths(static);
+  oldPaths <- getRootPaths(static)
 
   # Keep only unique paths
-  paths <- unlist(strsplit(paths, split=";", fixed=TRUE), use.names=FALSE);
-  paths <- unique(paths);
-  static$.rootPaths <- paths;
+  paths <- unlist(strsplit(paths, split=";", fixed=TRUE), use.names=FALSE)
+  paths <- unique(paths)
+  static$.rootPaths <- paths
 
   # If server is started, updated servers settings
   if (isStarted(static)) {
-    paths <- paste(paths, collapse=";");
-    res <- tcltk::tcl("setRootPaths", paths);
+    paths <- paste(paths, collapse=";")
+    res <- tcltk::tcl("setRootPaths", paths)
   }
 
-  invisible(oldPaths);
+  invisible(oldPaths)
 }, static=TRUE)
 
 
 ## setMethodS3("refreshRootPaths", "HttpDaemon", function(static, ...) {
 ##   # If server is started, updated servers settings
 ##   if (isStarted(static)) {
-##     paths <- getRootPaths(static);
-##     paths <- paste(paths, collapse=";");
-##     res <- tcltk::tcl("setRootPaths", paths);
+##     paths <- getRootPaths(static)
+##     paths <- paste(paths, collapse=";")
+##     res <- tcltk::tcl("setRootPaths", paths)
 ##   }
-##   invisible(getRootPaths(static));
+##   invisible(getRootPaths(static))
 ## }, static=TRUE)
 
 
@@ -515,12 +515,12 @@ setMethodS3("setRootPaths", "HttpDaemon", function(static, paths, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("appendRootPaths", "HttpDaemon", function(static, paths, ...) {
-  setRootPaths(static, c(getRootPaths(static), paths), ...);
+  setRootPaths(static, c(getRootPaths(static), paths), ...)
 }, static=TRUE)
 
 
 setMethodS3("insertRootPaths", "HttpDaemon", function(static, paths, ...) {
-  setRootPaths(static, c(paths, getRootPaths(static)), ...);
+  setRootPaths(static, c(paths, getRootPaths(static)), ...)
 }, static=TRUE)
 
 
@@ -555,8 +555,8 @@ setMethodS3("insertRootPaths", "HttpDaemon", function(static, paths, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getDefaultFilenamePattern", "HttpDaemon", function(static, ...) {
-  config <- getConfig(static);
-  as.character(config$default);
+  config <- getConfig(static)
+  as.character(config$default)
 }, static=TRUE)
 
 
@@ -592,10 +592,10 @@ setMethodS3("getDefaultFilenamePattern", "HttpDaemon", function(static, ...) {
 #*/#########################################################################
 setMethodS3("isStarted", "HttpDaemon", function(x, ...) {
   # To please R CMD check...
-  static <- x;
+  static <- x
 
-  port <- getPort(static);
-  (length(port) != 0L);
+  port <- getPort(static)
+  (length(port) != 0L)
 }, static=TRUE)
 
 
@@ -630,16 +630,16 @@ setMethodS3("isStarted", "HttpDaemon", function(x, ...) {
 #*/#########################################################################
 setMethodS3("sourceTcl", "HttpDaemon", function(static, ...) {
   # Load required package
-  requireNamespace("tcltk") || stop("Package not installed/found: tcltk");
+  requireNamespace("tcltk") || stop("Package not installed/found: tcltk")
 
-  tclPath <- system.file("tcl", package="R.rsp");
-  pathname <- file.path(tclPath, "r-httpd.tcl");
+  tclPath <- system.file("tcl", package="R.rsp")
+  pathname <- file.path(tclPath, "r-httpd.tcl")
   if (!isFile(pathname))
-    stop("Tcl source code file not found: ", pathname);
+    stop("Tcl source code file not found: ", pathname)
 
-  res <- tcltk::tcl("source", pathname);
-  invisible(res);
-}, static=TRUE, protected=TRUE);
+  res <- tcltk::tcl("source", pathname)
+  invisible(res)
+}, static=TRUE, protected=TRUE)
 
 
 
@@ -690,42 +690,42 @@ setMethodS3("start", "HttpDaemon", function(x, rootPaths=NULL, port=8080, defaul
   use("R.rsp", quietly=TRUE)
 
   # To please R CMD check...
-  static <- x;
+  static <- x
 
   # Is HTTP daemon already started?
   if (isStarted(static))
-    stop("HTTP daemon is already started: ", as.character(static));
+    stop("HTTP daemon is already started: ", as.character(static))
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'rootPaths':
   if (length(rootPaths) > 0L) {
-    rootPaths <- unlist(strsplit(rootPaths, split=";", fixed=TRUE), use.names=FALSE);
+    rootPaths <- unlist(strsplit(rootPaths, split=";", fixed=TRUE), use.names=FALSE)
     rootPaths <- unlist(sapply(rootPaths, FUN=function(path) {
-      Arguments$getReadablePathname(path, mustExist=TRUE);
+      Arguments$getReadablePathname(path, mustExist=TRUE)
     }), use.names=FALSE)
-    setRootPaths(static, rootPaths);
+    setRootPaths(static, rootPaths)
   } else {
-    rootPaths <- getRootPaths(static);
+    rootPaths <- getRootPaths(static)
   }
 
   # Argument 'port':
-  port <- Arguments$getInteger(port, range=c(0L,65535L));
+  port <- Arguments$getInteger(port, range=c(0L,65535L))
 
   # Argument 'default':
-  default <- Arguments$getCharacter(default, nchar=c(1L,256L));
+  default <- Arguments$getCharacter(default, nchar=c(1L,256L))
 
   # Source the TCL httpd code
-  sourceTcl(static);
+  sourceTcl(static)
 
   # Start the HTTP daemon (the webserver)
-  res <- tcltk::tcl("server", paste(rootPaths, collapse=";"), port, default);
+  res <- tcltk::tcl("server", paste(rootPaths, collapse=";"), port, default)
 
   # Validate opened port.
-  port <- Arguments$getInteger(tcltk::tclvalue(res), range=c(0L,65535L));
+  port <- Arguments$getInteger(tcltk::tclvalue(res), range=c(0L,65535L))
 
-  invisible(port);
+  invisible(port)
 }, static=TRUE, createGeneric=FALSE)
 
 
@@ -764,13 +764,13 @@ setMethodS3("start", "HttpDaemon", function(x, rootPaths=NULL, port=8080, defaul
 setMethodS3("terminate", "HttpDaemon", function(static, ...) {
   # Is HTTP daemon already started?
   if (!isStarted(static))
-    stop("HTTP daemon is not started.");
+    stop("HTTP daemon is not started.")
 
   # Close the httpd socket.
-  tcltk::.Tcl("close $config(listen)");
-  tcltk::.Tcl("unset config");
+  tcltk::.Tcl("close $config(listen)")
+  tcltk::.Tcl("unset config")
 
-  invisible(TRUE);
+  invisible(TRUE)
 }, static=TRUE)
 
 
@@ -808,15 +808,15 @@ setMethodS3("terminate", "HttpDaemon", function(static, ...) {
 #*/#########################################################################
 setMethodS3("restart", "HttpDaemon", function(static, ...) {
   if (!isStarted(static))
-    throw("HTTP daemon not started.");
+    throw("HTTP daemon not started.")
 
-  rootPaths <- getRootPaths(static);
-  port <- getPort(static);
-  default <- getDefaultFilenamePattern(static);
+  rootPaths <- getRootPaths(static)
+  port <- getPort(static)
+  default <- getDefaultFilenamePattern(static)
 
-  terminate(static, ...);
+  terminate(static, ...)
 
-  start(static, rootPaths=rootPaths, port=port, default=default, ...);
+  start(static, rootPaths=rootPaths, port=port, default=default, ...)
 }, static=TRUE)
 
 
@@ -855,29 +855,29 @@ setMethodS3("restart", "HttpDaemon", function(static, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("writeResponse", "HttpDaemon", function(static, ...) {
-  str <- paste(..., collapse="", sep="");
+  str <- paste(..., collapse="", sep="")
 
   # Nothing to do?
   if (nchar(str) == 0L) {
-    return(invisible(0L));
+    return(invisible(0L))
   }
 
   if (isTRUE(static$.debug)) {
-    mcat("=========================================================\n");
-    mcat("= BEGIN: Fake HttpDaemon response\n");
-    mcat("=========================================================\n");
-    mcat(str);
-    mcat("=========================================================\n");
-    mcat("= END: Fake HttpDaemon response\n");
-    mcat("=========================================================\n");
+    mcat("=========================================================\n")
+    mcat("= BEGIN: Fake HttpDaemon response\n")
+    mcat("=========================================================\n")
+    mcat(str)
+    mcat("=========================================================\n")
+    mcat("= END: Fake HttpDaemon response\n")
+    mcat("=========================================================\n")
   } else {
     # Escape certain characters, by converting the string to a Tcl string
     # and back.
-    str <- as.character(tcltk::tclVar(str));
+    str <- as.character(tcltk::tclVar(str))
 
     # Write the string to HTTP output connection.
-    tcltk::.Tcl(paste("catch { puts $sock $", str, " }", sep=""));
+    tcltk::.Tcl(paste("catch { puts $sock $", str, " }", sep=""))
   }
 
-  invisible(nchar(str));
+  invisible(nchar(str))
 })

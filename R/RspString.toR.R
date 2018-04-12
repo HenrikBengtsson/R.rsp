@@ -26,8 +26,8 @@
 # }
 #*/#########################################################################
 setMethodS3("toR", "RspString", function(object, envir=parent.frame(), ...) {
-  expr <- parseExpression(object, preprocess=TRUE, envir=envir, ...);
-  toR(expr, ...);
+  expr <- parseExpression(object, preprocess=TRUE, envir=envir, ...)
+  toR(expr, ...)
 }, protected=TRUE) # toR()
 
 
@@ -59,6 +59,6 @@ setMethodS3("toR", "RspString", function(object, envir=parent.frame(), ...) {
 # }
 #*/#########################################################################
 setMethodS3("evaluate", "RspString", function(object, envir=parent.frame(), ...) {
-  rCode <- toR(object, ...);
-  process(rCode, envir=envir, ...);
+  rCode <- toR(object, ...)
+  process(rCode, envir=envir, ...)
 }, createGeneric=FALSE)

@@ -31,41 +31,41 @@ setConstructorS3("RspFileProduct", function(pathname=NA, ..., mustExist=TRUE) {
   if (!is.null(pathname) && !is.na(pathname)) {
     if (!isUrl(pathname)) {
       withoutGString({
-        pathname <- Arguments$getReadablePathname(pathname, mustExist=mustExist);
+        pathname <- Arguments$getReadablePathname(pathname, mustExist=mustExist)
       })
     }
   }
 
-  extend(RspProduct(pathname, ...), "RspFileProduct");
+  extend(RspProduct(pathname, ...), "RspFileProduct")
 })
 
 
 setMethodS3("print", "RspFileProduct", function(x, ...) {
-  s <- sprintf("%s:", class(x)[1L]);
+  s <- sprintf("%s:", class(x)[1L])
 
-  s <- c(s, sprintf("Pathname: %s", x));
+  s <- c(s, sprintf("Pathname: %s", x))
 
   # File size
-  fileSize <- getFileSize(x, "units");
+  fileSize <- getFileSize(x, "units")
   if (!is.na(fileSize)) {
-    fileSizeB <- sprintf("%.0f bytes", getFileSize(x, "numeric"));
+    fileSizeB <- sprintf("%.0f bytes", getFileSize(x, "numeric"))
     if (fileSizeB != fileSize) {
-      fileSize <- sprintf("%s (%s)", fileSize, fileSizeB);
+      fileSize <- sprintf("%s (%s)", fileSize, fileSizeB)
     }
   }
-  s <- c(s, sprintf("File size: %s", fileSize));
+  s <- c(s, sprintf("File size: %s", fileSize))
 
-  s <- c(s, sprintf("Content type: %s", getType(x)));
+  s <- c(s, sprintf("Content type: %s", getType(x)))
 
-  md <- getMetadata(x, local=FALSE);
+  md <- getMetadata(x, local=FALSE)
   for (key in names(md)) {
-    s <- c(s, sprintf("Metadata '%s': '%s'", key, md[[key]]));
+    s <- c(s, sprintf("Metadata '%s': '%s'", key, md[[key]]))
   }
 
-  s <- c(s, sprintf("Has processor: %s", hasProcessor(x)));
+  s <- c(s, sprintf("Has processor: %s", hasProcessor(x)))
 
-  s <- paste(s, collapse="\n");
-  cat(s, "\n", sep="");
+  s <- paste(s, collapse="\n")
+  cat(s, "\n", sep="")
 }, protected=TRUE)
 
 
@@ -77,74 +77,74 @@ setMethodS3("view", "RspFileProduct", function(object, ...) {
   # backslashes?]  By temporarily setting the working directory to that
   # of the file, view() for RspFileProduct works around this issue.
   if (isFile(object)) {
-    path <- dirname(object);
-    pathname <- basename(object);
-    opwd <- getwd();
-    on.exit(setwd(opwd));
-    setwd(path);
+    path <- dirname(object)
+    pathname <- basename(object)
+    opwd <- getwd()
+    on.exit(setwd(opwd))
+    setwd(path)
   } else {
-    pathname <- object;
+    pathname <- object
   }
-  browseURL(pathname, ...);
-  invisible(object);
+  browseURL(pathname, ...)
+  invisible(object)
 }, proctected=TRUE)
 
 
 
 setMethodS3("getType", "RspFileProduct", function(object, default=NA_character_, as=c("text", "IMT"), ...) {
-  as <- match.arg(as);
-  res <- NextMethod("getType", default=NA_character_);
+  as <- match.arg(as)
+  res <- NextMethod("getType", default=NA_character_)
 
   if (is.na(res)) {
     # Infer type from the filename extension?
     if (isFile(object) || isUrl(object)) {
-      res <- extensionToIMT(object);
+      res <- extensionToIMT(object)
     }
   }
 
   # Fall back to a default?
   if (is.na(res)) {
-    default <- as.character(default);
-    res <- default;
+    default <- as.character(default)
+    res <- default
   }
 
   if (as == "IMT" && !is.na(res)) {
-    res <- parseInternetMediaType(res);
+    res <- parseInternetMediaType(res)
   }
 
-  res;
+  res
 }, protected=TRUE)
 
 
 setMethodS3("getFileSize", "RspFileProduct", function(object, what=c("numeric", "units"), sep="", ...) {
   # Argument 'what':
-  what <- match.arg(what);
+  what <- match.arg(what)
 
   pathname <- object
   if (is.null(pathname) && isUrl(pathname)) {
-    fileSize <- NA_real_;
+    fileSize <- NA_real_
   } else {
-    fileSize <- file.info2(pathname)$size;
+    fileSize <- file.info2(pathname)$size
   }
 
   if (what == "numeric")
-    return(fileSize);
+    return(fileSize)
 
   if (is.na(fileSize))
-    return(fileSize);
+    return(fileSize)
 
-  units <- c("bytes", "kB", "MB", "GB", "TB");
-  scale <- 1;
+  units <- c("bytes", "kB", "MB", "GB", "TB")
+  scale <- 1
   for (kk in seq_along(units)) {
-    unit <- units[kk];
+    unit <- units[kk]
     if (fileSize < 1000)
-      break;
-    fileSize <- fileSize/1024;
+      break
+    fileSize <- fileSize/1024
   }
-  fileSize <- sprintf("%.2f %s%s", fileSize, sep, unit);
-  fileSize <- gsub(".00 bytes", " bytes", fileSize, fixed=TRUE);
+  fileSize <- sprintf("%.2f %s%s", fileSize, sep, unit)
+  fileSize <- gsub(".00 bytes", " bytes", fileSize, fixed=TRUE)
 
-  fileSize;
+  fileSize
 })
 
 
@@ -220,24 +220,24 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Locating document-type specific processor");
-  type <- getType(object);
-  verbose && cat(verbose, "RSP product content type: ", type);
+  verbose && enter(verbose, "Locating document-type specific processor")
+  type <- getType(object)
+  verbose && cat(verbose, "RSP product content type: ", type)
 
   # Nothing to do?
   if (is.na(type)) {
-    verbose && cat(verbose, "Processor found: <none>");
-    verbose && exit(verbose);
-    return(NULL);
+    verbose && cat(verbose, "Processor found: <none>")
+    verbose && exit(verbose)
+    return(NULL)
   }
-  type <- parseInternetMediaType(type)$contentType;
+  type <- parseInternetMediaType(type)$contentType
 
 
   # Nothing to do?
@@ -249,11 +249,11 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
   }
 
 
-  source <- getMetadata(object, "source", local=TRUE);
+  source <- getMetadata(object, "source", local=TRUE)
   if (is.null(source)) {
-    verbose && cat(verbose, "Source document: <unknown>");
+    verbose && cat(verbose, "Source document: <unknown>")
   } else {
-    verbose && cat(verbose, "Source document: ", sQuote(source));
+    verbose && cat(verbose, "Source document: ", sQuote(source))
   }
 
 
@@ -311,31 +311,31 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
     # Sweave or Knitr Rnw documents:
     # *.Rnw => *.tex
     "application/x-rnw" = function(...) { compileRnw(..., postprocess=FALSE) }
-  );
+  )
 
   if (is.null(fcn)) {
-    verbose && cat(verbose, "Processor found: <none>");
+    verbose && cat(verbose, "Processor found: <none>")
   } else {
     # Get the metadata attributes
-    metadata <- getMetadata(object, local=TRUE);
+    metadata <- getMetadata(object, local=TRUE)
 
     # Make sure the processor returns an RspFileProduct
     fcnT <- fcn
     processor <- function(...) {
-       do.call(fcnT, args=c(list(...), list(metadata=metadata)));
+       do.call(fcnT, args=c(list(...), list(metadata=metadata)))
     }
 
     fcn <- function(pathname, ...) {
       # Arguments 'pathname':
       if (!isUrl(pathname)) {
         withoutGString({
-          pathnameT <- Arguments$getReadablePathname(pathname);
+          pathnameT <- Arguments$getReadablePathname(pathname)
           pathname[1] <- pathnameT;  ## Preserve class and attributes etc.
         })
       }
 
       # NOTE: It is not sure that the processor supports URLs
-      pathnameR <- processor(pathname, ...);
+      pathnameR <- processor(pathname, ...)
 
       ## Check if further postprocessoring should be disabled
       metadataR <- getMetadata(pathnameR)
@@ -343,16 +343,16 @@ setMethodS3("findProcessor", "RspFileProduct", function(object, ..., verbose=FAL
       if (isFALSE(postprocessR)) metadata$postprocess <- FALSE
 
       # Always return the relative path
-      pathnameR <- getAbsolutePath(pathnameR);
-      res <- RspFileProduct(pathnameR, attrs=list(metadata=metadata), mustExist=FALSE);
-      res <- setMetadata(res, name="source", value=pathname);
+      pathnameR <- getAbsolutePath(pathnameR)
+      res <- RspFileProduct(pathnameR, attrs=list(metadata=metadata), mustExist=FALSE)
+      res <- setMetadata(res, name="source", value=pathname)
 
-      res;
+      res
     } # fcn()
-    verbose && cat(verbose, "Processor found: ", type);
+    verbose && cat(verbose, "Processor found: ", type)
   }
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  fcn;
+  fcn
 }, protected=TRUE) # findProcessor()

@@ -27,8 +27,8 @@
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspSourceCodeFactory", function(language=NA, ...) {
-  language <- Arguments$getCharacter(language);
-  extend(language, "RspSourceCodeFactory");
+  language <- Arguments$getCharacter(language)
+  extend(language, "RspSourceCodeFactory")
 })
 
 
@@ -58,7 +58,7 @@ setConstructorS3("RspSourceCodeFactory", function(language=NA, ...) {
 # }
 #*/#########################################################################
 setMethodS3("getLanguage", "RspSourceCodeFactory", function(this, ...) {
-  as.character(this);
+  as.character(this)
 })
 
 
@@ -91,20 +91,20 @@ setMethodS3("getLanguage", "RspSourceCodeFactory", function(this, ...) {
 # }
 #*/#########################################################################
 setMethodS3("makeSourceCode", "RspSourceCodeFactory", function(this, code, ...) {
-  lang <- getLanguage(this);
-  className <- sprintf("Rsp%sSourceCode", capitalize(lang));
-  ns <- getNamespace("R.rsp");
-  clazz <- Class$forName(className, envir=ns);
-  code <- clazz(code, ...);
+  lang <- getLanguage(this)
+  className <- sprintf("Rsp%sSourceCode", capitalize(lang))
+  ns <- getNamespace("R.rsp")
+  clazz <- Class$forName(className, envir=ns)
+  code <- clazz(code, ...)
 
   # Get source code header, body, and footer.
-  code <- getCompleteCode(this, code, ...);
-  code <- c(code$header, code$body, code$footer);
+  code <- getCompleteCode(this, code, ...)
+  code <- c(code$header, code$body, code$footer)
 
   # Made code object
-  code <- clazz(code, ...);
+  code <- clazz(code, ...)
 
-  code;
+  code
 }, protected=TRUE)
 
 
@@ -138,7 +138,7 @@ setMethodS3("makeSourceCode", "RspSourceCodeFactory", function(this, code, ...) 
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("exprToCode", "RspSourceCodeFactory", abstract=TRUE);
+setMethodS3("exprToCode", "RspSourceCodeFactory", abstract=TRUE)
 
 
 
@@ -174,24 +174,24 @@ setMethodS3("getCompleteCode", "RspSourceCodeFactory", function(this, object, ..
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'object':
-  object <- Arguments$getInstanceOf(object, "RspSourceCode");
-  lang <- getLanguage(this);
-  className <- sprintf("Rsp%sSourceCode", capitalize(lang));
-  object <- Arguments$getInstanceOf(object, className);
+  object <- Arguments$getInstanceOf(object, "RspSourceCode")
+  lang <- getLanguage(this)
+  className <- sprintf("Rsp%sSourceCode", capitalize(lang))
+  object <- Arguments$getInstanceOf(object, className)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Create header and footer code
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Default header and footer
-  header <- '';
-  footer <- '';
+  header <- ''
+  footer <- ''
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Merge all code
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  list(header=header, body=object, footer=footer);
+  list(header=header, body=object, footer=footer)
 }, protected=TRUE) # getCompleteCode()
 
 
@@ -225,51 +225,51 @@ setMethodS3("getCompleteCode", "RspSourceCodeFactory", function(this, object, ..
 #*/#########################################################################
 setMethodS3("toSourceCode", "RspSourceCodeFactory", function(object, doc, ...) {
   # Argument 'doc':
-  doc <- Arguments$getInstanceOf(doc, "RspDocument");
+  doc <- Arguments$getInstanceOf(doc, "RspDocument")
 
   if (length(doc) == 0L) {
-    code <- makeSourceCode(object, "", ..., type=getType(doc), metadata=getMetadata(doc, local=TRUE));
-    return(code);
+    code <- makeSourceCode(object, "", ..., type=getType(doc), metadata=getMetadata(doc, local=TRUE))
+    return(code)
   }
 
   # Assert that the RspDocument 'doc' contains no RspDocument:s
   if (any(sapply(doc, FUN=inherits, "RspDocument"))) {
-    throw(sprintf("%s argument 'doc' contains other RspDocuments, which indicates that it has not been flattened.", class(doc)[1L]));
+    throw(sprintf("%s argument 'doc' contains other RspDocuments, which indicates that it has not been flattened.", class(doc)[1L]))
   }
 
   # Assert that the RspDocument 'doc' contains no RspDirective:s
   if (any(sapply(doc, FUN=inherits, "RspDirective"))) {
-    throw(sprintf("%s argument 'doc' contains RSP preprocessing directives, which indicates that it has not been preprocessed.", class(doc)[1L]));
+    throw(sprintf("%s argument 'doc' contains RSP preprocessing directives, which indicates that it has not been preprocessed.", class(doc)[1L]))
   }
 
   # Assert that 'doc' contains only RspText:s and RspExpression:s
   nok <- sapply(doc, FUN=function(expr) {
     if (inherits(expr, "RspText") || inherits(expr, "RspExpression")) {
-      NA;
+      NA
     } else {
-      class(expr);
+      class(expr)
     }
-  });
-  nok <- nok[!is.na(nok)];
-  nok <- unique(nok);
+  })
+  nok <- nok[!is.na(nok)]
+  nok <- unique(nok)
   if (length(nok) > 0L) {
-    throw(sprintf("%s argument 'doc' contains RSP preprocessing directives, which indicates that it has not been preprocessed: %s", class(doc)[1L], hpaste(nok)));
+    throw(sprintf("%s argument 'doc' contains RSP preprocessing directives, which indicates that it has not been preprocessed: %s", class(doc)[1L], hpaste(nok)))
   }
 
   # Unescape RspText
-  isText <- sapply(doc, FUN=inherits, "RspText");
+  isText <- sapply(doc, FUN=inherits, "RspText")
   doc[isText] <- lapply(doc[isText], FUN=function(expr) {
-    RspText(getContent(expr, unescape=TRUE));
-  });
+    RspText(getContent(expr, unescape=TRUE))
+  })
 
   # Coerce all RspConstruct:s to source code
-  code <- vector("list", length=length(doc));
+  code <- vector("list", length=length(doc))
   for (kk in seq_along(doc)) {
-    code[[kk]] <- exprToCode(object, doc[[kk]], index=kk);
+    code[[kk]] <- exprToCode(object, doc[[kk]], index=kk)
   }
-  code <- unlist(code, use.names=FALSE);
+  code <- unlist(code, use.names=FALSE)
 
-  code <- makeSourceCode(object, code, ..., type=getType(doc), metadata=getMetadata(doc, local=TRUE));
+  code <- makeSourceCode(object, code, ..., type=getType(doc), metadata=getMetadata(doc, local=TRUE))
 
-  code;
+  code
 }) # toSourceCode()

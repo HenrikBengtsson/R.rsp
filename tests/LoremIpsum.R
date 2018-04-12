@@ -10,6 +10,6 @@ for (pathname in pathnames) {
     pathnameR <- rfile(pathname, workdir=outPath, verbose=-10)
     print(pathnameR)
   }, error = function(ex) {
-    print(ex);
+    print(ex)
   })
 }

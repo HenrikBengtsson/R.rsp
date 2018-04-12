@@ -10,7 +10,7 @@
 # }
 #
 # \section{To get started}{
-#   We recommend that you start by reading one of the '\href{../doc/index.html}{vignettes}';
+#   We recommend that you start by reading one of the '\href{../doc/index.html}{vignettes}'
 #   \enumerate{
 #     \item A 5 minute slideshow covering the basics of RSP.
 #     \item Detailed description of the RSP markup language.

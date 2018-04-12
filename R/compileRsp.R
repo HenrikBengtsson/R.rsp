@@ -33,46 +33,46 @@ setMethodS3("compileRsp", "default", function(filename, path=NULL, ..., outPath=
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'filename' & 'path':
-  pathname <- if (is.null(path)) filename else file.path(path, filename);
+  pathname <- if (is.null(path)) filename else file.path(path, filename)
   if (!isUrl(pathname)) {
-    pathname <- Arguments$getReadablePathname(pathname);
+    pathname <- Arguments$getReadablePathname(pathname)
   }
 
   # Arguments 'outPath':
-  outPath <- Arguments$getWritablePath(outPath);
-  if (is.null(outPath)) outPath <- ".";
+  outPath <- Arguments$getWritablePath(outPath)
+  if (is.null(outPath)) outPath <- "."
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "Compiling RSP document");
+  verbose && enter(verbose, "Compiling RSP document")
 
   # A local file?
   if (!isUrl(pathname)) {
-    pathname <- getAbsolutePath(pathname);
-    verbose && cat(verbose, "RSP pathname (absolute): ", pathname);
-    verbose && printf(verbose, "Input file size: %g bytes\n", file.info(pathname)$size);
+    pathname <- getAbsolutePath(pathname)
+    verbose && cat(verbose, "RSP pathname (absolute): ", pathname)
+    verbose && printf(verbose, "Input file size: %g bytes\n", file.info(pathname)$size)
   }
 
-  verbose && cat(verbose, "Output and working directory: ", outPath);
+  verbose && cat(verbose, "Output and working directory: ", outPath)
 
-  opwd <- ".";
-  on.exit(setwd(opwd), add=TRUE);
+  opwd <- "."
+  on.exit(setwd(opwd), add=TRUE)
   if (!is.null(outPath)) {
-    opwd <- setwd(outPath);
+    opwd <- setwd(outPath)
   }
 
-  pathname2 <- rfile(pathname, ..., envir=envir);
-  setwd(opwd); opwd <- ".";
+  pathname2 <- rfile(pathname, ..., envir=envir)
+  setwd(opwd); opwd <- "."
 
-  res <- pathname2;
-  verbose && print(verbose, res);
+  res <- pathname2
+  verbose && print(verbose, res)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res;
+  res
 }) # compileRsp()

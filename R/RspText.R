@@ -31,14 +31,14 @@
 #*/###########################################################################
 setConstructorS3("RspText", function(text=character(), escape=FALSE, ...) {
   if (escape) {
-    text <- escapeRspTags(text);
+    text <- escapeRspTags(text)
   }
-  extend(RspConstruct(text), "RspText");
+  extend(RspConstruct(text), "RspText")
 })
 
 
 setMethodS3("getInclude", "RspText", function(object, ...) {
-  TRUE;
+  TRUE
 })
 
 
@@ -70,14 +70,14 @@ setMethodS3("getInclude", "RspText", function(object, ...) {
 # }
 #*/#########################################################################
 setMethodS3("getContent", "RspText", function(text, unescape=FALSE, ...) {
-  text <- as.character(text);
+  text <- as.character(text)
   if (unescape) {
-    text <- unescapeRspTags(text);
+    text <- unescapeRspTags(text)
   }
-  text;
+  text
 })
 
 
 setMethodS3("asRspString", "RspText", function(text, ...) {
-  RspString(getContent(text));
+  RspString(getContent(text))
 })

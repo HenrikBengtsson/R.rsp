@@ -24,20 +24,20 @@
 #*/###########################################################################
 setConstructorS3("HttpRequest", function(requestUri=NULL, parameters=list(), ...) {
   if (is.list(requestUri)) {
-    request <- requestUri;
-    requestUri <- request$requestUri;
-    parameters <- request$parameters;
+    request <- requestUri
+    requestUri <- request$requestUri
+    parameters <- request$parameters
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'requestUri':
-  requestUri <- Arguments$getCharacter(requestUri);
+  requestUri <- Arguments$getCharacter(requestUri)
 
   # Argument 'parameters':
   if (!is.list(parameters))
-    stop("Argument 'parameters' must be a list: ", mode(parameters));
+    stop("Argument 'parameters' must be a list: ", mode(parameters))
 
   extend(Object(), "HttpRequest",
     serverPort = NA,
@@ -86,25 +86,25 @@ setConstructorS3("HttpRequest", function(requestUri=NULL, parameters=list(), ...
 #*/###########################################################################
 setMethodS3("as.character", "HttpRequest", function(x, ...) {
   # To please R CMD check
-  this <- x;
+  this <- x
 
-  s <- paste(class(this)[1], ":", sep="");
+  s <- paste(class(this)[1], ":", sep="")
 
   if (is.null(this$requestUri)) {
-    s <- paste(s, " Request URI: <none>.", sep="");
+    s <- paste(s, " Request URI: <none>.", sep="")
   } else {
-    s <- paste(s, " Request URI: ", this$requestUri, ".", sep="");
+    s <- paste(s, " Request URI: ", this$requestUri, ".", sep="")
   }
 
   if (nbrOfParameters(this) > 0) {
-    params <- unlist(this$parameters, use.names=TRUE);
-    params <- paste(names(params), params, sep="=");
-    params <- paste(params, collapse=", ");
-    s <- paste(s, " Parameters: ", params, ".", sep="");
+    params <- unlist(this$parameters, use.names=TRUE)
+    params <- paste(names(params), params, sep="=")
+    params <- paste(params, collapse=", ")
+    s <- paste(s, " Parameters: ", params, ".", sep="")
   } else {
-    s <- paste(s, " Parameters: <none>.", sep="");
+    s <- paste(s, " Parameters: <none>.", sep="")
   }
-  s;
+  s
 })
 
 
@@ -141,7 +141,7 @@ setMethodS3("as.character", "HttpRequest", function(x, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("nbrOfParameters", "HttpRequest", function(this, ...) {
-  length(this$parameters);
+  length(this$parameters)
 })
 
 
@@ -176,11 +176,11 @@ setMethodS3("nbrOfParameters", "HttpRequest", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getParameters", "HttpRequest", function(this, trim=FALSE, ...) {
-  params <- as.list(this$parameters);
+  params <- as.list(this$parameters)
   if (trim) {
-    params <- lapply(params, FUN=trim);
+    params <- lapply(params, FUN=trim)
   }
-  params;
+  params
 })
 
 
@@ -222,18 +222,18 @@ setMethodS3("getParameters", "HttpRequest", function(this, trim=FALSE, ...) {
 #*/#########################################################################
 setMethodS3("getParameter", "HttpRequest", function(this, name, default=NULL, drop=TRUE, ...) {
   if (hasParameter(this, name)) {
-    params <- getParameters(this, ...);
-    idxs <- which(names(params) == name);
-    params <- params[idxs];
+    params <- getParameters(this, ...)
+    idxs <- which(names(params) == name)
+    params <- params[idxs]
 
     if (drop && length(params) == 1L) {
-      params <- params[[1L]];
+      params <- params[[1L]]
     }
   } else {
-    params <- default;
+    params <- default
   }
 
-  params;
+  params
 })
 
 
@@ -270,8 +270,8 @@ setMethodS3("getParameter", "HttpRequest", function(this, name, default=NULL, dr
 # @keyword IO
 #*/#########################################################################
 setMethodS3("hasParameter", "HttpRequest", function(this, name, ...) {
-  name <- Arguments$getCharacter(name, nchar=c(1,256));
-  is.element(name, names(this$parameters));
+  name <- Arguments$getCharacter(name, nchar=c(1,256))
+  is.element(name, names(this$parameters))
 })
 
 
@@ -307,7 +307,7 @@ setMethodS3("hasParameter", "HttpRequest", function(this, name, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getRemoteAddress", "HttpRequest", function(this, ...) {
-  this$remoteAddress;
+  this$remoteAddress
 })
 
 
@@ -343,7 +343,7 @@ setMethodS3("getRemoteAddress", "HttpRequest", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getRemoteHost", "HttpRequest", function(this, ...) {
-  this$remoteHost;
+  this$remoteHost
 })
 
 
@@ -378,7 +378,7 @@ setMethodS3("getRemoteHost", "HttpRequest", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getServerName", "HttpRequest", function(this, ...) {
-  this$serverName;
+  this$serverName
 })
 
 
@@ -413,7 +413,7 @@ setMethodS3("getServerName", "HttpRequest", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getServerPort", "HttpRequest", function(this, ...) {
-  as.integer(this$serverPort);
+  as.integer(this$serverPort)
 })
 
 
@@ -447,7 +447,7 @@ setMethodS3("getServerPort", "HttpRequest", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getScheme", "HttpRequest", function(this, ...) {
-  this$scheme;
+  this$scheme
 })
 
 
@@ -480,7 +480,7 @@ setMethodS3("getScheme", "HttpRequest", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getProtocol", "HttpRequest", function(this, ...) {
-  this$protocol;
+  this$protocol
 })
 
 
@@ -513,7 +513,7 @@ setMethodS3("getProtocol", "HttpRequest", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getContentType", "HttpRequest", function(this, ...) {
-  this$contentType;
+  this$contentType
 })
 
 
@@ -545,10 +545,10 @@ setMethodS3("getContentType", "HttpRequest", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getContentLength", "HttpRequest", function(this, ...) {
-  len <- this$contentLength;
+  len <- this$contentLength
   if (is.null(len))
-    len <- -1;
-  as.integer(len);
+    len <- -1
+  as.integer(len)
 })
 
 setMethodS3("getDateHeader", "HttpRequest", function(this, ...) {
@@ -563,14 +563,14 @@ setMethodS3("getContextPath", "HttpRequest", function(this, ...) {
 
 
 setMethodS3("getQueryString", "HttpRequest", function(this, ...) {
-  this$queryString;
+  this$queryString
 }, protected=TRUE)
 
 setMethodS3("getRemoteUser", "HttpRequest", function(this, ...) {
 }, protected=TRUE)
 
 setMethodS3("getRequestUri", "HttpRequest", function(this, ...) {
-  this$requestUri;
+  this$requestUri
 }, protected=TRUE)
 
 setMethodS3("getRequestUrl", "HttpRequest", function(this, ...) {
@@ -610,7 +610,7 @@ setMethodS3("getServletPath", "HttpRequest", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getRealPath", "HttpRequest", function(this, uri, ...) {
-  contextRoot <- this$contextRoot;
-  realPath <- filePath(contextRoot, uri);
-  realPath;
+  contextRoot <- this$contextRoot
+  realPath <- filePath(contextRoot, uri)
+  realPath
 })

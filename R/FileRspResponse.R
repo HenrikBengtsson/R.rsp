@@ -28,12 +28,12 @@
 setConstructorS3("FileRspResponse", function(file=stdout(), path=NULL, overwrite=FALSE, ...) {
   # Argument 'file' and 'path':
   if (is.character(file)) {
-    file <- Arguments$getWritablePathname(file=file, path=path, mustNotExist=!overwrite);
+    file <- Arguments$getWritablePathname(file=file, path=path, mustNotExist=!overwrite)
     # Empty the file
-    cat(file=file, "");
+    cat(file=file, "")
   } else if (!inherits(file, "connection")) {
     throw("Argument 'file' must be a filename or a connection: ",
-                                                          class(file)[1]);
+                                                          class(file)[1])
   }
 
   extend(RspResponse(), "FileRspResponse",
@@ -71,25 +71,25 @@ setConstructorS3("FileRspResponse", function(file=stdout(), path=NULL, overwrite
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getOutput", "FileRspResponse", function(this, ...) {
-  this$file;
+  this$file
 })
 
 
 setMethodS3("writeResponse", "FileRspResponse", function(this, ..., collapse="", sep="") {
-  msg <- paste(..., collapse=collapse, sep=sep);
-  msg <- as.character(GString(msg));
-  out <- getOutput(this);
-  cat(file=out, append=TRUE, msg);
+  msg <- paste(..., collapse=collapse, sep=sep)
+  msg <- as.character(GString(msg))
+  out <- getOutput(this)
+  cat(file=out, append=TRUE, msg)
 })
 
 
 
 setMethodS3("flush", "FileRspResponse", function(con) {
   # To please R CMD check.
-  this <- con;
+  this <- con
 
-  out <- getOutput(this);
-  flush(out);
+  out <- getOutput(this)
+  flush(out)
 }, appendVarArgs=FALSE)
 
 
@@ -122,7 +122,7 @@ setMethodS3("flush", "FileRspResponse", function(con) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getPath", "FileRspResponse", function(this, ...) {
-  getParent(this$file);
+  getParent(this$file)
 }, createGeneric=FALSE)
 
 
@@ -155,7 +155,7 @@ setMethodS3("getPath", "FileRspResponse", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getName", "FileRspResponse", function(this, ...) {
-  basename(this$file);
+  basename(this$file)
 }, createGeneric=FALSE)
 
 
@@ -188,5 +188,5 @@ setMethodS3("getName", "FileRspResponse", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getAbsolutePath", "FileRspResponse", function(this, ...) {
-  getAbsolutePath(this$file);
+  getAbsolutePath(this$file)
 }, createGeneric=FALSE)

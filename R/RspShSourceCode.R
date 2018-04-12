@@ -24,7 +24,7 @@
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspShSourceCode", function(...) {
-  extend(RspSourceCode(...), "RspShSourceCode");
+  extend(RspSourceCode(...), "RspShSourceCode")
 })
 
 
@@ -72,13 +72,13 @@ setMethodS3("evaluate", "RspShSourceCode", function(object, envir=parent.frame()
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   evalSh <- function(text, ...) {
     pathnameT <- tempfile(pattern="RSP-sh-", fileext=".sh")
-    writeLines(text, con=pathnameT);
+    writeLines(text, con=pathnameT)
     on.exit({
-      file.remove(pathnameT);
+      file.remove(pathnameT)
     })
-    res <- system2("sh", args=list(pathnameT), stdout=TRUE);
-    res <- paste(res, collapse="\n");
-    res;
+    res <- system2("sh", args=list(pathnameT), stdout=TRUE)
+    res <- paste(res, collapse="\n")
+    res
   } # evalSh()
 
 
@@ -86,33 +86,33 @@ setMethodS3("evaluate", "RspShSourceCode", function(object, envir=parent.frame()
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'args':
-  args <- cmdArgs(args=args);
+  args <- cmdArgs(args=args)
 
   # Argument 'output':
-  output <- match.arg(output);
+  output <- match.arg(output)
 
 
-  code <- object;
+  code <- object
 
   # Assign arguments to the parse/evaluation environment
-  attachLocally(args, envir=envir);
+  attachLocally(args, envir=envir)
 
   # Evaluate R source code and capture output
-  res <- evalSh(code);
+  res <- evalSh(code)
 
   if (output == "RspStringProduct") {
-    res <- RspStringProduct(res, type=getType(object));
+    res <- RspStringProduct(res, type=getType(object))
   } else {
-    cat(res);
-    res <- NULL;
+    cat(res)
+    res <- NULL
   }
 
-  res;
+  res
 }, createGeneric=FALSE) # evaluate()
 
 
 setMethodS3("findProcessor", "RspShSourceCode", function(object, ...) {
   function(...) {
-    evaluate(...);
+    evaluate(...)
   }
 }) # findProcess()

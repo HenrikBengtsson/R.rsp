@@ -29,17 +29,17 @@
 setConstructorS3("RspObject", function(value=NA, attrs=list(), ...) {
   # Argument 'attrs':
   if (!is.list(attrs)) {
-    throw("Argument 'attrs' is not a list: ", mode(attrs)[1L]);
+    throw("Argument 'attrs' is not a list: ", mode(attrs)[1L])
   }
 
   # Argument '...':
-  userAttrs <- list(...);
+  userAttrs <- list(...)
 
 
-  this <- extend(value, "RspObject");
-  this <- setAttributes(this, attrs);
-  this <- setAttributes(this, userAttrs);
-  this;
+  this <- extend(value, "RspObject")
+  this <- setAttributes(this, attrs)
+  this <- setAttributes(this, userAttrs)
+  this
 })
 
 
@@ -76,8 +76,8 @@ setConstructorS3("RspObject", function(value=NA, attrs=list(), ...) {
 # }
 #*/#########################################################################
 setMethodS3("print", "RspObject", function(x, ...) {
-  s <- NextMethod("print");
-  s <- c(sprintf("%s:", class(x)[1L]), s);
-  s <- paste(s, collapse="\n");
-  cat(s, "\n", sep="");
+  s <- NextMethod("print")
+  s <- c(sprintf("%s:", class(x)[1L]), s)
+  s <- paste(s, collapse="\n")
+  cat(s, "\n", sep="")
 }, protected=TRUE)

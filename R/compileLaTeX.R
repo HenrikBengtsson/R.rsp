@@ -49,39 +49,39 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Arguments 'filename' & 'path':
-  pathname <- if (is.null(path)) filename else file.path(path, filename);
+  pathname <- if (is.null(path)) filename else file.path(path, filename)
   if (!isUrl(pathname)) {
-    pathname <- Arguments$getReadablePathname(pathname);
+    pathname <- Arguments$getReadablePathname(pathname)
   }
 
   # Arguments 'outPath':
-  outPath <- Arguments$getWritablePath(outPath);
-  if (is.null(outPath)) outPath <- ".";
+  outPath <- Arguments$getWritablePath(outPath)
+  if (is.null(outPath)) outPath <- "."
 
   # Arguments 'texinputs':
-  texinputs <- Arguments$getCharacters(texinputs);
+  texinputs <- Arguments$getCharacters(texinputs)
 
   # Arguments 'format':
-  format <- match.arg(format);
+  format <- match.arg(format)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "Compiling LaTeX document");
+  verbose && enter(verbose, "Compiling LaTeX document")
 
   # Download URL?
   if (isUrl(pathname)) {
-    verbose && enter(verbose, "Downloading URL");
-    url <- pathname;
-    verbose && cat(verbose, "URL: ", url);
-    pathname <- downloadFile(url, verbose=less(verbose,50));
-    verbose && cat(verbose, "Local file: ", pathname);
-    verbose && exit(verbose);
+    verbose && enter(verbose, "Downloading URL")
+    url <- pathname
+    verbose && cat(verbose, "URL: ", url)
+    pathname <- downloadFile(url, verbose=less(verbose,50))
+    verbose && cat(verbose, "Local file: ", pathname)
+    verbose && exit(verbose)
   }
 
   ## Assert supported filename extension
@@ -91,130 +91,130 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
   }
 
   # Shorten, e.g. ../foo/../foo/ to ../foo
-  pathname <- normalizePath(pathname);
-  pathname <- getAbsolutePath(pathname);
-  verbose && cat(verbose, "LaTeX pathname (absolute): ", pathname);
-  verbose && printf(verbose, "Input file size: %g bytes\n", file.info(pathname)$size);
-  verbose && cat(verbose, "Output format: ", format);
-  verbose && cat(verbose, "Output and working directory: ", getAbsolutePath(outPath));
-  pattern <- "(.*)[.]([^.]+)$";
-  replace <- sprintf("\\1.%s", format);
-  filenameOut <- gsub(pattern, replace, basename(pathname));
-  pathnameOut <- filePath(outPath, filenameOut);
-  verbose && cat(verbose, "Output pathname (", toupper(format), "): ", getAbsolutePath(pathnameOut));
+  pathname <- normalizePath(pathname)
+  pathname <- getAbsolutePath(pathname)
+  verbose && cat(verbose, "LaTeX pathname (absolute): ", pathname)
+  verbose && printf(verbose, "Input file size: %g bytes\n", file.info(pathname)$size)
+  verbose && cat(verbose, "Output format: ", format)
+  verbose && cat(verbose, "Output and working directory: ", getAbsolutePath(outPath))
+  pattern <- "(.*)[.]([^.]+)$"
+  replace <- sprintf("\\1.%s", format)
+  filenameOut <- gsub(pattern, replace, basename(pathname))
+  pathnameOut <- filePath(outPath, filenameOut)
+  verbose && cat(verbose, "Output pathname (", toupper(format), "): ", getAbsolutePath(pathnameOut))
 
-  opwd <- ".";
-  on.exit(setwd(opwd), add=TRUE);
+  opwd <- "."
+  on.exit(setwd(opwd), add=TRUE)
   if (!is.null(outPath)) {
-    opwd <- setwd(outPath);
+    opwd <- setwd(outPath)
   }
 
-  verbose && enter(verbose, "Calling tools::texi2dvi()");
-  pdf <- (format == "pdf");
-  pathnameR <- getRelativePath(pathname);
+  verbose && enter(verbose, "Calling tools::texi2dvi()")
+  pdf <- (format == "pdf")
+  pathnameR <- getRelativePath(pathname)
   # Sanity check
-  pathnameRx <- Arguments$getReadablePathname(pathname);
+  pathnameRx <- Arguments$getReadablePathname(pathname)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Append the directory of the TeX file to TEXINPUTS search path?
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  pathR <- dirname(pathnameR);
+  pathR <- dirname(pathnameR)
   if (pathR != ".") {
-    verbose && enter(verbose, "Appending directory of TeX file to 'texinputs'");
+    verbose && enter(verbose, "Appending directory of TeX file to 'texinputs'")
     if (!is.null(texinputs)) {
-      texinputs <- unlist(strsplit(texinputs, split="[:;]", fixed=FALSE), use.names=FALSE);
+      texinputs <- unlist(strsplit(texinputs, split="[:;]", fixed=FALSE), use.names=FALSE)
     }
-    verbose && cat(verbose, "'texinputs' before:");
-    verbose && print(verbose, texinputs);
+    verbose && cat(verbose, "'texinputs' before:")
+    verbose && print(verbose, texinputs)
     # Shorten, e.g. ../foo/../foo/ to ../foo
-    pathR <- normalizePath(pathR);
+    pathR <- normalizePath(pathR)
 
     # Append as relative or absolute path (using the shortest one)
-    pathRR <- getRelativePath(pathR);
-    pathRA <- getAbsolutePath(pathR);
+    pathRR <- getRelativePath(pathR)
+    pathRA <- getAbsolutePath(pathR)
     if (nchar(pathRA) < nchar(pathRR)) {
-      texinputs <- c(pathRA, texinputs);
+      texinputs <- c(pathRA, texinputs)
     } else {
-      texinputs <- c(pathRR, texinputs);
+      texinputs <- c(pathRR, texinputs)
     }
-##      texinputs <- c(pathRR, texinputs);
-##      texinputs <- c(pathRA, texinputs);
+##      texinputs <- c(pathRR, texinputs)
+##      texinputs <- c(pathRA, texinputs)
 
     # Append as temporary link, iff possible
-    verbose && enter(verbose, "Appending temporary link, iff possible");
-    link <- basename(tempdir());
-    verbose && cat(verbose, "Link: ", link);
+    verbose && enter(verbose, "Appending temporary link, iff possible")
+    link <- basename(tempdir())
+    verbose && cat(verbose, "Link: ", link)
     if (!file.exists(link)) {
-      verbose && cat(verbose, "Trying to create link to target: ", pathR);
+      verbose && cat(verbose, "Trying to create link to target: ", pathR)
       tryCatch({
-        linkT <- createLink(target=pathR, link=link);
-        verbose && cat(verbose, "Created link: ", linkT);
+        linkT <- createLink(target=pathR, link=link)
+        verbose && cat(verbose, "Created link: ", linkT)
       }, error = function(ex) {
         verbose && print(verbose, ex)
       })
       if (file.exists(link)) {
-        linkA <- getAbsolutePath(link);
-        on.exit(removeDirectory(linkA, mustExist=FALSE), add=TRUE);
-        verbose && cat(verbose, "Link created: ", link);
-        texinputs <- c(link, texinputs);
+        linkA <- getAbsolutePath(link)
+        on.exit(removeDirectory(linkA, mustExist=FALSE), add=TRUE)
+        verbose && cat(verbose, "Link created: ", link)
+        texinputs <- c(link, texinputs)
       }
     }
-    verbose && exit(verbose);
+    verbose && exit(verbose)
 
     # Keep unique
-    texinputs <- unique(texinputs);
+    texinputs <- unique(texinputs)
 
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   }
 
-  verbose && cat(verbose, "texinputs:");
-  verbose && print(verbose, texinputs);
+  verbose && cat(verbose, "texinputs:")
+  verbose && print(verbose, texinputs)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Temporarily cleanup TEXINPUTS, BIBINPUTS, BSTINPUTS, TEXINDY
   # by removing empty, duplicated and non-existing paths.  This
   # lowers the risk for compilation failure due to too long paths.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  verbose && enter(verbose, "Cleaning up LaTeX environment variable");
+  verbose && enter(verbose, "Cleaning up LaTeX environment variable")
   cleanupPath <- function(path, sep=.Platform$path.sep) {
-    appendSep <- (regexpr(sprintf("%s$", sep), path) != -1L);
+    appendSep <- (regexpr(sprintf("%s$", sep), path) != -1L)
 
-    path <- unlist(strsplit(path, split=sep, fixed=TRUE));
+    path <- unlist(strsplit(path, split=sep, fixed=TRUE))
 
     # Drop duplicates
-    path <- unique(path);
+    path <- unique(path)
     # Drop empty paths
-    path <- path[nchar(path) > 0L];
+    path <- path[nchar(path) > 0L]
     # Drop non-existing paths (accounting for foo// specified paths)
-    pathX <- gsub("[/\\]*$", "", path);
-    isDir <- sapply(pathX, FUN=file.exists);
-    path <- path[isDir];
+    pathX <- gsub("[/\\]*$", "", path)
+    isDir <- sapply(pathX, FUN=file.exists)
+    path <- path[isDir]
     # Re-append separator to the end?
-    if (appendSep) path <- c(path, "");
+    if (appendSep) path <- c(path, "")
 
-    paste(path, collapse=sep);
+    paste(path, collapse=sep)
   } # cleanupPath()
 
-  vars <- c("TEXINPUTS", "BIBINPUTS", "BSTINPUTS", "TEXINDY");
-  verbose && cat(verbose, "Original:");
-  verbose && printf(verbose, " %s: %s\n", vars, Sys.getenv(vars));
-  envs <- Sys.getenv(vars, NA);
-  envs <- envs[!is.na(envs)];
+  vars <- c("TEXINPUTS", "BIBINPUTS", "BSTINPUTS", "TEXINDY")
+  verbose && cat(verbose, "Original:")
+  verbose && printf(verbose, " %s: %s\n", vars, Sys.getenv(vars))
+  envs <- Sys.getenv(vars, NA)
+  envs <- envs[!is.na(envs)]
 
   # Cleanup paths
   if (length(envs) > 0L) {
     # Undo any changes to system environments
-    on.exit(do.call(Sys.setenv, as.list(envs)), add=TRUE);
-    envs2 <- sapply(envs, FUN=cleanupPath);
+    on.exit(do.call(Sys.setenv, as.list(envs)), add=TRUE)
+    envs2 <- sapply(envs, FUN=cleanupPath)
     if (length(envs2) > 0L) {
       do.call(Sys.setenv, as.list(envs2))
       vars <- names(envs2)
-      verbose && cat(verbose, "Cleaned up:");
-      verbose && printf(verbose, " %s: %s\n", vars, Sys.getenv(vars));
+      verbose && cat(verbose, "Cleaned up:")
+      verbose && printf(verbose, " %s: %s\n", vars, Sys.getenv(vars))
     }
   }
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -224,54 +224,54 @@ setMethodS3("compileLaTeX", "default", function(filename, path=NULL, format=c("p
   # into a PDF.  This is useful on Travis CI where we then can
   # avoid having to install a huge LaTeX system for each check.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  fallback <- Sys.getenv("R_RSP_COMPILELATEX_FALLBACK");
+  fallback <- Sys.getenv("R_RSP_COMPILELATEX_FALLBACK")
   if (nzchar(fallback)) {
-    verbose && enter(verbose, "Fallback");
+    verbose && enter(verbose, "Fallback")
     # Disable fallback until done to avoid recursive calls when
     # calling isCapableOf(..., "latex").
-    Sys.unsetenv("R_RSP_COMPILELATEX_FALLBACK");
-    fallback0 <- fallback;
-    on.exit(Sys.setenv("R_RSP_COMPILELATEX_FALLBACK"=fallback0), add=TRUE);
+    Sys.unsetenv("R_RSP_COMPILELATEX_FALLBACK")
+    fallback0 <- fallback
+    on.exit(Sys.setenv("R_RSP_COMPILELATEX_FALLBACK"=fallback0), add=TRUE)
 
-    verbose && cat(verbose, "R_RSP_COMPILELATEX_FALLBACK=", fallback);
-    forceFB <- (regexpr("-force", fallback) != -1L);
+    verbose && cat(verbose, "R_RSP_COMPILELATEX_FALLBACK=", fallback)
+    forceFB <- (regexpr("-force", fallback) != -1L)
     if (forceFB) {
-      fallback <- gsub("-force", "", fallback);
-      verbose && cat(verbose, "Forced fallback");
-      verbose && cat(verbose, "R_RSP_COMPILELATEX_FALLBACK=", fallback);
+      fallback <- gsub("-force", "", fallback)
+      verbose && cat(verbose, "Forced fallback")
+      verbose && cat(verbose, "R_RSP_COMPILELATEX_FALLBACK=", fallback)
     }
 
     if (forceFB || !isCapableOf(R.rsp, "latex")) {
       if (fallback == "copy") {
         texi2dvi <- function(pathnameR, pdf=TRUE, ...) {
-          verbose && enter(verbose, "Faking texi2dvi() by copying source file.");
-          pathnameD <- file_path_sans_ext(basename(pathnameR));
-          pathnameD <- paste(pathnameD, if (pdf) "pdf" else "dvi", sep=".");
-          copyFile(pathnameR, pathnameD, overwrite=TRUE);
-          verbose && printf(verbose, "Copied: %s -> %s\n", pathnameR, pathnameD);
-          verbose && exit(verbose);
+          verbose && enter(verbose, "Faking texi2dvi() by copying source file.")
+          pathnameD <- file_path_sans_ext(basename(pathnameR))
+          pathnameD <- paste(pathnameD, if (pdf) "pdf" else "dvi", sep=".")
+          copyFile(pathnameR, pathnameD, overwrite=TRUE)
+          verbose && printf(verbose, "Copied: %s -> %s\n", pathnameR, pathnameD)
+          verbose && exit(verbose)
         } # texi2dvi()
-        verbose && cat(verbose, "Faking texi2dvi() by copying source file.");
+        verbose && cat(verbose, "Faking texi2dvi() by copying source file.")
       } else {
-        throw("Unknown value on _RSP_COMPILELATEX_FALLBACK_: ", fallback);
+        throw("Unknown value on _RSP_COMPILELATEX_FALLBACK_: ", fallback)
       }
     }
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   }
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Compile
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  texi2dvi(pathnameR, pdf=pdf, clean=clean, quiet=quiet, texinputs=texinputs);
+  texi2dvi(pathnameR, pdf=pdf, clean=clean, quiet=quiet, texinputs=texinputs)
 
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  setwd(opwd); opwd <- ".";
-  verbose && printf(verbose, "Output file size: %g bytes\n", file.info(pathnameOut)$size);
+  setwd(opwd); opwd <- "."
+  verbose && printf(verbose, "Output file size: %g bytes\n", file.info(pathnameOut)$size)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  pathnameOut;
+  pathnameOut
 }) # compileLaTeX()

@@ -30,11 +30,11 @@
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspLanguage", function(language="plain", ...) {
-  language <- Arguments$getCharacter(language, length=1, nchar=c(1,64));
+  language <- Arguments$getCharacter(language, length=1, nchar=c(1,64))
 
   extend(Object(), "RspLanguage",
     language=language
-  );
+  )
 })
 
 
@@ -67,7 +67,7 @@ setConstructorS3("RspLanguage", function(language="plain", ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getLanguage", "RspLanguage", function(this, ...) {
-  this$language;
+  this$language
 })
 
 
@@ -99,7 +99,7 @@ setMethodS3("getLanguage", "RspLanguage", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getNewline", "RspLanguage", function(this, ...) {
-  "\n";
+  "\n"
 })
 
 
@@ -133,9 +133,9 @@ setMethodS3("getNewline", "RspLanguage", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getComment", "RspLanguage", function(this, ...) {
-  s <- paste(..., collapse="\n", sep="");
+  s <- paste(..., collapse="\n", sep="")
   # By default, no output!
-  "";
+  ""
 })
 
 
@@ -167,7 +167,7 @@ setMethodS3("getComment", "RspLanguage", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("escape", "RspLanguage", function(this, ...) {
-  paste(..., collapse="\n", sep="");
+  paste(..., collapse="\n", sep="")
 })
 
 
@@ -200,5 +200,5 @@ setMethodS3("escape", "RspLanguage", function(this, ...) {
 # @keyword IO
 #*/#########################################################################
 setMethodS3("getVerbatim", "RspLanguage", function(this, ...) {
-  escape(this, ...);
+  escape(this, ...)
 })

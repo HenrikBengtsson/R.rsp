@@ -25,7 +25,7 @@
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspShSourceCodeFactory", function(...) {
-  extend(RspSourceCodeFactory("sh"), "RspShSourceCodeFactory");
+  extend(RspSourceCodeFactory("sh"), "RspShSourceCodeFactory")
 })
 
 
@@ -35,39 +35,39 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
   # Local function
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   escapeRspText <- function(text) {
-    text <- deparse(text);
-    text <- substring(text, first=2L, last=nchar(text)-1L);
-    text;
+    text <- deparse(text)
+    text <- substring(text, first=2L, last=nchar(text)-1L)
+    text
   } # escapeRspText()
 
   makeCode <- function(code, echo=FALSE, include=FALSE, ...) {
-    code <- unlist(strsplit(code, split="\n", fixed=TRUE), use.names=FALSE);
-    codeT <- trim(code);
+    code <- unlist(strsplit(code, split="\n", fixed=TRUE), use.names=FALSE)
+    codeT <- trim(code)
 
-    n <- length(code);
-    codeE <- sapply(code, FUN=escapeRspText);
-    codeE <- sprintf("printf \"%s\"", codeE);
-    suffixR <- rep(" > /dev/null", times=n);
-    codeR <- sprintf("%s%s", codeT, suffixR);
+    n <- length(code)
+    codeE <- sapply(code, FUN=escapeRspText)
+    codeE <- sprintf("printf \"%s\"", codeE)
+    suffixR <- rep(" > /dev/null", times=n)
+    codeR <- sprintf("%s%s", codeT, suffixR)
     if (include) {
       # Output the last out
-      codeR[n] <- sprintf("printf \"%s\"", code[n]);
+      codeR[n] <- sprintf("printf \"%s\"", code[n])
     }
 
-    codeS <- matrix(c(codeE, codeR), nrow=2L, byrow=TRUE);
-    rownames(codeS) <- c("echo", "include");
+    codeS <- matrix(c(codeE, codeR), nrow=2L, byrow=TRUE)
+    rownames(codeS) <- c("echo", "include")
 
     if (echo && !include) {
-      code <- codeS[1L,,drop=TRUE];
+      code <- codeS[1L,,drop=TRUE]
     } else if (echo && include) {
-      code <- codeS;
+      code <- codeS
     } else if (!echo && include) {
-      code <- codeS[2L,,drop=TRUE];
+      code <- codeS[2L,,drop=TRUE]
     } else if (!echo && !include) {
-      code <- codeS[2L,,drop=TRUE];
+      code <- codeS[2L,,drop=TRUE]
     }
 
-    code;
+    code
   } # makeCode()
 
 
@@ -75,9 +75,9 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'expr':
-  reqClasses <- c("RspText", "RspExpression");
+  reqClasses <- c("RspText", "RspExpression")
   if (!inherits(expr, reqClasses)) {
-    throw("Argument 'expr' must be of class RspText or RspExpression: ", class(expr)[1L]);
+    throw("Argument 'expr' must be of class RspText or RspExpression: ", class(expr)[1L])
   }
 
 
@@ -85,21 +85,21 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
   # RspText => echo "<text>"
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspText")) {
-    text <- getContent(expr);
+    text <- getContent(expr)
 
-    code <- NULL;
+    code <- NULL
     while (nchar(text) > 0L) {
-      textT <- substring(text, first=1L, last=1024L);
-      textT <- escapeRspText(textT);
-      codeT <- sprintf("printf \"%s\"", textT);
-      code <- c(code, codeT);
-      text <- substring(text, first=1025L);
+      textT <- substring(text, first=1L, last=1024L)
+      textT <- escapeRspText(textT)
+      codeT <- sprintf("printf \"%s\"", textT)
+      code <- c(code, codeT)
+      text <- substring(text, first=1025L)
     }
     if (is.null(code)) {
-      code <- "printf \"\\n\"";
+      code <- "printf \"\\n\""
     }
 
-    return(code);
+    return(code)
   }
 
 
@@ -107,16 +107,16 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
   # RspCodeChunk => ...
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspCodeChunk")) {
-    code <- makeCode(getCode(expr), echo=getEcho(expr), include=getInclude(expr));
-    return(code);
+    code <- makeCode(getCode(expr), echo=getEcho(expr), include=getInclude(expr))
+    return(code)
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # RspCode => <code>
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspCode")) {
-    code <- makeCode(getCode(expr), echo=getEcho(expr), include=FALSE);
-    return(code);
+    code <- makeCode(getCode(expr), echo=getEcho(expr), include=FALSE)
+    return(code)
   }
 
 
@@ -124,9 +124,9 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
   # RspComment => [void]
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (inherits(expr, "RspComment")) {
-    return("");
+    return("")
   }
 
 
-  throw(sprintf("Unknown class of RSP expression (#%d): %s", index, class(expr)[1L]));
+  throw(sprintf("Unknown class of RSP expression (#%d): %s", index, class(expr)[1L]))
 }, protected=TRUE) # exprToCode()

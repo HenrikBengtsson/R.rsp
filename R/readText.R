@@ -46,81 +46,81 @@
 #*/###########################################################################
 .readText <- function(con, ..., maxAge=getOption("R.rsp::downloadIfOlderThan", -Inf)) {
   if (is.character(con)) {
-    file <- con;
+    file <- con
 
     # Is the file local and an URL?
-    isUrl <- isUrl(file);
+    isUrl <- isUrl(file)
 
 
     # (a) If URL, download to temporary directory
     if (isUrl) {
-      url <- file;
-      path <- tempdir();
-      filename <- getChecksum(url);
-      pathname <- file.path(path, filename);
+      url <- file
+      path <- tempdir()
+      filename <- getChecksum(url)
+      pathname <- file.path(path, filename)
 
       # By default, download URL
-      download <- TRUE;
+      download <- TRUE
 
       # Unless...
       if (isFile(pathname)) {
         # Age (in seconds) when downloaded file is considered too old
-        maxAge <- as.double(maxAge);
-        if (is.na(maxAge)) maxAge <- -Inf;
-        maxAge <- Arguments$getDouble(maxAge);
+        maxAge <- as.double(maxAge)
+        if (is.na(maxAge)) maxAge <- -Inf
+        maxAge <- Arguments$getDouble(maxAge)
         # Time when file was downloaded
-        mtime <- file.info(pathname)$mtime;
+        mtime <- file.info(pathname)$mtime
         # Age of downloaded file in seconds
-        dtime <- Sys.time() - mtime;
-        units(dtime) <- "secs";
-        download <- isTRUE(dtime > maxAge);
+        dtime <- Sys.time() - mtime
+        units(dtime) <- "secs"
+        download <- isTRUE(dtime > maxAge)
       }
 
       if (download) {
         withoutGString({
-          pathname <- downloadFile(url, filename=pathname, skip=FALSE);
+          pathname <- downloadFile(url, filename=pathname, skip=FALSE)
         })
       }
 
-      if (isFile(pathname)) file <- pathname;
+      if (isFile(pathname)) file <- pathname
     } # if (isUrl)
 
 
     # (b) Try to open file connection
     con <- tryCatch({
       suppressWarnings({
-        file(file, open="rb");
-      });
+        file(file, open="rb")
+      })
     }, error = function(ex) {
       # (b) If failed, try to download file first
       if (regexpr("^https://", file, ignore.case=TRUE) == -1L) {
-        throw(ex);
+        throw(ex)
       }
-      url <- file;
+      url <- file
       withoutGString({
-        pathname <- downloadFile(url, path=tempdir());
+        pathname <- downloadFile(url, path=tempdir())
       })
-      file(pathname, open="rb");
-    });
-    on.exit(close(con));
+      file(pathname, open="rb")
+    })
+    on.exit(close(con))
   }
 
   # Sanity check
-  stop_if_not(inherits(con, "connection"));
+  stop_if_not(inherits(con, "connection"))
 
 
-  bfr <- NULL;
+  bfr <- NULL
   while (TRUE) {
-    bfrT <- readChar(con, nchars=1e6);
-    if (length(bfrT) == 0L) break;
-    bfrT <- gsub("\r\n", "\n", bfrT, fixed=TRUE);
-    bfrT <- gsub("\r", "\n", bfrT, fixed=TRUE);
-    bfr <- c(bfr, bfrT);
+    bfrT <- readChar(con, nchars=1e6)
+    if (length(bfrT) == 0L) break
+    bfrT <- gsub("\r\n", "\n", bfrT, fixed=TRUE)
+    bfrT <- gsub("\r", "\n", bfrT, fixed=TRUE)
+    bfr <- c(bfr, bfrT)
   }
-  bfr <- paste(bfr, collapse="");
+  bfr <- paste(bfr, collapse="")
   if (FALSE) {
-    bfr <- strsplit(bfr, split="\n", fixed=TRUE);
-    bfr <- unlist(bfr, use.names=FALSE);
+    bfr <- strsplit(bfr, split="\n", fixed=TRUE)
+    bfr <- unlist(bfr, use.names=FALSE)
   }
-  bfr;
+  bfr
 } # .readText()

@@ -26,29 +26,29 @@
 #*/###########################################################################
 setConstructorS3("RspString", function(s=character(), ...) {
   # Argument 's':
-  s <- paste(s, collapse="\n");
+  s <- paste(s, collapse="\n")
 
-  extend(RspObject(s, ...), "RspString");
+  extend(RspObject(s, ...), "RspString")
 })
 
 
 setMethodS3("print", "RspString", function(x, ...) {
-  s <- sprintf("%s:", class(x)[1L]);
-  s <- c(s, sprintf("Content type: %s", getAttribute(x, "type", NA)));
-  s <- c(s, sprintf("Language: %s", getAttribute(x, "language", NA)));
-  metadata <- getMetadata(x, local=FALSE);
+  s <- sprintf("%s:", class(x)[1L])
+  s <- c(s, sprintf("Content type: %s", getAttribute(x, "type", NA)))
+  s <- c(s, sprintf("Language: %s", getAttribute(x, "language", NA)))
+  metadata <- getMetadata(x, local=FALSE)
   if (length(metadata) > 0L) {
-    metadata <- unlist(metadata, use.names=TRUE);
-    s <- c(s, sprintf("Metadata '%s': %s", names(metadata), metadata));
+    metadata <- unlist(metadata, use.names=TRUE)
+    s <- c(s, sprintf("Metadata '%s': %s", names(metadata), metadata))
   } else {
-    s <- c(s, "Metadata to available.");
+    s <- c(s, "Metadata to available.")
   }
-  s <- c(s, sprintf("Number of characters: %s", nchar(x)));
-  s <- c(s, sprintf("Number of lines: %s", nbrOfLines(x)));
-  ruler <- paste(rep("#", times=getOption("width")-2L), collapse="");
-  s <- c(s, ruler, x);
-  s <- paste(s, collapse="\n");
-  cat(s, "\n", sep="");
+  s <- c(s, sprintf("Number of characters: %s", nchar(x)))
+  s <- c(s, sprintf("Number of lines: %s", nbrOfLines(x)))
+  ruler <- paste(rep("#", times=getOption("width")-2L), collapse="")
+  s <- c(s, ruler, x)
+  s <- paste(s, collapse="\n")
+  cat(s, "\n", sep="")
 }, protected=TRUE)
 
 
@@ -78,7 +78,7 @@ setMethodS3("print", "RspString", function(x, ...) {
 # }
 #*/#########################################################################
 setMethodS3("nbrOfLines", "RspString", function(object, ...) {
-  length(unlist(strsplit(object, split="\n", fixed=TRUE), use.names=FALSE));
+  length(unlist(strsplit(object, split="\n", fixed=TRUE), use.names=FALSE))
 })
 
 
@@ -110,13 +110,13 @@ setMethodS3("nbrOfLines", "RspString", function(object, ...) {
 # }
 #*/#########################################################################
 setMethodS3("getType", "RspString", function(object, default=NA, as=c("text", "IMT"), ...) {
-  as <- match.arg(as);
-  res <- getAttribute(object, "type", default=as.character(default));
-  res <- tolower(res);
+  as <- match.arg(as)
+  res <- getAttribute(object, "type", default=as.character(default))
+  res <- tolower(res)
   if (as == "IMT" && !is.na(res)) {
-    res <- parseInternetMediaType(res);
+    res <- parseInternetMediaType(res)
   }
-  res;
+  res
 }, protected=TRUE)
 
 
@@ -147,7 +147,7 @@ setMethodS3("getType", "RspString", function(object, default=NA, as=c("text", "I
 # }
 #*/#########################################################################
 setMethodS3("getSource", "RspString", function(object, ...) {
-  getAttribute(object, "source", default=as.character(NA));
+  getAttribute(object, "source", default=as.character(NA))
 }, protected=TRUE, createGeneric=FALSE)
 
 
@@ -183,7 +183,7 @@ setMethodS3("getSource", "RspString", function(object, ...) {
 #*/#########################################################################
 setMethodS3("parseDocument", "RspString", function(object, ..., envir=parent.frame(), parser=RspParser()) {
   # Argument 'parser':
-  parser <- Arguments$getInstanceOf(parser, "RspParser");
+  parser <- Arguments$getInstanceOf(parser, "RspParser")
 
-  parseDocument(parser, object, ..., envir=envir);
+  parseDocument(parser, object, ..., envir=envir)
 }, protected=TRUE)

@@ -58,105 +58,105 @@ setMethodS3("rcompile", "default", function(..., file=NULL, path=NULL, output=NU
   if (inherits(file, "connection")) {
   } else if (is.character(file)) {
     if (!is.null(path)) {
-      file <- file.path(path, file);
+      file <- file.path(path, file)
     }
     if (!isUrl(file)) {
-      file <- Arguments$getReadablePathname(file, absolute=TRUE);
+      file <- Arguments$getReadablePathname(file, absolute=TRUE)
     }
   }
 
   # Argument 'workdir':
   if (is.null(workdir)) {
     if (isAbsolutePath(output)) {
-      workdir <- getParent(output);
+      workdir <- getParent(output)
     } else {
-      workdir <- ".";
+      workdir <- "."
     }
   }
-  workdir <- Arguments$getWritablePath(workdir);
-  if (is.null(workdir)) workdir <- ".";
+  workdir <- Arguments$getWritablePath(workdir)
+  if (is.null(workdir)) workdir <- "."
 
   # Argument 'output':
   if (is.null(output)) {
     # Default is to return an RSP source code object
-    output <- RspString();
+    output <- RspString()
 
     if (inherits(file, "connection")) {
-      throw("When argument 'file' is a connection, then 'output' must be specified.");
+      throw("When argument 'file' is a connection, then 'output' must be specified.")
     } else if (is.character(file)) {
       # Is the input a filename or an URI?
       if (isUrl(file)) {
         # If URI, drop any URI arguments
-        url <- splitUrl(file);
-        filename <- basename(url$path);
-        filename <- Arguments$getReadablePathname(filename, adjust="url", mustExist=FALSE);
-        filename <- basename(file);
+        url <- splitUrl(file)
+        filename <- basename(url$path)
+        filename <- Arguments$getReadablePathname(filename, adjust="url", mustExist=FALSE)
+        filename <- basename(file)
       } else {
-        filename <- basename(file);
+        filename <- basename(file)
       }
 
-      outputF <- sprintf("compiled-%s", filename);
+      outputF <- sprintf("compiled-%s", filename)
       withoutGString({
-        output <- Arguments$getWritablePathname(outputF, path=workdir);
+        output <- Arguments$getWritablePathname(outputF, path=workdir)
       })
-      output <- getAbsolutePath(output);
+      output <- getAbsolutePath(output)
       # Don't overwrite the input file
       if (output == file) {
-        throw("Cannot process RSP file. The inferred argument 'output' is the same as argument 'file' & 'path': ", output, " == ", file);
+        throw("Cannot process RSP file. The inferred argument 'output' is the same as argument 'file' & 'path': ", output, " == ", file)
       }
     }
   } else if (inherits(output, "connection")) {
   } else if (identical(output, "")) {
-    output <- RspString();
+    output <- RspString()
   } else if (inherits(output, "RspString")) {
   } else if (inherits(output, "RspDocument")) {
   } else if (is.character(output)) {
     withoutGString({
       if (isAbsolutePath(output)) {
-        output <- Arguments$getWritablePathname(output);
+        output <- Arguments$getWritablePathname(output)
       } else {
-        output <- Arguments$getWritablePathname(output, path=workdir);
-        output <- getAbsolutePath(output);
+        output <- Arguments$getWritablePathname(output, path=workdir)
+        output <- getAbsolutePath(output)
       }
     })
     if (is.character(file) && (output == file)) {
-      throw("Cannot process RSP file. Argument 'output' specifies the same file as argument 'file' & 'path': ", output, " == ", file);
+      throw("Cannot process RSP file. Argument 'output' specifies the same file as argument 'file' & 'path': ", output, " == ", file)
     }
   } else {
-    throw("Argument 'output' of unknown type: ", class(output)[1L]);
+    throw("Argument 'output' of unknown type: ", class(output)[1L])
   }
 
   # Argument 'until':
-##  until <- match.arg(until);
+##  until <- match.arg(until)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
 
-  verbose && enter(verbose, "rcompile() for default");
-  verbose && cat(verbose, "Compile until: ", sQuote(until));
-  verbose && cat(verbose, "Workdir: ", workdir);
-  verbose && cat(verbose, "Output: ", output);
+  verbose && enter(verbose, "rcompile() for default")
+  verbose && cat(verbose, "Compile until: ", sQuote(until))
+  verbose && cat(verbose, "Workdir: ", workdir)
+  verbose && cat(verbose, "Output: ", output)
 
   if (is.null(file)) {
-    s <- RspString(...);
+    s <- RspString(...)
   } else {
-    verbose && cat(verbose, "Input: ", file);
-    s <- .readText(file);
-    s <- RspString(s, source=file);
-    s <- setMetadata(s, name="source", value=file);
+    verbose && cat(verbose, "Input: ", file)
+    s <- .readText(file)
+    s <- RspString(s, source=file)
+    s <- setMetadata(s, name="source", value=file)
   }
-  verbose && cat(verbose, "Length of RSP string: ", nchar(s));
+  verbose && cat(verbose, "Length of RSP string: ", nchar(s))
 
-  res <- rcompile(s, envir=envir, output=output, workdir=workdir, args=args, until=until, verbose=verbose);
+  res <- rcompile(s, envir=envir, output=output, workdir=workdir, args=args, until=until, verbose=verbose)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res;
+  res
 }) # rcompile()
 
 
@@ -166,11 +166,11 @@ setMethodS3("rcompile", "RspString", function(object, envir=parent.frame(), outp
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'workdir':
   if (is.null(workdir)) {
-    workdir <- ".";
+    workdir <- "."
     if (inherits(output, "RspString")) {
     } else if (inherits(output, "RspDocument")) {
     } else if (isAbsolutePath(output)) {
-      workdir <- getParent(output);
+      workdir <- getParent(output)
     }
   }
 
@@ -182,67 +182,67 @@ setMethodS3("rcompile", "RspString", function(object, envir=parent.frame(), outp
     } else {
       withoutGString({
         if (isAbsolutePath(output)) {
-          output <- Arguments$getWritablePathname(output);
+          output <- Arguments$getWritablePathname(output)
         } else {
-          output <- Arguments$getWritablePathname(output, path=workdir);
-          output <- getAbsolutePath(output);
+          output <- Arguments$getWritablePathname(output, path=workdir)
+          output <- getAbsolutePath(output)
         }
       })
     }
   }
 
   # Argument 'args':
-  args <- cmdArgs(args=args);
+  args <- cmdArgs(args=args)
 
   # Argument 'until':
-##  until <- match.arg(until);
+##  until <- match.arg(until)
 
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "rcompile() for ", class(object)[1L]);
-  verbose && cat(verbose, "Compile until: ", sQuote(until));
+  verbose && enter(verbose, "rcompile() for ", class(object)[1L])
+  verbose && cat(verbose, "Compile until: ", sQuote(until))
 
   if (length(args) > 0L) {
-    verbose && enter(verbose, "Assigning RSP arguments to processing environment");
-    verbose && cat(verbose, "Environment: ", getName(envir));
+    verbose && enter(verbose, "Assigning RSP arguments to processing environment")
+    verbose && cat(verbose, "Environment: ", getName(envir))
 
-    verbose && cat(verbose, "RSP arguments:");
-    verbose && str(verbose, args);
+    verbose && cat(verbose, "RSP arguments:")
+    verbose && str(verbose, args)
 
     # Assign arguments to the parse/evaluation environment
-    names <- attachLocally(args, envir=envir);
+    names <- attachLocally(args, envir=envir)
     if (verbose) {
       if (length(names) > 0L) {
-        printf(verbose, "Variables assigned: [%d] %s\n", length(names), hpaste(names));
+        printf(verbose, "Variables assigned: [%d] %s\n", length(names), hpaste(names))
         member <- NULL; rm(list="member"); # To please R CMD check
-        ll <- subset(ll(envir=envir), member %in% names);
-        print(verbose, ll);
+        ll <- subset(ll(envir=envir), member %in% names)
+        print(verbose, ll)
       }
     }
-    verbose && exit(verbose);
+    verbose && exit(verbose)
   } else {
-    names <- NULL;
+    names <- NULL
   }
 
   if (verbose) {
-    enter(verbose, "Parse RSP string");
-    cat(verbose, "Parse environment: ", getName(envir));
+    enter(verbose, "Parse RSP string")
+    cat(verbose, "Parse environment: ", getName(envir))
     if (length(names) > 0L) {
-      ll <- subset(ll(envir=envir), member %in% names);
-      print(verbose, ll);
+      ll <- subset(ll(envir=envir), member %in% names)
+      print(verbose, ll)
     }
   }
 
   # Class to parse to
-  as <- if (inherits(output, "RspDocument")) "RspDocument" else "RspString";
-  res <- parseDocument(object, envir=envir, ..., until=until, as=as, verbose=verbose);
-  verbose && print(verbose, res);
-  verbose && exit(verbose);
+  as <- if (inherits(output, "RspDocument")) "RspDocument" else "RspString"
+  res <- parseDocument(object, envir=envir, ..., until=until, as=as, verbose=verbose)
+  verbose && print(verbose, res)
+  verbose && exit(verbose)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Return as RspSourceCode, write to file, or ...?
@@ -251,15 +251,15 @@ setMethodS3("rcompile", "RspString", function(object, envir=parent.frame(), outp
   } else if (inherits(output, "RspString")) {
   } else if (!is.null(output)) {
     # Write to file
-    verbose && enter(verbose, "Writing to output");
-    cat(res, file=output);
-    verbose && exit(verbose);
-    res <- RspFileProduct(output, type=getType(res), metadata=getMetadata(res, local=TRUE), mustExist=FALSE);
+    verbose && enter(verbose, "Writing to output")
+    cat(res, file=output)
+    verbose && exit(verbose)
+    res <- RspFileProduct(output, type=getType(res), metadata=getMetadata(res, local=TRUE), mustExist=FALSE)
   }
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res;
+  res
 }) # rcompile()
 
 
@@ -269,21 +269,21 @@ setMethodS3("rcompile", "RspDocument", function(object, envir=parent.frame(), ..
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'verbose':
-  verbose <- Arguments$getVerbose(verbose);
+  verbose <- Arguments$getVerbose(verbose)
   if (verbose) {
-    pushState(verbose);
-    on.exit(popState(verbose));
+    pushState(verbose)
+    on.exit(popState(verbose))
   }
 
-  verbose && enter(verbose, "rcompile() for ", class(object)[1L]);
+  verbose && enter(verbose, "rcompile() for ", class(object)[1L])
 
-  verbose && enter(verbose, "Coercing RSP document to RSP string");
-  s <- asRspString(object);
-  verbose && exit(verbose);
+  verbose && enter(verbose, "Coercing RSP document to RSP string")
+  s <- asRspString(object)
+  verbose && exit(verbose)
 
-  res <- rcompile(s, ..., envir=envir, verbose=verbose);
+  res <- rcompile(s, ..., envir=envir, verbose=verbose)
 
-  verbose && exit(verbose);
+  verbose && exit(verbose)
 
-  res;
+  res
 }) # rcompile()

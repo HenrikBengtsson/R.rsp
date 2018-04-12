@@ -27,36 +27,36 @@
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspException", function(...) {
-  extend(Exception(...), "RspException");
+  extend(Exception(...), "RspException")
 })
 
 
 setConstructorS3("RspParseException", function(...) {
-  extend(RspException(...), "RspParseException");
+  extend(RspException(...), "RspParseException")
 })
 
 
 setConstructorS3("RspPreprocessingException", function(..., item=NULL) {
   extend(RspException(...), "RspPreprocessingException",
     item = item
-  );
+  )
 })
 
 setMethodS3("getMessage", "RspPreprocessingException", function(this, ...) {
   ## The following is not possible due to bug in R.oo 1.13.0:
-  ##  msg <- NextMethod("getMessage");
-  msg <- this$.msg;
+  ##  msg <- NextMethod("getMessage")
+  msg <- this$.msg
 
-  item <- this$item;
+  item <- this$item
   if (!is.null(item)) {
-    itemStr <- asRspString(item);
-    itemStr <- sprintf(" (%s)", itemStr);
+    itemStr <- asRspString(item)
+    itemStr <- sprintf(" (%s)", itemStr)
   } else {
-    itemStr <- "";
+    itemStr <- ""
   }
-  sprintf("An error occured while preprocessing RSP directive%s: %s", itemStr, msg);
+  sprintf("An error occured while preprocessing RSP directive%s: %s", itemStr, msg)
 }, createGeneric=FALSE)
 
 setMethodS3("getItem", "RspPreprocessingException", function(this, ...) {
-  this$item;
+  this$item
 })

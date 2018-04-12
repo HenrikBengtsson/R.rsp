@@ -28,7 +28,7 @@
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RspComment", function(str=character(), ...) {
-  extend(RspConstruct(str), "RspComment");
+  extend(RspConstruct(str), "RspComment")
 })
 
 
@@ -58,14 +58,14 @@ setConstructorS3("RspComment", function(str=character(), ...) {
 # }
 #*/#########################################################################
 setMethodS3("getComment", "RspComment", function(comment, ...) {
-  as.character(comment);
+  as.character(comment)
 })
 
 
 setMethodS3("asRspString", "RspComment", function(object, ...) {
-  body <- unclass(object);
-  suffixSpecs <- attr(object, "suffixSpecs");
-  fmtstr <- "<%%%s%s%%>";
-  s <- sprintf(fmtstr, body, suffixSpecs);
-  RspString(s);
+  body <- unclass(object)
+  suffixSpecs <- attr(object, "suffixSpecs")
+  fmtstr <- "<%%%s%s%%>"
+  s <- sprintf(fmtstr, body, suffixSpecs)
+  RspString(s)
 })

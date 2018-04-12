@@ -50,7 +50,7 @@ setConstructorS3("HttpDaemonRspResponse", function(httpDaemon=NULL, ...) {
   if (!is.null(httpDaemon)) {
     if (!inherits(httpDaemon, "HttpDaemon")) {
       throw("Argument 'httpDaemon' is not an HttpDaemon object: ",
-                                                       class(httpDaemon)[1]);
+                                                       class(httpDaemon)[1])
     }
   }
 
@@ -63,20 +63,20 @@ setConstructorS3("HttpDaemonRspResponse", function(httpDaemon=NULL, ...) {
 
 
 setMethodS3("writeResponse", "HttpDaemonRspResponse", function(this, ..., collapse="", sep="") {
-  version <- getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0");
+  version <- getOption("R.rsp/HttpDaemon/RspVersion", "0.1.0")
   # Argment 'version':
   if (!is.element(version, c("0.1.0", "1.0.0"))) {
-    throw("Unknown HttpDaemon RSP version: ", version);
+    throw("Unknown HttpDaemon RSP version: ", version)
   }
 
   # String to output
-  msg <- paste(..., collapse=collapse, sep=sep);
-  msg <- as.character(GString(msg));
+  msg <- paste(..., collapse=collapse, sep=sep)
+  msg <- as.character(GString(msg))
 
   if (version == "0.1.0") {
-    this$.bfr <- c(this$.bfr, msg);
+    this$.bfr <- c(this$.bfr, msg)
   } else if (version == "1.0.0") {
-    cat(msg);
+    cat(msg)
   }
 })
 
@@ -84,19 +84,19 @@ setMethodS3("writeResponse", "HttpDaemonRspResponse", function(this, ..., collap
 
 setMethodS3("flush", "HttpDaemonRspResponse", function(con) {
   # To please R CMD check.
-  this <- con;
+  this <- con
 
   # Get the content of the buffer
-  bfr <- this$.bfr;
+  bfr <- this$.bfr
 
   if (is.null(bfr))
-    return(invisible(as.integer(0)));
+    return(invisible(as.integer(0)))
 
   # Write buffer
-  len <- writeResponse(this$.httpDaemon, bfr);
+  len <- writeResponse(this$.httpDaemon, bfr)
 
   # Clear buffer
-  this$.bfr <- NULL;
+  this$.bfr <- NULL
 
-  invisible(len);
+  invisible(len)
 }, appendVarArgs=FALSE)

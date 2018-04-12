@@ -22,7 +22,7 @@
 # @keyword internal
 #*/###########################################################################
 setConstructorS3("RRspPackage", function(...) {
-  extend(Package(...), "RRspPackage");
+  extend(Package(...), "RRspPackage")
 })
 
 
@@ -64,88 +64,88 @@ setConstructorS3("RRspPackage", function(...) {
 #
 #*/###########################################################################
 setMethodS3("capabilitiesOf", "RRspPackage", function(static, what=NULL, force=FALSE, ...) {
-  res <- static$.capabilities;
+  res <- static$.capabilities
   if (force || is.null(res)) {
-    res <- list();
+    res <- list()
 
     # Check software
-    res$asciidoc <- !is.null(findAsciiDoc(mustExist=FALSE));
-    res$knitr <- !is.null(isPackageInstalled("knitr"));
-    res$markdown <- !is.null(isPackageInstalled("markdown"));
-    res$pandoc <- !is.null(findPandoc(mustExist=FALSE));
-    res$sweave <- !is.null(isPackageInstalled("utils"));
+    res$asciidoc <- !is.null(findAsciiDoc(mustExist=FALSE))
+    res$knitr <- !is.null(isPackageInstalled("knitr"))
+    res$markdown <- !is.null(isPackageInstalled("markdown"))
+    res$pandoc <- !is.null(findPandoc(mustExist=FALSE))
+    res$sweave <- !is.null(isPackageInstalled("utils"))
 
     # Check LaTeX
-    path <- system.file("rsp_LoremIpsum", package="R.rsp");
-    pathname <- file.path(path, "LoremIpsum.tex");
+    path <- system.file("rsp_LoremIpsum", package="R.rsp")
+    pathname <- file.path(path, "LoremIpsum.tex")
     res$latex <- tryCatch({
-      pathnameR <- compileLaTeX(pathname, outPath=tempdir());
-      isFile(pathnameR);
-    }, error = function(ex) FALSE);
+      pathnameR <- compileLaTeX(pathname, outPath=tempdir())
+      isFile(pathnameR)
+    }, error = function(ex) FALSE)
 
     # Order lexicographically
-    o <- order(names(res));
-    res <- res[o];
+    o <- order(names(res))
+    res <- res[o]
 
     # Coerce into a named character vector
-    res <- unlist(res, use.names=TRUE);
+    res <- unlist(res, use.names=TRUE)
 
     # Record
-    static$.capabilities <- res;
+    static$.capabilities <- res
   }
 
   if (!is.null(what)) {
-    res <- res[what];
+    res <- res[what]
   }
 
-  res;
+  res
 }, static=TRUE)
 
 
 setMethodS3("isCapableOf", "RRspPackage", function(static, what, ...) {
   # Argument 'what':
-  what <- Arguments$getCharacter(what);
-  pattern <- "^([^ ]+)[ ]*(|[(](<|<=|==|>=|>)[ ]*([^)]+)[)])$";
+  what <- Arguments$getCharacter(what)
+  pattern <- "^([^ ]+)[ ]*(|[(](<|<=|==|>=|>)[ ]*([^)]+)[)])$"
   if (regexpr(pattern, what) == -1L) {
-    throw("Unknown syntax of argument 'what': ", what);
+    throw("Unknown syntax of argument 'what': ", what)
   }
 
-  name <- gsub(pattern, "\\1", what);
-  op <- gsub(pattern, "\\3", what);
-  ver <- gsub(pattern, "\\4", what);
+  name <- gsub(pattern, "\\1", what)
+  op <- gsub(pattern, "\\3", what)
+  ver <- gsub(pattern, "\\4", what)
   if (nzchar(op)) {
-    op <- get(op, mode="function", envir=baseenv());
+    op <- get(op, mode="function", envir=baseenv())
   } else if (nzchar(ver)) {
-    throw("Missing version operator in argument 'what': ", what);
+    throw("Missing version operator in argument 'what': ", what)
   }
 
-  res <- capabilitiesOf(static, what=name, ...);
+  res <- capabilitiesOf(static, what=name, ...)
 
   # Nothing more to do?
   if (!is.element(name, names(res))) {
-    return(FALSE);
+    return(FALSE)
   }
 
   # Nothing more to do?
   if (!nzchar(ver)) {
-    return(res);
+    return(res)
   }
 
   # Get available version
   if (name == "asciidoc") {
-    v <- attr(findAsciiDoc(mustExist=FALSE), "version");
+    v <- attr(findAsciiDoc(mustExist=FALSE), "version")
   } else if (name == "pandoc") {
-    v <- attr(findPandoc(mustExist=FALSE), "version");
+    v <- attr(findPandoc(mustExist=FALSE), "version")
   } else if (is.element(name, c("knitr", "markdown"))) {
-    v <- packageVersion(name);
+    v <- packageVersion(name)
   } else if (name == "sweave") {
-    v <- packageVersion("utils");
+    v <- packageVersion("utils")
   } else {
-    v <- NA;
+    v <- NA
   }
 
   # Compare to requested version
-  res <- isTRUE(op(v, ver));
+  res <- isTRUE(op(v, ver))
 
-  res;
+  res
 })
