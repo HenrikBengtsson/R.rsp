@@ -48,7 +48,7 @@
               If \code{""}, the output is sent to the standard output.}
   \item{buffered}{If \code{\link[base:logical]{TRUE}}, and \code{output=""}, then the RSP output is
     outputted as soon as possible, if possible.}
-  \item{append}{Only applied if \code{output} specifies a pathname;
+  \item{append}{Only applied if \code{output} specifies a pathname.
     If \code{\link[base:logical]{TRUE}}, then the output is appended to the file, otherwise
     the files content is overwritten.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}

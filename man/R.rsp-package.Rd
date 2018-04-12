@@ -23,7 +23,7 @@
 }
 
 \section{To get started}{
-  We recommend that you start by reading one of the '\href{../doc/index.html}{vignettes}';
+  We recommend that you start by reading one of the '\href{../doc/index.html}{vignettes}':
   \enumerate{
     \item A 5 minute slideshow covering the basics of RSP.
     \item Detailed description of the RSP markup language.
@@ -62,7 +62,7 @@
 \section{How to cite this package}{
  Bengtsson H (2018).
 \emph{R.rsp: Dynamic Generation of Scientific Reports}.
-R package version 0.42.0, \url{https://github.com/HenrikBengtsson/R.rsp}.
+R package version 0.42.0-9000, \url{https://github.com/HenrikBengtsson/R.rsp}.
 }
 
 \author{Henrik Bengtsson}

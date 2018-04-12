@@ -45,7 +45,6 @@ RspResponse(...)
  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.rsp:flush.RspResponse]{flush}} \tab Flushes the response buffer.\cr
- \tab \code{write} \tab  -\cr
  \tab \code{\link[R.rsp:writeResponse.RspResponse]{writeResponse}} \tab Writes an RSP response to the predefined output.\cr
 }
 

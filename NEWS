@@ -1,7 +1,7 @@
 Package: R.rsp
 ==============
 
-Version: 0.42.0-9000 [2018-04-06]
+Version: 0.42.0-9000 [2018-04-11]
 
 SIGNIFICANT CHANGES:
 
@@ -14,6 +14,10 @@ BUG FIXES:
 
  * Forgot to declare a few S3 methods in the NAMESPACE.
  
+DEPRECATED AND DEFUNCT:
+
+ * Deprecated write() for RspResponse is now defunct - use writeResponse().
+
 
 Version: 0.42.0 [2018-01-09]
 

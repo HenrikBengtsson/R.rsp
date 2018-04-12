@@ -57,7 +57,7 @@ FileRspResponse(file=stdout(), path=NULL, overwrite=FALSE, ...)
 
 
  \bold{Methods inherited from RspResponse}:\cr
-flush, write, writeResponse
+flush, writeResponse
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, names, objectSize, print, save
