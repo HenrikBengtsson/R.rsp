@@ -22,7 +22,7 @@ Suggests:
 SuggestsNote:
   Recommended: R.devices, base64enc, markdown
 VignetteBuilder: R.rsp
-Date: 2018-01-10
+Date: 2018-04-20
 Title: Dynamic Generation of Scientific Reports
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))

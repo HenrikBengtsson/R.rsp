@@ -324,9 +324,11 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
     ## RSP code expression.
     setInlineRsp("default", function(x, ...) .base_paste0(x, collapse=""))
 
-    ## FIXME: Disable rpaste() generic until figuring out how to register
-    ## S3 methods at run time. /HB 2018-04-06
-    rpaste <- rpaste.default
+    ## Disable rpaste() generic?
+    ## WORKAROUND/FIXME: This is until it has been figured out how to
+    ## register S3 methods at run time. /HB 2018-04-06 - 2018-04-20
+    useS3 <- isTRUE(as.logical(Sys.getenv("R_RSP_RPASTE_GENERIC", "FALSE")))
+    if (!useS3) rpaste <- rpaste.default
 
     ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ## RSP source code script [BEGIN]
