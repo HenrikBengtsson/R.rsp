@@ -13,7 +13,7 @@ setMethodS3("as.list", "ROptions", function(this, ...) {
   # Import R options each time.
   this$.options <- options();
   tryCatch({
-    NextMethod("as.list");
+    NextMethod();
   }, error = function(ex) {
     # In case this method was called explicitly, e.g. ROptions$as.list()
     as.list.Options(this);
@@ -21,7 +21,7 @@ setMethodS3("as.list", "ROptions", function(this, ...) {
 })
 
 setMethodS3("setOption", "ROptions", function(this, ...) {
-  oldValue <- NextMethod("setOption");
+  oldValue <- NextMethod();
   # Store options
   options(this$.options);
   invisible(oldValue);

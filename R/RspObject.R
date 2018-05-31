@@ -76,7 +76,7 @@ setConstructorS3("RspObject", function(value=NA, attrs=list(), ...) {
 # }
 #*/#########################################################################
 setMethodS3("print", "RspObject", function(x, ...) {
-  s <- NextMethod("print")
+  s <- NextMethod()
   s <- c(sprintf("%s:", class(x)[1L]), s)
   s <- paste(s, collapse="\n")
   cat(s, "\n", sep="")

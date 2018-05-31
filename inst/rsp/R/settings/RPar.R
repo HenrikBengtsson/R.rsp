@@ -13,7 +13,7 @@ setMethodS3("as.list", "RPar", function(this, ...) {
   # Import R options each time.
   this$.options <- par();
   tryCatch({
-    NextMethod("as.list");
+    NextMethod();
   }, error = function(ex) {
     # In case this method was called explicitly, e.g. RPar$as.list()
     as.list.Options(this);
@@ -23,7 +23,7 @@ setMethodS3("as.list", "RPar", function(this, ...) {
 setMethodS3("setOption", "RPar", function(this, par, ...) {
   descr <- getDescription(this, par=par);
   grep("_\\*R[.]O[.]\\*_", descr, value=TRUE);
-  oldValue <- NextMethod("setOption");
+  oldValue <- NextMethod();
   # Store options
   par(this$.options);
   invisible(oldValue);

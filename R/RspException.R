@@ -44,7 +44,7 @@ setConstructorS3("RspPreprocessingException", function(..., item=NULL) {
 
 setMethodS3("getMessage", "RspPreprocessingException", function(this, ...) {
   ## The following is not possible due to bug in R.oo 1.13.0:
-  ##  msg <- NextMethod("getMessage")
+  ##  msg <- NextMethod()
   msg <- this$.msg
 
   item <- this$item

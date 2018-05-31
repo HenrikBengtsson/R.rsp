@@ -228,7 +228,7 @@ setMethodS3("getCompleteCode", "RspRSourceCodeFactory", function(this, object, .
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Get the default code header, body and footer
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  res <- NextMethod("getCompleteCode")
+  res <- NextMethod()
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
