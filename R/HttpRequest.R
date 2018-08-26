@@ -352,7 +352,7 @@ setMethodS3("getRemoteHost", "HttpRequest", function(this, ...) {
 #########################################################################/**
 # @RdocMethod getServerName
 #
-# @title "Gets the host name of the server that revieved the request"
+# @title "Gets the host name of the server that reviewed the request"
 #
 # \description{
 #  @get "title".

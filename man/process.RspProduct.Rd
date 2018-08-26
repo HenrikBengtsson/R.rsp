@@ -28,7 +28,7 @@
      If \code{\link[base]{NULL}}, the working directory is not changed.}
   \item{...}{Optional arguments passed to the processor \code{\link[base]{function}}.}
   \item{recursive}{
-     If a postive number (or +\code{\link[base:is.finite]{Inf}}), then processed output that can be
+     If a positive number (or +\code{\link[base:is.finite]{Inf}}), then processed output that can be
      processed will be processed recursively (with this argument being
      decreased by one).
      A value \code{\link[base:logical]{TRUE}} corresponds to +\code{\link[base:is.finite]{Inf}} (infinite processing if possible).

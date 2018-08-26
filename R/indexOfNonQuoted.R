@@ -1,7 +1,7 @@
 ###########################################################################/**
 # @RdocDefault indexOfNonQuoted
 #
-# @title "Gets the first index of a string that is not inside a double qouted string"
+# @title "Gets the first index of a string that is not inside a double quoted string"
 #
 # \description{
 #  @get "title".
@@ -43,7 +43,7 @@ setMethodS3("indexOfNonQuoted", "default", function(str, pattern, ...) {
 
   totalPos <- 0L;     # The position from the start of the string
   len <- 0L;          # The default match length
-  qm <- NULL;         # The current qoutation mark of a string, if exists.
+  qm <- NULL;         # The current quotation mark of a string, if exists.
   ready <- FALSE
   while(!ready) {
     # Get the first occurance of pattern in buffer

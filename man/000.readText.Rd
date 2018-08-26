@@ -44,7 +44,7 @@
 }
 
 \section{Newline substitution}{
-  All occurances of \code{\\r\\n} and \code{\\r} are replaced with
+  All occurrences of \code{\\r\\n} and \code{\\r} are replaced with
   \code{\\n} such that all lines are ending in \code{\\n} regardless
   of encoding.
 }

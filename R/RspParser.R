@@ -43,7 +43,7 @@ setConstructorS3("RspParser", function(...) {
 #   \item{object}{An @see RspString to be parsed.}
 #   \item{what}{A @character string specifying what type of RSP construct
 #     to parse for.}
-#   \item{commentLength}{Specify the number of hypens in RSP comments
+#   \item{commentLength}{Specify the number of hyphens in RSP comments
 #     to parse for.}
 #   \item{...}{Not used.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
@@ -356,7 +356,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
 #   \item{envir}{The @environment where the RSP document is preprocessed.}
 #   \item{...}{Passed to the processor in each step.}
 #   \item{until}{Specifies how far the parse should proceed, which is useful
-#      for troubleshooting and rebugging.}
+#      for troubleshooting and debugging.}
 #   \item{as}{Specifies in what format the parsed RSP document
 #      should be returned.}
 #   \item{verbose}{See @see "R.utils::Verbose".}

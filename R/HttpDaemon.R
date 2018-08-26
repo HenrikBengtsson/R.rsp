@@ -659,7 +659,7 @@ setMethodS3("sourceTcl", "HttpDaemon", function(static, ...) {
 # \arguments{
 #   \item{rootPaths}{The path(s) to act as the root of the webserver file
 #       system.  Files in parent directories of the root, will not be
-#       accessable.  If @NULL, the preset paths will be used,
+#       accessible.  If @NULL, the preset paths will be used,
 #       cf. @seemethod "setRootPaths".}
 #   \item{port}{The socket port the server listens to.}
 #   \item{default}{The default filename pattern to be retrieved if

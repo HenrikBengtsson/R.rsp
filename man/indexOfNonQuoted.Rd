@@ -10,10 +10,10 @@
 \alias{indexOfNonQuoted.default}
 \alias{indexOfNonQuoted}
 
-\title{Gets the first index of a string that is not inside a double qouted string}
+\title{Gets the first index of a string that is not inside a double quoted string}
 
 \description{
- Gets the first index of a string that is not inside a double qouted string.
+ Gets the first index of a string that is not inside a double quoted string.
 }
 
 \usage{

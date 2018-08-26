@@ -34,7 +34,7 @@ extends \link[R.rsp]{RspConstruct}\cr
 
 
  An RspDirective is an \code{\link{RspConstruct}} that represents an
- RSP preprocesing directive of format \code{<\%@ ... \%>}.
+ RSP preprocessing directive of format \code{<\%@ ... \%>}.
  The directive is independent of the underlying programming language.
 }
 

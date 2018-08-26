@@ -26,7 +26,7 @@
   \item{object}{An \code{\link{RspString}} to be parsed.}
   \item{what}{A \code{\link[base]{character}} string specifying what type of RSP construct
     to parse for.}
-  \item{commentLength}{Specify the number of hypens in RSP comments
+  \item{commentLength}{Specify the number of hyphens in RSP comments
     to parse for.}
   \item{...}{Not used.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}

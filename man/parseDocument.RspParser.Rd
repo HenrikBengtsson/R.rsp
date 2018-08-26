@@ -28,7 +28,7 @@
   \item{envir}{The \code{\link[base]{environment}} where the RSP document is preprocessed.}
   \item{...}{Passed to the processor in each step.}
   \item{until}{Specifies how far the parse should proceed, which is useful
-     for troubleshooting and rebugging.}
+     for troubleshooting and debugging.}
   \item{as}{Specifies in what format the parsed RSP document
      should be returned.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}

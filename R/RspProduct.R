@@ -199,7 +199,7 @@ setMethodS3("findProcessor", "RspProduct", function(object, ...) {
 #      If @NULL, the working directory is not changed.}
 #   \item{...}{Optional arguments passed to the processor @function.}
 #   \item{recursive}{
-#      If a postive number (or +@Inf), then processed output that can be
+#      If a positive number (or +@Inf), then processed output that can be
 #      processed will be processed recursively (with this argument being
 #      decreased by one).
 #      A value @TRUE corresponds to +@Inf (infinite processing if possible).

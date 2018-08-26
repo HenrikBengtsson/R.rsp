@@ -7,7 +7,7 @@
 #  @classhierarchy
 #
 #  An RspDirective is an @see "RspConstruct" that represents an
-#  RSP preprocesing directive of format \code{<\%@ ... \%>}.
+#  RSP preprocessing directive of format \code{<\%@ ... \%>}.
 #  The directive is independent of the underlying programming language.
 # }
 #

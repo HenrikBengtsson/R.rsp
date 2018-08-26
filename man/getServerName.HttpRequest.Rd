@@ -11,10 +11,10 @@
 \alias{HttpRequest.getServerName}
 \alias{getServerName,HttpRequest-method}
 
-\title{Gets the host name of the server that revieved the request}
+\title{Gets the host name of the server that reviewed the request}
 
 \description{
- Gets the host name of the server that revieved the request.
+ Gets the host name of the server that reviewed the request.
 }
 
 \usage{

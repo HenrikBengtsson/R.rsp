@@ -387,7 +387,7 @@ buildNonSweaveTexToPdf <- function(path=".", pattern="[.](tex|ltx)$", ...) {
 # }
 #
 # \value{
-#   Returns (invisibly) the absolute pathame to the built index.html file.
+#   Returns (invisibly) the absolute pathname to the built index.html file.
 #   If an index.html file already exists, nothing is done and @NULL
 #   is returned.
 # }

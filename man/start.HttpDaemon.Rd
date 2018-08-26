@@ -30,7 +30,7 @@
 \arguments{
   \item{rootPaths}{The path(s) to act as the root of the webserver file
       system.  Files in parent directories of the root, will not be
-      accessable.  If \code{\link[base]{NULL}}, the preset paths will be used,
+      accessible.  If \code{\link[base]{NULL}}, the preset paths will be used,
       cf. \code{\link[R.rsp:setRootPaths.HttpDaemon]{*setRootPaths}()}.}
   \item{port}{The socket port the server listens to.}
   \item{default}{The default filename pattern to be retrieved if
