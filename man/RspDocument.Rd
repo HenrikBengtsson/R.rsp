@@ -79,7 +79,7 @@ RspDocument(expressions=list(), ...)
 print
 
  \bold{Methods inherited from list}:\cr
-all.equal, as.data.frame, attachLocally, relist, within
+Ops,nonStructure,vector-method, Ops,structure,vector-method, Ops,vector,nonStructure-method, Ops,vector,structure-method, all.equal, as.data.frame, attachLocally, coerce,ANY,list-method, relist, type.convert, within
 
 
 }

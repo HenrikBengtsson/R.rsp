@@ -49,7 +49,7 @@ RspParser(...)
 
 
  \bold{Methods inherited from logical}:\cr
-as.data.frame, as.raster, whichVector
+Ops,nonStructure,vector-method, Ops,structure,vector-method, Ops,vector,nonStructure-method, Ops,vector,structure-method, as.data.frame, as.raster, coerce,ANY,logical-method, whichVector
 
 
 }
