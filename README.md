@@ -4,14 +4,14 @@
 ## Installation
 R package R.rsp is available on [CRAN](https://cran.r-project.org/package=R.rsp) and can be installed in R as:
 ```r
-install.packages('R.rsp')
+install.packages("R.rsp")
 ```
 
 ### Pre-release version
 
 To install the pre-release version that is available in Git branch `develop` on GitHub, use:
 ```r
-source('http://callr.org/install#HenrikBengtsson/R.rsp@develop')
+remotes::install_github("HenrikBengtsson/R.rsp@develop")
 ```
 This will install the package from source.  
 
