@@ -60,7 +60,7 @@ HttpRequest(requestUri=NULL, parameters=list(), ...)
  \tab \code{getRequestUri} \tab  -\cr
  \tab \code{getRequestUrl} \tab  -\cr
  \tab \code{\link[R.rsp:getScheme.HttpRequest]{getScheme}} \tab Gets the scheme used to make this request.\cr
- \tab \code{\link[R.rsp:getServerName.HttpRequest]{getServerName}} \tab Gets the host name of the server that revieved the request.\cr
+ \tab \code{\link[R.rsp:getServerName.HttpRequest]{getServerName}} \tab Gets the host name of the server that reviewed the request.\cr
  \tab \code{\link[R.rsp:getServerPort.HttpRequest]{getServerPort}} \tab Gets the port number on which this request was received.\cr
  \tab \code{getServletPath} \tab  -\cr
  \tab \code{\link[R.rsp:hasParameter.HttpRequest]{hasParameter}} \tab Checks if a parameter exists.\cr
