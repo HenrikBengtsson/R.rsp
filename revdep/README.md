@@ -24,7 +24,7 @@
 
 # Revdeps
 
-## Couldn't check (6)
+## Couldn't check (5)
 
 |package                                    |version |error |warning |note |
 |:------------------------------------------|:-------|:-----|:-------|:----|
@@ -33,7 +33,6 @@
 |lexRankr                                   |?       |      |        |     |
 |[metagear](problems.md#metagear)           |0.4     |1     |        |     |
 |[SemiCompRisks](problems.md#semicomprisks) |3.1     |1     |        |     |
-|future.BatchJobs                           |?       |      |        |     |
 
 ## All (168)
 
@@ -94,8 +93,9 @@
 |flacco                                                   |1.7           |      |        |     |
 |FLSSS                                                    |5.2           |      |        |     |
 |forestinventory                                          |0.3.1         |      |        |     |
-|future                                                   |1.9.0         |-1    |        |     |
-|future.apply                                             |1.0.0         |-1    |        |     |
+|future                                                   |1.9.0         |      |        |     |
+|future.apply                                             |1.0.0         |      |        |     |
+|future.BatchJobs                                         |0.16.0        |      |        |     |
 |future.batchtools                                        |0.7.1         |      |        |     |
 |future.callr                                             |0.3.1         |      |        |     |
 |[FuzzyLP](problems.md#fuzzylp)                           |0.1-5         |1     |        |     |
@@ -206,5 +206,4 @@
 |WCE                                                      |1.0.2         |      |        |     |
 |[webglobe](problems.md#webglobe)                         |1.0.2         |1     |        |     |
 |[Wrapped](problems.md#wrapped)                           |2.0           |1     |        |     |
-|future.BatchJobs                                         |?             |      |        |     |
 
