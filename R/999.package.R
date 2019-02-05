@@ -30,8 +30,7 @@
 #
 # \section{Acknowledgments}{
 #   Several of the post-processing features of this package utilize
-#   packages such as \pkg{base64enc}, \pkg{ascii}, \pkg{knitr}, and
-#   \pkg{markdown}.
+#   packages such as \pkg{base64enc}, \pkg{knitr}, and \pkg{markdown}.
 #   Not enough credit can be given to the authors and contributors
 #   of those packages.  Thank you for your great work.
 # }

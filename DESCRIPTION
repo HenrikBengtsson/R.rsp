@@ -14,7 +14,6 @@ Imports:
   digest (>= 0.6.13)
 Suggests:
   tcltk,
-  ascii (>= 2.1),
   markdown (>= 0.8),
   knitr (>= 1.9),
   R.devices (>= 2.15.1),
@@ -22,7 +21,7 @@ Suggests:
 SuggestsNote:
   Recommended: R.devices, base64enc, markdown
 VignetteBuilder: R.rsp
-Date: 2018-08-25
+Date: 2019-02-06
 Title: Dynamic Generation of Scientific Reports
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
