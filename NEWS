@@ -1,14 +1,13 @@
 Package: R.rsp
 ==============
 
-Version: 0.43.0-9000 [2019-02-05]
+Version: 0.43.1 [2019-02-05]
 
 BUG FIXES:
 
  * RSP directives could obtain 'content' values of length greater than one,
    e.g. <%@string a="${letters}"%> causing 'a' to have value base::letters.
    Such values are now pasted together into a single string without separators.
- 
  
 DEPRECATED AND DEFUNCT:
 
