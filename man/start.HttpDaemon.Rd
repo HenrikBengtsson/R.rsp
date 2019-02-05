@@ -28,7 +28,7 @@
 }
 
 \arguments{
-  \item{rootPaths}{The path(s) to act as the root of the webserver file
+  \item{rootPaths}{The path(s) to act as the root of the web server file
       system.  Files in parent directories of the root, will not be
       accessible.  If \code{\link[base]{NULL}}, the preset paths will be used,
       cf. \code{\link[R.rsp:setRootPaths.HttpDaemon]{*setRootPaths}()}.}
