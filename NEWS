@@ -1,6 +1,21 @@
 Package: R.rsp
 ==============
 
+Version: 0.43.1 [2019-02-05]
+
+BUG FIXES:
+
+ * RSP directives could obtain 'content' values of length greater than one,
+   e.g. <%@string a="${letters}"%> causing 'a' to have value base::letters.
+   Such values are now pasted together into a single string without separators.
+ 
+DEPRECATED AND DEFUNCT:
+
+ * Package 'ascii' is no longer suggested to avoid R CMD check WARNINGs because
+   'ascii' was "removed" from CRAN (it has been archieved).  AsciiDoc documents
+   can still be processed if you install 'ascii' by other means.
+ 
+
 Version: 0.43.0 [2018-08-25]
 
 BUG FIXES:

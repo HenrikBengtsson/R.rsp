@@ -657,7 +657,7 @@ setMethodS3("sourceTcl", "HttpDaemon", function(static, ...) {
 # @synopsis
 #
 # \arguments{
-#   \item{rootPaths}{The path(s) to act as the root of the webserver file
+#   \item{rootPaths}{The path(s) to act as the root of the web server file
 #       system.  Files in parent directories of the root, will not be
 #       accessible.  If @NULL, the preset paths will be used,
 #       cf. @seemethod "setRootPaths".}

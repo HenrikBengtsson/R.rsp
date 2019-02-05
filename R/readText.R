@@ -118,9 +118,14 @@
     bfr <- c(bfr, bfrT)
   }
   bfr <- paste(bfr, collapse="")
+  
   if (FALSE) {
     bfr <- strsplit(bfr, split="\n", fixed=TRUE)
     bfr <- unlist(bfr, use.names=FALSE)
   }
+
+  ## Sanity check
+  stop_if_not(is.character(bfr), length(bfr) == 1L)
+
   bfr
 } # .readText()

@@ -100,6 +100,7 @@ setMethodS3("getNameContentDefaultAttributes", "RspDirective", function(item, kn
     }
     name <- names[1L]
     content <- attrs[[name]]
+    if (length(content) > 1L) content <- paste(content, collapse="")
   }
 
   # Was directive given with 'file' attribute?
@@ -115,7 +116,9 @@ setMethodS3("getNameContentDefaultAttributes", "RspDirective", function(item, kn
     content <- .readText(pathname)
   }
 
-
+  ## Sanity check
+  stop_if_not(is.null(content) || length(content) == 1L)
+  
   # Use default?
   if (!is.null(content) && (is.na(content) || content == "NA")) {
     value <- default
