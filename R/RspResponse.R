@@ -67,11 +67,6 @@ setConstructorS3("RspResponse", function(...) {
 setMethodS3("writeResponse", "RspResponse", abstract=TRUE)
 
 
-setMethodS3("write", "RspResponse", function(...) {
-  .Defunct(msg = "write() for RspResponse is defunct. Use writeResponse() instead.")
-}, deprecated = TRUE)
-
-
 
 
 #########################################################################/**

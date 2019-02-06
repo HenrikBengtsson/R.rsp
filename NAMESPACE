@@ -622,8 +622,3 @@ S3method("getInclude", "RspVariableDirective")
 
 # RspVoid
 S3method("asRspString", "RspVoid")
-
-
-## DEPRECATED:
-export("write")
-S3method("write", "RspResponse")

@@ -3,7 +3,9 @@ Package: R.rsp
 
 Version: 0.43.1-9000 [2019-02-05]
 
- * ...
+DEPRECATED AND DEFUNCT:
+
+ * Removed defunct write() for RspResponse - use writeResponse() instead.
  
 
 Version: 0.43.1 [2019-02-05]
