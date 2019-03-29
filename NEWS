@@ -1,12 +1,15 @@
 Package: R.rsp
 ==============
 
-Version: 0.43.1-9000 [2019-02-05]
+Version: 0.43.1-9000 [2019-03-28]
 
 DEPRECATED AND DEFUNCT:
 
  * Removed defunct write() for RspResponse - use writeResponse() instead.
- 
+
+ * Removed defunct attribute 'verbatim' for RSP 'include' preprocessing
+   directives. Use attribute 'type' instead.
+
 
 Version: 0.43.1 [2019-02-05]
 
