@@ -29,4 +29,5 @@ for (filename in filenames) {
   print(filename)
   pathname <- rfile(filename, path=path, verbose = TRUE)
   print(pathname)
+  file.remove(pathname)
 }
