@@ -32,8 +32,14 @@ matrix:
         - _R_CHECK_LENGTH_1_LOGIC2_=true
     - os: osx
       r: oldrel
+      latex: false
+      r_build_args: --no-build-vignettes
+      r_check_args: --as-cran --no-vignettes
     - os: osx
       r: release
+      latex: false
+      r_build_args: --no-build-vignettes
+      r_check_args: --as-cran --no-vignettes
     - os: linux
       r: release
       r_check_args: --no-build-vignettes --no-codoc --no-examples --no-tests --no-manual --ignore-vignettes
