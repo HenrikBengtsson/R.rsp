@@ -17,6 +17,11 @@ R.utils::use("R.utils, R.devices")
 options(width=100)
 %>
 \graphicspath{{<%=getOption("devEval/args/path", "figures/")%>}}
+<%@logical twocolumn="${twocolumn}" default="FALSE" description="Specifies whether a two- or one-column layout should be used."%>
+<%@if twocolumn="TRUE"%>
+\usepackage{multicol}
+\setlength{\columnsep}{20pt}
+<%@endif%>
 
 \title{<%@meta name="title"%>}
 \author{<%@meta name="author"%>}
