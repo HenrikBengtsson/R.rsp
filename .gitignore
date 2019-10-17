@@ -5,7 +5,9 @@
 .test
 .o
 .dll
+.local
 .async
 revdep/data.sqlite
 revdep/checks/*
 revdep/library/*
+.make/*
