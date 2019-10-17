@@ -44,7 +44,7 @@ matrix:
       r: release
       r_check_args: --no-build-vignettes --no-codoc --no-examples --no-tests --no-manual --ignore-vignettes
       r_packages:
-        - covr
+        - covr, R.rsp
       after_success:
         - Rscript -e 'covr::codecov(quiet=FALSE)'
       env: NB='w/ covr' ## Just a label
