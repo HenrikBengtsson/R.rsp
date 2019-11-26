@@ -8,7 +8,7 @@ Imports:
   tools,
   utils,
   R.methodsS3 (>= 1.7.1),
-  R.oo (>= 1.22.0),
+  R.oo (>= 1.23.0),
   R.utils,
   R.cache (>= 0.13.0),
   digest (>= 0.6.13)
@@ -16,7 +16,7 @@ Suggests:
   tcltk,
   markdown (>= 0.8),
   knitr (>= 1.9),
-  R.devices (>= 2.15.1),
+  R.devices (>= 2.16.1),
   base64enc (>= 0.1-2)
 SuggestsNote:
   Recommended: R.devices, base64enc, markdown
