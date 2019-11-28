@@ -23,3 +23,7 @@ stop_if_not <- function(...) {
   }
 }
 
+escFmtStr <- function(x) {
+  gsub("%", "%%", x,  fixed = TRUE)
+}
+

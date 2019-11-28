@@ -49,14 +49,14 @@ extensionToIMT <- function(filename, ext=NULL, default=NA) {
 
 
 escapeRspTags <- function(s) {
-  s <- gsub("<%", "<%%", s, fixed=TRUE)
-  s <- gsub("%>", "%%>", s, fixed=TRUE)
+  s <- gsub(.rspBracketOpen,  .rspBracketOpenEscape,  s, fixed=TRUE)
+  s <- gsub(.rspBracketClose, .rspBracketCloseEscape, s, fixed=TRUE)
   s
 } # escapeRspTags()
 
 unescapeRspTags <- function(s) {
-  s <- gsub("<%%", "<%", s, fixed=TRUE)
-  s <- gsub("%%>", "%>", s, fixed=TRUE)
+  s <- gsub(.rspBracketOpenEscape,  .rspBracketOpen,  s, fixed=TRUE)
+  s <- gsub(.rspBracketCloseEscape, .rspBracketClose, s, fixed=TRUE)
   s
 } # unescapeRspTags()
 
