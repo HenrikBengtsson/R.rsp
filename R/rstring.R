@@ -160,7 +160,8 @@ setMethodS3("rstring", "RspDocument", function(object, envir=parent.frame(), ...
   verbose && enter(verbose, "rstring() for ", class(object)[1L])
 
   verbose && enter(verbose, "Coerce RSP document to source code")
-  language <- getAttribute(object, "language", default="R")
+#  language <- getAttribute(object, "language", default="R")
+  language <- getMetadata(object, "language", default="R")
   language <- capitalize(tolower(language))
   className <- sprintf("Rsp%sSourceCodeFactory", language)
   ns <- getNamespace("R.rsp")

@@ -35,7 +35,7 @@ extends \emph{\link[R.rsp]{RspSourceCode}}\cr
 
 
 
- An RspShSourceCode object is an \code{\link{RspSourceCode}} holding R source code.
+ An RspShSourceCode object is an \code{\link{RspSourceCode}} holding shell code.
 }
 
 \usage{

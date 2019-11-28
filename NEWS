@@ -1,9 +1,13 @@
 Package: R.rsp
 ==============
 
-Version: 0.43.2-9000 [2019-10-17]
+Version: 0.43.2-9000 [2019-10-27]
 
  * ...
+
+BUG FIXES:
+
+ * rstring() lost the 'language' meta tag.
  
 
 Version: 0.43.2 [2019-10-17]
