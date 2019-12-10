@@ -1,15 +1,18 @@
 Package: R.rsp
 ==============
 
-Version: 0.43.2-9000 [2019-10-27]
-
- * ...
+Version: 0.43.2-9000 [2019-12-10]
 
 BUG FIXES:
 
  * rstring() lost the 'language' meta tag.
- 
 
+DEPRECATED AND DEFUNCT:
+
+ * For R (>= 3.1.0), R.rsp::buildVignette() is defunct in favor of
+   tools::buildVignette().
+   
+   
 Version: 0.43.2 [2019-10-17]
 
 DEPRECATED AND DEFUNCT:
