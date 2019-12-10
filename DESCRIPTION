@@ -10,7 +10,7 @@ Imports:
   R.methodsS3 (>= 1.7.1),
   R.oo (>= 1.23.0),
   R.utils,
-  R.cache (>= 0.13.0),
+  R.cache,
   digest (>= 0.6.13)
 Suggests:
   tcltk,
