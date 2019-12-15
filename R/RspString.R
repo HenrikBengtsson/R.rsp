@@ -147,7 +147,7 @@ setMethodS3("getType", "RspString", function(object, default=NA, as=c("text", "I
 # }
 #*/#########################################################################
 setMethodS3("getSource", "RspString", function(object, ...) {
-  getAttribute(object, "source", default=as.character(NA))
+  getAttribute(object, "source", default=NA_character_)
 }, protected=TRUE, createGeneric=FALSE)
 
 
