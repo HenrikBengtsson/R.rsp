@@ -1,4 +1,9 @@
-<%@page language="sh"%>
+<%@meta language="sh"%>
 <% date="2002-05-04" %>
 RSP first saw the light of day on <%= ${date} %>.
+
+The first eight letters in the alphabet:
+<% for ii in $(seq 1 8); do %>
+  <%= $ii %>. <% printf "\\$(printf '%03o' $((64 + ii)))\n" %>  
+<% done %>
 
