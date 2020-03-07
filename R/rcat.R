@@ -208,5 +208,6 @@ setMethodS3("rcat", "RspString", function(..., envir=parent.frame(), args="*", o
 
 setMethodS3("rcat", "RspDocument", rcat.RspString)
 setMethodS3("rcat", "RspRSourceCode", rcat.RspString)
+setMethodS3("rcat", "RspShSourceCode", rcat.RspString)
 setMethodS3("rcat", "function", rcat.RspString)
 setMethodS3("rcat", "expression", rcat.RspString)

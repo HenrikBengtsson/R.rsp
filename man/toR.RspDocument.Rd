@@ -19,7 +19,7 @@
 }
 
 \usage{
-\method{toR}{RspDocument}(object, factory=RspRSourceCodeFactory(), ...)
+\method{toR}{RspDocument}(object, factory=NULL, ...)
 }
 
 \arguments{

@@ -12,6 +12,7 @@
 \alias{rfile.RspString}
 \alias{rfile.RspDocument}
 \alias{rfile.RspRSourceCode}
+\alias{rfile.RspShSourceCode}
 \alias{rfile.function}
 \alias{rfile.expression}
 

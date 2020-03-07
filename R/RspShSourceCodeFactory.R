@@ -47,7 +47,7 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
     n <- length(code)
     codeE <- sapply(code, FUN=escapeRspText)
     codeE <- sprintf("printf \"%s\"", codeE)
-    suffixR <- rep(" > /dev/null", times=n)
+    suffixR <- rep(" 2> /dev/null", times=n)
     codeR <- sprintf("%s%s", codeT, suffixR)
     if (include) {
       # Output the last out
