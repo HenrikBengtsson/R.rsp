@@ -157,7 +157,8 @@ setMethodS3("rcat", "RspString", function(..., envir=parent.frame(), args="*", o
   verbose && cat(verbose, "Arguments:")
   verbose && str(verbose, args)
 
-  s <- rstring(..., envir=envir, args=args, output=outputP)
+  s <- rstring(..., envir=envir, args=args, output=outputP,
+               verbose=less(verbose, 10))
 
   verbose && cat(verbose, "Result:")
   verbose && str(verbose, s)
