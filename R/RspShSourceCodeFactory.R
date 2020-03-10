@@ -37,6 +37,10 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
   escapeRspText <- function(text) {
     text <- deparse(text)
     text <- substring(text, first=2L, last=nchar(text)-1L)
+    ## SHELL: Escape backticks
+    text <- sapply(text, FUN=function(s) {
+      gsub("`", "\\`", s, fixed = TRUE)
+    })
     text
   } # escapeRspText()
 
