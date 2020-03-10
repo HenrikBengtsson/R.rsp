@@ -41,6 +41,10 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
     text <- sapply(text, FUN=function(s) {
       gsub("`", "\\`", s, fixed = TRUE)
     })
+    ## SHELL: Escape dollar signs
+    text <- sapply(text, FUN=function(s) {
+      gsub("$", "\\$", s, fixed = TRUE)
+    })
     text
   } # escapeRspText()
 
