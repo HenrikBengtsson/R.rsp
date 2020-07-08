@@ -37,6 +37,14 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
   escapeRspText <- function(text) {
     text <- deparse(text)
     text <- substring(text, first=2L, last=nchar(text)-1L)
+    ## SHELL: Escape backticks
+    text <- sapply(text, FUN=function(s) {
+      gsub("`", "\\`", s, fixed = TRUE)
+    })
+    ## SHELL: Escape dollar signs
+    text <- sapply(text, FUN=function(s) {
+      gsub("$", "\\$", s, fixed = TRUE)
+    })
     text
   } # escapeRspText()
 
@@ -47,7 +55,7 @@ setMethodS3("exprToCode", "RspShSourceCodeFactory", function(object, expr, ..., 
     n <- length(code)
     codeE <- sapply(code, FUN=escapeRspText)
     codeE <- sprintf("printf \"%s\"", codeE)
-    suffixR <- rep(" > /dev/null", times=n)
+    suffixR <- rep(" 2> /dev/null", times=n)
     codeR <- sprintf("%s%s", codeT, suffixR)
     if (include) {
       # Output the last out

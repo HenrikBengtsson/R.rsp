@@ -66,6 +66,9 @@
 
   parses and evaluates the RSP string and outputs the result to
   standard output.
+  A CLI-friendly alternative to the above is:
+
+  \code{Rscript -e R.rsp::rcat "A random integer in [1,<\%=K\%>]: <\%=sample(1:K, size=1)\%>" --args --K=50}
 }
 
 \section{rsource()}{

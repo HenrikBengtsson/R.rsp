@@ -110,7 +110,7 @@ setMethodS3("exprToCode", "RspRSourceCodeFactory", function(object, expr, ..., i
         # Drop { ... } again
         codeTT <- codeTT[-1L]; codeTT <- codeTT[-length(codeTT)]
         codeTT <- hpaste(codeTT, collapse="", maxHead=100L, maxTail=30L)
-        throw(sprintf("RSP code chunk (#%d):\n<%%= %s %%>\ndoes not contain a complete or valid R expression: %s", index, codeTT, ex))
+        throw(sprintf("RSP code chunk (#%d):\n%s= %s %s\ndoes not contain a complete or valid R expression: %s", index, .rspBracketOpen, codeTT, .rspBracketClose, ex))
       })
     }
 

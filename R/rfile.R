@@ -3,6 +3,7 @@
 # @alias rfile.RspString
 # @alias rfile.RspDocument
 # @alias rfile.RspRSourceCode
+# @alias rfile.RspShSourceCode
 # @alias rfile.function
 # @alias rfile.expression
 #
@@ -52,9 +53,12 @@
 #   Using @see "Rscript" and \code{rfile()}, it is possible to process
 #   an RSP file from the command line.  For example,
 #
-#   \code{Rscript -e "R.rsp::rfile(file='RSP_refcard.tex.rsp', path=system.file('doc', package='R.rsp'))"}
+#   \code{Rscript -e "R.rsp::rfile('RSP_refcard.tex.rsp')"}
 #
 #   parses and evaluates \file{RSP_refcard.tex.rsp} and output \file{RSP_refcard.pdf} in the current directory.
+#   A CLI-friendly alternative to the above is:
+#
+#   \code{Rscript -e R.rsp::rfile RSP_refcard.tex.rsp}
 # }
 #
 # \examples{
@@ -531,6 +535,142 @@ setMethodS3("rfile", "expression", function(object, ..., envir=parent.frame(), v
   code <- deparse(object[[1L]])
   rcode <- RspRSourceCode(code)
   res <- rfile(rcode, ..., envir=envir, verbose=verbose)
+  verbose && exit(verbose)
+
+  res
+}, protected=TRUE) # rfile()
+
+
+
+setMethodS3("rfile", "RspShSourceCode", function(rcode, output, workdir=NULL, envir=parent.frame(), args="*", postprocess=TRUE, ..., verbose=FALSE) {
+  # In-string variable substitute
+  vsub <- function(pathname, ...) {
+    gstr <- GString(pathname)
+    str <- gstring(gstr, where=c("envir", "Sys.getenv", "getOption"),
+                         envir=envir, inherits=FALSE)[1L]
+    str <- wstring(str, envir=envir)
+    str
+  } # vsub()
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'workdir':
+  if (is.null(workdir)) {
+    if (isAbsolutePath(output)) {
+      workdir <- getParent(output)
+    } else {
+      workdir <- "."
+    }
+  }
+  workdir <- Arguments$getWritablePath(workdir)
+  if (is.null(workdir)) workdir <- "."
+
+  # Argument 'output':
+  if (inherits(output, "connection")) {
+  } else if (identical(output, "")) {
+    output <- stdout()
+  } else if (is.character(output)) {
+    withoutGString({
+      if (isAbsolutePath(output)) {
+        output <- Arguments$getWritablePathname(output)
+      } else {
+        output <- Arguments$getWritablePathname(output, path=workdir)
+        output <- getAbsolutePath(output)
+      }
+    })
+  } else {
+    throw("Argument 'output' of unknown type: ", class(output)[1L])
+  }
+
+  # Argument 'envir':
+  stop_if_not(is.environment(envir))
+
+  # Argument 'args':
+  args <- cmdArgs(args=args)
+
+  # Argument 'verbose':
+  verbose <- Arguments$getVerbose(verbose)
+  if (verbose) {
+    pushState(verbose)
+    on.exit(popState(verbose), add=TRUE)
+  }
+
+
+  verbose && enter(verbose, "Processing RSP R source code")
+
+  if (verbose) {
+    if (is.character(output)) {
+      cat(verbose, "Output pathname: ", output)
+    } else if (inherits(output, "connection")) {
+      ci <- summary(output)
+      printf(verbose, "Output '%s' connection: %s\n",
+          class(ci)[1L], ci$description)
+    }
+  }
+
+
+  verbose && enter(verbose, "Assigning RSP arguments")
+  verbose && cat(verbose, "Environment: ", getName(envir))
+  if (length(args) > 0L) {
+    verbose && cat(verbose, "Arguments assigned: ", hpaste(names(args)))
+    # Assign arguments to the parse/evaluation environment
+    attachLocally(args, envir=envir)
+  } else {
+    verbose && cat(verbose, "Arguments assigned: <none>")
+  }
+  verbose && exit(verbose)
+
+
+  verbose && enter(verbose, "Evaluating RSP R source code")
+
+  # Change working directory
+  opwd <- NULL
+  if ((workdir != ".") && (workdir != getwd())) {
+    opwd <- getwd()
+    on.exit({ if (!is.null(opwd)) setwd(opwd) }, add=TRUE)
+    verbose && cat(verbose, "Temporary working directory: ", getAbsolutePath(workdir))
+    setwd(workdir)
+  }
+
+  res <- rcat(rcode, output=output, envir=envir, args=NULL, ..., verbose=less(verbose, 10))
+
+  withoutGString({
+    if (isFile(output)) {
+      res <- RspFileProduct(output, attrs=getAttributes(res))
+
+      # Rename output file via GString substitution of the filename?
+      resG <- vsub(res)
+      if (resG != res) {
+        if (renameFile(res, resG, overwrite=TRUE)) {
+          # FIXME: res <- newInstance(res, resG)
+          res <- RspFileProduct(resG, attrs=getAttributes(res))
+        } else {
+          warning(sprintf("Failed to rename output file containing variable substitutions in its name (keeping the current one): ", sQuote(res), " -> ", sQuote(resG)))
+        }
+      }
+      resG <- NULL; # Not needed anymore
+    } else {
+      res <- RspProduct(output, attrs=getAttributes(res))
+    }
+  }) # withoutGString()
+
+  verbose && print(verbose, res)
+  rcode <- output <- NULL; # Not needed anymore
+
+  # Reset the working directory?
+  if (!is.null(opwd)) {
+    setwd(opwd)
+    opwd <- NULL
+  }
+
+  verbose && exit(verbose)
+
+  if (postprocess && hasProcessor(res)) {
+    res <- process(res, workdir=workdir, ..., verbose=verbose)
+  }
+
   verbose && exit(verbose)
 
   res

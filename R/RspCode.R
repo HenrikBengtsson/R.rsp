@@ -104,7 +104,7 @@ setMethodS3("asRspString", "RspCode", function(code, ...) {
     fmtstr <- "%s"
   }
 
-  fmtstr <- paste("<%%", fmtstr, "%%>", sep="")
+  fmtstr <- paste(escFmtStr(.rspBracketOpen), fmtstr, escFmtStr(.rspBracketClose), sep="")
   s <- sprintf(fmtstr, body)
   RspString(s)
 })
@@ -160,7 +160,7 @@ setMethodS3("asRspString", "RspCodeChunk", function(code, ...) {
     fmtstr <- "%s"
   }
 
-  fmtstr <- paste("<%%", fmtstr, "%%>", sep="")
+  fmtstr <- paste(escFmtStr(.rspBracketOpen), fmtstr, escFmtStr(.rspBracketClose), sep="")
   s <- sprintf(fmtstr, body)
   RspString(s)
 })

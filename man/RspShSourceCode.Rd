@@ -35,7 +35,7 @@ extends \emph{\link[R.rsp]{RspSourceCode}}\cr
 
 
 
- An RspShSourceCode object is an \code{\link{RspSourceCode}} holding R source code.
+ An RspShSourceCode object is an \code{\link{RspSourceCode}} holding shell code.
 }
 
 \usage{
@@ -51,6 +51,7 @@ RspShSourceCode(...)
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RspShSourceCode]{evaluate}} \tab Evaluates the shell (sh) code.\cr
  \tab \code{findProcessor} \tab  -\cr
+ \tab \code{rfile} \tab  -\cr
 }
 
 

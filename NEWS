@@ -1,7 +1,56 @@
 Package: R.rsp
 ==============
 
-Version: 0.42.0-9000 [2018-08-25]
+Version: 0.43.2-9000 [2020-03-06]
+
+SIGNIFICANT CHANGES:
+
+ * Now R.rsp can also process RSP documents with shell code, e.g.
+   rcat('<%@meta language="sh"%><% now=$(date) %>It is now <%= $now %>').
+
+NEW FEATURES:
+
+ * toR() for RspDocument now select the RspSourceCodeFactory based on
+   the 'language' RSP metadata.
+   
+ * Add rfile() for RspShSourceCode.
+ 
+BUG FIXES:
+
+ * rstring() lost the 'language' meta tag.
+
+DEPRECATED AND DEFUNCT:
+
+ * For R (>= 3.1.0), R.rsp::buildVignette() is defunct in favor of
+   tools::buildVignette().
+   
+   
+Version: 0.43.2 [2019-10-17]
+
+DEPRECATED AND DEFUNCT:
+
+ * Removed defunct write() for RspResponse - use writeResponse() instead.
+
+ * Removed defunct attribute 'verbatim' for RSP 'include' preprocessing
+   directives. Use attribute 'type' instead.
+
+
+Version: 0.43.1 [2019-02-05]
+
+BUG FIXES:
+
+ * RSP directives could obtain 'content' values of length greater than one,
+   e.g. <%@string a="${letters}"%> causing 'a' to have value base::letters.
+   Such values are now pasted together into a single string without separators.
+ 
+DEPRECATED AND DEFUNCT:
+
+ * Package 'ascii' is no longer suggested to avoid R CMD check WARNINGs because
+   'ascii' was "removed" from CRAN (it has been archieved).  AsciiDoc documents
+   can still be processed if you install 'ascii' by other means.
+ 
+
+Version: 0.43.0 [2018-08-25]
 
 BUG FIXES:
 
@@ -52,10 +101,10 @@ BUG FIXES:
  
 DEPRECATED AND DEFUNCT:
 
-  * Removed defunct methods that were part of the legacy API.
+ * Removed defunct methods that were part of the legacy API.
   
-  * Attribute 'verbatim' for RSP 'include' preprocessing directives is defunct.
-    Use attribute 'type' instead.
+ * Attribute 'verbatim' for RSP 'include' preprocessing directives is defunct.
+   Use attribute 'type' instead.
 
 
 Version: 0.40.0 [2016-12-05]

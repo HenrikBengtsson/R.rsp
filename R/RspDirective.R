@@ -100,6 +100,7 @@ setMethodS3("getNameContentDefaultAttributes", "RspDirective", function(item, kn
     }
     name <- names[1L]
     content <- attrs[[name]]
+    if (length(content) > 1L) content <- paste(content, collapse="")
   }
 
   # Was directive given with 'file' attribute?
@@ -115,7 +116,9 @@ setMethodS3("getNameContentDefaultAttributes", "RspDirective", function(item, kn
     content <- .readText(pathname)
   }
 
-
+  ## Sanity check
+  stop_if_not(is.null(content) || length(content) == 1L)
+  
   # Use default?
   if (!is.null(content) && (is.na(content) || content == "NA")) {
     value <- default
@@ -147,7 +150,8 @@ setMethodS3("asRspString", "RspDirective", function(object, ...) {
   if (length(suffixSpecs) == 0L) {
     suffixSpecs <- ""
   }
-  fmtstr <- "<%%@%s%s%s%s%%>"
+  fmtstr <- "@%s%s%s%s"
+  fmtstr <- paste(escFmtStr(.rspBracketOpen), fmtstr, escFmtStr(.rspBracketClose), sep="")
   s <- sprintf(fmtstr, body, attrs, comment, suffixSpecs)
   RspString(s)
 })
@@ -441,7 +445,8 @@ setMethodS3("parseDirective", "RspUnparsedDirective", function(expr, ...) {
 setMethodS3("asRspString", "RspUnparsedDirective", function(object, ...) {
   body <- unclass(object)
   suffixSpecs <- attr(object, "suffixSpecs")
-  fmtstr <- "<%%@%s%s%%>"
+  fmtstr <- "@%s%s"
+  fmtstr <- paste(escFmtStr(.rspBracketOpen), fmtstr, escFmtStr(.rspBracketClose), sep="")
   s <- sprintf(fmtstr, body, suffixSpecs)
   RspString(s)
 })

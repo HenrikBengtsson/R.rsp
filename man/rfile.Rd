@@ -12,6 +12,7 @@
 \alias{rfile.RspString}
 \alias{rfile.RspDocument}
 \alias{rfile.RspRSourceCode}
+\alias{rfile.RspShSourceCode}
 \alias{rfile.function}
 \alias{rfile.expression}
 
@@ -64,27 +65,36 @@
   Using \code{\link{Rscript}} and \code{rfile()}, it is possible to process
   an RSP file from the command line.  For example,
 
-  \code{Rscript -e "R.rsp::rfile(file='RSP_refcard.tex.rsp', path=system.file('doc', package='R.rsp'))"}
+  \code{Rscript -e "R.rsp::rfile('RSP_refcard.tex.rsp')"}
 
   parses and evaluates \file{RSP_refcard.tex.rsp} and output \file{RSP_refcard.pdf} in the current directory.
+  A CLI-friendly alternative to the above is:
+
+  \code{Rscript -e R.rsp::rfile RSP_refcard.tex.rsp}
 }
 
 \examples{
 path <- system.file("exData", package="R.rsp")
-pathname <- rfile("random.txt.rsp", path=path)
+pathname <- rfile("random.txt.rsp", path=path,
+                  output=file.path(tempdir(), "random.txt"))
 print(pathname)
 
 lines <- readLines(pathname, warn=FALSE)
 cat(lines, collapse="\n")
+
+file.remove(pathname)
 
 
 # Passing arguments
 path <- system.file("exData", package="R.rsp")
-pathname <- rfile("random-args.txt.rsp", path=path, args=list(K=50))
+pathname <- rfile("random-args.txt.rsp", path=path, args=list(K=50),
+                  output=file.path(tempdir(), "random-args.txt"))
 print(pathname)
 
 lines <- readLines(pathname, warn=FALSE)
 cat(lines, collapse="\n")
+
+file.remove(pathname)
 
 
 \dontrun{

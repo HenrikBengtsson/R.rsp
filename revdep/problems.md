@@ -1,174 +1,58 @@
-# acebayes
+# afex
 
-Version: 1.4.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Antony M. Overstall <A.M.Overstall@soton.ac.uk>’
-    
-    Insufficient package version (submitted: 1.4.1, existing: 1.4.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# AEDForecasting
-
-Version: 0.20.0
+Version: 0.21-2
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking Rd cross-references ... WARNING
     ```
-    Maintainer: ‘Nhat Cuong Pham <acmetal74@gmail.com>’
-    
-    Insufficient package version (submitted: 0.20.0, existing: 0.20.0)
-    
-    This build time stamp is over a month old.
-    ```
-
-# AFLPsim
-
-Version: 0.4-2
-
-## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘AFLPsim-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: hybridindex
-    > ### Title: Estimate hybrid index por 'hybridsim' objects
-    > ### Aliases: hybridindex
-    > ### Keywords: hybridization
-    > 
-    > ### ** Examples
-    > 
-    > ## simulate parentals and F1 hybrids
-    > hybrids<-hybridsim(Nmarker=50, Na=10, Nb=10, Nf1=10, type="neutral", hybrid="F1")
-    ########Neutral hybridization########> 
-    > ## estimate hybrid index
-    > hest<-hybridindex(hybrids)
-    Error in if (is.na(x[[3]]) == F) { : the condition has length > 1
-    Calls: hybridindex -> sim2introgress
-    Execution halted
-    ```
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Francisco Balao <fbalao@us.es>’
-    
-    Insufficient package version (submitted: 0.4.2, existing: 0.4.2)
-    
-    Found the following (possibly) invalid URLs:
-      URL: http://personal.us.es/fbalao/software.html
-        From: DESCRIPTION
-        Status: 404
-        Message: Not Found
-      URL: http://www.r-project.org
-        From: DESCRIPTION
-        Status: 200
-        Message: OK
-        R-project URL not in canonical form
-      Canonical www.R-project.org URLs use https.
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking top-level files ... WARNING
-    ```
-    Conversion of ‘README.md’ failed:
-    pandoc: Could not fetch http://personal.us.es/fbalao/objetos/aflpsmall.jpg
-    StatusCodeException (Status {statusCode = 404, statusMessage = "Not Found"}) [("Date","Sat, 06 Jan 2018 03:46:57 GMT"),("Server","Apache"),("Content-Length","226"),("Content-Type","text/html; charset=iso-8859-1"),("X-Cache","MISS from mvpersonal.us.es"),("X-Cache-Lookup","MISS from mvpersonal.us.es:80"),("Via","1.1 mvpersonal.us.es (squid)"),("Connection","keep-alive"),("X-Response-Body-Start","<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n<html><head>\n<title>404 Not Found</title>\n</head><body>\n<h1>Not Found</h1>\n<p>The requested URL /fbalao/objetos/aflpsmall.jpg was not found on this server.</p>\n</body></html>\n"),("X-Request-URL","GET http://personal.us.es:80/fbalao/objetos/aflpsmall.jpg")] (CJ {expose = []})
+    Unknown package ‘ez’ in Rd xrefs
     ```
 
 # ALEPlot
 
-Version: 1.0
+Version: 1.1
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking re-building of vignette outputs ... WARNING
     ```
-    Maintainer: ‘Dan Apley <apley@northwestern.edu>’
+    Error in re-building vignettes:
+      ...
+    Error: processing vignette 'AccumulatedLocalEffectPlot.ltx' failed with diagnostics:
+    Running 'texi2dvi' on 'AccumulatedLocalEffectPlot.ltx' failed.
+    LaTeX errors:
+    ! LaTeX Error: File `changepage.sty' not found.
     
-    Insufficient package version (submitted: 1.0, existing: 1.0)
+    Type X to quit or <RETURN> to proceed,
+    or enter new name. (Default extension: sty)
     
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    ! Emergency stop.
+    <read *> 
+             
+    l.10 \usepackage
+                    {listings}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    Execution halted
     ```
 
-# AntBioR
+# AMModels
 
-Version: 0.03
+Version: 0.1.3
 
 ## In both
 
-*   checking package dependencies ... ERROR
+*   checking dependencies in R code ... NOTE
     ```
-    Namespace dependency not required: ‘jsonlite’
-    
-    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-    manual.
-    ```
-
-*   checking CRAN incoming feasibility ... NOTE
-    ```
-    ...
-        From: DESCRIPTION
-        Status: 404
-        Message: Not Found
-      URL: http://www1.data.antarctica.gov.au
-        From: man/AntBioR.Rd
-              man/antbio_cache_filename.Rd
-              man/antbio_config.Rd
-        Status: Error
-        Message: libcurl error code 60:
-        	SSL certificate problem: unable to get local issuer certificate
-        	(Status without verification: OK)
-      URL: http://www1.data.antarctica.gov.au/aadc/trophic/
-        From: man/get_diet_data.Rd
-        Status: Error
-        Message: libcurl error code 60:
-        	SSL certificate problem: unable to get local issuer certificate
-        	(Status without verification: OK)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    Namespace in Imports field not imported from: ‘unmarked’
+      All declared Imports should be used.
     ```
 
 # aroma.core
 
-Version: 3.1.1
+Version: 3.1.3
 
 ## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Henrik Bengtsson <henrikb@braju.com>’
-    
-    Insufficient package version (submitted: 3.1.1, existing: 3.1.1)
-    
-    Suggests or Enhances not in mainstream repositories:
-      sfit, expectile, HaarSeg, mpcbs
-    Availability using Additional_repositories specification:
-      sfit        yes   https://henrikbengtsson.github.io/drat
-      expectile   yes   http://r-forge.r-project.org          
-      HaarSeg     yes   http://r-forge.r-project.org          
-      mpcbs       yes   http://r-forge.r-project.org          
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
 
 *   checking package dependencies ... NOTE
     ```
@@ -181,20 +65,6 @@ Version: 3.1.1
 Version: 1.0
 
 ## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Matthew Hartley <Matthew.Hartley@jic.ac.uk>’
-    
-    Insufficient package version (submitted: 1.0, existing: 1.0)
-    
-    The Description field should not start with the package name,
-      'This package' or similar.
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
 
 *   checking R code for possible problems ... NOTE
     ```
@@ -215,225 +85,100 @@ Version: 1.0
     to your NAMESPACE file.
     ```
 
-# babel
-
-Version: 0.3-0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Adam B. Olshen <adam.olshen@ucsf.edu>’
-    
-    Insufficient package version (submitted: 0.3.0, existing: 0.3.0)
-    
-    This build time stamp is over a month old.
-    ```
-
-# baitmet
-
-Version: 1.0.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Xavier Domingo-Almenara <xdomingo@scripps.edu>’
-    
-    Insufficient package version (submitted: 1.0.1, existing: 1.0.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# bayesGDS
-
-Version: 0.6.2
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Michael Braun <braunm@smu.edu>’
-    
-    Insufficient package version (submitted: 0.6.2, existing: 0.6.2)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# bayesmeta
-
-Version: 2.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Christian Roever <christian.roever@med.uni-goettingen.de>’
-    
-    Insufficient package version (submitted: 2.0, existing: 2.0)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
 # BayesRS
+
+Version: 0.1.3
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘rjags’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
+# BayLum
 
 Version: 0.1.2
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking package dependencies ... ERROR
     ```
-    Maintainer: ‘Mirko Thalmann <mirkothalmann@hotmail.com>’
+    Packages required but not available: ‘rjags’ ‘ArchaeoPhases’
     
-    Insufficient package version (submitted: 0.1.2, existing: 0.1.2)
-    
-    This build time stamp is over a month old.
-    ```
-
-# BayLum
-
-Version: 0.1.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Anne Philippe <anne.philippe@univ-nantes.fr>’
-    
-    Insufficient package version (submitted: 0.1.1, existing: 0.1.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# biglasso
-
-Version: 1.3-6
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Yaohui Zeng <yaohui-zeng@uiowa.edu>’
-    
-    Insufficient package version (submitted: 1.3.6, existing: 1.3.6)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is 11.1Mb
-      sub-directories of 1Mb or more:
-        libs  10.4Mb
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # bridgesampling
 
-Version: 0.4-0
+Version: 0.5-2
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking package dependencies ... NOTE
     ```
-    Maintainer: ‘Quentin F. Gronau <Quentin.F.Gronau@gmail.com>’
-    
-    Insufficient package version (submitted: 0.4.0, existing: 0.4.0)
-    ```
-
-*   checking DESCRIPTION meta-information ... NOTE
-    ```
-    Author field differs from that derived from Authors@R
-      Author:    ‘Quentin F. Gronau [aut, cre] (<https://orcid.org/0000-0001-5510-6943>), Henrik Singmann [aut] (<https://orcid.org/0000-0002-4842-3657>), Jonathan J. Forster [ctb], Eric-Jan Wagenmakers [ths], The JASP Team [ctb], Jiqiang Guo [ctb], Jonah Gabry [ctb], Ben Goodrich [ctb]’
-      Authors@R: ‘Quentin F. Gronau [aut, cre] (0000-0001-5510-6943), Henrik Singmann [aut] (0000-0002-4842-3657), Jonathan J. Forster [ctb], Eric-Jan Wagenmakers [ths], The JASP Team [ctb], Jiqiang Guo [ctb], Jonah Gabry [ctb], Ben Goodrich [ctb]’
+    Packages suggested but not available for checking:
+      ‘R2jags’ ‘rjags’ ‘runjags’
     ```
 
 # brms
 
-Version: 2.0.1
+Version: 2.4.0
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking re-building of vignette outputs ... WARNING
     ```
-    Maintainer: ‘Paul-Christian Bürkner <paul.buerkner@gmail.com>’
+    Error in re-building vignettes:
+      ...
+    Error: processing vignette 'brms_multilevel.ltx' failed with diagnostics:
+    Running 'texi2dvi' on 'brms_multilevel.ltx' failed.
+    LaTeX errors:
+    ! LaTeX Error: File `inconsolata.sty' not found.
     
-    Insufficient package version (submitted: 2.0.1, existing: 2.0.1)
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.4Mb
-      sub-directories of 1Mb or more:
-        R     2.2Mb
-        doc   2.4Mb
+    Type X to quit or <RETURN> to proceed,
+    or enter new name. (Default extension: sty)
+    
+    ! Emergency stop.
+    <read *> 
+             
+    l.47 \RequirePackage
+                        [T1]{fontenc}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    Execution halted
     ```
 
 # brotli
 
-Version: 1.0
+Version: 1.2
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking re-building of vignette outputs ... WARNING
     ```
-    Maintainer: ‘Jeroen Ooms <jeroen@berkeley.edu>’
-    
-    Insufficient package version (submitted: 1.0, existing: 1.0)
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.8Mb
-      sub-directories of 1Mb or more:
-        bin    2.3Mb
-        doc    1.2Mb
-        libs   2.2Mb
-    ```
-
-# brr
-
-Version: 1.0.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Stéphane Laurent <laurent_step@yahoo.fr>’
-    
-    Insufficient package version (submitted: 1.0.0, existing: 1.0.0)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    Error in re-building vignettes:
+      ...
+    Loading required package: microbenchmark
+    pandoc: Could not fetch http://1.bp.blogspot.com/-qVXmEU7Dqi4/TxaSwzfpp3I/AAAAAAAAAOo/WKri5ORZNDE/s1600/Br%25C3%25B6tli.jpg
+    FailedConnectionException2 "1.bp.blogspot.com" 80 False getAddrInfo: does not exist (Name or service not known)
+    Error: processing vignette 'benchmarks.Rmd' failed with diagnostics:
+    pandoc document conversion failed with error 67
+    Execution halted
     ```
 
 # bst
 
-Version: 0.3-14
+Version: 0.3-15
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking package dependencies ... NOTE
     ```
-    Maintainer: ‘Zhu Wang <zwang@connecticutchildrens.org>’
-    
-    Insufficient package version (submitted: 0.3.14, existing: 0.3.14)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    Package suggested but not available for checking: ‘hdi’
     ```
 
 # bujar
@@ -442,141 +187,145 @@ Version: 0.2-3
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking package dependencies ... ERROR
     ```
-    Maintainer: ‘Zhu Wang <zwang@connecticutchildrens.org>’
+    Package required but not available: ‘mboost’
     
-    Insufficient package version (submitted: 0.2.3, existing: 0.2.3)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # canceR
 
-Version: 1.10.0
+Version: 1.14.0
 
 ## In both
 
-*   R CMD check timed out
-    
-
-*   checking CRAN incoming feasibility ... NOTE
+*   checking package dependencies ... ERROR
     ```
-    ...
-        171:                         metaData <- data.frame(labelDescription= colnames(myGlobalEnv$ClinicalData), row.names=colnames(myGlobalEnv$ClinicalData))        ## Bioconductor<e2><80><99>s Biobase package provides a class called AnnotatedDataFrame   
-      R/getGenesClassifier.R
-        153:             ##metaData <- data.frame(labelDescription= colnames(ClinicalData), row.names=colnames(ClinicalData))        ## Bioconductor<e2><80><99>s Biobase package provides a class called AnnotatedDataFrame   
-        154:             metaData <- data.frame(labelDescription= "DiseasesType", row.names="DiseasesType")        ## Bioconductor<e2><80><99>s Biobase package provides a class called AnnotatedDataFrame   
-      R/geteSet.R
-        159:                         metaData <- data.frame(labelDescription= colnames(ClinicalData), row.names=colnames(ClinicalData))        ## Bioconductor<e2><80><99>s Biobase package provides a class called AnnotatedDataFrame   
-      R/plotModel.R
-        27:     rbValue3 <- tclVar("PNG") # le choix par d<c3><a9>faut
+    Packages required but not available: ‘geNetClassifier’ ‘phenoTest’
     
-    The Title field should be in title case, current version then in title case:
-    ‘A Graphical User Interface for accessing and modeling the Cancer Genomics Data of MSKCC.’
-    ‘A Graphical User Interface for Accessing and Modeling the Cancer Genomics Data of MSKCC.’
-    
-    The Description field should not start with the package name,
-      'This package' or similar.
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    
-    Size of tarball: 63405630 bytes
-    ```
-
-*   checking for hidden files and directories ... NOTE
-    ```
-    Found the following hidden files and directories:
-      .travis.yml
-    These were most likely included in error. See section ‘Package
-    structure’ in the ‘Writing R Extensions’ manual.
-    
-    CRAN-pack does not know about
-      .travis.yml
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # causaleffect
 
-Version: 1.3.5
+Version: 1.3.8
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking re-building of vignette outputs ... WARNING
     ```
-    Maintainer: ‘Santtu Tikka <santtuth@gmail.com>’
+    Error in re-building vignettes:
+      ...
+    Error: processing vignette 'causaleffect.ltx' failed with diagnostics:
+    Running 'texi2dvi' on 'causaleffect.ltx' failed.
+    LaTeX errors:
+    ! LaTeX Error: File `appendix.sty' not found.
     
-    Insufficient package version (submitted: 1.3.5, existing: 1.3.5)
+    Type X to quit or <RETURN> to proceed,
+    or enter new name. (Default extension: sty)
     
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    ! Emergency stop.
+    <read *> 
+             
+    l.17 \usepackage
+                    {subcaption}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    Execution halted
     ```
 
-# chngpt
+# coga
 
-Version: 2018.1-3
+Version: 1.0.0
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking whether package ‘coga’ can be installed ... ERROR
     ```
-    Maintainer: ‘Youyi Fong <youyifong@gmail.com>’
-    
-    Insufficient package version (submitted: 2018.1.3, existing: 2018.1.3)
-    Version contains large components (2018.1-3)
-    
-    Days since last update: 1
+    Installation failed.
+    See ‘/wynton/scratch/henrik/repositories/R.rsp/revdep/checks/coga/new/coga.Rcheck/00install.out’ for details.
     ```
 
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘coga’ ...
+** package ‘coga’ successfully unpacked and MD5 sums checked
+checking for gsl-config... no
+configure: error: gsl-config not found, is GSL installed?
+ERROR: configuration failed for package ‘coga’
+* removing ‘/wynton/scratch/henrik/repositories/R.rsp/revdep/checks/coga/new/coga.Rcheck/coga’
+
+```
+### CRAN
+
+```
+* installing *source* package ‘coga’ ...
+** package ‘coga’ successfully unpacked and MD5 sums checked
+checking for gsl-config... no
+configure: error: gsl-config not found, is GSL installed?
+ERROR: configuration failed for package ‘coga’
+* removing ‘/wynton/scratch/henrik/repositories/R.rsp/revdep/checks/coga/old/coga.Rcheck/coga’
+
+```
 # comf
 
 Version: 0.1.7
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking re-building of vignette outputs ... WARNING
     ```
-    Maintainer: ‘Marcel Schweiker <marcel.schweiker@kit.edu>’
+    Error in re-building vignettes:
+      ...
+    Error: processing vignette 'R_packages-comf.ltx' failed with diagnostics:
+    Running 'texi2dvi' on 'R_packages-comf.ltx' failed.
+    LaTeX errors:
+    ! LaTeX Error: File `subfigure.sty' not found.
     
-    Insufficient package version (submitted: 0.1.7, existing: 0.1.7)
+    Type X to quit or <RETURN> to proceed,
+    or enter new name. (Default extension: sty)
     
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    ! Emergency stop.
+    <read *> 
+             
+    l.25 \usepackage
+                    {multirow}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    Execution halted
     ```
 
 # Compind
 
-Version: 1.2.1
+Version: 2.0
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking package dependencies ... ERROR
     ```
-    Maintainer: ‘Francesco Vidoli <fvidoli@gmail.com>’
+    Packages required but not available: ‘Benchmarking’ ‘nonparaeff’
     
-    Insufficient package version (submitted: 1.2.1, existing: 1.2.1)
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
-# CorporaCoCo
+# crisprseekplus
 
-Version: 1.1-0
+Version: 1.6.0
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking re-building of vignette outputs ... WARNING
     ```
-    Maintainer: ‘Anthony Hennessey <anthony.hennessey@nottingham.ac.uk>’
-    
-    Insufficient package version (submitted: 1.1.0, existing: 1.1.0)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    Error in re-building vignettes:
+      ...
+    Error: processing vignette 'crisprseekplus.Rmd' failed with diagnostics:
+    there is no package called ‘BiocStyle’
+    Execution halted
     ```
 
 # CryptRndTest
@@ -585,350 +334,199 @@ Version: 1.2.2
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking re-building of vignette outputs ... WARNING
     ```
-    Maintainer: ‘Haydar Demirhan <haydarde@hacettepe.edu.tr>’
+    Error in re-building vignettes:
+      ...
+    Error: processing vignette 'CryptRndTest.ltx' failed with diagnostics:
+    Running 'texi2dvi' on 'CryptRndTest.ltx' failed.
+    LaTeX errors:
+    ! LaTeX Error: File `inconsolata.sty' not found.
     
-    Insufficient package version (submitted: 1.2.2, existing: 1.2.2)
+    Type X to quit or <RETURN> to proceed,
+    or enter new name. (Default extension: sty)
     
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking Rd cross-references ... NOTE
-    ```
-    Package unavailable to check Rd xrefs: ‘copula’
-    ```
-
-# ctmcd
-
-Version: 1.2
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Marius Pfeuffer <marius.pfeuffer@fau.de>’
-    
-    Insufficient package version (submitted: 1.2, existing: 1.2)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    ! Emergency stop.
+    <read *> 
+             
+    l.47 \RequirePackage
+                        [T1]{fontenc}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    Execution halted
     ```
 
 # deBInfer
 
-Version: 0.4.1
+Version: 0.4.2
 
 ## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Philipp H Boersch-Supan <pboesu@gmail.com>’
-    
-    Insufficient package version (submitted: 0.4.1, existing: 0.4.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# debrowser
-
-Version: 1.6.8
-
-## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘debrowser-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: runHeatmap
-    > ### Title: runHeatmap
-    > ### Aliases: runHeatmap
-    > 
-    > ### ** Examples
-    > 
-    >     x <- runHeatmap(mtcars)
-    Error in if (distance_method != "cor") { : the condition has length > 1
-    Calls: runHeatmap -> heatmap.2 -> distfun
-    Execution halted
-    ```
 
 *   checking re-building of vignette outputs ... WARNING
     ```
     Error in re-building vignettes:
       ...
-    Warning in buildVignettes(dir = "/home/hb/repositories/R.rsp/revdep/checks/debrowser/new/debrowser.Rcheck/vign_test/debrowser") :
-      Files named as vignettes but with no recognized vignette engine:
-       ‘vignettes/DEBrowser.md’
-    (Is a VignetteBuilder field missing?)
-    Error: processing vignette 'DEBrowser.Rmd' failed with diagnostics:
-    there is no package called ‘BiocStyle’
+    Loading required package: deSolve
+    Order of initial conditions is  C, S, Z
+    initial posterior probability = -13968.8205931737
+    ! LaTeX Error: File `framed.sty' not found.
+    
+    ! Emergency stop.
+    <read *> 
+    
+    Error: processing vignette 'chytrid_dede_example.Rmd' failed with diagnostics:
+    Failed to compile chytrid_dede_example.tex. See chytrid_dede_example.log for more info.
     Execution halted
     ```
 
-*   checking CRAN incoming feasibility ... NOTE
+# debrowser
+
+Version: 1.8.0
+
+## In both
+
+*   checking R code for possible problems ... NOTE
     ```
     ...
-      if any, to sign a "copyright disclaimer" for the program, if necessary.
-      For more information on this, and how to apply and follow the GNU GPL, see
-      <http://www.gnu.org/licenses/>.
-      
-        The GNU General Public License does not permit incorporating your program
-      into proprietary programs.  If your program is a subroutine library, you
-      may consider it more useful to permit linking proprietary applications with
-      the library.  If this is what you want to do, use the GNU Lesser General
-      Public License instead of this License.  But first, please read
-      <http://www.gnu.org/philosophy/why-not-lgpl.html>.
-    
-    The Title field starts with the package name.
-    The Title field should be in title case, current version then in title case:
-    ‘debrowser: Interactive Differential Expresion Analysis Browser’
-    ‘Debrowser: Interactive Differential Expresion Analysis Browser’
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    
-    Size of tarball: 9303216 bytes
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  8.9Mb
-      sub-directories of 1Mb or more:
-        doc       6.4Mb
-        extdata   2.1Mb
-    ```
-
-*   checking top-level files ... NOTE
-    ```
-    Non-standard file/directory found at top level:
-      ‘README.pdf’
+    scatterZoom: no visible binding for global variable ‘size.hover’
+    scatterZoom: no visible binding for global variable ‘key’
+    startDEBrowser: no visible binding for global variable
+      ‘.startdebrowser.called’
+    volcanoPlot: no visible global function definition for ‘:=’
+    volcanoPlot: no visible binding for global variable ‘size’
+    volcanoPlot: no visible binding for global variable ‘size.hover’
+    volcanoPlot: no visible binding for global variable ‘fillOpacity’
+    volcanoPlot: no visible binding for global variable ‘fillOpacity.hover’
+    volcanoPlot: no visible binding for global variable ‘fill.brush’
+    volcanoPlot: no visible binding for global variable ‘opacity’
+    volcanoPlot: no visible binding for global variable ‘key’
+    volcanoZoom: no visible global function definition for ‘:=’
+    volcanoZoom: no visible binding for global variable ‘size’
+    volcanoZoom: no visible binding for global variable ‘size.hover’
+    volcanoZoom: no visible binding for global variable ‘key’
+    Undefined global functions or variables:
+      .startdebrowser.called := NUL align baseline biocLite conds debrowser
+      demodata div fill fill.brush fillOpacity fillOpacity.hover fit
+      fontSize imageOutput key opacity renderImage samples searched size
+      size.hover stroke
     ```
 
 # dggridR
 
-Version: 2.0.1
+Version: 2.0.3
 
 ## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Richard Barnes <rbarnes@umn.edu>’
-    
-    Insufficient package version (submitted: 2.0.1, existing: 2.0.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 27.5Mb
+      installed size is  5.0Mb
       sub-directories of 1Mb or more:
-        doc    1.9Mb
-        libs  25.2Mb
-    ```
-
-# DiffusionRgqd
-
-Version: 0.1.3
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Etienne A.D. Pienaar <etiennead@gmail.com>’
-    
-    Insufficient package version (submitted: 0.1.3, existing: 0.1.3)
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  6.6Mb
-      sub-directories of 1Mb or more:
-        doc   5.2Mb
-    ```
-
-# DiffusionRimp
-
-Version: 0.1.2
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Etienne A.D. Pienaar <etiennead@gmail.com>’
-    
-    Insufficient package version (submitted: 0.1.2, existing: 0.1.2)
-    
-    This build time stamp is over a month old.
-    ```
-
-# DiffusionRjgqd
-
-Version: 0.1.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Etienne A.D. Pienaar <etiennead@gmail.com>’
-    
-    Insufficient package version (submitted: 0.1.1, existing: 0.1.1)
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  6.8Mb
-      sub-directories of 1Mb or more:
-        doc   5.6Mb
-    ```
-
-# doFuture
-
-Version: 0.6.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Henrik Bengtsson <henrikb@braju.com>’
-    
-    Insufficient package version (submitted: 0.6.0, existing: 0.6.0)
-    
-    This build time stamp is over a month old.
+        libs   4.9Mb
     ```
 
 # dynamichazard
 
-Version: 0.5.1
+Version: 0.5.3
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking re-building of vignette outputs ... WARNING
     ```
-    Maintainer: ‘Benjamin Christoffersen <boennecd@gmail.com>’
+    Error in re-building vignettes:
+      ...
+    This is mgcv 1.8-24. For overview type 'help("mgcv-package")'.
+    a_0 not supplied. IWLS estimates of static glm model is used
+    a_0 not supplied. IWLS estimates of static glm model is used
+    a_0 not supplied. IWLS estimates of static glm model is used
+    a_0 not supplied. IWLS estimates of static glm model is used
+    a_0 not supplied. IWLS estimates of static glm model is used
+    a_0 not supplied. IWLS estimates of static glm model is used
+    a_0 not supplied. IWLS estimates of static glm model is used
+    a_0 not supplied. IWLS estimates of static glm model is used
+    a_0 not supplied. IWLS estimates of static glm model is used
+    ! LaTeX Error: File `framed.sty' not found.
     
-    Insufficient package version (submitted: 0.5.1, existing: 0.5.1)
+    ! Emergency stop.
+    <read *> 
     
-    This build time stamp is over a month old.
+    Error: processing vignette 'Comparing_methods_for_logistic_models.Rmd' failed with diagnostics:
+    Failed to compile Comparing_methods_for_logistic_models.tex. See Comparing_methods_for_logistic_models.log for more info.
+    Execution halted
     ```
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 25.0Mb
+      installed size is  7.0Mb
       sub-directories of 1Mb or more:
-        data   4.2Mb
-        doc    1.2Mb
-        libs  19.3Mb
+        libs   6.8Mb
     ```
 
-# easyVerification
+# econet
 
-Version: 0.4.4
+Version: 0.1.7
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking re-building of vignette outputs ... WARNING
     ```
-    Maintainer: ‘Jonas Bhend <jonas.bhend@meteoswiss.ch>’
+    Error in re-building vignettes:
+      ...
+    Error: processing vignette 'econet.tex' failed with diagnostics:
+    Running 'texi2dvi' on 'econet.tex' failed.
+    LaTeX errors:
+    ! LaTeX Error: File `framed.sty' not found.
     
-    Insufficient package version (submitted: 0.4.4, existing: 0.4.4)
+    Type X to quit or <RETURN> to proceed,
+    or enter new name. (Default extension: sty)
     
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# ecp
-
-Version: 3.1.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Wenyu Zhang <wz258@cornell.edu>’
-    
-    Insufficient package version (submitted: 3.1.0, existing: 3.1.0)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# EdSurvey
-
-Version: 1.0.6
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Paul Bailey <pbailey@air.org>’
-    
-    Insufficient package version (submitted: 1.0.6, existing: 1.0.6)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# emdi
-
-Version: 1.1.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Soeren Pannier <soeren.pannier@fu-berlin.de>’
-    
-    Insufficient package version (submitted: 1.1.1, existing: 1.1.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    ! Emergency stop.
+    <read *> 
+             
+    l.7 \usepackage
+                   {amsmath}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    Execution halted
     ```
 
 *   checking dependencies in R code ... NOTE
     ```
+    Namespace in Imports field not imported from: ‘tnet’
+      All declared Imports should be used.
+    ```
+
+# eggCounts
+
+Version: 2.0
+
+## In both
+
+*   checking package dependencies ... NOTE
+    ```
+    Package suggested but not available for checking: ‘eggCountsExtra’
+    ```
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is 16.2Mb
+      sub-directories of 1Mb or more:
+        libs  16.1Mb
+    ```
+
+# emdi
+
+Version: 1.1.3
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
     Namespaces in Imports field not imported from:
-      ‘FNN’ ‘ggmap’ ‘simFrame’
+      ‘graphics’ ‘maptools’ ‘rgeos’
       All declared Imports should be used.
     ```
 
 *   checking data for non-ASCII characters ... NOTE
     ```
-      Note: found 2098 marked UTF-8 strings
-    ```
-
-# enaR
-
-Version: 3.0.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Matthew K. Lau <enaR.maintainer@gmail.com>’
-    
-    Insufficient package version (submitted: 3.0.0, existing: 3.0.0)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+      Note: found 24 marked Latin-1 strings
     ```
 
 # EnsemblePCReg
@@ -937,128 +535,26 @@ Version: 1.1.1
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking package dependencies ... ERROR
     ```
-    Maintainer: ‘Alireza S. Mahani <alireza.s.mahani@gmail.com>’
+    Package required but not available: ‘EnsembleBase’
     
-    Insufficient package version (submitted: 1.1.1, existing: 1.1.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
-# erah
+# ePCR
 
-Version: 1.0.5
+Version: 0.9.9-6
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking package dependencies ... ERROR
     ```
-    Maintainer: ‘Xavier Domingo-Almenara <xdomingo@scripps.edu>’
+    Package required but not available: ‘c060’
     
-    Insufficient package version (submitted: 1.0.5, existing: 1.0.5)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# flacco
-
-Version: 1.7
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Pascal Kerschke <kerschke@uni-muenster.de>’
-    
-    Insufficient package version (submitted: 1.7, existing: 1.7)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# FLSSS
-
-Version: 5.2
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Charlie Wusuo Liu <liuwusuo@gmail.com>’
-    
-    Insufficient package version (submitted: 5.2, existing: 5.2)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# forestinventory
-
-Version: 0.3.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Andreas Hill <andreas.hill@usys.ethz.ch>’
-    
-    Insufficient package version (submitted: 0.3.1, existing: 0.3.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# future
-
-Version: 1.6.2
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Henrik Bengtsson <henrikb@braju.com>’
-    
-    Insufficient package version (submitted: 1.6.2, existing: 1.6.2)
-    
-    This build time stamp is over a month old.
-    ```
-
-# future.BatchJobs
-
-Version: 0.15.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Henrik Bengtsson <henrikb@braju.com>’
-    
-    Insufficient package version (submitted: 0.15.0, existing: 0.15.0)
-    
-    This build time stamp is over a month old.
-    ```
-
-# future.batchtools
-
-Version: 0.6.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Henrik Bengtsson <henrikb@braju.com>’
-    
-    Insufficient package version (submitted: 0.6.0, existing: 0.6.0)
-    
-    This build time stamp is over a month old.
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # FuzzyLP
@@ -1067,283 +563,183 @@ Version: 0.1-5
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking package dependencies ... ERROR
     ```
-    Maintainer: ‘Carlos A. Rabelo <carabelo@gmail.com>’
+    Package required but not available: ‘ROI.plugin.glpk’
     
-    Insufficient package version (submitted: 0.1.5, existing: 0.1.5)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# FuzzyStatProb
-
-Version: 2.0.3
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Pablo J. Villacorta <pjvi@decsai.ugr.es>’
-    
-    Insufficient package version (submitted: 2.0.3, existing: 2.0.3)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# GameTheory
-
-Version: 2.7
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Sebastian Cano-Berlanga <cano.berlanga@gmail.com>’
-    
-    Insufficient package version (submitted: 2.7, existing: 2.7)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# gdm
-
-Version: 1.3.4
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Matthew C. Fitzpatrick <mfitzpatrick@umces.edu>’
-    
-    Insufficient package version (submitted: 1.3.4, existing: 1.3.4)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # generalCorr
 
-Version: 1.1.0
+Version: 1.1.2
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking package dependencies ... ERROR
     ```
-    Maintainer: ‘H. D. Vinod <vinod@fordham.edu>’
+    Package required but not available: ‘meboot’
     
-    Insufficient package version (submitted: 1.1.0, existing: 1.1.0)
-    
-    Days since last update: 1
-    ```
-
-# GHap
-
-Version: 1.2.2
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Yuri Tani Utsunomiya <ytutsunomiya@gmail.com>’
-    
-    Insufficient package version (submitted: 1.2.2, existing: 1.2.2)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# gitlabr
-
-Version: 0.9
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Jirka Lewandowski <jirka.lewandowski@wzb.eu>’
-    
-    Insufficient package version (submitted: 0.9, existing: 0.9)
-    
-    Found the following (possibly) invalid URLs:
-      URL: https://blog.points-of-interest.cc/post/gitlabr/
-        From: DESCRIPTION
-        Status: Error
-        Message: libcurl error code 60:
-        	SSL certificate problem: certificate has expired
-        	(Status without verification: OK)
-      URL: https://gitlab.points-of-interest.cc/points-of-interest/gitlabr/issues/
-        From: DESCRIPTION
-        Status: Error
-        Message: libcurl error code 60:
-        	SSL certificate problem: certificate has expired
-        	(Status without verification: Bad Gateway)
-    
-    This build time stamp is over a month old.
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # graphite
 
-Version: 1.24.1
+Version: 1.26.1
 
 ## In both
 
-*   checking CRAN incoming feasibility ... NOTE
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘graphite-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: convertIdentifiers
+    > ### Title: Convert the node identifiers of a pathway.
+    > ### Aliases: convertIdentifiers
+    > 
+    > ### ** Examples
+    > 
+    >   r <- pathways("hsapiens", "reactome")
+    >   convertIdentifiers(r$`mTOR signalling`, "symbol")
+    Error in curl::curl_fetch_disk(url, x$path, handle = handle) : 
+      Could not resolve host: graphiteweb.bio.unipd.it; Name or service not known
+    Error in fetchRemote(name, path) : 
+      cannot download pathway data: are you offline?
+    Calls: convertIdentifiers ... initialize -> metabolites -> get -> loadEnv -> fetchRemote
+    Execution halted
+    ```
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      ══ testthat results  ═══════════════════════════════════════════════════════════
+      OK: 60 SKIPPED: 0 FAILED: 16
+      1. Error: (unknown) (@test_clipper.R#18) 
+      2. Error: protein conversion changes all node types (@test_conversion.R#62) 
+      3. Error: protein conversion preserves types as factors (@test_conversion.R#70) 
+      4. Error: protein conversion to symbol does not increase the number of edges (@test_conversion.R#77) 
+      5. Error: proteins with an invalid type of identifier are not converted (@test_conversion.R#85) 
+      6. Failure: conversion to an invalid type of identifier is rejected (@test_conversion.R#96) 
+      7. Error: conversion of empty pathway produces no edge (@test_conversion.R#103) 
+      8. Error: conversion looses all edges with invalid nodes (@test_conversion.R#116) 
+      9. Error: gene conversion leaves metabolites unchanged (@test_conversion.R#129) 
+      1. ...
+      
+      Error: testthat unit tests failed
+      Execution halted
+    ```
+
+*   checking Rd cross-references ... WARNING
+    ```
+    Unknown packages ‘SPIA’, ‘clipper’, ‘topologyGSA’ in Rd xrefs
+    ```
+
+*   checking package dependencies ... NOTE
+    ```
+    Packages suggested but not available for checking:
+      ‘clipper’ ‘SPIA’ ‘topologyGSA’
+    ```
+
+*   checking re-building of vignette outputs ... NOTE
     ```
     ...
-    Maintainer: ‘Gabriele Sales <gabriele.sales@unipd.it>’
     
-    Package duplicated from https://bioconductor.org/packages/3.6/bioc
+        IQR, mad, sd, var, xtabs
     
-    Package was archived on CRAN
+    The following objects are masked from ‘package:base’:
     
-    CRAN repository db overrides:
-      X-CRAN-Comment: This package is now available from Bioconductor only,
-        see
-        <http://www.bioconductor.org/packages/release/bioc/html/graphite.html>.
+        Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+        as.data.frame, basename, cbind, colMeans, colSums, colnames,
+        dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+        intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+        order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+        rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+        union, unique, unsplit, which, which.max, which.min
     
-    Found the following (possibly) invalid URLs:
-      URL: http://pid.nci.nih.gov/
-        From: man/nci.Rd
-        Status: Error
-        Message: libcurl error code 6:
-        	Could not resolve host: pid.nci.nih.gov
+    Error in curl::curl_fetch_disk(url, x$path, handle = handle) : 
+      Could not resolve host: graphiteweb.bio.unipd.it; Name or service not known
     
-    The Title field should be in title case, current version then in title case:
-    ‘GRAPH Interaction from pathway Topological Environment’
-    ‘GRAPH Interaction from Pathway Topological Environment’
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  6.1Mb
-      sub-directories of 1Mb or more:
-        data   5.1Mb
-    ```
-
-*   checking data for non-ASCII characters ... NOTE
-    ```
-      Note: found 30 marked UTF-8 strings
-    ```
-
-# haplo.stats
-
-Version: 1.7.7
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Jason P. Sinnwell <sinnwell.jason@mayo.edu>’
-    
-    Insufficient package version (submitted: 1.7.7, existing: 1.7.7)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    Error: processing vignette 'graphite.Rnw' failed with diagnostics:
+     chunk 13 (label = ident1) 
+    Error in fetchRemote(name, path) : 
+      cannot download pathway data: are you offline?
+    Execution halted
     ```
 
 # httk
 
-Version: 1.7
+Version: 1.8
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘John Wambaugh <wambaugh.john@epa.gov>’
-    
-    Insufficient package version (submitted: 1.7, existing: 1.7)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
 *   checking installed package size ... NOTE
     ```
-      installed size is 13.8Mb
+      installed size is  6.7Mb
       sub-directories of 1Mb or more:
-        data  12.3Mb
-        doc    1.0Mb
+        data   6.5Mb
+    ```
+
+# hydrolinks
+
+Version: 0.10.0
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘sf’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # hyperSpec
 
-Version: 0.99-20171005
+Version: 0.99-20180627
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking re-building of vignette outputs ... NOTE
     ```
-    Maintainer: ‘Claudia Beleites <chemometrie@beleites.de>’
+    ...
+    Iteration 4: 38 support points
+    Iteration 5: 32 support points
+    Iteration 6: 29 support points
+    Iteration 7: 29 support points
+    spectrum      1:    29 support points, noise = 15.0,   7 iterations
+    Error in texi2dvi(file = file, pdf = TRUE, clean = clean, quiet = quiet,  : 
+      Running 'texi2dvi' on 'baseline.tex' failed.
+    LaTeX errors:
+    ! LaTeX Error: File `fourier.sty' not found.
     
-    Insufficient package version (submitted: 0.99.20171005, existing: 0.99.20171005)
-    Version contains large components (0.99-20171005)
+    Type X to quit or <RETURN> to proceed,
+    or enter new name. (Default extension: sty)
     
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    ! Emergency stop.
+    <read *> 
+             
+    l.12 \usepackage
+                    []{helvet}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    Calls: buildVignettes -> texi2pdf -> texi2dvi
+    Execution halted
     ```
 
-*   checking Rd cross-references ... NOTE
-    ```
-    Package unavailable to check Rd xrefs: ‘caTools’
-    ```
+# Jdmbs
 
-# iprior
-
-Version: 0.7.1
+Version: 1.3
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking dependencies in R code ... NOTE
     ```
-    Maintainer: ‘Haziq Jamil <haziq.jamil@gmail.com>’
-    
-    Insufficient package version (submitted: 0.7.1, existing: 0.7.1)
-    
-    Uses the superseded package: ‘doSNOW’
-    ```
-
-*   checking top-level files ... WARNING
-    ```
-    Conversion of ‘README.md’ failed:
-    pandoc: Could not fetch https://img.shields.io/codecov/c/github/haziqj/iprior/master.svg
-    TlsExceptionHostPort (HandshakeFailed Error_EOF) "img.shields.io" 443
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is 10.2Mb
-      sub-directories of 1Mb or more:
-        doc    1.1Mb
-        libs   8.7Mb
-    ```
-
-# IsoriX
-
-Version: 0.7
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Alexandre Courtiol <alexandre.courtiol@gmail.com>’
-    
-    Insufficient package version (submitted: 0.7, existing: 0.7)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    Namespace in Imports field not imported from: ‘png’
+      All declared Imports should be used.
     ```
 
 # jsonlite
@@ -1352,13 +748,56 @@ Version: 1.5
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking examples ... ERROR
     ```
-    Maintainer: ‘Jeroen Ooms <jeroen@berkeley.edu>’
+    ...
+    > 
+    > # compare formats
+    > x <- iris[1:3,]
+    > toJSON(x)
+    [{"Sepal.Length":5.1,"Sepal.Width":3.5,"Petal.Length":1.4,"Petal.Width":0.2,"Species":"setosa"},{"Sepal.Length":4.9,"Sepal.Width":3,"Petal.Length":1.4,"Petal.Width":0.2,"Species":"setosa"},{"Sepal.Length":4.7,"Sepal.Width":3.2,"Petal.Length":1.3,"Petal.Width":0.2,"Species":"setosa"}] 
+    > stream_out(x)
+    {"Sepal.Length":5.1,"Sepal.Width":3.5,"Petal.Length":1.4,"Petal.Width":0.2,"Species":"setosa"}
+    {"Sepal.Length":4.9,"Sepal.Width":3,"Petal.Length":1.4,"Petal.Width":0.2,"Species":"setosa"}
+    {"Sepal.Length":4.7,"Sepal.Width":3.2,"Petal.Length":1.3,"Petal.Width":0.2,"Species":"setosa"}
     
-    Insufficient package version (submitted: 1.5, existing: 1.5)
+    Complete! Processed total of 3 rows.
+    > 
+    > # Trivial example
+    > mydata <- stream_in(url("http://httpbin.org/stream/100"))
+    opening url input connection.
+    Warning in open.connection(con, "rb") :
+      URL 'http://httpbin.org/stream/100': status was 'Couldn't resolve host name'
+    Error in open.connection(con, "rb") : 
+      cannot open the connection to 'http://httpbin.org/stream/100'
+    Calls: stream_in -> open -> open.connection
+    Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... WARNING
+    ```
+    ...
+      ...
+    Warning in system(sprintf("%s %s.sty", kpsewhich(), name), intern = TRUE) :
+      running command 'kpsewhich framed.sty' had status 1
+    Warning in test_latex_pkg("framed", system.file("misc", "framed.sty", package = "knitr")) :
+      unable to find LaTeX package 'framed'; will use a copy from knitr
+    Error in texi2dvi(file = file, pdf = TRUE, clean = clean, quiet = quiet,  : 
+      Running 'texi2dvi' on 'json-opencpu.tex' failed.
+    LaTeX errors:
+    ! LaTeX Error: File `fullpage.sty' not found.
     
-    This build time stamp is over a month old.
+    Type X to quit or <RETURN> to proceed,
+    or enter new name. (Default extension: sty)
+    
+    ! Emergency stop.
+    <read *> 
+             
+    l.62 \usepackage
+                    {xspace}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    Calls: buildVignettes -> texi2pdf -> texi2dvi
+    Execution halted
     ```
 
 *   checking compiled code ... NOTE
@@ -1369,28 +808,6 @@ Version: 1.5
     Compiled code should not call non-API entry points in R.
     
     See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual.
-    ```
-
-# kdecopula
-
-Version: 0.9.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Thomas Nagler <thomas.nagler@tum.de>’
-    
-    Insufficient package version (submitted: 0.9.1, existing: 0.9.1)
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking top-level files ... WARNING
-    ```
-    Conversion of ‘README.md’ failed:
-    pandoc: Could not fetch https://img.shields.io/badge/License-GPL%20v3-blue.svg
-    TlsExceptionHostPort (HandshakeFailed Error_EOF) "img.shields.io" 443
     ```
 
 # LAGOSNE
@@ -1407,237 +824,53 @@ Version: 1.1.0
     manual.
     ```
 
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Joseph Stachelek <stachel2@msu.edu>’
-    
-    Insufficient package version (submitted: 1.1.0, existing: 1.1.0)
-    ```
+# Luminescence
 
-# ldhmm
-
-Version: 0.4.2
+Version: 0.8.5
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking Rd cross-references ... WARNING
     ```
-    Maintainer: ‘Stephen H-T. Lihn <stevelihn@gmail.com>’
-    
-    Insufficient package version (submitted: 0.4.2, existing: 0.4.2)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    Unknown package ‘rjags’ in Rd xrefs
     ```
 
-# lexRankr
-
-Version: 0.5.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
+*   checking package dependencies ... NOTE
     ```
-    Maintainer: ‘Adam Spannbauer <spannbaueradam@gmail.com>’
-    
-    Insufficient package version (submitted: 0.5.0, existing: 0.5.0)
+    Package suggested but not available for checking: ‘rjags’
     ```
 
-*   checking top-level files ... WARNING
-    ```
-    Conversion of ‘README.md’ failed:
-    pandoc: Could not fetch https://img.shields.io/codecov/c/github/AdamSpannbauer/lexRankr/master.svg
-    TlsExceptionHostPort (HandshakeFailed Error_EOF) "img.shields.io" 443
-    ```
+# MatchIt
 
-# listenv
-
-Version: 0.6.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Henrik Bengtsson <henrikb@braju.com>’
-    
-    Insufficient package version (submitted: 0.6.0, existing: 0.6.0)
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error in re-building vignettes:
-      ...
-    Error: processing vignette 'listenv.md.rsp' failed with diagnostics:
-    there is no package called ‘markdown’
-    Execution halted
-    ```
-
-# lmvar
-
-Version: 1.4.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Marco Nijmeijer <nijmeijer@posthuma-partners.nl>’
-    
-    Insufficient package version (submitted: 1.4.0, existing: 1.4.0)
-    
-    Days since last update: 2
-    ```
-
-# lqmm
-
-Version: 1.5.3
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    ...
-              man/VarCorr.Rd
-              man/ranef.Rd
-        Status: 200
-        Message: OK
-        CRAN URL not in canonical form
-      URL: http://CRAN.R-project.org/package=quantreg
-        From: man/summary.lqm.Rd
-        Status: 200
-        Message: OK
-        CRAN URL not in canonical form
-      URL: http://CRAN.R-project.org/package=statmod
-        From: man/gauss.quad.Rd
-              man/gauss.quad.prob.Rd
-        Status: 200
-        Message: OK
-        CRAN URL not in canonical form
-      Canonical CRAN.R-project.org URLs use https.
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# madness
-
-Version: 0.2.2
+Version: 3.0.2
 
 ## In both
 
 *   checking tests ...
     ```
      ERROR
-    Running the tests in ‘tests/run-all.R’ failed.
+    Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-              d xval
-       calc: -------- 
-              d xval
-        val: 1.307766 1.468549 1.546559 1.280354 ...
-       dvdx: 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ...
-       varx:  ...
-      ── 1. Failure: eigen functions (@test-correctness.r#400)  ──────────────────────
-      comp_err(xval, thefun = thefun, scalfun = scalfun, eps = eps) is not strictly less than `errtol`. Difference: 1.09e-07
+             `3109` = FALSE, `3110` = FALSE, `3111` = FALSE, `3112` = FALSE, `3113` = FALSE, 
+             `3114` = FALSE, `3115` = FALSE, `3116` = FALSE, `3117` = FALSE, `3118` = FALSE, 
+             `3119` = FALSE, `3120` = FALSE, `3121` = FALSE, `3122` = FALSE, `3123` = FALSE, 
+             `3124` = FALSE, `3125` = FALSE, `3126` = FALSE, `3127` = FALSE, `3128` = FALSE, 
+             `3129` = FALSE, `3130` = FALSE, `3131` = FALSE, `3132` = FALSE, `3133` = FALSE, 
+             `3134` = FALSE, `3135` = FALSE, `3136` = FALSE, `3137` = FALSE), is.full.mahalanobis = FALSE)
+      4: stop("cem package is required.  Please install it.")
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 459 SKIPPED: 0 FAILED: 1
-      1. Failure: eigen functions (@test-correctness.r#400) 
+      OK: 119 SKIPPED: 0 FAILED: 2
+      1. Error: can get correct matches, cem (@test-get_matches.R#209) 
+      2. Error: correct weights for replace= TRUE; test2 (@test-get_matches.R#271) 
       
       Error: testthat unit tests failed
       Execution halted
     ```
 
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Steven E. Pav <shabbychef@gmail.com>’
-    
-    Insufficient package version (submitted: 0.2.2, existing: 0.2.2)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# manifestoR
-
-Version: 1.2.4
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Jirka Lewandowski <jirka.lewandowski@wzb.eu>’
-    
-    Insufficient package version (submitted: 1.2.4, existing: 1.2.4)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# marmap
-
-Version: 0.9.6
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Eric Pante <pante.eric@gmail.com>’
-    
-    Insufficient package version (submitted: 0.9.6, existing: 0.9.6)
-    
-    Found the following (possibly) invalid URLs:
-      URL: http://www.ngdc.noaa.gov/mgg/gdas/gd_designagrid.html (moved to https://www.ngdc.noaa.gov/mgg/gdas/gd_designagrid.html)
-        From: man/aleutians.Rd
-              man/as.xyz.Rd
-              man/celt.Rd
-              man/florida.Rd
-              man/hawaii.Rd
-              man/nw.atlantic.Rd
-              man/read.bathy.Rd
-        Status: 404
-        Message: Not Found
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking Rd cross-references ... NOTE
-    ```
-    Package unavailable to check Rd xrefs: ‘maptools’
-    ```
-
-# MatchIt
-
-Version: 3.0.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Kosuke Imai <kimai@Princeton.Edu>’
-    
-    Insufficient package version (submitted: 3.0.1, existing: 3.0.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
 *   checking package dependencies ... NOTE
     ```
     Packages suggested but not available for checking: ‘cem’ ‘WhatIf’
-    ```
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespace in Imports field not imported from: ‘rgenoud’
-      All declared Imports should be used.
     ```
 
 # matrixpls
@@ -1646,103 +879,56 @@ Version: 1.0.5
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking examples ... ERROR
     ```
-    Maintainer: ‘Mikko Rönkkö <mikko.ronkko@jyu.fi>’
+    ...
     
-    Insufficient package version (submitted: 1.0.5, existing: 1.0.5)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    > ### Name: estimator
+    > ### Title: Parameter estimation of a model matrix
+    > ### Aliases: estimator estimator.ols estimator.tsls estimator.plscLoadings
+    > ###   estimator.efaLoadings estimator.cfaLoadings estimator.plsreg
+    > 
+    > ### ** Examples
+    > 
+    > # Run the education example from the book
+    > 
+    > # Sanchez, G. (2013) PLS Path Modeling with R
+    > # Trowchez Editions. Berkeley, 2013. 
+    > # http://www.gastonsanchez.com/PLS Path Modeling with R.pdf
+    > 
+    > education <- read.csv("http://www.gastonsanchez.com/education.csv")
+    Warning in file(file, "rt") :
+      URL 'http://www.gastonsanchez.com/education.csv': status was 'Couldn't resolve host name'
+    Error in file(file, "rt") : 
+      cannot open the connection to 'http://www.gastonsanchez.com/education.csv'
+    Calls: read.csv -> read.table -> file
+    Execution halted
     ```
 
-*   checking Rd cross-references ... NOTE
+*   checking Rd cross-references ... WARNING
     ```
-    Package unavailable to check Rd xrefs: ‘sem’
+    Unknown package ‘sem’ in Rd xrefs
     ```
 
-# matrixStats
+# mazeinda
 
-Version: 0.52.2
+Version: 0.0.1
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking re-building of vignette outputs ... WARNING
     ```
-    Maintainer: ‘Henrik Bengtsson <henrikb@braju.com>’
+    Error in re-building vignettes:
+      ...
+    Loading required package: MASS
+    ! LaTeX Error: File `framed.sty' not found.
     
-    Insufficient package version (submitted: 0.52.2, existing: 0.52.2)
+    ! Emergency stop.
+    <read *> 
     
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  8.3Mb
-      sub-directories of 1Mb or more:
-        libs   7.6Mb
-    ```
-
-# MDplot
-
-Version: 1.0.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Christian Margreitter <christian.margreitter@gmail.com>’
-    
-    Insufficient package version (submitted: 1.0.1, existing: 1.0.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  7.5Mb
-      sub-directories of 1Mb or more:
-        doc       1.9Mb
-        extdata   5.3Mb
-    ```
-
-# MDSMap
-
-Version: 1.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Bram Boskamp <bram.boskamp@bioss.ac.uk>’
-    
-    Insufficient package version (submitted: 1.0, existing: 1.0)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# metafor
-
-Version: 2.0-0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Wolfgang Viechtbauer <wvb@metafor-project.org>’
-    
-    Insufficient package version (submitted: 2.0.0, existing: 2.0.0)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    Error: processing vignette 'my-vignette.Rmd' failed with diagnostics:
+    Failed to compile my-vignette.tex. See my-vignette.log for more info.
+    Execution halted
     ```
 
 # metagear
@@ -1754,18 +940,7 @@ Version: 0.4
 *   checking whether package ‘metagear’ can be installed ... ERROR
     ```
     Installation failed.
-    See ‘/home/hb/repositories/R.rsp/revdep/checks/metagear/new/metagear.Rcheck/00install.out’ for details.
-    ```
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Marc J. Lajeunesse <lajeunesse@usf.edu>’
-    
-    Insufficient package version (submitted: 0.4, existing: 0.4)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    See ‘/wynton/scratch/henrik/repositories/R.rsp/revdep/checks/metagear/new/metagear.Rcheck/00install.out’ for details.
     ```
 
 ## Installation
@@ -1779,15 +954,15 @@ Version: 0.4
 ** data
 *** moving datasets to lazyload DB
 ** inst
-** preparing package for lazy loading
+** byte-compile and prepare package for lazy loading
 R session is headless; GTK+ not initialized.
 
-(R:9525): Gtk-WARNING **: gtk_disable_setlocale() must be called before gtk_init()
+(R:16955): Gtk-WARNING **: gtk_disable_setlocale() must be called before gtk_init()
 Error : .onLoad failed in loadNamespace() for 'cairoDevice', details:
   call: fun(libname, pkgname)
   error: GDK display not found - please make sure X11 is running
 ERROR: lazy loading failed for package ‘metagear’
-* removing ‘/home/hb/repositories/R.rsp/revdep/checks/metagear/new/metagear.Rcheck/metagear’
+* removing ‘/wynton/scratch/henrik/repositories/R.rsp/revdep/checks/metagear/new/metagear.Rcheck/metagear’
 
 ```
 ### CRAN
@@ -1799,66 +974,42 @@ ERROR: lazy loading failed for package ‘metagear’
 ** data
 *** moving datasets to lazyload DB
 ** inst
-** preparing package for lazy loading
+** byte-compile and prepare package for lazy loading
 R session is headless; GTK+ not initialized.
 
-(R:9534): Gtk-WARNING **: gtk_disable_setlocale() must be called before gtk_init()
+(R:14950): Gtk-WARNING **: gtk_disable_setlocale() must be called before gtk_init()
 Error : .onLoad failed in loadNamespace() for 'cairoDevice', details:
   call: fun(libname, pkgname)
   error: GDK display not found - please make sure X11 is running
 ERROR: lazy loading failed for package ‘metagear’
-* removing ‘/home/hb/repositories/R.rsp/revdep/checks/metagear/old/metagear.Rcheck/metagear’
+* removing ‘/wynton/scratch/henrik/repositories/R.rsp/revdep/checks/metagear/old/metagear.Rcheck/metagear’
 
 ```
-# metaplus
-
-Version: 0.7-9
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Ken Beath <ken.beath@mq.edu.au>’
-    
-    Insufficient package version (submitted: 0.7.9, existing: 0.7.9)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# metaSEM
-
-Version: 0.9.16
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Mike W.-L. Cheung <mikewlcheung@nus.edu.sg>’
-    
-    Insufficient package version (submitted: 0.9.16, existing: 0.9.16)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
 # mets
 
-Version: 1.2.2
+Version: 1.2.4
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking re-building of vignette outputs ... WARNING
     ```
-    Maintainer: ‘Klaus K. Holst <klaus@holst.it>’
+    Error in re-building vignettes:
+      ...
+    Error: processing vignette 'basic-dutils.ltx' failed with diagnostics:
+    Running 'texi2dvi' on 'basic-dutils.ltx' failed.
+    LaTeX errors:
+    ! LaTeX Error: File `tufte-handout.cls' not found.
     
-    Insufficient package version (submitted: 1.2.2, existing: 1.2.2)
+    Type X to quit or <RETURN> to proceed,
+    or enter new name. (Default extension: cls)
     
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    ! Emergency stop.
+    <read *> 
+             
+    l.10 \usepackage
+                    {etex}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    Execution halted
     ```
 
 *   checking package dependencies ... NOTE
@@ -1868,497 +1019,230 @@ Version: 1.2.2
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 21.0Mb
+      installed size is  5.7Mb
       sub-directories of 1Mb or more:
-        doc    1.0Mb
-        libs  16.7Mb
-        misc   1.1Mb
-    ```
-
-# MIAmaxent
-
-Version: 0.4.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Julien Vollering <julien.vollering@hvl.no>’
-    
-    Insufficient package version (submitted: 0.4.0, existing: 0.4.0)
-    
-    This build time stamp is over a month old.
-    ```
-
-# micromapST
-
-Version: 1.1.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Jim Pearson <jpearson@statnetconsulting.com>’
-    
-    Insufficient package version (submitted: 1.1.1, existing: 1.1.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# microPop
-
-Version: 1.3
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Helen Kettle <Helen.Kettle@bioss.ac.uk>’
-    
-    Insufficient package version (submitted: 1.3, existing: 1.3)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# mpath
-
-Version: 0.3-4
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Zhu Wang <zwang@connecticutchildrens.org>’
-    
-    Insufficient package version (submitted: 0.3.4, existing: 0.3.4)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# MRH
-
-Version: 2.2
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Yolanda Hagar <yolanda.hagar@colorado.edu>’
-    
-    Insufficient package version (submitted: 2.2, existing: 2.2)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+        libs   4.8Mb
     ```
 
 # MultiAssayExperiment
 
-Version: 1.4.4
+Version: 1.6.0
 
 ## In both
-
-*   checking CRAN incoming feasibility ... NOTE
-    ```
-    Maintainer: ‘Marcel Ramos <marcel.ramosperez@roswellpark.org>’
-    
-    Package duplicated from https://bioconductor.org/packages/3.6/bioc
-    
-    The Title field should be in title case, current version then in title case:
-    ‘Software for the integration of multi-omics experiments in Bioconductor’
-    ‘Software for the Integration of Multi-Omics Experiments in Bioconductor’
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking DESCRIPTION meta-information ... NOTE
-    ```
-    Maintainer field differs from that derived from Authors@R
-      Maintainer: ‘Marcel Ramos <marcel.ramosperez@roswellpark.org>’
-      Authors@R:  ‘Marcel Ramos <marcel.ramos@roswellpark.org>’
-    ```
 
 *   checking dependencies in R code ... NOTE
     ```
-    Unexported object imported by a ':::' call: ‘BiocGenerics:::replaceSlots’
+    Unexported objects imported by ':::' calls:
+      ‘BiocGenerics:::replaceSlots’ ‘S4Vectors:::selectSome’
       See the note in ?`:::` about the use of this operator.
-    ```
-
-*   checking for unstated dependencies in vignettes ... NOTE
-    ```
-    '::' or ':::' imports not declared from:
-      ‘BiocInstaller’ ‘TCGAutils’
-    'library' or 'require' calls not declared from:
-      ‘TCGAutils’ ‘readr’
-    ```
-
-# MVisAGe
-
-Version: 0.2.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Vonn Walter <vwalter1@pennstatehealth.psu.edu>’
-    
-    Insufficient package version (submitted: 0.2.0, existing: 0.2.0)
-    
-    This build time stamp is over a month old.
     ```
 
 # MXM
 
-Version: 1.3.1
+Version: 1.3.8
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking re-building of vignette outputs ... WARNING
     ```
-    Maintainer: ‘Michail Tsagris <mtsagris@csd.uoc.gr>’
-    
-    Insufficient package version (submitted: 1.3.1, existing: 1.3.1)
-    
-    Number of updates in past 6 months: 8
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# nCal
-
-Version: 2017.12-3
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Youyi Fong <youyifong@gmail.com>’
-    
-    Insufficient package version (submitted: 2017.12.3, existing: 2017.12.3)
-    Version contains large components (2017.12-3)
-    
-    This build time stamp is over a month old.
-    ```
-
-# NUCOMBog
-
-Version: 1.0.4.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘J.W.M. Pullens <jeroenpullens@gmail.com>’
-    
-    Insufficient package version (submitted: 1.0.4.1, existing: 1.0.4.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# opencpu
-
-Version: 2.0.5
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Jeroen Ooms <jeroen@berkeley.edu>’
-    
-    Insufficient package version (submitted: 2.0.5, existing: 2.0.5)
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking data for non-ASCII characters ... NOTE
-    ```
-      Note: found 4 marked UTF-8 strings
-    ```
-
-# OpenML
-
-Version: 1.7
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>’
-    
-    Insufficient package version (submitted: 1.7, existing: 1.7)
-    
-    This build time stamp is over a month old.
-    ```
-
-# optimization
-
-Version: 1.0-7
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Kai Husmann <khusman1@uni-goettingen.de>’
-    
-    Insufficient package version (submitted: 1.0.7, existing: 1.0.7)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# PAFit
-
-Version: 1.0.0.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Thong Pham <thongpham@thongpham.net>’
-    
-    Insufficient package version (submitted: 1.0.0.1, existing: 1.0.0.1)
-    
-    Found the following (possibly) invalid URLs:
-      URL: http://iopscience.iop.org/article/10.1209/epl/i2003-00166-9/fulltext/
-        From: man/Jeong.rd
-              man/PAFit-package.Rd
-        Status: 403
-        Message: Forbidden
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# PakPC2017
-
-Version: 0.4.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Muhammad Yaseen <myaseen208@gmail.com>’
-    
-    Insufficient package version (submitted: 0.4.0, existing: 0.4.0)
+    Error in re-building vignettes:
+      ...
+    Error: processing vignette 'FS_guide.ltx' failed with diagnostics:
+    Running 'texi2dvi' on 'FS_guide.ltx' failed.
+    BibTeX errors:
+    The top-level auxiliary file: FS_guide.aux
+    I couldn't open style file apa.bst
+    ---line 80 of file FS_guide.aux
+     : \bibstyle{apa
+     :              }
+    I'm skipping whatever remains of this command
+    I found no style file---while reading file FS_guide.aux
+    Execution halted
     ```
 
 *   checking dependencies in R code ... NOTE
     ```
-    Namespaces in Imports field not imported from:
-      ‘curl’ ‘stats’
+    Namespace in Imports field not imported from: ‘knitr’
       All declared Imports should be used.
     ```
 
-# pleio
+# nCal
 
-Version: 1.5
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Jason Sinnwell <sinnwell.jason@mayo.edu>’
-    
-    Insufficient package version (submitted: 1.5, existing: 1.5)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# plsRglm
-
-Version: 1.1.1
+Version: 2018.8-20
 
 ## In both
 
 *   checking examples ... ERROR
     ```
     ...
-    ____Predicting X without NA neither in X nor in Y____
-    ****________________________________________________****
-    
-    > modpls2NA=plsR(dataY=ypine,dataX=Xpine,nt=6,modele="pls",dataPredictY=Xpine_supNA)
-    ____************************************************____
-    ____Component____ 1 ____
-    ____Component____ 2 ____
-    ____Component____ 3 ____
-    ____Component____ 4 ____
-    ____Component____ 5 ____
-    ____Component____ 6 ____
-    ____Predicting X with NA in X and not in Y____
-    ****________________________________________________****
-    
+    + )
+    > dat=rbind(dat, dat.std, dat.unk)
     > 
-    > #Identical to predict(modpls,type="response") or modpls$ValsPredictY
-    > cbind(predict(modpls),predict(modplsform))
-    Error in if (!(type %in% c("response", "scores"))) stop("Invalid type specification") : 
-      the condition has length > 1
-    Calls: cbind -> predict -> predict.plsRmodel
+    > fits = bcrm(log(fi)~expected_conc, dat, parameterization="gh", error.model="norm", 
+    +     prior="cytokine", n.iter=6e3)
+    Error in loadNamespace(name) : there is no package called ‘rjags’
+    [1] "jags.model fails, try with a different seed"
+    Error in loadNamespace(name) : there is no package called ‘rjags’
+    [1] "jags.model fails, try with a different seed"
+    Error in loadNamespace(name) : there is no package called ‘rjags’
+    [1] "jags.model fails, try with a different seed"
+    > par(mfrow=c(1,2))
+    > plot(fits)
+    Error in plot.window(...) : need finite 'xlim' values
+    Calls: plot -> plot.default -> localWindow -> plot.window
+    In addition: Warning messages:
+    1: In min(x) : no non-missing arguments to min; returning Inf
+    2: In max(x) : no non-missing arguments to max; returning -Inf
+    3: In min(x) : no non-missing arguments to min; returning Inf
+    4: In max(x) : no non-missing arguments to max; returning -Inf
     Execution halted
     ```
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking tests ...
     ```
-    ...
-              man/predict.plsRmodel.Rd
-              man/print.coef.plsRglmmodel.Rd
-              man/print.coef.plsRmodel.Rd
-              man/print.cv.plsRglmmodel.Rd
-              man/print.cv.plsRmodel.Rd
-              man/print.plsRglmmodel.Rd
-              man/print.plsRmodel.Rd
-              man/print.summary.plsRglmmodel.Rd
-              man/print.summary.plsRmodel.Rd
-              man/summary.cv.plsRglmmodel.Rd
-              man/summary.cv.plsRmodel.Rd
-              man/summary.plsRglmmodel.Rd
-              man/summary.plsRmodel.Rd
-              inst/CITATION
-        Status: Error
-        Message: libcurl error code 47:
-        	Maximum (20) redirects followed
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+     ERROR
+    Running the tests in ‘tests/doRUnit.R’ failed.
+    Last 13 lines of output:
+      unit testing failed (#test failures: 1, #R errors: 0)
+      
+      In addition: Warning messages:
+      1: In log(fitte) : NaNs produced
+      2: In drm.fit(formula, data = data, fit.4pl = fit.4pl, w = outcome.var^(-init.gamma/2),  :
+        drm.fit: default ssfct fails, try additional starting functions.  
+      3: In drm.fit(formula, data = data, fit.4pl = fit.4pl, w = outcome.var^(-init.gamma/2),  :
+        drm.fit: default ssfct fails, try additional starting functions.  
+      4: In drm.fit(formula, data = data, fit.4pl = fit.4pl, w = (data[[outcome.coln]])^(-1),  :
+        drm.fit: default ssfct fails, try additional starting functions.  
+      5: In drm.fit(formula, data = data, fit.4pl = fit.4pl, w = outcome.var^(-init.gamma/2),  :
+        drm.fit: default ssfct fails, try additional starting functions.  
+      6: In drm.fit(formula, data = data, fit.4pl = fit.4pl, w = outcome.var^(-init.gamma/2),  :
+        drm.fit: default ssfct fails, try additional starting functions.  
+      Execution halted
     ```
+
+*   checking package dependencies ... NOTE
+    ```
+    Packages suggested but not available for checking: ‘rjags’ ‘gWidgetstcltk’
+    ```
+
+# networktools
+
+Version: 1.2.0
+
+## In both
 
 *   checking dependencies in R code ... NOTE
     ```
-    'library' or 'require' calls in package code:
-      ‘MASS’ ‘plsdof’
-      Please use :: or requireNamespace() instead.
-      See section 'Suggested packages' in the 'Writing R Extensions' manual.
+    Namespace in Imports field not imported from: ‘devtools’
+      All declared Imports should be used.
+    ```
+
+# nlaR
+
+Version: 0.3
+
+## In both
+
+*   checking package dependencies ... NOTE
+    ```
+    Package suggested but not available for checking: ‘sf’
+    ```
+
+# NUCOMBog
+
+Version: 1.0.4.2
+
+## In both
+
+*   checking re-building of vignette outputs ... WARNING
+    ```
+    Error in re-building vignettes:
+      ...
+    Error: processing vignette 'NUCOMBog.ltx' failed with diagnostics:
+    Running 'texi2dvi' on 'NUCOMBog.ltx' failed.
+    LaTeX errors:
+    ! LaTeX Error: File `framed.sty' not found.
+    
+    Type X to quit or <RETURN> to proceed,
+    or enter new name. (Default extension: sty)
+    
+    ! Emergency stop.
+    <read *> 
+             
+    l.29 \makeatletter
+                      ^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    Execution halted
+    ```
+
+# opencpu
+
+Version: 2.0.8
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘protolite’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
+# PAFit
+
+Version: 1.0.0.4
+
+## In both
+
+*   checking package dependencies ... ERROR
+    ```
+    Package required but not available: ‘magicaxis’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
+    ```
+
+# PakPC2017
+
+Version: 1.0.0
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespace in Imports field not imported from: ‘stats’
+      All declared Imports should be used.
+    ```
+
+# permuco
+
+Version: 1.0.1
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespace in Imports field not imported from: ‘MASS’
+      All declared Imports should be used.
     ```
 
 # PrevMap
 
-Version: 1.4.1
+Version: 1.4.2
 
 ## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Emanuele Giorgi <e.giorgi@lancaster.ac.uk>’
-    
-    Insufficient package version (submitted: 1.4.1, existing: 1.4.1)
-    
-    Suggests or Enhances not in mainstream repositories:
-      INLA
-    Availability using Additional_repositories specification:
-      INLA   yes   http://www.math.ntnu.no/inla/R/testing
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
 
 *   checking whether package ‘PrevMap’ can be installed ... WARNING
     ```
     Found the following significant warnings:
       Warning: no DISPLAY variable so Tk is not available
-    See ‘/home/hb/repositories/R.rsp/revdep/checks/PrevMap/new/PrevMap.Rcheck/00install.out’ for details.
+    See ‘/wynton/scratch/henrik/repositories/R.rsp/revdep/checks/PrevMap/new/PrevMap.Rcheck/00install.out’ for details.
     ```
 
 *   checking package dependencies ... NOTE
     ```
     Package suggested but not available for checking: ‘INLA’
-    ```
-
-# profmem
-
-Version: 0.4.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Henrik Bengtsson <henrikb@braju.com>’
-    
-    Insufficient package version (submitted: 0.4.0, existing: 0.4.0)
-    
-    This build time stamp is over a month old.
-    ```
-
-# PSCBS
-
-Version: 0.63.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Henrik Bengtsson <henrikb@braju.com>’
-    
-    Insufficient package version (submitted: 0.63.0, existing: 0.63.0)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# Qtools
-
-Version: 1.2
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Marco Geraci <geraci@mailbox.sc.edu>’
-    
-    Insufficient package version (submitted: 1.2, existing: 1.2)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# R.devices
-
-Version: 2.15.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Henrik Bengtsson <henrikb@braju.com>’
-    
-    Insufficient package version (submitted: 2.15.1, existing: 2.15.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# randomLCA
-
-Version: 1.0-13
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Ken Beath <ken.beath@mq.edu.au>’
-    
-    Insufficient package version (submitted: 1.0.13, existing: 1.0.13)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
     ```
 
 # randomUniformForest
@@ -2367,86 +1251,42 @@ Version: 1.1.5
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking R code for possible problems ... NOTE
     ```
-    Maintainer: ‘Saip Ciss <saip.ciss@wanadoo.fr>’
-    
-    Insufficient package version (submitted: 1.1.5, existing: 1.1.5)
-    
-    Found the following (possibly) invalid URLs:
-      URL: http://CRAN.R-project.org/package=randomUniformForest
-        From: inst/CITATION
-        CRAN URL not in canonical form
-      Canonical CRAN.R-project.org URLs use https.
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# RAppArmor
-
-Version: 2.0.2
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Jeroen Ooms <jeroen.ooms@stat.ucla.edu>’
-    
-    Insufficient package version (submitted: 2.0.2, existing: 2.0.2)
-    
-    CRAN repository db overrides:
-      OS_type: unix
-    
-    This build time stamp is over a month old.
+    ...
+      ‘rnorm’
+    update.unsupervised: no visible global function definition for
+      ‘predict’
+    weightedVoteModel: no visible global function definition for ‘lm’
+    which.is.duplicate: no visible global function definition for ‘na.omit’
+    Undefined global functions or variables:
+      abline aggregate barplot cor dev.new dev.off dist graphics.off grid
+      head heat.colors kmeans legend lm median memory.limit model.frame
+      model.matrix model.response mosaicplot na.omit par pbinom persp plot
+      points predict qnorm quantile rnorm runif sd title
+    Consider adding
+      importFrom("grDevices", "dev.new", "dev.off", "graphics.off",
+                 "heat.colors")
+      importFrom("graphics", "abline", "barplot", "grid", "legend",
+                 "mosaicplot", "par", "persp", "plot", "points", "title")
+      importFrom("stats", "aggregate", "cor", "dist", "kmeans", "lm",
+                 "median", "model.frame", "model.matrix", "model.response",
+                 "na.omit", "pbinom", "predict", "qnorm", "quantile",
+                 "rnorm", "runif", "sd")
+      importFrom("utils", "head", "memory.limit")
+    to your NAMESPACE file.
     ```
 
 # rbi
 
-Version: 0.8.0
+Version: 0.9.1
 
 ## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Sebastian Funk <sebastian.funk@lshtm.ac.uk>’
-    
-    Insufficient package version (submitted: 0.8.0, existing: 0.8.0)
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error in re-building vignettes:
-      ...
-    Error: processing vignette 'introduction.Rmd.rsp' failed with diagnostics:
-    Failed to attach package:knitr
-    Execution halted
-    ```
 
 *   checking dependencies in R code ... NOTE
     ```
     Namespace in Imports field not imported from: ‘reshape2’
       All declared Imports should be used.
-    ```
-
-# rCAT
-
-Version: 0.1.5
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Justin Moat <J.Moat@kew.org>’
-    
-    Insufficient package version (submitted: 0.1.5, existing: 0.1.5)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
     ```
 
 # rccmisc
@@ -2455,135 +1295,51 @@ Version: 0.3.7
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Erik Bulow <erik.bulow@rccvast.se>’
-    
-    Insufficient package version (submitted: 0.3.7, existing: 0.3.7)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
 *   checking dependencies in R code ... NOTE
     ```
     Namespace in Imports field not imported from: ‘dplyr’
       All declared Imports should be used.
     ```
 
-# rcss
-
-Version: 1.2
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Jeremy Yee <jeremyyee@outlook.com.au>’
-    
-    Insufficient package version (submitted: 1.2, existing: 1.2)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is 12.8Mb
-      sub-directories of 1Mb or more:
-        libs  12.4Mb
-    ```
-
 # rEDM
 
-Version: 0.6.9
+Version: 0.7.1
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking re-building of vignette outputs ... WARNING
     ```
-    Maintainer: ‘Hao Ye <hao.ye@weecology.org>’
+    Error in re-building vignettes:
+      ...
+    Error: processing vignette 'rEDM-algorithms.ltx' failed with diagnostics:
+    Running 'texi2dvi' on 'rEDM-algorithms.ltx' failed.
+    LaTeX errors:
+    ! LaTeX Error: File `pgfplots.sty' not found.
     
-    Insufficient package version (submitted: 0.6.9, existing: 0.6.9)
+    Type X to quit or <RETURN> to proceed,
+    or enter new name. (Default extension: sty)
     
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is 17.6Mb
-      sub-directories of 1Mb or more:
-        doc    2.1Mb
-        libs  15.1Mb
-    ```
-
-# repfdr
-
-Version: 1.2.3
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Ruth Heller <ruheller@gmail.com>’
-    
-    Insufficient package version (submitted: 1.2.3, existing: 1.2.3)
-    
-    This build time stamp is over a month old.
+    ! Emergency stop.
+    <read *> 
+             
+    l.23 \usepackage
+                    {tikz}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    Execution halted
     ```
 
 # revengc
 
-Version: 1.0.0
+Version: 1.0.2
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking package dependencies ... ERROR
     ```
-    Maintainer: ‘Samantha Duchscherer <sam.duchscherer@gmail.com>’
+    Package required but not available: ‘mipfp’
     
-    Insufficient package version (submitted: 1.0.0, existing: 1.0.0)
-    
-    This build time stamp is over a month old.
-    ```
-
-# Rlda
-
-Version: 0.2.2
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Pedro Albuquerque <pedroa@unb.br>’
-    
-    Insufficient package version (submitted: 0.2.2, existing: 0.2.2)
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  6.6Mb
-      sub-directories of 1Mb or more:
-        libs   5.0Mb
-    ```
-
-# rmcfs
-
-Version: 1.2.8
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Michal Draminski <michal.draminski@ipipan.waw.pl>’
-    
-    Insufficient package version (submitted: 1.2.8, existing: 1.2.8)
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # robumeta
@@ -2591,17 +1347,6 @@ Version: 1.2.8
 Version: 2.0
 
 ## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Zachary Fisher <fish.zachary@gmail.com>’
-    
-    Insufficient package version (submitted: 2.0, existing: 2.0)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
 
 *   checking data for non-ASCII characters ... NOTE
     ```
@@ -2614,60 +1359,81 @@ Version: 1.0.0
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking files in ‘vignettes’ ... NOTE
     ```
-    Maintainer: ‘John Hutcheson <jacknx8a@gmail.com>’
-    
-    Insufficient package version (submitted: 1.0.0, existing: 1.0.0)
-    
-    This build time stamp is over a month old.
+    Files named as vignettes but with no recognized vignette engine:
+       ‘vignettes/Untitled.Rnw’
+    (Is a VignetteBuilder field missing?)
+    ```
+
+# santaR
+
+Version: 1.0
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespace in Imports field not imported from: ‘gridExtra’
+      All declared Imports should be used.
     ```
 
 # SemiCompRisks
 
-Version: 2.8
+Version: 3.1
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking whether package ‘SemiCompRisks’ can be installed ... ERROR
     ```
-    Maintainer: ‘Kyu Ha Lee <klee@hsph.harvard.edu>’
-    
-    Insufficient package version (submitted: 2.8, existing: 2.8)
-    
-    Days since last update: 3
+    Installation failed.
+    See ‘/wynton/scratch/henrik/repositories/R.rsp/revdep/checks/SemiCompRisks/new/SemiCompRisks.Rcheck/00install.out’ for details.
     ```
 
-# SetRank
+## Installation
 
-Version: 1.1.0
+### Devel
+
+```
+* installing *source* package ‘SemiCompRisks’ ...
+** package ‘SemiCompRisks’ successfully unpacked and MD5 sums checked
+** libs
+gcc -std=gnu99 -I"/netapp/home/hb/shared/apps/manual/r/R-3.5.1/lib64/R/include" -DNDEBUG   -I/usr/local/include   -fpic  -g -O2  -c BAFT_DPscr.c -o BAFT_DPscr.o
+BAFT_DPscr.c:12:28: fatal error: gsl/gsl_matrix.h: No such file or directory
+ #include "gsl/gsl_matrix.h"
+                            ^
+compilation terminated.
+make: *** [BAFT_DPscr.o] Error 1
+ERROR: compilation failed for package ‘SemiCompRisks’
+* removing ‘/wynton/scratch/henrik/repositories/R.rsp/revdep/checks/SemiCompRisks/new/SemiCompRisks.Rcheck/SemiCompRisks’
+
+```
+### CRAN
+
+```
+* installing *source* package ‘SemiCompRisks’ ...
+** package ‘SemiCompRisks’ successfully unpacked and MD5 sums checked
+** libs
+gcc -std=gnu99 -I"/netapp/home/hb/shared/apps/manual/r/R-3.5.1/lib64/R/include" -DNDEBUG   -I/usr/local/include   -fpic  -g -O2  -c BAFT_DPscr.c -o BAFT_DPscr.o
+BAFT_DPscr.c:12:28: fatal error: gsl/gsl_matrix.h: No such file or directory
+ #include "gsl/gsl_matrix.h"
+                            ^
+compilation terminated.
+make: *** [BAFT_DPscr.o] Error 1
+ERROR: compilation failed for package ‘SemiCompRisks’
+* removing ‘/wynton/scratch/henrik/repositories/R.rsp/revdep/checks/SemiCompRisks/old/SemiCompRisks.Rcheck/SemiCompRisks’
+
+```
+# shadow
+
+Version: 0.5.5
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking dependencies in R code ... NOTE
     ```
-    Maintainer: ‘Cedric Simillion <cedric.simillion@dkf.unibe.ch>’
-    
-    Insufficient package version (submitted: 1.1.0, existing: 1.1.0)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# sgd
-
-Version: 1.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Dustin Tran <dustin@cs.columbia.edu>’
-    
-    Insufficient package version (submitted: 1.1, existing: 1.1)
-    
-    This build time stamp is over a month old.
+    Namespace in Imports field not imported from: ‘parallel’
+      All declared Imports should be used.
     ```
 
 # sourceR
@@ -2676,17 +1442,6 @@ Version: 1.0.1
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Poppy Miller <p.miller@lancaster.ac.uk>’
-    
-    Insufficient package version (submitted: 1.0.1, existing: 1.0.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
 *   checking dependencies in R code ... NOTE
     ```
     Namespaces in Imports field not imported from:
@@ -2694,51 +1449,11 @@ Version: 1.0.1
       All declared Imports should be used.
     ```
 
-# spam
-
-Version: 2.1-2
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Reinhard Furrer <reinhard.furrer@math.uzh.ch>’
-    
-    Insufficient package version (submitted: 2.1.2, existing: 2.1.2)
-    
-    Found the following (possibly) invalid URLs:
-      URL: https://sparse.tamu.edu/
-        From: man/import.Rd
-        Status: 403
-        Message: Forbidden
-    ```
-
-*   checking Rd cross-references ... NOTE
-    ```
-    Package unavailable to check Rd xrefs: ‘magic’
-    ```
-
 # SpatialEpiApp
 
 Version: 0.3
 
 ## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Paula Moraga <p.e.moraga-serrano@lancaster.ac.uk>’
-    
-    Insufficient package version (submitted: 0.3, existing: 0.3)
-    
-    Suggests or Enhances not in mainstream repositories:
-      INLA
-    Availability using Additional_repositories specification:
-      INLA   yes   https://inla.r-inla-download.org/R/stable
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
 
 *   checking package dependencies ... NOTE
     ```
@@ -2754,59 +1469,11 @@ Version: 0.3
       All declared Imports should be used.
     ```
 
-# spmoran
-
-Version: 0.1.2
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Daisuke Murakami <dmuraka@ism.ac.jp>’
-    
-    Insufficient package version (submitted: 0.1.2, existing: 0.1.2)
-    
-    This build time stamp is over a month old.
-    ```
-
-# SRCS
-
-Version: 1.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Pablo J. Villacorta <pjvi@decsai.ugr.es>’
-    
-    Insufficient package version (submitted: 1.1, existing: 1.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking Rd cross-references ... NOTE
-    ```
-    Packages unavailable to check Rd xrefs: ‘RColorBrewer’, ‘colorspace’
-    ```
-
 # ssfa
 
 Version: 1.1
 
 ## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Elisa Fusco <fusco_elisa@libero.it>’
-    
-    Insufficient package version (submitted: 1.1, existing: 1.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
 
 *   checking R code for possible problems ... NOTE
     ```
@@ -2834,22 +1501,37 @@ Version: 1.1
     to your NAMESPACE file.
     ```
 
+*   checking re-building of vignette outputs ... NOTE
+    ```
+    ...
+    Loading required package: sp
+    Loading required package: spData
+    To access larger datasets in this package, install the spDataLarge
+    package with: `install.packages('spDataLarge',
+    repos='https://nowosad.github.io/drat/', type='source'))`
+    Error in texi2dvi(file = file, pdf = TRUE, clean = clean, quiet = quiet,  : 
+      Running 'texi2dvi' on 'ssfavignette.tex' failed.
+    LaTeX errors:
+    ! LaTeX Error: File `subfigure.sty' not found.
+    
+    Type X to quit or <RETURN> to proceed,
+    or enter new name. (Default extension: sty)
+    
+    ! Emergency stop.
+    <read *> 
+             
+    l.10 \usepackage
+                    {graphicx}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    Calls: buildVignettes -> texi2pdf -> texi2dvi
+    Execution halted
+    ```
+
 # stagePop
 
 Version: 1.1-1
 
 ## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘David Nutter <david.nutter@bioss.ac.uk>’
-    
-    Insufficient package version (submitted: 1.1.1, existing: 1.1.1)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
 
 *   checking R code for possible problems ... NOTE
     ```
@@ -2879,19 +1561,24 @@ Version: 1.1-1
 
 # STPGA
 
-Version: 4.0
+Version: 5.1
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking package dependencies ... NOTE
     ```
-    Maintainer: ‘Deniz Akdemir <deniz.akdemir.work@gmail.com>’
-    
-    Insufficient package version (submitted: 4.0, existing: 4.0)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    Package suggested but not available for checking: ‘UsingR’
+    ```
+
+# SUMMER
+
+Version: 0.2.1
+
+## In both
+
+*   checking package dependencies ... NOTE
+    ```
+    Package suggested but not available for checking: ‘INLA’
     ```
 
 # surrosurv
@@ -2900,32 +1587,12 @@ Version: 1.1.24
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking package dependencies ... ERROR
     ```
-    Maintainer: ‘Federico Rotolo <federico.rotolo@gustaveroussy.fr>’
+    Package required but not available: ‘parfm’
     
-    Insufficient package version (submitted: 1.1.24, existing: 1.1.24)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# tailDepFun
-
-Version: 1.0.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Anna Kiriliouk <anna.kiriliouk@uclouvain.be>’
-    
-    Insufficient package version (submitted: 1.0.0, existing: 1.0.0)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # timma
@@ -2934,38 +1601,28 @@ Version: 1.2.1
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking R code for possible problems ... NOTE
     ```
-    Maintainer: ‘Jing Tang <jing.tang@helsinki.fi>’
-    
-    Insufficient package version (submitted: 1.2.1, existing: 1.2.1)
-    
-    Found the following (possibly) invalid URLs:
-      URL: http://cancerres.aacrjournals.org/content/73/1/285/suppl/DC1
-        From: man/tyner_interaction_binary.Rd
-              man/tyner_interaction_multiclass.Rd
-              man/tyner_sensitivity.Rd
-        Status: 403
-        Message: Forbidden
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# TSCS
-
-Version: 0.1.1
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Tianjian Yang <yangtj5@mail2.sysu.edu.cn>’
-    
-    Insufficient package version (submitted: 0.1.1, existing: 0.1.1)
-    
-    This build time stamp is over a month old.
+    drawGraph: no visible global function definition for ‘pdf’
+    drawGraph: no visible global function definition for ‘par’
+    drawGraph: no visible global function definition for ‘plot’
+    drawGraph: no visible global function definition for ‘segments’
+    drawGraph: no visible global function definition for ‘lines’
+    drawGraph: no visible global function definition for ‘text’
+    drawGraph: no visible global function definition for ‘dev.off’
+    drugRank: no visible global function definition for ‘aggregate’
+    floating2: no visible global function definition for ‘cor’
+    timma: no visible global function definition for ‘median’
+    timma: no visible global function definition for ‘write.table’
+    Undefined global functions or variables:
+      aggregate cor dev.off lines median par pdf plot segments text
+      write.table
+    Consider adding
+      importFrom("grDevices", "dev.off", "pdf")
+      importFrom("graphics", "lines", "par", "plot", "segments", "text")
+      importFrom("stats", "aggregate", "cor", "median")
+      importFrom("utils", "write.table")
+    to your NAMESPACE file.
     ```
 
 # tsdisagg2
@@ -2974,99 +1631,25 @@ Version: 0.1.0
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking re-building of vignette outputs ... WARNING
     ```
-    Maintainer: ‘Jorge Vieira <jorgealexandrevieira@gmail.com>’
+    Error in re-building vignettes:
+      ...
+    Error: processing vignette 'tsdisagg2manual.ltx' failed with diagnostics:
+    Running 'texi2dvi' on 'tsdisagg2manual.ltx' failed.
+    LaTeX errors:
+    ! LaTeX Error: File `relsize.sty' not found.
     
-    Insufficient package version (submitted: 0.1.0, existing: 0.1.0)
+    Type X to quit or <RETURN> to proceed,
+    or enter new name. (Default extension: sty)
     
-    This build time stamp is over a month old.
-    ```
-
-# WACS
-
-Version: 1.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Denis Allard <allard@avignon.inra.fr>’
-    
-    Insufficient package version (submitted: 1.0, existing: 1.0)
-    
-    Found the following (possibly) invalid URLs:
-      URL: http://informatique-mia.inra.fr/biosp/allard#WACS
-        From: DESCRIPTION
-        Status: 404
-        Message: Not Found
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-# WCE
-
-Version: 1.0
-
-## In both
-
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Marie-Pierre Sylvestre <marie-pierre.sylvestre@umontreal.ca>’
-    
-    Insufficient package version (submitted: 1.0, existing: 1.0)
-    
-    Found the following (possibly) invalid URLs:
-      URL: http://cran.r-project.org/web/packages/PermAlgo/index.html
-        From: man/drugdata.Rd
-        Status: 200
-        Message: OK
-        CRAN URL not in canonical form
-      The canonical URL of the CRAN page for a package is 
-        https://CRAN.R-project.org/package=pkgname
-    
-    The Description field should not start with the package name,
-      'This package' or similar.
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    ```
-
-*   checking S3 generic/method consistency ... NOTE
-    ```
-    Found the following apparent S3 methods exported but not registered:
-      knots.WCE
-    See section ‘Registering S3 methods’ in the ‘Writing R Extensions’
-    manual.
-    ```
-
-*   checking R code for possible problems ... NOTE
-    ```
-    ...
-    .EstimateSplineUnconstrainedNCC: no visible global function definition
-      for ‘vcov’
-    .knots.equi: no visible global function definition for ‘quantile’
-    .sumWCEall: no visible global function definition for ‘pnorm’
-    .sumWCEbest: no visible global function definition for ‘pnorm’
-    checkWCE: no visible global function definition for ‘na.omit’
-    plot.WCE: no visible global function definition for ‘matplot’
-    plot.WCE: no visible global function definition for ‘title’
-    plot.WCE: no visible global function definition for ‘points’
-    plot.WCE: no visible global function definition for ‘legend’
-    plot.WCE: no visible global function definition for ‘plot’
-    plot.WCE: no visible global function definition for ‘lines’
-    Undefined global functions or variables:
-      as.formula binomial glm legend lines logLik matplot na.omit plot
-      pnorm points quantile title vcov
-    Consider adding
-      importFrom("graphics", "legend", "lines", "matplot", "plot", "points",
-                 "title")
-      importFrom("stats", "as.formula", "binomial", "glm", "logLik",
-                 "na.omit", "pnorm", "quantile", "vcov")
-    to your NAMESPACE file.
+    ! Emergency stop.
+    <read *> 
+             
+    l.16 \usepackage
+                    {enumerate}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    Execution halted
     ```
 
 # webglobe
@@ -3083,33 +1666,19 @@ Version: 1.0.2
     manual.
     ```
 
-*   checking CRAN incoming feasibility ... WARNING
-    ```
-    Maintainer: ‘Richard Barnes <rbarnes@umn.edu>’
-    
-    Insufficient package version (submitted: 1.0.2, existing: 1.0.2)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
-    
-    Size of tarball: 5002654 bytes
-    ```
-
 # Wrapped
 
 Version: 2.0
 
 ## In both
 
-*   checking CRAN incoming feasibility ... WARNING
+*   checking package dependencies ... ERROR
     ```
-    Maintainer: ‘Saralees Nadarajah <mbbsssn2@manchester.ac.uk>’
+    Packages required but not available:
+      ‘NormalLaplace’ ‘irtProb’ ‘sld’ ‘sgt’ ‘SkewHyperbolic’
+      ‘GEVStableGarch’ ‘VarianceGamma’
     
-    Insufficient package version (submitted: 2.0, existing: 2.0)
-    
-    The Date field is over a month old.
-    
-    This build time stamp is over a month old.
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 

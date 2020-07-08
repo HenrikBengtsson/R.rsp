@@ -14,6 +14,9 @@
 
 \description{
  Compiles an AsciiDoc noweb file.
+
+ \emph{NOTE: This function requires the \bold{ascii} package, which was
+ "removed" (archived) from CRAN on 2019-01-26.}
 }
 
 \usage{
@@ -24,7 +27,8 @@
 \arguments{
   \item{filename, path}{The filename and (optional) path of the
      document to be compiled.}
-  \item{...}{Additional arguments passed to \code{\link[ascii]{Asciidoc}}.}
+  \item{...}{Additional arguments passed to \code{Asciidoc()} of the
+     \bold{ascii} package.}
   \item{outPath}{The output and working directory.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
