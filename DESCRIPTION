@@ -1,5 +1,5 @@
 Package: R.rsp
-Version: 0.43.2-9000
+Version: 0.44.0
 Depends:
   R (>= 2.14.0)
 Imports:
@@ -31,4 +31,3 @@ License: LGPL (>= 2.1)
 URL: https://github.com/HenrikBengtsson/R.rsp
 BugReports: https://github.com/HenrikBengtsson/R.rsp/issues
 LazyLoad: TRUE
-
