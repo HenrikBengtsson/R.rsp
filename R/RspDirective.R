@@ -150,7 +150,8 @@ setMethodS3("asRspString", "RspDirective", function(object, ...) {
   if (length(suffixSpecs) == 0L) {
     suffixSpecs <- ""
   }
-  fmtstr <- "<%%@%s%s%s%s%%>"
+  fmtstr <- "@%s%s%s%s"
+  fmtstr <- paste(escFmtStr(.rspBracketOpen), fmtstr, escFmtStr(.rspBracketClose), sep="")
   s <- sprintf(fmtstr, body, attrs, comment, suffixSpecs)
   RspString(s)
 })
@@ -444,7 +445,8 @@ setMethodS3("parseDirective", "RspUnparsedDirective", function(expr, ...) {
 setMethodS3("asRspString", "RspUnparsedDirective", function(object, ...) {
   body <- unclass(object)
   suffixSpecs <- attr(object, "suffixSpecs")
-  fmtstr <- "<%%@%s%s%%>"
+  fmtstr <- "@%s%s"
+  fmtstr <- paste(escFmtStr(.rspBracketOpen), fmtstr, escFmtStr(.rspBracketClose), sep="")
   s <- sprintf(fmtstr, body, suffixSpecs)
   RspString(s)
 })

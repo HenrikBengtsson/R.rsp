@@ -1,6 +1,30 @@
 Package: R.rsp
 ==============
 
+Version: 0.44.0 [2020-07-09]
+
+SIGNIFICANT CHANGES:
+
+ * Now R.rsp can also process RSP documents with shell code, e.g.
+   rcat('<%@meta language="sh"%><% now=$(date) %>It is now <%= $now %>').
+
+NEW FEATURES:
+
+ * toR() for RspDocument now select the RspSourceCodeFactory based on
+   the 'language' RSP metadata.
+   
+ * Add rfile() for RspShSourceCode.
+ 
+BUG FIXES:
+
+ * rstring() lost the 'language' meta tag.
+
+DEPRECATED AND DEFUNCT:
+
+ * For R (>= 3.1.0), R.rsp::buildVignette() is defunct in favor of
+   tools::buildVignette().
+   
+   
 Version: 0.43.2 [2019-10-17]
 
 DEPRECATED AND DEFUNCT:

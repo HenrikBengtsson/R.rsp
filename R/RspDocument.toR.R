@@ -26,7 +26,16 @@
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("toR", "RspDocument", function(object, factory=RspRSourceCodeFactory(), ...) {
+setMethodS3("toR", "RspDocument", function(object, factory=NULL, ...) {
+  if (is.null(factory)) {
+    language <- getMetadata(object, "language", default="R")
+    language <- capitalize(tolower(language))
+    className <- sprintf("Rsp%sSourceCodeFactory", language)
+    ns <- getNamespace("R.rsp")
+    clazz <- Class$forName(className, envir=ns)
+    factory <- newInstance(clazz)
+  }
+  
   # Argument 'factory':
   factory <- Arguments$getInstanceOf(factory, "RspSourceCodeFactory")
 

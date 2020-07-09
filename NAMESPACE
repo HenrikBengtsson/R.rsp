@@ -35,7 +35,7 @@ importFrom("utils", "toLatex")
 
 ## Importing functions
 importFrom("R.cache", "getChecksum")
-importFrom("R.methodsS3", "throw")
+importFrom("R.oo", "throw")
 importFrom("R.oo", "attachLocally")
 importFrom("R.oo", "getStaticInstance")
 importFrom("R.oo", "intToChar")
@@ -566,6 +566,7 @@ S3method("getCompleteCode", "RspRSourceCodeFactory")
 # RspShSourceCode
 S3method("evaluate", "RspShSourceCode")
 S3method("findProcessor", "RspShSourceCode")
+S3method("rfile", "RspShSourceCode")
 
 # RspShSourceCodeFactory
 S3method("exprToCode", "RspShSourceCodeFactory")

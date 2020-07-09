@@ -56,6 +56,9 @@
 #
 #   parses and evaluates the RSP string and outputs the result to
 #   standard output.
+#   A CLI-friendly alternative to the above is:
+#
+#   \code{Rscript -e R.rsp::rcat "A random integer in [1,<\%=K\%>]: <\%=sample(1:K, size=1)\%>" --args --K=50}
 # }
 #
 # \section{rsource()}{
@@ -154,7 +157,8 @@ setMethodS3("rcat", "RspString", function(..., envir=parent.frame(), args="*", o
   verbose && cat(verbose, "Arguments:")
   verbose && str(verbose, args)
 
-  s <- rstring(..., envir=envir, args=args, output=outputP)
+  s <- rstring(..., envir=envir, args=args, output=outputP,
+               verbose=less(verbose, 10))
 
   verbose && cat(verbose, "Result:")
   verbose && str(verbose, s)
@@ -205,5 +209,6 @@ setMethodS3("rcat", "RspString", function(..., envir=parent.frame(), args="*", o
 
 setMethodS3("rcat", "RspDocument", rcat.RspString)
 setMethodS3("rcat", "RspRSourceCode", rcat.RspString)
+setMethodS3("rcat", "RspShSourceCode", rcat.RspString)
 setMethodS3("rcat", "function", rcat.RspString)
 setMethodS3("rcat", "expression", rcat.RspString)

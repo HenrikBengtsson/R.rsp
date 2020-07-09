@@ -6,7 +6,7 @@
 # \description{
 #  @classhierarchy
 #
-#  An RspShSourceCode object is an @see "RspSourceCode" holding R source code.
+#  An RspShSourceCode object is an @see "RspSourceCode" holding shell code.
 # }
 #
 # @synopsis
