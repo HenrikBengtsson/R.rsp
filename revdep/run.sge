@@ -17,6 +17,9 @@ if [[ $SGE_CLUSTER_NAME == *wynton* ]]; then
     module load CBI
     module load r
 
+    module load gsl jags
+#    module load scl-devtoolset/8
+    
     ## Report on what modules are in use
     module list
     
