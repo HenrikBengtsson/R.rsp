@@ -1,5 +1,5 @@
 Package: R.rsp
-Version: 0.44.0
+Version: 0.44.0-9000
 Depends:
   R (>= 2.14.0)
 Imports:
@@ -7,17 +7,17 @@ Imports:
   stats,
   tools,
   utils,
-  R.methodsS3 (>= 1.7.1),
+  R.methodsS3 (>= 1.8.0),
   R.oo (>= 1.23.0),
   R.utils,
   R.cache,
-  digest (>= 0.6.13)
+  digest
 Suggests:
   tcltk,
-  markdown (>= 0.8),
-  knitr (>= 1.9),
-  R.devices (>= 2.16.1),
-  base64enc (>= 0.1-2)
+  markdown
+  knitr
+  R.devices
+  base64enc
 SuggestsNote:
   Recommended: R.devices, base64enc, markdown
 VignetteBuilder: R.rsp
