@@ -14,9 +14,9 @@ Imports:
   digest
 Suggests:
   tcltk,
-  markdown
-  knitr
-  R.devices
+  markdown,
+  knitr,
+  R.devices,
   base64enc
 SuggestsNote:
   Recommended: R.devices, base64enc, markdown
