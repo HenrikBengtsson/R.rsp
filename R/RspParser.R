@@ -63,17 +63,19 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  brackets <- getRspBrackets()
+  
   # Escape '<%%' and '%%>'
   escapeP <- function(s) {
-    s <- gsub(.rspBracketOpenEscape,  "---<<<---%%%---%%%---", s, fixed=TRUE)
-    s <- gsub(.rspBracketCloseEscape, "---%%%---%%%--->>>---", s, fixed=TRUE)
+    s <- gsub(brackets$openEscape,  "---<<<---%%%---%%%---", s, fixed=TRUE)
+    s <- gsub(brackets$closeEscape, "---%%%---%%%--->>>---", s, fixed=TRUE)
     s
   } # escapeP()
 
   # Unescape '<%%' and '%%>'
   unescapeP <- function(s) {
-    s <- gsub("---<<<---%%%---%%%---", .rspBracketOpenEscape,  s, fixed=TRUE)
-    s <- gsub("---%%%---%%%--->>>---", .rspBracketCloseEscape, s, fixed=TRUE)
+    s <- gsub("---<<<---%%%---%%%---", brackets$openEscape,  s, fixed=TRUE)
+    s <- gsub("---%%%---%%%--->>>---", brackets$closeEscape, s, fixed=TRUE)
     s
   } # unescapeP()
 
@@ -108,7 +110,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
   # Setup
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Pattern for suffix specification
-  patternS <- paste("([+]|[-]+(\\[[^]]*\\])?)", .rspBracketClose, sep="")
+  patternS <- paste("([+]|[-]+(\\[[^]]*\\])?)", brackets$close, sep="")
 
   # Setup the regular expressions for start and stop RSP constructs
   hasPatternLTail <- FALSE
@@ -116,23 +118,23 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
     if (commentLength == -1L) {
       # <%-%>, <%--%>, <%---%>, <%----%>, ...
       # <%-[suffix]%>, <%--[suffix]%>, <%---[suffix]%>, ...
-      patternL <- sprintf("(%s([-]+(\\[[^]]*\\])?%s))", .rspBracketOpen, .rspBracketClose)
+      patternL <- sprintf("(%s([-]+(\\[[^]]*\\])?%s))", brackets$open, brackets$close)
       patternR <- NULL
     } else {
       # <%-- --%>, <%--\n--%>, <%-- text --%>, ...
       # <%--- ---%>, <%--- text ---%>, ...
-      patternL <- sprintf("(%s-{%d})([^-])", .rspBracketOpen, commentLength)
+      patternL <- sprintf("(%s-{%d})([^-])", brackets$open, commentLength)
       hasPatternLTail <- TRUE
-      patternR <- sprintf("(|[^-])(-{%d}(\\[[^]]*\\])?)%s", commentLength, .rspBracketClose)
+      patternR <- sprintf("(|[^-])(-{%d}(\\[[^]]*\\])?)%s", commentLength, brackets$close)
     }
     bodyClass <- RspComment
   } else if (what == "directive") {
-    patternL <- sprintf("(%s@)()", .rspBracketOpen)
-    patternR <- sprintf("()(|[+]|-(\\[[^]]*\\])?)%s", .rspBracketClose)
+    patternL <- sprintf("(%s@)()", brackets$open)
+    patternR <- sprintf("()(|[+]|-(\\[[^]]*\\])?)%s", brackets$close)
     bodyClass <- RspUnparsedDirective
   } else if (what == "expression") {
-    patternL <- sprintf("(%s)()", .rspBracketOpen)
-    patternR <- sprintf("()(|[+]|-(\\[[^]]*\\])?)%s", .rspBracketClose)
+    patternL <- sprintf("(%s)()", brackets$open)
+    patternR <- sprintf("()(|[+]|-(\\[[^]]*\\])?)%s", brackets$close)
     bodyClass <- RspUnparsedExpression
   }
 
@@ -176,7 +178,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
       # Was it an escaped RSP start tag, i.e. '<%%'?
       if (what == "expression") {
         tagX <- substring(bfr, first=posL, last=posL+nL)
-        if (tagX == .rspBracketOpenEscape)
+        if (tagX == brackets$openEscape)
           break
       }
 
@@ -266,7 +268,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
       # Was it an escaped RSP end tag, i.e. '%%>'?
       if (what == "expression") {
         nT <- nchar(tail)
-        if (nT >= nchar(.rspBracketCloseEscape) && substring(tail, first=nT-nchar(.rspBracketCloseEscape)+1L, last=nT) == .rspBracketCloseEscape)
+        if (nT >= nchar(brackets$closeEscape) && substring(tail, first=nT-nchar(brackets$closeEscape)+1L, last=nT) == brackets$closeEscape)
           break
       }
 
@@ -389,6 +391,7 @@ setMethodS3("parseDocument", "RspParser", function(parser, object, envir=parent.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  brackets <- getRspBrackets()
   metadata <- getMetadata(object, local=TRUE)
 
   returnAs <- function(doc, as=c("RspDocument", "RspString")) {
@@ -487,7 +490,7 @@ setMethodS3("parseDocument", "RspParser", function(parser, object, envir=parent.
 
   count <- 0L
   posL <- -1L
-  while ((pos <- regexpr(sprintf("%s[-]+", .rspBracketOpen), object)) != -1L) {
+  while ((pos <- regexpr(sprintf("%s[-]+", brackets$open), object)) != -1L) {
     # Nothing changed? (e.g. if there is an unclosed comment)
     if (identical(pos, posL)) {
       break

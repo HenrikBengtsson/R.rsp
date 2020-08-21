@@ -104,7 +104,8 @@ setMethodS3("asRspString", "RspCode", function(code, ...) {
     fmtstr <- "%s"
   }
 
-  fmtstr <- paste(escFmtStr(.rspBracketOpen), fmtstr, escFmtStr(.rspBracketClose), sep="")
+  brackets <- getRspBrackets()
+  fmtstr <- paste(escFmtStr(brackets$open), fmtstr, escFmtStr(brackets$close), sep="")
   s <- sprintf(fmtstr, body)
   RspString(s)
 })
@@ -160,7 +161,8 @@ setMethodS3("asRspString", "RspCodeChunk", function(code, ...) {
     fmtstr <- "%s"
   }
 
-  fmtstr <- paste(escFmtStr(.rspBracketOpen), fmtstr, escFmtStr(.rspBracketClose), sep="")
+  brackets <- getRspBrackets()
+  fmtstr <- paste(escFmtStr(brackets$open), fmtstr, escFmtStr(brackets$close), sep="")
   s <- sprintf(fmtstr, body)
   RspString(s)
 })

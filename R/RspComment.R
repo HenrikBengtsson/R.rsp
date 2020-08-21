@@ -67,7 +67,8 @@ setMethodS3("asRspString", "RspComment", function(object, ...) {
   suffixSpecs <- attr(object, "suffixSpecs")
 
   fmtstr <- "%s%s"
-  fmtstr <- paste(escFmtStr(.rspBracketOpen), fmtstr, escFmtStr(.rspBracketClose), sep="")
+  brackets <- getRspBrackets()
+  fmtstr <- paste(escFmtStr(brackets$open), fmtstr, escFmtStr(brackets$close), sep="")
   
   s <- sprintf(fmtstr, body, suffixSpecs)
   RspString(s)

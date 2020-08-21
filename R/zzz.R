@@ -5,6 +5,8 @@
 }
 
 .onLoad <- function(libname, pkgname) {
+  setRspBrackets(open="<%", close="%>")
+
   .registerVignetteEngines(pkgname)
 
   ns <- getNamespace(pkgname)
