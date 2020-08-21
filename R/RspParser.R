@@ -436,6 +436,31 @@ setMethodS3("parseDocument", "RspParser", function(parser, object, envir=parent.
   verbose && cat(verbose, "Return as: ", sQuote(as))
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # (0) Change RSP 'brackets'?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "RSP brackets meta")
+  verbose && cat(verbose, "Length of RSP string before: ", nchar(object))
+
+  if (length(object) > 0L) {
+    ## Change RSP brackets?
+    pattern <- '^([[:space:]]*)<%@meta[[:space:]]+open="([^"]+)"[[:space:]]+close="([^"]+)"[[:space:]]*%>(.*)'
+    first <- as.character(object)
+    if (grepl(pattern, first)) {
+      open <- gsub(pattern, "\\2", first)
+      close <- gsub(pattern, "\\3", first)
+      object <- gsub(pattern, "\\1\\4", object)
+      setRspBrackets(open = open, close = close)
+      verbose && cat(verbose, "New RSP brackets:")
+      verbose && str(verbose, getRspBrackets())
+    }
+    first <- NULL
+  }
+  
+  verbose && cat(verbose, "Length of RSP string after: ", nchar(object))
+  verbose && exit(verbose)
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # (1a) Parse and drop "empty" RSP comments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Dropping 'empty' RSP comments")

@@ -1,0 +1,4 @@
+<%@meta open="<!" close="!>"%>
+
+<! x <- "42" !>
+The meaning of it all: <!= x !>

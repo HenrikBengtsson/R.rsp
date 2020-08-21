@@ -1,9 +1,15 @@
 Package: R.rsp
 ==============
 
-Version: 0.44.0-9000 [2020-07-09]
+Version: 0.44.0-9000 [2020-08-21]
 
- * ...
+NEW FEATURES:
+
+ * Add expermental support for changing the opening and closing brackets used
+   by the RSP parser, which default to '<%' and '%>', by declaring them on the
+   first line as <%@meta open="{open}" close="{close}"%>.  For example, 
+   <%@meta open="<!" close="!>"%> will allow use to write RSP expressions
+   as '<! x <- 42 !>The value is <!= x !>' thereafter.
 
 
 Version: 0.44.0 [2020-07-09]
