@@ -443,13 +443,14 @@ setMethodS3("parseDocument", "RspParser", function(parser, object, envir=parent.
 
   if (length(object) > 0L) {
     ## Change RSP brackets?
-    pattern <- '^([[:space:]]*)<%@meta[[:space:]]+open="([^"]+)"[[:space:]]+close="([^"]+)"[[:space:]]*%>(.*)'
+    pattern <- '^[[:space:]]*<%@meta[[:space:]]+open="([^"]+)"[[:space:]]+close="([^"]+)"[[:space:]]*%>[[:space:]]*(.*)'
     first <- as.character(object)
     if (grepl(pattern, first)) {
-      open <- gsub(pattern, "\\2", first)
-      close <- gsub(pattern, "\\3", first)
-      object <- gsub(pattern, "\\1\\4", object)
-      setRspBrackets(open = open, close = close)
+      open <- gsub(pattern, "\\1", first)
+      close <- gsub(pattern, "\\2", first)
+      object <- gsub(pattern, "\\3", object)
+      old <- setRspBrackets(open = open, close = close)
+      on.exit(setRspBrackets(old), add = TRUE)
       verbose && cat(verbose, "New RSP brackets:")
       verbose && str(verbose, getRspBrackets())
     }
