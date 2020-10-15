@@ -3,7 +3,7 @@ Package: R.rsp
 
 Version: 0.44.0-9000 [2020-07-09]
 
- * ...
+ * Package 'ascii' has returned to CRAN and is no longer deprecated.
 
 
 Version: 0.44.0 [2020-07-09]

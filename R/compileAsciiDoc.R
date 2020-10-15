@@ -5,9 +5,6 @@
 #
 # \description{
 #  @get "title".
-#
-#  \emph{NOTE: This function requires the \bold{ascii} package, which was
-#  "removed" (archived) from CRAN on 2019-01-26.}
 # }
 #
 # @synopsis

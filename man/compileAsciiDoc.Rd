@@ -14,9 +14,6 @@
 
 \description{
  Compiles an AsciiDoc file.
-
- \emph{NOTE: This function requires the \bold{ascii} package, which was
- "removed" (archived) from CRAN on 2019-01-26.}
 }
 
 \usage{

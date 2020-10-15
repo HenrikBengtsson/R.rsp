@@ -17,7 +17,8 @@ Suggests:
   markdown,
   knitr,
   R.devices,
-  base64enc
+  base64enc,
+  ascii
 SuggestsNote:
   Recommended: R.devices, base64enc, markdown
 VignetteBuilder: R.rsp
