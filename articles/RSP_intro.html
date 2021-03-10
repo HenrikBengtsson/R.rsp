@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>RSP: A Brief Introduction</title>
+  <meta name="author" content="Henrik Bengtsson">
+  <meta name="keywords" content="R, RSP markup language, literate programming, reproducible research, report generator, Sweave, knitr, brew, noweb, TeX, LaTeX, Markdown, AsciiDoc, reStructuredText, Org-Mode, HTML, PDF">
+  <style>
+
+body {
+  font-family: serif;
+}
+
+h1, h2, h3 {
+  font-family: sans-serif;
+  font-weight: normal;
+}
+
+section {
+  font-size: 16pt;
+}
+
+h1 {
+  -webkit-margin-before: 0.27em;
+  -webkit-margin-after: 0.67em;
+}
+
+ul {
+  padding-left: 2ex;
+  list-style-position: outside;
+}
+
+li {
+  margin-top: 0.75ex;
+}
+
+.remark-slide-content h1 { font-size: 140%; }
+.remark-slide-content h2 { font-size: 100%; }
+.remark-slide-content h3 { font-size: 90%; }
+
+.remark-slide-content {
+  font-size: 115%;
+  /* Defaults: 1em 4em 1em 4em; */
+  margin: 0ex;
+  padding: 0em 3em 0em 3em;
+}
+
+.remark-code, .remark-inline-code {
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 90%;
+}
+
+img.screenshot-center {
+   position: relative;
+   bottom: 20%;
+   width: 100%;
+   box-shadow: 10px 10px 5px #888888;
+}
+
+img.screenshot-center-medium {
+   position: relative;
+   bottom: 20%;
+   width: 70%;
+   box-shadow: 10px 10px 5px #888888;
+}
+
+th {
+   background-color: #f2f2f2;
+}
+tr:nth-child(even) {
+   background-color: #f2f2f2
+}
+
+.blank {
+  background-color: white;
+}
+
+td {
+   width: 20%;
+}
+td:first-child {
+   width: 15%;
+}
+
+#author {
+  font-size: 150%;
+}
+
+.footnote-large {
+  position: absolute;
+  bottom: 3%;
+  font-size: 120%;
+}
+
+.footnote-small {
+  position: absolute;
+  bottom: 5%;
+  font-size: 80%;
+}
+
+  </style>
+</head>
+<body>
+<textarea id="source" style="visibility: hidden">
+
+# RSP: A Brief Introduction
+
+by Henrik Bengtsson, 2020-07-09
+
+
+Available on <a href="https://cran.r-project.org/package=R.rsp">CRAN</a> since 2005 (first version ~2002):
+
+```r
+install.packages("R.rsp")
+```
+
+```r
+> library("R.rsp")
+
+> rcat("A random number: <%= sample(1:10, size = 1) %>")
+A random number: 7
+```
+
+
+	      
+---
+# Objectives
+<div class="footer">
+* Dynamically generate documents and reports (and web/help pages).
+* Quickly turn your favorite static report template into a dynamic one.
+* Support _all_ formats, e.g. LaTeX, Markdown, HTML, ...
+* Supplement and/or complement Sweave, knitr, ...
+* Mix and match code and text however you want.
+* Simplify sharing of template and output documents.
+* Use for R package vignettes.
+
+## Some usage
+* PSCBS: PDF reports of copy-number segmentation results
+* aroma-project.org: Interactive [Chromosome Explorer](http://aroma-project.org/data/reports/GSE8605/ACC,-XY,BPN,-XY,AVG,FLN,-XY,paired/ChromosomeExplorer.html) and [Array Explorer](http://www.aroma-project.org/data/reports/GSE8605/raw/ArrayExplorer.html)
+
+
+	      
+---
+# Compiling RSP document into PDF, HTML, ...
+<div class="footer">
+```r
+> rfile("http://example.org/vignette.tex.rsp")
+RspFileProduct:
+Pathname: vignette.pdf
+File size: 258.71 kB (264925 bytes)
+Content type: application/pdf
+Metadata 'title': 'Dynamic document creation using RSP'
+Metadata 'keywords': 'Literate programming, HTML, PDF'
+Metadata 'author': 'Henrik Bengtsson'
+```
+
+
+
+	      
+---
+# Very simple idea: Translate RSP to R and evaluate
+<div class="footer">
+## 1. RSP document
+```
+Title: Example
+Counting:<% for (i in 1:3) { %>
+ <%= i %>
+<% } %>
+```
+## 2. R script
+```r
+cat("Title: Example\nCounting:")
+for (i in 1:3) {
+  cat(" ")
+  cat(i)
+}
+```
+## 3. RSP output
+```
+Title: Example
+Counting: 1 2 3
+```
+
+	      
+---
+# RSP Markup Language
+<div class="footer">
+## 1. RSP comments (`<%-- ... --%>`)
+## 2. RSP preprocessing directives (`<%@ ... %>`)
+## 3. RSP code expressions (`<% ... %>`)
+
+
+	      
+---
+# RSP Markup Language
+<div class="footer">
+## 1. RSP comments (`<%-- ... --%>`)
+```
+<%-----------------------------
+  Compile to PDF:
+  R.rsp::rfile("report.tex.rsp")
+  ------------------------------%>
+\documentclass{report}
+...
+```
+RSP comments drop anything within, e.g. private notes, other RSP constructor (nested comments too) and will never be part of the output.
+
+	      
+---
+# RSP Markup Language
+<div class="footer">
+## 2. RSP preprocessing directives (`<%@ ... %>`)
+### Including local and online files
+```
+<%@include file="http://example.org/QC.tex.rsp"%>
+```
+
+### Conditional inclusion
+```
+<%@ifeq version="devel"%>
+  <%@include file="templates/QA-devel.tex.rsp"%>
+<%@else%>
+  Quality assessment is still under development.
+<%@endif%>
+```
+
+### Meta data
+```
+<%@meta title="Example"%>
+\hypersetup{pdftitle=<%@meta name="title"%>}
+\title{<%@meta name="title"%>}
+```
+
+RSP preprocessing directives are independent of R, i.e. they would look the same with RSP for Python.
+
+	      
+---
+# RSP Markup Language
+<div class="footer">
+## 3. RSP code expressions (`<% ... %>`)
+### Insert value of evaluated R expressions
+```
+<%= sample(1:100, size = 1) %>
+```
+
+<br>
+
+### Code snippets - mixture of RSP and text 
+```
+<% for (i in 1:3) { %>
+ Step <%= i %>.
+<% } %>
+```
+
+
+
+	      
+---
+# Looping over mixtures of code and text
+<div class="footer">
+```
+<% fit <- segmentByPairedPSCBS(data) %>
+
+\section{Segmentation results}
+
+<% for (chr in 1:23) { %>
+  \subsection{Chromosome <%= chr %>}
+
+  <% fitT <- extractChromosome(fit, chr) %>
+  PSCBS identified <%= nbrOfSegments(fitT) %> segments
+  on Chr. <%= chr %>.
+
+  ...
+<% } # for (chr ...) %>
+```
+
+<br>
+
+To achieve the same using noweb-style markup (e.g. Sweave and knitr) is tedious.
+
+
+
+	      
+---
+# RSP template functions
+<div class="footer">
+```
+<%-- RSP TEMPLATES --%>
+<% chromosomeSummary <- function(chr) { %>
+  <% fitT <- extractChromosome(fit, chr) %>
+  PSCBS identified <%= nbrOfSegments(fitT) %> segments
+  on Chr. <%= chr %>.
+  ...
+<% } %>
+
+<%-- DOCUMENT --%>
+...
+<% for (chr in 1:23) { %>
+  \subsection{Chromosome <%= chr %>}
+  <% chromosomeSummary(chr) %>
+<% } # for (chr ...) %>
+```
+
+
+
+	      
+---
+# R.rsp package - RSP engine for R
+<div class="footer">
+## rcat() - RSP version of cat()
+```r
+> rcat("A random integer in [1,100]:
+        <%=sample(1:100, size = 1)%>\n")
+A random integer in [1,100]: 77
+```
+
+<br>
+
+## rsource() - RSP version of source()
+Consider RSP file 'count.rsp' (think 'count.R'):
+
+```
+Counting:<% for (i in 1:10) { %>
+  <% Sys.sleep(0.3) %><%= i %>
+<% } %>.
+```
+Running this RSP script gives:
+
+```r
+> rsource("count.rsp")
+Counting: 1 2 3 4 5 6 7 8 9 10.
+```
+
+	      
+---
+# rfile() - end-to-end compilation
+<div class="footer">
+```r
+> rfile("report.md.rsp", args = list(n = 50, model = "L1"))
+RspFileProduct:
+Pathname: report.html
+File size: 42.54 kB (43564 bytes)
+Content type: text/html
+```
+
+<br>
+
+```r
+> rfile("http://example.org/vignette.tex.rsp")
+RspFileProduct:
+Pathname: vignette.pdf
+File size: 258.71 kB (264925 bytes)
+Content type: application/pdf
+Metadata 'title': 'Dynamic document creation using RSP'
+Metadata 'keywords': 'Literate programming, HTML, PDF'
+Metadata 'author': 'Henrik Bengtsson'
+```
+
+
+	      
+---
+# Including graphics (R.devices package)
+<div class="footer">
+RSP-embedded LaTeX
+
+```
+\includegraphics{<%= toPDF("MyFigure,yeah,cool", {
+  curve(dnorm, from = -5, to = +5)
+}) %>}
+```
+
+generates the image file and outputs
+
+```
+\includegraphics{MyFigure,yeah,cool}
+```
+
+which appears as
+
+<img src="data:image/png;base64,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CUsY+3f1oGme2/WUyrwa3UQAAAJfSURBVFkG/wvh0sCbQodBWhzvEUeW+PhpfGXkNKK7fuXrvtAE6ua5HU+9OMvgfyFcGnhT6DBIxbi/bJhObVlH5hTuCWxhJwpv8hrRcs4y+F+IMvhoJx93kG6mWVnFuN5HXen2M67cQZTKOjRHAy9EKQRJPuYgXXWUfSj/mamGwzeQvamTIr9h6t9DCy9EKQRJPuYgHSQNvH9OjkoKie+/j6t7D028ECUQJABdQ5AABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJD065cYyxfu27nUgHWNL3AhSLo2ixpccrmyqls3clcCCJKedaJxLld/GstdByBIunY42rF9OaVd4q4DECR9e4taJtl4V28FDwRJ1wruJHqGuwhwIUh6t4BoG3cN4EKQdO5CKlFr9gUnAUHSuVE0shlN5a4CECR9W2epk7PFFnGAuw5AkPTsfAotdbkepz9yFwIIkp4Np36F/z9fm2ZzVwIIkn6ttlQ74b79jGJ/5a7F9BAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAEQJAABECQAARAkAAH+H+z2sHFNbUBDAAAAAElFTkSuQmCC" width=480>
+
+
+	      
+---
+# Appendix
+<div class="footer">
+Session info:
+
+```
+R version 4.0.4 (2021-02-15)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 18.04.5 LTS
+
+Matrix products: default
+BLAS:   /home/hb/shared/software/CBI/R-4.0.4/lib/R/lib/libRblas.so
+LAPACK: /home/hb/shared/software/CBI/R-4.0.4/lib/R/lib/libRlapack.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] R.devices_2.17.0  R.rsp_0.44.0      R.oo_1.24.0       R.methodsS3_1.8.1
+
+loaded via a namespace (and not attached):
+ [1] compiler_4.0.4            pillar_1.5.1             
+ [3] prettyunits_1.1.1         R.utils_2.10.1-9000      
+ [5] base64enc_0.1-3           tools_4.0.4              
+ [7] digest_0.6.27             drat_0.1.8               
+ [9] pkgbuild_1.2.0            memoise_2.0.0            
+[11] tibble_3.1.0              lifecycle_1.0.0          
+[13] R.cache_0.14.0            debugme_1.1.0            
+[15] pkgconfig_2.0.3           rlang_0.4.10             
+[17] cli_2.3.1                 rstudioapi_0.13          
+[19] yaml_2.2.1                pkgdown_1.6.1            
+[21] fastmap_1.1.0             withr_2.4.1              
+[23] desc_1.3.0                fs_1.5.0                 
+[25] vctrs_0.3.6               rappdirs_0.3.3           
+[27] rprojroot_2.0.2           glue_1.4.2               
+[29] R6_2.5.0                  processx_3.4.5           
+[31] fansi_0.4.2               callr_3.5.1              
+[33] magrittr_2.0.1            ps_1.6.0                 
+[35] pkgdown.extras_0.0.0-9000 ellipsis_0.3.1           
+[37] assertthat_0.2.1          utf8_1.1.4               
+[39] cachem_1.0.4              crayon_1.4.1             
+[41] Cairo_1.5-12.2           
+```
+
+These slides were generated using `R.rsp::rfile()` in 0.08 secs.
+
+</textarea>
+
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>
+var slideshow = remark.create({
+  ratio: '4:3',
+})
+</script>
+
+</body>
+</html>
