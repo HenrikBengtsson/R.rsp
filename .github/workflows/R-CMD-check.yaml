@@ -41,7 +41,14 @@ jobs:
 
       - uses: r-lib/actions/setup-tinytex@v1
       - run: tlmgr --version
-      
+
+      - name: Install additional LaTeX packages
+        run: |
+          tlmgr --version
+          ## Additional LaTeX packages needed for the vignettes:
+          tlmgr install titlesec
+          tlmgr list --only-installed
+
       - uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.config.r }}
