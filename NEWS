@@ -1,10 +1,15 @@
 Package: R.rsp
 ==============
 
-Version: 0.44.0-9000 [2020-10-15]
+Version: 0.44.0-9000 [2021-10-05]
 
  * ...
- 
+
+CLEANUP:
+
+ * Package no longer import R.utils::inherits(), which is deprecated and
+   will eventually be removed.
+
 UNDEPRECATED:
 
  * Package 'ascii' has returned to CRAN.

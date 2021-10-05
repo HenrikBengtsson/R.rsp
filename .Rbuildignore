@@ -6,10 +6,11 @@
 ^.github
 ^.make
 ^.local
-INSTALL[.]md
-OVERVIEW[.]md
-README[.]md
-CONDUCT[.]md
+^INSTALL[.]md$
+^OVERVIEW[.]md$
+^README[.]md$
+^CONDUCT[.]md$
+^CONTRIBUTING[.]md$
 
 #----------------------------
 # devtools
