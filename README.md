@@ -1,7 +1,10 @@
 
 
+<div id="badges"><!-- pkgdown markup -->
+<a href="https://CRAN.R-project.org/web/checks/check_results_R.rsp.html"><img border="0" src="https://www.r-pkg.org/badges/version/R.rsp" alt="CRAN check status"/></a> <a href="https://github.com/HenrikBengtsson/R.rsp/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/R.rsp/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a>   <a href="https://ci.appveyor.com/project/HenrikBengtsson/r-rsp"><img border="0" src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/R.rsp?svg=true" alt="Build status"/></a> <a href="https://codecov.io/gh/HenrikBengtsson/R.rsp"><img border="0" src="https://codecov.io/gh/HenrikBengtsson/R.rsp/branch/develop/graph/badge.svg" alt="Coverage Status"/></a> 
+</div>
 
-# R.rsp: Dynamic Generation of Scientific Reports
+# R.rsp: Dynamic Generation of Scientific Reports 
 
 
 ## Installation
@@ -19,20 +22,10 @@ remotes::install_github("HenrikBengtsson/R.rsp", ref="develop")
 ```
 This will install the package from source.  
 
+<!-- pkgdown-drop-below -->
 
-<div id="badges"><!-- pkgdown markup -->
 
 ## Contributing
 
 To contribute to this package, please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-
-## Software status
-
-| Resource      | CRAN        | GitHub Actions      | Travis CI       | AppVeyor CI      |
-| ------------- | ------------------- | ------------------- | --------------- | ---------------- |
-| _Platforms:_  | _Multiple_          | _Multiple_          | _Linux & macOS_ | _Windows_        |
-| R CMD check   | <a href="https://cran.r-project.org/web/checks/check_results_R.rsp.html"><img border="0" src="http://www.r-pkg.org/badges/version/R.rsp" alt="CRAN version"></a> | <a href="https://github.com/HenrikBengtsson/R.rsp/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/HenrikBengtsson/R.rsp/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"></a>       | <a href="https://travis-ci.org/HenrikBengtsson/R.rsp"><img src="https://travis-ci.org/HenrikBengtsson/R.rsp.svg" alt="Build status"></a>   | <a href="https://ci.appveyor.com/project/HenrikBengtsson/r-rsp"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/R.rsp?svg=true" alt="Build status"></a> |
-| Test coverage |                     |                     | <a href="https://codecov.io/gh/HenrikBengtsson/R.rsp"><img src="https://codecov.io/gh/HenrikBengtsson/R.rsp/branch/develop/graph/badge.svg" alt="Coverage Status"/></a>     |                  |
-
-</div>
