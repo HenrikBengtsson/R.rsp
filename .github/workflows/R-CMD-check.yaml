@@ -41,21 +41,21 @@ jobs:
 
       - uses: r-lib/actions/setup-tinytex@v1
       - run: tlmgr --version
-
+ 
       - name: Install additional LaTeX packages
         run: |
           tlmgr --version
           ## Additional LaTeX packages needed for the vignettes:
           tlmgr install titlesec
           tlmgr list --only-installed
-
+          
       - uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.config.r }}
 
       - uses: r-lib/actions/setup-pandoc@master
 
-      - name: Query dependencies
+      - name: Query R package dependencies
         run: |
           install.packages('remotes')
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
@@ -70,7 +70,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
-      - name: Install system dependencies
+      - name: Install R package system dependencies
         if: runner.os == 'Linux'
         env:
           RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
@@ -79,16 +79,22 @@ jobs:
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
 
-      - name: Install dependencies
+      - name: Install R package dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("rcmdcheck")
           install.packages(".", repos=NULL, type="source")  ## needs itself for package vignettes
+        shell: Rscript {0}
+
+      - name: Install 'rcmdcheck'
+        run: |
+          remotes::install_cran("rcmdcheck")
+          library(rcmdcheck)  ## triggers an error, if installation failed
         shell: Rscript {0}
 
       - name: Session info
         run: |
           options(width = 100)
+          capabilities()
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
