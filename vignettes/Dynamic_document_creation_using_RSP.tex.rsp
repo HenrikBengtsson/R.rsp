@@ -150,6 +150,8 @@ devOptions("png", width=840)
 \author{<%@meta name="author"%>}
 \date{<%=format(as.Date(R.rsp$date), format="%B %d, %Y")%>}
 
+\pdfsuppressptexinfo=-1
+
 \begin{document}
 
 \maketitle
