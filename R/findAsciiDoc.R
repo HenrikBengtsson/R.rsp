@@ -80,7 +80,7 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
       
       ## No matching output?
       if (length(ver) == 0) {
-        stop(sprintf("Failed to infer version of %s based on captured output: ", sQuote(name), paste(dQuote(output), collapse=", ")))
+        stop(sprintf("Failed to infer version of %s based on captured output: %s", sQuote(name), paste(dQuote(output), collapse=", ")))
       }
 
       ## Try to coerce to version objects
