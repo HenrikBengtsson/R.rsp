@@ -1,9 +1,13 @@
 Package: R.rsp
 ==============
 
-Version: 0.44.0-9000 [2021-10-05]
+Version: 0.44.0-9001 [2022-06-20]
 
- * ...
+BUG FIXES:
+
+ * findAsciiDoc() failed to parse 'asciidoc --version' for asciidoc
+   9.0.0rc1, resulting in an error. The error message was also
+   incorrectly formatted.
 
 CLEANUP:
 
