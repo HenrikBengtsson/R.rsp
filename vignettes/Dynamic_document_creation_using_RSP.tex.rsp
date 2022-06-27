@@ -63,6 +63,9 @@ withCapture <- R.utils::withCapture
   pdfproducer={R.rsp v<%=R.rsp$version%> by <%=R.rsp$author%>}
 }
 
+% Drop PTEX metadata (for reproducbility)
+\pdfsuppressptexinfo=-1 
+
 \usepackage{graphicx}
 \usepackage{xspace}
 \usepackage{xcolor}

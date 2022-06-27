@@ -6,6 +6,10 @@
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 %\VignetteIndexEntry{Dummy vignette to trigger the use of the Makefile}
 %\VignetteEngine{R.rsp::dummy_Rnw}
+
+% Drop PTEX metadata (for reproducbility)
+\pdfsuppressptexinfo=-1 
+
 \documentclass{article}
 \begin{document}
 \end{document}
