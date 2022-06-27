@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">R.rsp</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.44.0-9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.45.0-9000</span>
       </span>
     </div>
 
@@ -81,12 +81,12 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co">## Static method (use this):</span>
-<span class="co">## RRspPackage$capabilitiesOf(what=NULL, force=FALSE, ...)</span>
-
-<span class="co">## Don't use the below:</span>
-<span class="co"># S3 method for RRspPackage</span>
-<span class="fu"><a href="Non-documented_objects.html">capabilitiesOf</a></span><span class="op">(</span><span class="va">static</span>, what<span class="op">=</span><span class="cn">NULL</span>, force<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co">## Static method (use this):</span></span>
+<span><span class="co">## RRspPackage$capabilitiesOf(what=NULL, force=FALSE, ...)</span></span>
+<span></span>
+<span><span class="co">## Don't use the below:</span></span>
+<span><span class="co"># S3 method for RRspPackage</span></span>
+<span><span class="fu"><a href="Non-documented_objects.html">capabilitiesOf</a></span><span class="op">(</span><span class="va">static</span>, what<span class="op">=</span><span class="cn">NULL</span>, force<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -116,18 +116,18 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in">  <span class="co"># Display which tools are supported by the package</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="Non-documented_objects.html">capabilitiesOf</a></span><span class="op">(</span><span class="va">R.rsp</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span>  <span class="co"># Display which tools are supported by the package</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="Non-documented_objects.html">capabilitiesOf</a></span><span class="op">(</span><span class="va">R.rsp</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> asciidoc    knitr    latex markdown   pandoc   sweave </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     TRUE     TRUE     TRUE     TRUE     TRUE     TRUE </span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># Check whether AsciiDoc is supported</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="Non-documented_objects.html">isCapableOf</a></span><span class="op">(</span><span class="va">R.rsp</span>, <span class="st">"asciidoc"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Check whether AsciiDoc is supported</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="Non-documented_objects.html">isCapableOf</a></span><span class="op">(</span><span class="va">R.rsp</span>, <span class="st">"asciidoc"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> asciidoc </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     TRUE </span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># Check whether pandoc v1.12 or newer is supported</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="Non-documented_objects.html">isCapableOf</a></span><span class="op">(</span><span class="va">R.rsp</span>, <span class="st">"pandoc (&gt;= 1.12)"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Check whether pandoc v1.12 or newer is supported</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="Non-documented_objects.html">isCapableOf</a></span><span class="op">(</span><span class="va">R.rsp</span>, <span class="st">"pandoc (&gt;= 1.12)"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 </code></pre></div>
     </div>
@@ -143,7 +143,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9004.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9004.</p>
 </div>
 
       </footer></div>

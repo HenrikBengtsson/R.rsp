@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">R.rsp</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.44.0-9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.45.0-9000</span>
       </span>
     </div>
 
@@ -81,9 +81,9 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for default</span>
-<span class="fu">rfile</span><span class="op">(</span><span class="va">file</span>, path<span class="op">=</span><span class="cn">NULL</span>, output<span class="op">=</span><span class="cn">NULL</span>, workdir<span class="op">=</span><span class="cn">NULL</span>, type<span class="op">=</span><span class="cn">NA</span>, envir<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,
-  args<span class="op">=</span><span class="st">"*"</span>, postprocess<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">...</span>, verbose<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for default</span></span>
+<span><span class="fu">rfile</span><span class="op">(</span><span class="va">file</span>, path<span class="op">=</span><span class="cn">NULL</span>, output<span class="op">=</span><span class="cn">NULL</span>, workdir<span class="op">=</span><span class="cn">NULL</span>, type<span class="op">=</span><span class="cn">NA</span>, envir<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  args<span class="op">=</span><span class="st">"*"</span>, postprocess<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">...</span>, verbose<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -160,52 +160,52 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exData"</span>, package<span class="op">=</span><span class="st">"R.rsp"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pathname</span> <span class="op">&lt;-</span> <span class="fu">rfile</span><span class="op">(</span><span class="st">"random.txt.rsp"</span>, path<span class="op">=</span><span class="va">path</span>,</span>
-<span class="r-in">                  output<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"random.txt"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">pathname</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exData"</span>, package<span class="op">=</span><span class="st">"R.rsp"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pathname</span> <span class="op">&lt;-</span> <span class="fu">rfile</span><span class="op">(</span><span class="st">"random.txt.rsp"</span>, path<span class="op">=</span><span class="va">path</span>,</span></span>
+<span class="r-in"><span>                  output<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"random.txt"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">pathname</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> RspFileProduct:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Pathname: /tmp/hb/RtmpA0Gs8R/random.txt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Pathname: /tmp/hb/RtmpNLle8d/random.txt</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> File size: 32 bytes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Content type: text/plain</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Has processor: FALSE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">pathname</span>, warn<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">lines</span>, collapse<span class="op">=</span><span class="st">"\n"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A random integer in [1,100]: 17 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.remove</a></span><span class="op">(</span><span class="va">pathname</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">pathname</span>, warn<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">lines</span>, collapse<span class="op">=</span><span class="st">"\n"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A random integer in [1,100]: 54 </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.remove</a></span><span class="op">(</span><span class="va">pathname</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Passing arguments</span></span>
-<span class="r-in"><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exData"</span>, package<span class="op">=</span><span class="st">"R.rsp"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pathname</span> <span class="op">&lt;-</span> <span class="fu">rfile</span><span class="op">(</span><span class="st">"random-args.txt.rsp"</span>, path<span class="op">=</span><span class="va">path</span>, args<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>K<span class="op">=</span><span class="fl">50</span><span class="op">)</span>,</span>
-<span class="r-in">                  output<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"random-args.txt"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">pathname</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Passing arguments</span></span></span>
+<span class="r-in"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exData"</span>, package<span class="op">=</span><span class="st">"R.rsp"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pathname</span> <span class="op">&lt;-</span> <span class="fu">rfile</span><span class="op">(</span><span class="st">"random-args.txt.rsp"</span>, path<span class="op">=</span><span class="va">path</span>, args<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>K<span class="op">=</span><span class="fl">50</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                  output<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"random-args.txt"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">pathname</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> RspFileProduct:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Pathname: /tmp/hb/RtmpA0Gs8R/random-args.txt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Pathname: /tmp/hb/RtmpNLle8d/random-args.txt</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> File size: 31 bytes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Content type: text/plain</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Has processor: FALSE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">pathname</span>, warn<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">lines</span>, collapse<span class="op">=</span><span class="st">"\n"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A random integer in [1,50]: 30 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.remove</a></span><span class="op">(</span><span class="va">pathname</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">pathname</span>, warn<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">lines</span>, collapse<span class="op">=</span><span class="st">"\n"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A random integer in [1,50]: 50 </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.remove</a></span><span class="op">(</span><span class="va">pathname</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># Compile and display the main vignette (requires LaTeX)</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="Non-documented_objects.html">isCapableOf</a></span><span class="op">(</span><span class="va">R.rsp</span>, <span class="st">"latex"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"doc"</span>, package<span class="op">=</span><span class="st">"R.rsp"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">pdf</span> <span class="op">&lt;-</span> <span class="fu">rfile</span><span class="op">(</span><span class="st">"Dynamic_document_creation_using_RSP.tex.rsp"</span>, path<span class="op">=</span><span class="va">path</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Created document: "</span>, <span class="va">pdf</span>, <span class="st">"\n"</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
-<span class="r-in">  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html" class="external-link">browseURL</a></span><span class="op">(</span><span class="va">pdf</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># Compile and display the main vignette (requires LaTeX)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="Non-documented_objects.html">isCapableOf</a></span><span class="op">(</span><span class="va">R.rsp</span>, <span class="st">"latex"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"doc"</span>, package<span class="op">=</span><span class="st">"R.rsp"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">pdf</span> <span class="op">&lt;-</span> <span class="fu">rfile</span><span class="op">(</span><span class="st">"Dynamic_document_creation_using_RSP.tex.rsp"</span>, path<span class="op">=</span><span class="va">path</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Created document: "</span>, <span class="va">pdf</span>, <span class="st">"\n"</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html" class="external-link">browseURL</a></span><span class="op">(</span><span class="va">pdf</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -220,7 +220,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9004.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9004.</p>
 </div>
 
       </footer></div>

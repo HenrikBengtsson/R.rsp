@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">R.rsp</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.44.0-9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.45.0-9000</span>
       </span>
     </div>
 
@@ -187,8 +187,8 @@ engine to skip the tangling of that vignette, i.e. the
 otherwise is the default.</p>
 <p>The last thing to do is to make sure <code>R.rsp</code> is added to
 the following two fields of the <code>DESCRIPTION</code> file:</p>
-<pre><code><span class="va">Suggests</span><span class="op">:</span> <span class="va">R.rsp</span>
-<span class="va">VignetteBuilder</span><span class="op">:</span> <span class="va">R.rsp</span></code></pre>
+<pre><code><span><span class="va">Suggests</span><span class="op">:</span> <span class="va">R.rsp</span></span>
+<span><span class="va">VignetteBuilder</span><span class="op">:</span> <span class="va">R.rsp</span></span></code></pre>
 <p>That’s it. <code>R CMD build YAPackage</code> will now detect the two
 vignettes, compile them into their final formats (PDF for the TeX
 vignette and HTML for the Markdown vignette), and include them as part
@@ -216,7 +216,7 @@ be used for any type of vignette format.</em></p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9004.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9004.</p>
 </div>
 
       </footer>

@@ -1,5 +1,5 @@
 pandoc: '2.18'
-pkgdown: 2.0.4
+pkgdown: 2.0.5
 pkgdown_sha: ~
 articles:
   Dynamic_document_creation_using_RSP: Dynamic_document_creation_using_RSP.html
@@ -9,5 +9,5 @@ articles:
   R_packages-RSP_vignettes: R_packages-RSP_vignettes.html
   R_packages-Static_PDF_and_HTML_vignettes: R_packages-Static_PDF_and_HTML_vignettes.html
   R_packages-Vignettes_prior_to_R300: R_packages-Vignettes_prior_to_R300.html
-last_built: 2022-06-21T06:26Z
+last_built: 2022-06-27T18:37Z
 
