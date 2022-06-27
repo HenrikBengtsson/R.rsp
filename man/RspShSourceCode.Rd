@@ -51,6 +51,7 @@ RspShSourceCode(...)
 \tabular{rll}{
  \tab \code{\link[R.rsp:evaluate.RspShSourceCode]{evaluate}} \tab Evaluates the shell (sh) code.\cr
  \tab \code{findProcessor} \tab  -\cr
+ \tab \code{rcat} \tab  -\cr
  \tab \code{rfile} \tab  -\cr
 }
 

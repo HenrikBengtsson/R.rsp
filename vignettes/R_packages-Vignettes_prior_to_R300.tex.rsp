@@ -28,6 +28,9 @@ R.rsp <- R.oo::Package("R.rsp");
 \addtolength{\topmargin}{-0.5in}	
 \addtolength{\textheight}{1in}
 
+% Drop PTEX metadata (for reproducbility)
+\pdfsuppressptexinfo=-1 
+
 \newcommand{\keywords}[1]{\footnotesize{\textbf{Keywords: }#1}\xspace}
 \newcommand{\pkg}[1]{\textsl{#1}\xspace}
 \newcommand{\file}[1]{\textsl{#1}\xspace}
@@ -144,6 +147,5 @@ paste(bfr, collapse="\n");
 \subsection*{Session information}
 <%=toLatex(sessionInfo())%>
 This report was automatically generated using \code{rfile()} of the R.rsp package.
-Total processing time after RSP-to-R translation was <%=dt <- round(Sys.time()-t0, digits=2)%> <%=attr(dt, "units")%>.
 
 \end{document}

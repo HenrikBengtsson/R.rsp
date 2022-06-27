@@ -73,11 +73,14 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
 
     if (!is.null(output)) {
       name <- "asciidoc"
-      ver <- trim(gsub("asciidoc", "", output))
+      ver <- gsub("asciidoc", "", output)
+      ver <- trim(ver)
+      ver <- gsub("rc.?$", "", ver)        ## e.g. asciidoc 9.0.0rc1
+      ver <- trim(ver)
       
       ## No matching output?
       if (length(ver) == 0) {
-        stop(sprintf("Failed to infer version of %s based on captured output: ", sQuote(name), paste(dQuote(output), collapse=", ")))
+        stop(sprintf("Failed to infer version of %s based on captured output: %s", sQuote(name), paste(dQuote(output), collapse=", ")))
       }
 
       ## Try to coerce to version objects
@@ -86,7 +89,7 @@ setMethodS3("findAsciiDoc", "default", function(mustExist=TRUE, ..., verbose=FAL
       
       ## Failed to coerce?
       if (length(ver) == 0) {
-        stop("Failed to parse version of %s based on captured output: ", sQuote(name), paste(dQuote(output), collapse=", "))
+        stop(sprintf("Failed to parse version of %s based on captured output: ", sQuote(name), paste(dQuote(output), collapse=", ")))
       }
 
       ## If more than one match, use the first one

@@ -63,6 +63,9 @@ withCapture <- R.utils::withCapture
   pdfproducer={R.rsp v<%=R.rsp$version%> by <%=R.rsp$author%>}
 }
 
+% Drop PTEX metadata (for reproducbility)
+\pdfsuppressptexinfo=-1 
+
 \usepackage{graphicx}
 \usepackage{xspace}
 \usepackage{xcolor}
@@ -1270,6 +1273,5 @@ In June 2007, the \pkg{brew} package (on CRAN) was introduced independently [pri
 \subsection*{Session information}
 <%=toLatex(sessionInfo())%>
 This report was automatically generated using \code{rfile()} of the R.rsp package.
-Total processing time after RSP-to-R translation was <%=dt <- round(Sys.time()-t0, digits=2)%> <%=attr(dt, "units")%>.
 
 \end{document}

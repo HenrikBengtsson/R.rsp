@@ -108,8 +108,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
   # Setup
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Pattern for suffix specification
-##  patternS <- "(([+]))|([-]+\\[([^]]*)\\])?%>"
-  patternS <- "([+]|[-]+(\\[[^]]*\\])?)%>"
+  patternS <- paste("([+]|[-]+(\\[[^]]*\\])?)", .rspBracketClose, sep="")
 
   # Setup the regular expressions for start and stop RSP constructs
   hasPatternLTail <- FALSE
@@ -267,7 +266,7 @@ setMethodS3("parseRaw", "RspParser", function(parser, object, what=c("comment", 
       # Was it an escaped RSP end tag, i.e. '%%>'?
       if (what == "expression") {
         nT <- nchar(tail)
-        if (nT >= 3L && substring(tail, first=nT-2L, last=nT) == "%%>")
+        if (nT >= nchar(.rspBracketCloseEscape) && substring(tail, first=nT-nchar(.rspBracketCloseEscape)+1L, last=nT) == .rspBracketCloseEscape)
           break
       }
 

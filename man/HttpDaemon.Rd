@@ -82,7 +82,7 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
  local host (127.0.0.1).  This lowers the risk for external computers
  to gain access to the R session.
  This is asserted by the \code{accept_connect} Tcl procedure in
- r-httpd.tcl (located in \code{system("tcl/", package="R.rsp")}).
+ r-httpd.tcl (located in \code{system.file("tcl/", package="R.rsp")}).
  If access from other hosts are wanted, then this procedure needs to
  be modified.
 
