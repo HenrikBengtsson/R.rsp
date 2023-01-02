@@ -1,6 +1,9 @@
 # Version (development version)
 
- * ...
+## Significant Changes
+
+ * Drop 'R packages: Vignettes prior to R 3.0.0' vignette.  R 3.0.0 was
+   released on 2013-04-03.
  
 
 # Version 0.45.0 [2022-06-27]
