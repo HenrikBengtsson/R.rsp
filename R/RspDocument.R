@@ -1683,7 +1683,7 @@ setMethodS3("preprocess", "RspDocument", function(object, recursive=TRUE, flatte
 
         # Evaluate
         tryCatch({
-          value <- eval(expr, envir=envir)
+          value <- eval(expr, envir = envir, enclos = baseenv())
         }, error = function(ex) {
           throw(sprintf("Failed to process RSP '%s' directive (%s): %s", item[1L], asRspString(item), ex$message))
         })

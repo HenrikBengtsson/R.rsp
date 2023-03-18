@@ -134,7 +134,7 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(),
 ##    # The default capture.output() uses textConnection()
 ##    # which is much slower than rawConnection().
 ##    res <- capture.output({
-##      eval(expr, envir=envir)
+##      eval(expr, envir = envir, enclos = baseenv())
 ##      # Force a last complete line
 ##      cat("\n")
 ##    })
@@ -145,7 +145,7 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(),
     on.exit({
       if (!is.null(file)) close(file)
     }, add=TRUE)
-    capture.output({ eval(expr, envir=envir) }, file=file)
+    capture.output({ eval(expr, envir = envir, enclos = baseenv()) }, file=file)
     res <- rawToChar(rawConnectionValue(file))
     close(file); file <- NULL
 
@@ -157,7 +157,7 @@ setMethodS3("evaluate", "RspRSourceCode", function(object, envir=parent.frame(),
       res <- setMetadata(res, rmeta())
     }
   } else if (output == "stdout") {
-    eval(expr, envir=envir)
+    eval(expr, envir = envir, enclos = baseenv())
     # Force a last complete line
     cat("\n")
     res <- NULL
