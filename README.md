@@ -1,7 +1,7 @@
 
 
 <div id="badges"><!-- pkgdown markup -->
-<a href="https://CRAN.R-project.org/web/checks/check_results_R.rsp.html"><img border="0" src="https://www.r-pkg.org/badges/version/R.rsp" alt="CRAN check status"/></a> <a href="https://github.com/HenrikBengtsson/R.rsp/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/R.rsp/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a>   <a href="https://ci.appveyor.com/project/HenrikBengtsson/r-rsp"><img border="0" src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/R.rsp?svg=true" alt="Build status"/></a> <a href="https://codecov.io/gh/HenrikBengtsson/R.rsp"><img border="0" src="https://codecov.io/gh/HenrikBengtsson/R.rsp/branch/develop/graph/badge.svg" alt="Coverage Status"/></a> 
+<a href="https://CRAN.R-project.org/web/checks/check_results_R.rsp.html"><img border="0" src="https://www.r-pkg.org/badges/version/R.rsp" alt="CRAN check status"/></a> <a href="https://github.com/HenrikBengtsson/R.rsp/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/R.rsp/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a>    <a href="https://ci.appveyor.com/project/HenrikBengtsson/r-rsp"><img border="0" src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/R.rsp?svg=true" alt="Build status"/></a> <a href="https://app.codecov.io/gh/HenrikBengtsson/R.rsp"><img border="0" src="https://codecov.io/gh/HenrikBengtsson/R.rsp/branch/develop/graph/badge.svg" alt="Coverage Status"/></a> 
 </div>
 
 # R.rsp: Dynamic Generation of Scientific Reports 
