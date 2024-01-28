@@ -22,8 +22,6 @@
 }
 
 \arguments{
-  \item{expr}{An \code{\link{RspDocument}} that has been preprocessed
-              and flattened.}
   \item{...}{Not used.}
 }
 

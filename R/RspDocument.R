@@ -526,7 +526,6 @@ setMethodS3("trimNonText", "RspDocument", function(object, ..., verbose=FALSE) {
 # @synopsis
 #
 # \arguments{
-#   \item{envir}{The @environment where the RSP document is evaluated.}
 #   \item{...}{Not used.}
 #   \item{verbose}{See @see "R.utils::Verbose".}
 # }
@@ -792,7 +791,6 @@ setMethodS3("flatten", "RspDocument", function(object, ..., verbose=FALSE) {
 #
 # \arguments{
 #   \item{i}{Indices of the RSP elements to extract.}
-#   \item{...}{Not used.}
 # }
 #
 # \value{

@@ -5,6 +5,10 @@
  * Drop 'R packages: Vignettes prior to R 3.0.0' vignette.  R 3.0.0 was
    released on 2013-04-03.
 
+## Documentation
+
+ * Fix help-page issues.
+
 ## Bug Fixes
 
  * `rcat()` for `RspShSourceCode` was not registered as an S3 method.

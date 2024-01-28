@@ -21,8 +21,6 @@ buildNonSweaveVignettes(...)
 }
 
 \arguments{
-  \item{path}{The directory where to search for non-Sweave vignettes.}
-  \item{pattern}{Filename pattern to locate non-Sweave vignettes.}
   \item{...}{Additional arguments passed to \code{\link{buildNonSweaveVignette}}().}
 }
 

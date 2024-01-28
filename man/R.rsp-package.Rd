@@ -59,9 +59,10 @@
 }
 
 \section{How to cite this package}{
- Bengtsson H (2022).
+ Bengtsson H (2024).
 \emph{R.rsp: Dynamic Generation of Scientific Reports}.
-R package version 0.45.0, \url{https://CRAN.R-project.org/package=R.rsp}.
+R package version 0.45.0-9003,
+https://github.com/HenrikBengtsson/R.rsp, \url{https://henrikbengtsson.github.io/R.rsp/}.
 }
 
 \author{Henrik Bengtsson}

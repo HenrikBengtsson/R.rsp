@@ -21,7 +21,6 @@ buildNonSweaveVignette(vign, envir=new.env(), ...)
 }
 
 \arguments{
-  \item{pathname}{The vignette file to be built.}
   \item{...}{Not used.}
 }
 

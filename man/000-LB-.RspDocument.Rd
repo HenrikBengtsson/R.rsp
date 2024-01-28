@@ -27,7 +27,6 @@
 
 \arguments{
   \item{i}{Indices of the RSP elements to extract.}
-  \item{...}{Not used.}
 }
 
 \value{

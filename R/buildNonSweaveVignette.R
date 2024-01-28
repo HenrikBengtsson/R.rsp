@@ -201,7 +201,6 @@ parseVignettes <- function(path=".", pattern="[.][^.~]*$", ..., drop="^dummy.tex
 # @synopsis
 #
 # \arguments{
-#   \item{pathname}{The vignette file to be built.}
 #   \item{...}{Not used.}
 # }
 #
@@ -283,8 +282,6 @@ buildNonSweaveVignette <- function(vign, envir=new.env(), ...) {
 # @synopsis
 #
 # \arguments{
-#   \item{path}{The directory where to search for non-Sweave vignettes.}
-#   \item{pattern}{Filename pattern to locate non-Sweave vignettes.}
 #   \item{...}{Additional arguments passed to @see "buildNonSweaveVignette".}
 # }
 #

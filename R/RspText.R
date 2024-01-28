@@ -54,9 +54,9 @@ setMethodS3("getInclude", "RspText", function(object, ...) {
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Not used.}
-#   \item{unescaped}{If @TRUE, character sequences \code{<\%\%} and
+#   \item{unescape}{If @TRUE, character sequences \code{<\%\%} and
 #                \code{\%\%>} are unescaped to \code{<\%} and \code{\%>}.}
+#   \item{...}{Not used.}
 # }
 #
 # \value{

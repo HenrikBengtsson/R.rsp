@@ -22,7 +22,6 @@
 }
 
 \arguments{
-  \item{envir}{The \code{\link[base]{environment}} where the RSP document is evaluated.}
   \item{...}{Not used.}
   \item{verbose}{See \code{\link[R.utils]{Verbose}}.}
 }
