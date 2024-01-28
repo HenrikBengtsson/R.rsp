@@ -8,6 +8,9 @@
 ## Documentation
 
  * Fix help-page issues.
+ 
+ * LaTeX vignettes failed with `Undefined control
+   sequence. \pdfsuppressptexinfo` with old LaTeX versions.
 
 ## Bug Fixes
 

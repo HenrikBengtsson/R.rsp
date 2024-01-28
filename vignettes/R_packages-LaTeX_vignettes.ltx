@@ -18,7 +18,9 @@
 \addtolength{\textheight}{1in}
 
 % Drop PTEX metadata (for reproducbility)
-\pdfsuppressptexinfo=-1 
+\ifdefined\pdfsuppressptexinfo
+  \pdfsuppressptexinfo=-1
+\fi
 
 \newcommand{\keywords}[1]{\footnotesize{\textbf{Keywords: }#1}\xspace}
 \newcommand{\pkg}[1]{\textsl{#1}\xspace}

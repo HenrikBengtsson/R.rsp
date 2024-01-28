@@ -36,8 +36,10 @@ R.rsp <- R.oo::Package("R.rsp");
   pdfproducer={R.rsp v<%=R.rsp$version%> by <%=R.rsp$author%>}
 }
 
-% Drop PTEX metadata (for reproducbility)
-\pdfsuppressptexinfo=-1 
+% Drop PTEX metadata (for reproducibility)
+\ifdefined\pdfsuppressptexinfo
+  \pdfsuppressptexinfo=-1
+\fi
 
 \usepackage{xspace}
 \usepackage{xcolor}
