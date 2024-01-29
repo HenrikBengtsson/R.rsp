@@ -3,6 +3,9 @@
 <%@meta keywords="PDF, HTML, vignette, package"%>
 %\VignetteIndexEntry{<%@meta name="title"%>}
 %\VignetteEngine{R.rsp::asis}
+%\VignetteEncoding{UTF-8}
+
+%% Optional:
 <% for (keyword in unlist(strsplit("<%@meta name='keywords'%>", split=",[ ]*"))) { %>
 %\VignetteKeyword{<%=keyword%>}
 <% } %>

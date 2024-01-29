@@ -7,6 +7,8 @@
 
 ## Documentation
 
+ * The as-is LaTeX vignette now uses `%\VignetteEncoding{UTF-8}`.
+ 
  * Fix help-page issues.
  
  * LaTeX vignettes failed with `Undefined control

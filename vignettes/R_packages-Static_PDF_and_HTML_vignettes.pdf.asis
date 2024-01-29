@@ -1,5 +1,8 @@
 %\VignetteIndexEntry{R packages: Static PDF and HTML vignettes}
 %\VignetteEngine{R.rsp::asis}
+%\VignetteEncoding{UTF-8}
+
+%% Optional:
 %\VignetteKeyword{PDF}
 %\VignetteKeyword{HTML}
 %\VignetteKeyword{vignette}
