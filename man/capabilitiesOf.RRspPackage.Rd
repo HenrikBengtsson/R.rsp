@@ -41,14 +41,14 @@
 }
 
 \examples{
-  # Display which tools are supported by the package
-  print(capabilitiesOf(R.rsp))
+# Display which tools are supported by the package
+print(capabilitiesOf(R.rsp))
 
-  # Check whether AsciiDoc is supported
-  print(isCapableOf(R.rsp, "asciidoc"))
+# Check whether AsciiDoc is supported
+print(isCapableOf(R.rsp, "asciidoc"))
 
-  # Check whether pandoc v1.12 or newer is supported
-  print(isCapableOf(R.rsp, "pandoc (>= 1.12)"))
+# Check whether pandoc v1.12 or newer is supported
+print(isCapableOf(R.rsp, "pandoc (>= 1.12)"))
 }
 
 \author{Henrik Bengtsson}

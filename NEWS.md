@@ -1,4 +1,4 @@
-# Version (development version)
+# Version 0.46.0 [2024-01-28]
 
 ## Significant Changes
 
