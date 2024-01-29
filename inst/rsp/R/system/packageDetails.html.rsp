@@ -47,7 +47,7 @@ Package:
 
   # Linkify all http:// words.
   details <- lapply(details, FUN=function(x) {
-    x <- gsub("((http|ftp)://[^ \t\n\r\v,;'`´\"><()]*)", "<a href=\"\\1\">\\1</a>", x);
+    x <- gsub("((http|ftp)://[^ \t\n\r\v,;'`Â´\"><()]*)", "<a href=\"\\1\">\\1</a>", x);
     x <- gsub("[.]\">ftp://", "\">ftp://", x);
     x <- gsub("[.]</a>", "</a>.", x);
     x;
