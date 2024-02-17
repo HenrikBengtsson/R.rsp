@@ -24,7 +24,6 @@
 }
 
 \arguments{
-  \item{expr}{An \code{\link{RspExpression}}.}
   \item{...}{Not used.}
 }
 

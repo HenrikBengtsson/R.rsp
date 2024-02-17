@@ -22,9 +22,9 @@
 }
 
 \arguments{
-  \item{...}{Not used.}
-  \item{unescaped}{If \code{\link[base:logical]{TRUE}}, character sequences \code{<\%\%} and
+  \item{unescape}{If \code{\link[base:logical]{TRUE}}, character sequences \code{<\%\%} and
                \code{\%\%>} are unescaped to \code{<\%} and \code{\%>}.}
+  \item{...}{Not used.}
 }
 
 \value{

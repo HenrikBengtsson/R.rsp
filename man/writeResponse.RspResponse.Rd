@@ -29,8 +29,6 @@
 
 \arguments{
   \item{...}{Objects to be pasted together and outputted.}
-  \item{collapse}{A \code{\link[base]{character}} string to be used to collapse the objects.}
-  \item{sep}{A \code{\link[base]{character}} string to separate the objects.}
 }
 
 \value{

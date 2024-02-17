@@ -565,6 +565,7 @@ S3method("getCompleteCode", "RspRSourceCodeFactory")
 # RspShSourceCode
 S3method("evaluate", "RspShSourceCode")
 S3method("findProcessor", "RspShSourceCode")
+S3method("rcat", "RspShSourceCode")
 S3method("rfile", "RspShSourceCode")
 
 # RspShSourceCodeFactory

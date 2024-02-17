@@ -48,8 +48,6 @@ setConstructorS3("RspResponse", function(...) {
 #
 # \arguments{
 #   \item{...}{Objects to be pasted together and outputted.}
-#   \item{collapse}{A @character string to be used to collapse the objects.}
-#   \item{sep}{A @character string to separate the objects.}
 # }
 #
 # \value{

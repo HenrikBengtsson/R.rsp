@@ -469,8 +469,6 @@ setMethodS3("asRspString", "RspUnparsedDirective", function(object, ...) {
 #
 # \arguments{
 #   \item{value}{A @character string.}
-#   \item{attributes}{A named @list, which must contain either
-#      a 'file' or a 'text' element.}
 #   \item{...}{Optional arguments passed to the constructor
 #              of @see "RspDirective".}
 # }
@@ -638,8 +636,6 @@ setMethodS3("getWrap", "RspIncludeDirective", function(directive, ...) {
 #
 # \arguments{
 #   \item{value}{A @character string.}
-#   \item{attributes}{A named @list, which must contain a 'file'
-#      or a 'text' element.}
 #   \item{...}{Optional arguments passed to the constructor
 #              of @see "RspDirective".}
 # }

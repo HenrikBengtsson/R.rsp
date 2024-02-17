@@ -45,7 +45,6 @@ devOptions("png", width = 840)
 	      
 ---
 # <%= title %>
-<div class="footer">
 <% } # slide() %>
 
 <!DOCTYPE html>

@@ -124,7 +124,6 @@ setMethodS3("makeSourceCode", "RspSourceCodeFactory", function(this, code, ...) 
 # @synopsis
 #
 # \arguments{
-#   \item{expr}{An @see "RspExpression".}
 #   \item{...}{Not used.}
 # }
 #
@@ -208,8 +207,6 @@ setMethodS3("getCompleteCode", "RspSourceCodeFactory", function(this, object, ..
 # @synopsis
 #
 # \arguments{
-#   \item{expr}{An @see "RspDocument" that has been preprocessed
-#               and flattened.}
 #   \item{...}{Not used.}
 # }
 #

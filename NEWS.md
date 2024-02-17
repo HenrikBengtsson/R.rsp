@@ -1,3 +1,24 @@
+# Version 0.46.0 [2024-01-28]
+
+## Significant Changes
+
+ * Drop 'R packages: Vignettes prior to R 3.0.0' vignette.  R 3.0.0 was
+   released on 2013-04-03.
+
+## Documentation
+
+ * The as-is LaTeX vignette now uses `%\VignetteEncoding{UTF-8}`.
+ 
+ * Fix help-page issues.
+ 
+ * LaTeX vignettes failed with `Undefined control
+   sequence. \pdfsuppressptexinfo` with old LaTeX versions.
+
+## Bug Fixes
+
+ * `rcat()` for `RspShSourceCode` was not registered as an S3 method.
+
+
 # Version 0.45.0 [2022-06-27]
 
 ## Bug Fixes

@@ -12,7 +12,6 @@
 # @synopsis
 #
 # \arguments{
-#   \item{object}{A R object.}
 #   \item{...}{Not used.}
 # }
 #

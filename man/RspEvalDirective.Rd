@@ -46,8 +46,6 @@ RspEvalDirective(value="eval", ...)
 
 \arguments{
   \item{value}{A \code{\link[base]{character}} string.}
-  \item{attributes}{A named \code{\link[base]{list}}, which must contain a 'file'
-     or a 'text' element.}
   \item{...}{Optional arguments passed to the constructor
              of \code{\link{RspDirective}}.}
 }
@@ -70,7 +68,7 @@ asRspString, getComment, getInclude, getSuffixSpecs
 print
 
  \bold{Methods inherited from character}:\cr
-Ops,nonStructure,vector-method, Ops,structure,vector-method, Ops,vector,nonStructure-method, Ops,vector,structure-method, all.equal, as.Date, as.POSIXlt, as.data.frame, as.raster, coerce,ANY,character-method, coerce,character,SuperClassMethod-method, coerce,character,signature-method, coerce<-,ObjectsWithPackage,character-method, coerce<-,signature,character-method, formula, getDLLRegisteredRoutines, isOpen, toLatex, uses
+Ops,nonStructure,vector-method, Ops,structure,vector-method, Ops,vector,nonStructure-method, Ops,vector,structure-method, all.equal, as.Date, as.POSIXlt, as.data.frame, as.raster, coerce,ANY,character-method, coerce,character,SuperClassMethod-method, coerce,character,signature-method, coerce<-,ObjectsWithPackage,character-method, coerce<-,signature,character-method, formula, getDLLRegisteredRoutines, glyphJust, isOpen, toLatex, uses
 
 
 }

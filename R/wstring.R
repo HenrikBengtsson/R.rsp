@@ -24,7 +24,7 @@ setMethodS3("wstring", "default", function(..., sep="", envir=parent.frame()) {
 
     # Evaluate
     expr <- base::parse(text=code)
-    value <- eval(expr, envir=envir)
+    value <- eval(expr, envir = envir, enclos = baseenv())
     value <- as.character(value)
 
     bfr <- c(bfr, head, value)

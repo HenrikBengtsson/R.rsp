@@ -1,10 +1,12 @@
 %\VignetteIndexEntry{R packages: LaTeX vignettes}
 %\VignetteAuthor{Henrik Bengtsson}
+%\VignetteEngine{R.rsp::tex}
+
+%% Optional:
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{LaTeX}
-%\VignetteEngine{R.rsp::tex}
 
 \documentclass[12pt]{article}
 \usepackage{xspace}
@@ -18,7 +20,9 @@
 \addtolength{\textheight}{1in}
 
 % Drop PTEX metadata (for reproducbility)
-\pdfsuppressptexinfo=-1 
+\ifdefined\pdfsuppressptexinfo
+  \pdfsuppressptexinfo=-1
+\fi
 
 \newcommand{\keywords}[1]{\footnotesize{\textbf{Keywords: }#1}\xspace}
 \newcommand{\pkg}[1]{\textsl{#1}\xspace}
@@ -54,6 +58,8 @@ which contains the following meta directives at the top of the file:
 \begin{verbatim} 
   %\VignetteIndexEntry{R packages: LaTeX vignettes}
   %\VignetteEngine{R.rsp::tex}
+
+  %% Optional:
   %\VignetteKeyword{R}
   %\VignetteKeyword{package}
   %\VignetteKeyword{vignette}
