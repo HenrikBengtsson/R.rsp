@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">R.rsp</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.45.0-9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.46.0-9000</span>
       </span>
     </div>
 
@@ -49,9 +49,6 @@
     <li>
       <a href="../articles/R_packages-Static_PDF_and_HTML_vignettes.html">R packages: Static PDF and HTML vignettes</a>
     </li>
-    <li>
-      <a href="../articles/R_packages-Vignettes_prior_to_R300.html">R packages: Vignettes prior to R 3.0.0</a>
-    </li>
   </ul></li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -80,7 +77,25 @@
 <ul><li>…</li>
 </ul></div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.45.0" id="version-0450">Version 0.45.0<a class="anchor" aria-label="anchor" href="#version-0450"></a></h2>
+<h2 class="page-header" data-toc-text="0.46.0" id="version-0460">Version 0.46.0<small>2024-02-17</small><a class="anchor" aria-label="anchor" href="#version-0460"></a></h2>
+<div class="section level3">
+<h3 id="significant-changes-0-46-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-46-0"></a></h3>
+<ul><li>Drop ‘R packages: Vignettes prior to R 3.0.0’ vignette. R 3.0.0 was released on 2013-04-03.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-0-46-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-46-0"></a></h3>
+<ul><li><p>The as-is LaTeX vignette now uses <code>%\VignetteEncoding{UTF-8}</code>.</p></li>
+<li><p>Fix help-page issues.</p></li>
+<li><p>LaTeX vignettes failed with <code>Undefined control    sequence. \pdfsuppressptexinfo</code> with old LaTeX versions.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-46-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-46-0"></a></h3>
+<ul><li>
+<code><a href="../reference/rcat.html">rcat()</a></code> for <code>RspShSourceCode</code> was not registered as an S3 method.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.45.0" id="version-0450">Version 0.45.0<small>2022-06-27</small><a class="anchor" aria-label="anchor" href="#version-0450"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-45-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-45-0"></a></h3>
 <ul><li>
@@ -88,7 +103,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="cleanup-0-45-0">Cleanup<a class="anchor" aria-label="anchor" href="#cleanup-0-45-0"></a></h3>
-<ul><li>Package no longer imports <code><a href="https://rdrr.io/pkg/R.utils/man/Non-documented_objects.html" class="external-link">R.utils::inherits()</a></code>, which is deprecated and will eventually be removed.</li>
+<ul><li>Package no longer imports <code>R.utils::inherits()</code>, which is deprecated and will eventually be removed.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="undeprecated-0-45-0">Undeprecated<a class="anchor" aria-label="anchor" href="#undeprecated-0-45-0"></a></h3>
@@ -397,7 +412,7 @@
 <h2 class="page-header" data-toc-text="0.18.2" id="version-0182">Version 0.18.2<a class="anchor" aria-label="anchor" href="#version-0182"></a></h2>
 <div class="section level3">
 <h3 id="code-refactoring-0-18-2">Code Refactoring<a class="anchor" aria-label="anchor" href="#code-refactoring-0-18-2"></a></h3>
-<ul><li><p>Using <code><a href="https://rdrr.io/pkg/R.utils/man/use.html" class="external-link">R.utils::use()</a></code> instead of <code><a href="https://rdrr.io/r/base/library.html" class="external-link">require()</a></code> in more places.</p></li>
+<ul><li><p>Using <code><a href="https://henrikbengtsson.github.io/R.utils/reference/use.html" class="external-link">R.utils::use()</a></code> instead of <code><a href="https://rdrr.io/r/base/library.html" class="external-link">require()</a></code> in more places.</p></li>
 <li><p>Cleanup: Dropped internal ununsed vignette engines.</p></li>
 <li><p>Bumped up package dependencies.</p></li>
 </ul></div>
@@ -434,7 +449,7 @@
 <h2 class="page-header" data-toc-text="0.17.2" id="version-0172">Version 0.17.2<a class="anchor" aria-label="anchor" href="#version-0172"></a></h2>
 <div class="section level3">
 <h3 id="code-refactoring-0-17-2">Code Refactoring<a class="anchor" aria-label="anchor" href="#code-refactoring-0-17-2"></a></h3>
-<ul><li>Using <code><a href="https://rdrr.io/pkg/R.utils/man/use.html" class="external-link">R.utils::use()</a></code> instead of <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> in more RSP documents.</li>
+<ul><li>Using <code><a href="https://henrikbengtsson.github.io/R.utils/reference/use.html" class="external-link">R.utils::use()</a></code> instead of <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> in more RSP documents.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-and-defunct-0-17-2">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-0-17-2"></a></h3>
@@ -1606,7 +1621,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9004.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9005.</p>
 </div>
 
       </footer></div>
