@@ -75,11 +75,11 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-       - name: Install R package dependencies
-         run: |
-           ## needs itself for package vignettes
-           install.packages(".", repos=NULL, type="source")
-         shell: Rscript {0}
+      - name: Install R package dependencies
+        run: |
+          ## needs itself for package vignettes
+          install.packages(".", repos=NULL, type="source")
+        shell: Rscript {0}
  
       - name: Session info
         run: |

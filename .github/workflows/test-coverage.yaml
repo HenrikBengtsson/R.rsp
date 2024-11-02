@@ -29,11 +29,11 @@ jobs:
           extra-packages: any::covr, any::xml2
           needs: coverage
 
-       - name: Install R package dependencies
-         run: |
-           ## needs itself for package vignettes
-           install.packages(".", repos=NULL, type="source")
-         shell: Rscript {0}
+      - name: Install R package dependencies
+        run: |
+          ## needs itself for package vignettes
+          install.packages(".", repos=NULL, type="source")
+        shell: Rscript {0}
          
       - name: Test coverage
         run: |
