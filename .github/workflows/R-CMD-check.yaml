@@ -50,12 +50,11 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v2
 
       - uses: r-lib/actions/setup-tinytex@v2
+      
+      - name: Install additional LaTeX packages
       - run: |
           tlmgr update --self
           tlmgr --version
-
-      - name: Install additional LaTeX packages
-      - run: |
           ## Additional LaTeX packages needed for the vignette
           tlmgr install titlesec
           tlmgr list --only-installed
